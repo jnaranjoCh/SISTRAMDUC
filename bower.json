@@ -1,0 +1,22 @@
+{
+  "name": "SISTRAMDUC",
+  "authors": [],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#^2.3.11",
+    "font-awesome": "^4.7.0",
+    "Ionicons": "ionicons#^2.0.1"
+  }
+}
