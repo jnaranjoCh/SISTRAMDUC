@@ -1,3 +1,8 @@
+reincorporacion:
+    resource: "@ReincorporacionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 registro_unico:
     resource: "@RegistroUnicoBundle/Resources/config/routing.yml"
     prefix:   /

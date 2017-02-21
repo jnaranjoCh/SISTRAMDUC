@@ -150,6 +150,29 @@
             </li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa fa-suitcase"></i><span>Reincorporación</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-right pull-right"></i>
+            </span>            
+          </a> 
+          <ul class="treeview-menu">
+            <li data-route="actualizar-curriculum">
+             <a href="{{ path('reincorporacion') }}"><i class="fa fa-circle-o"></i>Inicio</a>
+            </li>
+            <li data-route="actualizar-curriculum">
+              <a href="{{ path('actualizar-curriculum') }}"><i class="fa fa-circle-o"></i>Actualizar currículum</a>
+            </li>
+            <li data-route="subir-recaudos">
+              <a href="{{ path('subir-recaudos') }}"><i class="fa fa-circle-o"></i>Subida de recaudos</a>
+            </li>
+            <li data-route="verificar-datos">
+              <a href="{{ path('verificar-datos') }}"><i class="fa fa-circle-o"></i>Envío de solicitud</a>
+            </li>
+          </ul>         
+        </li>
+        
       </ul>
     </section>
     <!-- /.sidebar -->
