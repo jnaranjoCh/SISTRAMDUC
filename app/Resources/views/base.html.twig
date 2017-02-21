@@ -129,9 +129,15 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ path('registro_usuario_index') }}"><i class="fa fa-circle-o"></i>Registro de usuario</a></li>
-            <li><a href="{{ path('registro_datos_index') }}"><i class="fa fa-circle-o"></i>Registro de datos</a></li>
-            <li><a href="{{ path('registro_consulta_index') }}"><i class="fa fa-circle-o"></i>Consultar datos</a></li>
+            <li data-route="registro_usuario_index">
+              <a href="{{ path('registro_usuario_index') }}"><i class="fa fa-circle-o"></i>Registro de usuario</a>
+            </li>
+            <li data-route="registro_datos_index">
+              <a href="{{ path('registro_datos_index') }}"><i class="fa fa-circle-o"></i>Registro de datos</a>
+            </li>
+            <li data-route="registro_consulta_index">
+              <a href="{{ path('registro_consulta_index') }}"><i class="fa fa-circle-o"></i>Consultar datos</a>
+            </li>
           </ul>
         </li>
         <li class="treeview">
@@ -202,6 +208,7 @@
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
+<script src="{{ asset('bundles/js/autoClick.js') }}"></script>
 
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}
