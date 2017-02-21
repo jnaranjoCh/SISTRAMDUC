@@ -1,7 +1,11 @@
-registro_usuario_homepage:
-    path:     /registro-usuario
+registro_usuario_index:
+    path:     /registro/usuario
     defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuario }
 
-registro_datos_homepage:
-    path:     /registro-datos
+registro_datos_index:
+    path:     /registro/datos
     defaults: { _controller: RegistroUnicoBundle:Default:registrarDatosUsuario }
+
+registro_consulta_index:
+    path:     /registro/consulta
+    defaults: { _controller: RegistroUnicoBundle:Default:conultarRegistro }
