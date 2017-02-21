@@ -1,3 +1,7 @@
+registro_unico:
+    resource: "@RegistroUnicoBundle/Resources/config/routing.yml"
+    prefix:   /
+
 plan_septenal:
     resource: "@PlanSeptenalBundle/Controller/"
     type:     annotation

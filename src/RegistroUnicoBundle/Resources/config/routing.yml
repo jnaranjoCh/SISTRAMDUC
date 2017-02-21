@@ -1,0 +1,7 @@
+registro_usuario_homepage:
+    path:     /registro-usuario
+    defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuario }
+
+registro_datos_homepage:
+    path:     /registro-datos
+    defaults: { _controller: RegistroUnicoBundle:Default:registrarDatosUsuario }

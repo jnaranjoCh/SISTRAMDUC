@@ -1,0 +1,4 @@
+services:
+#    registro_unico.example:
+#        class: RegistroUnicoBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
