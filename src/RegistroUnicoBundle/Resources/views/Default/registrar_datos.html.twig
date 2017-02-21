@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
+    <!--User data header-->
     <section class="content-header">
       <h1>Registrar Datos</h1>
       <ol class="breadcrumb">
@@ -8,4 +9,127 @@
         <li class="active">Registrar datos</li>
       </ol>
     </section>
+    <!--User data header-->
+    <br/>
+    <!--User data body-->
+    <section class="content-body">
+      <!--seccion for generate box-->
+      <div class="container">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <div class="row">
+                <div class="col-md-offset-1 col-md-5">
+                  <div class="form-group has-feedback">
+                        <input type="email" class="form-control" placeholder="Email">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group has-feedback">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Generar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
+      </div>
+      <!--seccion for generate box-->
+      <!--box personal and contact data-->
+      <div class="col-md-offset-1 col-md-10">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title">Datos personales</h3>
+  
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+            </div>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <!-- /.form-group -->
+                <div class="form-group">
+                  <label>Apellido</label>
+                  <input type="text" class="form-control" placeholder="Apellido">
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Edad</label>
+                  <input type="number" class="form-control" placeholder="Edad" min="18" max="80">
+                </div>
+                <!-- /.form-group -->
+                <div class="form-group">
+                  <label>Sexo</label>
+                  <select class="form-control select2" style="width: 100%;">
+                    <option selected="selected">Seleccione una opción</option>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                  </select>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Cedula</label>
+                  <input type="number" class="form-control" placeholder="Cedula">
+                </div>
+                <!-- /.form-group -->
+                <div class="form-group">
+                  <label>RIF</label>
+                  <input type="number" class="form-control" placeholder="RIF">
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Telefono</label>
+                  <div class="row">
+                      <div class="col-xs-4">
+                        <input type="number" class="form-control" placeholder="" min="100" max="999">
+                      </div>
+                      <strong><label class="col-xs-1">—</label></strong>
+                      <div class="col-xs-7">
+                        <input type="number" class="form-control" placeholder="" min="1000000" max="9999999">
+                      </div>
+                  </div>
+                </div>  
+                <!-- /.form-group -->
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <textarea class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                </div>
+                <!-- /.form-group -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <strong>Sección para ingresar datos personales y de contactos.</strong>
+          </div>
+        </div>
+        <!-- /.box -->
+      </div>  
+      <!--box personal and contact data-->
+    </section>
+    <!--User data body-->
+    
+    
+    
 {% endblock %}
