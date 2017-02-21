@@ -8,5 +8,38 @@
         <li class="active">Registro de Usuarios</li>
       </ol>
     </section>
+    <br/>
+    <section class="content-body col-md-offset-2 col-md-8">
+      <br/>
+      <div class="register-box-body">
+          <form>
+             <img src="{{asset('bundles/images/usuario.jpeg')}}" class="user-image col-sm-offset-5 col-xs-offset-4" alt="User Image">
+            <div class="form-group has-feedback">
+              <input type="email" class="form-control" placeholder="Email">
+              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+              <input type="password" class="form-control" placeholder="Contraseña">
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+              <input type="password" class="form-control" placeholder="Repetir contraseña">
+              <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <select class="form-control select2" style="width: 100%;">
+                  <option selected="selected">Seleccione su opción</option>
+                  <option>Administrador</option>
+                  <option>Docente</option>
+                  <option>Otros</option>
+                </select>
+              </div>
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">Registrar</button>
+            </div>
+          </form>
+      </div>
+    </section>
+    <br/><br/>
 {% endblock %}
 
