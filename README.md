@@ -25,6 +25,7 @@ El sistema busca la mayor automatización administrativa de los trámites hacien
 ```bash
 $ cd sistramduc
 $ composer install
+$ npm install -g bower
 $ bower install
 $ php bin/console server:run
 ```
