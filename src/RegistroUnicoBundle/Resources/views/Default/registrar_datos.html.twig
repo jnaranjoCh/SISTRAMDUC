@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-
     <!--User data header-->
     <section class="content-header">
       <h1>Registrar Datos</h1>
@@ -76,8 +75,8 @@
                       <label>Sexo</label>
                       <select class="form-control select2" style="width: 100%;">
                         <option selected="selected">Seleccione una opción</option>
-                        <option>Masculino</option>
-                        <option>Femenino</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
                       </select>
                     </div>
                     <!-- /.form-group -->
@@ -127,17 +126,17 @@
             <!-- /.box -->
           </div>  
           <!--personal and contact data box-->
-          
-          <!--courses and studies box-->
+        
+          <!--research,courses and studies box-->
           <div class="col-md-offset-1 col-md-10">
             <!-- /.box-info -->
             <div class="box-footer">
-              <strong>Sección para ingresar estudios y cursos realizados.</strong>
+              <strong>Sección para investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
             </div>
              <!-- /.box-header -->
-            <div class="box box-danger">
+            <div class="box box-success">
               <div class="box-header with-border">
-                <h3 class="box-title">Estudios y cursos realizados</h3>
+                <h3 class="box-title">Investigaciones, estudios, cursos y extensiones</h3>
                 <div class="box-tools pull-right">
                   <button type="button" id="mini-2" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -151,9 +150,9 @@
                       <label>Estatus</label>
                       <select class="form-control select2" style="width: 100%;">
                         <option selected="selected">Seleccione una opción</option>
-                        <option>Iniciando</option>
-                        <option>En curso</option>
-                        <option>Culminado</option>
+                        <option value="Iniciando">Iniciando</option>
+                        <option value="En curso">En curso</option>
+                        <option value="Culminado">Culminado</option>
                       </select>
                     </div>
                     <!-- /.form-group -->
@@ -164,23 +163,46 @@
                       <label>Nivel de estudio</label>
                       <select class="form-control select2" style="width: 100%;">
                         <option selected="selected">Seleccione una opción</option>
-                        <option>Curso</option>
-                        <option>Pregrado</option>
-                        <option>Posgrado</option>
+                        <option value="Curso">Curso</option>
+                        <option value="Pregrado">Pregrado</option>
+                        <option value="Posgrado">Posgrado</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Tipo de referencia</label>
+                      <select id="tr" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Seleccione una opción</option>
+                        <option value="Proyecto">Proyecto</option>
+                        <option value="Tesis tutoriada">Tesis tutoriada</option>
+                        <option value="Articulo publicado">Articulo publicado</option>
+                        <option value="Asistencia a congreso">Asistencia a congreso</option>
+                        <option value="Tutoria de servicio comunitario">Tutoria de servicio comunitario</option>
+                        <option value="Tutoria de pasantias">Tutoria de pasantias</option>
                       </select>
                     </div>
                   </div>
                   <!-- /.col -->
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label>Descripción</label>
-                      <input type="text" class="form-control" placeholder="Nombre" min="18" max="80">
+                      <input type="text" class="form-control" placeholder="Nombre">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Año de publicacion y/o asistencia</label>
+                      <input type="number" class="form-control" placeholder="Año" min="1">
                     </div>
                     <!-- /.form-group -->
                   </div>
                   <div class="col-md-offset-4 col-md-4">
                       <div class="form-group has-feedback">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Agregar</button>
+                            <button id="ar" type="submit" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
                       </div>
                   </div>
                 </div>
@@ -188,105 +210,101 @@
                 <table id="table-1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                  <th>Id del registro</th>
+                  <th>Tipo de referencia</th>
                   <th>Descripción</th>
                   <th>Nivel</th>
                   <th>Etatus</th>
+                  <th>Año de publicacion y/o asistencia</th>
                 </tr>
                 </thead>
                 <tbody>
                 </tbody>
                 <tfoot>
                 <tr>
+                  <th>Id del registro</th>
+                  <th>Tipo de referencia</th>
                   <th>Descripción</th>
                   <th>Nivel</th>
                   <th>Etatus</th>
+                  <th>Año de publicacion y/o asistencia</th>
                 </tr>
                 </tfoot>
               </table>
-            </div>
-            <!-- /.box -->
-          </div>  
-          <!--courses and studies box-->
-          
-          <!--courses and studies box-->
-          <div>
-            <!-- /.box-info -->
-            <div class="box-footer">
-              <strong>Sección para ingresar estudios y cursos realizados.</strong>
-            </div>
-             <!-- /.box-header -->
-            <div class="box box-success">
-              <div class="box-header with-border">
-                <h3 class="box-title">Investigaciones</h3>
-                <div class="box-tools pull-right">
-                  <button type="button" id="mini-3" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                </div>
-              </div>
-              <!-- /.box-body --> 
-              <div class="box-body">
-                <div class="row">
-                  <div class="col-md-6">
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                      <label>Estatus</label>
-                      <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Seleccione una opción</option>
-                        <option>Iniciando</option>
-                        <option>En curso</option>
-                        <option>Culminado</option>
-                      </select>
-                    </div>
-                    <!-- /.form-group -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Nivel de estudio</label>
-                      <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Seleccione una opción</option>
-                        <option>Curso</option>
-                        <option>Pregrado</option>
-                        <option>Posgrado</option>
-                      </select>
-                    </div>
-                  </div>
-                  <!-- /.col -->
+              <hr/>
+              <div class="row">
                   <div class="col-md-12">
+                    <h3>Participantes</h3>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- /.form-group -->
                     <div class="form-group">
-                      <label>Descripción</label>
-                      <input type="text" class="form-control" placeholder="Nombre" min="18" max="80">
+                      <label>Nombre completo</label>
+                      <input type="text" class="form-control" placeholder="Nombre del participantes">
                     </div>
                     <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Cedula</label>
+                      <input type="number" class="form-control" placeholder="cedula" min="1">
+                    </div>
+                  </div>
+                   <!-- /.col -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Id del registro</label>
+                      <input type="number" class="form-control" placeholder="Id del registro" min="1">
+                    </div>
                   </div>
                   <div class="col-md-offset-4 col-md-4">
                       <div class="form-group has-feedback">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Agregar</button>
+                            <button id="ap" type="submit" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
                       </div>
                   </div>
-                </div>
-                <hr/>
-                <table id="table-2" class="table table-bordered table-striped">
+              </div>
+              <hr/>
+              <table id="table-2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Descripción</th>
-                  <th>Nivel</th>
-                  <th>Etatus</th>
+                  <th>Id del registro</th>
+                  <th>Nombre</th>
+                  <th>Cedula</th>
                 </tr>
                 </thead>
                 <tbody>
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>Descripción</th>
-                  <th>Nivel</th>
-                  <th>Etatus</th>
+                  <th>Id del registro</th>
+                  <th>Nombre</th>
+                  <th>Cedula</th>
                 </tr>
                 </tfoot>
               </table>
+              <div class="row">
+                  <div id="em" class="col-md-12 hidden">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Empresa</label>
+                      <input type="text" class="form-control" placeholder="Empresa">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <div id="in" class="col-md-12 hidden">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Institución</label>
+                      <input type="text" class="form-control" placeholder="Institución">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+              </div>
             </div>
             <!-- /.box -->
           </div>  
-          <!--courses and studies box-->
+          <!--research,courses and studies box-->
       </section>
     </div>
     <!--User data body-->
@@ -295,4 +313,6 @@
 {% block custom_javascripts %}
   <script src="{{ asset('assets/js/autoClick.js') }}"></script>
   <script src="{{ asset('assets/js/configTable.js') }}"></script>
+  <script src="{{ asset('assets/js/showField.js') }}"></script>
+  <script src="{{ asset('assets/js/insertTable.js') }}"></script>
 {% endblock %}
