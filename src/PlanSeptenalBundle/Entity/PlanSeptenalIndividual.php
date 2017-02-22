@@ -30,7 +30,7 @@ class PlanSeptenalIndividual
     private $fin;
 
     /**
-     * @ORM\OneToMany(targetEntity="TramitePlanSeptenal", mappedBy="plan_septenal_individual")
+     * @ORM\OneToMany(targetEntity="TramitePlanSeptenal", mappedBy="plan_septenal_individual", cascade={"persist"})
      **/
     private $tramites;
 
