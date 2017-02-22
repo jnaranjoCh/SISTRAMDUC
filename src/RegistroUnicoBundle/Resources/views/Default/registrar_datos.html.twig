@@ -6,7 +6,7 @@
     <section class="content-header">
       <h1>Registrar Datos</h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-fa fa-address-card-o"></i>Regitro de único</li>
+        <li><i class="fa fa-fa fa-address-card-o"></i>Registro único</li>
         <li class="active">Registrar datos</li>
       </ol>
     </section>
@@ -22,7 +22,7 @@
                   <div class="row">
                     <div class="col-md-offset-1 col-md-5">
                       <div class="form-group has-feedback">
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="email" class="form-control" placeholder="Email del usuario">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
                     </div>
@@ -128,16 +128,16 @@
           </div>  
           <!--personal and contact data box-->
           
-          <!--personal and contact data box-->
+          <!--courses and studies box-->
           <div class="col-md-offset-1 col-md-10">
             <!-- /.box-info -->
             <div class="box-footer">
-              <strong>Sección para ingresar datos personales y de contactos.</strong>
+              <strong>Sección para ingresar estudios y cursos realizados.</strong>
             </div>
              <!-- /.box-header -->
-            <div class="box box-warning">
+            <div class="box box-danger">
               <div class="box-header with-border">
-                <h3 class="box-title">Datos personales y de contacto</h3>
+                <h3 class="box-title">Estudios y cursos realizados</h3>
                 <div class="box-tools pull-right">
                   <button type="button" id="mini-2" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -146,79 +146,147 @@
               <div class="box-body">
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Nombre</label>
-                      <input type="text" class="form-control" placeholder="Nombre">
-                    </div>
                     <!-- /.form-group -->
                     <div class="form-group">
-                      <label>Apellido</label>
-                      <input type="text" class="form-control" placeholder="Apellido">
-                    </div>
-                    <!-- /.form-group -->
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Edad</label>
-                      <input type="number" class="form-control" placeholder="Edad" min="18" max="80">
-                    </div>
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                      <label>Sexo</label>
+                      <label>Estatus</label>
                       <select class="form-control select2" style="width: 100%;">
                         <option selected="selected">Seleccione una opción</option>
-                        <option>Masculino</option>
-                        <option>Femenino</option>
+                        <option>Iniciando</option>
+                        <option>En curso</option>
+                        <option>Culminado</option>
                       </select>
                     </div>
                     <!-- /.form-group -->
                   </div>
                   <!-- /.col -->
-                </div>
-                <!-- /.row -->
-                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>Cedula</label>
-                      <input type="number" class="form-control" placeholder="Cedula">
+                      <label>Nivel de estudio</label>
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Seleccione una opción</option>
+                        <option>Curso</option>
+                        <option>Pregrado</option>
+                        <option>Posgrado</option>
+                      </select>
                     </div>
-                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-12">
                     <div class="form-group">
-                      <label>RIF</label>
-                      <input type="number" class="form-control" placeholder="RIF">
+                      <label>Descripción</label>
+                      <input type="text" class="form-control" placeholder="Nombre" min="18" max="80">
                     </div>
                     <!-- /.form-group -->
                   </div>
-                  <!-- /.col -->
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>Telefono</label>
-                      <div class="row">
-                          <div class="col-xs-4">
-                            <input type="number" class="form-control" placeholder="C. Area" min="100" max="999">
-                          </div>
-                          <strong><label class="col-xs-1">—</label></strong>
-                          <div class="col-xs-7">
-                            <input type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
-                          </div>
+                  <div class="col-md-offset-4 col-md-4">
+                      <div class="form-group has-feedback">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Agregar</button>
                       </div>
-                    </div>  
-                    <!-- /.form-group -->
-                    <div class="form-group">
-                      <label>Dirección</label>
-                      <textarea class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
-                    </div>
-                    <!-- /.form-group -->
                   </div>
-                  <!-- /.col -->
                 </div>
-                <!-- /.row -->
-              </div>
+                <hr/>
+                <table id="table-1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Etatus</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Etatus</th>
+                </tr>
+                </tfoot>
+              </table>
             </div>
             <!-- /.box -->
           </div>  
-          <!--box personal and contact data-->
+          <!--courses and studies box-->
+          
+          <!--courses and studies box-->
+          <div>
+            <!-- /.box-info -->
+            <div class="box-footer">
+              <strong>Sección para ingresar estudios y cursos realizados.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Investigaciones</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="mini-3" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body --> 
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Estatus</label>
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Seleccione una opción</option>
+                        <option>Iniciando</option>
+                        <option>En curso</option>
+                        <option>Culminado</option>
+                      </select>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nivel de estudio</label>
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Seleccione una opción</option>
+                        <option>Curso</option>
+                        <option>Pregrado</option>
+                        <option>Posgrado</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Descripción</label>
+                      <input type="text" class="form-control" placeholder="Nombre" min="18" max="80">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <div class="col-md-offset-4 col-md-4">
+                      <div class="form-group has-feedback">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Agregar</button>
+                      </div>
+                  </div>
+                </div>
+                <hr/>
+                <table id="table-2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Etatus</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Etatus</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box -->
+          </div>  
+          <!--courses and studies box-->
       </section>
     </div>
     <!--User data body-->
@@ -226,4 +294,5 @@
 
 {% block custom_javascripts %}
   <script src="{{ asset('assets/js/autoClick.js') }}"></script>
+  <script src="{{ asset('assets/js/configTable.js') }}"></script>
 {% endblock %}
