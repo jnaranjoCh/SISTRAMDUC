@@ -4,6 +4,7 @@ namespace PlanSeptenalBundle\Entity;
 
 use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -19,18 +20,18 @@ class PlanSeptenalIndividual
     private $id;
 
     /**
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     private $inicio;
 
     /**
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     private $fin;
 
     /**
-     * this must be a one-to-many relationship
-     */
+     * @ORM\OneToMany(targetEntity="TramitePlanSeptenal", mappedBy="plan_septenal_individual")
+     **/
     private $tramites;
 
     public function __construct($inicio, $fin)
@@ -44,23 +45,25 @@ class PlanSeptenalIndividual
 
         $this->inicio = $inicio;
         $this->fin = $fin;
-        $this->tramites = []; // remember to change the var type by the proper one
+        $this->tramites = new ArrayCollection();
     }
 
     public function addTramite(TramitePlanSeptenal $new_tramite)
     {
+        $new_tramite->attachToPlanSeptenal($this);
+
         $this->checkTramiteRange($new_tramite);
 
         $this->tramites[] = $new_tramite;
     }
 
-    private function checkTramiteRange($new_tramite)
+    private function checkTramiteRange(TramitePlanSeptenal $new_tramite)
     {
         $this->checkTramiteIsWithinSeptenalRange($new_tramite);
         $this->checkTramitesDisjointness($new_tramite);
     }
 
-    private function checkTramiteIsWithinSeptenalRange($new_tramite)
+    private function checkTramiteIsWithinSeptenalRange(TramitePlanSeptenal $new_tramite)
     {
         $año_inicial_tramite = (int) $new_tramite->getMesInicial()->format('Y');
         $año_final_tramite = (int) $new_tramite->getMesFinal()->format('Y');
@@ -70,7 +73,7 @@ class PlanSeptenalIndividual
         }
     }
 
-    private function checkTramitesDisjointness($new_tramite)
+    private function checkTramitesDisjointness(TramitePlanSeptenal $new_tramite)
     {
         foreach ($this->tramites as $tramite) {
             $disjoint = (

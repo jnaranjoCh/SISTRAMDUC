@@ -32,6 +32,11 @@ class TramitePlanSeptenal
      */
     private $mes_final;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="PlanSeptenalIndividual", inversedBy="tramites")
+     **/
+    private $plan_septenal_individual;
+
     public function __construct(array $attributes = [])
     {
         if (isset($attributes['tipo'])) {
@@ -96,5 +101,15 @@ class TramitePlanSeptenal
     public function getMesFinal()
     {
         return $this->mes_final;
+    }
+
+    public function attachToPlanSeptenal($plan_septenal_individual)
+    {
+        $this->plan_septenal_individual = $plan_septenal_individual;
+    }
+
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 }
