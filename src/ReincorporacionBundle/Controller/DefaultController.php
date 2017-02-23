@@ -22,6 +22,15 @@ class DefaultController extends Controller
     {
         return $this->render('ReincorporacionBundle::actualizar-curriculum.html.twig');
     }
+    
+    /**
+     * @Route("/reincorporacion-docente/actualizar-curriculum/nueva-entrada", name="nueva-entrada-curriculum")
+     */ 
+    public function mostrarCrearEntradaEnCurriculum()
+    {
+        return $this->render('ReincorporacionBundle::nueva-entrada-curriculum.html.twig');
+    }
+    
 
     /**
      * @Route("/reincorporacion-docente/subir-recaudos", name="subir-recaudos")
