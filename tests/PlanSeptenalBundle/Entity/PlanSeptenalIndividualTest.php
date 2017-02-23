@@ -11,12 +11,12 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
       * @expectedException     Exception
       * @expectedExceptionCode 10
       */
-    public function testPlanSeptenalMustHaveASevenYearsRange()
+    public function testPlanSeptenalIndividualMustBeSeptennial()
     {
         $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2015);
     }
 
-    public function testPlanSeptenalIndividualTramiteCount()
+    public function testPlanSeptenalIndividualMustContainTramitesAfterAddition()
     {
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')
@@ -33,14 +33,16 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
         $planSeptenalIndividual->addTramite($sabatico);
 
         $tramites = $planSeptenalIndividual->getTramites();
-        $this->assertCount(2, $tramites);
+
+        $this->assertContains($beca, $tramites);
+        $this->assertContains($sabatico, $tramites);
     }
 
     /**
       * @expectedException     Exception
       * @expectedExceptionCode 20
       */
-    public function testTramiteMustBeWithinPlanSeptenalRange()
+    public function testTramiteMustBeWithinPlanSeptenalYears()
     {
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')
@@ -56,7 +58,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
       * @expectedException     Exception
       * @expectedExceptionCode 30
       */
-    public function testTramiteRangesMustBeDisjoint()
+    public function testTramiteDateRangesMustBeDisjoint()
     {
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')

@@ -12,12 +12,12 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
      * @expectedException     Exception
      * @expectedExceptioncode 10
      */
-    public function testPlanSeptenalColectivoDateRange()
+    public function testPlanSeptenalColectivoMustBeSeptennial()
     {
         $planColectivo = new PlanSeptenalIndividual(2010, 2017);
     }
 
-    public function testPlanesSeptenalesIndividualesCount()
+    public function testPlanSeptenalColectivoMustContainPlanesSeptenalesIndividualesAfterAdditions()
     {
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')
@@ -52,7 +52,8 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
         $planSeptenalColectivo->addPlanSeptenalIndividual($planSeptenalIndividualDos);
 
         $planes = $planSeptenalColectivo->getPlanesSeptenalesIndividuales();
-        $this->assertCount(2, $planes);
+        $this->assertContains($planSeptenalIndividualUno, $planes);
+        $this->assertContains($planSeptenalIndividualDos, $planes);
     }
 
     /**

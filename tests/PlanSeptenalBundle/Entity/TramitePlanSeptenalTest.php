@@ -10,35 +10,25 @@ class TramitePlanSeptenalTest extends \PHPUnit_Framework_TestCase
       * @expectedException     Exception
       * @expectedExceptionCode 100
       */
-    public function testTramitePlanSeptenalDateRangeValidation()
+    public function testMesInicialCannotBeAfterMesFinal()
     {
         $beca = new TramitePlanSeptenal(['tipo' => 'beca']);
-        $beca->setMesInicial('06/2017');
+        $beca->setMesInicial('02/2017');
         $beca->setMesFinal('01/2017');
     }
 
-    public function testDateTimeIsWithinTramiteDateRange()
+    public function testTramiteDateRangeMustIncludeBothMesInicialAndMesFinalCompletely()
     {
         $beca = new TramitePlanSeptenal(['tipo' => 'beca']);
         $beca->setMesInicial('01/2017');
         $beca->setMesFinal('06/2017');
 
-        $date = new \DateTime('2017-01-10');
+        $left_edge = \DateTime::createFromFormat('d-m-Y', '01-01-2017');
+        $left_edge->setTime(0, 0, 0);
+        $this->assertGreaterThanOrEqual($beca->getMesInicial(), $left_edge);
 
-        $this->assertGreaterThanOrEqual($beca->getMesInicial(), $date);
-        $this->assertLessThanOrEqual($beca->getMesFinal(), $date);
-    }
-
-    public function testDateTimeIsOutsideTramiteDateRange()
-    {
-        $beca = new TramitePlanSeptenal(['tipo' => 'beca']);
-        $beca->setMesInicial('01/2017');
-        $beca->setMesFinal('06/2017');
-
-        $date = new \DateTime('2016-12-31');
-        $this->assertLessThanOrEqual($beca->getMesInicial(), $date);
-
-        $date = new \DateTime('2017-07-01');
-        $this->assertGreaterThanOrEqual($beca->getMesFinal(), $date);
+        $right_edge = \DateTime::createFromFormat('d-m-Y', '30-06-2017');
+        $right_edge->setTime(23, 59, 59);
+        $this->assertLessThanOrEqual($beca->getMesFinal(), $right_edge);
     }
 }

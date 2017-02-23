@@ -52,7 +52,7 @@ class ActualizacionPlanSeptenalTest extends \PHPUnit_Framework_TestCase
             ->addActualizacionTramite($this->actualizacion_sabatico);
     }
 
-    public function testActualizacionPlanSeptenalIsPendingAfterCreation()
+    public function testActualizacionPlanSeptenalMustHavePendingStatusAfterCreation()
     {
         $this->assertEquals('Pendiente', $this->actualizacion_plan_septenal->getEstado());
     }
