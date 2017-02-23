@@ -8,4 +8,4 @@ registro_datos_index:
 
 registro_consulta_index:
     path:     /registro/consulta
-    defaults: { _controller: RegistroUnicoBundle:Default:conultarRegistro }
+    defaults: { _controller: RegistroUnicoBundle:Default:consultarRegistro }

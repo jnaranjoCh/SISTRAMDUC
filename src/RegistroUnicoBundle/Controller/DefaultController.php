@@ -17,7 +17,7 @@ class DefaultController extends Controller
         return $this->render('RegistroUnicoBundle:Default:registrar_datos.html.twig');
     }
     
-    public function conultarRegistroAction()
+    public function consultarRegistroAction()
     {
         return $this->render('RegistroUnicoBundle:Default:consultar_registro.html.twig');
     }

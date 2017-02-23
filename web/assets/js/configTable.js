@@ -4,12 +4,12 @@ $(function () {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
         columns: [
-            { title: "IdRegistro" },
-            { title: "TipoReferencia" },
-            { title: "Descripcion" },
-            { title: "Nivel" },
-            { title: "Estatus" },
-            { title: "Año" }
+            { "data": "Id del registro" },
+            { "data": "Tipo de referencia" },
+            { "data": "Descripcion" },
+            { "data": "Nivel" },
+            { "data": "Estatus" },
+            { "data": "Año de publicación y/o asistencia" }
         ]
     });
     
@@ -18,9 +18,9 @@ $(function () {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
         columns: [
-            { title: "IdRegistro" },
-            { title: "Nombre" },
-            { title: "Cedula" }
+            { "data": "Id del registro" },
+            { "data": "Nombre" },
+            { "data": "Cedula" }
         ]
     });
 });

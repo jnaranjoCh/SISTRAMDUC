@@ -1,0 +1,3 @@
+clausulas_contractuales_prima_hijos:
+    path:     /clausulas-contractuales/prima-hijos
+    defaults: { _controller: ClausulasContractualesBundle:Default:primaHijos}

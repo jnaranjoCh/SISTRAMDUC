@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new PlanSeptenalBundle\PlanSeptenalBundle(),
             new RegistroUnicoBundle\RegistroUnicoBundle(),
+            new ClausulasContractualesBundle\ClausulasContractualesBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
