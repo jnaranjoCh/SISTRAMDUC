@@ -31,8 +31,13 @@ class PlanSeptenalIndividual
 
     /**
      * @ORM\OneToMany(targetEntity="TramitePlanSeptenal", mappedBy="plan_septenal_individual", cascade={"persist"})
-     **/
+     */
     private $tramites;
+
+    /**
+     * @ORM\OneToMany(targetEntity="PlanSeptenalColectivo", inversedBy="planes_septenales_individuales")
+     */
+    private $plan_septenal_colectivo;
 
     public function __construct($inicio, $fin)
     {
@@ -82,7 +87,7 @@ class PlanSeptenalIndividual
             );
 
             if (! $disjoint) {
-                throw new \Exception('Los rangos de los tramites deben ser disjuntos.', 30);
+                throw new \Exception('Los rangos de fechas de los tramites deben ser disjuntos.', 30);
             }
         }
     }
@@ -90,5 +95,25 @@ class PlanSeptenalIndividual
     public function getTramites()
     {
         return $this->tramites;
+    }
+
+    public function getPlanSeptenalColectivo()
+    {
+        return $this->plan_septenal_colectivo;
+    }
+
+    public function attachToPlanSeptenalColectivo($plan_septenal_colectivo)
+    {
+        $this->plan_septenal_colectivo = $plan_septenal_collectivo;
+    }
+
+    public function getInicio()
+    {
+        return $this->inicio;
+    }
+
+    public function getFin()
+    {
+        return $this->fin;
     }
 }
