@@ -60,6 +60,8 @@ class PlanSeptenalIndividual
         $this->checkTramiteRange($new_tramite);
 
         $this->tramites[] = $new_tramite;
+
+        return $this;
     }
 
     private function checkTramiteRange(TramitePlanSeptenal $new_tramite)

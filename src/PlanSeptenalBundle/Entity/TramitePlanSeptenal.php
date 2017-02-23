@@ -3,6 +3,8 @@
 namespace PlanSeptenalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use PlanSeptenalBundle\Entity\ActualizacionTramitePlanSeptenal;
 
 /**
  * @ORM\Entity
@@ -37,6 +39,11 @@ class TramitePlanSeptenal
      **/
     private $plan_septenal_individual;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ActualizacionTramitePlanSeptenal", mappedBy="tramite")
+     */
+    private $actualizaciones_solicitadas;
+
     public function __construct(array $attributes = [])
     {
         if (isset($attributes['tipo'])) {
@@ -48,6 +55,8 @@ class TramitePlanSeptenal
         if (isset($attributes['mes_final'])) {
             $this->setMesFinal($attributes['mes_final']);
         }
+
+        $this->actualizaciones_solicitadas = new ArrayCollection();
     }
 
     public function setTipo($tipo)
@@ -111,5 +120,22 @@ class TramitePlanSeptenal
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    public function getActualizacionesSolicitadas()
+    {
+        return $this->actualizaciones_solicitadas;
+    }
+
+    public function addSolicitudActualizacion(ActualizacionTramitePlanSeptenal $actualizacion)
+    {
+        $this->actualizaciones_solicitadas[] = $actualizacion;
+    }
+
+    public function clearDateRange()
+    {
+        $this->mes_inicial = $this->mes_final = NULL;
+
+        return $this;
     }
 }
