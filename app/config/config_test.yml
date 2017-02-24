@@ -17,6 +17,5 @@ swiftmailer:
 
 doctrine:
     dbal:
-        driver: pdo_sqlite
-        path: :memory:
-        memory: true
+        driver: pdo_pgsql
+        dbname: sistramduc_testing
