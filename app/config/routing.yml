@@ -1,3 +1,7 @@
+preparadores:
+    resource: "@PreparadoresBundle/Resources/config/routing.yml"
+    prefix:   /
+
 clausulas_contractuales:
     resource: "@ClausulasContractualesBundle/Resources/config/routing.yml"
     prefix:   /
