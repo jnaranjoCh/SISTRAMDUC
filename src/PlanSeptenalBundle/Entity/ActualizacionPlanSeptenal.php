@@ -20,12 +20,12 @@ class ActualizacionPlanSeptenal
     private $id;
 
     /**
-     * @ORM\Column(type="string", lenght="64")
+     * @ORM\Column(type="string", length=64)
      */
     private $estado;
 
     /**
-     * @ORM\OneToMany(targetEntity="ActualizacionTramitePlanSeptenal", mappedBy="actualizacionPlanSeptenal")
+     * @ORM\OneToMany(targetEntity="ActualizacionTramitePlanSeptenal", mappedBy="actualizacion_plan_septenal")
      **/
     private $actualizaciones_tramites;
 
@@ -56,12 +56,5 @@ class ActualizacionPlanSeptenal
     public function getEstado()
     {
         return $this->estado;
-    }
-
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
     }
 }

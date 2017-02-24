@@ -75,4 +75,9 @@ class MonthlyDateRange
     {
         return clone $this->end;
     }
+
+    public function __toString()
+    {
+        return $this->getStart()->format('m/Y').' - '.$this->getEnd()->format('m/Y');
+    }
 }

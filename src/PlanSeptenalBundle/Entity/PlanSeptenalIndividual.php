@@ -35,7 +35,7 @@ class PlanSeptenalIndividual
     private $tramites;
 
     /**
-     * @ORM\OneToMany(targetEntity="PlanSeptenalColectivo", inversedBy="planes_septenales_individuales")
+     * @ORM\ManyToOne(targetEntity="PlanSeptenalColectivo", inversedBy="planes_septenales_individuales")
      */
     private $plan_septenal_colectivo;
 
@@ -72,8 +72,8 @@ class PlanSeptenalIndividual
 
     private function checkTramiteIsWithinSeptenalRange(TramitePlanSeptenal $new_tramite)
     {
-        $año_inicial_tramite = (int) $new_tramite->getMesInicial()->format('Y');
-        $año_final_tramite = (int) $new_tramite->getMesFinal()->format('Y');
+        $año_inicial_tramite = (int) $new_tramite->getPeriodo()->getStart()->format('Y');
+        $año_final_tramite = (int) $new_tramite->getPeriodo()->getEnd()->format('Y');
 
         if ($año_inicial_tramite < $this->inicio || $año_final_tramite > $this->fin) {
             throw new \Exception('El Tramite debe estar dentro del periodo septenal.', 20);
@@ -83,13 +83,8 @@ class PlanSeptenalIndividual
     private function checkTramitesDisjointness(TramitePlanSeptenal $new_tramite)
     {
         foreach ($this->tramites as $tramite) {
-            $disjoint = (
-                $tramite->getMesFinal() < $new_tramite->getMesInicial() ||
-                $tramite->getMesInicial() > $new_tramite->getMesFinal()
-            );
-
-            if (! $disjoint) {
-                throw new \Exception('Los rangos de fechas de los tramites deben ser disjuntos.', 30);
+            if ($new_tramite->getPeriodo()->overlaps( $tramite->getPeriodo() )) {
+                throw new \Exception('Los rangos de fechas de los tramites no pueden solaparse.', 30);
             }
         }
     }

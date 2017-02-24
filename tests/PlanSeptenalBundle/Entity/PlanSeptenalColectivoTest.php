@@ -5,6 +5,7 @@ namespace Tests\PlanSeptenal\Entity;
 use PlanSeptenalBundle\Entity\PlanSeptenalColectivo;
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
+use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
 
 class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,13 +22,11 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
     {
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')
-            ->setMesInicial('01/2016')
-            ->setMesFinal('06/2016');
+            ->setPeriodo(new MonthlyDateRange('01/2016', '06/2016'));
 
         $sabatico = (new TramitePlanSeptenal)
             ->setTipo('sabatico')
-            ->setMesInicial('01/2014')
-            ->setMesFinal('12/2014');
+            ->setPeriodo(new MonthlyDateRange('01/2014', '12/2014'));
 
         $planSeptenalIndividualUno = new PlanSeptenalIndividual(2010, 2016);
         $planSeptenalIndividualUno->addTramite($beca);
@@ -35,13 +34,11 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
 
         $postgrado = (new TramitePlanSeptenal)
             ->setTipo('postgrado')
-            ->setMesInicial('01/2016')
-            ->setMesFinal('06/2016');
+            ->setPeriodo(new MonthlyDateRange('01/2016', '06/2016'));
 
         $licencia = (new TramitePlanSeptenal)
             ->setTipo('licencia')
-            ->setMesInicial('01/2014')
-            ->setMesFinal('12/2014');
+            ->setPeriodo(new MonthlyDateRange('01/2014', '12/2014'));
 
         $planSeptenalIndividualDos = new PlanSeptenalIndividual(2010, 2016);
         $planSeptenalIndividualDos->addTramite($postgrado);

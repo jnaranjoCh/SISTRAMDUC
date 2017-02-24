@@ -4,7 +4,9 @@ namespace PlanSeptenalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 use PlanSeptenalBundle\Entity\ActualizacionTramitePlanSeptenal;
+use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
 
 /**
  * @ORM\Entity
@@ -25,14 +27,9 @@ class TramitePlanSeptenal
     private $tipo;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="monthly_date_range", length=17)
      */
-    private $mes_inicial;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $mes_final;
+    private $periodo;
 
     /**
      * @ORM\ManyToOne(targetEntity="PlanSeptenalIndividual", inversedBy="tramites")
@@ -49,11 +46,8 @@ class TramitePlanSeptenal
         if (isset($attributes['tipo'])) {
             $this->setTipo($attributes['tipo']);
         }
-        if (isset($attributes['mes_inicial'])) {
-            $this->setMesInicial($attributes['mes_inicial']);
-        }
-        if (isset($attributes['mes_final'])) {
-            $this->setMesFinal($attributes['mes_final']);
+        if (isset($attributes['periodo'])) {
+            $this->setPeriodo($attributes['periodo']);
         }
 
         $this->actualizaciones_solicitadas = new ArrayCollection();
@@ -66,50 +60,16 @@ class TramitePlanSeptenal
         return $this;
     }
 
-    public function setMesInicial($mes_inicial)
+    public function setPeriodo(MonthlyDateRange $periodo)
     {
-        $mes_inicial = \DateTime::createFromFormat('d/m/Y', '01/'.$mes_inicial)
-            ->setTime(0, 0, 0);
-
-        if (! is_null($this->mes_final)) {
-            $this->checkRangeValidity($mes_inicial, $this->mes_final);
-        }
-
-        $this->mes_inicial = $mes_inicial;
+        $this->periodo = $periodo;
 
         return $this;
     }
 
-    public function setMesFinal($mes_final)
+    public function getPeriodo()
     {
-        $mes_final = \DateTime::createFromFormat('m/Y', $mes_final)
-            ->modify('last day of this month')
-            ->setTime(23, 59, 59);
-
-        if (! is_null($this->mes_inicial)) {
-            $this->checkRangeValidity($this->mes_inicial, $mes_final);
-        }
-
-        $this->mes_final = $mes_final;
-
-        return $this;
-    }
-
-    private function checkRangeValidity($mes_inicial, $mes_final)
-    {
-        if ($mes_inicial > $mes_final) {
-            throw new \Exception('El mes inicial debe ser menor al mes final', 100);
-        }
-    }
-
-    public function getMesInicial()
-    {
-        return $this->mes_inicial;
-    }
-
-    public function getMesFinal()
-    {
-        return $this->mes_final;
+        return $this->periodo;
     }
 
     public function attachToPlanSeptenal($plan_septenal_individual)
@@ -130,12 +90,5 @@ class TramitePlanSeptenal
     public function addSolicitudActualizacion(ActualizacionTramitePlanSeptenal $actualizacion)
     {
         $this->actualizaciones_solicitadas[] = $actualizacion;
-    }
-
-    public function clearDateRange()
-    {
-        $this->mes_inicial = $this->mes_final = NULL;
-
-        return $this;
     }
 }
