@@ -38,3 +38,12 @@
 .reincorporacion-undecorated-list {
     list-style-type: none;
 }
+
+.reincorporacion-box-alert {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.reincorporacion-btn-group {
+    margin-top: 100px;
+}
