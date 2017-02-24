@@ -1,5 +1,6 @@
 preparadores:
-    resource: "@PreparadoresBundle/Resources/config/routing.yml"
+    resource: "@PreparadoresBundle/Controller/"
+    type:     annotation
     prefix:   /
 
 clausulas_contractuales:

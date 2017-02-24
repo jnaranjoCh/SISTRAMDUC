@@ -1,3 +1,0 @@
-preparadores_homepage:
-    path:     /preparadores/index
-    defaults: { _controller: PreparadoresBundle:Default:index }

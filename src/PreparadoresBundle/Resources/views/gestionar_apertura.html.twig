@@ -1,0 +1,317 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <section class="content-header">
+    <h1>
+      Gestionar Apertura de Concurso
+      <button type="button" class="btn btn-primary btn-xs">
+        <i class="fa fa-eye"></i> 
+          Ver Solicitud
+      </button>
+      <button type="button" class="btn btn-primary btn-xs">
+        <i class="fa fa-download"></i> 
+          Descargar Acta de Resultados
+      </button>
+    </h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa fa-users"></i> Preparadores</li>
+      <li> Apertura De Concurso</li>
+      <li class="active"> Gestionar</li>
+    </ol>
+  </section>
+  
+  <br/>
+  
+  <div class="row">
+    <section class="content-body">
+      <div class="col-md-offset-1 col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+          <div class="inner" href="#">
+              <h3>Paso 1</h3> 
+              <p>Aprobar Presupuesto</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-question"></i>
+          </div>
+          <a href="#aprobarPresupuesto" data-toggle="collapse" class="small-box-footer">
+            Abrir <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="col-lg-3 col-xs-6 col-xs-offset-1">
+        <div class="small-box bg-aqua">
+          <div class="inner">
+              <h3>Paso 2</h3> 
+              <p>Aprobar Jurado</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-question"></i>
+          </div>
+          <a href="#aprobarJurado" data-toggle="collapse" class="small-box-footer">
+            Entrar <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+       
+      <div class="col-lg-4 col-xs-6 col-xs-offset-1">
+        <div class="small-box bg-aqua">
+          <div class="inner">
+              <h3>Paso 3</h3> 
+              <p>Registrar Fecha de Recepcion de Documentos</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-question"></i>
+          </div>
+          <a href="#registrarFecha" data-toggle="collapse" class="small-box-footer">
+            Entrar <i class="fa fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+        
+      <div class="col-md-offset-1 col-md-10">
+        <div id="aprobarPresupuesto"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Aprobar Presupuesto</b></h3>
+  
+            <div class="box-tools pull-right">
+              <!--<button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="glyphicon glyphicon-chevron-down"></i>
+              </button>-->
+              <button type="button" class="btn btn-box-tool" data-toggle="collapse" href="#aprobarPresupuesto">
+              <i class="fa fa-times"></i></button>
+              <!--<a class="btn btn-box-tool" data-toggle="collapse" href="#collapseOne">
+                  <i class="fa fa-plus"></i>
+                </a>-->
+            </div>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Hay Presupuesto para el Cargo?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <button type="submit" href="#aprobarPresupuesto" data-toggle="collapse" class=" btn btn-info btn-block">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="aprobarJurado"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Aprobar Jurado</b></h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Aprueba el Jurado de la Solicitud?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <button type="submit" href="#cambiarJurado" data-toggle="collapse" class=" btn btn-info btn-block">Siguiente</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="cambiarJurado"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Cambiar Jurado</b></h3>
+          </div>
+          <form role="form">
+            <div class="box-body">
+              <div class="col-md-5">
+                <h3 class="text-center"><b>Propuesto</b></h3>
+                <div class="form-group">
+                  <label for="juradoCoord">Jurado Coordinador</label>
+                  <input id="juradoCoord" type="text" class="form-control" placeholder="Jurado Coordinador">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal1">Jurado Principal 1</label>
+                  <input id="juradoPpal1" type="text" class="form-control" placeholder="Jurado Principal 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal2">Jurado Principal 2</label>
+                  <input id="juradoPpal2" type="text" class="form-control" placeholder="Jurado Principal 2">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl1">Jurado Suplente 1</label>
+                  <input id="juradoSpl1" type="text" class="form-control" placeholder="Jurado Suplente 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl2">Jurado Suplente 2</label>
+                  <input id="juradoSpl2" type="text" class="form-control" placeholder="Jurado Suplente 2">
+                </div>
+              </div>
+              
+              <div class="col-md-5">
+                <h3 class="text-center text-navy"><b>Nuevo</b></h3>
+                
+                <div class="form-group">
+                  <label for="juradoCoord">Jurado Coordinador</label>
+                  <input id="juradoCoord" type="text" class="form-control" placeholder="Jurado Coordinador">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal1">Jurado Principal 1</label>
+                  <input id="juradoPpal1" type="text" class="form-control" placeholder="Jurado Principal 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal2">Jurado Principal 2</label>
+                  <input id="juradoPpal2" type="text" class="form-control" placeholder="Jurado Principal 2">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl1">Jurado Suplente 1</label>
+                  <input id="juradoSpl1" type="text" class="form-control" placeholder="Jurado Suplente 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl2">Jurado Suplente 2</label>
+                  <input id="juradoSpl2" type="text" class="form-control" placeholder="Jurado Suplente 2">
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <div class="col-sm-offset-4 col-sm-4">
+                <button type="submit" href="#veredicto" data-toggle="collapse" class="btn btn-info btn-block">Cambiar Jurado</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="veredicto"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Registrar Veredicto de la Solicitud</b></h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Aprueba la Solicitud?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Veredicto</label>
+                  <textarea class="form-control" rows="3" placeholder="Ingrese aquí las observaciones sobre el veredicto de la solicitud" style="resize:none"></textarea>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button type="submit" class="btn btn-info btn-block">Cargar Veredicto</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="registrarFecha"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title">
+              <b>Registrar Fecha de Recepcion de Documentos</b>
+            </h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="form-group">
+                      <div class="col-xs-4">
+                        <label>Date:</label>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="datepicker">
+                        </div>
+                      </div>
+                      <div class="col-xs-2">
+                        <button type="submit" href="#registrarFecha" data-toggle="collapse" class=" btn btn-info btn-block">Enviar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+    </section>
+  </div>
+  
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script>
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
+  </script>
+{% endblock %}
+
+
+
