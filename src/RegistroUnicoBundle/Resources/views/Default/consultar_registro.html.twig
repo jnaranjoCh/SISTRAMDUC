@@ -8,4 +8,316 @@
         <li class="active">Consultar datos</li>
       </ol>
     </section>
+    <br/>
+    <!--User data body-->
+    <div class="row">
+      <section class="content-body">
+          <!--Alert message-->
+          <div id="alertData" class="col-md-offset-1 col-md-10 alert alert-danger hidden">
+                El usuario no se encuentra registrado. 
+          </div>
+          <!--Alert message-->
+          <!--seccion for generate box-->
+          <div class="col-md-offset-1 col-md-10">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                  <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                      <div class="form-group has-feedback">
+                            <input id="gemail" type="email" class="form-control" placeholder="Email del usuario">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button id="generate" type="submit" class="btn btn-primary btn-block btn-flat">Generar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+          <!--seccion for generate boxes-->
+          
+          <!--personal and contact box-->
+          <div id="form-1" class="col-md-offset-1 col-md-10 hidden">
+            <!-- /.box-info -->
+            <div class="box-footer">
+              <strong>Sección para ingresar datos personales y de contactos.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-warning">
+              <div class="box-header with-border">
+                <h3 class="box-title">Datos personales y de contacto</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="mini-1" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body --> 
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nombre</label>
+                      <input type="text" class="form-control" placeholder="Nombre">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Apellido</label>
+                      <input type="text" class="form-control" placeholder="Apellido">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Edad</label>
+                      <input type="number" class="form-control" placeholder="Edad" min="18" max="80">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Sexo</label>
+                      <select class="form-control select2" style="width: 100%;">
+                        <option selected="selected">Seleccione una opción</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                      </select>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Cedula</label>
+                      <input type="number" class="form-control" placeholder="Cedula">
+                    </div>
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>RIF</label>
+                      <input type="number" class="form-control" placeholder="RIF">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Telefono</label>
+                      <div class="row">
+                          <div class="col-xs-4">
+                            <input type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
+                          </div>
+                          <strong><label class="col-xs-1">—</label></strong>
+                          <div class="col-xs-7">
+                            <input type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
+                          </div>
+                      </div>
+                    </div>  
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Dirección</label>
+                      <textarea class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+              </div>
+            </div>
+            <!-- /.box -->
+          </div>  
+          <!--personal and contact data box-->
+        
+          <!--research,courses and studies box-->
+          <div id="form-2" class="col-md-offset-1 col-md-10 hidden">
+            <!-- /.box-info -->
+            <div class="box-footer">
+              <strong>Sección para investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Investigaciones, estudios, cursos y extensiones</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="mini-2" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body --> 
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Estatus</label>
+                      <select id="estR" class="form-control select2" style="width: 100%;">
+                        <option value="" selected="selected">Seleccione una opción</option>
+                        <option value="Iniciando">Iniciando</option>
+                        <option value="En curso">En curso</option>
+                        <option value="Culminado">Culminado</option>
+                      </select>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Nivel de estudio</label>
+                      <select id="neR" class="form-control select2" style="width: 100%;">
+                        <option value="" selected="selected">Seleccione una opción</option>
+                        <option value="Curso">Curso</option>
+                        <option value="Pregrado">Pregrado</option>
+                        <option value="Posgrado">Posgrado</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Tipo de referencia</label>
+                      <select id="tr" class="form-control select2" style="width: 100%;">
+                        <option value="" selected="selected">Seleccione una opción</option>
+                        <option value="Proyecto">Proyecto</option>
+                        <option value="Tesis tutoriada">Tesis tutoriada</option>
+                        <option value="Articulo publicado">Articulo publicado</option>
+                        <option value="Asistencia a congreso">Asistencia a congreso</option>
+                        <option value="Tutoria de servicio comunitario">Tutoria de servicio comunitario</option>
+                        <option value="Tutoria de pasantias">Tutoria de pasantias</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Descripción</label>
+                      <input id="desR" type="text" class="form-control" placeholder="Nombre">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Año de publicacion y/o asistencia</label>
+                      <input id="anoR" type="number" class="form-control" placeholder="Año" min="1">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <div class="col-md-offset-4 col-md-4">
+                      <div class="form-group has-feedback">
+                            <button id="ar" type="submit" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
+                      </div>
+                  </div>
+                </div>
+                <hr/>
+                <table id="table-1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Id del registro</th>
+                  <th>Tipo de referencia</th>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Etatus</th>
+                  <th>Año de publicacion y/o asistencia</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Id del registro</th>
+                  <th>Tipo de referencia</th>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Etatus</th>
+                  <th>Año de publicacion y/o asistencia</th>
+                </tr>
+                </tfoot>
+              </table>
+              <hr/>
+              <div class="row">
+                  <div class="col-md-12">
+                    <h3>Participantes</h3>
+                  </div>
+                  <div class="col-md-4">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Nombre completo</label>
+                      <input id="nomP" type="text" class="form-control" placeholder="Nombre del participantes">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Cedula</label>
+                      <input id="cedP" type="number" class="form-control" placeholder="cedula" min="1">
+                    </div>
+                  </div>
+                   <!-- /.col -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Id del registro</label>
+                      <input id="idP" type="number" class="form-control" placeholder="Id del registro" min="1">
+                    </div>
+                  </div>
+                  <div class="col-md-offset-4 col-md-4">
+                      <div class="form-group has-feedback">
+                            <button id="ap" type="submit" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
+                      </div>
+                  </div>
+              </div>
+              <hr/>
+              <table id="table-2" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Id del registro</th>
+                  <th>Nombre</th>
+                  <th>Cedula</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Id del registro</th>
+                  <th>Nombre</th>
+                  <th>Cedula</th>
+                </tr>
+                </tfoot>
+              </table>
+              <div class="row">
+                  <div id="em" class="col-md-12 hidden">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Empresa</label>
+                      <input type="text" class="form-control" placeholder="Empresa">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <div id="in" class="col-md-12 hidden">
+                    <!-- /.form-group -->
+                    <div class="form-group">
+                      <label>Institución</label>
+                      <input type="text" class="form-control" placeholder="Institución">
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+              </div>
+            </div>
+            <!-- /.box -->
+          </div>  
+          <!--research,courses and studies box-->
+      </section>
+    </div>
+    <!--User data body-->
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/autoClick.js') }}"></script>
+  <script src="{{ asset('assets/js/configTable.js') }}"></script>
+  <script src="{{ asset('assets/js/showField.js') }}"></script>
+  <script src="{{ asset('assets/js/insertAndDeleteTable.js') }}"></script>
+  <script src="{{ asset('assets/js/generate.js') }}"></script>
 {% endblock %}

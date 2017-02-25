@@ -10,4 +10,14 @@ class DefaultController extends Controller
     {
         return $this->render('ClausulasContractualesBundle:Default:prima_hijos.html.twig');
     }
+    
+    public function discapacidadAction()
+    {
+        return $this->render('ClausulasContractualesBundle:Default:discapacidad.html.twig');
+    }
+    
+    public function becaAction()
+    {
+        return $this->render('ClausulasContractualesBundle:Default:beca.html.twig');
+    }
 }
