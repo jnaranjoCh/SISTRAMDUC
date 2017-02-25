@@ -3,13 +3,73 @@
 {% block content %}
 
     <section class="content-header">
-      <h1>Solicitud de Reincorporación al Personal Docente</h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa fa-suitcase"></i> Reincorporación docente</li>
-        <li class="active">Subida de recaudos</li>
-      </ol>
+        <h1>Solicitud de Reincorporación al Personal Docente</h1>
+        <ol class="breadcrumb">
+          <li><i class="fa fa fa-suitcase"></i> Reincorporación docente</li>
+          <li class="active">Subida de recaudos</li>
+        </ol>
     </section>
 
-    <section class="content"></section>
+    <section class="content">
+        <div class="callout callout-info">        
+            <h4><i class="fa fa-info-circle"></i> Debe adjuntar los recaudos exigidos a continuación para continuar con el proceso de <strong>Reincorporación.</strong></h4>
+        </div>
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">Subida de recaudos</h4>
+            </div>
+            <div class="box-body">
+              <form action="">
+                <div class="input-group">
+                  <label for="designacion_como_docente">Designación como docente</label>
+                  <input type="file" name="fileToUpload" id="fileToUpload" 
+                         placeholder="Designación como docente"
+                          name="designacion_como_docente">
+                </div>
+                <br>
+                <div class="input-group">
+                  <label for="designacion_como_docente">Oficio de la Ubicación</label>
+                  <input type="file" name="fileToUpload" id="fileToUpload" 
+                         placeholder="Oficio de la Ubicación"
+                          name="oficio_ubicacion">
+                </div>
+                <br>
+                <div class="input-group">
+                  <label for="designacion_como_docente">Oficio del úitimo ascenso</label>
+                  <input type="file" name="fileToUpload" id="fileToUpload" 
+                         placeholder="Oficio del úitimo ascenso"
+                          name="oficio_ultimo_ascenso">
+                </div>
+                <br>
+                <div class="input-group">
+                  <label for="designacion_como_docente">Oficio de la aceptación de la renuncia</label>
+                  <input type="file" name="fileToUpload" id="fileToUpload" 
+                         placeholder="Oficio de la aceptación de la renuncia"
+                          name="oficio_aceptacion_renuncia">
+                </div>
+                <br>
+                <div class="input-group">
+                  <label for="designacion_como_docente">Fondo negro del título (solo IV o V nivel)</label>
+                  <input type="file" name="fileToUpload" id="fileToUpload" 
+                         placeholder="Fondo negro del título (solo IV o V nivel)"
+                          name="fondo_negro_titulo">
+                </div>
+                <br>
+                <div class="input-group">
+                  <label for="designacion_como_docente">Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo</label>
+                  <input type="file" name="fileToUpload" id="fileToUpload" 
+                         placeholder="Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo"
+                          name="declaracion_jurada">
+                </div>
+                <br><br>
+                <div class="col-md-12 col-sm-12 right-block">                
+                    <a href="{{ path('actualizar-curriculum') }}" class="btn btn-lg btn-default">Volver</a>  
+                    <a href="{{ path('verificar-datos') }}" class="btn btn-lg btn-success">Adjuntar</a>
+                </div>
+              </form>
+            </div>
+            
+        </div>
+    </section>
 
 {% endblock %}
