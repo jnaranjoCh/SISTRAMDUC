@@ -9,3 +9,15 @@ registro_datos_index:
 registro_consulta_index:
     path:     /registro/consulta
     defaults: { _controller: RegistroUnicoBundle:Default:consultarRegistro }
+
+registro_guardar_ajax:
+    path:     /registro/guardar-datos
+    defaults: { _controller: RegistroUnicoBundle:Default:guardarDatosAjax }
+    requirements:
+        _method:  POST
+        
+registro_obtener_ajax:
+    path:     /registro/obtener-datos
+    defaults: { _controller: RegistroUnicoBundle:Default:enviarData }
+    requirements:
+        _method:  POST

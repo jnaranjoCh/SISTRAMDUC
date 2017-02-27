@@ -1,0 +1,27 @@
+RegistroUnicoBundle\Entity\Registro:
+    type: entity
+    table: null
+    repositoryClass: RegistroUnicoBundle\Repository\RegistroRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        año:
+            type: integer
+            nullable: true
+        description:
+            type: string
+            length: '50'
+        tipoId:
+            type: integer
+            column: tipo_id
+        nivelId:
+            type: integer
+            column: nivel_id
+        estatusId:
+            type: integer
+            column: estatus_id
+    lifecycleCallbacks: {  }

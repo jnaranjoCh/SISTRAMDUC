@@ -23,4 +23,13 @@ $(function () {
             { "data": "Cedula" }
         ]
     });
+    
+    table3 = $('#table-3').DataTable({
+	    "language": {
+            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        columns: [
+            { "data": "Cargos" }
+        ]
+    });
 });

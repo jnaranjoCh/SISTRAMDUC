@@ -25,3 +25,15 @@ $('#ap').click(function(){
 $('#table-2').on( 'click', 'tbody tr', function () {
     table2.row( this ).remove().draw();
 } );
+
+
+
+$('#ac').click(function(){
+   table3.row.add( {
+            "Cargos": $("#crg").find('option:selected').val()
+    } ).draw();
+}); 
+
+$('#table-3').on( 'click', 'tbody tr', function () {
+    table3.row( this ).remove().draw();
+} );
