@@ -31,7 +31,7 @@ class Participante
 
     /**
      * @ManyToMany(targetEntity="Registro", inversedBy="participantes")
-     * @JoinTable(name="registros_participantes",
+     * @JoinTable(name="registro_participantes",
      *      joinColumns={@JoinColumn(name="participante_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")}
      *      )

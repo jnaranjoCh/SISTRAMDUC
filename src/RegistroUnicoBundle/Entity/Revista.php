@@ -2,24 +2,18 @@
 
 namespace RegistroUnicoBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="Cargo")
+ * Revista
  */
-class Cargo
+class Revista
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @var string
      */
     private $description;
 
@@ -27,7 +21,7 @@ class Cargo
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -39,7 +33,7 @@ class Cargo
      *
      * @param string $description
      *
-     * @return Cargo
+     * @return Revista
      */
     public function setDescription($description)
     {
@@ -58,3 +52,4 @@ class Cargo
         return $this->description;
     }
 }
+

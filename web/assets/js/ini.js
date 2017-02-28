@@ -1,6 +1,7 @@
 $( window ).load(function() {
     $("#mini-1").click();
     $("#mini-2").click();
+    $("#mini-3").click();
     $.ajax({
         method: "POST",
         url:  "/web/app_dev.php/registro/obtener-datos",

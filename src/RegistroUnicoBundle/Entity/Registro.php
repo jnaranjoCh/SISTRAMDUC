@@ -52,15 +52,10 @@ class Registro
      */
     protected $estatus;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Cargo", inversedBy="registros")
-     * @ORM\JoinColumn(name="cargo_id", referencedColumnName="id")
-     */
-    protected $cargo;
 
     /**
      * @ManyToMany(targetEntity="Participante", inversedBy="registros")
-     * @JoinTable(name="registros_participantes",
+     * @JoinTable(name="registro_participantes",
      *      joinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="participante_id", referencedColumnName="id")}
      *      )
@@ -81,10 +76,6 @@ class Registro
      */
     private $estatusId;
 
-    /**
-     * @var integer
-     */
-    private $cargoId;
 
     public function __construct()
     {
@@ -245,31 +236,7 @@ class Registro
         return $this->estatusId;
     }
     
-    /**
-     * Set cargosId
-     *
-     * @param integer $cargoId
-     *
-     * @return Registro
-     */
-    public function setCargoId($cargoId)
-    {
-        $this->cargoId = $cargoId;
-
-        return $this;
-    }
-
-    /**
-     * Get cargoId
-     *
-     * @return integer
-     */
-    public function getCargoId()
-    {
-        return $this->cargoId;
-    }
     
-
     /**
      * Get tipo_registro
      *
@@ -338,30 +305,6 @@ class Registro
     public function setEstatus(Estatus $estatus)
     {
         $this->estatus = $estatus;
-
-        return $this;
-    }
-    
-    /**
-     * Get cargo
-     *
-     * @return integer
-     */
-    public function getCargo()
-    {
-        return $this->cargo;
-    }
-    
-    /**
-     * Set cargo
-     *
-     * @param Cargo $cargo
-     *
-     * @return Registro
-     */
-    public function setCargo(Cargo $cargo)
-    {
-        $this->cargo = $cargo;
 
         return $this;
     }
