@@ -42,6 +42,7 @@ class Participante
     {
         $this->registros = new ArrayCollection();
     }
+    
     /**
      * Get id
      *

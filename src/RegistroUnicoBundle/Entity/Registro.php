@@ -61,6 +61,16 @@ class Registro
      *      )
      */
     protected $participantes;
+
+    /**
+     * @ManyToMany(targetEntity="Revista", inversedBy="registros")
+     * @JoinTable(name="registro_revistas",
+     *      joinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="revista_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $revistas;
+    
     /**
      * @var integer
      */
@@ -80,6 +90,7 @@ class Registro
     public function __construct()
     {
         $this->participantes = new ArrayCollection();
+        $this->revistas = new ArrayCollection();
     }
     
     /**

@@ -1,12 +1,38 @@
 $('#ar').click(function(){
-    table1.row.add( {
-        "Id del registro": "1",
-        "Tipo de referencia": $("#tr").find('option:selected').val(),
-        "Descripcion": $("#desR").val(),
-        "Nivel": $("#neR").find('option:selected').val(),
-        "Estatus": $("#estR").find('option:selected').val(),
-        "Año de publicación y/o asistencia": $("#anoR").val()
-    } ).draw();
+    if($("#empR").val()=="" && $("#insR").val()=="")
+    {
+        table1.row.add( {
+            "Id del registro": "1",
+            "Tipo de referencia": $("#tr").find('option:selected').val(),
+            "Descripcion": $("#desR").val(),
+            "Nivel": $("#neR").find('option:selected').val(),
+            "Estatus": $("#estR").find('option:selected').val(),
+            "Año de publicación y/o asistencia": $("#anoR").val(),
+            "Empresa y/o institución": ""
+        } ).draw();
+    }else if($("#empR").val()!="")
+    {
+        table1.row.add( {
+            "Id del registro": "1",
+            "Tipo de referencia": $("#tr").find('option:selected').val(),
+            "Descripcion": $("#desR").val(),
+            "Nivel": $("#neR").find('option:selected').val(),
+            "Estatus": $("#estR").find('option:selected').val(),
+            "Año de publicación y/o asistencia": $("#anoR").val(),
+            "Empresa y/o institución": $("#empR").val()
+        } ).draw();
+    }else if($("#insR").val()!="")
+    {
+        table1.row.add( {
+            "Id del registro": "1",
+            "Tipo de referencia": $("#tr").find('option:selected').val(),
+            "Descripcion": $("#desR").val(),
+            "Nivel": $("#neR").find('option:selected').val(),
+            "Estatus": $("#estR").find('option:selected').val(),
+            "Año de publicación y/o asistencia": $("#anoR").val(),
+            "Empresa y/o institución": $("#insR").val()
+        } ).draw();
+    }
     
 });
 
@@ -30,10 +56,22 @@ $('#table-2').on( 'click', 'tbody tr', function () {
 
 $('#ac').click(function(){
    table3.row.add( {
-            "Cargos": $("#crg").find('option:selected').val()
+            "Cargo": $("#crg").find('option:selected').val()
     } ).draw();
 }); 
 
 $('#table-3').on( 'click', 'tbody tr', function () {
     table3.row( this ).remove().draw();
+} );
+
+$('#arv').click(function(){
+   table4.row.add( {
+            "Id del registro": $("#idR").val(),
+            "Revista": $("#nomR").val()
+    } ).draw();
+    
+});
+
+$('#table-4').on( 'click', 'tbody tr', function () {
+    table4.row( this ).remove().draw();
 } );
