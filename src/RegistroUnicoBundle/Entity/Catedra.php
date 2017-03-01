@@ -38,6 +38,12 @@ class Catedra
      */
     protected $departamentos;
     
+    public function __construct()
+    {
+        $this->departamentos = new ArrayCollection();
+        $this->escuelas = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *

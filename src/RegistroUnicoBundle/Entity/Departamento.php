@@ -43,6 +43,11 @@ class Departamento
      */
     protected $catedras;
     
+    public function __construct()
+    {
+        $this->catedras = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *

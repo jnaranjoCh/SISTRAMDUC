@@ -43,6 +43,11 @@ class Escuela
      */
     protected $catedras;
     
+    public function __construct()
+    {
+        $this->catedras = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
