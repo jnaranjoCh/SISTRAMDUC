@@ -22,6 +22,8 @@ class AppKernel extends Kernel
             new RegistroUnicoBundle\RegistroUnicoBundle(),
             new ClausulasContractualesBundle\ClausulasContractualesBundle(),
             new PreparadoresBundle\PreparadoresBundle(),
+            new ClausulasContractualesABundle\ClausulasContractualesABundle(),
+            new ClausulasContractualesBBundle\ClausulasContractualesBBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -51,7 +51,7 @@
                <!-- /.box-header -->
               <div class="box box-warning">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Datos personales y de contacto</h3>
+                  <h3 class="box-title">Sección 1</h3>
                   <div class="box-tools pull-right">
                     <button type="button" id="mini-1" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
@@ -143,7 +143,7 @@
                <!-- /.box-header -->
               <div class="box box-danger">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Cargos desempeñados en la UC</h3>
+                  <h3 class="box-title">Sección 2</h3>
                   <div class="box-tools pull-right">
                     <button type="button" id="mini-3" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
@@ -170,14 +170,14 @@
                   <table id="table-3" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                      <th>Cargos</th>
+                      <th>Cargo</th>
                     </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
                     <tr>
-                     <th>Cargos</th>
+                     <th>Cargo</th>
                     </tr>
                     </tfoot>
                   </table>
@@ -193,12 +193,12 @@
             <div id="form-2" class="col-md-offset-1 col-md-10 hidden">
               <!-- /.box-info -->
               <div class="box-footer">
-                <strong>Sección para investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
+                <strong>Sección para ingresar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
               </div>
                <!-- /.box-header -->
               <div class="box box-success">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Investigaciones, estudios, cursos y extensiones</h3>
+                  <h3 class="box-title">Sección 3</h3>
                   <div class="box-tools pull-right">
                     <button type="button" id="mini-2" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
@@ -251,7 +251,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Empresa</label>
-                        <input type="text" class="form-control" placeholder="Empresa">
+                        <input id="empR" type="text" class="form-control" placeholder="Empresa">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -259,7 +259,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Institución</label>
-                        <input type="text" class="form-control" placeholder="Institución">
+                        <input id="insR" type="text" class="form-control" placeholder="Institución">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -277,8 +277,9 @@
                     <th>Tipo de referencia</th>
                     <th>Descripción</th>
                     <th>Nivel</th>
-                    <th>Etatus</th>
+                    <th>Estatus</th>
                     <th>Año de publicacion y/o asistencia</th>
+                    <th>Empresa y/o institución</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -289,8 +290,9 @@
                     <th>Tipo de referencia</th>
                     <th>Descripción</th>
                     <th>Nivel</th>
-                    <th>Etatus</th>
+                    <th>Estatus</th>
                     <th>Año de publicacion y/o asistencia</th>
+                    <th>Empresa y/o institución</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -346,6 +348,51 @@
                   </tr>
                   </tfoot>
                 </table>
+                <hr/>
+                <div id="revista" class="hidden">
+                  <div class="row">
+                      <div class="col-md-12">
+                        <h3>Revistas de publicación</h3>
+                      </div>
+                      <div class="col-md-6">
+                        <!-- /.form-group -->
+                        <div class="form-group">
+                          <label>Descripcion</label>
+                          <input id="nomR" type="text" class="form-control" placeholder="Nombre de la revista">
+                        </div>
+                        <!-- /.form-group -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Id del registro</label>
+                          <input id="idR" type="number" class="form-control" placeholder="Id del registro" min="1">
+                        </div>
+                      </div>
+                      <div class="col-md-offset-4 col-md-4">
+                          <div class="form-group has-feedback">
+                                <button id="arv" type="button" class="btn btn-primary btn-block btn-flat">Agregar revista</button>
+                          </div>
+                      </div>
+                  </div>
+                  <hr/>
+                  <table id="table-4" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Revista</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Revista</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
               </div>
               <!-- /.box -->
             </div>  

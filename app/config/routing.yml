@@ -1,3 +1,11 @@
+clausulas_contractuales_b:
+    resource: "@ClausulasContractualesBBundle/Resources/config/routing.yml"
+    prefix:   /
+
+clausulas_contractuales_a:
+    resource: "@ClausulasContractualesABundle/Resources/config/routing.yml"
+    prefix:   /
+
 preparadores:
     resource: "@PreparadoresBundle/Controller/"
     type:     annotation

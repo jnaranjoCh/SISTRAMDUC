@@ -2,22 +2,42 @@
 
 namespace RegistroUnicoBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
- * Revista
+ * @ORM\Entity
+ * @ORM\Table(name="Revista")
  */
 class Revista
 {
+    
     /**
-     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=50)
      */
     private $description;
 
-
+    /**
+     * @ManyToMany(targetEntity="Registro", inversedBy="revistas")
+     * @JoinTable(name="registro_revistas",
+     *      joinColumns={@JoinColumn(name="revista_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $registros;
+    
+    public function __construct()
+    {
+        $this->registros = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *

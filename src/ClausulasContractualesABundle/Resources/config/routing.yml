@@ -1,0 +1,15 @@
+clausulas_contractuales_prima_hijos:
+    path:     /clausulas-contractuales/prima-hijos
+    defaults: { _controller: ClausulasContractualesABundle:Default:primaHijos}
+    
+clausulas_contractuales_discapacidad:
+    path:     /clausulas-contractuales/discapacidad
+    defaults: { _controller: ClausulasContractualesABundle:Default:discapacidad}
+    
+clausulas_contractuales_beca:
+    path:     /clausulas-contractuales/beca
+    defaults: { _controller: ClausulasContractualesABundle:Default:beca}
+    
+clausulas_contractuales_consultar:
+    path:     /clausulas-contractuales/consultar
+    defaults: { _controller: ClausulasContractualesABundle:Default:consultar}

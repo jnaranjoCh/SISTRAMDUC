@@ -9,7 +9,8 @@ $(function () {
             { "data": "Descripcion" },
             { "data": "Nivel" },
             { "data": "Estatus" },
-            { "data": "Año de publicación y/o asistencia" }
+            { "data": "Año de publicación y/o asistencia" },
+            { "data": "Empresa y/o institución" }
         ]
     });
     
@@ -29,7 +30,17 @@ $(function () {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
         columns: [
-            { "data": "Cargos" }
+            { "data": "Cargo" }
+        ]
+    });
+    
+    table4 = $('#table-4').DataTable({
+	    "language": {
+            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        columns: [
+            { "data": "Id del registro" },
+            { "data": "Revista" }
         ]
     });
 });
