@@ -32,7 +32,6 @@ class Rol
      * @ORM\OneToMany(targetEntity="Usuario", mappedBy="rol")
      */
     protected $usuarios;
-    
     /**
      * @ManyToMany(targetEntity="Permisos", inversedBy="roles")
      * @JoinTable(name="permisos_roles",
@@ -49,7 +48,7 @@ class Rol
     }
     /**
      * Get id
-     *
+     *no
      * @return int
      */
     public function getId()

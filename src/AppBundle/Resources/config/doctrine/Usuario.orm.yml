@@ -12,7 +12,6 @@ AppBundle\Entity\Usuario:
         cedula:
             type: string
             length: '25'
-            unique: true
         primerNombre:
             type: string
             length: '50'
@@ -35,21 +34,24 @@ AppBundle\Entity\Usuario:
         correo:
             type: string
             length: '50'
-            unique: true
         telefono:
             type: integer
         rif:
             type: integer
-            unique: true
         fechaNacimiento:
             type: date
             column: fecha_nacimiento
+            nullable: true
         fechaFallecimiento:
             type: date
             column: fecha_fallecimiento
+            nullable: true
         contraseña:
             type: string
             length: '100'
         activo:
             type: boolean
+        rolId:
+            type: integer
+            column: estatus_id
     lifecycleCallbacks: {  }

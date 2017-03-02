@@ -4,12 +4,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Usuario")
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @ORM\Id
@@ -138,6 +139,28 @@ class Usuario
         return $this->id;
     }
 
+    /**
+     * Get rolId
+     *
+     * @return int
+     */
+    public function getRolId()
+    {
+        return $this->rolId;
+    }
+    
+    /**
+     * Set rolId
+     *
+     * @param int $rolId
+     */
+    public function setRolId($rolId)
+    {
+        $this->rolId = $rolId;
+        
+        return $this;
+    }
+    
     /**
      * Set cedula
      *
@@ -409,7 +432,7 @@ class Usuario
      *
      * @return Usuario
      */
-    public function setContraseña($contraseña)
+    public function setPassword($contraseña)
     {
         $this->contraseña = $contraseña;
 
@@ -421,7 +444,7 @@ class Usuario
      *
      * @return string
      */
-    public function getContraseña()
+    public function getPassword()
     {
         return $this->contraseña;
     }
@@ -449,5 +472,10 @@ class Usuario
     {
         return $this->activo;
     }
+    
+    public function getRoles(){}
+    public function getUsername(){}
+    public function getSalt(){}
+    public function eraseCredentials(){}
 }
 

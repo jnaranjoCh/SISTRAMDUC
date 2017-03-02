@@ -62,12 +62,12 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Nombre</label>
-                        <input type="text" class="form-control" placeholder="Nombre">
+                        <input type="text" class="form-control" placeholder="Nombre" required>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Apellido</label>
-                        <input type="text" class="form-control" placeholder="Apellido">
+                        <input type="text" class="form-control" placeholder="Apellido" required>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -75,12 +75,12 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Edad</label>
-                        <input type="number" class="form-control" placeholder="Edad" min="18" max="80">
+                        <input type="number" class="form-control" placeholder="Edad" min="18" max="80" required>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Sexo</label>
-                        <select class="form-control select2" style="width: 100%;">
+                        <select class="form-control select2" style="width: 100%;" required>
                           <option selected="selected">Seleccione una opción</option>
                           <option value="Masculino">Masculino</option>
                           <option value="Femenino">Femenino</option>
@@ -410,7 +410,7 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/ini.js') }}"></script>
+  <script src="{{ asset('assets/js/iniRD.js') }}"></script>
   <script src="{{ asset('assets/js/configTable.js') }}"></script>
   <script src="{{ asset('assets/js/showField.js') }}"></script>
   <script src="{{ asset('assets/js/insertAndDeleteTable.js') }}"></script>
