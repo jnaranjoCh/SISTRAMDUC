@@ -8,10 +8,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/comision_remunerada_info", name="comision_remunerada_info")
      */
-    public function indexAction()
+    public function comision_remunerada_infoAction()
     {
-        return $this->render('ComisionRemuneradaBundle:Default:index.html.twig');
+        return $this->render('ComisionRemuneradaBundle:Default:comision_remunerada_info.html.twig');
+    }
+    /**
+     * @Route("/solicitud_serv_remun", name="solicitud_serv_remun")
+     */
+    public function solicitud_serv_remunAction()
+    {
+        return $this->render('ComisionRemuneradaBundle:Default:solicitud_serv_remun.html.twig');
     }
 }

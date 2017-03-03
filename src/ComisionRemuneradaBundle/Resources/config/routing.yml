@@ -1,0 +1,7 @@
+comision_remunerada_info:
+    path: /comision_remunerada_info
+    defaults: {_controller: ComisionRemuneradaBundle:Default:comision_remunerada_info}
+
+solicitud_serv_remun:
+    path: /solicitud_serv_remun
+    defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}
