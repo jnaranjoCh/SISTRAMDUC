@@ -21,4 +21,11 @@ class DefaultController extends Controller
     {
         return $this->render('ComisionRemuneradaBundle:Default:solicitud_serv_remun.html.twig');
     }
+    /**
+     * @Route("/solicitudes_serv_remun", name="solicitudes_serv_remun")
+     */
+    public function solicitudes_serv_remunAction()
+    {
+        return $this->render('ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun.html.twig');
+    }
 }
