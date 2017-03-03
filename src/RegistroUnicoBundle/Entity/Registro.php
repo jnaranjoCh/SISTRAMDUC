@@ -72,17 +72,25 @@ class Registro
     protected $revistas;
     
     /**
-     * @var integer
+     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="registros")
+     * @JoinTable(name="usuarios_registros",
+     *      joinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $usuarios;
+    /**
+     * @ORM\@Column(type="integer")
      */
     private $tipoId;
 
     /**
-     * @var integer
+     * @ORM\@Column(type="integer")
      */
     private $nivelId;
 
     /**
-     * @var integer
+     * @ORM\@Column(type="integer")
      */
     private $estatusId;
 
@@ -91,6 +99,7 @@ class Registro
     {
         $this->participantes = new ArrayCollection();
         $this->revistas = new ArrayCollection();
+        $this->usuarios = new ArrayCollection();
     }
     
     /**

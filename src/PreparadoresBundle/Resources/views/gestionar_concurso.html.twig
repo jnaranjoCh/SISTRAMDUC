@@ -16,108 +16,87 @@
   
   <div class="row">
     <section class="content-body">
-      <div class="col-md-offset-1 col-lg-3 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner" href="#">
-              <h3>Paso 1</h3> 
-              <p>Declarar Concurso Desierto</p>
+      <div class="col-md-offset-1 col-md-10">
+        <div id="solicitudSeleccionada"  class="box box-info">
+          <div class="box-header with-border text-center">
+            <h3 class="box-title"><b>Datos del Concurso</b></h3>
           </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
+          <div class="box-body">
+            <div class="col-md-offset-3 col-md-6">
+              <dl class="dl-horizontal">
+                <dt>Asignatura</dt>
+                <dd>Materia...</dd>
+                
+                <dt>Número de Aspirantes</dt>
+                <dd>Nro...</dd>
+                
+                <dt>Tema Examen Oral</dt>
+                <dd>Tema...</dd>
+                
+                <dt>Tema Examen Escrito</dt>
+                <dd>Tema...</dd>
+                
+                <dt>Jurado</dt>
+                <dd>Coordinador...</dd>
+                <dd>Principal 1...</dd>
+                <dd>Principal 2...</dd>
+                <dd>Suplente 1...</dd>
+                <dd>Suplente 2...</dd>
+                
+                <dt>Fechas Importantes</dt>
+                <dd>Fecha...</dd>
+                
+              </dl>
+            </div>
           </div>
-          <a href="#concursoDesierto" data-toggle="collapse" class="small-box-footer">
-            Abrir <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      
-      <div class="col-lg-3 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-              <h3>Paso 2</h3> 
-              <p>Registrar Aspirantes</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
-          </div>
-          <a href="#registroAspirante" data-toggle="collapse" class="small-box-footer">
-            Entrar <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-       
-      <div class="col-lg-4 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-              <h3>Paso 3</h3> 
-              <p>Evaluar Requisitos de los Aspirantes</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
-          </div>
-          <a href="#evaluarRequisitosAspirante" data-toggle="collapse" class="small-box-footer">
-            Entrar <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      
-      <div class="col-md-offset-1  col-lg-3 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-              <h3>Paso 4</h3> 
-              <p>Registrar Fecha de Evaluacion</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
-          </div>
-          <a href="#registrarFecha" data-toggle="collapse" class="small-box-footer">
-            Entrar <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      
-      <div class=" col-lg-4 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-              <h3>Paso 5</h3> 
-              <p>Registrar Calificacion de la Evaluacion</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
-          </div>
-          <a href="#registrarCalificacionAspirantes" data-toggle="collapse" class="small-box-footer">
-            Entrar <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      
-      <div class="col-lg-3 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-              <h3>Paso 6</h3> 
-              <p>Registrar Exposicion de Motivos</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
-          </div>
-          <a href="#exposicionMotivos" data-toggle="collapse" class="small-box-footer">
-            Entrar <i class="fa fa-arrow-circle-right"></i>
-          </a>
-        </div>
-      </div>
-      
-      <div class="col-md-offset-1 col-lg-3 col-xs-3">
-        <div class="small-box bg-aqua">
-          <div class="inner">
-              <h3>Paso 7</h3> 
-              <p>Registrar Proposicion del Nombramiento</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-question"></i>
-          </div>
-          <a href="#registrarFecha" data-toggle="collapse" class="small-box-footer">
-            Entrar <i class="fa fa-arrow-circle-right"></i>
-          </a>
+          <div class="box-footer">
+            <div class="col-md-offset-5"> 
+              <div class="btn-group">
+                <button type="button" class="btn btn-info">Acciones</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="#concursoDesierto" data-toggle="collapse">
+                      <b>Declarar Concurso Desierto</b>
+                    </a>
+                  </li>                  
+                  <li>
+                    <a href="#registroAspirante" data-toggle="collapse">
+                      <b>Registrar Aspirantes</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#evaluarRequisitosAspirante" data-toggle="collapse">
+                      <b>Evaluar Requisitos de los Aspirantes</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#registrarFecha" data-toggle="collapse">
+                      <b>Registrar Fecha de Evaluacion</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#registrarCalificacionAspirantes" data-toggle="collapse">
+                      <b>Registrar Calificacion de la Evaluacion</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#exposicionMotivos" data-toggle="collapse">
+                      <b>Registrar Exposicion de Motivos</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#proposicionNombramiento" data-toggle="collapse">
+                      <b>Registrar Proposicion del Nombramiento</b>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> 
         </div>
       </div>
       

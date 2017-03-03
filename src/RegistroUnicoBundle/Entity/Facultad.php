@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Cargo")
+ * @ORM\Table(name="Facultad")
  */
-class Cargo
+class Facultad
 {
     /**
      * @ORM\Id
@@ -23,14 +23,25 @@ class Cargo
      */
     private $description;
 
+
     /**
-     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="cargos")
-     * @JoinTable(name="usuarios_cargos",
-     *      joinColumns={@JoinColumn(name="cargo_id", referencedColumnName="id")},
+     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="facultades")
+     * @JoinTable(name="usuarios_facultades",
+     *      joinColumns={@JoinColumn(name="facultad_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
      *      )
      */
     protected $usuarios;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Escuela", mappedBy="facultad")
+     */
+    protected $escuelas;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Departamento", mappedBy="facultad")
+     */
+    protected $departamentos;
     
     public function __construct()
     {
@@ -40,7 +51,7 @@ class Cargo
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -52,7 +63,7 @@ class Cargo
      *
      * @param string $description
      *
-     * @return Cargo
+     * @return Facultad
      */
     public function setDescription($description)
     {
@@ -71,3 +82,4 @@ class Cargo
         return $this->description;
     }
 }
+

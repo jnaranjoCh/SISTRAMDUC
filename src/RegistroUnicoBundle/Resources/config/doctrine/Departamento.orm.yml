@@ -1,0 +1,18 @@
+RegistroUnicoBundle\Entity\Departamento:
+    type: entity
+    table: null
+    repositoryClass: RegistroUnicoBundle\Repository\DepartamentoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        description:
+            type: string
+            length: '50'
+        facultadId:
+            type: integer
+            column: facultad_id
+    lifecycleCallbacks: {  }

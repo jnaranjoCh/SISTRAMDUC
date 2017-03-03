@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Cargo")
+ * @ORM\Table(name="Catedra")
  */
-class Cargo
+class Catedra
 {
     /**
      * @ORM\Id
@@ -24,23 +24,33 @@ class Cargo
     private $description;
 
     /**
-     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="cargos")
-     * @JoinTable(name="usuarios_cargos",
-     *      joinColumns={@JoinColumn(name="cargo_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
+     * @ManyToMany(targetEntity="Escuela", inversedBy="catedras")
+     * @JoinTable(name="escuelas_catedras",
+     *      joinColumns={@JoinColumn(name="catedra_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="escuela_id", referencedColumnName="id")}
      *      )
      */
-    protected $usuarios;
+    protected $escuelas;
+
+    /**
+     * @ManyToMany(targetEntity="Departamento", inversedBy="catedras")
+     * @JoinTable(name="departamentos_catedras",
+     *      joinColumns={@JoinColumn(name="catedra_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="departamento_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $departamentos;
     
     public function __construct()
     {
-        $this->usuarios = new ArrayCollection();
+        $this->departamentos = new ArrayCollection();
+        $this->escuelas = new ArrayCollection();
     }
     
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -52,7 +62,7 @@ class Cargo
      *
      * @param string $description
      *
-     * @return Cargo
+     * @return Catedra
      */
     public function setDescription($description)
     {
@@ -71,3 +81,4 @@ class Cargo
         return $this->description;
     }
 }
+

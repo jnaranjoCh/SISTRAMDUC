@@ -18,6 +18,18 @@ registro_guardar_ajax:
         
 registro_obtener_ajax:
     path:     /registro/obtener-datos
-    defaults: { _controller: RegistroUnicoBundle:Default:enviarData }
+    defaults: { _controller: RegistroUnicoBundle:Default:enviarDataAjax }
+    requirements:
+        _method:  POST
+        
+registro_buscaremail_ajax:
+    path:     /registro/buscar-email
+    defaults: { _controller: RegistroUnicoBundle:Default:buscarEmailAjax }
+    requirements:
+        _method:  POST
+        
+registro_registeruser_ajax:
+    path:     /registro/registrar-usuario
+    defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuarioAjax }
     requirements:
         _method:  POST
