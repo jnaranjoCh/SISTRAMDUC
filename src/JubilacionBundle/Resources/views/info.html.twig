@@ -1,16 +1,24 @@
 {% extends '::base.html.twig' %}
 
 {% block opcionsidebar %}
-    <ul class="treeview-menu">
-        <li <!--class="active"-->><a href="{{  asset('templates/index.html')}}"><i class="fa fa-dot-circle-o"></i> Requisitos</a></li>
-        <li><a href="index2.html"><i class="fa fa-dot-circle-o"></i> Realizar Solicitud</a></li>
-    </ul>
+        <li data-route="jubilacion-informacion">
+            <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+        </li>
+        <li data-route="jubilacion-solicitud">
+            <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+        </li>>
 {% endblock %}
 
 {% block content %}
-    <h2 style="text-align: center"><b>Información</b></h2>
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <h4 style="text-align: center"><b>INFORMACIÓN</b></h4>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-fw fa-wheelchair"></i> Jubilación</a></li>
+            <li class="active">Información </li>
+        </ol>
+    </div>
 
-    <!-- Content Wrapper. Contains page content -->
     <!-- Main content -->
     <section class="content">
         <div class="callout callout-info">
