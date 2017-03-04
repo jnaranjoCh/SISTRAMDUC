@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new ClausulasContractualesABundle\ClausulasContractualesABundle(),
             new ClausulasContractualesBBundle\ClausulasContractualesBBundle(),
             new ComisionRemuneradaBundle\ComisionRemuneradaBundle(),
+            new JubilacionBundle\JubilacionBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

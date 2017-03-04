@@ -1,0 +1,130 @@
+{% extends '::base.html.twig' %}
+
+{% block sidebar %}
+    <ul class="treeview-menu">
+        <li <!--class="active"-->><a href="{{  asset('templates/index.html')}}"><i class="fa fa-dot-circle-o"></i> Revisar solicitudes</a></li>
+        <li><a href="index2.html"><i class="fa fa-dot-circle-o"></i> Generar Informe</a></li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <h3 style="text-align: center"><b>CONSEJO DE FACULTAD</b></h3>
+    <!-- Content Wrapper. Contains page content -->
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-solid box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>Solicitudes:</b></h3>
+            </div>
+
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-16">
+
+                        <div class="box-tools pull-right">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-header">
+
+
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Fecha Recibida</th>
+                                    <th>Fecha Enviada</th>
+                                    <th>Estatus</th>
+                                    <th>Motivo</th>
+                                </tr>
+                                <tr>
+                                    <td><a href="#" style="text-decoration: underline">183</a></td>
+                                    <td>John Doe</td>
+                                    <td>11-7-2014</td>
+                                    <td>11-7-2014</td>
+                                    <td><span class="label label-success">Approved</span></td>
+                                    <td>
+                                        <p align="justify"> - yiuaysduyaodsyoa aidyoaiydoiyadoayd idyoiaydoya</p>
+                                        <!--<input class="form-control" type="text" placeholder="Default input">-->
+                                    </td>
+
+                                    <!--<td>
+                                        <button type="button" class="btn btn-block btn-success">Enviar</button>
+                                    </td>-->
+                                </tr>
+                                <tr>
+                                    <td><a href="#" style="text-decoration: underline">219</a></td>
+                                    <td>Alexander Pierce</td>
+                                    <td>11-7-2014</td>
+                                    <td>11-7-2014</td>
+                                    <td><span class="label label-warning">Pending</span></td>
+                                    <td>
+                                        -aljsdjasdjljadlkjd añsjdñlajdñljdf ñaldñljaljeoeroj flkefñjañjdfñajdñj
+                                        <!--<input class="form-control" type="text" placeholder="Default input">-->
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><a href="#" style="text-decoration: underline">657</a></td>
+                                    <td>Bob Doe</td>
+                                    <td>11-7-2014</td>
+                                    <td>11-7-2014</td>
+                                    <td><span class="label label-primary">Approved</span></td>
+                                    <td>
+                                        -
+                                        <!--<input class="form-control" type="text" placeholder="Default input">-->
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><a href="#" style="text-decoration: underline">175</a></td>
+                                    <td>Mike Doe</td>
+                                    <td>11-7-2014</td>
+                                    <td>11-7-2014</td>
+                                    <td><span class="label label-danger">Denied</span></td>
+                                    <td>
+                                        -kjoiasoiuafiafhlkahflka kaljslkdjalskjdlaksjdlaksjd lkajsdlkajsdlkjaldsj
+                                        <!--<input class="form-control" type="text" placeholder="Default input">-->
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+
+                        <!-- /.box -->
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button previous disabled" id="example1_previous"><a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0">Previous</a></li>
+                                        <li class="paginate_button active"><a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0">1</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0">2</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0">3</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0">4</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0">5</a></li>
+                                        <li class="paginate_button "><a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0">6</a></li>
+                                        <li class="paginate_button next" id="example1_next"><a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+    <!-- /.content-wrapper -->
+
+{% endblock %}
