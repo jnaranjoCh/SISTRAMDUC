@@ -1,0 +1,3 @@
+jubilacion-informacion:
+    path: /jubilacion-informacion
+    defaults: {_controller: UserBundle::info}

@@ -8,10 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/jubilacion/informacion", name="jubilacion-informacion")
      */
-    public function indexAction()
+    public function infoAction()
     {
-        return $this->render('JubilacionBundle:Default:index.html.twig');
+        return $this->render('JubilacionBundle::info.html.twig');
     }
 }
