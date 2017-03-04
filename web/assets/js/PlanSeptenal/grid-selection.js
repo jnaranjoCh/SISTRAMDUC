@@ -78,7 +78,7 @@ $(document).on('mousedown', '.grid-element', function () {
 
     update_selection(state.dragging, this, true);
 }).on('mouseup', function (e) {
-    if (! $(e.target).hasClass('grid-element') && ! $(e.target).hasClass('grid-action-btn')) {
+    if (! $(e.target).hasClass('grid-element') && ! $(e.target).hasClass('grid-action-btn') && ! $(e.target).hasClass('grid-clear-btn')) {
         state.rangeselection.active = false;
         state.rangeselection.start = null;
 

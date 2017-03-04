@@ -156,7 +156,7 @@
             </li>
           </ul>
         </li>
-        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa fa-handshake-o"></i><span>Cláusulas Contractuales</span>
@@ -190,7 +190,7 @@
             </li>
           </ul>
         </li>
-        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-users"></i><span>Preparadores</span>
@@ -246,7 +246,9 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <div class="container-fluid">
       {% block content %}{% endblock %}
+    </div>
   </div>
   <!-- /.content-wrapper -->
 
@@ -278,7 +280,7 @@
     $ul.addClass('menu-open');
     $ul.parent('li.treeview').addClass('active');
   }
-  
+
 
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
@@ -286,7 +288,7 @@
     $ul.parent('li').parent('ul').addClass('menu-open');
     $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
   }
-  
+
 </script>
 
 <!-- Bootstrap 3.3.6 -->

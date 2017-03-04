@@ -1,5 +1,5 @@
 {
-  "name": "SISTRAMDUC",
+  "name": "sistramduc",
   "authors": [],
   "description": "",
   "main": "",
@@ -18,5 +18,9 @@
     "AdminLTE": "admin-lte#^2.3.11",
     "font-awesome": "^4.7.0",
     "Ionicons": "ionicons#^2.0.1"
+  },
+  "devDependencies": {
+    "sinon-1.17.7": "http://sinonjs.org/releases/sinon-1.17.7.js",
+    "qunit": "^2.1.1"
   }
 }
