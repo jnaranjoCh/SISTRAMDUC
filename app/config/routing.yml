@@ -1,3 +1,8 @@
+tramite:
+    resource: "@TramiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 comision_remunerada:
     resource: "@ComisionRemuneradaBundle/Controller/"
     type:     annotation
