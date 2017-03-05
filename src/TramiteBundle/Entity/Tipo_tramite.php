@@ -1,49 +1,59 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Anyelys
+ * Date: 03/03/2017
+ * Time: 11:34 PM
+ */
 
 namespace TramiteBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
- * Tipo_tramite
+ * @ORM\Entity
+ * @ORM\Table(name="tipo_tramite")
  */
+
 class Tipo_tramite
 {
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=50)
      */
     private $nombre;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=50)
      */
     private $duracion;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=100)
      */
     private $descripcion;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="Tramite", mappedBy="tipo_tramite")
      */
-    private $tramites;
+    protected $tramites;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
-        $this->tramites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tramites = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -156,4 +166,3 @@ class Tipo_tramite
         return $this->tramites;
     }
 }
-
