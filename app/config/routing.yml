@@ -3,6 +3,11 @@ tramite:
     type:     annotation
     prefix:   /
 
+jubilacion:
+    resource: "@JubilacionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 comision_remunerada:
     resource: "@ComisionRemuneradaBundle/Controller/"
     type:     annotation

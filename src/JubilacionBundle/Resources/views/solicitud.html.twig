@@ -1,0 +1,98 @@
+{% extends '::base.html.twig' %}
+
+{% block sidebar %}
+    <ul class="treeview-menu">
+        <li <!--class="active"-->><a href="{{  asset('templates/index.html')}}"><i class="fa fa-dot-circle-o"></i> Requisitos</a></li>
+        <li><a href="index2.html"><i class="fa fa-dot-circle-o"></i> Realizar Solicitud</a></li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <!-- Content Wrapper. Contains page content -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="callout callout-info">
+            <h4>PROCESO DE ENVÍO DE SOLICITUD</h4>
+            <p align="center"><tt><big>Para continuar con el proceso adjunte todos los recaudos exigidos:</big></tt></p>
+        </div>
+        <!-- Default box -->
+        <div class="box box-solid box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>Adjuntar Documentos:</b></h3>
+            </div>
+
+            <section class="content">
+                <!-- general form elements -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Oficio de solicitud de jubilación</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Fotocopia de cédula de Identidad</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Fotocopia del RIF</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Copia de Constancia expedida por la Dirección de Asuntos Profesorales</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Recibo de pago</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Partida de nacimiento (opcional)</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Constancia de Antecedentes de servicios (opcional)</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Constancia de cumplimiento de labores como preparador (opcional)</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Example block-level help text here.</p>
+                        </div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-block btn-success">Enviar Solicitud</button>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+                <!-- /.box -->
+            </section>
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+    <!-- /.content-wrapper -->
+
+{% endblock %}
