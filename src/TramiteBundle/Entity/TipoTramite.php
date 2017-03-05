@@ -6,7 +6,7 @@
  * Time: 11:34 PM
  */
 
-namespace ComisionRemuneradaBundle\Entity;
+namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,6 +39,16 @@ class Tipo_tramite
      * @ORM\Column(type="string", length=100)
      */
     private $descripcion;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Tramite", mappedBy="tipo_tramite")
+     */
+    protected $tramites;
+
+    public function __construct()
+    {
+        $this->tramites = new ArrayCollection();
+    }
 
     /**
      * Get id
