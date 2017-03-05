@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/comision_remunerada_info", name="comision_remunerada_info")
+     * @Route("/comision-servicio-remunerada/info", name="comision-servicio-remunerada-info")
      */
     public function comision_remunerada_infoAction()
     {

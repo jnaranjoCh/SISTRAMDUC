@@ -25,8 +25,8 @@ class AppKernel extends Kernel
             new ClausulasContractualesABundle\ClausulasContractualesABundle(),
             new ClausulasContractualesBBundle\ClausulasContractualesBBundle(),
             new ComisionRemuneradaBundle\ComisionRemuneradaBundle(),
+            new TramiteBundle\TramiteBundle(),
             new JubilacionBundle\JubilacionBundle(),
-        ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
