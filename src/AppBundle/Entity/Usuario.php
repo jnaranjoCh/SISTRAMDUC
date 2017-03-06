@@ -21,7 +21,7 @@ class Usuario implements UserInterface
     /**
      *  @ORM\@Column(type="integer")
      */
-    private $rolId;
+    private $estatusId;
 
     /**
      * @ORM\Column(type="string", length=25)
@@ -154,23 +154,23 @@ class Usuario implements UserInterface
     }
 
     /**
-     * Get rolId
+     * Get estatusId
      *
      * @return int
      */
-    public function getRolId()
+    public function getEstatusId()
     {
-        return $this->rolId;
+        return $this->estatusId;
     }
 
     /**
-     * Set rolId
+     * Set estatusId
      *
-     * @param int $rolId
+     * @param int $estatusId
      */
-    public function setRolId($rolId)
+    public function setEstatusId($estatusId)
     {
-        $this->rolId = $rolId;
+        $this->estatusId = $estatusId;
 
         return $this;
     }
