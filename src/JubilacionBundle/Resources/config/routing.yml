@@ -1,0 +1,19 @@
+jubilacion-informacion:
+    path: /jubilacion-informacion
+    defaults: {_controller: UserBundle::info}
+
+jubilacion-solicitud:
+    path: /jubilacion-solicitud
+    defaults: {_controller: UserBundle::solicitud}
+
+direccion-asuntos-Prof:
+    path: /direccion-asuntos-Prof
+    defaults: {_controller: UserBundle:Tramites:direccion}
+
+consejo-facultad:
+    path: /consejo-facultad
+    defaults: {_controller: UserBundle:Tramites:consejo}
+
+informe-consejo:
+    path: /informe-consejo
+    defaults: {_controller: UserBundle:Tramites:informeConsejo}

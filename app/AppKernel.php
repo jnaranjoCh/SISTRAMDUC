@@ -15,10 +15,18 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+
             new AppBundle\AppBundle(),
             new PlanSeptenalBundle\PlanSeptenalBundle(),
             new RegistroUnicoBundle\RegistroUnicoBundle(),
             new ReincorporacionBundle\ReincorporacionBundle(),
+            new ClausulasContractualesBundle\ClausulasContractualesBundle(),
+            new PreparadoresBundle\PreparadoresBundle(),
+            new ClausulasContractualesABundle\ClausulasContractualesABundle(),
+            new ClausulasContractualesBBundle\ClausulasContractualesBBundle(),
+            new ComisionRemuneradaBundle\ComisionRemuneradaBundle(),
+            new JubilacionBundle\JubilacionBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

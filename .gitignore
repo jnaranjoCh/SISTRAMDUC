@@ -15,3 +15,5 @@
 /vendor/
 /web/bundles/
 /web/assets/vendor/
+/tests/PlanSeptenalBundle/LearningTests/
+/.idea/*
