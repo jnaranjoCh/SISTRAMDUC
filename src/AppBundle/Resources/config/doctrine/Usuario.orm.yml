@@ -9,6 +9,10 @@ AppBundle\Entity\Usuario:
             generator:
                 strategy: AUTO
     fields:
+        cedula:
+            type: string
+            length: 12
+            column: cedula
         primerNombre:
             type: string
             length: '50'
@@ -31,7 +35,7 @@ AppBundle\Entity\Usuario:
             column: direccion
         nacionalidad:
             type: string
-            length: '50'
+            length: '1'
             column: nacionalidad
         correo:
             type: string
@@ -54,11 +58,11 @@ AppBundle\Entity\Usuario:
         contraseña:
             type: string
             length: '100'
-            column: contraseña
+            column: contrasena
         activo:
             type: boolean
             column: activo
-        rolId:
+        estatusId:
             type: integer
             column: estatus_id
     lifecycleCallbacks: {  }

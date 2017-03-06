@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@PlanSeptenalBundle/Resources/config/services.yml" }
     - { resource: "@RegistroUnicoBundle/Resources/config/services.yml" }
+    - { resource: "@ReincorporacionBundle/Resources/config/services.yml" }
     - { resource: "@ClausulasContractualesBundle/Resources/config/services.yml" }
     - { resource: "@PreparadoresBundle/Resources/config/services.yml" }
     - { resource: "@ClausulasContractualesABundle/Resources/config/services.yml" }

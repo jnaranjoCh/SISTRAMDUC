@@ -14,6 +14,13 @@ class RootController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig');
+        $user = $this->getUser();
+
+        $user = [
+            'short_name' => $user->getNombreCorto(),
+            'full_name' => $user->getNombreCompleto()
+        ];
+
+        return $this->render('default/index.html.twig', compact('user'));
     }
 }

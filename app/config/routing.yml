@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 concursos:
     resource: "@ConcursosBundle/Controller/"
+=======
+reincorporacion:
+    resource: "@ReincorporacionBundle/Controller/"
+>>>>>>> 07918504f4ce70f42525cf30aad13e3dab5eec38
     type:     annotation
     prefix:   /
 
