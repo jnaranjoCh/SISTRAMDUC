@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+      <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <!--User data header-->
     <section class="content-header">
@@ -11,13 +15,50 @@
     </section>
     <!--User data header-->
     <br/>
-      <!--User data body-->
+     <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <table id="table-5" class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Estatus</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+              <tr>
+               <th>Email</th>
+               <th>Rol</th>
+               <th>Estatus</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!--User data body-->
     <form>
       <div class="row">
         <section class="content-body">
             <!--Alert message-->
             <div id="alertData" class="col-md-offset-1 col-md-10 alert alert-danger hidden">
-                  El usuario no se encuentra registrado. 
+                  El usuario no se encuentra registrado o esta inactivo. 
             </div>
             <!--Alert message-->
             <!--seccion for generate box-->
@@ -34,6 +75,11 @@
                       <div class="col-md-2">
                         <div class="form-group has-feedback">
                               <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ver usuarios</button>
                         </div>
                       </div>
                     </div>
@@ -61,16 +107,51 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" placeholder="Nombre" required>
+                        <label>Primer nombre</label>
+                        <input type="text" class="form-control" placeholder="Primer nombre" required>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
-                        <label>Apellido</label>
-                        <input type="text" class="form-control" placeholder="Apellido" required>
+                        <label>Segundo nombre</label>
+                        <input type="text" class="form-control" placeholder="Segundo nombre" required>
                       </div>
                       <!-- /.form-group -->
                     </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Primer apellido</label>
+                        <input type="text" class="form-control" placeholder="Primer apellido" required>
+                      </div>
+                      <!-- /.form-group -->
+                      <div class="form-group">
+                        <label>Segundo apellido</label>
+                        <input type="text" class="form-control" placeholder="Segundo apellido" required>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Nacionalidad</label>
+                        <input type="text" class="form-control" placeholder="Nacionalidad" required>
+                      </div>
+                      <!-- /.form-group -->
+                      <div class="form-group">
+                        <label>Fecha de nacimiento</label>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
                     <!-- /.col -->
                     <div class="col-md-6">
                       <div class="form-group">
@@ -416,4 +497,8 @@
   <script src="{{ asset('assets/js/insertAndDeleteTable.js') }}"></script>
   <script src="{{ asset('assets/js/generate.js') }}"></script>
   <script src="{{ asset('assets/js/saveData.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
+   <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 {% endblock %}

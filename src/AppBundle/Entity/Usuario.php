@@ -20,9 +20,19 @@ class Usuario implements UserInterface
     private $id;
 
     /**
+     *  @ORM\@Column(type="integer")
+     */
+    private $rolId;
+    
+    /**
      * @ORM\Column(type="string", length=25)
      */
     private $cedula;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $direccion;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -45,7 +55,7 @@ class Usuario implements UserInterface
     private $segundoApellido;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=1)
      */
     private $nacionalidad;
 
@@ -118,15 +128,20 @@ class Usuario implements UserInterface
     protected $facultades;
     
     /**
-     *  @ORM\@Column(type="integer")
+     * @ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
+     * @JoinTable(name="usuario_hijo",
+     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="hijo_id", referencedColumnName="id")}
+     *      )
      */
-    private $rolId;
+    protected $hijos;
     
     public function __construct()
     {
         $this->registros = new ArrayCollection();
         $this->cargos = new ArrayCollection();
         $this->facultades = new ArrayCollection();
+        $this->hijos = new ArrayCollection();
     }
 
     /**
@@ -471,6 +486,30 @@ class Usuario implements UserInterface
     public function getActivo()
     {
         return $this->activo;
+    }
+    
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return Usuario
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
     }
     
     public function getRoles(){}

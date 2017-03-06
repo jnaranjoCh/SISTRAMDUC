@@ -2,6 +2,19 @@ $( window ).load(function() {
     $("#mini-1").click();
     $("#mini-2").click();
     $("#mini-3").click();
+    
+    $("#table-5").DataTable( {
+          "ajax": "/web/app_dev.php/registro/enviar-emails",
+          "columns": [
+		        { "data": "Email" },
+		        { "data": "Rol" },
+		        { "data": "Estatus" }
+	       ],
+	       "language": {
+            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            }
+    });
+    
     $.ajax({
         method: "POST",
         url:  "/web/app_dev.php/registro/obtener-datos",
@@ -26,5 +39,7 @@ $( window ).load(function() {
             $("#crg").html(cargo);
         }
     });
+    
+    $('#datetimepicker1').datetimepicker();
 });
 
