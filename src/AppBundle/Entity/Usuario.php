@@ -8,7 +8,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Usuario")
  */
 class Usuario implements UserInterface
 {
@@ -23,7 +22,7 @@ class Usuario implements UserInterface
      *  @ORM\@Column(type="integer")
      */
     private $rolId;
-    
+
     /**
      * @ORM\Column(type="string", length=25)
      */
@@ -64,23 +63,23 @@ class Usuario implements UserInterface
      */
     private $correo;
 
-    /** 
-     * @ORM\@Column(type="integer") 
+    /**
+     * @ORM\@Column(type="integer")
      */
     private $telefono;
 
-    /** 
-     * @ORM\@Column(type="integer") 
+    /**
+     * @ORM\@Column(type="integer")
      */
     private $rif;
 
-    /** 
-      * @ORM\@Column(type="datetime") 
+    /**
+      * @ORM\@Column(type="datetime")
       */
     private $fechaNacimiento;
 
-    /** 
-      * @ORM\@Column(type="datetime") 
+    /**
+      * @ORM\@Column(type="datetime")
       */
     private $fechaFallecimiento;
 
@@ -99,7 +98,7 @@ class Usuario implements UserInterface
      * @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
      */
     protected $rol;
-    
+
     /**
      * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro", inversedBy="usuarios")
      * @JoinTable(name="usuarios_registros",
@@ -108,7 +107,7 @@ class Usuario implements UserInterface
      *      )
      */
     protected $registros;
-    
+
     /**
      * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo", inversedBy="usuarios")
      * @JoinTable(name="usuarios_cargos",
@@ -117,7 +116,7 @@ class Usuario implements UserInterface
      *      )
      */
     protected $cargos;
-    
+
     /**
      * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad", inversedBy="usuarios")
      * @JoinTable(name="usuarios_facultades",
@@ -126,7 +125,7 @@ class Usuario implements UserInterface
      *      )
      */
     protected $facultades;
-    
+
     /**
      * @ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
      * @JoinTable(name="usuario_hijo",
@@ -135,7 +134,7 @@ class Usuario implements UserInterface
      *      )
      */
     protected $hijos;
-    
+
     public function __construct()
     {
         $this->registros = new ArrayCollection();
@@ -163,7 +162,7 @@ class Usuario implements UserInterface
     {
         return $this->rolId;
     }
-    
+
     /**
      * Set rolId
      *
@@ -172,10 +171,10 @@ class Usuario implements UserInterface
     public function setRolId($rolId)
     {
         $this->rolId = $rolId;
-        
+
         return $this;
     }
-    
+
     /**
      * Set cedula
      *
@@ -487,7 +486,7 @@ class Usuario implements UserInterface
     {
         return $this->activo;
     }
-    
+
     /**
      * Set direccion
      *
@@ -511,10 +510,25 @@ class Usuario implements UserInterface
     {
         return $this->direccion;
     }
-    
-    public function getRoles(){}
-    public function getUsername(){}
-    public function getSalt(){}
-    public function eraseCredentials(){}
-}
 
+    public function getRoles()
+    {
+        return [];
+    }
+
+    public function getUsername(){}
+
+    public function getSalt(){}
+
+    public function eraseCredentials(){}
+
+    public function getNombreCorto ()
+    {
+        return $this->getPrimerNombre().' '.$this->getPrimerApellido();
+    }
+
+    public function getNombreCompleto ()
+    {
+        return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+    }
+}
