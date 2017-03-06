@@ -1,0 +1,16 @@
+RegistroUnicoBundle\Entity\TipoRegistro:
+    type: entity
+    table: null
+    repositoryClass: RegistroUnicoBundle\Repository\TipoRegistroRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        description:
+            type: string
+            length: '50'
+            unique: true
+    lifecycleCallbacks: {  }

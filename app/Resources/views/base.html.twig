@@ -180,6 +180,105 @@
           </ul>         
         </li>
         
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa fa-handshake-o"></i><span>Cláusulas Contractuales</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li data-route="">
+              <a href="#"><i class="fa fa-circle-o"></i><span>Realizar solicitud</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="clausulas_contractuales_prima_hijos">
+                  <a href="{{ path('clausulas_contractuales_prima_hijos') }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                </li>
+                <li data-route="clausulas_contractuales_beca">
+                  <a href="{{path('clausulas_contractuales_beca')}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
+                </li>
+                <li data-route="clausulas_contractuales_discapacidad">
+                  <a href="{{path('clausulas_contractuales_discapacidad')}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="treeview-menu">
+            <li data-route="clausulas_contractuales_consultar">
+              <a href="{{path('clausulas_contractuales_consultar')}}"><i class="fa fa-circle-o"></i><span>Consultar solicitud</span></a>
+            </li>
+          </ul>
+        </li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users"></i><span>Preparadores</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="#">
+                <i class="fa fa fa-circle-o"></i><span>Apertura De Concurso</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="apertura_concurso_index">
+                  <a href="{{ path('apertura_concurso_index') }}"><i class="fa fa-circle-o"></i>Inicio</a>
+                </li>
+                <li data-route="solicitar">
+                  <a href="{{ path('solicitar') }}"><i class="fa fa-circle-o"></i>Solicitar</a>
+                </li>
+              </ul>
+            </li>
+            <li data-route="concurso_index">
+              <a href="{{ path('concurso_index') }}"><i class="fa fa-circle-o"></i>Concurso</a>
+            </li>
+            <li data-route="renuncia_preparador_index">
+              <a href="{{ path('renuncia_preparador_index') }}"><i class="fa fa-circle-o"></i>Gestionar Renuncia</a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-fw fa-money"></i><span>Comisión de Servicio<br> Remunerada</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li data-route="comision_remunerada_info">
+              <a href="{{ path('comision_remunerada_info') }}"><i class="fa fa-circle-o"></i>Información</a>
+            </li>
+            <li data-route="comision_remunerada_solicitar">
+              <a href="{{ path('solicitud_serv_remun') }}"><i class="fa fa-circle-o"></i>Solicitar</a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-fw fa-wheelchair"></i><span>Jubilación</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li data-route="jubilacion-informacion">
+              <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+            </li>
+            <li data-route="jubilacion-solicitud">
+              <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+            </li>>
+          </ul>
+        </li>
+>>>>>>> f3188520327daa51c0ec0631cdf4efe51d62787c
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -219,6 +318,15 @@
     $ul.addClass('menu-open');
     $ul.parent('li.treeview').addClass('active');
   }
+  
+
+  if ($ul.is('.treeview-menu')) {
+    $ul.addClass('menu-open');
+    $ul.parent('li').addClass('active');
+    $ul.parent('li').parent('ul').addClass('menu-open');
+    $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
+  }
+  
 </script>
 
 <!-- Bootstrap 3.3.6 -->
@@ -226,13 +334,17 @@
 <!-- daterangepicker -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/moment.js') }}"></script>
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- datatable -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <!-- Slimscroll -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.js') }}"></script>
+<!-- Slide to top -->
+<script src="{{ asset('assets/js/SlideToTop.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
-<script src="{{ asset('bundles/js/autoClick.js') }}"></script>
 
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}

@@ -1,0 +1,4 @@
+services:
+#    clausulas_contractuales.example:
+#        class: ClausulasContractualesBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

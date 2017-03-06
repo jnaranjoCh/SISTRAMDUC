@@ -4,44 +4,58 @@
     <section class="content-header">
       <h1>Registrar Usuario</h1>
       <ol class="breadcrumb">
-        <li><i class="fa fa-fa fa-address-card-o"></i>Regitro único</li>
+        <li><i class="fa fa-fa fa-address-card-o"></i>Registro único</li>
         <li class="active">Registro de Usuarios</li>
       </ol>
     </section>
     
     <br/>
-    
-    <section class="content-body col-md-offset-2 col-md-8">
-      <br/>
-      <div class="register-box-body">
-          <form>
-             <img src="{{asset('bundles/images/usuario.jpeg')}}" class="user-image col-sm-offset-5 col-xs-offset-3" alt="User Image">
-            <div class="form-group has-feedback">
-              <input type="email" class="form-control" placeholder="Email">
-              <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-              <input type="password" class="form-control" placeholder="Contraseña">
-              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-              <input type="password" class="form-control" placeholder="Repetir contraseña">
-              <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">Seleccione el tipo de usuario</option>
-                  <option>Administrador</option>
-                  <option>Docente</option>
-                  <option>Otros</option>
-                </select>
-              </div>
-            <div class="col-xs-12">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">Registrar</button>
-            </div>
-          </form>
+    <div class="row">
+      <!--Success message-->
+      <div id="succesUser" class="col-md-offset-1 col-md-10 alert alert-success hidden">
+          Usuario registrado con exito!. 
       </div>
-    </section>
+      <!--Success message-->
+      <section class="content-body col-md-offset-2 col-md-8">
+        <br/>
+        <div class="register-box-body">
+            <form>
+              <img src="{{asset('assets/images/usuario.jpeg')}}" class="user-image col-sm-offset-5 col-xs-offset-3" alt="User Image">
+              <div class="form-group has-feedback">
+                <input id="emailUsuario" type="email" class="form-control" placeholder="Email">
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <span id="emailUsuarioS" class="hidden" style="color:red;">Email no valido.<br/></span>
+                <span id="emailUsuarioSS" class="hidden" style="color:red;">El email ya se encuentra registrado.</span>
+              </div>
+              <div class="form-group has-feedback">
+                <input id="passwordUsuario" type="password" class="form-control" placeholder="Contraseña">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <span id="passwordUsuarioS" class="hidden" style="color:red;">Campo obligatoria.</span>
+              </div>
+              <div class="form-group has-feedback">
+                <input id="retryPasswordUsuario" type="password" class="form-control" placeholder="Repetir contraseña">
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                <span id="retryPasswordUsuarioS" class="hidden" style="color:red;">Las contraseñas no coinciden.<br/></span>
+                <span id="retryPasswordUsuarioSS" class="hidden" style="color:red;">Campo obligatoria.</span>
+              </div>
+              <div class="form-group has-feedback">
+                  <select id="tu" class="form-control select2" style="width: 100%;">
+                  </select>
+                  <span id="tuS" class="hidden" style="color:red;">Debe seleccionar una opcion.</span>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button id="registrarUsuario" type="button" class="btn btn-primary btn-block btn-flat">Registrar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
     <br/><br/>
 {% endblock %}
 
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/iniRU.js') }}"></script>
+  <script src="{{ asset('assets/js/registerUser.js') }}"></script>
+{% endblock %}

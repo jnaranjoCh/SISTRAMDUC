@@ -1,0 +1,3 @@
+# clausulas_contractuales_b_index:
+#     path:     /
+#     defaults: { _controller: ClausulasContractualesBBundle:Default}

@@ -1,6 +1,6 @@
 <?php
 
-namespace PlanSeptenalBundle\Tests\Controller;
+namespace ClausulasContractualesBBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

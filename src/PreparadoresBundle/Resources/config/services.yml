@@ -1,0 +1,4 @@
+services:
+#    preparadores.example:
+#        class: PreparadoresBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

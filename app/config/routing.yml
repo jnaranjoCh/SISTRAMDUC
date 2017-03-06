@@ -3,6 +3,33 @@ reincorporacion:
     type:     annotation
     prefix:   /
 
+jubilacion:
+    resource: "@JubilacionBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+comision_remunerada:
+    resource: "@ComisionRemuneradaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+clausulas_contractuales_b:
+    resource: "@ClausulasContractualesBBundle/Resources/config/routing.yml"
+    prefix:   /
+
+clausulas_contractuales_a:
+    resource: "@ClausulasContractualesABundle/Resources/config/routing.yml"
+    prefix:   /
+
+preparadores:
+    resource: "@PreparadoresBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+clausulas_contractuales:
+    resource: "@ClausulasContractualesBundle/Resources/config/routing.yml"
+    prefix:   /
+
 registro_unico:
     resource: "@RegistroUnicoBundle/Resources/config/routing.yml"
     prefix:   /

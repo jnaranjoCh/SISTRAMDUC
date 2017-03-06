@@ -1,0 +1,15 @@
+RegistroUnicoBundle\Entity\Catedra:
+    type: entity
+    table: null
+    repositoryClass: RegistroUnicoBundle\Repository\CatedraRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        description:
+            type: string
+            length: '50'
+    lifecycleCallbacks: {  }

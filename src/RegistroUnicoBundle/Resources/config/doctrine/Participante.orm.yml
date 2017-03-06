@@ -1,0 +1,18 @@
+RegistroUnicoBundle\Entity\Participante:
+    type: entity
+    table: null
+    repositoryClass: RegistroUnicoBundle\Repository\ParticipanteRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nombre:
+            type: string
+            length: '100'
+        cedula:
+            type: integer
+            unique: true
+    lifecycleCallbacks: {  }

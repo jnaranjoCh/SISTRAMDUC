@@ -5,6 +5,12 @@ imports:
     - { resource: "@PlanSeptenalBundle/Resources/config/services.yml" }
     - { resource: "@RegistroUnicoBundle/Resources/config/services.yml" }
     - { resource: "@ReincorporacionBundle/Resources/config/services.yml" }
+    - { resource: "@ClausulasContractualesBundle/Resources/config/services.yml" }
+    - { resource: "@PreparadoresBundle/Resources/config/services.yml" }
+    - { resource: "@ClausulasContractualesABundle/Resources/config/services.yml" }
+    - { resource: "@ClausulasContractualesBBundle/Resources/config/services.yml" }
+    - { resource: "@ComisionRemuneradaBundle/Resources/config/services.yml" }
+    - { resource: "@JubilacionBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -45,12 +51,13 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_pgsql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        driver:         pdo_pgsql
+        host:           "%database_host%"
+        port:           "%database_port%"
+        dbname:         "%database_name%"
+        user:           "%database_user%"
+        password:       "%database_password%"
+        server_version: "%database_server_version%"
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -58,7 +65,10 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #path:     "%database_path%"
-
+        types:
+            monthly_date_range: PlanSeptenalBundle\Entity\Types\MonthlyDateRangeType
+        mapping_types:
+            monthly_date_range: string
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -71,3 +81,14 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Snappy Configuration
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     "%wkhtmltopdf%"
+        options:    []
+    image:
+        enabled:    false
+        binary:     "%wkhtmltoimage%"
+        options:    []

@@ -1,6 +1,6 @@
 <?php
 
-namespace RegitroUnicoBundle\Tests\Controller;
+namespace JubilacionBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

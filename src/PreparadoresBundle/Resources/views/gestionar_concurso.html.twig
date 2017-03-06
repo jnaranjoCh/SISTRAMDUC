@@ -1,0 +1,417 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <section class="content-header">
+    <h1>
+      Gestionar Concurso
+    </h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa fa-users"></i> Preparadores</li>
+      <li> Concurso</li>
+      <li class="active">Gestionar</li>
+    </ol>
+  </section>
+  
+  <br/>
+  
+  <div class="row">
+    <section class="content-body">
+      <div class="col-md-offset-1 col-md-10">
+        <div id="solicitudSeleccionada"  class="box box-info">
+          <div class="box-header with-border text-center">
+            <h3 class="box-title"><b>Datos del Concurso</b></h3>
+          </div>
+          <div class="box-body">
+            <div class="col-md-offset-3 col-md-6">
+              <dl class="dl-horizontal">
+                <dt>Asignatura</dt>
+                <dd>Materia...</dd>
+                
+                <dt>Número de Aspirantes</dt>
+                <dd>Nro...</dd>
+                
+                <dt>Tema Examen Oral</dt>
+                <dd>Tema...</dd>
+                
+                <dt>Tema Examen Escrito</dt>
+                <dd>Tema...</dd>
+                
+                <dt>Jurado</dt>
+                <dd>Coordinador...</dd>
+                <dd>Principal 1...</dd>
+                <dd>Principal 2...</dd>
+                <dd>Suplente 1...</dd>
+                <dd>Suplente 2...</dd>
+                
+                <dt>Fechas Importantes</dt>
+                <dd>Fecha...</dd>
+                
+              </dl>
+            </div>
+          </div>
+          <div class="box-footer">
+            <div class="col-md-offset-5"> 
+              <div class="btn-group">
+                <button type="button" class="btn btn-info">Acciones</button>
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="#concursoDesierto" data-toggle="collapse">
+                      <b>Declarar Concurso Desierto</b>
+                    </a>
+                  </li>                  
+                  <li>
+                    <a href="#registroAspirante" data-toggle="collapse">
+                      <b>Registrar Aspirantes</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#evaluarRequisitosAspirante" data-toggle="collapse">
+                      <b>Evaluar Requisitos de los Aspirantes</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#registrarFecha" data-toggle="collapse">
+                      <b>Registrar Fecha de Evaluacion</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#registrarCalificacionAspirantes" data-toggle="collapse">
+                      <b>Registrar Calificacion de la Evaluacion</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#exposicionMotivos" data-toggle="collapse">
+                      <b>Registrar Exposicion de Motivos</b>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#proposicionNombramiento" data-toggle="collapse">
+                      <b>Registrar Proposicion del Nombramiento</b>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="concursoDesierto"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Declarar Concurso Desierto</b></h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Causal de Concurso Desierto</label>
+                  <textarea class="form-control" rows="3" placeholder="Ingrese aquí el causal del concurso desierto" style="resize:none"></textarea>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button type="submit" class="btn btn-info btn-block">Cargar Causal</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="evaluarRequisitosAspirante"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Evaluar Requisitos Aspirantes</b></h3>
+          </div>
+          <form role="form" class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="input-group col-sm-offset-2 col-sm-8">
+                    {#<label>Comunicacion Escrita</label>#}
+                    <input type="text" name="attachment" placeholder="Comunicacion Escrita" class="form-control">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group col-sm-offset-2 col-sm-8">
+                    {#<label>Comunicacion Escrita</label>#}
+                    <input type="text" name="attachment" placeholder="Reporte de Notas" class="form-control">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group col-sm-offset-2 col-sm-8">
+                    {#<label>Comunicacion Escrita</label>#}
+                    <input type="text" name="attachment" placeholder="Carta de Buena Conducta" class="form-control">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-2 col-sm-3">
+                  <button type="submit" href="#incumpleRequisitos" data-toggle="collapse" class="btn btn-danger btn-block">No Cumple</button>
+                </div>
+                <div class="col-sm-offset-2 col-sm-3">
+                  <button type="submit" class="btn btn-success btn-block">Cumple</button>
+                </div>
+              </div>
+            </form>
+        </div>
+        
+        <div id="incumpleRequisitos"  class="box  no-border box-info collapse off">
+          {#<div class="box-header with-border">#}
+          {#  <h3 class="box-title"><b>incumpleRequisitos</b></h3>#}
+          {#</div>#}
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Solicitará Exoneración?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <button type="submit" class=" btn btn-info btn-block">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+        
+      <div class="col-md-offset-1 col-md-10">
+        <div id="registrarFecha"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title">
+              <b>Registrar Fecha de Evaluacion</b>
+            </h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="form-group">
+                      <div class="col-xs-4">
+                        <label>Date:</label>
+                      </div>
+                      <div class="col-xs-4">
+                        <div class="input-group date">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control pull-right" id="datepicker">
+                        </div>
+                      </div>
+                      <div class="col-xs-2">
+                        <button type="submit" class=" btn btn-info btn-block">Enviar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="registrarCalificacionAspirantes"class="box box-info collapse off">
+          <div class="box-header with-border">
+              <h3 class="box-title">
+                <i class="fa fa-upload"></i>
+                <b>Registrar Calificacion de los Aspirantes</b>
+              </h3>
+          </div>
+          <div id="collapseOne" class="box-body">
+            <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="asigSol" class="col-sm-3 control-label">Nota Examen Escrito</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="asigSol" placeholder="Asignatura Solicitante">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="nroPlz" class="col-sm-3 control-label">Nota Examen Oral</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" id="nroPlz" placeholder="Número de Plazas">
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button type="submit" class=" btn btn-info btn-block">Registrar Calificacion</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="exposicionMotivos"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Exposicion de Motivos</b></h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Exposicion de Motivos</label>
+                  <textarea class="form-control" rows="3" placeholder="Ingrese aquí Exposicion de Motivos" style="resize:none"></textarea>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button type="submit" class="btn btn-info btn-block">Cargar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="aprobarJurado"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Aprobar Jurado</b></h3>
+          </div>
+          <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Aprueba el Jurado de la Solicitud?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <button type="submit" href="#cambiarJurado" data-toggle="collapse" class=" btn btn-info btn-block">Siguiente</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div class="col-md-offset-1 col-md-10">
+        <div id="cambiarJurado"  class="box box-info collapse off">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Cambiar Jurado</b></h3>
+          </div>
+          <form role="form">
+            <div class="box-body">
+              <div class="col-md-5">
+                <h3 class="text-center"><b>Propuesto</b></h3>
+                <div class="form-group">
+                  <label for="juradoCoord">Jurado Coordinador</label>
+                  <input id="juradoCoord" type="text" class="form-control" placeholder="Jurado Coordinador">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal1">Jurado Principal 1</label>
+                  <input id="juradoPpal1" type="text" class="form-control" placeholder="Jurado Principal 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal2">Jurado Principal 2</label>
+                  <input id="juradoPpal2" type="text" class="form-control" placeholder="Jurado Principal 2">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl1">Jurado Suplente 1</label>
+                  <input id="juradoSpl1" type="text" class="form-control" placeholder="Jurado Suplente 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl2">Jurado Suplente 2</label>
+                  <input id="juradoSpl2" type="text" class="form-control" placeholder="Jurado Suplente 2">
+                </div>
+              </div>
+              
+              <div class="col-md-5">
+                <h3 class="text-center text-navy"><b>Nuevo</b></h3>
+                
+                <div class="form-group">
+                  <label for="juradoCoord">Jurado Coordinador</label>
+                  <input id="juradoCoord" type="text" class="form-control" placeholder="Jurado Coordinador">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal1">Jurado Principal 1</label>
+                  <input id="juradoPpal1" type="text" class="form-control" placeholder="Jurado Principal 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoPpal2">Jurado Principal 2</label>
+                  <input id="juradoPpal2" type="text" class="form-control" placeholder="Jurado Principal 2">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl1">Jurado Suplente 1</label>
+                  <input id="juradoSpl1" type="text" class="form-control" placeholder="Jurado Suplente 1">
+                </div>
+                <div class="form-group">
+                  <label for="juradoSpl2">Jurado Suplente 2</label>
+                  <input id="juradoSpl2" type="text" class="form-control" placeholder="Jurado Suplente 2">
+                </div>
+              </div>
+            </div>
+            <div class="box-footer">
+              <div class="col-sm-offset-4 col-sm-4">
+                <button type="submit" href="#veredicto" data-toggle="collapse" class="btn btn-info btn-block">Cambiar Jurado</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+    </section>
+  </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script>
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
+  </script>
+{% endblock %}
+

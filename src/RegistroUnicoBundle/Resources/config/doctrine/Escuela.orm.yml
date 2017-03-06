@@ -1,0 +1,18 @@
+RegistroUnicoBundle\Entity\Escuela:
+    type: entity
+    table: null
+    repositoryClass: RegistroUnicoBundle\Repository\EscuelaRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        description:
+            type: string
+            length: '50'
+        facultadId:
+            type: integer
+            column: facultad_id
+    lifecycleCallbacks: {  }
