@@ -108,12 +108,16 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Primer nombre</label>
-                        <input type="text" class="form-control" placeholder="Primer nombre" required>
+                        <input type="text" id="primerNombreDatosI" class="form-control" placeholder="Primer nombre" required>
+                        <span id="primerNombreDatos" class="hidden" style="color:red;">Nombre no valido.<br/></span>
+                        <span id="primerNombreDatosE" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Segundo nombre</label>
-                        <input type="text" class="form-control" placeholder="Segundo nombre" required>
+                        <input type="text" id="segundoNombreDatosI" class="form-control" placeholder="Segundo nombre" required>
+                        <span id="segundoNombreDatos" class="hidden" style="color:red;">Nombre no valido.<br/></span>
+                        <span id="segundoNombreDatosE" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -121,12 +125,16 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Primer apellido</label>
-                        <input type="text" class="form-control" placeholder="Primer apellido" required>
+                        <input type="text" id="primerApellidoDatosI" class="form-control" placeholder="Primer apellido" required>
+                        <span id="primerApellidoDatos" class="hidden" style="color:red;">Apellido no valido.<br/></span>
+                        <span id="primerApellidoDatosE" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Segundo apellido</label>
-                        <input type="text" class="form-control" placeholder="Segundo apellido" required>
+                        <input type="text" id="segundoApellidoDatosI" class="form-control" placeholder="Segundo apellido" required>
+                        <span id="segundoApellidoDatos" class="hidden" style="color:red;">Apellido no valido.<br/></span>
+                        <span id="segundoApellidoDatosE" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -137,17 +145,23 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Nacionalidad</label>
-                        <input type="text" class="form-control" placeholder="Nacionalidad" required>
+                        <select id="nacionalidadDatosI" class="form-control select2" style="width: 100%;" required>
+                          <option selected="selected" value="">Seleccione una opción</option>
+                          <option value="Venezolano">Venezolano</option>
+                          <option value="Extranjero">Extranjero</option>
+                        </select>
+                        <span id="nacionalidadDatos" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Fecha de nacimiento</label>
                         <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control" />
+                            <input id="fechaNacimientoDatosI" type='text' class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
+                        <span id="fechaNacimientoDatos" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -156,16 +170,19 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Edad</label>
-                        <input type="number" class="form-control" placeholder="Edad" min="18" max="80" required>
+                        <input type="number" id="edadDatosI" class="form-control" placeholder="Edad" min="18" max="80" required>
+                        <span id="edadDatos" class="hidden" style="color:red;">Edad no valida.<br/></span>
+                        <span id="edadDatosE" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Sexo</label>
-                        <select class="form-control select2" style="width: 100%;" required>
-                          <option selected="selected">Seleccione una opción</option>
+                        <select class="form-control select2" id="sexoDatosI" style="width: 100%;" required>
+                          <option selected="selected" value="">Seleccione una opción</option>
                           <option value="Masculino">Masculino</option>
                           <option value="Femenino">Femenino</option>
                         </select>
+                        <span id="sexoDatos" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -176,12 +193,14 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Cedula</label>
-                        <input type="number" class="form-control" placeholder="Cedula">
+                        <input id="cedulaDatosI" type="number" class="form-control" placeholder="Cedula">
+                        <span id="cedulaDatos" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>RIF</label>
-                        <input type="number" class="form-control" placeholder="RIF">
+                        <input id="rifDatosI" type="number" class="form-control" placeholder="RIF">
+                        <span id="rifDatos" class="hidden" style="color:red;">Campo obligatorio.</span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -191,18 +210,20 @@
                         <label>Telefono</label>
                         <div class="row">
                             <div class="col-xs-4">
-                              <input type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
+                              <input id="numeroDatosI" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
                             </div>
                             <strong><label class="col-xs-1">—</label></strong>
                             <div class="col-xs-7">
-                              <input type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
+                              <input id="numeroDatosII" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
                             </div>
                         </div>
+                        <span id="numeroDatos" class="hidden" style="color:red;">Numero no valido.<br/></span>
+                        <span id="numeroDatosE" class="hidden" style="color:red;">Campos obligatorios.</span>
                       </div>  
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Dirección</label>
-                        <textarea class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                        <textarea id="direccionDatosI" class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -210,6 +231,7 @@
                   </div>
                   <!-- /.row -->
                 </div>
+                <span id="noCoincide" class="hidden" style="color:red;">La fecha de nacimiento no coincide con la edad.<br/></span>
               </div>
               <!-- /.box -->
             </div>  

@@ -31,7 +31,7 @@ AppBundle\Entity\Usuario:
             column: direccion
         nacionalidad:
             type: string
-            length: '50'
+            length: '1'
             column: nacionalidad
         correo:
             type: string
