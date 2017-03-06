@@ -27,5 +27,12 @@ $ cd sistramduc
 $ composer install
 $ npm install -g bower
 $ bower install
+$ php bin/console doctrine:database:create
+$ php bin/console doctrine:schema:update --force
+$ php bin/console doctrine:fixtures:load
 $ php bin/console server:run
 ```
+
+### Credenciales
+Cédula: 1234
+Contraseña: 1234
