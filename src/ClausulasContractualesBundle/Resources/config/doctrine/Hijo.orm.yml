@@ -1,0 +1,52 @@
+ClausulasContractualesBundle\Entity\Hijo:
+    type: entity
+    table: null
+    repositoryClass: ClausulasContractualesBundle\Repository\HijoRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        cedulaMadre:
+            type: integer
+            unique: true
+            column: cedula_madre
+        cedulaPadre:
+            type: integer
+            unique: true
+            column: cedula_padre
+        cedulaHijo:
+            type: integer
+            nullable: true
+            unique: true
+            column: cedula_hijo
+        fechaNacimiento:
+            type: date
+            column: fecha_nacimiento
+        primerNombre:
+            type: string
+            length: '50'
+            column: primer_nombre
+        segundoNombre:
+            type: string
+            length: '50'
+            nullable: true
+            column: segundo_nombre
+        primerApellido:
+            type: string
+            length: '50'
+            column: primer_apellido
+        segundoApellido:
+            type: string
+            length: '50'
+            column: segundo_apellido
+        nacionalidadd:
+            type: string
+            length: '1'
+        partidaNacimientoUrl:
+            type: string
+            length: 255
+            column: partida_nacimiento_url
+    lifecycleCallbacks: {  }

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/reincorporacion/global.css') }}">    
+{% endblock %}
+
+{% block content %}
+
+    <section class="content-header">
+        <h1>Solicitud de Reincorporación al Personal Docente</h1>
+        <ol class="breadcrumb">
+          <li><i class="fa fa fa-suitcase"></i> Reincorporación docente</li>
+          <li class="active">Subida de recaudos</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="callout callout-info">        
+            <h4><i class="fa fa-info-circle"></i> Debe adjuntar los recaudos exigidos a continuación para continuar con el proceso de <strong>Reincorporación.</strong></h4>
+        </div>
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">Subida de recaudos</h4>
+            </div>
+            <div class="box-body">
+              <form action="">
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Designación como docente" readonly="true">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+                  </span>
+              </div>                
+              <br>
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Oficio de la Ubicación" readonly="true">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+                  </span>                
+              </div>
+              <br>
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Oficio del úitimo ascenso" readonly="true">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+                  </span>  
+              </div>
+              <br>
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Oficio de la aceptación de la renuncia" readonly="true">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+                  </span> 
+              </div>
+              <br>
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Fondo negro del título (solo IV o V nivel)" readonly="true">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+                  </span> 
+              </div>
+              <br>
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo" readonly="true">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+                  </span>                
+              </div>
+              <br><br>
+              <div class="col-md-12 col-sm-12 right-block">                
+                  <a href="{{ path('actualizar-curriculum') }}" class="btn btn-lg btn-default">Volver</a>  
+                  <a href="{{ path('verificar-datos') }}" class="btn btn-lg btn-success">Adjuntar</a>
+              </div>
+            </form>
+          </div>
+            
+        </div>
+    </section>
+
+{% endblock %}

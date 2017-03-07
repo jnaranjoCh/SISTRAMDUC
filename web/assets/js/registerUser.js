@@ -45,7 +45,7 @@ $("#registrarUsuario").click(function (){
             dataType: 'json',
             success: function(data)
             {
-                if(data == "S")
+                if(data != "N")
                   $("#emailUsuarioSS").removeClass("hidden");
                 else
                 {
@@ -62,6 +62,7 @@ $("#registrarUsuario").click(function (){
                                 $("#emailUsuario").val("");
                                 $("#passwordUsuario").val("");
                                 $("#retryPasswordUsuario").val("");
+                                $("#succesUser").removeClass("hidden");                        
                             }
                         });
                     }

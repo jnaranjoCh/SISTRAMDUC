@@ -1,0 +1,49 @@
+.reincorporacion-box-item {
+    display: inline-flex;
+}
+
+.reincorporacion-link {
+    text-decoration: none;
+}
+
+.reincorporacion-box-body {
+    padding-left: 33.3%;
+
+}
+
+.reincorporacion-box-header {
+    text-align: center; 
+    padding-top: 20px;
+}
+
+.reincorporacion-box-footer{
+    padding-top: 20px;
+    padding-bottom: 25px;
+}
+
+.reincorporacion-primary-badge {
+    background-color: #00c0ef;
+    border-radius: 0px;
+    font-size: 24px;
+}
+
+.reincorporacion-amber {
+    color: #f39c12;
+}
+
+.reincorporacion-primary {
+    color: #4b94c0;
+}
+
+.reincorporacion-undecorated-list {
+    list-style-type: none;
+}
+
+.reincorporacion-box-alert {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.reincorporacion-btn-group {
+    margin-top: 100px;
+}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/reincorporacion/global.css') }}">    
+{% endblock %}
+
+{% block content %}
+
+    <section class="content-header">
+      <h1>Solicitud de Reincorporación al Personal Docente</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-suitcase"></i> Reincorporación docente</li>
+        <li class="active">Verificar datos</li>
+      </ol>
+    </section>
+
+    <section class="content"></section>
+
+{% endblock %}
