@@ -102,10 +102,10 @@ class Usuario implements UserInterface
      *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
      *      )
      */
-    protected $rol;
+    protected $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro")
      * @ORM\JoinTable(name="usuarios_registros",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")}
@@ -114,7 +114,7 @@ class Usuario implements UserInterface
     protected $registros;
 
     /**
-     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo")
      * @ORM\JoinTable(name="usuarios_cargos",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="cargo_id", referencedColumnName="id")}
@@ -123,7 +123,7 @@ class Usuario implements UserInterface
     protected $cargos;
 
     /**
-     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad")
      * @ORM\JoinTable(name="usuarios_facultades",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="facultad_id", referencedColumnName="id")}
@@ -132,7 +132,7 @@ class Usuario implements UserInterface
     protected $facultades;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo")
      * @ORM\JoinTable(name="usuario_hijo",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id")}
@@ -146,6 +146,7 @@ class Usuario implements UserInterface
         $this->cargos = new ArrayCollection();
         $this->facultades = new ArrayCollection();
         $this->hijos = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -518,10 +519,25 @@ class Usuario implements UserInterface
 
     public function getRoles()
     {
-        return [];
+        // profiler needs at least one rol to consider the user logged in
+        $roles = array_reduce($this->roles->toArray(), function ($rol_names, $rol) {
+            $rol_names[] = $rol->getNombre();
+            return $rol_names;
+        }, []);
+
+        return $roles;
     }
 
-    public function getUsername(){}
+    public function addRol($rol)
+    {
+        $this->roles[] = $rol;
+    }
+
+    public function getUsername()
+    {
+        // shows username in profiler
+        return $this->getNombreCorto();
+    }
 
     public function getSalt(){}
 

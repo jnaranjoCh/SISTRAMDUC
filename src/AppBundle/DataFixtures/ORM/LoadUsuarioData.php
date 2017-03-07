@@ -2,13 +2,15 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+
 use AppBundle\Entity\Usuario;
 
-class LoadUserData implements FixtureInterface, ContainerAwareInterface
+class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -22,26 +24,34 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-        $user = new Usuario();
-        $user->setCedula('1234');
-        $user->setPrimerNombre('Anthony');
-        $user->setSegundoNombre('Edward');
-        $user->setPrimerApellido('Stark');
-        $user->setSegundoApellido(' ');
-        $user->setNacionalidad('_');
-        $user->setCorreo('tony@stark.com');
-        $user->setTelefono(0);
-        $user->setRif(0);
-        $user->setActivo(true);
-        $user->setDireccion('Malibu');
-        $user->setEstatusId(1);
+        $tony = new Usuario();
+        $tony->setCedula('1234');
+        $tony->setPrimerNombre('Anthony');
+        $tony->setSegundoNombre('Edward');
+        $tony->setPrimerApellido('Stark');
+        $tony->setSegundoApellido(' ');
+        $tony->setNacionalidad('_');
+        $tony->setCorreo('tony@stark.com');
+        $tony->setTelefono(0);
+        $tony->setRif(0);
+        $tony->setActivo(true);
+        $tony->setDireccion('Malibu');
+        $tony->setEstatusId(1);
 
-        // the 'security.password_encoder' service requires Symfony 2.6 or higher
         $encoder = $this->container->get('security.password_encoder');
-        $password = $encoder->encodePassword($user, '1234');
-        $user->setPassword($password);
+        $password = $encoder->encodePassword($tony, '1234');
+        $tony->setPassword($password);
 
-        $manager->persist($user);
+        $tony->addRol($this->getReference('profesor-rol'));
+
+        $manager->persist($tony);
         $manager->flush();
+
+        $this->addReference('tony-user', $tony);
+    }
+
+    public function getOrder()
+    {
+        return 2;
     }
 }
