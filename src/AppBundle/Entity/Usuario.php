@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 class Usuario implements UserInterface
 {
@@ -19,7 +20,7 @@ class Usuario implements UserInterface
     private $id;
 
     /**
-     *  @ORM\@Column(type="integer")
+     *  @ORM\Column(type="integer")
      */
     private $estatusId;
 
@@ -64,22 +65,23 @@ class Usuario implements UserInterface
     private $correo;
 
     /**
-     * @ORM\@Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $telefono;
 
     /**
-     * @ORM\@Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $rif;
 
     /**
-      * @ORM\@Column(type="datetime")
+      * @ORM\Column(type="datetime", nullable=true)
+      *
       */
     private $fechaNacimiento;
 
     /**
-      * @ORM\@Column(type="datetime")
+      * @ORM\Column(type="datetime", nullable=true)
       */
     private $fechaFallecimiento;
 
@@ -89,48 +91,51 @@ class Usuario implements UserInterface
     private $contraseña;
 
     /**
-     * @ORM\Column(type="bool")
+     * @ORM\Column(type="boolean")
      */
     private $activo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Rol", inversedBy="usuarios")
-     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Rol")
+     * @ORM\JoinTable(name="usuario_rol",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
+     *      )
      */
     protected $rol;
 
     /**
-     * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro", inversedBy="usuarios")
-     * @JoinTable(name="usuarios_registros",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuarios_registros",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")}
      *      )
      */
     protected $registros;
 
     /**
-     * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo", inversedBy="usuarios")
-     * @JoinTable(name="usuarios_cargos",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="cargo_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuarios_cargos",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="cargo_id", referencedColumnName="id")}
      *      )
      */
     protected $cargos;
 
     /**
-     * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad", inversedBy="usuarios")
-     * @JoinTable(name="usuarios_facultades",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="facultad_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuarios_facultades",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="facultad_id", referencedColumnName="id")}
      *      )
      */
     protected $facultades;
 
     /**
-     * @ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
-     * @JoinTable(name="usuario_hijo",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="hijo_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuario_hijo",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id")}
      *      )
      */
     protected $hijos;

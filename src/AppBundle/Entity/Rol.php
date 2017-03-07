@@ -19,36 +19,31 @@ class Rol
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=64)
      */
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=256)
      */
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="rol")
-     */
-    protected $usuarios;
-    /**
-     * @ManyToMany(targetEntity="Permisos", inversedBy="roles")
-     * @JoinTable(name="permisos_roles",
-     *      joinColumns={@JoinColumn(name="rol_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="permisos_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="Permiso")
+     * @ORM\JoinTable(name="rol_permiso",
+     *      joinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="permiso_id", referencedColumnName="id")}
      *      )
      */
     protected $permisos;
-    
+
     public function __construct()
     {
-        $this->usuarios = new ArrayCollection();
         $this->permisos = new ArrayCollection();
     }
     /**
      * Get id
-     *no
+     *
      * @return int
      */
     public function getId()
@@ -104,4 +99,3 @@ class Rol
         return $this->description;
     }
 }
-
