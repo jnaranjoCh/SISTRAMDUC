@@ -4,29 +4,29 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Doctrine\ORM\Tools\SchemaTool;
 
 use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
+use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 
 class PlanSeptenalIndividualController extends WebTestCase
 {
     protected $em;
 
-    /*
     public function setUp() {
         parent::setUp();
 
         $kernel = static::createKernel();
         $kernel->boot();
         $this->em = $kernel->getContainer()->get('doctrine')->getManager();
-        $schemaTool = new SchemaTool($this->em);
-        $metadata = $this->em->getMetadataFactory()->getAllMetadata();
-
-        $schemaTool->dropSchema($metadata);
-        $schemaTool->createSchema($metadata);
     }
-    */
+
+    /**
+     * @group functionalTesting
+     */
     public function testCreateAction()
     {
-        /*
-        $client = static::createClient();
+        $client = static::createClient(array(), array(
+            'PHP_AUTH_USER' => '1234',
+            'PHP_AUTH_PW'   => '1234',
+        ));
 
         $plan_septenal_individual_json = [
             'inicio'   => "2010",
@@ -57,7 +57,15 @@ class PlanSeptenalIndividualController extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
 
-        $this->assertCount(2, $this->em->getRepository(TramitePlanSeptenal::class)->findAll());
-        */
+        $tramites = $this->em->getRepository(TramitePlanSeptenal::class)->findAll();
+        $this->assertCount(2, $tramites);
+
+        $planes = $this->em->getRepository(PlanSeptenalIndividual::class)->findAll();
+        $this->assertCount(1, $planes);
+
+        $this->em->remove($tramites[0]);
+        $this->em->remove($tramites[1]);
+        $this->em->remove($planes[0]);
+        $this->em->flush();
     }
 }
