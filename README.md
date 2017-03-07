@@ -38,7 +38,7 @@ $ psql
 ubuntu=# CREATE USER username SUPERUSER PASSWORD 'password';
 ubuntu=# \q
 
-Luego en el archivo parameters.yml se colocan las credencia de super usuario y listo.
+Luego en el archivo parameters.yml se colocan las credenciales de super usuario y listo.
 ```
 
 ### Instalación
