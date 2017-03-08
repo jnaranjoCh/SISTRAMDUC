@@ -116,6 +116,12 @@ function saveChanges () {
     $.ajax({
         url: "/plan-septenal/individual",
         data: getSummary(),
-        method: 'POST'
+        method: 'POST',
+        success: function (data) {
+            toastr["success"]("Los cambios han sido guardados");
+        },
+        error: function (data) {
+            toastr["error"]("Ocurrió un error. En caso de que el problema persista contacte a soporte");
+        }
     });
 }

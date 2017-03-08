@@ -22,6 +22,12 @@ QUnit.module("Activity Assignment", {
         this.$second = $elements.eq(1);
         this.$third = $elements.eq(2);
         this.$last = $elements.last();
+
+        this.server = sinon.fakeServer.create();
+        this.server.respondImmediately = true;
+    },
+    afterEach: function() {
+        this.server.restore();
     }
 });
 
@@ -128,7 +134,7 @@ QUnit.test("saveChanges()", function (assert) {
 
     saveChanges();
 
-    assert.ok($.ajax.calledWith({ url: "/plan-septenal/individual", data: data, method: 'POST' }), "Ajax request must be correctly formed");
+    assert.ok($.ajax.calledWithMatch({ url: "/plan-septenal/individual", data: data, method: 'POST' }), "Ajax request must be correctly formed");
 
     $.ajax.restore();
 });
@@ -144,4 +150,24 @@ QUnit.test("Summit button must call saveChanges method", function (assert) {
     window.saveChanges = real_saveChanges;
     // this shouldn't trigger the assertion because the function was restored
     $('<button type="submit">').appendTo( this.$plan ).trigger('click');
+});
+
+QUnit.test("On successful save, a message should be displayed", function (assert) {
+    this.server.respondWith([200, {}, ""]);
+
+    sinon.stub(toastr, 'success');
+
+    $('<button type="submit">').appendTo( this.$plan ).trigger('click');
+
+    assert.ok(toastr["success"].calledWith("Los cambios han sido guardados"), "A success message is necessary here");
+});
+
+QUnit.test("On server error, a message should be displayed", function (assert) {
+    this.server.respondWith([500, {}, ""]);
+
+    sinon.stub(toastr, 'error');
+
+    $('<button type="submit">').appendTo( this.$plan ).trigger('click');
+
+    assert.ok(toastr["error"].calledWith("Ocurrió un error. En caso de que el problema persista contacte a soporte"), "An error message is necessary here");
 });
