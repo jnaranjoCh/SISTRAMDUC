@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Permisos")
+ * @ORM\Table(name="Permiso")
  */
-class Permisos
+class Permiso
 {
     /**
      * @ORM\Id
@@ -19,29 +19,15 @@ class Permisos
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=64)
      */
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=256)
      */
     private $description;
 
-    /**
-     * @ManyToMany(targetEntity="Rol", inversedBy="permisos")
-     * @JoinTable(name="permisos_roles",
-     *      joinColumns={@JoinColumn(name="permisos_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="rol_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $roles;
-    
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
-    }
-    
     /**
      * Get id
      *
@@ -100,4 +86,3 @@ class Permisos
         return $this->description;
     }
 }
-

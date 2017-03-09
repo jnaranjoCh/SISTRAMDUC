@@ -27,6 +27,7 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
 
+
   {% block stylesheets %}{% endblock %}
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -73,15 +74,13 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"-->
-              <span class="hidden-xs">User</span>
+              <span class="hidden-xs">{{ app.user.getNombreCorto() }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <!-- img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"-->
-                <p>
-                  User - Developer
-                </p>
+                <p>{{ app.user.getNombreCompleto() }}</p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
@@ -89,7 +88,7 @@
                   <a href="#" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Salir</a>
+                  <a href="{{ path('security_logout') }}" class="btn btn-default btn-flat">Salir</a>
                 </div>
               </li>
             </ul>
@@ -156,7 +155,28 @@
             </li>
           </ul>
         </li>
-        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa fa-suitcase"></i><span>Reincorporación</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li data-route="reincorporacion">
+             <a href="{{ path('reincorporacion') }}"><i class="fa fa-circle-o"></i>Inicio</a>
+            </li>
+            <li data-route="actualizar-curriculum">
+              <a href="{{ path('actualizar-curriculum') }}"><i class="fa fa-circle-o"></i>Actualizar currículum</a>
+            </li>
+            <li data-route="subir-recaudos">
+              <a href="{{ path('subir-recaudos') }}"><i class="fa fa-circle-o"></i>Subida de recaudos</a>
+            </li>
+            <li data-route="verificar-datos">
+              <a href="{{ path('verificar-datos') }}"><i class="fa fa-circle-o"></i>Envío de solicitud</a>
+            </li>
+          </ul>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa fa-handshake-o"></i><span>Cláusulas Contractuales</span>
@@ -190,7 +210,7 @@
             </li>
           </ul>
         </li>
-        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-users"></i><span>Preparadores</span>
@@ -241,7 +261,7 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-fw fa-money"></i><span>Jubilación</span>
+            <i class="fa fa-fw fa-wheelchair"></i><span>Jubilación</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -250,9 +270,9 @@
             <li data-route="jubilacion-informacion">
               <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
             </li>
-            <li data-route="comision_remunerada_solicitar">
-              <a href="{{ path('solicitud_serv_remun') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
-            </li>
+            <li data-route="jubilacion-solicitud">
+              <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+            </li>>
           </ul>
         </li>
       </ul>
@@ -294,7 +314,7 @@
     $ul.addClass('menu-open');
     $ul.parent('li.treeview').addClass('active');
   }
-  
+
 
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
@@ -302,7 +322,7 @@
     $ul.parent('li').parent('ul').addClass('menu-open');
     $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
   }
-  
+
 </script>
 
 <!-- Bootstrap 3.3.6 -->

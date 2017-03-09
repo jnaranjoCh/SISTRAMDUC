@@ -1,5 +1,14 @@
-tramite:
-    resource: "@TramiteBundle/Controller/"
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+concursos:
+    resource: "@ConcursosBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+reincorporacion:
+    resource: "@ReincorporacionBundle/Controller/"
     type:     annotation
     prefix:   /
 
@@ -38,7 +47,3 @@ plan_septenal:
     resource: "@PlanSeptenalBundle/Controller/"
     type:     annotation
     prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation

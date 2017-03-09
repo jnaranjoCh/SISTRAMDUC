@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Usuario")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 class Usuario implements UserInterface
 {
@@ -20,9 +20,19 @@ class Usuario implements UserInterface
     private $id;
 
     /**
+     *  @ORM\Column(type="integer")
+     */
+    private $estatusId;
+
+    /**
      * @ORM\Column(type="string", length=25)
      */
     private $cedula;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $direccion;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -45,7 +55,7 @@ class Usuario implements UserInterface
     private $segundoApellido;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=1)
      */
     private $nacionalidad;
 
@@ -54,23 +64,24 @@ class Usuario implements UserInterface
      */
     private $correo;
 
-    /** 
-     * @ORM\@Column(type="integer") 
+    /**
+     * @ORM\Column(type="integer")
      */
     private $telefono;
 
-    /** 
-     * @ORM\@Column(type="integer") 
+    /**
+     * @ORM\Column(type="integer")
      */
     private $rif;
 
-    /** 
-      * @ORM\@Column(type="datetime") 
+    /**
+      * @ORM\Column(type="datetime", nullable=true)
+      *
       */
     private $fechaNacimiento;
 
-    /** 
-      * @ORM\@Column(type="datetime") 
+    /**
+      * @ORM\Column(type="datetime", nullable=true)
       */
     private $fechaFallecimiento;
 
@@ -80,53 +91,62 @@ class Usuario implements UserInterface
     private $contraseña;
 
     /**
-     * @ORM\Column(type="bool")
+     * @ORM\Column(type="boolean")
      */
     private $activo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Rol", inversedBy="usuarios")
-     * @ORM\JoinColumn(name="rol_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Rol")
+     * @ORM\JoinTable(name="usuario_rol",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
+     *      )
      */
-    protected $rol;
-    
+    protected $roles;
+
     /**
-     * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro", inversedBy="usuarios")
-     * @JoinTable(name="usuarios_registros",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro")
+     * @ORM\JoinTable(name="usuarios_registros",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")}
      *      )
      */
     protected $registros;
-    
+
     /**
-     * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo", inversedBy="usuarios")
-     * @JoinTable(name="usuarios_cargos",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="cargo_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo")
+     * @ORM\JoinTable(name="usuarios_cargos",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="cargo_id", referencedColumnName="id")}
      *      )
      */
     protected $cargos;
-    
+
     /**
-     * @ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad", inversedBy="usuarios")
-     * @JoinTable(name="usuarios_facultades",
-     *      joinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="facultad_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad")
+     * @ORM\JoinTable(name="usuarios_facultades",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="facultad_id", referencedColumnName="id")}
      *      )
      */
     protected $facultades;
-    
+
     /**
-     *  @ORM\@Column(type="integer")
+     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo")
+     * @ORM\JoinTable(name="usuario_hijo",
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id")}
+     *      )
      */
-    private $rolId;
-    
+    protected $hijos;
+
     public function __construct()
     {
         $this->registros = new ArrayCollection();
         $this->cargos = new ArrayCollection();
         $this->facultades = new ArrayCollection();
+        $this->hijos = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -140,27 +160,27 @@ class Usuario implements UserInterface
     }
 
     /**
-     * Get rolId
+     * Get estatusId
      *
      * @return int
      */
-    public function getRolId()
+    public function getEstatusId()
     {
-        return $this->rolId;
+        return $this->estatusId;
     }
-    
+
     /**
-     * Set rolId
+     * Set estatusId
      *
-     * @param int $rolId
+     * @param int $estatusId
      */
-    public function setRolId($rolId)
+    public function setEstatusId($estatusId)
     {
-        $this->rolId = $rolId;
-        
+        $this->estatusId = $estatusId;
+
         return $this;
     }
-    
+
     /**
      * Set cedula
      *
@@ -472,10 +492,64 @@ class Usuario implements UserInterface
     {
         return $this->activo;
     }
-    
-    public function getRoles(){}
-    public function getUsername(){}
-    public function getSalt(){}
-    public function eraseCredentials(){}
-}
 
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return Usuario
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    public function getRoles()
+    {
+        // profiler needs at least one rol to consider the user logged in
+        $roles = array_reduce($this->roles->toArray(), function ($rol_names, $rol) {
+            $rol_names[] = $rol->getNombre();
+            return $rol_names;
+        }, []);
+
+        return $roles;
+    }
+
+    public function addRol($rol)
+    {
+        $this->roles[] = $rol;
+    }
+
+    public function getUsername()
+    {
+        // shows username in profiler
+        return $this->getNombreCorto();
+    }
+
+    public function getSalt(){}
+
+    public function eraseCredentials(){}
+
+    public function getNombreCorto ()
+    {
+        return $this->getPrimerNombre().' '.$this->getPrimerApellido();
+    }
+
+    public function getNombreCompleto ()
+    {
+        return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+    }
+}

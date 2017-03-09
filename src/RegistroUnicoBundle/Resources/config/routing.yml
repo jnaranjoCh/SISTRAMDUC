@@ -33,3 +33,9 @@ registro_registeruser_ajax:
     defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuarioAjax }
     requirements:
         _method:  POST
+        
+registro_obteneremails_ajax:
+    path:     /registro/enviar-emails
+    defaults: { _controller: RegistroUnicoBundle:Default:enviarEmailsAjax }
+    requirements:
+        _method:  POST

@@ -26,7 +26,7 @@ class DefaultController extends Controller
         return $this->render('RegistroUnicoBundle:Default:consultar_registro.html.twig');
     }
     
-    public function guardarDatosAjaxAction(Request $request)
+    /*public function guardarDatosAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
         {
@@ -34,7 +34,12 @@ class DefaultController extends Controller
         }
         else
             return new JsonResponse("else");
-    }
+    }*/
+    
+    public function enviarEmailsAjaxAction(Request $request)
+    {
+        return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
+    }   
     
     public function registrarUsuarioAjaxAction(Request $request)
     {
@@ -52,10 +57,10 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($usuario);
             $em->flush();
-            return new JsonResponse($usuario->getCorreo()." ".$usuario->getPassword()." ".$usuario->getRolId()."   insertado");
+            return new JsonResponse("insertado");
         }
         else
-            return new JsonResponse("else");
+            throw $this->createNotFoundException('Error al solicitar datos');
     }
     
     public function buscarEmailAjaxAction(Request $request)
@@ -68,7 +73,9 @@ class DefaultController extends Controller
                  return new JsonResponse("N");
             }else
             {
-                return new JsonResponse("S");
+                $data["Rol"] = $this->getRolName("AppBundle:","Rol",$encontrado->getRolId())->getNombre();
+                $data["Activo"] = $encontrado->getActivo();
+                return new JsonResponse($data);
             }
         }
         else
@@ -102,6 +109,33 @@ class DefaultController extends Controller
         else
              throw $this->createNotFoundException('Error al solicitar datos');
     }
+
+    private function getEmails($object)
+    {
+        $i = 0;
+        $datas=null;
+        $data["Email"]="";
+        $data["Rol"]="";
+        $data["Estatus"]="";
+        foreach($object as $value)
+        {
+           $data["Email"] = $value->getCorreo();
+           $data["Rol"] = $this->getRolName("AppBundle:","Rol",$value->getRolId())->getNombre();
+           if($value->getActivo())
+               $data["Estatus"]="Activo";
+           else
+               $data["Estatus"]="Inactivo";
+           $datas[$i] = $data;
+           $i++;
+        }
+        
+        return array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $datas
+        );
+    }
     
     private function bdToArrayDescription($object,$entidad,$val)
     {
@@ -133,6 +167,7 @@ class DefaultController extends Controller
         $usuario->setPrimerApellido("");
         $usuario->setSegundoApellido("");
         $usuario->setNacionalidad("");
+        $usuario->setDireccion("");
         $usuario->setCorreo("");
         $usuario->setTelefono(0);
         $usuario->setRif(0);
@@ -164,5 +199,12 @@ class DefaultController extends Controller
                     ->findAll();
     }
     
+    private function getRolName($bundle,$entidad,$id)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneById($id);
+    }
     
 }

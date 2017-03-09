@@ -1,17 +1,30 @@
 {% extends '::base.html.twig' %}
 
-{% block sidebar %}
-    <ul class="treeview-menu">
-        <li <!--class="active"-->><a href="{{  asset('templates/index.html')}}"><i class="fa fa-dot-circle-o"></i> Revisar solicitudes</a></li>
-        <li><a href="index2.html"><i class="fa fa-dot-circle-o"></i> Generar Informe</a></li>
-    </ul>
+{% block opcionsidebar %}
+    <li data-route="jubilacion-informacion">
+        <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Revisar Solicitudes</a>
+    </li>
+    <li data-route="comision_remunerada_solicitar">
+        <a href="{{ path('solicitud_serv_remun') }}"><i class="fa fa-circle-o"></i>Generar Informe</a>
+    </li>>
 {% endblock %}
 
-{% block body %}
-    <h3 style="text-align: center"><b>DIRECCIÓN DE ASUNTOS PROFESORALES</b></h3>
-    <!-- Content Wrapper. Contains page content -->
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-fw fa-wheelchair"></i> Jubilación</a></li>
+            <li class="active">Dirección de Asuntos Profesorales </li>
+            <li class="active">Revisar Solicitudes </li>
+        </ol>
+    </div>
+    <br>
+
     <!-- Main content -->
     <section class="content">
+        <h4 style="text-align: center"><b>DIRECCIÓN DE ASUNTOS PROFESORALES</b></h4>
+        <br>
         <!-- Default box -->
         <div class="box box-solid box-default">
             <div class="box-header with-border">
