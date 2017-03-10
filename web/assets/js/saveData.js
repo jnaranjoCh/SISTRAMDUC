@@ -1,132 +1,103 @@
 $('#submitData').click(function(){
-    var anio;
+    toastr.clear();
+    var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII"];
+    var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
+    var can_register = true;
     var date = new Date();
+    var anio;
+    var text = "";
     
-    if(!(/^[a-zA-Z]*$/).test($('#primerNombreDatosI').val()))
+    
+    for(var i = 0; i < inputsO.length; i++)
     {
-        $('#primerNombreDatos').removeClass("hidden");
-        $('#primerNombreDatosE').addClass("hidden");
-        
-    }else if($('#primerNombreDatosI').val() == "")
-    {
-        $('#primerNombreDatosE').removeClass("hidden");
-        $('#primerNombreDatos').addClass("hidden");
-    }else{
-        $('#primerNombreDatosE').addClass("hidden");
-        $('#primerNombreDatos').addClass("hidden");
+        if($("#"+inputsO[i]).val() == "")
+        {
+            if(inputsO[i] != "NumeroDatosII")
+            {
+                can_register = false;
+                $("#headerPersonal").css({ 'color': "red" });
+                $("#span"+inputsO[i]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i]).addClass("has-error");
+            }else
+            {
+                can_register = false;
+                $("#headerPersonal").css({ 'color': "red" });
+                $("#div"+inputsO[i-1]).addClass("has-error");
+            }
+            
+            text = "Error campo mal introducido o obligatorio.";
+        }else
+        {
+            if(inputsO[i] == "FechaNacimientoDatos")
+              anio = parseInt($("#"+inputsO[i]).val()[6]+$("#"+inputsO[i]).val()[7]+$("#"+inputsO[i]).val()[8]+$("#"+inputsO[i]).val()[9]); 
+              
+            if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18))
+            {
+                can_register = false;
+                $("#headerPersonal").css({ 'color': "red" });
+                $("#span"+inputsO[i]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i]).addClass("has-error");
+                text = "Error dato invalida.";
+            }else if(inputsO[i] == "NumeroDatos" &&  (parseInt($("#"+inputsO[i]).val()) > 999 || parseInt($("#"+inputsO[i]).val()) < 100)){
+                can_register = false;
+                $("#headerPersonal").css({ 'color': "red" });
+                $("#span"+inputsO[i]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i]).addClass("has-error");
+                text = "Error dato invalida.";
+            }else if(inputsO[i] == "NumeroDatosII" &&   (parseInt($("#"+inputsO[i]).val()) > 9999999 || parseInt($("#"+inputsO[i]).val()) < 1000000))
+            {
+                can_register = false;
+                $("#headerPersonal").css({ 'color': "red" });
+                $("#span"+inputsO[i-1]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i-1]).addClass("has-error");
+                text = "Error dato invalida.";
+            }else
+            {
+                $("#headerPersonal").css({ 'color': "black" });
+                $("#span"+inputsO[i]).removeClass("glyphicon-remove");
+                $("#div"+inputsO[i]).removeClass("has-error");   
+            }
+        }
     }
     
-    if(!(/^[a-zA-Z]*$/).test($('#segundoNombreDatosI').val()))
+    for(var i = 0; i < inputsW.length; i++)
     {
-        $('#segundoNombreDatos').removeClass("hidden");
-        $('#segundoNombreDatosE').addClass("hidden");
-        
-    }else if($('#segundoNombreDatosI').val() == "")
-    {
-        $('#segundoNombreDatosE').removeClass("hidden");
-        $('#segundoNombreDatos').addClass("hidden");
-    }else{
-        $('#segundoNombreDatosE').addClass("hidden");
-        $('#segundoNombreDatos').addClass("hidden");
+        if(!(/^[a-zA-Z]*$/).test($("#"+inputsW[i]).val()))
+        {
+            can_register = false;
+            $("#headerPersonal").css({ 'color': "red" });
+            $("#span"+inputsW[i]).addClass("glyphicon-remove");
+            $("#div"+inputsW[i]).addClass("has-error");
+            text = "Campo mal introducido.";
+            
+        }else if($("#"+inputsW[i]).val() != ""){
+            $("#headerPersonal").css({ 'color': "black" });
+            $("#span"+inputsW[i]).removeClass("glyphicon-remove");
+            $("#div"+inputsW[i]).removeClass("has-error");
+        }
+    
     }
     
-    if(!(/^[a-zA-Z]*$/).test($('#primerApellidoDatosI').val()))
+    if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0)))
     {
-        $('#primerApellidoDatos').removeClass("hidden");
-        $('#primerApellidoDatosE').addClass("hidden");
-        
-    }else if($('#primerApellidoDatosI').val() == "")
-    {
-        $('#primerApellidoDatosE').removeClass("hidden");
-        $('#primerApellidoDatos').addClass("hidden");
-    }else{
-        $('#primerApellidoDatosE').addClass("hidden");
-        $('#primerApellidoDatos').addClass("hidden");
+        can_register = false;
+        $("#headerPersonal").css({ 'color': "red" });
+        text = "Error la edad no coincide con la fecha de nacimiento.";
     }
     
-    if(!(/^[a-zA-Z]*$/).test($('#segundoApellidoDatosI').val()))
+    if(countCargo < 1)
     {
-        $('#segundoApellidoDatos').removeClass("hidden");
-        $('#segundoApellidoDatosE').addClass("hidden");
-        
-    }else if($('#segundoApellidoDatosI').val() == "")
+         can_register = false;
+         $("#spanCargosDatos").addClass("glyphicon-remove");
+         $("#divCargosDatos").addClass("has-error");
+         $("#headerCargos").css({ 'color': "red" });
+    }else
     {
-        $('#segundoApellidoDatosE').removeClass("hidden");
-        $('#segundoApellidoDatos').addClass("hidden");
-    }else{
-        $('#segundoApellidoDatosE').addClass("hidden");
-        $('#segundoApellidoDatos').addClass("hidden");
-    }
-    
-    if($('#nacionalidadDatosI').find('option:selected').val() == "")
-    {
-        $('#nacionalidadDatos').removeClass("hidden");
-    }else{
-        $('#nacionalidadDatos').addClass("hidden");
-    }
-    
-    if($('#fechaNacimientoDatosI').val() == "")
-    {
-         $('#fechaNacimientoDatos').removeClass("hidden");
-    }else{
-        anio = parseInt($('#fechaNacimientoDatosI').val()[6]+$('#fechaNacimientoDatosI').val()[7]+$('#fechaNacimientoDatosI').val()[8]+$('#fechaNacimientoDatosI').val()[9]); 
-        $('#fechaNacimientoDatos').addClass("hidden");
+         $("#spanCargosDatos").removeClass("glyphicon-remove");
+         $("#divCargosDatos").removeClass("has-error");
+         $("#headerCargos").css({ 'color': "black" });
     }
 
-    if(parseInt($('#edadDatosI').val()) > 80 || parseInt($('#edadDatosI').val()) < 18)
-    {
-        $('#edadDatos').removeClass("hidden");
-        $('#edadDatosE').addClass("hidden");
-        
-    }else if($('#edadDatosI').val() == "")
-    {
-        $('#edadDatosE').removeClass("hidden");
-        $('#edadDatos').addClass("hidden");
-    }else{
-        $('#edadDatosE').addClass("hidden");
-        $('#edadDatos').addClass("hidden");
-    }
-    
-    if($('#sexoDatosI').find('option:selected').val() == "")
-    {
-        $('#sexoDatos').removeClass("hidden");
-    }else{
-        $('#sexoDatos').addClass("hidden");
-    }
-    
-    if($('#cedulaDatosI').val() == "")
-    {
-        $('#cedulaDatos').removeClass("hidden");
-    }else{
-        $('#cedulaDatos').addClass("hidden");
-    }
-    
-    if($('#rifDatosI').val() == "")
-    {
-        $('#rifDatos').removeClass("hidden");
-    }else{
-        $('#rifDatos').addClass("hidden");
-    }
-    
-    if(parseInt($('#numeroDatosI').val()) > 999 || parseInt($('#numeroDatosI').val()) < 100 || parseInt($('#numeroDatosII').val()) > 9999999 || parseInt($('#numeroDatosII').val()) < 1000000)
-    {
-        $('#numeroDatos').removeClass("hidden");
-        $('#numeroDatosE').addClass("hidden");
-        
-    }else if($('#numeroDatosI').val() == "" || $('#numeroDatosII').val() == "")
-    {
-        $('#numeroDatos').addClass("hidden");
-        $('#numeroDatosE').removeClass("hidden");
-    }else{
-        $('#numeroDatosE').addClass("hidden");
-        $('#numeroDatos').addClass("hidden");
-    }
-    
-    if(((parseInt($('#edadDatosI').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#edadDatosI').val())-(parseInt(date.getFullYear())-anio)) > 0))
-            $('#noCoincide').removeClass("hidden");
-    else
-            $('#noCoincide').addClass("hidden");
-    
     
     
     /*$.ajax({
@@ -138,4 +109,12 @@ $('#submitData').click(function(){
             alert(data);
         }
     });*/
+    
+    if(!can_register)
+        toastr.error(text, "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+    else
+       toastr.clear();
 });

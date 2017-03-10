@@ -1,12 +1,14 @@
+var countRol =0;
+var countCargo =0;
 $('#ar').click(function(){
     if($("#empR").val()=="" && $("#insR").val()=="")
     {
         table1.row.add( {
             "Id del registro": "1",
-            "Tipo de referencia": $("#tr").find('option:selected').val(),
+            "Tipo de referencia": $("#tipoDeRegistroDatos").find('option:selected').val(),
             "Descripcion": $("#desR").val(),
-            "Nivel": $("#neR").find('option:selected').val(),
-            "Estatus": $("#estR").find('option:selected').val(),
+            "Nivel": $("#nivelDeEstudioDatos").find('option:selected').val(),
+            "Estatus": $("#estatusDatos").find('option:selected').val(),
             "Año de publicación y/o asistencia": $("#anoR").val(),
             "Empresa y/o institución": ""
         } ).draw();
@@ -14,10 +16,10 @@ $('#ar').click(function(){
     {
         table1.row.add( {
             "Id del registro": "1",
-            "Tipo de referencia": $("#tr").find('option:selected').val(),
+            "Tipo de referencia": $("#tipoDeRegistroDatos").find('option:selected').val(),
             "Descripcion": $("#desR").val(),
-            "Nivel": $("#neR").find('option:selected').val(),
-            "Estatus": $("#estR").find('option:selected').val(),
+            "Nivel": $("#nivelDeEstudioDatos").find('option:selected').val(),
+            "Estatus": $("#estatusDatos").find('option:selected').val(),
             "Año de publicación y/o asistencia": $("#anoR").val(),
             "Empresa y/o institución": $("#empR").val()
         } ).draw();
@@ -25,10 +27,10 @@ $('#ar').click(function(){
     {
         table1.row.add( {
             "Id del registro": "1",
-            "Tipo de referencia": $("#tr").find('option:selected').val(),
+            "Tipo de referencia": $("#tipoDeRegistroDatos").find('option:selected').val(),
             "Descripcion": $("#desR").val(),
-            "Nivel": $("#neR").find('option:selected').val(),
-            "Estatus": $("#estR").find('option:selected').val(),
+            "Nivel": $("#nivelDeEstudioDatos").find('option:selected').val(),
+            "Estatus": $("#estatusDatos").find('option:selected').val(),
             "Año de publicación y/o asistencia": $("#anoR").val(),
             "Empresa y/o institución": $("#insR").val()
         } ).draw();
@@ -53,15 +55,68 @@ $('#table-2').on( 'click', 'tbody tr', function () {
 } );
 
 
+$('#agregarCargoDatos').click(function(){
+    var band = false;
+    if(($('#tableCargo td').length-1) > 0)
+    {
+         tableCargo.column(0)
+              .data()
+              .each( function ( value,index ) {
+                    if(value == $("#cargosDatos").find('option:selected').val())
+                        band = true;
+               });
+   }
+   
+   if(($('#tableCargo td').length-1)==0 && $("#cargosDatos").find('option:selected').val() != "")
+   {
+       tableCargo.row.add( {
+                "Cargo": $("#cargosDatos").find('option:selected').val()
+        }).draw();
+   }else if(!band && $("#cargosDatos").find('option:selected').val() != "")
+   {
+       tableCargo.row.add( {
+                "Cargo": $("#cargosDatos").find('option:selected').val()
+        }).draw();
+   }
+   countCargo++;
+});
 
-$('#ac').click(function(){
-   table3.row.add( {
-            "Cargo": $("#crg").find('option:selected').val()
-    } ).draw();
-}); 
+$('#rolUser').change(function(){
+    var band = false;
+    if(($('#tableRol td').length-1) > 0)
+    {
+         tableRol.column(0)
+              .data()
+              .each( function ( value,index ) {
+                    if(value == $("#rolUser").find('option:selected').val())
+                        band = true;
+               });
+   }
+   
+   if(($('#tableRol td').length-1)==0 && $("#rolUser").find('option:selected').val() != "")
+   {
+       tableRol.row.add( {
+                "Rol": $("#rolUser").find('option:selected').val()
+        }).draw();
+   }else if(!band && $("#rolUser").find('option:selected').val() != "")
+   {
+       tableRol.row.add( {
+                "Rol": $("#rolUser").find('option:selected').val()
+        }).draw();
+   }
+   countRol++;
+});
 
-$('#table-3').on( 'click', 'tbody tr', function () {
-    table3.row( this ).remove().draw();
+$('#tableRol').on( 'click', 'tbody tr', function () {
+    tableRol.row( this ).remove().draw();
+    if(countRol > 0)
+        countRol--;
+} );
+
+$('#tableCargo').on( 'click', 'tbody tr', function () {
+    tableCargo.row( this ).remove().draw();
+    if(countCargo > 0)
+        countCargo--;
 } );
 
 $('#arv').click(function(){

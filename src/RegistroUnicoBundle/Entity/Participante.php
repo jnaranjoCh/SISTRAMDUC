@@ -29,13 +29,7 @@ class Participante
      */
     private $cedula;
 
-    /**
-     * @ManyToMany(targetEntity="Registro", inversedBy="participantes")
-     * @JoinTable(name="registro_participantes",
-     *      joinColumns={@JoinColumn(name="participante_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")}
-     *      )
-     */
+
     protected $registros;
     
     public function __construct()

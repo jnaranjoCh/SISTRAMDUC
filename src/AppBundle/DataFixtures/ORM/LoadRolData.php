@@ -19,8 +19,15 @@ class LoadRolData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($profesor_rol);
         $manager->flush();
+        
+        $administrador_rol = new Rol();
+        $administrador_rol->setNombre('Administrador');
+        $administrador_rol->setDescription('Rol para administrar el sistema SISTRAMDUC');
 
-        $this->addReference('profesor-rol', $profesor_rol);
+        $manager->persist($administrador_rol);
+        $manager->flush();
+
+        $this->addReference('administrador-rol', $administrador_rol);
     }
 
     public function getOrder()

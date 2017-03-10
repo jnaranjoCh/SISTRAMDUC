@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use AppBundle\Entity\Rol;
 
 /**
  * @ORM\Entity
@@ -142,11 +143,7 @@ class Usuario implements UserInterface
 
     public function __construct()
     {
-        $this->registros = new ArrayCollection();
-        $this->cargos = new ArrayCollection();
-        $this->facultades = new ArrayCollection();
-        $this->hijos = new ArrayCollection();
-        $this->roles = new ArrayCollection();
+      $this->roles = new ArrayCollection();
     }
 
     /**
@@ -531,6 +528,12 @@ class Usuario implements UserInterface
     public function addRol($rol)
     {
         $this->roles[] = $rol;
+    }
+    
+    public function addRoles($roles)
+    {
+        foreach($roles as $rol)
+            $this->addRol($rol);
     }
 
     public function getUsername()

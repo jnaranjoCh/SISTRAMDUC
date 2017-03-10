@@ -1,4 +1,4 @@
-$('#tr').change(function(){
+$('#tipoDeRegistroDatos').change(function(){
     var selectedOption = $(this).find('option:selected');
 
     if(selectedOption.val().localeCompare("Articulo publicado") == 0)

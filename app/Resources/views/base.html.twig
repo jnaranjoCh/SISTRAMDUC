@@ -15,7 +15,10 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
-
+  <!--toasttr-->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.css') }}">
+  <!--datetimepicker-->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 
@@ -337,11 +340,15 @@
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <!-- Slimscroll -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.js') }}"></script>
+<!--datetimepicker-->
+<script src="{{ asset('assets/vendor/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <!-- Slide to top -->
 <script src="{{ asset('assets/js/SlideToTop.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
-
+<!--toasttr-->
+<script src="{{ asset('assets/vendor/toastr/toastr.js') }}"></script>
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}
 

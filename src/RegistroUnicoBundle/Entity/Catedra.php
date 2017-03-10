@@ -23,22 +23,8 @@ class Catedra
      */
     private $description;
 
-    /**
-     * @ManyToMany(targetEntity="Escuela", inversedBy="catedras")
-     * @JoinTable(name="escuelas_catedras",
-     *      joinColumns={@JoinColumn(name="catedra_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="escuela_id", referencedColumnName="id")}
-     *      )
-     */
     protected $escuelas;
 
-    /**
-     * @ManyToMany(targetEntity="Departamento", inversedBy="catedras")
-     * @JoinTable(name="departamentos_catedras",
-     *      joinColumns={@JoinColumn(name="catedra_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="departamento_id", referencedColumnName="id")}
-     *      )
-     */
     protected $departamentos;
     
     public function __construct()
