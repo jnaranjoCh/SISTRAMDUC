@@ -12,37 +12,53 @@
     <br/>
     <div class="row">
       <!--Success message-->
-      <div id="succesUser" class="col-md-offset-1 col-md-10 alert alert-success hidden">
-          Usuario registrado con exito!. 
-      </div>
-      <!--Success message-->
       <section class="content-body col-md-offset-2 col-md-8">
         <br/>
         <div class="register-box-body">
             <form>
               <img src="{{asset('assets/images/usuario.jpeg')}}" class="user-image col-sm-offset-5 col-xs-offset-3" alt="User Image">
-              <div class="form-group has-feedback">
-                <input id="emailUsuario" type="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                <span id="emailUsuarioS" class="hidden" style="color:red;">Email no valido.<br/></span>
-                <span id="emailUsuarioSS" class="hidden" style="color:red;">El email ya se encuentra registrado.</span>
+              <div id="divEmailUser" class="form-group has-feedback">
+                <label>Email</label>
+                <input id="EmailUser" type="email" class="form-control" placeholder="Email">
+                <span id="spanEmailUser" class="glyphicon glyphicon-envelope form-control-feedback"></span>
               </div>
-              <div class="form-group has-feedback">
-                <input id="passwordUsuario" type="password" class="form-control" placeholder="Contraseña">
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                <span id="passwordUsuarioS" class="hidden" style="color:red;">Campo obligatoria.</span>
+              <div id="divCedulaUser" class="form-group has-feedback">
+                <label>Cedula</label>
+                <input id="CedulaUser" type="number" class="form-control" placeholder="Cedula">
+                <span id="spanCedulaUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
               </div>
-              <div class="form-group has-feedback">
-                <input id="retryPasswordUsuario" type="password" class="form-control" placeholder="Repetir contraseña">
-                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-                <span id="retryPasswordUsuarioS" class="hidden" style="color:red;">Las contraseñas no coinciden.<br/></span>
-                <span id="retryPasswordUsuarioSS" class="hidden" style="color:red;">Campo obligatoria.</span>
+              <div id="divPasswordUser" class="form-group has-feedback">
+                <label>Contraseña</label>
+                <input id="PasswordUser" type="password" class="form-control" placeholder="Contraseña">
+                <span id="spanPasswordUser"class="glyphicon glyphicon-lock form-control-feedback"></span>
               </div>
-              <div class="form-group has-feedback">
-                  <select id="tu" class="form-control select2" style="width: 100%;">
+              <div id="divRetryPasswordUser" class="form-group has-feedback">
+                <label>Repita la contraseña</label>
+                <input id="RetryPasswordUser" type="password" class="form-control" placeholder="Repetir contraseña">
+                <span id="spanRetryPasswordUser" class="glyphicon glyphicon-log-in form-control-feedback"></span>
+              </div>
+              <div id="divRolUser" class="form-group has-feedback">
+                  <label>Tipo de rol</label>
+                  <select id="rolUser" class="form-control select2" style="width: 100%;">
                   </select>
-                  <span id="tuS" class="hidden" style="color:red;">Debe seleccionar una opcion.</span>
+                  <span id="spanRolUser" class="glyphicon form-control-feedback"></span>
               </div>
+              <hr/>
+              <table id="tableRol" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Rol</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Rol</th>
+                </tr>
+                </tfoot>
+              </table>
+              <hr/>
               <div class="row">
                 <div class="col-xs-12">
                   <button id="registrarUsuario" type="button" class="btn btn-primary btn-block btn-flat">Registrar</button>
@@ -57,5 +73,7 @@
 
 {% block custom_javascripts %}
   <script src="{{ asset('assets/js/iniRU.js') }}"></script>
+  <script src="{{ asset('assets/js/configTable.js') }}"></script>
+  <script src="{{ asset('assets/js/insertAndDeleteTable.js') }}"></script>
   <script src="{{ asset('assets/js/registerUser.js') }}"></script>
 {% endblock %}

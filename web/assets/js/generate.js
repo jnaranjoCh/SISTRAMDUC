@@ -1,11 +1,12 @@
 $('#gemail').on('input',function(e){
-    $("#form-1").addClass("hidden");
-    $("#form-2").addClass("hidden");
-    $("#form-3").addClass("hidden");
+    $("#formPersonal").addClass("hidden");
+    $("#formRegistros").addClass("hidden");
+    $("#formCargos").addClass("hidden");
     $("#save").addClass("hidden");
 });
 
 $('#generate').click(function(){
+        toastr.clear();
         $.ajax({
             method: "POST",
             data: {"Email":$('#gemail').val()},
@@ -13,27 +14,22 @@ $('#generate').click(function(){
             dataType: 'json',
             success: function(data)
             {
-                if((data["Rol"] ==  "Docente"  || data["Rol"] == "Administrador") && data["Activo"] == true)
+                if(data)
                 {
-                    $("#alertData").addClass("hidden");
-                    $("#form-1").removeClass("hidden");
-                    $("#form-2").removeClass("hidden");
-                    $("#form-3").removeClass("hidden");
+                    $("#formPersonal").removeClass("hidden");
+                    $("#formRegistros").removeClass("hidden");
+                    $("#formCargos").removeClass("hidden");
                     $("#save").removeClass("hidden");
                 }
-                else if(data["Rol"] == "Otros" && data["Activo"] == true)
+                else
                 {
-                    $("#alertData").addClass("hidden");
-                    $("#form-1").removeClass("hidden");
-                    $("#form-2").addClass("hidden");
-                    $("#form-3").addClass("hidden");
-                    $("#save").removeClass("hidden");
-                }else
-                {
-                    $("#alertData").removeClass("hidden");
-                    $("#form-1").addClass("hidden");
-                    $("#form-2").addClass("hidden");
-                    $("#form-3").addClass("hidden");
+                    toastr.error("El usuario no se encuentra registrado o esta inactivo.", "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             });
+                    $("#formPersonal").addClass("hidden");
+                    $("#formRegistros").addClass("hidden");
+                    $("#formCargos").addClass("hidden");
                     $("#save").addClass("hidden");
                 }
             }

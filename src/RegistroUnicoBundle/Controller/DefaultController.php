@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
 use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Rol;
 
 class DefaultController extends Controller
 {
@@ -45,14 +46,22 @@ class DefaultController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
+            $roles[] = new Rol();
+            $i = 0;
             $usuario = new Usuario();
             $usuario = $this->initialiceUser($usuario);
-            $usuario->setCorreo($_POST["Email"]);
+            $usuario->setCedula($request->get("Cedula"));
             $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($usuario,$_POST["Password"]);
+            $encoded = $encoder->encodePassword($usuario,$request->get("Password"));
             $usuario->setPassword($encoded);
-            $usuario->setRolId($this->getByName("AppBundle:","Rol",$_POST["TipoUsuario"])->getId());
+            foreach($request->get("Roles") as $rol)
+            {
+              $roles[$i] = $this->getByName("AppBundle:","Rol",$rol);
+              $i++;
+            }
+            $usuario->addRoles($roles);
             $usuario->setActivo(1);
+            $usuario->setCorreo($request->get("Email"));
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($usuario);
@@ -63,20 +72,33 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Error al solicitar datos');
     }
     
-    public function buscarEmailAjaxAction(Request $request)
+    public function buscarCedulaAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
         {
-            $encontrado = $this->getOneEmail("AppBundle:","Usuario",$_POST["Email"]);
+            $encontrado = $this->getOneCedula("AppBundle:","Usuario",$request->get("Cedula"));
 
             if (!$encontrado) {
                  return new JsonResponse("N");
             }else
             {
-                $data["Rol"] = $this->getRolName("AppBundle:","Rol",$encontrado->getRolId())->getNombre();
-                $data["Activo"] = $encontrado->getActivo();
-                return new JsonResponse($data);
+                return new JsonResponse("S");
             }
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');
+    }
+    
+    public function buscarEmailAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = $this->getOneEmail("AppBundle:","Usuario",$request->get("Email"));
+
+            if (!$encontrado) {
+                return new JsonResponse(0);
+            }else
+                return new JsonResponse($encontrado->getActivo());
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');
@@ -115,12 +137,10 @@ class DefaultController extends Controller
         $i = 0;
         $datas=null;
         $data["Email"]="";
-        $data["Rol"]="";
         $data["Estatus"]="";
         foreach($object as $value)
         {
            $data["Email"] = $value->getCorreo();
-           $data["Rol"] = $this->getRolName("AppBundle:","Rol",$value->getRolId())->getNombre();
            if($value->getActivo())
                $data["Estatus"]="Activo";
            else
@@ -168,13 +188,21 @@ class DefaultController extends Controller
         $usuario->setSegundoApellido("");
         $usuario->setNacionalidad("");
         $usuario->setDireccion("");
-        $usuario->setCorreo("");
+        $usuario->setEstatusId(0);
         $usuario->setTelefono(0);
         $usuario->setRif(0);
         
         return $usuario;
     }
 
+    private function getOneCedula($bundle,$entidad,$cedula)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByCedula($cedula);
+    }
+    
     private function getOneEmail($bundle,$entidad,$email)
     {
         return $this->getDoctrine()

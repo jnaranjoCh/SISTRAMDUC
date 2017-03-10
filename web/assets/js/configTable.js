@@ -25,7 +25,7 @@ $(function () {
         ]
     });
     
-    table3 = $('#table-3').DataTable({
+    tableCargo = $('#tableCargo').DataTable({
 	    "language": {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
@@ -41,6 +41,15 @@ $(function () {
         columns: [
             { "data": "Id del registro" },
             { "data": "Revista" }
+        ]
+    });
+    
+    tableRol = $('#tableRol').DataTable({
+	    "language": {
+            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        columns: [
+            { "data": "Rol" }
         ]
     });
 });

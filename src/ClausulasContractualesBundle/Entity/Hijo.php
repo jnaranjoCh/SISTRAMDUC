@@ -35,7 +35,7 @@ class Hijo
     private $cedulaHijo;
 
     /** 
-      * @ORM\@Column(type="datetime") 
+      * @ORM\Column(type="datetime") 
       */
     private $fechaNacimiento;
 
@@ -68,14 +68,7 @@ class Hijo
      * @ORM\Column(type="string", length=255)
      */
     private $partidaNacimientoUrl;
-    
-    /**
-     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="hijos")
-     * @JoinTable(name="usuario_hijo",
-     *      joinColumns={@JoinColumn(name="hijo_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
-     *      )
-     */
+
     protected $usuarios;
 
     public function __construct()

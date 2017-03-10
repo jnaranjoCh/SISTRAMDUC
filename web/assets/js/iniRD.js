@@ -1,13 +1,12 @@
 $( window ).load(function() {
-    $("#mini-1").click();
-    $("#mini-2").click();
-    $("#mini-3").click();
+    $("#miniPersonal").click();
+    $("#miniRegistros").click();
+    $("#miniCargos").click();
     
-    $("#table-5").DataTable( {
+    $("#table-6").DataTable( {
           "ajax": "/web/app_dev.php/registro/enviar-emails",
           "columns": [
 		        { "data": "Email" },
-		        { "data": "Rol" },
 		        { "data": "Estatus" }
 	       ],
 	       "language": {
@@ -33,10 +32,10 @@ $( window ).load(function() {
             var cargo ="<option value='' selected='selected'>Seleccione una opción</option>";
             for(var i = 0; i < data["cargo"].length; i++)
                 cargo = cargo+"<option value='"+data["cargo"][i]+"'>"+data["cargo"][i]+"</option>";
-            $("#estR").html(estatus);
-            $("#neR").html(nivel);
-            $("#tr").html(tipo_registro);
-            $("#crg").html(cargo);
+            $("#estatusDatos").html(estatus);
+            $("#nivelDeEstudioDatos").html(nivel);
+            $("#tipoDeRegistroDatos").html(tipo_registro);
+            $("#cargosDatos").html(cargo);
         }
     });
     

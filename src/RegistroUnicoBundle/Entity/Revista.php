@@ -24,13 +24,6 @@ class Revista
      */
     private $description;
 
-    /**
-     * @ManyToMany(targetEntity="Registro", inversedBy="revistas")
-     * @JoinTable(name="registro_revistas",
-     *      joinColumns={@JoinColumn(name="revista_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")}
-     *      )
-     */
     protected $registros;
     
     public function __construct()
