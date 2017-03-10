@@ -1,5 +1,5 @@
 $(function () {
-    table1 = $('#table-1').DataTable({
+    tableRegistros = $('#tableRegistros').DataTable({
 	    "language": {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
@@ -14,7 +14,7 @@ $(function () {
         ]
     });
     
-    table2 = $('#table-2').DataTable({
+    tableParticipantes = $('#tableParticipantes').DataTable({
 	    "language": {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },

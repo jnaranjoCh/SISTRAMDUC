@@ -32,9 +32,9 @@ $( window ).load(function() {
             var cargo ="<option value='' selected='selected'>Seleccione una opción</option>";
             for(var i = 0; i < data["cargo"].length; i++)
                 cargo = cargo+"<option value='"+data["cargo"][i]+"'>"+data["cargo"][i]+"</option>";
-            $("#estatusDatos").html(estatus);
-            $("#nivelDeEstudioDatos").html(nivel);
-            $("#tipoDeRegistroDatos").html(tipo_registro);
+            $("#EstatusDatos").html(estatus);
+            $("#NivelDeEstudioDatos").html(nivel);
+            $("#TipoDeRegistroDatos").html(tipo_registro);
             $("#cargosDatos").html(cargo);
         }
     });
