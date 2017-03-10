@@ -4,6 +4,8 @@ namespace PlanSeptenalBundle\ValueObject;
 
 class MonthlyDateRange
 {
+    const FORMAT = 'm/Y';
+
     /**
      * @var \DateTime
      */
@@ -31,14 +33,14 @@ class MonthlyDateRange
 
     protected function buildStart($start)
     {
-        $start = (is_string($start)) ? \DateTime::createFromFormat('m/Y', $start) : $start;
+        $start = (is_string($start)) ? \DateTime::createFromFormat(self::FORMAT, $start) : $start;
 
         return $start->modify('first day of this month')->setTime(0, 0, 0);
     }
 
     protected function buildEnd($end)
     {
-        $end = (is_string($end)) ? \DateTime::createFromFormat('m/Y', $end) : $end;
+        $end = (is_string($end)) ? \DateTime::createFromFormat(self::FORMAT, $end) : $end;
 
         return $end->modify('last day of this month')->setTime(23, 59, 59);
     }
@@ -70,7 +72,7 @@ class MonthlyDateRange
 
     public function getStartAsString()
     {
-        return $this->getStart()->format('m/Y');
+        return $this->getStart()->format(self::FORMAT);
     }
 
     /**
@@ -83,11 +85,11 @@ class MonthlyDateRange
 
     public function getEndAsString()
     {
-        return $this->getEnd()->format('m/Y');
+        return $this->getEnd()->format(self::FORMAT);
     }
 
     public function __toString()
     {
-        return $this->getStart()->format('m/Y').' - '.$this->getEnd()->format('m/Y');
+        return $this->getStart()->format(self::FORMAT).' - '.$this->getEnd()->format(self::FORMAT);
     }
 }

@@ -20,7 +20,7 @@
         <h2 class="box-title titulo-seccion">Creación de Plan Septenal Individual</h2>
         </div>
       <div class="box-body">
-        <div id="plan-septenal-individual"></div>
+        <div id="plan-septenal-individual" data-route="{{ path('create-plan-septenal-individual') }}"></div>
       </div>
       <div class="box-footer">
         <button class="btn btn-primary btn-flat pull-right" type="submit">Guardar cambios</button>
@@ -36,6 +36,7 @@
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
   <script>
     initPlanSeptenalIndividual($('#plan-septenal-individual'));
+    getPlan(2007, 2013);
     toastr.options = {
       "positionClass": "toast-bottom-center"
     };

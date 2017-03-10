@@ -80,8 +80,7 @@ QUnit.test("getSummary()", function (assert) {
     this.$last.addClass("selected");
     this.$beca_btn.trigger("click");
 
-    var summary = getSummary(),
-        expectedSummary = {
+    var expectedSummary = {
             inicio: this.$firstYear,
             fin: this.$firstYear + 6,
             tramites: [
@@ -109,7 +108,41 @@ QUnit.test("getSummary()", function (assert) {
             ]
         };
 
-    assert.deepEqual(summary, expectedSummary, "Summary must be properly structured");
+    assert.deepEqual(getSummary(), expectedSummary, "Summary must be properly structured");
+});
+
+QUnit.test("Set state should put the grid in a given state", function (assert) {
+    var state = {
+        inicio: 2000,
+        fin: 2006,
+        tramites: [
+            {
+                tipo: 'Sabático',
+                periodo: {
+                    start: '01/2000',
+                    end: '02/2000',
+                }
+            },
+            {
+                tipo: 'Licencia Remunerada',
+                periodo: {
+                    start: '03/2000',
+                    end: '03/2000'
+                }
+            },
+            {
+                tipo: 'Beca',
+                periodo: {
+                    start: '12/2006',
+                    end: '12/2006',
+                }
+            }
+        ]
+    }
+
+    setState(state, $plan);
+
+    assert.deepEqual(getSummary(), state);
 });
 
 QUnit.test("saveChanges()", function (assert) {
@@ -134,7 +167,7 @@ QUnit.test("saveChanges()", function (assert) {
 
     saveChanges();
 
-    assert.ok($.ajax.calledWithMatch({ url: "/plan-septenal/individual", data: data, method: 'POST' }), "Ajax request must be correctly formed");
+    assert.ok($.ajax.calledWithMatch({ url: $plan.data('route'), data: data, method: 'POST' }), "Ajax request must be correctly formed");
 
     $.ajax.restore();
 });
@@ -160,6 +193,8 @@ QUnit.test("On successful save, a message should be displayed", function (assert
     $('<button type="submit">').appendTo( this.$plan ).trigger('click');
 
     assert.ok(toastr["success"].calledWith("Los cambios han sido guardados"), "A success message is necessary here");
+
+    toastr['success'].restore();
 });
 
 QUnit.test("On server error, a message should be displayed", function (assert) {
@@ -170,4 +205,48 @@ QUnit.test("On server error, a message should be displayed", function (assert) {
     $('<button type="submit">').appendTo( this.$plan ).trigger('click');
 
     assert.ok(toastr["error"].calledWith("Ocurrió un error. En caso de que el problema persista contacte a soporte"), "An error message is necessary here");
+
+    toastr['error'].restore();
+});
+
+QUnit.test("getPlan must request the plan septenal individual to the server", function (assert) {
+    sinon.stub($, 'ajax');
+
+    var data = {
+        inicio: 2010,
+        fin: 2016
+    };
+
+    getPlan(data.inicio, data.fin);
+
+    assert.ok($.ajax.calledWithMatch({ url: $plan.data('route'), data: data, method: 'GET' }), "Ajax request must be correctly formed");
+
+    $.ajax.restore();
+});
+
+QUnit.test("On successful get, a message should be displayed", function (assert) {
+    this.server.respondWith([200, {}, ""]);
+    sinon.stub(toastr, 'success');
+
+    getPlan(2010, 2016);
+
+    assert.ok(toastr["success"].calledWith("Plan septenal cargado satisfactoriamente"), "A success message is necessary here");
+
+    toastr['success'].restore();
+});
+
+QUnit.test("On server error while requestinng plan, a message should be displayed", function (assert) {
+    this.server.respondWith([500, {}, ""]);
+    sinon.stub(toastr, 'error');
+
+    getPlan(2010, 2016);
+
+    assert.ok(
+        toastr["error"].calledWith(
+            "Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte"
+        ),
+        "An error message is necessary here"
+    );
+
+    toastr['error'].restore();
 });

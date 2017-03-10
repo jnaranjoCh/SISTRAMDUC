@@ -12,12 +12,20 @@ use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 
 class PlanSeptenalIndividualController extends Controller
 {
-
     /**
-     * @Route("/plan-septenal/individual", name="plan-septenal-individual")
+     * @Route("/plan-septenal/individual", name="display-plan-septenal-individual")
      * @Method({"GET"})
      */
-    public function showAction()
+    public function displayAction()
+    {
+        return $this->render('PlanSeptenalBundle::individual.html.twig');
+    }
+
+    /**
+     * @Route("/plan-septenal-individual", name="get-plan-septenal-individual")
+     * @Method({"GET"})
+     */
+    public function getAction()
     {
         $entity_manager = $this->getDoctrine()->getManager();
         $plan_septenal_individual_repo = $entity_manager->getRepository(PlanSeptenalIndividual::class);
@@ -25,17 +33,19 @@ class PlanSeptenalIndividualController extends Controller
         $plan_septenal_individual = $plan_septenal_individual_repo
             ->findOneBy(['owner' => $this->getUser()->getId()]);
 
-        return $this->render('PlanSeptenalBundle::individual.html.twig', compact($plan_septenal_individual));
+        $response = is_null($plan_septenal_individual) ? null : $plan_septenal_individual->toArray();
+
+        return $this->json($response);
     }
 
     /**
-     * @Route("/plan-septenal/individual", name="create-plan-septenal-individual")
-     * @Method("POST")
+     * @Route("/plan-septenal-individual", name="create-plan-septenal-individual")
+     * @Method({"POST"})
      */
     public function createOrUpdateAction(Request $request)
     {
-        $inicio = $request->get('inicio');
-        $fin = $request->get('fin');
+        $inicio = $request->request->get('inicio');
+        $fin = $request->request->get('fin');
 
         $entity_manager = $this->getDoctrine()->getManager();
         $plan_septenal_individual_repo = $entity_manager->getRepository(PlanSeptenalIndividual::class);

@@ -99,6 +99,49 @@ function getRelatedDate (index) {
     return month + '/' + year;
 }
 
+function setState (state) {
+    // initPlanSeptenalIndividual must be called previously
+    $plan.empty();
+    initPlanSeptenalIndividual($plan, state.inicio);
+
+    for (var i = 0; i < state.tramites.length; i++) {
+        var range = getRelatedRange(state.tramites[i].periodo);
+        assignTramiteToRange(state.tramites[i].tipo, range);
+    }
+}
+
+function getRelatedRange (periodo) {
+    // get_range is from grid-selection.js
+    return get_range(getRelatedElement(periodo.start), getRelatedElement(periodo.end));
+}
+
+function getRelatedElement (date) {
+    var parts = date.split('/'), month = parts[0], year  = parts[1];
+
+    return $('.grid-element').eq((year - first_year) * 12 + parseInt(month - 1));
+}
+
+function assignTramiteToRange (tramite_tipo, range) {
+    range.addClass('selected');
+
+    var tramite_index = getTramiteIndexFromName(tramite_tipo);
+    var btn = $('.grid-action-btn').filter(function () {
+        return $(this).data("tramite-type") == tramite_index;
+    });
+
+    btn.trigger("click");
+
+    range.removeClass('selected');
+}
+
+function getTramiteIndexFromName (name) {
+    var index = 0;
+    while (index < tramites.length && tramites[index].name != name) {
+        index++;
+    }
+    return index;
+}
+
 $(document).on('click', '.grid-action-btn', function (e) {
     var tramite_type = $(e.target).data('tramite-type');
     $plan.find('.grid-element.selected').data('tramite-type', tramite_type).css('background', tramites[ tramite_type ].color);
@@ -114,7 +157,7 @@ $(document).on('click', 'button[type="submit"]', function (e) {
 
 function saveChanges () {
     $.ajax({
-        url: "/plan-septenal/individual",
+        url: $plan.data('route'),
         data: getSummary(),
         method: 'POST',
         success: function (data) {
@@ -122,6 +165,24 @@ function saveChanges () {
         },
         error: function (data) {
             toastr["error"]("Ocurrió un error. En caso de que el problema persista contacte a soporte");
+        }
+    });
+}
+
+function getPlan (inicio, fin) {
+    $.ajax({
+        url: $plan.data('route'),
+        data: {
+            'inicio' : inicio,
+            'fin'    : fin
+        },
+        method: 'GET',
+        success: function (data) {
+            toastr["success"]("Plan septenal cargado satisfactoriamente");
+            setState(data, $plan);
+        },
+        error: function (data) {
+            toastr["error"]("Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte");
         }
     });
 }

@@ -30,8 +30,8 @@ class PlanSeptenalIndividualController extends WebTestCase
         ));
 
         $this->plan_septenal_individual_array = [
-            'inicio'   => "2010",
-            'fin'      => "2016",
+            'inicio'   => 2010,
+            'fin'      => 2016,
             'tramites' => [
                 [
                     'tipo' => 'beca',
@@ -58,7 +58,7 @@ class PlanSeptenalIndividualController extends WebTestCase
     {
         $this->client->request(
             'POST',
-            '/plan-septenal/individual',
+            '/plan-septenal-individual',
             $this->plan_septenal_individual_array
         );
 
@@ -75,11 +75,11 @@ class PlanSeptenalIndividualController extends WebTestCase
     {
         $this->client->request(
             'POST',
-            '/plan-septenal/individual',
+            '/plan-septenal-individual',
             $this->plan_septenal_individual_array
         );
 
-        $this->client->getResponse();
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
 
         $this->plan_septenal_individual_array['tramites'][] = [
             'tipo' => 'licencia',
@@ -91,13 +91,63 @@ class PlanSeptenalIndividualController extends WebTestCase
 
         $this->client->request(
             'POST',
-            '/plan-septenal/individual',
+            '/plan-septenal-individual',
             $this->plan_septenal_individual_array
         );
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertCount(3, $this->tramite_repo->findAll());
         $this->assertCount(1, $this->plan_septenal_individual_repo->findAll());
+    }
+
+    /**
+     * @group functionalTesting
+     */
+    public function testGetAction()
+    {
+        $this->client->request(
+            'GET',
+            '/plan-septenal-individual',
+            ['inicio' => 2010, 'fin' => 2016]
+        );
+
+        $this->assertTrue($this->client->getResponse()->isOk());
+
+        $this->client->request(
+            'POST',
+            '/plan-septenal-individual',
+            $this->plan_septenal_individual_array
+        );
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->client->request(
+            'GET',
+            '/plan-septenal-individual',
+            ['inicio' => 2010, 'fin' => 2016]
+        );
+
+        $response = json_decode($this->client->getResponse()->getContent(), true);
+
+        $this->assertEquals(
+            $this->plan_septenal_individual_array['inicio'],
+            $response['inicio']
+        );
+
+        $this->assertEquals(
+            $this->plan_septenal_individual_array['fin'],
+            $response['fin']
+        );
+
+        $this->assertContains(
+            $this->plan_septenal_individual_array['tramites'][0],
+            $response['tramites']
+        );
+
+        $this->assertContains(
+            $this->plan_septenal_individual_array['tramites'][1],
+            $response['tramites']
+        );
     }
 
     protected function tearDown()
