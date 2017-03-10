@@ -61,4 +61,12 @@ class MonthlyDateRangeTest extends \PHPUnit_Framework_TestCase
         $end = $range->getEnd()->modify('+1 day');
         $this->assertEquals($copy->getEnd(), $range->getEnd());
     }
+
+    public function testGetEndPointAsString()
+    {
+        $range = new MonthlyDateRange('01/2010', '06/2010');
+
+        $this->assertEquals($range->getStartAsString(), '01/2010');
+        $this->assertEquals($range->getEndAsString(), '06/2010');
+    }
 }

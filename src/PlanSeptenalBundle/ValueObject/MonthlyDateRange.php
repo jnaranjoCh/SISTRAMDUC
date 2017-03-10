@@ -68,12 +68,22 @@ class MonthlyDateRange
         return clone $this->start;
     }
 
+    public function getStartAsString()
+    {
+        return $this->getStart()->format('m/Y');
+    }
+
     /**
      * @return \DateTime
      */
     public function getEnd()
     {
         return clone $this->end;
+    }
+
+    public function getEndAsString()
+    {
+        return $this->getEnd()->format('m/Y');
     }
 
     public function __toString()

@@ -9,49 +9,55 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
-use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
-use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
 
 class PlanSeptenalIndividualController extends Controller
 {
+
     /**
      * @Route("/plan-septenal/individual", name="plan-septenal-individual")
      * @Method({"GET"})
      */
     public function showAction()
     {
-        return $this->render('PlanSeptenalBundle::individual.html.twig');
+        $entity_manager = $this->getDoctrine()->getManager();
+        $plan_septenal_individual_repo = $entity_manager->getRepository(PlanSeptenalIndividual::class);
+
+        $plan_septenal_individual = $plan_septenal_individual_repo
+            ->findOneBy(['owner' => $this->getUser()->getId()]);
+
+        return $this->render('PlanSeptenalBundle::individual.html.twig', compact($plan_septenal_individual));
     }
 
     /**
      * @Route("/plan-septenal/individual", name="create-plan-septenal-individual")
      * @Method("POST")
      */
-    public function createAction(Request $request)
+    public function createOrUpdateAction(Request $request)
     {
         $inicio = $request->get('inicio');
         $fin = $request->get('fin');
 
-        $new_plan = new PlanSeptenalIndividual($inicio, $fin);
+        $entity_manager = $this->getDoctrine()->getManager();
+        $plan_septenal_individual_repo = $entity_manager->getRepository(PlanSeptenalIndividual::class);
 
-        $tramites = $request->get('tramites');
+        $plan_septenal_individual = $plan_septenal_individual_repo
+            ->findOneBy(['inicio' => $inicio, 'fin' => $fin, 'owner' => $this->getUser()->getId()]);
 
-        foreach ($tramites as $tramite) {
-            $new_plan->addTramite(
-                new TramitePlanSeptenal([
-                    'tipo' => $tramite['tipo'],
-                    'periodo' => new MonthlyDateRange(
-                        $tramite['periodo']['start'],
-                        $tramite['periodo']['end']
-                    )
-                ])
-            );
+        if (is_null($plan_septenal_individual)) {
+            $plan_septenal_individual = new PlanSeptenalIndividual($inicio, $fin);
+            $plan_septenal_individual->assignTo($this->getUser());
+        } else {
+            $persisted_tramites = $plan_septenal_individual->getTramites();
+            foreach ($persisted_tramites as $tramite) {
+                $entity_manager->remove($tramite);
+            }
+            $persisted_tramites->clear();
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $plan_septenal_individual->addTramites($request->get('tramites'));
 
-        $entityManager->persist($new_plan);
-        $entityManager->flush();
+        $entity_manager->persist($plan_septenal_individual);
+        $entity_manager->flush();
 
         return new Response('', 200);
     }

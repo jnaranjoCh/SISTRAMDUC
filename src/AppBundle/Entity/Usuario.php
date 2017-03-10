@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
@@ -140,6 +142,11 @@ class Usuario implements UserInterface
      */
     protected $hijos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlanSeptenalBundle\Entity\PlanSeptenalIndividual", mappedBy="owner")
+     */
+    protected $planes_septenales_individuales;
+
     public function __construct()
     {
         $this->registros = new ArrayCollection();
@@ -147,6 +154,7 @@ class Usuario implements UserInterface
         $this->facultades = new ArrayCollection();
         $this->hijos = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->planes_septenales_individuales = new ArrayCollection();
     }
 
     /**
@@ -551,5 +559,16 @@ class Usuario implements UserInterface
     public function getNombreCompleto ()
     {
         return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+    }
+
+    public function ownPlanSeptenalIndividual(PlanSeptenalIndividual $plan)
+    {
+        $this->planes_septenales_individuales[] = $plan;
+        return $this;
+    }
+
+    public function getPlanesSeptenalesIndividuales()
+    {
+        return $this->planes_septenales_individuales;
     }
 }

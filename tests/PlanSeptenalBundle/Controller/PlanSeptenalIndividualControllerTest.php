@@ -8,27 +8,28 @@ use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 
 class PlanSeptenalIndividualController extends WebTestCase
 {
+    protected $plan_septenal_individual_json;
     protected $em;
+    protected $plan_septenal_individual_repo;
+    protected $tramite_repo;
+    protected $client;
 
     public function setUp() {
         parent::setUp();
 
         $kernel = static::createKernel();
         $kernel->boot();
-        $this->em = $kernel->getContainer()->get('doctrine')->getManager();
-    }
 
-    /**
-     * @group functionalTesting
-     */
-    public function testCreateAction()
-    {
-        $client = static::createClient(array(), array(
+        $this->em = $kernel->getContainer()->get('doctrine')->getManager();
+        $this->plan_septenal_individual_repo = $this->em->getRepository(PlanSeptenalIndividual::class);
+        $this->tramite_repo = $this->em->getRepository(TramitePlanSeptenal::class);
+
+        $this->client = static::createClient(array(), array(
             'PHP_AUTH_USER' => '1234',
             'PHP_AUTH_PW'   => '1234',
         ));
 
-        $plan_septenal_individual_json = [
+        $this->plan_septenal_individual_array = [
             'inicio'   => "2010",
             'fin'      => "2016",
             'tramites' => [
@@ -48,24 +49,69 @@ class PlanSeptenalIndividualController extends WebTestCase
                 ]
             ]
         ];
+    }
 
-        $client->request(
+    /**
+     * @group functionalTesting
+     */
+    public function testCreateOrUpdateActionCreateNewPlan()
+    {
+        $this->client->request(
             'POST',
             '/plan-septenal/individual',
-            $plan_septenal_individual_json
+            $this->plan_septenal_individual_array
         );
 
-        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
 
-        $tramites = $this->em->getRepository(TramitePlanSeptenal::class)->findAll();
-        $this->assertCount(2, $tramites);
+        $this->assertCount(2, $this->tramite_repo->findAll());
+        $this->assertCount(1, $this->plan_septenal_individual_repo->findAll());
+    }
 
-        $planes = $this->em->getRepository(PlanSeptenalIndividual::class)->findAll();
-        $this->assertCount(1, $planes);
+    /**
+     * @group functionalTesting
+     */
+    public function testCreateOrUpdateActionUpdateOldPlan()
+    {
+        $this->client->request(
+            'POST',
+            '/plan-septenal/individual',
+            $this->plan_septenal_individual_array
+        );
 
-        $this->em->remove($tramites[0]);
-        $this->em->remove($tramites[1]);
-        $this->em->remove($planes[0]);
+        $this->client->getResponse();
+
+        $this->plan_septenal_individual_array['tramites'][] = [
+            'tipo' => 'licencia',
+            'periodo' => [
+                'start' => '06/2011',
+                'end' => '12/2011'
+            ]
+        ];
+
+        $this->client->request(
+            'POST',
+            '/plan-septenal/individual',
+            $this->plan_septenal_individual_array
+        );
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertCount(3, $this->tramite_repo->findAll());
+        $this->assertCount(1, $this->plan_septenal_individual_repo->findAll());
+    }
+
+    protected function tearDown()
+    {
+        $tramites = $this->tramite_repo->findAll();
+        foreach ($tramites as $tramite) {
+            $this->em->remove($tramite);
+        }
+
+        $planes = $this->plan_septenal_individual_repo->findAll();
+        foreach ($planes as $plan) {
+            $this->em->remove($plan);
+        }
+
         $this->em->flush();
     }
 }
