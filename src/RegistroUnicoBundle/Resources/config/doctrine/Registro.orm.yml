@@ -12,6 +12,7 @@ RegistroUnicoBundle\Entity\Registro:
         año:
             type: integer
             nullable: true
+            column: anio
         description:
             type: string
             length: '50'

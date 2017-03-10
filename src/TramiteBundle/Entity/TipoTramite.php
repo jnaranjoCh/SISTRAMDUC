@@ -10,13 +10,14 @@ namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use TramiteBundle\Entity\Tramite;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="tipo_tramite")
  */
 
-class Tipo_tramite
+class TipoTramite
 {
     /**
      * @ORM\Id
@@ -65,7 +66,7 @@ class Tipo_tramite
      *
      * @param string $nombre
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function setNombre($nombre)
     {
@@ -89,7 +90,7 @@ class Tipo_tramite
      *
      * @param string $duracion
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function setDuracion($duracion)
     {
@@ -113,7 +114,7 @@ class Tipo_tramite
      *
      * @param string $descripcion
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function setDescripcion($descripcion)
     {
@@ -137,7 +138,7 @@ class Tipo_tramite
      *
      * @param \TramiteBundle\Entity\Tramite $tramite
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function addTramite(\TramiteBundle\Entity\Tramite $tramite)
     {

@@ -86,7 +86,7 @@ class Usuario implements UserInterface
     private $fechaFallecimiento;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(name="contrasena", type="string", length=100)
      */
     private $contraseña;
 
