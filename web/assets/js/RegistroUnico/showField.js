@@ -1,4 +1,4 @@
-$('#tipoDeRegistroDatos').change(function(){
+$('#TipoDeRegistroDatos').change(function(){
     var selectedOption = $(this).find('option:selected');
 
     if(selectedOption.val().localeCompare("Articulo publicado") == 0)
@@ -7,28 +7,28 @@ $('#tipoDeRegistroDatos').change(function(){
     {
         $("#revista").addClass("hidden");
         table4.clear().draw();
-        $("#empR").val("");
-        $("#insR").val("");
+        $("#EmpresaDatos").val("");
+        $("#InstitucionDatos").val("");
     }
         
     if(selectedOption.val().localeCompare("Tutoria de pasantias") == 0)
-        $("#em").removeClass("hidden");
+        $("#divEmpresaDatos").removeClass("hidden");
     else
     {
-        $("#em").addClass("hidden");
+        $("#divEmpresaDatos").addClass("hidden");
         table4.clear().draw();
-        $("#empR").val("");
-        $("#insR").val("");
+        $("#EmpresaDatos").val("");
+        $("#InstitucionDatos").val("");
     }
 
     
     if(selectedOption.val().localeCompare("Tutoria de servicio comunitario") == 0)
-        $("#in").removeClass("hidden");
+        $("#divInstitucionDatos").removeClass("hidden");
     else
     {
-        $("#in").addClass("hidden");
+        $("#divInstitucionDatos").addClass("hidden");
         table4.clear().draw();
-        $("#empR").val("");
-        $("#insR").val("");
+        $("#EmpresaDatos").val("");
+        $("#InstitucionDatos").val("");
     }
 });

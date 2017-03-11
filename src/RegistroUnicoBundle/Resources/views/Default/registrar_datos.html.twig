@@ -298,7 +298,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Estatus</label>
-                        <select id="estatusDatos" class="form-control select2" style="width: 100%;">
+                        <select id="EstatusDatos" class="form-control select2" style="width: 100%;">
                         </select>
                       </div>
                       <!-- /.form-group -->
@@ -307,7 +307,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Nivel de estudio</label>
-                        <select id="nivelDeEstudioDatos" class="form-control select2" style="width: 100%;">
+                        <select id="NivelDeEstudioDatos" class="form-control select2" style="width: 100%;">
                         </select>
                       </div>
                     </div>
@@ -315,7 +315,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Tipo de registro</label>
-                        <select id="tipoDeRegistroDatos" class="form-control select2" style="width: 100%;">
+                        <select id="TipoDeRegistroDatos" class="form-control select2" style="width: 100%;">
                         </select>
                       </div>
                     </div>
@@ -323,7 +323,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Descripción</label>
-                        <input id="desR" type="text" class="form-control" placeholder="Nombre">
+                        <input id="DescripcionDatos" type="text" class="form-control" placeholder="Nombre">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -331,34 +331,34 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Año de publicacion y/o asistencia</label>
-                        <input id="anoR" type="number" class="form-control" placeholder="Año" min="1">
+                        <input id="AnoPublicacionDatos" type="number" class="form-control" placeholder="Año" min="1">
                       </div>
                       <!-- /.form-group -->
                     </div>
-                    <div id="em" class="col-md-12 hidden">
+                    <div id="divEmpresaDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Empresa</label>
-                        <input id="empR" type="text" class="form-control" placeholder="Empresa">
+                        <input id="EmpresaDatos" type="text" class="form-control" placeholder="Empresa">
                       </div>
                       <!-- /.form-group -->
                     </div>
-                    <div id="in" class="col-md-12 hidden">
+                    <div id="divInstitucionDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Institución</label>
-                        <input id="insR" type="text" class="form-control" placeholder="Institución">
+                        <input id="InstitucionDatos" type="text" class="form-control" placeholder="Institución">
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="form-group has-feedback">
-                              <button id="ar" type="button" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
+                              <button id="agregarRegistro" type="button" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
                         </div>
                     </div>
                   </div>
                   <hr/>
-                  <table id="table-1" class="table table-bordered table-striped">
+                  <table id="tableRegistros" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Id del registro</th>
@@ -393,7 +393,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Nombre completo</label>
-                        <input id="nomP" type="text" class="form-control" placeholder="Nombre del participantes">
+                        <input id="NombreParticipanteRegistro" type="text" class="form-control" placeholder="Nombre del participantes">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -401,24 +401,24 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Cedula</label>
-                        <input id="cedP" type="number" class="form-control" placeholder="cedula" min="1">
+                        <input id="CedulaParticipanteRegistro" type="number" class="form-control" placeholder="cedula" min="1">
                       </div>
                     </div>
                      <!-- /.col -->
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Id del registro</label>
-                        <input id="idP" type="number" class="form-control" placeholder="Id del registro" min="1">
+                        <input id="IdParticipanteRegistro" type="number" class="form-control" placeholder="Id del registro" min="1">
                       </div>
                     </div>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="form-group has-feedback">
-                              <button id="ap" type="button" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
+                              <button id="agregarParticipantes" type="button" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
                         </div>
                     </div>
                 </div>
                 <hr/>
-                <table id="table-2" class="table table-bordered table-striped">
+                <table id="tableParticipantes" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Id del registro</th>
@@ -498,12 +498,12 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/iniRD.js') }}"></script>
-  <script src="{{ asset('assets/js/configTable.js') }}"></script>
-  <script src="{{ asset('assets/js/showField.js') }}"></script>
-  <script src="{{ asset('assets/js/insertAndDeleteTable.js') }}"></script>
-  <script src="{{ asset('assets/js/generate.js') }}"></script>
-  <script src="{{ asset('assets/js/saveData.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/iniRD.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/showField.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/generate.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/saveData.js') }}"></script>
 {% endblock %}
 
 {% block javascripts %}
