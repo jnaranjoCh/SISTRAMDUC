@@ -20,7 +20,7 @@ class Registro
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="anio", type="integer")
      */
     private $año;
     
