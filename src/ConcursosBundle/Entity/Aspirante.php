@@ -97,6 +97,27 @@ class Aspirante
      * @ORM\Column(name="anyoGraduacion", type="integer", nullable=true)
      */
     private $anyoGraduacion;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comunicacionEscritaUrl", type="string", length=255, nullable=true)
+     */
+    private $comunicacionEscritaUrl;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cartaConductaUrl", type="string", length=255, nullable=true)
+     */
+    private $cartaConductaUrl;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="reporteNotaUrl", type="string", length=255, nullable=true)
+     */
+    private $reporteNotaUrl;
 
     /**
      * @var int
@@ -125,6 +146,19 @@ class Aspirante
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
      */
     private $observaciones;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="$fechaRenuncia", type="datetime", nullable=true)
+     */
+    private $fechaRenuncia;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Concurso", inversedBy="aspirantes")
+     * @ORM\JoinColumn(name="concurso_id", referencedColumnName="id")
+     */
+    protected $concurso;
 
 
     /**
@@ -400,6 +434,78 @@ class Aspirante
     {
         return $this->anyoGraduacion;
     }
+    
+    /**
+     * Set comunicacionEscritaUrl
+     *
+     * @param string $comunicacionEscritaUrl
+     *
+     * @return Aspirante
+     */
+    public function setComunicacionEscritaUrl($comunicacionEscritaUrl)
+    {
+        $this->comunicacionEscritaUrl = $comunicacionEscritaUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get comunicacionEscritaUrl
+     *
+     * @return string
+     */
+    public function getComunicacionEscritaUrl()
+    {
+        return $this->comunicacionEscritaUrl;
+    }
+
+    /**
+     * Set cartaConductaUrl
+     *
+     * @param string $cartaConductaUrl
+     *
+     * @return Aspirante
+     */
+    public function setCartaConductaUrl($cartaConductaUrl)
+    {
+        $this->cartaConductaUrl = $cartaConductaUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get cartaConductaUrl
+     *
+     * @return string
+     */
+    public function getCartaConductaUrl()
+    {
+        return $this->cartaConductaUrl;
+    }
+
+    /**
+     * Set reporteNotaUrl
+     *
+     * @param string $reporteNotaUrl
+     *
+     * @return Aspirante
+     */
+    public function setReporteNotaUrl($reporteNotaUrl)
+    {
+        $this->reporteNotaUrl = $reporteNotaUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get reporteNotaUrl
+     *
+     * @return string
+     */
+    public function getReporteNotaUrl()
+    {
+        return $this->reporteNotaUrl;
+    }
 
     /**
      * Set promedioAcademico
@@ -496,5 +602,30 @@ class Aspirante
     {
         return $this->observaciones;
     }
-}
+    
+    /**
+     * Set fechaRenuncia
+     *
+     * @param \DateTime $fechaRenuncia
+     *
+     * @return Concurso
+     */
+    public function setFechaRenuncia($fechaRenuncia)
+    {
+        $this->fechaRenuncia = $fechaRenuncia;
 
+        return $this;
+    }
+
+    /**
+     * Get fechaRenuncia
+     *
+     * @return \DateTime
+     */
+    public function getFechaRenuncia()
+    {
+        return $this->fechaRenuncia;
+    }
+
+
+}

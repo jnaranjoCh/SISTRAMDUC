@@ -69,6 +69,11 @@ class Concurso
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
      */
     private $observaciones;
+    
+      /**
+     * @ORM\OneToMany(targetEntity="Aspirante", mappedBy="concurso")
+     */
+    protected $aspirantes;
 
 
     /**
