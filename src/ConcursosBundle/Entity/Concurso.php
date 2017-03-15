@@ -70,12 +70,24 @@ class Concurso
      */
     private $observaciones;
     
-      /**
-     * @ORM\OneToMany(targetEntity="Aspirante", mappedBy="concurso")
+    /**
+     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Aspirante")
+     * @ORM\JoinTable(name="concurso_aspirante",
+     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")}
+     *      )
      */
     protected $aspirantes;
-
-
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Jurado")
+     * @ORM\JoinTable(name="concurso_jurado",
+     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="jurado_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $jurado;
+    
     /**
      * Get id
      *

@@ -76,6 +76,8 @@ class Jurado
      * @ORM\Column(name="cedula", type="string", length=25)
      */
     private $cedula;
+    
+    protected $concurso;
 
 
     /**
