@@ -33,15 +33,31 @@
 
 .grid-header {
     padding: 0;
+    display: block;
 }
 
-.grid-num, .grid-header-el, .grid-element {
+.grid-numeration {
+    float: left;
+    width: 7.5%;
+}
+
+.grid-num {
+    border: 1px solid black;
+    height: 30px;
+    margin: 3px 0px 0px 0px;
+}
+
+.grid-header-el, .grid-element {
     margin: 3px 0px 0px 0px;
     width: 7.5%;
     height: 30px;
     border: 1px solid;
-    display: inline-block;
+    /*! display: inline-block; */
     float: left;
+}
+
+.grid-header-el:first-child {
+    margin-left: 7.5%;
 }
 
 .grid-header-el, .grid-num {
