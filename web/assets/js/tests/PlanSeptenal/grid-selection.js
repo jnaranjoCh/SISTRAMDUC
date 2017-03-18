@@ -1,8 +1,8 @@
 var CTRL_CODE = 17, SHIFT_CODE = 16,
-    ctrlDown = jQuery.Event("keydown", { keyCode : CTRL_CODE }),
-    ctrlUp = jQuery.Event("keyup", { keyCode : CTRL_CODE }),
+    ctrlDown  = jQuery.Event("keydown", { keyCode : CTRL_CODE }),
+    ctrlUp    = jQuery.Event("keyup", { keyCode : CTRL_CODE }),
     shiftDown = jQuery.Event("keydown", { keyCode : SHIFT_CODE }),
-    shiftUp = jQuery.Event("keyup", { keyCode : SHIFT_CODE });
+    shiftUp   = jQuery.Event("keyup", { keyCode : SHIFT_CODE });
 
 function triggerClickRelatedEvents () {
     $targets = Array.prototype.slice.call(arguments);
@@ -12,13 +12,13 @@ function triggerClickRelatedEvents () {
 }
 
 function addGridReferences (that) {
-    that.$elements = that.grid.$elements;
-    that.$first    = that.$elements.eq(0);
-    that.$second   = that.$elements.eq(1);
-    that.$third    = that.$elements.eq(2);
-    that.$fourth   = that.$elements.eq(3);
-    that.$fifth    = that.$elements.eq(4);
-    that.$last     = that.$elements.last();
+    that.$cells  = that.grid.$cells;
+    that.$first  = that.grid.cell(0);
+    that.$second = that.grid.cell(1);
+    that.$third  = that.grid.cell(2);
+    that.$fourth = that.grid.cell(3);
+    that.$fifth  = that.grid.cell(4);
+    that.$last   = that.grid.cell(that.$cells.length -1);
 }
 
 QUnit.test("container is mandatory for grid initialization", function (assert) {
@@ -38,7 +38,7 @@ QUnit.test("Create grid appropriately", function (assert) {
     assert.equal($(".grid-header-el").length, 12, "grid must have 12 column headers");
     assert.equal($(".grid-num").length, 7, "grid must have 7 row numbers");
     assert.equal($(".grid-row").length, 7, "grid must have 7 rows");
-    assert.equal($(".grid-element").length, 84, "grid must have 84 elements");
+    assert.equal($(".grid-cell").length, 84, "grid must have 84 cells");
 });
 
 QUnit.module("Single Selection", {
@@ -48,21 +48,21 @@ QUnit.module("Single Selection", {
     }
 });
 
-QUnit.test("Click on an element must add class selected", function (assert) {
+QUnit.test("Click on a cell must add class selected", function (assert) {
     triggerClickRelatedEvents(this.$first);
-    assert.ok(this.$first.hasClass("selected"), "Clicked element must has class .selected");
+    assert.ok(this.$first.isSelected(), "Clicked cell must has class .selected");
 });
 
-QUnit.test("Click on an element must remove class selected from all elements", function (assert) {
-    this.$elements.addClass("selected");
+QUnit.test("Click on a cell must remove class selected from all cells", function (assert) {
+    this.$cells.addClass("selected");
     triggerClickRelatedEvents(this.$first);
 
-    assert.equal(this.$elements.filter(".selected").length, 1, "Class .selected must be only in clicked element");
+    assert.equal(this.grid.getSelection().length, 1, "Class .selected must be only in clicked cell");
 });
 
-QUnit.test("Holding click over an element should keep it selected", function (assert) {
+QUnit.test("Holding click over a cell should keep it selected", function (assert) {
     this.$first.trigger("mousedown");
-    assert.ok(this.$first.hasClass("selected"), "Clicked element must has class .selected");
+    assert.ok(this.$first.isSelected(), "Clicked cell must has class .selected");
 });
 
 QUnit.module( "Multiselection", {
@@ -76,7 +76,7 @@ QUnit.test("Pressing ctrl key must allow multiselection", function (assert) {
     $(document).trigger(ctrlDown);
     triggerClickRelatedEvents(this.$first, this.$last);
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "There should be two selected elements");
+    assert.equal(this.grid.getSelection().length, 2, "There should be two selected cells");
 });
 
 QUnit.test("Releasing ctrl key must deactivate multiselection", function (assert) {
@@ -86,16 +86,16 @@ QUnit.test("Releasing ctrl key must deactivate multiselection", function (assert
     $(document).trigger(ctrlUp);
     triggerClickRelatedEvents(this.$first);
 
-    assert.equal(this.$elements.filter(".selected").length, 1, "There should be two selected elements");
+    assert.equal(this.grid.getSelection().length, 1, "There should be two selected cells");
 });
 
-QUnit.test("When user is multiselecting class selected must be toggled in clicked elements", function (assert) {
+QUnit.test("When user is multiselecting class selected must be toggled in clicked cells", function (assert) {
     $(document).trigger(ctrlDown);
     triggerClickRelatedEvents(this.$first);
-    assert.equal(this.$elements.filter(".selected").length, 1, "There should be one selected elements");
+    assert.equal(this.grid.getSelection().length, 1, "There should be one selected cells");
 
     triggerClickRelatedEvents(this.$first);
-    assert.equal(this.$elements.filter(".selected").length, 0, "There should be one selected elements");
+    assert.equal(this.grid.getSelection().length, 0, "There should be one selected cells");
 });
 
 
@@ -114,29 +114,29 @@ QUnit.test("Pressing shift must allow range selection", function (assert) {
     $(document).trigger(shiftDown);
     triggerClickRelatedEvents(this.$first, this.$third);
 
-    assert.equal(this.$elements.filter(".selected").length, 3, "Three elements should be selected");
+    assert.equal(this.grid.getSelection().length, 3, "Three cells should be selected");
 });
 
-QUnit.test("Range selection must start in current clicked element if no other element has been clicked before", function (assert) {
+QUnit.test("Range selection must start in current clicked cell if no other cell has been clicked before", function (assert) {
     $(document).trigger(shiftDown);
     triggerClickRelatedEvents(this.$third);
 
-    assert.equal(this.$elements.filter(".selected").length, 1, "Only one element should be selected");
-    assert.ok(this.$third.hasClass("selected"), "The starting point of range should be selected");
+    assert.equal(this.grid.getSelection().length, 1, "Only one cell should be selected");
+    assert.ok(this.$third.isSelected(), "The starting point of range should be selected");
 });
 
 QUnit.test("Range selection must work across different rows", function (assert) {
     $(document).trigger(shiftDown);
-    triggerClickRelatedEvents(this.$third, this.$elements.eq(this.cols * 2 + 4));
+    triggerClickRelatedEvents(this.$third, this.$cells.eq(this.cols * 2 + 4));
 
-    assert.equal(this.$elements.filter(".selected").length, 2 * this.cols + 3, 2 * this.cols + 3 + " elements should be selected");
+    assert.equal(this.grid.getSelection().length, 2 * this.cols + 3, 2 * this.cols + 3 + " cells should be selected");
 });
 
 QUnit.test("Range selection must work across different rows, backwards", function (assert) {
     $(document).trigger(shiftDown);
-    triggerClickRelatedEvents(this.$elements.eq(this.cols * 2 + 4), this.$third);
+    triggerClickRelatedEvents(this.$cells.eq(this.cols * 2 + 4), this.$third);
 
-    assert.equal(this.$elements.filter(".selected").length, 2 * this.cols + 3, 2 * this.cols + 3 + " elements should be selected");
+    assert.equal(this.grid.getSelection().length, 2 * this.cols + 3, 2 * this.cols + 3 + " cells should be selected");
 });
 
 QUnit.test("Stopping shift key pressing must deactivate rangeselection", function (assert) {
@@ -146,14 +146,14 @@ QUnit.test("Stopping shift key pressing must deactivate rangeselection", functio
     $(document).trigger(shiftUp);
     triggerClickRelatedEvents(this.$second);
 
-    assert.equal(this.$elements.filter(".selected").length, 1, "Only one element should be selected");
+    assert.equal(this.grid.getSelection().length, 1, "Only one cell should be selected");
 });
 
 QUnit.test("After starting rangeselection first bound must be anchored", function (assert) {
     $(document).trigger(shiftDown);
     triggerClickRelatedEvents(this.$third, this.$second, this.$first);
 
-    assert.equal(this.$elements.filter(".selected").length, 3, "Three elements should be selected");
+    assert.equal(this.grid.getSelection().length, 3, "Three cells should be selected");
 });
 
 QUnit.test("After starting rangeselection first bound must be always anchored if selection change direction previous selection must be turned off", function (assert) {
@@ -162,25 +162,25 @@ QUnit.test("After starting rangeselection first bound must be always anchored if
 
     triggerClickRelatedEvents(this.$fifth);
 
-    assert.equal(this.$elements.filter(".selected").length, 3, "Three elements should be selected");
-    assert.ok(! this.$first.hasClass("selected"), "First element should be unselected");
-    assert.ok(! this.$second.hasClass("selected"), "Second element should be unselected");
-    assert.ok(this.$third.hasClass("selected"), "Third element should be selected");
-    assert.ok(this.$fourth.hasClass("selected"), "Fourth element should be selected");
-    assert.ok(this.$fifth.hasClass("selected"), "Fifth element should be selected");
+    assert.equal(this.grid.getSelection().length, 3, "Three cells should be selected");
+    assert.ok(! this.$first.isSelected(), "First cell should be unselected");
+    assert.ok(! this.$second.isSelected(), "Second cell should be unselected");
+    assert.ok(this.$third.isSelected(), "Third cell should be selected");
+    assert.ok(this.$fourth.isSelected(), "Fourth cell should be selected");
+    assert.ok(this.$fifth.isSelected(), "Fifth cell should be selected");
 });
 
-QUnit.module("Unselecting elements", {
+QUnit.module("Unselecting cells", {
     beforeEach: function() {
         this.grid = new Grid($(".grid"));
     }
 });
 
-QUnit.test("A click outside of the grid should unselect selected elements", function (assert) {
-    var $elements = $(".grid-element"), $target = $elements.first();
+QUnit.test("A click outside of the grid should unselect selected cells", function (assert) {
+    var $target = this.grid.$cells.first();
     triggerClickRelatedEvents($target, $("#qunit-fixture"));
 
-    assert.equal($elements.filter(".selected").length, 0, "There should be no selected elements");
+    assert.equal(this.grid.getSelection().length, 0, "There should be no selected cells");
 });
 
 QUnit.module("Dragging", {
@@ -194,7 +194,7 @@ QUnit.test("Click holding and moving mouse should perform dragging selection", f
     this.$first.trigger("mousedown");
     this.$second.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "There should be two selected elements");
+    assert.equal(this.grid.getSelection().length, 2, "There should be two selected cells");
 });
 
 QUnit.test("Releasing the click should stop dragging selection", function (assert) {
@@ -203,14 +203,14 @@ QUnit.test("Releasing the click should stop dragging selection", function (asser
     this.$second.trigger("mouseup").trigger("click");
     this.$third.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "There should be two selected elements");
+    assert.equal(this.grid.getSelection().length, 2, "There should be two selected cells");
 
     this.$first.trigger("mousedown");
     this.$second.trigger("mouseenter");
     $("#qunit-fixture").trigger("mouseup");
     this.$third.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "There should be two selected elements");
+    assert.equal(this.grid.getSelection().length, 2, "There should be two selected cells");
 });
 
 QUnit.test("New selections using dragging range selection should turn off previous selections", function (assert) {
@@ -220,11 +220,11 @@ QUnit.test("New selections using dragging range selection should turn off previo
     this.$third.trigger("mouseenter").trigger("mousedown");
     this.$fourth.trigger("mouseenter");
 
-    assert.ok(! this.$first.hasClass("selected"), "First element should be unselected");
-    assert.ok(! this.$second.hasClass("selected"), "Second element should be unselected");
+    assert.ok(! this.$first.isSelected(), "First cell should be unselected");
+    assert.ok(! this.$second.isSelected(), "Second cell should be unselected");
 
-    assert.ok(this.$third.hasClass("selected"), "Third element should be selected");
-    assert.ok(this.$fourth.hasClass("selected"),"Fourth element should be selected");
+    assert.ok(this.$third.isSelected(), "Third cell should be selected");
+    assert.ok(this.$fourth.isSelected(),"Fourth cell should be selected");
 });
 
 QUnit.test("New selections using dragging range selection should keep previous selections when control key is being held", function (assert) {
@@ -239,47 +239,47 @@ QUnit.test("New selections using dragging range selection should keep previous s
     this.$fifth.trigger("mousedown");
     this.$fourth.trigger("mouseenter");
 
-    assert.ok(this.$first.hasClass("selected"), "First element should be selected");
-    assert.ok(this.$second.hasClass("selected"), "Second element should be selected");
-    assert.ok(! this.$third.hasClass("selected"), "Third element should be unselected");
-    assert.ok(this.$fourth.hasClass("selected"),"Fourth element should be selected");
-    assert.ok(this.$fifth.hasClass("selected"), "Fifth element should be selected");
+    assert.ok(this.$first.isSelected(), "First cell should be selected");
+    assert.ok(this.$second.isSelected(), "Second cell should be selected");
+    assert.ok(! this.$third.isSelected(), "Third cell should be unselected");
+    assert.ok(this.$fourth.isSelected(),"Fourth cell should be selected");
+    assert.ok(this.$fifth.isSelected(), "Fifth cell should be selected");
 
-    assert.equal(this.$elements.filter(".selected").length, 4, "There should be 4 selected elements");
+    assert.equal(this.grid.getSelection().length, 4, "There should be 4 selected cells");
 });
 
-QUnit.test("Dragging selections must not have gaps of unselected elements", function (assert) {
+QUnit.test("Dragging selections must not have gaps of unselected cells", function (assert) {
     this.$first.trigger("mousedown");
     this.$fourth.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 4, "Need four selected elements here");
-    assert.ok(this.$first.hasClass("selected"), "There a blank space in first element");
-    assert.ok(this.$second.hasClass("selected"), "There a blank space in second element");
-    assert.ok(this.$third.hasClass("selected"), "There a blank space in third element");
-    assert.ok(this.$fourth.hasClass("selected"), "There a blank space in fourth element");
+    assert.equal(this.grid.getSelection().length, 4, "Need four selected cells here");
+    assert.ok(this.$first.isSelected(), "There a blank space in first cell");
+    assert.ok(this.$second.isSelected(), "There a blank space in second cell");
+    assert.ok(this.$third.isSelected(), "There a blank space in third cell");
+    assert.ok(this.$fourth.isSelected(), "There a blank space in fourth cell");
 });
 
-QUnit.test("Dragging consecutive elements must selected all of them", function (assert) {
+QUnit.test("Dragging consecutive cells must selected all of them", function (assert) {
     this.$first.trigger("mousedown");
     this.$second.trigger("mouseenter");
     this.$third.trigger("mouseenter");
     this.$fourth.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 4, "Need four selected elements here");
-    assert.ok(this.$first.hasClass("selected"), "There a blank space in first element");
-    assert.ok(this.$second.hasClass("selected"), "There a blank space in second element");
-    assert.ok(this.$third.hasClass("selected"), "There a blank space in third element");
-    assert.ok(this.$fourth.hasClass("selected"), "There a blank space in fourth element");
+    assert.equal(this.grid.getSelection().length, 4, "Need four selected cells here");
+    assert.ok(this.$first.isSelected(), "There a blank space in first cell");
+    assert.ok(this.$second.isSelected(), "There a blank space in second cell");
+    assert.ok(this.$third.isSelected(), "There a blank space in third cell");
+    assert.ok(this.$fourth.isSelected(), "There a blank space in fourth cell");
 });
 
-QUnit.test("When pressing shift the range selection must not be performed automatically, clicking the second element must be needed", function (assert) {
+QUnit.test("When pressing shift the range selection must not be performed automatically, clicking the second cell must be needed", function (assert) {
     var SHIFT_CODE = 16, keyDown = jQuery.Event("keydown", { keyCode : SHIFT_CODE });
 
     this.$first.trigger("mousedown").trigger("mouseup").trigger("click");
     $(document).trigger(keyDown);
     this.$fourth.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 1, "Only first element should be selected");
+    assert.equal(this.grid.getSelection().length, 1, "Only first cell should be selected");
 });
 
 QUnit.test("When cursor retreat to a selected zone, the selection should retreat as well", function (assert) {
@@ -287,32 +287,32 @@ QUnit.test("When cursor retreat to a selected zone, the selection should retreat
     this.$fourth.trigger("mouseenter");
     this.$second.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "Only two element should be selected");
-    assert.ok(this.$first.hasClass("selected"), "First element should be selected");
-    assert.ok(this.$second.hasClass("selected"), "Second element should be selected");
-    assert.ok(! this.$fourth.hasClass("selected"), "Fourth element should be unselected");
+    assert.equal(this.grid.getSelection().length, 2, "Only two cell should be selected");
+    assert.ok(this.$first.isSelected(), "First cell should be selected");
+    assert.ok(this.$second.isSelected(), "Second cell should be selected");
+    assert.ok(! this.$fourth.isSelected(), "Fourth cell should be unselected");
 });
 
-QUnit.test("When cursor returned to the begin of the seleccion only the starting element should be selected", function (assert) {
+QUnit.test("When cursor returned to the begin of the seleccion only the starting cell should be selected", function (assert) {
     this.$second.trigger("mousedown");
     this.$first.trigger("mouseenter");
     this.$second.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 1, "Only second element should be selected");
-    assert.ok(this.$second.hasClass("selected"), "Only second element should be selected");
+    assert.equal(this.grid.getSelection().length, 1, "Only second cell should be selected");
+    assert.ok(this.$second.isSelected(), "Only second cell should be selected");
 });
 
-QUnit.test("When cursor leave the grid and return again the range should be from the element under the cursor to starting point", function (assert) {
+QUnit.test("When cursor leave the grid and return again the range should be from the cell under the cursor to starting point", function (assert) {
     this.$fourth.trigger("mousedown");
     this.$third.trigger("mouseenter");
     this.$second.trigger("mouseenter");
 
     this.$second.trigger("mouseleave").trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 3, "Three elements should be selected");
-    assert.ok(this.$second.hasClass("selected"), "Second element should be selected");
-    assert.ok(this.$third.hasClass("selected"), "Third element should be selected");
-    assert.ok(this.$fourth.hasClass("selected"), "Fourth element should be selected");
+    assert.equal(this.grid.getSelection().length, 3, "Three cells should be selected");
+    assert.ok(this.$second.isSelected(), "Second cell should be selected");
+    assert.ok(this.$third.isSelected(), "Third cell should be selected");
+    assert.ok(this.$fourth.isSelected(), "Fourth cell should be selected");
 });
 
 QUnit.test("If ctrl is held when cursor retreat to starting point current range should be reduced to one point keeping previous selections", function (assert) {
@@ -323,10 +323,10 @@ QUnit.test("If ctrl is held when cursor retreat to starting point current range 
     this.$second.trigger("mouseenter").trigger("mouseleave");
     this.$first.trigger("mouseenter");
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "Only two elements should be selected");
-    assert.ok(this.$first.hasClass("selected"), "First element should be selected");
-    assert.ok(! this.$second.hasClass("selected"), "Second element should be unselected");
-    assert.ok(this.$last.hasClass("selected"), "Last element should be selected");
+    assert.equal(this.grid.getSelection().length, 2, "Only two cells should be selected");
+    assert.ok(this.$first.isSelected(), "First cell should be selected");
+    assert.ok(! this.$second.isSelected(), "Second cell should be unselected");
+    assert.ok(this.$last.isSelected(), "Last cell should be selected");
 });
 
 QUnit.module("Double click", {
@@ -339,15 +339,15 @@ QUnit.module("Double click", {
     }
 });
 
-QUnit.test("Double clicking an element allows whole row selection", function (assert) {
+QUnit.test("Double clicking a cell allows whole row selection", function (assert) {
     this.$second.trigger("dblclick");
-    assert.equal(this.$elements.filter(".selected").length, 12, "Whole row should be selected");
+    assert.equal(this.grid.getSelection().length, 12, "Whole row should be selected");
 });
 
 QUnit.test("Double clicking a selected row unselect it completely", function (assert) {
     this.$second.trigger("dblclick");
     this.$second.trigger("dblclick");
-    assert.equal(this.$elements.filter(".selected").length, 0, "Whole row should be unselected");
+    assert.equal(this.grid.getSelection().length, 0, "Whole row should be unselected");
 });
 
 QUnit.module("Complex interactions", {
@@ -357,7 +357,7 @@ QUnit.module("Complex interactions", {
     }
 });
 
-QUnit.test("When multiselection is inactive a new rangeselection must unselected all previously selected elements", function (assert) {
+QUnit.test("When multiselection is inactive a new rangeselection must unselected all previously selected cells", function (assert) {
     $(document).trigger(shiftDown);
     triggerClickRelatedEvents(this.$first, this.$second);
     $(document).trigger(shiftUp);
@@ -368,23 +368,23 @@ QUnit.test("When multiselection is inactive a new rangeselection must unselected
     $(document).trigger(shiftDown).trigger(ctrlUp);
     triggerClickRelatedEvents(this.$fifth);
 
-    assert.equal(this.$elements.filter(".selected").length, 2, "Two elements should be selected");
-    assert.ok(! this.$first.hasClass("selected"), "First element should be unselected");
-    assert.ok(! this.$second.hasClass("selected"), "Second element should be unselected");
-    assert.ok(this.$fourth.hasClass("selected"), "Fourth element should be selected");
-    assert.ok(this.$fifth.hasClass("selected"), "Fifth element should be selected");
+    assert.equal(this.grid.getSelection().length, 2, "Two cells should be selected");
+    assert.ok(! this.$first.isSelected(), "First cell should be unselected");
+    assert.ok(! this.$second.isSelected(), "Second cell should be unselected");
+    assert.ok(this.$fourth.isSelected(), "Fourth cell should be selected");
+    assert.ok(this.$fifth.isSelected(), "Fifth cell should be selected");
 });
 
 QUnit.test("When multiselection and rangeselection are active simultaneously, the selections must not shrink", function (assert) {
     $(document).trigger(shiftDown).trigger(ctrlDown);
     triggerClickRelatedEvents(this.$third, this.$first, this.$fifth);
 
-    assert.equal(this.$elements.filter(".selected").length, 5, "Five elements should be selected");
-    assert.ok(this.$first.hasClass("selected"), "First element should be selected");
-    assert.ok(this.$second.hasClass("selected"), "Second element should be selected");
-    assert.ok(this.$third.hasClass("selected"), "Fourth element should be selected");
-    assert.ok(this.$fourth.hasClass("selected"), "Fourth element should be selected");
-    assert.ok(this.$fifth.hasClass("selected"), "Fifth element should be selected");
+    assert.equal(this.grid.getSelection().length, 5, "Five cells should be selected");
+    assert.ok(this.$first.isSelected(), "First cell should be selected");
+    assert.ok(this.$second.isSelected(), "Second cell should be selected");
+    assert.ok(this.$third.isSelected(), "Fourth cell should be selected");
+    assert.ok(this.$fourth.isSelected(), "Fourth cell should be selected");
+    assert.ok(this.$fifth.isSelected(), "Fifth cell should be selected");
 });
 
 QUnit.module("Header component", {
@@ -443,7 +443,7 @@ QUnit.module("Destroying", {
 
 QUnit.test("Destroy should remove all children of container", function (assert) {
     this.grid.destroy();
-    assert.equal(this.grid.container.children().length, 0, "Should be no elements");
+    assert.equal(this.grid.container.children().length, 0, "Should be no cells");
 });
 
 QUnit.test("Destroy should remove all event handlers attached to the container", function (assert) {
@@ -472,9 +472,39 @@ QUnit.test("get selection should return a jquery wrapped set", function (assert)
     $(document).trigger(ctrlDown);
     triggerClickRelatedEvents(this.$first, this.$last);
 
-    $selection = this.grid.getSelection();
+    var $selection = this.grid.getSelection();
 
-    assert.ok(this.$first.is($selection), "first element should be present in the set");
-    assert.ok(this.$last.is($selection), "last element should be present in the set");
-    assert.equal($selection.length, 2), "only two elements should be present";
+    assert.ok(this.$first.is($selection), "first cell should be present in the set");
+    assert.ok(this.$last.is($selection), "last cell should be present in the set");
+    assert.equal($selection.length, 2), "only two cells should be present";
+});
+
+QUnit.module("Abstracting cells", {
+    beforeEach: function() {
+        this.grid = new Grid($(".grid"), {
+            numeration: 20
+        });
+        addGridReferences(this);
+    }
+});
+
+QUnit.test("isSelected()", function (assert) {
+    $(document).trigger(ctrlDown);
+    triggerClickRelatedEvents(this.$first);
+
+    assert.ok(this.grid.cell(0).isSelected());
+    assert.notOk(this.grid.cell(1).isSelected());
+});
+
+QUnit.test("$rows property", function (assert) {
+    assert.equal(this.grid.$rows.length, 20);
+});
+
+QUnit.test("accessing cells through rows", function (assert) {
+    assert.strictEqual(this.grid.row(0).cell(0), this.grid.cell(0));
+});
+
+QUnit.test("Select allows to marks cells as selected", function (assert) {
+    this.grid.select(0, 4);
+    assert.equal(this.grid.getSelection().length, 5);
 });
