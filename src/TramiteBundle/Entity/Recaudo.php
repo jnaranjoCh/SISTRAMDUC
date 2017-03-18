@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Yulbais Seijas
- * Date: 11/03/2017
- * Time: 20:54
- */
 
-namespace RecaudoBundle\Entity;
+namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
