@@ -1,0 +1,250 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Registro de Aspirante al Concurso de Oposici&oacute;n
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Registro de Aspirante</li>
+      </ol>
+    </section>
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-2 col-md-8">
+        <br/>
+        <div class="register-box-body">
+            <form>          		
+
+	            <br/>
+        
+				<div class="container">
+	            <label>C&eacute;dula del aspirante</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='cedula'>
+				                    <input type="text" class="form-control" maxlength="9" placeholder="Ejemplo: 12345678"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-hashtag"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Primer Nombre</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='nombre1'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Jes&uacute;s"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Segundo Nombre</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='nombre2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Manuel"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Primer Apellido</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='apellido1'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Gonzalez"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Segundo Apellido</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='apellido2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Perez"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Primer Telefono</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='tlf1'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 0000 - 1122 33 44"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-hashtag"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Segundo Telefono</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='tlf2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 0000 - 1122 33 44"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-hashtag"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Correo</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='email'>
+				                    <input type="mail" class="form-control" maxlength="50" placeholder="Ejemplo: abdcef123@mail.com"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-at"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Repita el Correo</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='email2'>
+				                    <input type="mail" class="form-control" maxlength="50" placeholder="Ejemplo: abdcef123@mail.com"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-at"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Egresado de la Universidad?</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='universidad'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Universidad de Carabobo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Descrici&oacute;n del titulo</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='tiulo'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Lic. Computaci&oacute;n"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Año de Graduaci&oacute;n</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='graduacion'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 2017"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-hashtag"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Observaci&oacute;n</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='observacion'>
+				                    <input type="text" class="form-control" maxlength="3" placeholder="Que quiere mencionar?"/>
+				                    <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-eye-open"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<br/><br/>
+
+              <div class="row">
+                <div class="col-xs-6">
+                	<center>
+                  		<button id="documentacion" type="button" class="btn btn-primary btn-block btn-flat">Adjuntar Documentaci&oacute;n</button>
+                  	</center>
+                </div>
+                <div class="col-xs-6">
+                  <button id="registrarConcurso" type="button" class="btn btn-primary btn-block btn-flat">Registrar Aspirante</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}

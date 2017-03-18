@@ -1,0 +1,294 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Concurso de Oposici&oacute;n, formaci&oacute;n de jurado
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Apertura Concurso</li>
+      </ol>
+    </section>
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-2 col-md-8">
+        <br/>
+        <div class="register-box-body">
+            <form>
+
+				<div class="container">
+	            <label><center>Jurado Coordinador</center></label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='cedulaCoor'>
+				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='nombreCoor'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='apellidoCoor'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='facultadCoor'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='universidadCoor'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='areaCoor'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+	            <label><center>Jurado 2</center></label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='cedula2'>
+				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='nombre2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='apellido2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='facultad2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='universidad2'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='area2'>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+	            <label><center>Jurado 3</center></label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='cedula3'>
+				                    <input type="text" class="form-control" required="true" maxlength="9" placeholder="C&eacute;dula"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='nombre3'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='apellido3'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='facultad3'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='universidad3'>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='area3'>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<br/><br/>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
+                </div>
+                <div class="col-xs-6">
+                  <button id="registrarConcurso" type="button" class="btn btn-primary btn-block btn-flat">Registrar Jurado</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
