@@ -47,7 +47,7 @@
     margin: 3px 0px 0px 0px;
 }
 
-.grid-header-el, .grid-element {
+.grid-header-el, .grid-cell {
     margin: 3px 0px 0px 0px;
     width: 7.5%;
     height: 30px;
@@ -71,7 +71,7 @@
     display: block;
 }
 
-.grid-element {
+.grid-cell {
     position: relative;
     border-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.1);
     background: #ffffff;
@@ -79,7 +79,7 @@
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
-.grid-element:after {
+.grid-cell:after {
     content: '';
     position: absolute;
     z-index: 1000;
@@ -93,7 +93,7 @@
     transition: all 0.3s;
 }
 
-.grid-element.selected:after {
+.grid-cell.selected:after {
     background: rgba(255, 255, 255, 0.1);
     border: 1px dashed;
     border-color: rgba(0, 0, 0, 0.6) rgba(0, 0, 0, 0.33);

@@ -201,7 +201,8 @@ Grid.prototype = {
         return this._rows[pos];
     },
     select: function (start, end) {
-        return this.getRange(start, end).addClass('selected');
+        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
+        return range.addClass('selected');
     },
     unselect: function (start, end) {
         return this.getRange(start, end).removeClass('selected');

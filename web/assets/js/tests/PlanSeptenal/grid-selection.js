@@ -508,3 +508,9 @@ QUnit.test("Select allows to marks cells as selected", function (assert) {
     this.grid.select(0, 4);
     assert.equal(this.grid.getSelection().length, 5);
 });
+
+QUnit.test("Select also can receive jquery objects", function (assert) {
+    var range = this.grid.getRange(this.$cells.eq(0), this.$cells.eq(4));
+    this.grid.select(range);
+    assert.equal(this.grid.getSelection().length, 5);
+});
