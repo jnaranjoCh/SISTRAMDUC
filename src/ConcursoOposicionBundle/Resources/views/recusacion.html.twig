@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Recusaci&oacute;n de Jurado en el Concurso de Oposici&oacute;n
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Recusaci&oacute;n</li>
+      </ol>
+    </section>
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-9">
+        <br/>
+        <div class="register-box-body">
+            <form>           		
+
+	            <br/>
+
+	            <div class="callout callout-info">        
+		            <h4><i class="fa fa-info-circle"></i> Debe estar seguro de acusar a un miembro del jurado ya que amerita comprobaci&oacute;n de la solicitud.</h4>
+		        </div>
+
+		        <div class="container">
+	            <label>C&eacute;dula del Aspirante Recusador</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='aspirante'>
+				                    <input type="text" class="form-control" maxlength="9" placeholder="Ejemplo: 12345678"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-hashtag"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+		        <div class="container">
+	            <label>C&eacute;dula del Jurado a Recusar</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group' id='profesor'>
+				                    <input type="text" class="form-control" maxlength="9" placeholder="Ejemplo: 12345678"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-hashtag"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            <label>Fecha de Acusaci&oacute;n</label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				            <div class="form-group">
+				                <div class='input-group date' id='datetimepicker1'>
+				                    <input type='text' class="form-control" placeholder="dd/MM/yyyy"/>
+				                    <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-calendar"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<br/><br/>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <button id="registrar" type="button" class="btn btn-success btn-block btn-flat">Registrar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}

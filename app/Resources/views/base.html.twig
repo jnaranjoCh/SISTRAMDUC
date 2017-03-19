@@ -286,15 +286,57 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="apertura_concurso_oposicion_index">
-              <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Concurso</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="apertura_concurso_oposicion_index">
+                  <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
+                </li>
+                <li data-route="tablaBasicaConcurso">
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listar Concursos</a>
+                </li>
+              </ul>
             </li>
-            <li data-route="tablaBasicaConcurso">
-              <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listar Concursos</a>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Aspirantes</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="registro_usuario_oposicion">
+                  <a href="{{ path('registro_usuario_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Aspirante</a>
+                </li>
+                <li data-route="listaAspirantes">
+                  <a href="{{ path('listaAspirantes') }}"><i class="fa fa-circle-o"></i>Listar Aspirantes</a>
+                </li>
+              </ul>
             </li>
-            <li data-route="registro_usuario_oposicion">
-              <a href="{{ path('registro_usuario_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Aspirante</a>
-            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Recusaci&oacute;n</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="recusacion_oposicion">
+                  <a href="{{ path('recusacion_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Recusaci&oacute;n</a>
+                </li>
+                <li data-route="listaRecusacion">
+                  <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listar Recusaciones</a>
+                </li>
+              </ul>
+            </li>        
+            
           </ul>
         </li>
       </ul>

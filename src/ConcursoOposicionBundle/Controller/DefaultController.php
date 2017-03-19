@@ -46,4 +46,36 @@ class DefaultController extends Controller
     {
         return $this->render('ConcursoOposicionBundle::registroAspirante.html.twig');
     }
+
+    /**
+     * @Route("/concursoOposicion/documentacion_oposicion", name="documentacion_oposicion")
+     */
+    public function documentacionAction()
+    {
+        return $this->render('ConcursoOposicionBundle::documentacion.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/recusacion_oposicion", name="recusacion_oposicion")
+     */
+    public function recusacionAction()
+    {
+        return $this->render('ConcursoOposicionBundle::recusacion.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listaAspirantes", name="listaAspirantes")
+     */
+    public function listaAspirantesAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listaAspirantes.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listaRecusacion", name="listaRecusacion")
+     */
+    public function listaRecusacionAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listaRecusacion.html.twig');
+    }
 }
