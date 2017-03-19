@@ -3,13 +3,13 @@
 {% block content %}
     <section class="content-header">
       <h1>
-        Concurso de Oposici&oacute;n, formaci&oacute;n de la CPEC
+        Concurso de Oposici&oacute;n, formaci&oacute;n de suplentes de la CPEC
       </h1> 
       <ol class="breadcrumb">
         <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
         <li class="active"> Apertura Concurso</li>
       </ol>
-    </section>
+    </section> 
 
     <br/>
     <div class="row">
@@ -18,17 +18,17 @@
         <br/>
         <div class="register-box-body">
 
-        	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
       
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Registro de CPEC</h4>
+            <h4 class="modal-title">Usuarios registrados</h4>
           </div>
           <div class="modal-body">
           	<div class="container">
-	            <label><center>CPEC</center></label>
+	            <label><center>Suplente</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
 				            <div class="form-group">
@@ -116,7 +116,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-success" data-dismiss="modal">Registrar</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
           </div>
         </div>
         
@@ -125,13 +125,13 @@
 
             <form>
 
-				<div class="container">
-	            	<label><center>CPEC Coordinador</center></label>
+	            <div class="container">
+	            	<label><center>Suplente 1</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' id='nombre1'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 1"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 1"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -147,12 +147,12 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>CPEC 2</center></label>
+	            	<label><center>Suplente 2</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' id='nombre2'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 2"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 2"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -168,12 +168,12 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>CPEC 3</center></label>
+	            	<label><center>Suplente 3</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' id='nombre3'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 3"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 3"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -189,12 +189,12 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>CPEC 4</center></label>
+	            	<label><center>Suplente 4</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' id='nombre4'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 4"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 4"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -207,15 +207,15 @@
                         </div>
                       </div>
 				    </div>
-				</div>	
+				</div>
 
 				<div class="container">
-	            	<label><center>CPEC 5</center></label>
+	            	<label><center>Suplente 5</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' id='nombre5'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 5"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 5"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -228,7 +228,7 @@
                         </div>
                       </div>
 				    </div>
-				</div>	
+				</div>
 
 				<br/><br/>
 
@@ -237,7 +237,7 @@
                   <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
                 </div>
                 <div class="col-xs-6">
-                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar CPEC</button>
+                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar Suplentes</button>
                 </div>
               </div>
             </form>

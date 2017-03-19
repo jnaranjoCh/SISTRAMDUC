@@ -298,7 +298,13 @@
                   <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
                 </li>
                 <li data-route="tablaBasicaConcurso">
-                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listar Concursos</a>
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
+                </li>
+                <li data-route="listarJurados">
+                  <a href="{{ path('listarJurados') }}"><i class="fa fa-circle-o"></i>Listado de Jurados</a>
+                </li>
+                <li data-route="listarSuplentes">
+                  <a href="{{ path('listarSuplentes') }}"><i class="fa fa-circle-o"></i>Listado de Suplentes</a>
                 </li>
               </ul>
             </li>
@@ -315,7 +321,7 @@
                   <a href="{{ path('registro_usuario_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Aspirante</a>
                 </li>
                 <li data-route="listaAspirantes">
-                  <a href="{{ path('listaAspirantes') }}"><i class="fa fa-circle-o"></i>Listar Aspirantes</a>
+                  <a href="{{ path('listaAspirantes') }}"><i class="fa fa-circle-o"></i>Listado de Aspirantes</a>
                 </li>
               </ul>
             </li>
@@ -332,10 +338,44 @@
                   <a href="{{ path('recusacion_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Recusaci&oacute;n</a>
                 </li>
                 <li data-route="listaRecusacion">
-                  <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listar Recusaciones</a>
+                  <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
                 </li>
               </ul>
-            </li>        
+            </li>  
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Pruebas</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="pruebas">
+                  <a href="{{ path('pruebas') }}"><i class="fa fa-circle-o"></i>Registrar Pruebas</a>
+                </li>
+                <li data-route="listarPruebas">
+                  <a href="{{ path('listarPruebas') }}"><i class="fa fa-circle-o"></i>Listado de Pruebas</a>
+                </li>
+              </ul>
+            </li> 
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Resultados</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="resultados">
+                  <a href="{{ path('resultados') }}"><i class="fa fa-circle-o"></i>Registrar Resultados</a>
+                </li>
+                <li data-route="listarResultados">
+                  <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
+                </li>
+              </ul>
+            </li>       
             
           </ul>
         </li>

@@ -36,7 +36,7 @@ class DefaultController extends Controller
      */
     public function concursoAction()
     {
-        return $this->render('ConcursoOposicionBundle::tablaBasica_concurso.html.twig');
+        return $this->render('ConcursoOposicionBundle::listarConcurso.html.twig');
     }
 
     /**
@@ -77,5 +77,69 @@ class DefaultController extends Controller
     public function listaRecusacionAction()
     {
         return $this->render('ConcursoOposicionBundle::listaRecusacion.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/suplentesJurado", name="suplentesJurado")
+     */
+    public function suplentesJuradoAction()
+    {
+        return $this->render('ConcursoOposicionBundle::suplentesJurado.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/suplentesCPEC", name="suplentesCPEC")
+     */
+    public function suplentesCPECAction()
+    {
+        return $this->render('ConcursoOposicionBundle::suplentesCPEC.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listarJurados", name="listarJurados")
+     */
+    public function listarJuradosAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listarJurados.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listarSuplentes", name="listarSuplentes")
+     */
+    public function listarSuplentesAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listarSuplentes.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/pruebas", name="pruebas")
+     */
+    public function pruebasAction()
+    {
+        return $this->render('ConcursoOposicionBundle::pruebas.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listarPruebas", name="listarPruebas")
+     */
+    public function listarPruebasAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listarPruebas.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/resultados", name="resultados")
+     */
+    public function resultadosAction()
+    {
+        return $this->render('ConcursoOposicionBundle::resultados.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listarResultados", name="listarResultados")
+     */
+    public function listarResultadosAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listarResultados.html.twig');
     }
 }
