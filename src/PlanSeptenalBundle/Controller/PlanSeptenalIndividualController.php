@@ -69,6 +69,6 @@ class PlanSeptenalIndividualController extends Controller
         $entity_manager->persist($plan_septenal_individual);
         $entity_manager->flush();
 
-        return new Response('', 200);
+        return new Response('success', 200);
     }
 }

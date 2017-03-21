@@ -12,14 +12,7 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/Ionicons/css/ionicons.min.css') }}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
 
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-
-  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/skins/_all-skins.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/flat/blue.css') }}">
   <!-- Date Picker -->
@@ -28,6 +21,14 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/skins/_all-skins.min.css') }}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
 
   {% block stylesheets %}{% endblock %}
 </head>
@@ -325,7 +326,6 @@
     $ul.parent('li').parent('ul').addClass('menu-open');
     $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
   }
-
 </script>
 
 <!-- Bootstrap 3.3.6 -->
@@ -346,6 +346,10 @@
 <script src="{{ asset('assets/vendor/toastr/toastr.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
+
+<script>
+  $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+</script>
 
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}

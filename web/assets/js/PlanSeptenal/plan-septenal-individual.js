@@ -176,9 +176,9 @@ function pushTramitesIntoTramitesSummary (tramites_summary, tramite_group, trami
 
 function cellIndexToDate (index, $plan) {
     var year = Math.floor($plan.starting_year + (index / 12)),
-        month = (index % 12) + 1;
+        month = ("0" + (1 + index % 12)).slice(-2);
 
-    return ( (month < 10) ? "0" + month : month ) + "/" + year;
+    return month + "/" + year;
 }
 
 function getRangeFromPeriodo (periodo, $plan) {
