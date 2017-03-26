@@ -14,7 +14,7 @@
     <br/>
     <div class="row">
       <!--Success message-->
-      <section class="content-body col-md-offset-1 col-md-9">
+      <section class="content-body col-md-offset-1 col-md-10">
         <br/>
         <div class="register-box-body">
 
@@ -31,9 +31,10 @@
 	            <label><center>Suplente</center></label>
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='cedulaCoor'>
-				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula"/>
+				                <div class='input-group' >
+				                    <input type="number" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-address-card-o"></span>
 				                    </span>
@@ -45,9 +46,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spannombre" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombreCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -59,9 +61,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spanapellido" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='apellidoCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -73,9 +76,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spanfacultad" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='facultadCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -87,9 +91,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spanuniversidad" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='universidadCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                <div class='input-group' >
+				                	<input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -101,9 +106,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spanarea" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='areaCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n" id='area'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -116,7 +122,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="registrarSuplenteCPEC" class="btn btn-success" data-dismiss="modal">Ingresar</button>
           </div>
         </div>
         
@@ -126,12 +132,13 @@
             <form>
 
 	            <div class="container">
-	            	<label><center>Suplente 1</center></label>
+	            	<label>Suplente 1</label>
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre1'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 1"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 1" id='nombre1'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -147,12 +154,13 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>Suplente 2</center></label>
+	            	<label>Suplente 2</label>
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spannombre2" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre2'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 2"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 2" id='nombre2'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -168,12 +176,13 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>Suplente 3</center></label>
+	            	<label>Suplente 3</label>
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spannombre3" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre3'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 3"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 3" id='nombre3'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -189,12 +198,13 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>Suplente 4</center></label>
+	            	<label>Suplente 4</label>
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spannombre4" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre4'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 4"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 4" id='nombre4'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -210,12 +220,13 @@
 				</div>
 
 				<div class="container">
-	            	<label><center>Suplente 5</center></label>
+	            	<label>Suplente 5</label>
 				    <div class="row">
 				        <div class='col-sm-6'>
+				        	<span id="spannombre5" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre5'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 5"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 5" id='nombre5'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -237,7 +248,7 @@
                   <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
                 </div>
                 <div class="col-xs-6">
-                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar Suplentes</button>
+                  <button id="registrarSuplentesCPEC" type="button" class="btn btn-success btn-block btn-flat">Registrar Suplentes</button>
                 </div>
               </div>
             </form>
@@ -246,4 +257,11 @@
     </div>
     <br/><br/>
     
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoOposicion/saveSuplentesCPEC.js') }}"></script>
+
 {% endblock %}

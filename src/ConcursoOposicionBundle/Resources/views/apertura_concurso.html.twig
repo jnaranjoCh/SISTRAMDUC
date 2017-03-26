@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block content %} 
     <section class="content-header">
       <h1>
         Apertura del Concurso de Oposici&oacute;n
@@ -17,7 +17,25 @@
       <section class="content-body col-md-offset-1 col-md-9">
         <br/>
         <div class="register-box-body">
-            <form>
+            <form id="aperturaConcurso">
+
+            	<div class="panel panel-danger hide" id="msgFracaso">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Debe llenar todos los campos indicados.</h4>
+            		</div>		            
+		        </div>
+
+		        <div class="panel panel-success hide" id="msgExito">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar2"></i> Exito</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Concurso Insertado.</h4>
+            		</div>		            
+		        </div>
 
             	<div class="row">
 	                <div class="col-xs-6">
@@ -44,14 +62,18 @@
 	            <br/>
 
 	            <div class="container">
-	            <label>Fecha de Inicio</label>
+	            <label>Fecha de Inicio
+	            	<span id="spanfechaConcurso" class="label label-danger hide">Vac&iacute;o</span>
+	            </label>
 				    <div class="row">
 				        <div class='col-sm-7'>
 				            <div class="form-group">
-				                <div class='input-group date' id='datetimepicker1'>
-				                    <input type='text' class="form-control" placeholder="dd/MM/yyyy"/>
+				                <div class='input-group'>
+
+					                  <input type='text' class="form-control" maxlength="10" id="fechaConcurso" placeholder="dd/MM/yyyy"/>
+					              
 				                    <span class="input-group-addon">
-				                        <span class="glyphicon glyphicon-calendar"></span>
+				                        <span class="glyphicon glyphicon-calendar"></span>				                        
 				                    </span>
 				                </div>
 				            </div>
@@ -60,12 +82,15 @@
 				</div>
 
 				<div class="container">
-	            <label>Cantidad de Vacantes</label>
+	            <label>Cantidad de Vacantes
+	            	<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span>
+	            	<span id="spancedula2" class="label label-danger hide">Esto no es un n&uacute;mero</span>
+	            </label>
 				    <div class="row">
 				        <div class='col-sm-7'>
 				            <div class="form-group">
-				                <div class='input-group' id='cedula'>
-				                    <input type="text" class="form-control" maxlength="3" placeholder="123"/>
+				                <div class='input-group'>
+				                    <input type="text" id="cedula" class="form-control" maxlength="3" required="true" placeholder="Ejemplo: 123" onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-hashtag"></span>
 				                    </span>
@@ -76,12 +101,14 @@
 				</div>
 
 				<div class="container">
-	            <label>Area de Postulaci&oacute;n</label>
+	            <label>Area de Postulaci&oacute;n
+	            	<span id="spanarea" class="label label-danger hide">Vac&iacute;o</span>
+	            </label>
 				    <div class="row">
 				        <div class='col-sm-7'>
 				            <div class="form-group">
-				                <div class='input-group' id='area'>
-				                    <input type="text" class="form-control" maxlength="3" placeholder="Oposicion"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" id="area" maxlength="99" placeholder="Ejemplo: Literatura"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -96,8 +123,8 @@
 				    <div class="row">
 				        <div class='col-sm-7'>
 				            <div class="form-group">
-				                <div class='input-group date' id='datetimepicker2'>
-				                    <input type='text' class="form-control" placeholder="dd/MM/yyyy"/>
+				                <div class='input-group'>
+				                    <input type='text' class="form-control" placeholder="dd/mm/yyyy" id='fechaDoc' maxlength="10"/>
 				                    <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-calendar"></span>
 				                    </span>
@@ -112,8 +139,8 @@
 				    <div class="row">
 				        <div class='col-sm-7'>
 				            <div class="form-group">
-				                <div class='input-group date' id='datetimepicker3'>
-				                    <input type='text' class="form-control" placeholder="dd/MM/yyyy"/>
+				                <div class='input-group'>
+				                    <input type='text' class="form-control" placeholder="dd/mm/yyyy"  id="fechaPre" maxlength="10"/>
 				                    <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-calendar"></span>
 				                    </span>
@@ -128,8 +155,8 @@
 				    <div class="row">
 				        <div class='col-sm-7'>
 				            <div class="form-group">
-				                <div class='input-group' id='observacion'>
-				                    <input type="text" class="form-control" maxlength="3" placeholder="Que quiere mencionar?"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" id="observacion" maxlength="254" placeholder="Que quiere mencionar?"/>
 				                    <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-eye-open"></span>
 				                    </span>
@@ -142,7 +169,10 @@
 				<br/><br/>
 
               <div class="row">
-                <div class="col-xs-12">
+              <div class="col-xs-6">
+                  <button id="limpiarConcurso" type="button" class="btn btn-default btn-block btn-flat">Limpiar</button>
+                </div>
+                <div class="col-xs-6">
                   <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar</button>
                 </div>
               </div>
@@ -152,4 +182,25 @@
     </div>
     <br/><br/>
     
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script>
+
+    $('#fechaConcurso').datepicker({
+      autoclose: true
+    });
+
+    $('#fechaDoc').datepicker({
+      autoclose: true
+    });
+
+    $('#fechaPre').datepicker({
+      autoclose: true
+    });
+
+  </script>
+
+  <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+
 {% endblock %}

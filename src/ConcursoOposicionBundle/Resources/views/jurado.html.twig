@@ -21,12 +21,14 @@
             <form>
 
 				<div class="container">
-	            <label><center>Jurado Coordinador</center></label>
+	            <label>Jurado Coordinador</label>
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spancedula1" class="label label-danger hide">Vac&iacute;o</span>
+				            <span id="spancedula11" class="label label-danger hide">Esto no es un n&uacute;mero</span>
 				            <div class="form-group">
-				                <div class='input-group' id='cedulaCoor'>
-				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula"/>
+				                <div class='input-group' >
+				                    <input type="number" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula1' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-address-card-o"></span>
 				                    </span>
@@ -38,9 +40,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombreCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre1'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -52,9 +55,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanapellido1" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='apellidoCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido1'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -66,9 +70,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanfacultad1" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='facultadCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad1'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -80,9 +85,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanuniversidad1" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='universidadCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad1'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -94,9 +100,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanarea1" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='areaCoor'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n" id='area1'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -112,9 +119,11 @@
 	            <label><center>Jurado 2</center></label>
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spancedula2" class="label label-danger hide">Vac&iacute;o</span>
+				            <span id="spancedula22" class="label label-danger hide">Esto no es un n&uacute;mero</span>
 				            <div class="form-group">
-				                <div class='input-group' id='cedula2'>
-				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula"/>
+				                <div class='input-group' >
+				                    <input type="number" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula2' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-address-card-o"></span>
 				                    </span>
@@ -126,9 +135,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spannombre2" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre2'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre2'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -140,9 +150,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanapellido2" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='apellido2'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido2'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -154,9 +165,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanfacultad2" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='facultad2'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad2'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -168,9 +180,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanuniversidad2" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='universidad2'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad2'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -182,9 +195,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanarea2" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='area2'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n" id='area2'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -200,9 +214,11 @@
 	            <label><center>Jurado 3</center></label>
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spancedula3" class="label label-danger hide">Vac&iacute;o</span>
+				            <span id="spancedula33" class="label label-danger hide">Esto no es un n&uacute;mero</span>
 				            <div class="form-group">
-				                <div class='input-group' id='cedula3'>
-				                    <input type="text" class="form-control" required="true" maxlength="9" placeholder="C&eacute;dula"/>
+				                <div class='input-group' >
+				                    <input type="number" class="form-control" required="true" maxlength="9" placeholder="C&eacute;dula" id='cedula3' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-address-card-o"></span>
 				                    </span>
@@ -214,9 +230,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spannombre3" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='nombre3'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre3'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -228,9 +245,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanapellido3" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='apellido3'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido3'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -242,9 +260,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanfacultad3" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='facultad3'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad3'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -256,9 +275,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanuniversidad3" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='universidad3'>
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad3'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -270,9 +290,10 @@
 				<div class="container">
 				    <div class="row">
 				        <div class='col-sm-7'>
+				            <span id="spanarea3" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
-				                <div class='input-group' id='area3'>
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n"/>
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n" id='area3'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-graduation-cap"></span>
 				                    </span>
@@ -289,7 +310,7 @@
                   <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
                 </div>
                 <div class="col-xs-6">
-                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar Jurado</button>
+                  <button id="registrarJurado" type="button" class="btn btn-success btn-block btn-flat">Registrar Jurado</button>
                 </div>
               </div>
             </form>
@@ -298,4 +319,11 @@
     </div>
     <br/><br/>
     
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoOposicion/saveJurado.js') }}"></script>
+
 {% endblock %}
