@@ -1,3 +1,5 @@
+// split this tests in different modules, that bulky module is supicious
+
 function triggerClickRelatedEvents () {
     $targets = Array.prototype.slice.call(arguments);
     for (var i = 0; i < $targets.length; i++) {
@@ -24,14 +26,25 @@ QUnit.test("container is mandatory during PlanSeptenalIndividual creation", func
     );
 });
 
-QUnit.test("starting year is mandatory during PlanSeptenalIndividual creation", function (assert) {
+QUnit.test("container should have data-route attr", function (assert) {
     assert.throws(
         function () {
             var p = new PlanSeptenalIndividual($('<div>'), 'x');
         },
+        /route/
+    );
+
+});
+
+QUnit.test("starting year is mandatory during PlanSeptenalIndividual creation", function (assert) {
+    assert.throws(
+        function () {
+            var p = new PlanSeptenalIndividual($('<div data-route="url">'), 'x');
+        },
         /Starting year/
     );
 });
+
 
 QUnit.module("Activity Assignment", {
     beforeEach: function() {
@@ -153,6 +166,16 @@ QUnit.test("save()", function (assert) {
     $.ajax.restore();
 });
 
+QUnit.test("on save() if status is 'modifying' the request should be PUT instead of POST", function (assert) {
+    sinon.stub($, 'ajax');
+    this.$plan.setState(this.sample_state);
+    this.$plan.status = "modifying";
+    this.$plan.save();
+
+    assert.ok($.ajax.calledWithMatch({ url: this.$plan.container.data('route'), data: this.sample_state, method: 'PUT' }), "Ajax request must be correctly formed");
+    $.ajax.restore();
+});
+
 QUnit.test("Summit button must call save method", function (assert) {
     sinon.stub(this.$plan, 'save');
     $('<button type="submit">').appendTo( this.$plan.container ).trigger('click');
@@ -200,7 +223,7 @@ QUnit.test("On successful get, a message should be displayed", function (assert)
     toastr['success'].restore();
 });
 
-QUnit.test("On server error while requestinng plan, a message should be displayed", function (assert) {
+QUnit.test("On server error while requesting plan, a message should be displayed", function (assert) {
     this.server.respondWith([500, {}, ""]);
     sinon.stub(toastr, 'error');
     this.$plan.load(2010, 2016);
@@ -212,4 +235,66 @@ QUnit.test("On server error while requestinng plan, a message should be displaye
         "An error message is necessary here"
     );
     toastr['error'].restore();
+});
+
+QUnit.test("plan status must be unknown initially", function (assert) {
+    assert.equal(this.$plan.status, "unknown");
+});
+
+QUnit.test("plan status will be 'creating' if plan does not exist", function (assert) {
+    this.server.respondWith([404, {}, ""]);
+    this.$plan.load(2010, 2016);
+    assert.equal(this.$plan.status, "creating");
+});
+
+QUnit.test("plan status will be 'modifying' if plan exists", function (assert) {
+    this.server.respondWith([200, {}, JSON.stringify(this.sample_state)]);
+    this.$plan.load(2010, 2016);
+    assert.equal(this.$plan.status, "modifying");
+});
+
+QUnit.test("on successful save plan status will be 'modifying'", function (assert) {
+    this.server.respondWith([200, {}, JSON.stringify(this.sample_state)]);
+    this.$plan.save();
+    assert.equal(this.$plan.status, "modifying");
+});
+
+QUnit.test("if plan septenal colectivo is 'in creation' then plan septenal individual should be loaded", function (assert) {
+    this.server.respondWith([200, {}, JSON.stringify({status: "En creación"})]);
+    sinon.stub(PlanSeptenalIndividual.prototype, 'load');
+    this.container = $(".plan-septenal-individual");
+    attemptToLoadPlanIndividual(this, 2018);
+
+    assert.ok(PlanSeptenalIndividual.prototype.load.called);
+    PlanSeptenalIndividual.prototype.load.restore();
+});
+
+QUnit.test("if plan septenal colectivo is already created then plan septenal individual should not be loaded", function (assert) {
+    this.server.respondWith([200, {}, JSON.stringify({status: "Creado"})]);
+    sinon.stub(PlanSeptenalIndividual.prototype, 'load');
+    attemptToLoadPlanIndividual(this, 2018);
+
+    assert.notOk(PlanSeptenalIndividual.prototype.load.called);
+    PlanSeptenalIndividual.prototype.load.restore();
+});
+
+QUnit.test("if plan septenal colectivo does not exist then plan septenal individual should not be loaded", function (assert) {
+    this.server.respondWith([404, {}, ""]);
+    sinon.stub(PlanSeptenalIndividual.prototype, 'load');
+    attemptToLoadPlanIndividual(this, 2018);
+
+    assert.notOk(PlanSeptenalIndividual.prototype.load.called);
+    PlanSeptenalIndividual.prototype.load.restore();
+});
+
+QUnit.test("if plan septenal colectivo does not exist a message should be displayed saying so", function (assert) {
+    var app = {
+        container: $("<div class='container'>")
+    };
+
+    this.server.respondWith([404, {}, ""]);
+
+    attemptToLoadPlanIndividual(app, 2018);
+
+    assert.ok(/El plan septenal colectivo aún no existe./.exec(app.container.html()));
 });

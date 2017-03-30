@@ -113,7 +113,7 @@ QUnit.test("on notFound getPlanSeptenalColectivoOfNextYear()", function (assert)
     assert.notOk(this.plan_creation.find("#creation-progress").is(':visible'));
 });
 
-QUnit.test("on client error while starting creation process a message should be displayed", function (assert) {
+QUnit.test("on client error while starting creation process received error message should be displayed", function (assert) {
     var message = '"something went wrong"';
     this.server.respondWith([400, { "Content-Type": "application/json" }, message]);
     sinon.stub(toastr, "error");

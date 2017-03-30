@@ -21,6 +21,10 @@ function PlanSeptenalIndividual (container, starting_year) {
     }
     this.container = $(container);
 
+    if ($(container).data("route") === undefined) {
+        throw "Container (first argument) must have a data-route attribute";
+    }
+
     if (! isInt(starting_year)) {
         throw "Starting year (second argument) must be a valid integer";
     }
@@ -33,6 +37,8 @@ function PlanSeptenalIndividual (container, starting_year) {
     });
 
     getControls().appendTo(this.container);
+
+    this.status = "unknown";
 
     var plan = this;
 
@@ -67,12 +73,15 @@ PlanSeptenalIndividual.prototype = {
         }
     },
     save: function () {
+        var plan = this,
+            method = (this.status === "modifying") ? "PUT" : "POST";
         $.ajax({
             url: this.container.data("route"),
             data: this.getState(),
-            method: "POST",
+            method: method,
             success: function (data) {
                 toastr["success"]("Los cambios han sido guardados");
+                plan.status = "modifying";
             },
             error: function (data) {
                 toastr["error"]("Ocurrió un error. En caso de que el problema persista contacte a soporte");
@@ -88,12 +97,20 @@ PlanSeptenalIndividual.prototype = {
                 fin: fin
             },
             method: "GET",
-            success: function (data) {
-                toastr["success"]("Plan septenal cargado satisfactoriamente");
-                plan.setState(data);
-            },
-            error: function (data) {
-                toastr["error"]("Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte");
+            statusCode: {
+                200: function (data) {
+                    toastr["success"]("Plan septenal cargado satisfactoriamente");
+                    plan.status = "modifying";
+                    plan.setState(data);
+                    $("button[type='submit']").show();
+                },
+                404: function () {
+                    plan.status = "creating";
+                    $("button[type='submit']").show();
+                },
+                500: function (data) {
+                    toastr["error"]("Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte");
+                }
             }
         });
     },
@@ -227,3 +244,30 @@ function isInt (value) {
 return PlanSeptenalIndividual;
 
 }());
+
+function attemptToLoadPlanIndividual (receiver, starting_year) {
+    var inicio = starting_year,
+        fin = inicio + 6;
+
+    return $.ajax({
+        url: '/plan-septenal-colectivo',
+        data: {
+            inicio: inicio,
+            fin: fin
+        },
+        method: "GET",
+        statusCode: {
+            200: function (data) {
+                var json_data = (typeof data === "object") ? data : $.parseJSON(data);
+
+                if (json_data.status === "En creación") {
+                    receiver.plan = new PlanSeptenalIndividual(receiver.container, inicio);
+                    receiver.plan.load(inicio, fin);
+                }
+            },
+            404: function (data) {
+                receiver.container.html("El plan septenal colectivo aún no existe.");
+            }
+        }
+    });
+}

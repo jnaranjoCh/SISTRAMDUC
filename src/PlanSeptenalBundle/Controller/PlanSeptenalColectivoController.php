@@ -42,7 +42,7 @@ class PlanSeptenalColectivoController extends Controller
             return $this->json(["El plan septenal colectivo solicitado no existe."], 404);
         }
 
-        return $this->json(["status" => "En creación"]);
+        return $this->json(["status" => $plan_septenal_colectivo->getStatus()]);
     }
 
     /**

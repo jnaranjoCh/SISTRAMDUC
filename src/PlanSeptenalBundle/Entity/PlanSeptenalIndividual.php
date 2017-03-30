@@ -45,6 +45,7 @@ class PlanSeptenalIndividual
 
     /**
      * @ORM\ManyToOne(targetEntity="PlanSeptenalColectivo", inversedBy="planes_septenales_individuales")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $plan_septenal_colectivo;
 
@@ -92,6 +93,8 @@ class PlanSeptenalIndividual
             }
             $this->addTramite($tramite);
         }
+
+        return $this;
     }
 
     private function checkTramiteRange(TramitePlanSeptenal $new_tramite)
@@ -164,5 +167,11 @@ class PlanSeptenalIndividual
             'fin'      => $this->getFin(),
             'tramites' => $arrayTramites
         ];
+    }
+
+    public function setPlanSeptenalColectivo($plan_septenal_colectivo)
+    {
+        $this->plan_septenal_colectivo = $plan_septenal_colectivo;
+        return $this;
     }
 }

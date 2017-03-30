@@ -25,7 +25,7 @@
             <div id="plan-septenal-individual" data-route="{{ path('create-plan-septenal-individual') }}"></div>
           </div>
           <div class="box-footer">
-            <button class="btn btn-primary btn-flat pull-right" type="submit">Guardar cambios</button>
+            <button class="btn btn-primary btn-flat pull-right" type="submit" style="display: none;">Guardar cambios</button>
             <a class="btn btn-default btn-flat pull-left" href="/" class="btn btn-default">Cancelar</a>
           </div>
         </div>
@@ -39,10 +39,16 @@
   <script src="{{ asset('assets/js/PlanSeptenal/grid-selection.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
   <script>
-    var plan = new PlanSeptenalIndividual($('#plan-septenal-individual'), 2006);
-    plan.load(2006, 2012);
     toastr.options = {
       positionClass: "toast-bottom-center"
     };
+
+    var app = {
+      container: $("#plan-septenal-individual"),
+      plan: null,
+      next_year: (new Date().getFullYear() + 1)
+    };
+
+    attemptToLoadPlanIndividual(app, app.next_year);
   </script>
 {% endblock %}
