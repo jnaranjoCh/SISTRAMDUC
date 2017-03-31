@@ -4,6 +4,7 @@ namespace PreparadoresBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use ConcursosBundle\Entity\Concurso;
 
 class DefaultController extends Controller
 {
@@ -53,5 +54,36 @@ class DefaultController extends Controller
     public function renunciaPreparadorAction()
     {
         return $this->render('PreparadoresBundle::renuncia_preparador.html.twig');
+    }
+    
+    /**
+     * @Route("/preparadores/registrar_solicitud", name="registrar_solicitud_ajax")
+     */
+    public function registrarSolicitudAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            $concurso = new Concurso();
+            $concurso = $this->initialiceConcurso($concurso);
+            $concurso->setAreaPostulacion($request->get("Asignatura"));
+            $concurso->setNroVacantes($request->get("Plazas"));
+           
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($concurso);
+            $em->flush();
+            return new JsonResponse("insertado");
+        }
+        else
+            throw $this->createNotFoundException('Error al solicitar datos');
+    }
+    
+    private function initialiceConcurso($concurso)
+    {
+        $concurso->setFechaInicio("");
+        $concurso->setNroVacantes(0);
+        $concurso->setAreaPostulacion("");
+        $concurso->setFechaPresentacion("");
+        $concurso->setFechaRecepDoc("");
+        
+        return $concurso;
     }
 }
