@@ -20,7 +20,7 @@ class Registro
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="anio", type="integer")
      */
     private $año;
     
@@ -54,43 +54,37 @@ class Registro
     
 
     /**
-     * @ManyToMany(targetEntity="Participante", inversedBy="registros")
-     * @JoinTable(name="registro_participantes",
-     *      joinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="participante_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="Participante")
+     * @ORM\JoinTable(name="registro_participantes",
+     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="participante_id", referencedColumnName="id")}
      *      )
      */
     protected $participantes;
 
     /**
-     * @ManyToMany(targetEntity="Revista", inversedBy="registros")
-     * @JoinTable(name="registro_revistas",
-     *      joinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="revista_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="Revista")
+     * @ORM\JoinTable(name="registro_revistas",
+     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="revista_id", referencedColumnName="id")}
      *      )
      */
     protected $revistas;
     
-    /**
-     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="registros")
-     * @JoinTable(name="usuarios_registros",
-     *      joinColumns={@JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
-     *      )
-     */
+    
     protected $usuarios;
     /**
-     * @ORM\@Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $tipoId;
 
     /**
-     * @ORM\@Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $nivelId;
 
     /**
-     * @ORM\@Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $estatusId;
 

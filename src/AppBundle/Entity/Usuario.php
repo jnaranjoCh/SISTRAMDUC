@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use AppBundle\Entity\Rol;
 
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
@@ -89,7 +90,7 @@ class Usuario implements UserInterface
     private $fechaFallecimiento;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(name="contrasena", type="string", length=100)
      */
     private $contraseña;
 
@@ -156,10 +157,6 @@ class Usuario implements UserInterface
 
     public function __construct()
     {
-        $this->registros = new ArrayCollection();
-        $this->cargos = new ArrayCollection();
-        $this->facultades = new ArrayCollection();
-        $this->hijos = new ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->planes_septenales_individuales = new ArrayCollection();
     }
@@ -546,6 +543,12 @@ class Usuario implements UserInterface
     public function addRol($rol)
     {
         $this->roles[] = $rol;
+    }
+
+    public function addRoles($roles)
+    {
+        foreach($roles as $rol)
+            $this->addRol($rol);
     }
 
     public function getUsername()

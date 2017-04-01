@@ -9,9 +9,9 @@
       <li class="active"> Solicitar</li>
     </ol>
   </section>
-  
+
   <br/>
-  
+
   <div class="row">
     <section class="content-body">
       <div class="col-md-offset-1 col-md-10">
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="col-md-offset-1 col-md-10">
         <div class="box box-info collapsed-box">
           <div class="box-header with-border">
@@ -40,71 +40,70 @@
                 <b>Cargar Requisitos</b>
               </h3>
               <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                <button id="closeCargaRequisitos" type="button" class="btn btn-box-tool" data-widget="collapse">
                   <i class="fa fa-plus"></i>
                 </button>
             </div>
           </div>
-          <div id="collapseOne" class="box-body">
-            <form class="form-horizontal">
+          <div class="box-body">
+            <form id="cargaRequisitos" class="form-horizontal">
               <div class="box-body">
-                <div class="form-group">
-                  <label for="asigSol" class="col-sm-3 control-label">Asignatura Solicitante</label>
+
+                <div id="divAsigSol" class="form-group">
+                  <label for="AsigSol" class="col-sm-3 control-label">Asignatura Solicitante</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="asigSol" placeholder="Asignatura Solicitante">
+                    <input type="text" class="form-control" id="AsigSol" placeholder="Asignatura Solicitante">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="nroPlz" class="col-sm-3 control-label">Número de Plazas</label>
+
+                <div id="divNroPlz" class="form-group">
+                  <label for="NroPlz" class="col-sm-3 control-label">Número de Plazas</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="nroPlz" placeholder="Número de Plazas">
+                    <input type="text" class="form-control" id="NroPlz" placeholder="Número de Plazas">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="temExOral" class="col-sm-3 control-label">Tema Examen Oral</label>
+                <div id="divTemExOral" class="form-group">
+                  <label for="TemExOral" class="col-sm-3 control-label">Tema Examen Oral</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="temExOral" placeholder="Tema Examen Oral">
+                    <input type="text" class="form-control" id="TemExOral" placeholder="Tema Examen Oral">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="temExEsc" class="col-sm-3 control-label">Tema Examen Escrito</label>
+                <div id="divTemExEsc" class="form-group">
+                  <label for="TemExEsc" class="col-sm-3 control-label">Tema Examen Escrito</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="temExEsc" placeholder="Tema Examen Escrito">
+                    <input type="text" class="form-control" id="TemExEsc" placeholder="Tema Examen Escrito">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="jurado" class="col-sm-3 control-label">Jurado</label>
-                  
-                  <div id="jurado">
+                <div id="divJurado" class="form-group">
+                  <label for="Jurado" class="col-sm-3 control-label">Jurado</label>
+
+                  <div id="Jurado">
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" placeholder="Jurado Coordinador">
+                      <input type="text" class="form-control" id="JurCoord" placeholder="Coordinador">
                     </div>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" placeholder="Jurado Principal 1">
+                      <input type="text" class="form-control" id="JurPpal1" placeholder="Principal 1">
                     </div>
                     <div class="col-sm-3">
-                      <input type="text" class="form-control" placeholder="Jurado Principal 2">
+                      <input type="text" class="form-control" id="JurPpal2" placeholder="Principal 2">
                     </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-sm-offset-3">
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="Jurado Suplente 1">
+                    </br></br>
+                    <div class="col-sm-offset-3 col-sm-3">
+                      <input type="text" class="form-control" id="JurSupl1" placeholder="Suplente 1">
                     </div>
-                    <div class="col-sm-4">
-                      <input type="text" class="form-control" placeholder="Jurado Suplente 2">
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control" id="JurSupl2" placeholder="Suplente 2">
                     </div>
                   </div>
                 </div>
               </div>
               <div class="box-footer">
                 <div class="col-sm-offset-4 col-sm-4">
-                  <button type="submit" class=" btn btn-info btn-block">Cargar Requisitos</button>
+                  <button id="cargarSolicConcurso" type="button" class="btn btn-success btn-block">Cargar Requisitos</button>
                 </div>
               </div>
             </form>
@@ -113,5 +112,9 @@
       </div>
     </section>
   </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/concursoPreparadores/saveSolicitudConcurso.js') }}"></script>
 {% endblock %}
 

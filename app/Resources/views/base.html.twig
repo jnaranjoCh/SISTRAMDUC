@@ -12,7 +12,8 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/Ionicons/css/ionicons.min.css') }}">
-
+  <!-- datetimepicker -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/flat/blue.css') }}">
   <!-- Date Picker -->
@@ -253,8 +254,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="comision_remunerada_info">
-              <a href="{{ path('comision_remunerada_info') }}"><i class="fa fa-circle-o"></i>Información</a>
+            <li data-route="comision-servicio-remunerada-info">
+              <a href="{{ path('comision-servicio-remunerada-info') }}"><i class="fa fa-circle-o"></i>Información</a>
             </li>
             <li data-route="comision_remunerada_solicitar">
               <a href="{{ path('solicitud_serv_remun') }}"><i class="fa fa-circle-o"></i>Solicitar</a>
@@ -275,6 +276,107 @@
             <li data-route="jubilacion-solicitud">
               <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
             </li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users"></i><span>Concurso de Opsosición</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Concurso</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="apertura_concurso_oposicion_index">
+                  <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
+                </li>
+                <li data-route="tablaBasicaConcurso">
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
+                </li>
+                <li data-route="listarJurados">
+                  <a href="{{ path('listarJurados') }}"><i class="fa fa-circle-o"></i>Listado de Jurados</a>
+                </li>
+                <li data-route="listarSuplentes">
+                  <a href="{{ path('listarSuplentes') }}"><i class="fa fa-circle-o"></i>Listado de Suplentes</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Aspirantes</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="registro_usuario_oposicion">
+                  <a href="{{ path('registro_usuario_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Aspirante</a>
+                </li>
+                <li data-route="listaAspirantes">
+                  <a href="{{ path('listaAspirantes') }}"><i class="fa fa-circle-o"></i>Listado de Aspirantes</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Recusaci&oacute;n</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="recusacion_oposicion">
+                  <a href="{{ path('recusacion_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Recusaci&oacute;n</a>
+                </li>
+                <li data-route="listaRecusacion">
+                  <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Pruebas</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="pruebas">
+                  <a href="{{ path('pruebas') }}"><i class="fa fa-circle-o"></i>Registrar Pruebas</a>
+                </li>
+                <li data-route="listarPruebas">
+                  <a href="{{ path('listarPruebas') }}"><i class="fa fa-circle-o"></i>Listado de Pruebas</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Resultados</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="resultados">
+                  <a href="{{ path('resultados') }}"><i class="fa fa-circle-o"></i>Registrar Resultados</a>
+                </li>
+                <li data-route="listarResultados">
+                  <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
+                </li>
+              </ul>
+            </li>
+
           </ul>
         </li>
       </ul>
@@ -340,6 +442,9 @@
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <!-- Slimscroll -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.js') }}"></script>
+<!--datetimepicker-->
+<script src="{{ asset('assets/vendor/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <!-- Slide to top -->
 <script src="{{ asset('assets/js/SlideToTop.js') }}"></script>
 <!-- Toastr -->

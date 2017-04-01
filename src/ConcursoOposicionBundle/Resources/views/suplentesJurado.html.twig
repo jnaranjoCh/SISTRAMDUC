@@ -1,0 +1,327 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Concurso de Oposici&oacute;n, formaci&oacute;n de suplentes de jurados
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Apertura Concurso</li>
+      </ol>
+    </section> 
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-9">
+        <br/>
+        <div class="register-box-body">
+
+            <form>
+
+				<div class="container">
+	            <label>Suplente 1	            	
+	            </label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spancedula1" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="number" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula1' onkeypress="return justNumbers(event);"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spannombre1" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre1'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanapellido1" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido1'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				       		<span id="spanfacultad1" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad1'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanuniversidad1" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad1'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanarea1" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n" id='area1'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<br/>
+
+				<div class="container">
+	            <label><center>Suplente 2</center></label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spancedula2" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula2' onkeypress="return justNumbers(event);"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spannombre2" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre2'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanapellido2" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido2'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanfacultad2" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad2'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanuniversidad2" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad2'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanarea2" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n" id='area2'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<br/>
+
+				<div class="container">
+	            <label><center>Suplente 3</center></label>
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spancedula3" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" required="true" maxlength="9" placeholder="C&eacute;dula" id='cedula3' onkeypress="return justNumbers(event);"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spannombre3" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre3'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanapellido3" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido3'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanfacultad3" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad3'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanuniversidad3" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad3'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-7'>
+				        	<span id="spanarea3" class="label label-danger hide pull-right">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Area de investigaci&oacute;n" id='area3'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				<br/><br/>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
+                </div>
+                <div class="col-xs-6">
+                  <button id="registrarSuplentesJurado" type="button" class="btn btn-success btn-block btn-flat">Registrar Suplentes</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoOposicion/saveSuplentesJurado.js') }}"></script>
+
+{% endblock %}
