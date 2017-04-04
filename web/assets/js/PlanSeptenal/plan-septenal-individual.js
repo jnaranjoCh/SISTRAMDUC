@@ -1,19 +1,18 @@
 /* @author: Cesar Manrique <cesar.manrique.h@gmail.com> */
-var TRAMITES = [
-    { name: "Sabático", color: "#00a7d0" },
-    { name: "Licencia No Remunerada", color: "#30bbbb" },
-    { name: "Estudios de Postgrado con Carga Docente", color: "#368763" },
-    { name: "Licencia Remunerada", color: "#00e765" },
-    { name: "Beca", color: "#ff7701" },
-    { name: "Curso de Formación Docente", color: "#db0ead" },
-    { name: "Programa de Formación Especial", color: "#555299" },
-    { name: "Plan Conjunto", color: "#ca195a" },
-    { name: "Posible Extensión de Beca", color: "#00a65a" }
-];
-
 var PlanSeptenalIndividual = (function () {
 
-var MONTHS = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+var MONTHS = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"],
+    TRAMITES = [
+        { name: "Sabático", color: "#00a7d0" },
+        { name: "Licencia No Remunerada", color: "#30bbbb" },
+        { name: "Estudios de Postgrado con Carga Docente", color: "#368763" },
+        { name: "Licencia Remunerada", color: "#00e765" },
+        { name: "Beca", color: "#ff7701" },
+        { name: "Curso de Formación Docente", color: "#db0ead" },
+        { name: "Programa de Formación Especial", color: "#555299" },
+        { name: "Plan Conjunto", color: "#ca195a" },
+        { name: "Posible Extensión de Beca", color: "#00a65a" }
+    ];
 
 function PlanSeptenalIndividual (container, starting_year) {
     if (container === undefined) {
@@ -38,7 +37,7 @@ function PlanSeptenalIndividual (container, starting_year) {
 
     getControls().appendTo(this.container);
 
-    this.status = "unknown";
+    this.setStatus("");
 
     var plan = this;
 
@@ -48,10 +47,15 @@ function PlanSeptenalIndividual (container, starting_year) {
     this.container.on("click", ".grid-action-btn", function (e) {
         assignTramiteToRange( $(e.target).data("tramite-type"), plan.grid.getSelection() );
     });
-    $(document).on("click", "button[type='submit']", function (e) {
+    $(document).on("click", "#btn-save", function (e) {
         plan.save();
     });
+    $(document).on("click", "#btn-request-approval", function (e) {
+        plan.askForApproval();
+    });
 }
+
+PlanSeptenalIndividual.TRAMITES = TRAMITES;
 
 PlanSeptenalIndividual.prototype = {
     getState: function () {
@@ -74,14 +78,16 @@ PlanSeptenalIndividual.prototype = {
     },
     save: function () {
         var plan = this,
-            method = (this.status === "modifying") ? "PUT" : "POST";
+            method = (this.status === "Modificando") ? "PUT" : "POST";
         $.ajax({
             url: this.container.data("route"),
             data: this.getState(),
             method: method,
             success: function (data) {
                 toastr["success"]("Los cambios han sido guardados");
-                plan.status = "modifying";
+                plan.setStatus("Modificando");
+                $("#btn-save").show().prop("disabled", false);;
+                $("#btn-request-approval").show().prop("disabled", false);
             },
             error: function (data) {
                 toastr["error"]("Ocurrió un error. En caso de que el problema persista contacte a soporte");
@@ -97,22 +103,66 @@ PlanSeptenalIndividual.prototype = {
                 fin: fin
             },
             method: "GET",
+            dataType: "json",
             statusCode: {
                 200: function (data) {
                     toastr["success"]("Plan septenal cargado satisfactoriamente");
-                    plan.status = "modifying";
-                    plan.setState(data);
-                    $("button[type='submit']").show();
+
+                    $("#btn-save").show();
+                    $("#btn-request-approval").show();
+                    plan.setStatus(data.status).setState(data);
+
+                    if (data.status == "Esperando aprobación") {
+                        $("#btn-save").prop("disabled", true);
+                        $("#btn-request-approval").prop("disabled", true);
+                        return;
+                    }
+
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-request-approval").prop("disabled", false);
                 },
                 404: function () {
-                    plan.status = "creating";
-                    $("button[type='submit']").show();
+                    plan.setStatus("En creación");
+                    $("#btn-save").show().prop("disabled", false);;
+                    $("#btn-request-approval").show().prop("disabled", true);
                 },
                 500: function (data) {
                     toastr["error"]("Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte");
                 }
             }
         });
+    },
+    askForApproval: function () {
+        var plan = this;
+        $.ajax({
+            url: "/plan-septenal-individual/ask-for-approval",
+            data: {
+                inicio: plan.starting_year,
+                fin: plan.starting_year + 6
+            },
+            method: "PUT",
+            dataType: "json",
+            statusCode: {
+                200: function () {
+                    plan.setStatus("Esperando aprobación");
+                    toastr["success"]("El plan septenal está en espera por aprobación.");
+                    $("#btn-request-approval").show().prop("disabled", true);
+                    $("#btn-save").show().prop("disabled", true);
+                },
+                404: function (data) {
+                    toastr["error"](data.responseJSON[0]);
+                }
+            }
+        });
+    },
+    getStatus: function () {
+        return this.status;
+    },
+    setStatus: function (status) {
+        $("#status").text(status);
+        this.status = status;
+
+        return this;
     },
     assignTramiteToRange: function (tramite, range) {
         assignTramiteToRange(tramite, range);
@@ -250,17 +300,16 @@ function attemptToLoadPlanIndividual (receiver, starting_year) {
         fin = inicio + 6;
 
     return $.ajax({
-        url: '/plan-septenal-colectivo',
+        url: "/plan-septenal-colectivo",
+        method: "GET",
         data: {
             inicio: inicio,
             fin: fin
         },
-        method: "GET",
+        dataType: "json",
         statusCode: {
             200: function (data) {
-                var json_data = (typeof data === "object") ? data : $.parseJSON(data);
-
-                if (json_data.status === "En creación") {
+                if (data.status === "En creación") {
                     receiver.plan = new PlanSeptenalIndividual(receiver.container, inicio);
                     receiver.plan.load(inicio, fin);
                 }

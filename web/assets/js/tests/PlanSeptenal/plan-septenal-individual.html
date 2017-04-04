@@ -15,7 +15,20 @@
   <body>
     <div id='qunit'></div>
     <div id='qunit-fixture'>
-      <div class="plan-septenal-individual" data-route="endpoint-url"></div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h2 class="box-title">Creación de Plan Septenal Individual</h2>
+          <h4 id="status" class="pull-right"></h4>
+        </div>
+        <div class="box-body">
+          <div class="plan-septenal-individual" data-route="endpoint-url"></div>
+        </div>
+        <div class="box-footer">
+          <button id="btn-save" class="btn btn-primary btn-flat pull-right" style="display: none;">Guardar cambios</button>
+          <button id="btn-request-approval" class="btn btn-success btn-flat pull-right" style="display: none;">Solicitar aprobación</button>
+          <a class="btn btn-default btn-flat pull-left" href="/" class="btn btn-default">Cancelar</a>
+        </div>
+      </div>
     </div>
 
     <!-- JS files under test -->

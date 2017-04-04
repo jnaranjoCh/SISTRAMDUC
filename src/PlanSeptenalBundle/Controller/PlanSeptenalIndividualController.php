@@ -116,4 +116,31 @@ class PlanSeptenalIndividualController extends Controller
 
         return $this->json('success', 200);
     }
+
+    /**
+     * @Route("/plan-septenal-individual/ask-for-approval", name="ask-for-approval-plan-septenal-individual")
+     * @Method({"PUT"})
+     */
+    public function askForApprovalAction(Request $request)
+    {
+        $inicio = $request->request->get('inicio');
+        $fin = $request->request->get('fin');
+
+        $entity_manager = $this->getDoctrine()->getManager();
+        $plan_septenal_individual_repo = $entity_manager->getRepository(PlanSeptenalIndividual::class);
+
+        $plan_septenal_individual = $plan_septenal_individual_repo
+            ->findOneBy(['inicio' => $inicio, 'fin' => $fin, 'owner' => $this->getUser()->getId()]);
+
+        if (is_null($plan_septenal_individual)) {
+            return $this->json(["El plan septenal individual no existe."], 404);
+        }
+
+        $plan_septenal_individual->askForApproval();
+
+        $entity_manager->persist($plan_septenal_individual);
+        $entity_manager->flush();
+
+        return $this->json('success', 200);
+    }
 }

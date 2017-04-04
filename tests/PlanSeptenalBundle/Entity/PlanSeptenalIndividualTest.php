@@ -77,6 +77,14 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
         $planSeptenalIndividual->addTramite($sabatico);
     }
 
+    public function testAskForApprovalShouldModifyStatus()
+    {
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual->askForApproval();
+
+        $this->assertEquals('Esperando aprobación', $planSeptenalIndividual->getStatus());
+    }
+
     /**
      * @beforeClass
      */
@@ -85,6 +93,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
         static::$arrayRepresentation = [
             'inicio'   => 2010,
             'fin'      => 2016,
+            'status'   => 'Modificando',
             'tramites' => [
                 [
                     'tipo' => 'beca',

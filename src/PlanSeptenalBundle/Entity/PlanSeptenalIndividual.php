@@ -39,6 +39,11 @@ class PlanSeptenalIndividual
     private $fin;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $status;
+
+    /**
      * @ORM\OneToMany(targetEntity="TramitePlanSeptenal", mappedBy="plan_septenal_individual", cascade={"persist"})
      */
     private $tramites;
@@ -60,6 +65,7 @@ class PlanSeptenalIndividual
 
         $this->inicio = $inicio;
         $this->fin = $fin;
+        $this->status = 'Modificando';
         $this->tramites = new ArrayCollection();
     }
 
@@ -147,6 +153,18 @@ class PlanSeptenalIndividual
         return $this->fin;
     }
 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function askForApproval()
+    {
+        $this->status = 'Esperando aprobación';
+
+        return $this;
+    }
+
     public function assignTo(Usuario $usuario)
     {
         $this->owner = $usuario;
@@ -165,6 +183,7 @@ class PlanSeptenalIndividual
         return [
             'inicio'   => $this->getInicio(),
             'fin'      => $this->getFin(),
+            'status'   => $this->getStatus(),
             'tramites' => $arrayTramites
         ];
     }

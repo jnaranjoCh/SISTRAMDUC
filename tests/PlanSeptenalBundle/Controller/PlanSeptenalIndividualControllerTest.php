@@ -169,6 +169,60 @@ class PlanSeptenalIndividualController extends WebTestCase
         $this->assertCount(1, $this->plan_septenal_individual_repo->findAll());
     }
 
+    /**
+     * @group functionalTesting
+     */
+    public function testAskForApproval()
+    {
+        $usuario = $this->usuario_repo->findOneBy([]);
+
+        // it's not the point of this test to confirm the creation works as expected
+        // but we require an existing plan septenal individual
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, 2016, $usuario, (new DateTime)->modify('+1 month'));
+
+        $this->em->persist($planSeptenalColectivo);
+        $this->em->flush();
+
+        $this->client->request(
+            'POST',
+            '/plan-septenal-individual',
+            $this->plan_septenal_individual_array
+        );
+
+        $this->client->request(
+            'PUT',
+            '/plan-septenal-individual/ask-for-approval',
+            ['inicio' => 2010, 'fin' => 2016]
+        );
+
+        $this->client->request(
+            'GET',
+            '/plan-septenal-individual',
+            ['inicio' => 2010, 'fin' => 2016]
+        );
+
+        $response = $this->client->getResponse();
+        $plan = json_decode($response->getContent(), true);
+        $this->assertEquals('Esperando aprobación', $plan['status']);
+    }
+
+    /**
+     * @group functionalTesting
+     */
+    public function testAskForApprovalActionWouldFailIfCorrespondingPlanSeptenalIndividualDoesntExist()
+    {
+        $this->client->request(
+            'PUT',
+            '/plan-septenal-individual/ask-for-approval',
+            $this->plan_septenal_individual_array
+        );
+
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode());
+        $this->assertEquals('["El plan septenal individual no existe."]', $response->getContent());
+    }
+
     protected function tearDown()
     {
         $tramites = $this->tramite_repo->findAll();
