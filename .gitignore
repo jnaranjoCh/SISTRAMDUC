@@ -17,4 +17,5 @@
 /web/assets/vendor/
 /tests/PlanSeptenalBundle/LearningTests/
 /.idea/*
+/node_modules
 /.phpintel/*

@@ -1,6 +1,6 @@
 {
-    "name": "cesar/sistram",
-    "license": "proprietary",
+    "name": "SISTRAMDUC",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {

@@ -53,6 +53,20 @@ class TramitePlanSeptenal
         $this->actualizaciones_solicitadas = new ArrayCollection();
     }
 
+    public static function createFromArray(array $array_representation)
+    {
+        $tramite = (new TramitePlanSeptenal)
+            ->setTipo($array_representation['tipo'])
+            ->setPeriodo(
+                new MonthlyDateRange(
+                    $array_representation['periodo']['start'],
+                    $array_representation['periodo']['end']
+                )
+            );
+
+        return $tramite;
+    }
+
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
@@ -90,5 +104,16 @@ class TramitePlanSeptenal
     public function addSolicitudActualizacion(ActualizacionTramitePlanSeptenal $actualizacion)
     {
         $this->actualizaciones_solicitadas[] = $actualizacion;
+    }
+
+    public function toArray()
+    {
+        return [
+            'tipo' => $this->getTipo(),
+            'periodo' => [
+                'start' => $this->getPeriodo()->getStartAsString(),
+                'end'   => $this->getPeriodo()->getEndAsString()
+            ]
+        ];
     }
 }

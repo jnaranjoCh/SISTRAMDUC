@@ -2,13 +2,16 @@
 
 namespace PlanSeptenalBundle\Entity;
 
-use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use AppBundle\Entity\Usuario;
+use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
+use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="plan_septenal_individual")
+ * @ORM\Table(name="plan_septenal_individual",uniqueConstraints={@ORM\UniqueConstraint(name="one_plan_per_user", columns={"owner_id", "inicio", "fin"})})
  */
 class PlanSeptenalIndividual
 {
@@ -18,6 +21,12 @@ class PlanSeptenalIndividual
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="planes_septenales_individuales")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
 
     /**
      * @ORM\Column(type="integer")
@@ -36,6 +45,7 @@ class PlanSeptenalIndividual
 
     /**
      * @ORM\ManyToOne(targetEntity="PlanSeptenalColectivo", inversedBy="planes_septenales_individuales")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $plan_septenal_colectivo;
 
@@ -53,6 +63,17 @@ class PlanSeptenalIndividual
         $this->tramites = new ArrayCollection();
     }
 
+    public static function createFromArray($array_representation)
+    {
+        $nuevo_plan = new PlanSeptenalIndividual(
+            $array_representation['inicio'],
+            $array_representation['fin']
+        );
+        $nuevo_plan->addTramites($array_representation['tramites']);
+
+        return $nuevo_plan;
+    }
+
     public function addTramite(TramitePlanSeptenal $new_tramite)
     {
         $new_tramite->attachToPlanSeptenal($this);
@@ -60,6 +81,18 @@ class PlanSeptenalIndividual
         $this->checkTramiteRange($new_tramite);
 
         $this->tramites[] = $new_tramite;
+
+        return $this;
+    }
+
+    public function addTramites(array $tramites)
+    {
+        foreach ($tramites as $tramite) {
+            if (is_array($tramite)) {
+                $tramite = TramitePlanSeptenal::createFromArray($tramite);
+            }
+            $this->addTramite($tramite);
+        }
 
         return $this;
     }
@@ -112,5 +145,33 @@ class PlanSeptenalIndividual
     public function getFin()
     {
         return $this->fin;
+    }
+
+    public function assignTo(Usuario $usuario)
+    {
+        $this->owner = $usuario;
+        $usuario->ownPlanSeptenalIndividual($this);
+
+        return $this;
+    }
+
+    public function toArray()
+    {
+        $arrayTramites = [];
+        foreach ($this->tramites as $tramite) {
+            $arrayTramites[] = $tramite->toArray();
+        }
+
+        return [
+            'inicio'   => $this->getInicio(),
+            'fin'      => $this->getFin(),
+            'tramites' => $arrayTramites
+        ];
+    }
+
+    public function setPlanSeptenalColectivo($plan_septenal_colectivo)
+    {
+        $this->plan_septenal_colectivo = $plan_septenal_colectivo;
+        return $this;
     }
 }

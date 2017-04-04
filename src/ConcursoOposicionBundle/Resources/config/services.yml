@@ -1,0 +1,4 @@
+services:
+#    concurso_oposicion.example:
+#        class: ConcursoOposicionBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+
+    <link rel='stylesheet' href='../../../vendor/qunit/qunit/qunit.css'>
+
+    <!-- external libraries -->
+    <script src='../../../vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js'></script>
+
+    <script src='../../../vendor/qunit/qunit/qunit.js'></script>
+    <script src='../../../vendor/sinon-1.17.7/index.js'></script>
+  </head>
+  <body>
+    <div id='qunit'></div>
+    <div id='qunit-fixture'>
+
+      <!-- I think that I should duplicate this markup but I haven't found a good way to avoid it -->
+      <div id="plan-septenal-colectivo-creation">
+        <form class="form-inline" action="{{ path('start-creation-of-plan-septenal-colectivo') }}" style="display: none;">
+          <div class="form-group">
+            <input type="hidden" id="start_year" name="start_year" value="2018">
+            <label for="creation_deadline" class="form-label">Fecha de finalización:</label>
+            <input type="text" class="datepicker form-control" id="creation_deadline">
+          </div>
+          <button class="btn btn-primary btn-flat" id="start-creation-btn" type="submit">Iniciar proceso de creación</button>
+        </form>
+        <div id="creation-progress" style="display: none;">
+          Anything that's related with creation process progress
+        </div>
+      </div>
+    </div>
+
+    <!-- JS files under test -->
+    <script src='../../../vendor/toastr/toastr.min.js'></script>
+    <script src='../../PlanSeptenal/plan-septenal-colectivo.js'></script>
+
+    <!-- tests to run with the given fixtures above -->
+    <script src='plan-septenal-colectivo.js'></script>
+  </body>
+</html>

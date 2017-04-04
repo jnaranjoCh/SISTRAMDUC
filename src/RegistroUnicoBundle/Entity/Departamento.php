@@ -24,16 +24,11 @@ class Departamento
     private $description;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $facultadId;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Facultad", inversedBy="departamentos")
      * @ORM\JoinColumn(name="facultad_id", referencedColumnName="id")
      */
     protected $facultad;
-     
+
     /**
      * @ORM\ManyToMany(targetEntity="Catedra")
      * @ORM\JoinTable(name="departamentos_catedras",
@@ -42,12 +37,12 @@ class Departamento
      *      )
      */
     protected $catedras;
-    
+
     public function __construct()
     {
         $this->catedras = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -106,4 +101,3 @@ class Departamento
         return $this->facultadId;
     }
 }
-

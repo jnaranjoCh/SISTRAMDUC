@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='content-type' content='text/html; charset=utf-8'>
+
+    <link rel='stylesheet' href='../../../vendor/qunit/qunit/qunit.css'>
+
+    <!-- external libraries -->
+    <script src='../../../vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js'></script>
+
+    <script src='../../../vendor/qunit/qunit/qunit.js'></script>
+    <script src='../../../vendor/sinon-1.17.7/index.js'></script>
+  </head>
+  <body>
+    <div id='qunit'></div>
+    <div id='qunit-fixture'>
+      <div class="plan-septenal-individual" data-route="endpoint-url"></div>
+    </div>
+
+    <!-- JS files under test -->
+    <script src='../../../vendor/toastr/toastr.min.js'></script>
+    <script src='../../PlanSeptenal/grid-selection.js'></script>
+    <script src='../../PlanSeptenal/plan-septenal-individual.js'></script>
+
+    <!-- tests to run with the given fixtures above -->
+    <script src='plan-septenal-individual.js'></script>
+  </body>
+</html>

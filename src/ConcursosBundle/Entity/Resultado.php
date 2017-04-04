@@ -70,7 +70,6 @@ class Resultado
      */
     private $resultado;
 
-
     /**
      * Get id
      *

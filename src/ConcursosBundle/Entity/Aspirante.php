@@ -150,16 +150,12 @@ class Aspirante
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="$fechaRenuncia", type="datetime", nullable=true)
+     * @ORM\Column(name="fechaRenuncia", type="datetime", nullable=true)
      */
     private $fechaRenuncia;
     
-    /**
-     * @ORM\ManyToOne(targetEntity="Concurso", inversedBy="aspirantes")
-     * @ORM\JoinColumn(name="concurso_id", referencedColumnName="id")
-     */
-    protected $concurso;
-
+   
+    protected $concursos;
 
     /**
      * Get id

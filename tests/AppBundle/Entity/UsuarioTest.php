@@ -4,6 +4,7 @@ namespace Tests\AppBundle\Entity;
 
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Rol;
+use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 
 class UsuarioTest extends \PHPUnit_Framework_TestCase
 {

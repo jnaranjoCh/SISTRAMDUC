@@ -1,0 +1,267 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Concurso de Oposici&oacute;n, formaci&oacute;n de suplentes de la CPEC
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Apertura Concurso</li>
+      </ol>
+    </section> 
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+        <br/>
+        <div class="register-box-body">
+
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+          	<div class="container">
+	            <label><center>Suplente</center></label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="number" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula' onkeypress="return justNumbers(event);"/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanapellido" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanfacultad" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanuniversidad" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                	<input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container">
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanarea" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n" id='area'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="registrarSuplenteCPEC" class="btn btn-success" data-dismiss="modal">Ingresar</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+            <form>
+
+	            <div class="container">
+	            	<label>Suplente 1</label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 1" id='nombre1'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="s1" type="button" class="btn btn-warning btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ingresar</button>
+                        </div>
+                      </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            	<label>Suplente 2</label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre2" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 2" id='nombre2'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="s2" type="button" class="btn btn-warning btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ingresar</button>
+                        </div>
+                      </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            	<label>Suplente 3</label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre3" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 3" id='nombre3'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="s3" type="button" class="btn btn-warning btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ingresar</button>
+                        </div>
+                      </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            	<label>Suplente 4</label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre4" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 4" id='nombre4'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="s4" type="button" class="btn btn-warning btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ingresar</button>
+                        </div>
+                      </div>
+				    </div>
+				</div>
+
+				<div class="container">
+	            	<label>Suplente 5</label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre5" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese suplente 5" id='nombre5'/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="s5" type="button" class="btn btn-warning btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ingresar</button>
+                        </div>
+                      </div>
+				    </div>
+				</div>
+
+				<br/><br/>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
+                </div>
+                <div class="col-xs-6">
+                  <button id="registrarSuplentesCPEC" type="button" class="btn btn-success btn-block btn-flat">Registrar Suplentes</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoOposicion/saveSuplentesCPEC.js') }}"></script>
+
+{% endblock %}

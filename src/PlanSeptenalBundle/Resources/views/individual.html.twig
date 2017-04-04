@@ -1,15 +1,54 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/plan-septenal.css') }}">
+{% endblock %}
+
 {% block content %}
 
-    <section class="content-header">
-      <h1>Plan Septenal Individual</h1>
-      <ol class="breadcrumb">
-        <li><i class="fa fa fa-calendar"></i>Plan Septenal</li>
-        <li class="active">Individual</li>
-      </ol>
-    </section>
+  <section class="content-header">
+    <h1>Plan Septenal Individual</h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa fa-calendar"></i>Plan Septenal</li>
+      <li class="active">Individual</li>
+    </ol>
+  </section>
 
-    <section class="content"></section>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h2 class="box-title">Creación de Plan Septenal Individual</h2>
+            </div>
+          <div class="box-body">
+            <div id="plan-septenal-individual" data-route="{{ path('create-plan-septenal-individual') }}"></div>
+          </div>
+          <div class="box-footer">
+            <button class="btn btn-primary btn-flat pull-right" type="submit" style="display: none;">Guardar cambios</button>
+            <a class="btn btn-default btn-flat pull-left" href="/" class="btn btn-default">Cancelar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/PlanSeptenal/grid-selection.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
+  <script>
+    toastr.options = {
+      positionClass: "toast-bottom-center"
+    };
+
+    var app = {
+      container: $("#plan-septenal-individual"),
+      plan: null,
+      next_year: (new Date().getFullYear() + 1)
+    };
+
+    attemptToLoadPlanIndividual(app, app.next_year);
+  </script>
 {% endblock %}
