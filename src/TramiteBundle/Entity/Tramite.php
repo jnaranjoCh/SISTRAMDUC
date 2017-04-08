@@ -33,7 +33,7 @@ class Tramite
     /**
      * @ORM\OneToOne(targetEntity="Transicion", inversedBy="tramite")
      */
-    private $transicion;
+    protected $transicion;
 
     public function getId()
     {
