@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Anyelys
- * Date: 04/03/2017
- * Time: 01:10 PM
- */
 
 namespace TramiteBundle\Entity;
 
@@ -35,6 +29,11 @@ class Tramite
      * @ORM\JoinColumn(name="tipo_tramite_id", referencedColumnName="id")
      */
     protected $tipo_tramite;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Transicion", inversedBy="tramite")
+     */
+    protected $transicion;
 
     public function getId()
     {

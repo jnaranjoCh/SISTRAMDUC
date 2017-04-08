@@ -10,3 +10,16 @@ solicitudes_serv_remun:
     path: /solicitudes_serv_remun
     defaults: {_controller: ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun}
 
+estado_sol_prof:
+    path: /estado-solicitud
+    defaults: {_controller: ComisionRemuneradaBundle:Default:estado_sol_prof}
+
+#envio_solicitud:
+ #   path: /envio_solicitud
+  #  defaults: {_controller: ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun}
+
+#descarga_archivo_ajax:
+    #path:     /solicitud_serv_remun/envio-solicitud
+    #defaults: { _controller: ComisionRemuneradaBundle:Default:descargaArchivo }
+    #requirements:
+        #_method:  POST

@@ -19,15 +19,15 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" id="formsolicitud" method="post">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="exampleInputFile">Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario</label>
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" id="exampleInputFile" name="oficio">
 
                         <p class="help-block">Example block-level help text here.</p>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="exampleInputFile">Fotocopia de cédula de Identidad</label>
                         <input type="file" id="exampleInputFile">
 
@@ -44,7 +44,7 @@
                         <input type="file" id="exampleInputFile">
 
                         <p class="help-block">Example block-level help text here.</p>
-                    </div>
+                    </div>-->
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
@@ -55,4 +55,29 @@
         <!-- /.box -->
     </section>
     <!-- /.content -->
+{% endblock %}
+
+{% block custom_javascripts %}
+    {{parent()}}
+    <!--<script type="text/javascript">
+        var form = document.getElementById("formsolicitud");
+        $.ajax({
+            url:"/web/app_dev.php/solicitud_serv_remun/envio-solicitud",
+            data: new FormData(form),// the formData function is available in almost all new browsers.
+            type:"post",
+            contentType:false,
+            processData:false,
+            cache:false,
+            dataType:"json", // Change this according to your response from the server.
+            /*error:function(err){
+                console.error(err);
+            },*/
+            success:function(data){
+                console.log(data);
+            }
+            /*complete:function(){
+                console.log("Request finished.");
+            }*/
+        });
+    </script>-->
 {% endblock %}
