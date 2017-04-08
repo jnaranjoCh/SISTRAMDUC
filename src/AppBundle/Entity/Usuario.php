@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\Rol;
 
+use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
+use RegistroUnicoBundle\Entity\Departamento;
+
 /**
  * @ORM\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
@@ -141,9 +144,21 @@ class Usuario implements UserInterface
      */
     protected $hijos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="PlanSeptenalBundle\Entity\PlanSeptenalIndividual", mappedBy="owner")
+     */
+    protected $planes_septenales_individuales;
+
+    /**
+     * @ORM\OneToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
+     * @ORM\JoinColumn(name="departamento_id", referencedColumnName="id")
+     */
+    private $departamento;
+
     public function __construct()
     {
-      $this->roles = new ArrayCollection();
+        $this->roles = new ArrayCollection();
+        $this->planes_septenales_individuales = new ArrayCollection();
     }
 
     /**
@@ -529,7 +544,7 @@ class Usuario implements UserInterface
     {
         $this->roles[] = $rol;
     }
-    
+
     public function addRoles($roles)
     {
         foreach($roles as $rol)
@@ -554,5 +569,27 @@ class Usuario implements UserInterface
     public function getNombreCompleto ()
     {
         return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+    }
+
+    public function ownPlanSeptenalIndividual(PlanSeptenalIndividual $plan)
+    {
+        $this->planes_septenales_individuales[] = $plan;
+        return $this;
+    }
+
+    public function getPlanesSeptenalesIndividuales()
+    {
+        return $this->planes_septenales_individuales;
+    }
+
+    public function setDepartamento(Departamento $departamento)
+    {
+        $this->departamento = $departamento;
+        return $this;
+    }
+
+    public function getDepartamento()
+    {
+        return $this->departamento;
     }
 }

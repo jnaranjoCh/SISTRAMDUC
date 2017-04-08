@@ -19,3 +19,9 @@ doctrine:
     dbal:
         driver: pdo_pgsql
         dbname: sistramduc_testing
+
+# this simplify tests by allowing them to use HTTP authentication
+security:
+    firewalls:
+        restricted_area:
+            http_basic: ~

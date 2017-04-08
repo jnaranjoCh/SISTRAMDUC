@@ -1,0 +1,100 @@
+#plan-septenal-individual, #plan-septenal-individual * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.grid {
+    padding: 0 5%; /* this deserves a media query, when screen is too small side paddings should be zero  */
+    color: #444;
+    width: 100%;
+    display: inline-block;
+}
+
+.grid-control {
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.grid-action-btn {
+    display: inline-block;
+    margin: 2px;
+    border: 1px solid !important;
+    border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.grid-action-btn:hover {
+    border-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.grid-header {
+    padding: 0;
+    display: block;
+}
+
+.grid-numeration {
+    float: left;
+    width: 7.5%;
+}
+
+.grid-num {
+    border: 1px solid black;
+    height: 30px;
+    margin: 3px 0px 0px 0px;
+}
+
+.grid-header-el, .grid-cell {
+    margin: 3px 0px 0px 0px;
+    width: 7.5%;
+    height: 30px;
+    border: 1px solid;
+    /*! display: inline-block; */
+    float: left;
+}
+
+.grid-header-el:first-child {
+    margin-left: 7.5%;
+}
+
+.grid-header-el, .grid-num {
+    border-color: transparent;
+    padding: 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+.grid-row {
+    display: block;
+}
+
+.grid-cell {
+    position: relative;
+    border-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.grid-cell:after {
+    content: '';
+    position: absolute;
+    z-index: 1000;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+    background: rgba(255, 255, 255, 0);
+    border: 1px dashed;
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    transition: all 0.3s;
+}
+
+.grid-cell.selected:after {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px dashed;
+    border-color: rgba(0, 0, 0, 0.6) rgba(0, 0, 0, 0.33);
+}
