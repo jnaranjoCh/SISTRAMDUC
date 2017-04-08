@@ -46,4 +46,12 @@ class DefaultController extends Controller
     {
         return $this->render('JubilacionBundle::informeConsejo.html.twig');
     }
+
+    /**
+     * @Route("/jubilacion/constacia-jubilacion", name="jubilacion-constancia-jubilacion")
+     */
+    public function constanciaJubilacionAction()
+    {
+        return $this->render('JubilacionBundle::constanciaJubilacion.html.twig');
+    }
 }

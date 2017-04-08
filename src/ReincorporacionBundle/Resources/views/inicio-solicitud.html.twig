@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/reincorporacion/global.css') }}">    
+{% endblock %}
+
+{% block content %}
+
+    <section class="content-header">
+        <h1>Solicitud de Reincorporación al Personal Docente</h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa fa-suitcase"></i> Reincorporación</li>
+            <li class="active">Inicio</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="col-md-7">
+            <div class="col-md-12 box box-success">
+                <div class="box-header with-border reincorporacion-box-header">            
+                    <h4 class="box-title left-block"> <i class="fa fa fa-exclamation-circle reincorporacion-amber" aria-hidden="true"></i> Por favor, siga los siguientes pasos para procesar su reincorporación al personal docente de la Universidad de Carabobo.</h4>
+                </div>
+                <div class="box-body reincorporacion-box-body">            
+                    <div class="center-block">              
+                        <div class="row">                  
+                            <h3><span class="badge reincorporacion-primary-badge">1</span> Actualizar currículum</h3>                
+                        </div>
+                        <div class="row">
+                            <h3><span class="badge reincorporacion-primary-badge">2</span> Subir recaudos</h3>
+                        </div>
+                        <div class="row">
+                            <h3><span class="badge reincorporacion-primary-badge">3</span> Verificación de datos</h3>
+                        </div>
+                    </div> 
+                </div>
+                <div class="box-footer reincorporacion-box-footer box-tools">
+                    <a href="{{ path('actualizar-curriculum') }}" class="btn btn-success btn-lg center-block">Iniciar proceso</a>
+                </div>  
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="col-md-12 box box-primary">
+                <div class="box-header with-border reincorporacion-box-header">            
+                    <h4 class="box-title left-block"> <i class="fa fa fa-info-circle reincorporacion-primary" aria-hidden="true"></i> Ayuda</h4>
+                </div>
+                <div class="box-body">            
+                    <div class="center-block">              
+                        <ul class="reincorporacion-undecorated-list">
+                            <li><a href="">¿Por qué veo esto?</a> <span>Haga clic para saber por qué.</span></li>
+                            <li><a href="">¿Qué necesito para reincorporarme?</a> <span>Lista de recaudos a consignar.</span></li>
+                        </ul>
+                    </div> 
+                </div>            
+            </div>
+        </div>
+        
+    </section>
+
+{% endblock %}

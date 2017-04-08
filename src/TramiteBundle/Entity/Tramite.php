@@ -31,7 +31,7 @@ class Tramite
     private $observacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tipo_tramite", inversedBy="tramites")
+     * @ORM\ManyToOne(targetEntity="TipoTramite", inversedBy="tramites")
      * @ORM\JoinColumn(name="tipo_tramite_id", referencedColumnName="id")
      */
     protected $tipo_tramite;
@@ -66,23 +66,23 @@ class Tramite
     }
 
     /**
-     * Set tipoTramite
+     * Set tipo_tramite
      *
-     * @param \TramiteBundle\Entity\Tipo_tramite $tipoTramite
+     * @param \TramiteBundle\Entity\TipoTramite $tipoTramite
      *
      * @return Tramite
      */
-    public function setTipoTramite(\TramiteBundle\Entity\Tipo_tramite $tipoTramite = null)
+    public function setTipoTramite(\TramiteBundle\Entity\TipoTramite $tipo_tramite = null)
     {
-        $this->tipo_tramite = $tipoTramite;
+        $this->tipo_tramite = $tipo_tramite;
 
         return $this;
     }
 
     /**
-     * Get tipoTramite
+     * Get tipo_tramite
      *
-     * @return \TramiteBundle\Entity\Tipo_tramite
+     * @return \TramiteBundle\Entity\TipoTramite
      */
     public function getTipoTramite()
     {

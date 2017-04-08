@@ -23,14 +23,6 @@ class Facultad
      */
     private $description;
 
-
-    /**
-     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="facultades")
-     * @JoinTable(name="usuarios_facultades",
-     *      joinColumns={@JoinColumn(name="facultad_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
-     *      )
-     */
     protected $usuarios;
     
     /**
@@ -46,6 +38,8 @@ class Facultad
     public function __construct()
     {
         $this->usuarios = new ArrayCollection();
+        $this->escuelas = new ArrayCollection();
+        $this->departamentos = new ArrayCollection();
     }
     
     /**

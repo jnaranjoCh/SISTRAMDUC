@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
 use AppBundle\Entity\Usuario;
+use AppBundle\Entity\Rol;
 
 class DefaultController extends Controller
 {
@@ -26,7 +27,7 @@ class DefaultController extends Controller
         return $this->render('RegistroUnicoBundle:Default:consultar_registro.html.twig');
     }
     
-    public function guardarDatosAjaxAction(Request $request)
+    /*public function guardarDatosAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
         {
@@ -34,35 +35,48 @@ class DefaultController extends Controller
         }
         else
             return new JsonResponse("else");
-    }
+    }*/
+    
+    public function enviarEmailsAjaxAction(Request $request)
+    {
+        return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
+    }   
     
     public function registrarUsuarioAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
         {
+            $roles[] = new Rol();
+            $i = 0;
             $usuario = new Usuario();
             $usuario = $this->initialiceUser($usuario);
-            $usuario->setCorreo($_POST["Email"]);
+            $usuario->setCedula($request->get("Cedula"));
             $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($usuario,$_POST["Password"]);
+            $encoded = $encoder->encodePassword($usuario,$request->get("Password"));
             $usuario->setPassword($encoded);
-            $usuario->setRolId($this->getByName("AppBundle:","Rol",$_POST["TipoUsuario"])->getId());
+            foreach($request->get("Roles") as $rol)
+            {
+              $roles[$i] = $this->getByName("AppBundle:","Rol",$rol);
+              $i++;
+            }
+            $usuario->addRoles($roles);
             $usuario->setActivo(1);
+            $usuario->setCorreo($request->get("Email"));
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($usuario);
             $em->flush();
-            return new JsonResponse($usuario->getCorreo()." ".$usuario->getPassword()." ".$usuario->getRolId()."   insertado");
+            return new JsonResponse("insertado");
         }
         else
-            return new JsonResponse("else");
+            throw $this->createNotFoundException('Error al solicitar datos');
     }
     
-    public function buscarEmailAjaxAction(Request $request)
+    public function buscarCedulaAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
         {
-            $encontrado = $this->getOneEmail("AppBundle:","Usuario",$_POST["Email"]);
+            $encontrado = $this->getOneCedula("AppBundle:","Usuario",$request->get("Cedula"));
 
             if (!$encontrado) {
                  return new JsonResponse("N");
@@ -70,6 +84,21 @@ class DefaultController extends Controller
             {
                 return new JsonResponse("S");
             }
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');
+    }
+    
+    public function buscarEmailAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = $this->getOneEmail("AppBundle:","Usuario",$request->get("Email"));
+
+            if (!$encontrado) {
+                return new JsonResponse(0);
+            }else
+                return new JsonResponse($encontrado->getActivo());
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');
@@ -102,6 +131,31 @@ class DefaultController extends Controller
         else
              throw $this->createNotFoundException('Error al solicitar datos');
     }
+
+    private function getEmails($object)
+    {
+        $i = 0;
+        $datas=null;
+        $data["Email"]="";
+        $data["Estatus"]="";
+        foreach($object as $value)
+        {
+           $data["Email"] = $value->getCorreo();
+           if($value->getActivo())
+               $data["Estatus"]="Activo";
+           else
+               $data["Estatus"]="Inactivo";
+           $datas[$i] = $data;
+           $i++;
+        }
+        
+        return array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $datas
+        );
+    }
     
     private function bdToArrayDescription($object,$entidad,$val)
     {
@@ -133,13 +187,22 @@ class DefaultController extends Controller
         $usuario->setPrimerApellido("");
         $usuario->setSegundoApellido("");
         $usuario->setNacionalidad("");
-        $usuario->setCorreo("");
+        $usuario->setDireccion("");
+        $usuario->setEstatusId(0);
         $usuario->setTelefono(0);
         $usuario->setRif(0);
         
         return $usuario;
     }
 
+    private function getOneCedula($bundle,$entidad,$cedula)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByCedula($cedula);
+    }
+    
     private function getOneEmail($bundle,$entidad,$email)
     {
         return $this->getDoctrine()
@@ -164,5 +227,12 @@ class DefaultController extends Controller
                     ->findAll();
     }
     
+    private function getRolName($bundle,$entidad,$id)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneById($id);
+    }
     
 }

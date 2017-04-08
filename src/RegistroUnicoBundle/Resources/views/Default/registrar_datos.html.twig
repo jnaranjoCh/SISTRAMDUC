@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+      <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <!--User data header-->
     <section class="content-header">
@@ -11,15 +15,45 @@
     </section>
     <!--User data header-->
     <br/>
-      <!--User data body-->
+     <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <table id="table-6" class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Email</th>
+                <th>Estatus</th>
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+              <tr>
+               <th>Email</th>
+               <th>Estatus</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <!--User data body-->
     <form>
       <div class="row">
         <section class="content-body">
-            <!--Alert message-->
-            <div id="alertData" class="col-md-offset-1 col-md-10 alert alert-danger hidden">
-                  El usuario no se encuentra registrado. 
-            </div>
-            <!--Alert message-->
             <!--seccion for generate box-->
             <div class="col-md-offset-1 col-md-10">
               <div class="box box-info">
@@ -36,6 +70,11 @@
                               <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
                         </div>
                       </div>
+                      <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ver usuarios</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                </div>
@@ -43,9 +82,9 @@
             <!--seccion for generate boxes-->
           
             <!--personal and contact box-->
-            <div id="form-1" class="col-md-offset-1 col-md-10 hidden">
+            <div id="formPersonal" class="col-md-offset-1 col-md-10 hidden">
               <!-- /.box-info -->
-              <div class="box-footer">
+              <div id="headerPersonal" class="box-footer">
                 <strong>Sección para ingresar datos personales y de contactos.</strong>
               </div>
                <!-- /.box-header -->
@@ -53,38 +92,84 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Sección 1</h3>
                   <div class="box-tools pull-right">
-                    <button type="button" id="mini-1" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" id="miniPersonal" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
                 <!-- /.box-body --> 
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" placeholder="Nombre" required>
+                      <div id="divPrimerNombreDatos" class="form-group has-feedback">
+                        <label>Primer nombre</label>
+                        <input type="text" id="PrimerNombreDatos" class="form-control" placeholder="Primer nombre" required>
+                        <span id="spanPrimerNombreDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
-                      <div class="form-group">
-                        <label>Apellido</label>
-                        <input type="text" class="form-control" placeholder="Apellido" required>
+                      <div id="divSegundoNombreDatos" class="form-group has-feedback">
+                        <label>Segundo nombre</label>
+                        <input type="text" id="SegundoNombreDatos" class="form-control" placeholder="Segundo nombre" required>
+                        <span id="spanSegundoNombreDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Edad</label>
-                        <input type="number" class="form-control" placeholder="Edad" min="18" max="80" required>
+                      <div id="divPrimerApellidoDatos" class="form-group has-feedback">
+                        <label>Primer apellido</label>
+                        <input type="text" id="PrimerApellidoDatos" class="form-control" placeholder="Primer apellido" required>
+                        <span id="spanPrimerApellidoDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
-                      <div class="form-group">
+                      <div id="divSegundoApellidoDatos" class="form-group has-feedback">
+                        <label>Segundo apellido</label>
+                        <input type="text" id="SegundoApellidoDatos" class="form-control" placeholder="Segundo apellido" required>
+                        <span id="spanSegundoApellidoDatos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                      <div id="divNacionalidadDatos" class="form-group has-feedback">
+                        <label>Nacionalidad</label>
+                        <select id="NacionalidadDatos" class="form-control select2" style="width: 100%;" required>
+                          <option selected="selected" value="">Seleccione una opción</option>
+                          <option value="Venezolano">Venezolano</option>
+                          <option value="Extranjero">Extranjero</option>
+                        </select>
+                        <span id="spanNacionalidadDatos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                      <!-- /.form-group -->
+                      <div id="divFechaNacimientoDatos" class="form-group has-feedback">
+                        <label>Fecha de nacimiento</label>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input id="FechaNacimientoDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                      <div id="divEdadDatos" class="form-group has-feedback">
+                        <label>Edad</label>
+                        <input type="number" id="EdadDatos" class="form-control" placeholder="Edad" min="18" max="80" required>
+                        <span id="spanEdadDatos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                      <!-- /.form-group -->
+                      <div id="divSexoDatos" class="form-group has-feedback">
                         <label>Sexo</label>
-                        <select class="form-control select2" style="width: 100%;" required>
-                          <option selected="selected">Seleccione una opción</option>
+                        <select class="form-control select2" id="SexoDatos" style="width: 100%;" required>
+                          <option selected="selected" value="">Seleccione una opción</option>
                           <option value="Masculino">Masculino</option>
                           <option value="Femenino">Femenino</option>
                         </select>
+                        <span id="spanSexoDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -93,35 +178,37 @@
                   <!-- /.row -->
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Cedula</label>
-                        <input type="number" class="form-control" placeholder="Cedula">
-                      </div>
-                      <!-- /.form-group -->
-                      <div class="form-group">
+                      <div id="divRifDatos" class="form-group has-feedback">
                         <label>RIF</label>
-                        <input type="number" class="form-control" placeholder="RIF">
+                        <input id="RifDatos" type="number" class="form-control" placeholder="RIF">
+                        <span id="spanRifDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
-                      <div class="form-group">
+                      <div id="divNumeroDatos" class="form-group">
                         <label>Telefono</label>
                         <div class="row">
                             <div class="col-xs-4">
-                              <input type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
+                              <input id="NumeroDatos" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
                             </div>
                             <strong><label class="col-xs-1">—</label></strong>
                             <div class="col-xs-7">
-                              <input type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
+                              <input id="NumeroDatosII" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
                             </div>
                         </div>
                       </div>  
                       <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-xs-12">
                       <div class="form-group">
                         <label>Dirección</label>
-                        <textarea class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                        <textarea id="direccionDatosI" class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -135,9 +222,9 @@
             <!--personal and contact data box-->
           
             <!--+carg box-->
-            <div id="form-3" class="col-md-offset-1 col-md-10 hidden">
+            <div id="formCargos" class="col-md-offset-1 col-md-10 hidden">
               <!-- /.box-info -->
-              <div class="box-footer">
+              <div id="headerCargos" class="box-footer">
                 <strong>Sección para ingresar los cargos desempeñados en la UC.</strong>
               </div>
                <!-- /.box-header -->
@@ -145,7 +232,7 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Sección 2</h3>
                   <div class="box-tools pull-right">
-                    <button type="button" id="mini-3" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" id="miniCargos" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
                 <!-- /.box-body --> 
@@ -153,21 +240,22 @@
                   <div class="row">
                       <div class="col-md-12">
                         <!-- /.form-group -->
-                        <div class="form-group">
+                        <div id="divCargosDatos" class="form-group has-feedback">
                           <label>Cargos</label>
-                          <select id="crg" class="form-control select2" style="width: 100%;">
+                          <select id="cargosDatos" class="form-control select2" style="width: 100%;">
                           </select>
+                          <span id="spanCargosDatos" class="glyphicon form-control-feedback"></span>
                         </div>
                         <!-- /.form-group -->
                       </div>
                       <div class="col-md-offset-4 col-md-4">
                           <div class="form-group has-feedback">
-                                <button id="ac" type="button" class="btn btn-primary btn-block btn-flat">Agregar cargo</button>
+                                <button id="agregarCargoDatos" type="button" class="btn btn-primary btn-block btn-flat">Agregar cargo</button>
                           </div>
                       </div>
                   </div>
                   <hr/>
-                  <table id="table-3" class="table table-bordered table-striped">
+                  <table id="tableCargo" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                       <th>Cargo</th>
@@ -190,9 +278,9 @@
  
             
             <!--research,courses and studies box-->
-            <div id="form-2" class="col-md-offset-1 col-md-10 hidden">
+            <div id="formRegistros" class="col-md-offset-1 col-md-10 hidden">
               <!-- /.box-info -->
-              <div class="box-footer">
+              <div id="headerRegistros" class="box-footer">
                 <strong>Sección para ingresar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
               </div>
                <!-- /.box-header -->
@@ -200,7 +288,7 @@
                 <div class="box-header with-border">
                   <h3 class="box-title">Sección 3</h3>
                   <div class="box-tools pull-right">
-                    <button type="button" id="mini-2" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button type="button" id="miniRegistros" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                   </div>
                 </div>
                 <!-- /.box-body --> 
@@ -210,7 +298,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Estatus</label>
-                        <select id="estR" class="form-control select2" style="width: 100%;">
+                        <select id="EstatusDatos" class="form-control select2" style="width: 100%;">
                         </select>
                       </div>
                       <!-- /.form-group -->
@@ -219,7 +307,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Nivel de estudio</label>
-                        <select id="neR" class="form-control select2" style="width: 100%;">
+                        <select id="NivelDeEstudioDatos" class="form-control select2" style="width: 100%;">
                         </select>
                       </div>
                     </div>
@@ -227,7 +315,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Tipo de registro</label>
-                        <select id="tr" class="form-control select2" style="width: 100%;">
+                        <select id="TipoDeRegistroDatos" class="form-control select2" style="width: 100%;">
                         </select>
                       </div>
                     </div>
@@ -235,7 +323,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Descripción</label>
-                        <input id="desR" type="text" class="form-control" placeholder="Nombre">
+                        <input id="DescripcionDatos" type="text" class="form-control" placeholder="Nombre">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -243,34 +331,34 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Año de publicacion y/o asistencia</label>
-                        <input id="anoR" type="number" class="form-control" placeholder="Año" min="1">
+                        <input id="AnoPublicacionDatos" type="number" class="form-control" placeholder="Año" min="1">
                       </div>
                       <!-- /.form-group -->
                     </div>
-                    <div id="em" class="col-md-12 hidden">
+                    <div id="divEmpresaDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Empresa</label>
-                        <input id="empR" type="text" class="form-control" placeholder="Empresa">
+                        <input id="EmpresaDatos" type="text" class="form-control" placeholder="Empresa">
                       </div>
                       <!-- /.form-group -->
                     </div>
-                    <div id="in" class="col-md-12 hidden">
+                    <div id="divInstitucionDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Institución</label>
-                        <input id="insR" type="text" class="form-control" placeholder="Institución">
+                        <input id="InstitucionDatos" type="text" class="form-control" placeholder="Institución">
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="form-group has-feedback">
-                              <button id="ar" type="button" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
+                              <button id="agregarRegistro" type="button" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
                         </div>
                     </div>
                   </div>
                   <hr/>
-                  <table id="table-1" class="table table-bordered table-striped">
+                  <table id="tableRegistros" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Id del registro</th>
@@ -305,7 +393,7 @@
                       <!-- /.form-group -->
                       <div class="form-group">
                         <label>Nombre completo</label>
-                        <input id="nomP" type="text" class="form-control" placeholder="Nombre del participantes">
+                        <input id="NombreParticipanteRegistro" type="text" class="form-control" placeholder="Nombre del participantes">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -313,24 +401,24 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Cedula</label>
-                        <input id="cedP" type="number" class="form-control" placeholder="cedula" min="1">
+                        <input id="CedulaParticipanteRegistro" type="number" class="form-control" placeholder="cedula" min="1">
                       </div>
                     </div>
                      <!-- /.col -->
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Id del registro</label>
-                        <input id="idP" type="number" class="form-control" placeholder="Id del registro" min="1">
+                        <input id="IdParticipanteRegistro" type="number" class="form-control" placeholder="Id del registro" min="1">
                       </div>
                     </div>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="form-group has-feedback">
-                              <button id="ap" type="button" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
+                              <button id="agregarParticipantes" type="button" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
                         </div>
                     </div>
                 </div>
                 <hr/>
-                <table id="table-2" class="table table-bordered table-striped">
+                <table id="tableParticipantes" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>Id del registro</th>
@@ -410,10 +498,14 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/iniRD.js') }}"></script>
-  <script src="{{ asset('assets/js/configTable.js') }}"></script>
-  <script src="{{ asset('assets/js/showField.js') }}"></script>
-  <script src="{{ asset('assets/js/insertAndDeleteTable.js') }}"></script>
-  <script src="{{ asset('assets/js/generate.js') }}"></script>
-  <script src="{{ asset('assets/js/saveData.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/iniRD.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/showField.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/generate.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/saveData.js') }}"></script>
+{% endblock %}
+
+{% block javascripts %}
+   <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 {% endblock %}

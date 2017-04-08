@@ -23,13 +23,6 @@ class Cargo
      */
     private $description;
 
-    /**
-     * @ManyToMany(targetEntity="AppBundle\Entity\Usuario", inversedBy="cargos")
-     * @JoinTable(name="usuarios_cargos",
-     *      joinColumns={@JoinColumn(name="cargo_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="usuario_id", referencedColumnName="id")}
-     *      )
-     */
     protected $usuarios;
     
     public function __construct()

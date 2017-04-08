@@ -1,11 +1,15 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
+    encoders:
+        AppBundle\Entity\Usuario:
+            algorithm: bcrypt
+            cost: 12
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        database_users:
+            entity: { class: AppBundle\Entity\Usuario }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,16 +17,26 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+        # disables authentication for login
+        unrestricted_area:
+            pattern: ^/login$
+            security: false
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+        restricted_area:
+            pattern: ^/
+            security: true
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-    encoders:
-        AppBundle\Entity\Usuario:
-            algorithm: bcrypt
-            cost: 12
+            # This allows the user to login by submitting a username and password
+            form_login:
+                # The route name that the login form submits to
+                check_path: security_login_check
+                # The name of the route where the login form lives
+                login_path: security_login_form
+                # Secure the login form against CSRF
+                csrf_token_generator: security.csrf.token_manager
+
+            logout:
+                # The route name the user can go to in order to logout
+                path: security_logout
+                # The name of the route to redirect to after logging out
+                target: security_login_form

@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Knp\Bundle\SnappyBundle;
 
 class AppKernel extends Kernel
 {
@@ -16,19 +17,23 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 
             new AppBundle\AppBundle(),
             new PlanSeptenalBundle\PlanSeptenalBundle(),
             new RegistroUnicoBundle\RegistroUnicoBundle(),
+            new ReincorporacionBundle\ReincorporacionBundle(),
             new ClausulasContractualesBundle\ClausulasContractualesBundle(),
             new PreparadoresBundle\PreparadoresBundle(),
             new ClausulasContractualesABundle\ClausulasContractualesABundle(),
             new ClausulasContractualesBBundle\ClausulasContractualesBBundle(),
             new ComisionRemuneradaBundle\ComisionRemuneradaBundle(),
-            new TramiteBundle\TramiteBundle(),
             new JubilacionBundle\JubilacionBundle(),
+            new ConcursosBundle\ConcursosBundle(),
+            new TramiteBundle\TramiteBundle(),
+            new ConcursoOposicionBundle\ConcursoOposicionBundle(),
         ];
-        
+
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();

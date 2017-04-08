@@ -15,7 +15,10 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
-
+  <!--toasttr-->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.css') }}">
+  <!--datetimepicker-->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 
@@ -26,6 +29,7 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/datepicker3.css') }}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
+
 
   {% block stylesheets %}{% endblock %}
 </head>
@@ -73,15 +77,13 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"-->
-              <span class="hidden-xs">User</span>
+              <span class="hidden-xs">{{ app.user.getNombreCorto() }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <!-- img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"-->
-                <p>
-                  User - Developer
-                </p>
+                <p>{{ app.user.getNombreCompleto() }}</p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
@@ -89,7 +91,7 @@
                   <a href="#" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Salir</a>
+                  <a href="{{ path('security_logout') }}" class="btn btn-default btn-flat">Salir</a>
                 </div>
               </li>
             </ul>
@@ -156,7 +158,28 @@
             </li>
           </ul>
         </li>
-        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa fa-suitcase"></i><span>Reincorporación</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li data-route="reincorporacion">
+             <a href="{{ path('reincorporacion') }}"><i class="fa fa-circle-o"></i>Inicio</a>
+            </li>
+            <li data-route="actualizar-curriculum">
+              <a href="{{ path('actualizar-curriculum') }}"><i class="fa fa-circle-o"></i>Actualizar currículum</a>
+            </li>
+            <li data-route="subir-recaudos">
+              <a href="{{ path('subir-recaudos') }}"><i class="fa fa-circle-o"></i>Subida de recaudos</a>
+            </li>
+            <li data-route="verificar-datos">
+              <a href="{{ path('verificar-datos') }}"><i class="fa fa-circle-o"></i>Envío de solicitud</a>
+            </li>
+          </ul>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa fa fa-handshake-o"></i><span>Cláusulas Contractuales</span>
@@ -190,7 +213,7 @@
             </li>
           </ul>
         </li>
-        
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-users"></i><span>Preparadores</span>
@@ -255,6 +278,107 @@
             </li>>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-users"></i><span>Concurso de Opsosición</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Concurso</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="apertura_concurso_oposicion_index">
+                  <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
+                </li>
+                <li data-route="tablaBasicaConcurso">
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
+                </li>
+                <li data-route="listarJurados">
+                  <a href="{{ path('listarJurados') }}"><i class="fa fa-circle-o"></i>Listado de Jurados</a>
+                </li>
+                <li data-route="listarSuplentes">
+                  <a href="{{ path('listarSuplentes') }}"><i class="fa fa-circle-o"></i>Listado de Suplentes</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Aspirantes</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="registro_usuario_oposicion">
+                  <a href="{{ path('registro_usuario_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Aspirante</a>
+                </li>
+                <li data-route="listaAspirantes">
+                  <a href="{{ path('listaAspirantes') }}"><i class="fa fa-circle-o"></i>Listado de Aspirantes</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Recusaci&oacute;n</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="recusacion_oposicion">
+                  <a href="{{ path('recusacion_oposicion') }}"><i class="fa fa-circle-o"></i>Registrar Recusaci&oacute;n</a>
+                </li>
+                <li data-route="listaRecusacion">
+                  <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
+                </li>
+              </ul>
+            </li>  
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Pruebas</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="pruebas">
+                  <a href="{{ path('pruebas') }}"><i class="fa fa-circle-o"></i>Registrar Pruebas</a>
+                </li>
+                <li data-route="listarPruebas">
+                  <a href="{{ path('listarPruebas') }}"><i class="fa fa-circle-o"></i>Listado de Pruebas</a>
+                </li>
+              </ul>
+            </li> 
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Resultados</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="resultados">
+                  <a href="{{ path('resultados') }}"><i class="fa fa-circle-o"></i>Registrar Resultados</a>
+                </li>
+                <li data-route="listarResultados">
+                  <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
+                </li>
+              </ul>
+            </li>       
+            
+          </ul>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -294,7 +418,7 @@
     $ul.addClass('menu-open');
     $ul.parent('li.treeview').addClass('active');
   }
-  
+
 
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
@@ -302,7 +426,7 @@
     $ul.parent('li').parent('ul').addClass('menu-open');
     $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
   }
-  
+
 </script>
 
 <!-- Bootstrap 3.3.6 -->
@@ -317,11 +441,15 @@
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
 <!-- Slimscroll -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.js') }}"></script>
+<!--datetimepicker-->
+<script src="{{ asset('assets/vendor/bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
 <!-- Slide to top -->
 <script src="{{ asset('assets/js/SlideToTop.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
-
+<!--toasttr-->
+<script src="{{ asset('assets/vendor/toastr/toastr.js') }}"></script>
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}
 

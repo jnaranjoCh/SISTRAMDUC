@@ -1,22 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Anyelys
- * Date: 03/03/2017
- * Time: 11:34 PM
- */
+
 
 namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use TramiteBundle\Entity\Tramite;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="tipo_tramite")
  */
 
-class Tipo_tramite
+class TipoTramite
 {
     /**
      * @ORM\Id
@@ -65,7 +61,7 @@ class Tipo_tramite
      *
      * @param string $nombre
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function setNombre($nombre)
     {
@@ -89,7 +85,7 @@ class Tipo_tramite
      *
      * @param string $duracion
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function setDuracion($duracion)
     {
@@ -113,7 +109,7 @@ class Tipo_tramite
      *
      * @param string $descripcion
      *
-     * @return Tipo_tramite
+     * @return TipoTramite
      */
     public function setDescripcion($descripcion)
     {
@@ -130,5 +126,39 @@ class Tipo_tramite
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Add tramite
+     *
+     * @param \TramiteBundle\Entity\Tramite $tramite
+     *
+     * @return TipoTramite
+     */
+    public function addTramite(\TramiteBundle\Entity\Tramite $tramite)
+    {
+        $this->tramites[] = $tramite;
+
+        return $this;
+    }
+
+    /**
+     * Remove tramite
+     *
+     * @param \TramiteBundle\Entity\Tramite $tramite
+     */
+    public function removeTramite(\TramiteBundle\Entity\Tramite $tramite)
+    {
+        $this->tramites->removeElement($tramite);
+    }
+
+    /**
+     * Get tramites
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTramites()
+    {
+        return $this->tramites;
     }
 }

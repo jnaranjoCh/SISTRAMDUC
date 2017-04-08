@@ -22,6 +22,12 @@ registro_obtener_ajax:
     requirements:
         _method:  POST
         
+registro_buscarcedula_ajax:
+    path:     /registro/buscar-cedula
+    defaults: { _controller: RegistroUnicoBundle:Default:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+        
 registro_buscaremail_ajax:
     path:     /registro/buscar-email
     defaults: { _controller: RegistroUnicoBundle:Default:buscarEmailAjax }
@@ -31,5 +37,11 @@ registro_buscaremail_ajax:
 registro_registeruser_ajax:
     path:     /registro/registrar-usuario
     defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuarioAjax }
+    requirements:
+        _method:  POST
+        
+registro_obteneremails_ajax:
+    path:     /registro/enviar-emails
+    defaults: { _controller: RegistroUnicoBundle:Default:enviarEmailsAjax }
     requirements:
         _method:  POST

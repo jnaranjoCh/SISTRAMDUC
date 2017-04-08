@@ -24,7 +24,7 @@ class Departamento
     private $description;
 
     /**
-     * @ORM\@Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     private $facultadId;
 
@@ -35,10 +35,10 @@ class Departamento
     protected $facultad;
      
     /**
-     * @ManyToMany(targetEntity="Catedra", inversedBy="departamentos")
-     * @JoinTable(name="departamentos_catedras",
-     *      joinColumns={@JoinColumn(name="departamento_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="catedra_id", referencedColumnName="id")}
+     * @ORM\ManyToMany(targetEntity="Catedra")
+     * @ORM\JoinTable(name="departamentos_catedras",
+     *      joinColumns={@ORM\JoinColumn(name="departamento_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="catedra_id", referencedColumnName="id")}
      *      )
      */
     protected $catedras;

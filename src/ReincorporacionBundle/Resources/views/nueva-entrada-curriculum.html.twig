@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/reincorporacion/global.css') }}">    
+{% endblock %}
+
+{% block content %}
+
+    <section class="content-header">
+      <h1>Solicitud de Reincorporación al Personal Docente</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-suitcase"></i> Reincorporación</li>
+        <li>Currículum</li>
+        <li class="active">Nueva entrada</li>
+      </ol>
+    </section>
+
+    <section class="content">
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">Nueva experiencia</h4>
+            </div>
+            <div class="box-body">
+                <form action="">
+                    <div class="row col-md-12">
+                        <div class="input-group col-md-12">
+                            <input type="radio"> Experiencia laboral 
+                            <input type="radio"> Experiencia académica 
+                        </div>
+                    </div>
+                    <div class="col-md-12"><br></div>
+                    <div class="row col-md-12">
+                        <div class="input-group col-md-12">
+                            <input type="text" name="experiencia" placeholder="Nombre del cargo/Título adquirido" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-12"><br></div>
+                    <div class="row col-md-12">
+                        <div class="input-group col-md-12">
+                            <input type="text" name="experiencia" placeholder="Institución/Organización" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-12"><br></div>
+                    <div class="row col-md-12">
+                        <div class="input-group col-md-12">
+                            <textarea name="descripcion" placeholder="Descripción del título obtenido/Descripción del cargo"
+                                      id="descripcion" 
+                                      cols="30" rows="8" 
+                                      class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="col-md-12 col-sm-12 right-block">                
+                        <a href="{{ path('actualizar-curriculum') }}" class="btn btn-lg btn-default">Volver</a>  
+                        <a href="{{ path('actualizar-curriculum') }}" class="btn btn-lg btn-success">Crear</a>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        
+    </section>
+
+{% endblock %}

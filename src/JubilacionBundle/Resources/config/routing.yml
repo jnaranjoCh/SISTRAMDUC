@@ -17,3 +17,7 @@ consejo-facultad:
 informe-consejo:
     path: /informe-consejo
     defaults: {_controller: UserBundle:Tramites:informeConsejo}
+
+constancia-jubilacion:
+    path: /constancia-jubilacion
+    defaults: {_controller: UserBundle:Tramites:constanciaJubilacion}

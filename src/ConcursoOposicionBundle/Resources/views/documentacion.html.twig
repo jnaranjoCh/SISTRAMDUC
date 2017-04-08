@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Registro de Aspirante al Concurso de Oposici&oacute;n
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Registro de Aspirante, Documentaci&oacute;n</li>
+      </ol>
+    </section>
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-9">
+        <br/>
+        <div class="register-box-body">
+            <form>           		
+
+	            <br/>
+
+	            <div class="callout callout-info">     
+		            <h4><i class="fa fa-info-circle"></i> Debe adjuntar los recaudos exigidos a continuación para continuar con el proceso de Registro de Aspirante.</h4>
+		        </div>
+
+				<div class="input-group">
+				<span id="spantitulo" class="label label-danger hide">Vac&iacute;o</span> 
+				</div>
+		        <div class="input-group">
+		        	
+	                <input id="titulo" type="text" class="form-control" placeholder="Titulo Universitario" readonly="true">
+	                  <span class="input-group-btn">
+	                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+	                 </span>
+	            </div>
+
+	            <br/>
+
+	            <div class="input-group">
+				<span id="spannota" class="label label-danger hide">Vac&iacute;o</span> 
+				</div>
+	            <div class="input-group">
+	            	<span id="spannota" class="label label-danger hide">Vac&iacute;o</span>
+	                <input id="nota" type="text" class="form-control" placeholder="Reporte de Notas" readonly="true">
+	                  <span class="input-group-btn">
+	                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+	                 </span>
+	            </div>
+
+	            <br/>
+
+	            <div class="input-group">
+				<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span> 
+				</div>
+	            <div class="input-group">
+	                <input id="cedula" type="text" class="form-control" placeholder="C&eacute;dula, Gaceta Oficial o Pasaporte" readonly="true">
+	                  <span class="input-group-btn">
+	                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+	                 </span>
+	            </div>
+
+	            <br/>
+
+	            <div class="input-group">
+				<span id="spanhoja" class="label label-danger hide">Vac&iacute;o</span> 
+				</div>
+	            <div class="input-group">
+	                <input id="hoja" type="text" class="form-control" placeholder="Curriculum" readonly="true">
+	                  <span class="input-group-btn">
+	                      <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
+	                 </span>
+	            </div>
+
+				<br/><br/>
+
+              <div class="row">
+                <div class="col-xs-6">
+                  <a href="{{ path('registro_usuario_oposicion') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
+                </div>
+                <div class="col-xs-6">
+                  <button id="registrarDocumentos" type="button" class="btn btn-success btn-block btn-flat">Adjuntar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoOposicion/saveAspirante.js') }}"></script>
+
+{% endblock %}
