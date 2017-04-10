@@ -98,3 +98,7 @@
     border: 1px dashed;
     border-color: rgba(0, 0, 0, 0.6) rgba(0, 0, 0, 0.33);
 }
+
+#plan-septenal-colectivo-main-section > #details-viewer > .modal-dialog {
+    width: 70%;
+}

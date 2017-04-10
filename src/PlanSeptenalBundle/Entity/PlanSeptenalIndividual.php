@@ -10,8 +10,8 @@ use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
 use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="plan_septenal_individual",uniqueConstraints={@ORM\UniqueConstraint(name="one_plan_per_user", columns={"owner_id", "inicio", "fin"})})
+ * @ORM\Entity(repositoryClass="PlanSeptenalBundle\Repository\PlanSeptenalIndividualRepository")
+ * @ORM\Table(name="plan_septenal_individual",uniqueConstraints={@ORM\UniqueConstraint(name="one_plan_per_user", columns={"owner_id", "inicio"})})
  */
 class PlanSeptenalIndividual
 {
@@ -34,11 +34,6 @@ class PlanSeptenalIndividual
     private $inicio;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $fin;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $status;
@@ -54,26 +49,24 @@ class PlanSeptenalIndividual
      */
     private $plan_septenal_colectivo;
 
-    public function __construct($inicio, $fin)
+    public function __construct(int $inicio, Usuario $usuario, $planColectivo = null)
     {
-        $inicio = (int) $inicio;
-        $fin = (int) $fin;
-
-        if (($fin - $inicio + 1) != 7) {
-            throw new \Exception('El rango septenal debe ser de 7 años.', 10);
-        }
-
         $this->inicio = $inicio;
-        $this->fin = $fin;
+        $this->owner = $usuario;
         $this->status = 'Modificando';
         $this->tramites = new ArrayCollection();
+
+        if (! is_null($planColectivo)) {
+            $this->attachToPlanSeptenalColectivo($planColectivo);
+        }
     }
 
     public static function createFromArray($array_representation)
     {
         $nuevo_plan = new PlanSeptenalIndividual(
             $array_representation['inicio'],
-            $array_representation['fin']
+            $array_representation['owner'],
+            isset($array_representation['plan_colectivo']) ? $array_representation['plan_colectivo'] : null
         );
         $nuevo_plan->addTramites($array_representation['tramites']);
 
@@ -114,7 +107,7 @@ class PlanSeptenalIndividual
         $año_inicial_tramite = (int) $new_tramite->getPeriodo()->getStart()->format('Y');
         $año_final_tramite = (int) $new_tramite->getPeriodo()->getEnd()->format('Y');
 
-        if ($año_inicial_tramite < $this->inicio || $año_final_tramite > $this->fin) {
+        if ($año_inicial_tramite < $this->inicio || $año_final_tramite > $this->getFin()) {
             throw new \Exception('El Tramite debe estar dentro del periodo septenal.', 20);
         }
     }
@@ -133,6 +126,11 @@ class PlanSeptenalIndividual
         return $this->tramites;
     }
 
+    public function getTramitesCount()
+    {
+        return count($this->tramites);
+    }
+
     public function getPlanSeptenalColectivo()
     {
         return $this->plan_septenal_colectivo;
@@ -140,7 +138,12 @@ class PlanSeptenalIndividual
 
     public function attachToPlanSeptenalColectivo($plan_septenal_colectivo)
     {
-        $this->plan_septenal_colectivo = $plan_septenal_collectivo;
+        $this->plan_septenal_colectivo = $plan_septenal_colectivo;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getInicio()
@@ -150,7 +153,7 @@ class PlanSeptenalIndividual
 
     public function getFin()
     {
-        return $this->fin;
+        return $this->inicio + 6;
     }
 
     public function getStatus()
@@ -165,12 +168,20 @@ class PlanSeptenalIndividual
         return $this;
     }
 
-    public function assignTo(Usuario $usuario)
+    public function approve()
     {
-        $this->owner = $usuario;
-        $usuario->ownPlanSeptenalIndividual($this);
+        if ($this->status != 'Esperando aprobación') {
+            throw new \Exception('Plan must be waiting for approval', 100);
+        }
+
+        $this->status = 'Aprobado';
 
         return $this;
+    }
+
+    public function getOwnerName()
+    {
+        return $this->owner->getNombreCompleto();
     }
 
     public function toArray()

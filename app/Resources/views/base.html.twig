@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/datepicker3.css') }}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
 
@@ -435,8 +437,8 @@
 <!-- daterangepicker -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/moment.js') }}"></script>
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- datatable -->
-<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
@@ -453,6 +455,12 @@
 
 <script>
   $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+
+  $.extend( true, $.fn.dataTable.defaults, {
+    "language": {
+      "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+    }
+  });
 </script>
 
 <!-- Add extra libraries and plugins here -->

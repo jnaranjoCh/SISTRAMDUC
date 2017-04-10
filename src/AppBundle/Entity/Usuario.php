@@ -561,19 +561,35 @@ class Usuario implements UserInterface
 
     public function eraseCredentials(){}
 
-    public function getNombreCorto ()
+    public function getNombreCorto()
     {
-        return $this->getPrimerNombre().' '.$this->getPrimerApellido();
+        return $this->joinNames([$this->primerNombre, $this->primerApellido]);
     }
 
-    public function getNombreCompleto ()
+    public function getNombreCompleto()
     {
-        return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+        return $this->joinNames([$this->primerNombre, $this->segundoNombre, $this->primerApellido, $this->segundoApellido]);
     }
 
-    public function ownPlanSeptenalIndividual(PlanSeptenalIndividual $plan)
+    private function joinNames(array $names)
     {
-        $this->planes_septenales_individuales[] = $plan;
+        $joined_names = "";
+        foreach ($names as $name) {
+            if (! empty($name)) {
+                $joined_names .= (empty($joined_names) ? "" : " ") . $name;
+            }
+        }
+
+        return $joined_names;
+    }
+
+    public function setNombreCompleto(string $primerNombre = null, string $segundoNombre = null, string $primerApellido = null, string $segundoApellido = null)
+    {
+        $this->primerNombre = $primerNombre;
+        $this->segundoNombre = $segundoNombre;
+        $this->primerApellido = $primerApellido;
+        $this->segundoApellido = $segundoApellido;
+
         return $this;
     }
 

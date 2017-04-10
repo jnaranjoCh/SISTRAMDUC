@@ -5,6 +5,7 @@ namespace Tests\PlanSeptenal\Entity;
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
 use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
+use AppBundle\Entity\Usuario;
 
 class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,15 +13,6 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
     protected static $planSeptenalIndividual;
     protected static $beca;
     protected static $licencia;
-
-    /**
-      * @expectedException     Exception
-      * @expectedExceptionCode 10
-      */
-    public function testPlanSeptenalIndividualMustBeSeptennial()
-    {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2015);
-    }
 
     public function testPlanSeptenalIndividualMustContainTramitesAfterAddition()
     {
@@ -32,7 +24,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ->setTipo('sabatico')
             ->setPeriodo(new MonthlyDateRange('01/2014', '12/2014'));
 
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
         $planSeptenalIndividual->addTramite($beca);
         $planSeptenalIndividual->addTramite($sabatico);
 
@@ -52,7 +44,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ->setTipo('beca')
             ->setPeriodo(new MonthlyDateRange('01/2009', '06/2009'));
 
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
 
         $planSeptenalIndividual->addTramite($beca);
     }
@@ -71,7 +63,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ->setTipo('sabatico')
             ->setPeriodo(new MonthlyDateRange('04/2016', '08/2016'));
 
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
 
         $planSeptenalIndividual->addTramite($beca);
         $planSeptenalIndividual->addTramite($sabatico);
@@ -79,10 +71,61 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
 
     public function testAskForApprovalShouldModifyStatus()
     {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
         $planSeptenalIndividual->askForApproval();
 
         $this->assertEquals('Esperando aprobación', $planSeptenalIndividual->getStatus());
+    }
+
+    public function testGetTramitesCount()
+    {
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+
+        $beca = (new TramitePlanSeptenal)
+            ->setTipo('beca')
+            ->setPeriodo(new MonthlyDateRange('01/2010', '03/2010'));
+        $planSeptenalIndividual->addTramite($beca);
+        $this->assertEquals(1, $planSeptenalIndividual->getTramitesCount());
+
+        $sabatico = (new TramitePlanSeptenal)
+            ->setTipo('sabatico')
+            ->setPeriodo(new MonthlyDateRange('05/2013', '08/2013'));
+        $planSeptenalIndividual->addTramite($sabatico);
+        $this->assertEquals(2, $planSeptenalIndividual->getTramitesCount());
+    }
+
+    public function testGetOwnerName()
+    {
+        $usuario = $this->getMockBuilder(Usuario::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getNombreCompleto'])
+            ->getMock();
+
+        $usuario->expects($this->once())
+            ->method('getNombreCompleto')
+            ->will($this->returnValue("Tony"));
+
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, $usuario);
+
+        $this->assertEquals("Tony", $planSeptenalIndividual->getOwnerName());
+    }
+
+    /**
+      * @expectedException     Exception
+      * @expectedExceptionCode 100
+      */
+    public function testPlanMustBeWaitingForApprovalToBeApprovable()
+    {
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+        $planSeptenalIndividual->approve();
+    }
+
+    public function testApprove()
+    {
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+        $planSeptenalIndividual->askForApproval()->approve();
+
+        $this->assertEquals($planSeptenalIndividual->getStatus(), 'Aprobado');
     }
 
     /**
@@ -112,7 +155,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        static::$planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        static::$planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
 
         static::$beca = (new TramitePlanSeptenal)
             ->setTipo('beca')
@@ -128,15 +171,18 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateFromArrayMethod()
     {
+        $planIndividual = static::$arrayRepresentation;
+        $planIndividual['owner'] = new Usuario();
+
         $this->assertEquals(
             static::$planSeptenalIndividual,
-            PlanSeptenalIndividual::createFromArray(static::$arrayRepresentation)
+            PlanSeptenalIndividual::createFromArray($planIndividual)
         );
     }
 
     public function testAddTramitesInArrayForm()
     {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
         $planSeptenalIndividual->addTramites(static::$arrayRepresentation['tramites']);
 
         $this->assertEquals(
@@ -147,7 +193,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
 
     public function testAddTramitesInClassForm()
     {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
         $planSeptenalIndividual->addTramites([static::$beca, static::$licencia]);
 
         $this->assertEquals(

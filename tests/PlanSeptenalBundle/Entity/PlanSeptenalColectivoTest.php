@@ -28,23 +28,14 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
             ->setTipo('sabatico')
             ->setPeriodo(new MonthlyDateRange('01/2014', '12/2014'));
 
-        $this->planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $this->planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
         $this->planSeptenalIndividual->addTramite($beca);
         $this->planSeptenalIndividual->addTramite($sabatico);
     }
 
-    /**
-     * @expectedException     Exception
-     * @expectedExceptioncode 10
-     */
-    public function testPlanSeptenalColectivoMustBeSeptennial()
-    {
-        $planColectivo = new PlanSeptenalColectivo(2010, 2017, $this->creator, $this->creation_deadline);
-    }
-
     public function testPlanSeptenalColectivoMustContainPlanSeptenalIndividualAfterAddition()
     {
-        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, 2016, $this->creator, $this->creation_deadline);
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, $this->creator, $this->creation_deadline);
         $planSeptenalColectivo->addPlanSeptenalIndividual($this->planSeptenalIndividual);
 
         $planes = $planSeptenalColectivo->getPlanesSeptenalesIndividuales();
@@ -57,8 +48,8 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
      */
     public function testPlanesIndividualesDateRangeMustCoincideWithPlanColectivo()
     {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
-        $planSeptenalColectivo = new PlanSeptenalColectivo(2011, 2017, $this->creator, $this->creation_deadline);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2011, $this->creator, $this->creation_deadline);
 
         $planSeptenalColectivo->addPlanSeptenalIndividual($planSeptenalIndividual);
     }
@@ -70,20 +61,20 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
     public function testCreatorShouldHaveADefinedDepartment()
     {
         $creator = new Usuario();
-        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, 2016, $creator, $this->creation_deadline);
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, $creator, $this->creation_deadline);
     }
 
     public function testNewlyCreatedPlanShouldHaveOnCreationStatus()
     {
         $this->creator->setDepartamento(new Departamento);
-        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, 2016, $this->creator, $this->creation_deadline);
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, $this->creator, $this->creation_deadline);
 
         $this->assertEquals('En creación', $planSeptenalColectivo->getStatus());
     }
 
     public function testNewlyCreatedPlanShouldBorrowDepartmentFromCreator()
     {
-        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, 2016, $this->creator, $this->creation_deadline);
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, $this->creator, $this->creation_deadline);
 
         $this->assertEquals($this->creator_department, $planSeptenalColectivo->getDepartamento());
     }
@@ -95,6 +86,6 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
     public function testCreationDeadlineMustBeAfterCurrentDate()
     {
         $yesterday = (new \DateTime())->modify('-1 day');
-        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, 2016, $this->creator, $yesterday);
+        $planSeptenalColectivo = new PlanSeptenalColectivo(2010, $this->creator, $yesterday);
     }
 }

@@ -94,14 +94,18 @@ PlanSeptenalIndividual.prototype = {
             }
         });
     },
-    load: function (inicio, fin) {
+    load: function (criteria) {
         var plan = this;
+        if (typeof criteria != "object") {
+            throw "criteria must be an object";
+        }
+        if (criteria.id === undefined && criteria.inicio === undefined) {
+            throw "criteria must have a property id or inicio";
+        }
+
         $.ajax({
             url: plan.container.data("route"),
-            data: {
-                inicio: inicio,
-                fin: fin
-            },
+            data: criteria,
             method: "GET",
             dataType: "json",
             statusCode: {
@@ -137,8 +141,7 @@ PlanSeptenalIndividual.prototype = {
         $.ajax({
             url: "/plan-septenal-individual/ask-for-approval",
             data: {
-                inicio: plan.starting_year,
-                fin: plan.starting_year + 6
+                inicio: plan.starting_year
             },
             method: "PUT",
             dataType: "json",
@@ -295,23 +298,19 @@ return PlanSeptenalIndividual;
 
 }());
 
-function attemptToLoadPlanIndividual (receiver, starting_year) {
-    var inicio = starting_year,
-        fin = inicio + 6;
-
+function attemptToLoadPlanIndividual (receiver, inicio) {
     return $.ajax({
         url: "/plan-septenal-colectivo",
         method: "GET",
         data: {
-            inicio: inicio,
-            fin: fin
+            inicio: inicio
         },
         dataType: "json",
         statusCode: {
             200: function (data) {
                 if (data.status === "En creación") {
                     receiver.plan = new PlanSeptenalIndividual(receiver.container, inicio);
-                    receiver.plan.load(inicio, fin);
+                    receiver.plan.load({inicio: inicio});
                 }
             },
             404: function (data) {

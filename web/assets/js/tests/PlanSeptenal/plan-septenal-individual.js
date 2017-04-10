@@ -151,7 +151,7 @@ QUnit.test("getState()", function (assert) {
 QUnit.test("On success load, setState must be called", function (assert) {
     this.server.respondWith([200, {}, ""]);
     sinon.stub(this.$plan, "setState");
-    this.$plan.load();
+    this.$plan.load({ inicio: 2010 });
     this.server.respond();
 
     assert.ok(this.$plan.setState.calledOnce);
@@ -171,7 +171,12 @@ QUnit.test("save()", function (assert) {
     this.$plan.setState(this.sample_state);
     this.$plan.save();
 
-    assert.ok($.ajax.calledWithMatch({ url: this.$plan.container.data("route"), data: this.sample_state, method: "POST" }), "Ajax request must be correctly formed");
+    var ajaxSettings = {
+        url: this.$plan.container.data("route"),
+        data: this.sample_state,
+        method: "POST"
+    };
+    assert.ok($.ajax.calledWithMatch(ajaxSettings));
     $.ajax.restore();
 });
 
@@ -181,7 +186,12 @@ QUnit.test("on save() if status is modifying the request should be PUT instead o
     this.$plan.status = "Modificando";
     this.$plan.save();
 
-    assert.ok($.ajax.calledWithMatch({ url: this.$plan.container.data("route"), data: this.sample_state, method: "PUT" }), "Ajax request must be correctly formed");
+    var ajaxSettings = {
+        url: this.$plan.container.data("route"),
+        data: this.sample_state,
+        method: "PUT"
+    };
+    assert.ok($.ajax.calledWithMatch(ajaxSettings));
     $.ajax.restore();
 });
 
@@ -211,22 +221,47 @@ QUnit.test("On server error, a message should be displayed", function (assert) {
     toastr["error"].restore();
 });
 
+QUnit.test("load must receive an object with an id or period", function (assert) {
+    assert.throws(
+        function () {
+            this.$plan.load("");
+        },
+        /must be an object/
+    );
+
+    assert.throws(
+        function () {
+            this.$plan.load({});
+        },
+        /id or inicio/
+    );
+
+    assert.throws(
+        function () {
+            this.$plan.load({otherkey: true});
+        },
+        /id or inicio/
+    );
+});
+
 QUnit.test("load must request the plan septenal individual to the server", function (assert) {
     sinon.stub($, "ajax");
-    var data = {
-        inicio: 2010,
-        fin: 2016
-    };
-    this.$plan.load(data.inicio, data.fin);
+    var data = { inicio: 2010 };
+    this.$plan.load(data);
 
-    assert.ok($.ajax.calledWithMatch({ url: this.$plan.container.data("route"), data: data, method: "GET" }), "Ajax request must be correctly formed");
+    var ajaxSettings = {
+        url: this.$plan.container.data("route"),
+        data: data,
+        method: "GET"
+    };
+    assert.ok($.ajax.calledWithMatch(ajaxSettings));
     $.ajax.restore();
 });
 
 QUnit.test("On successful get, a message should be displayed", function (assert) {
     this.server.respondWith([200, {}, ""]);
     sinon.stub(toastr, "success");
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
 
     assert.ok(toastr["success"].calledWith("Plan septenal cargado satisfactoriamente"), "A success message is necessary here");
     toastr["success"].restore();
@@ -235,7 +270,7 @@ QUnit.test("On successful get, a message should be displayed", function (assert)
 QUnit.test("On server error while requesting plan, a message should be displayed", function (assert) {
     this.server.respondWith([500, {}, ""]);
     sinon.stub(toastr, "error");
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
 
     assert.ok(
         toastr["error"].calledWith(
@@ -252,14 +287,14 @@ QUnit.test("plan status must be empty initially", function (assert) {
 
 QUnit.test("plan status will be creating if plan does not exist", function (assert) {
     this.server.respondWith([404, {}, ""]);
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
     assert.equal(this.$plan.status, "En creación");
 });
 
 QUnit.test("plan status will be modifying if plan exists", function (assert) {
     this.sample_state.status = "Modificando";
     this.server.respondWith([200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]);
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
     assert.equal(this.$plan.status, "Modificando");
 });
 
@@ -276,7 +311,7 @@ QUnit.test("if plan septenal colectivo is 'in creation' then plan septenal indiv
     this.container = $(".plan-septenal-individual");
     attemptToLoadPlanIndividual(this, 2018);
 
-    assert.ok(PlanSeptenalIndividual.prototype.load.called);
+    assert.ok(PlanSeptenalIndividual.prototype.load.calledWith({inicio: 2018 }));
     PlanSeptenalIndividual.prototype.load.restore();
 });
 
@@ -328,7 +363,7 @@ QUnit.module("Availability of actions and asking for approval", {
 
 QUnit.test("actions availability when creating plan", function (assert) {
     this.server.respondWith([404, {}, ""]);
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
 
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
     assert.strictEqual($("#btn-request-approval").is(":visible"), true, "btn-request-approval should be visible");
@@ -339,7 +374,7 @@ QUnit.test("actions availability when creating plan", function (assert) {
 
 QUnit.test("actions availability when modifying plan", function (assert) {
     this.server.respondWith([200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]);
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
 
     assert.strictEqual($("#btn-request-approval").prop("disabled"), false, "btn-request-approval should be enabled");
     assert.strictEqual($("#btn-request-approval").is(":visible"), true, "btn-request-approval should be visible");
@@ -363,15 +398,12 @@ QUnit.test("askForApproval should make an ajax request", function (assert) {
     sinon.stub($, "ajax");
     this.$plan.askForApproval();
 
-    assert.ok(
-        $.ajax.calledWithMatch({
-            url: "/plan-septenal-individual/ask-for-approval",
-            data: { inicio: this.$plan.starting_year, fin: this.$plan.starting_year + 6 },
-            method: "PUT"
-        }),
-        "Ajax request must be correctly formed"
-    );
-
+    var ajaxSettings = {
+        url: "/plan-septenal-individual/ask-for-approval",
+        data: { inicio: this.$plan.starting_year },
+        method: "PUT"
+    };
+    assert.ok($.ajax.calledWithMatch(ajaxSettings));
     $.ajax.restore();
 });
 
@@ -429,7 +461,7 @@ QUnit.test("on loading, if plan septenal is waiting for approval then both actio
     this.server.respondWith(
         [200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]
     );
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
 
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
     assert.strictEqual($("#btn-save").prop("disabled"), true, "btn-save should be disabled");
@@ -440,7 +472,7 @@ QUnit.test("on loading, if plan septenal is waiting for approval then both actio
     this.server.respondWith(
         [200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]
     );
-    this.$plan.load(2010, 2016);
+    this.$plan.load({ inicio: 2010 });
 
     assert.equal($("#status").text(), this.sample_state.status);
 });

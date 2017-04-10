@@ -1,4 +1,11 @@
 services:
-#    plan_septenal.example:
-#        class: PlanSeptenalBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    plan_septenal.plan_septenal_individual_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - PlanSeptenalBundle\Entity\PlanSeptenalIndividual
+    plan_septenal.plan_septenal_colectivo_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - PlanSeptenalBundle\Entity\PlanSeptenalColectivo

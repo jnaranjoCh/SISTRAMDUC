@@ -9,7 +9,8 @@ class PlanSeptenalColectivoControllerTest extends WebTestCase
 {
     protected $plan_septenal_colectivo;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         $kernel = static::createKernel();
@@ -32,7 +33,6 @@ class PlanSeptenalColectivoControllerTest extends WebTestCase
     {
         $data = [
             'inicio' => 2010,
-            'fin'    => 2016,
             'creation_deadline' => (new \DateTime())->modify('+1 day')->format("d/m/Y")
         ];
 
@@ -51,7 +51,7 @@ class PlanSeptenalColectivoControllerTest extends WebTestCase
      */
     public function testGetOnNonExistentPlanShouldReturn404()
     {
-        $data = ['inicio' => 2010, 'fin'    => 2016];
+        $data = ['inicio' => 2010];
 
         $this->client->request(
             'GET',

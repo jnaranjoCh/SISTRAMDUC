@@ -8,17 +8,17 @@
 
     <!-- external libraries -->
     <script src='../../../vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js'></script>
-
     <script src='../../../vendor/qunit/qunit/qunit.js'></script>
     <script src='../../../vendor/sinon-1.17.7/index.js'></script>
+    <script src='../../../vendor/toastr/toastr.min.js'></script>
+    <script src='../../../vendor/AdminLTE/bootstrap/js/bootstrap.min.js'></script>
+    <script src='../../../vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js'></script>
   </head>
   <body>
     <div id='qunit'></div>
     <div id='qunit-fixture'>
-
-      <!-- I think that I should duplicate this markup but I haven't found a good way to avoid it -->
       <div id="plan-septenal-colectivo-creation">
-        <form class="form-inline" action="{{ path('start-creation-of-plan-septenal-colectivo') }}" style="display: none;">
+        <form class="form-inline" action="start-creation-of-plan-septenal-colectivo" style="display: none;">
           <div class="form-group">
             <input type="hidden" id="start_year" name="start_year" value="2018">
             <label for="creation_deadline" class="form-label">Fecha de finalización:</label>
@@ -27,13 +27,48 @@
           <button class="btn btn-primary btn-flat" id="start-creation-btn" type="submit">Iniciar proceso de creación</button>
         </form>
         <div id="creation-progress" style="display: none;">
-          Anything that's related with creation process progress
+          <table id="planes-septenales-individuales-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Profesor</th>
+                <th>Trámites</th>
+                <th>Status</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="plan-septenal-individual" data-route="endpoint-url"></div>
+      </div>
+
+      <div class="modal fade" id="details-viewer" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="box box-primary">
+              <div class="box-header with-border modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Plan Septenal Individual</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="plan-septenal-individual" data-route="create-plan-septenal-individual"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default approve" data-dismiss="modal">Aprobar</button>
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 
     <!-- JS files under test -->
-    <script src='../../../vendor/toastr/toastr.min.js'></script>
+    <script src='../../PlanSeptenal/grid-selection.js'></script>
+    <script src='../../PlanSeptenal/plan-septenal-individual.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-colectivo.js'></script>
 
     <!-- tests to run with the given fixtures above -->

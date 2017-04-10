@@ -34,8 +34,7 @@ class PlanSeptenalColectivoController extends Controller
         $plan_septenal_colectivo = $plan_septenal_colectivo_repo
             ->findOneBy([
                 "departamento" => $this->getUser()->getDepartamento()->getId(),
-                "inicio" => $request->get("inicio"),
-                "fin" => $request->get("fin")
+                "inicio" => $request->get("inicio")
             ]);
 
         if (is_null($plan_septenal_colectivo)) {
@@ -52,10 +51,9 @@ class PlanSeptenalColectivoController extends Controller
     public function startCreationAction(Request $request)
     {
         $inicio = $request->request->get("inicio");
-        $fin = $request->request->get("fin");
         $deadline = \DateTime::createFromFormat("d/m/Y", $request->request->get("creation_deadline"));
 
-        $plan = new PlanSeptenalColectivo($inicio, $fin, $this->getUser(), $deadline);
+        $plan = new PlanSeptenalColectivo($inicio, $this->getUser(), $deadline);
 
         $entity_manager = $this->getDoctrine()->getManager();
         $entity_manager->persist($plan);

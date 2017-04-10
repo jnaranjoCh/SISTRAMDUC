@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/plan-septenal.css') }}">
+{% endblock %}
+
 {% block content %}
 
   <section class="content-header">
@@ -10,7 +14,7 @@
     </ol>
   </section>
 
-  <section class="content">
+  <section class="content" id="plan-septenal-colectivo-main-section">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
@@ -28,8 +32,41 @@
                 <button class="btn btn-primary btn-flat" id="start-creation-btn" type="submit">Iniciar proceso de creación</button>
               </form>
               <div id="creation-progress" style="display: none;">
-                Información relacionada al proceso de creación.
+                <h4>Lista de Planes Septenales Individuales</h4>
+                <table id="planes-septenales-individuales-table" class="display" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Profesor</th>
+                      <th>Trámites</th>
+                      <th>Status</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                </table>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="details-viewer" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="box box-primary">
+            <div class="box-header with-border modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Plan Septenal Individual</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="plan-septenal-individual" data-route="{{ path('create-plan-septenal-individual') }}"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default approve" data-dismiss="modal">Aprobar</button>
+              <button type="button" class="btn btn-default cancel" data-dismiss="modal">Cancelar</button>
             </div>
           </div>
         </div>
@@ -40,6 +77,8 @@
 {% endblock %}
 
 {% block custom_javascripts %}
+  <script src="{{ asset('assets/js/PlanSeptenal/grid-selection.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-colectivo.js') }}"></script>
   <script>
     $(".datepicker").datepicker({
