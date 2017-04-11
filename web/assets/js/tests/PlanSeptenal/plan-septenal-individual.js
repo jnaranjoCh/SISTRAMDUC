@@ -258,15 +258,6 @@ QUnit.test("load must request the plan septenal individual to the server", funct
     $.ajax.restore();
 });
 
-QUnit.test("On successful get, a message should be displayed", function (assert) {
-    this.server.respondWith([200, {}, ""]);
-    sinon.stub(toastr, "success");
-    this.$plan.load({ inicio: 2010 });
-
-    assert.ok(toastr["success"].calledWith("Plan septenal cargado satisfactoriamente"), "A success message is necessary here");
-    toastr["success"].restore();
-});
-
 QUnit.test("On server error while requesting plan, a message should be displayed", function (assert) {
     this.server.respondWith([500, {}, ""]);
     sinon.stub(toastr, "error");
@@ -362,7 +353,7 @@ QUnit.module("Availability of actions and asking for approval", {
 });
 
 QUnit.test("actions availability when creating plan", function (assert) {
-    this.server.respondWith([404, {}, ""]);
+    this.server.respondWith([404, { "Content-Type": "application/json" }, "message"]);
     this.$plan.load({ inicio: 2010 });
 
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
@@ -440,15 +431,20 @@ QUnit.test("When the user ask for approval unsuccessfully a message should be di
     toastr["success"].restore();
 });
 
-QUnit.test("on successful ask for approval, both actions (save and ask) should be disabled", function (assert) {
+QUnit.test("on successful ask for approval, editing and actions should be disabled", function (assert) {
     this.server.respondWith([200, {}, ""]);
+    sinon.stub(this.$plan, "disableEditing");
+
     this.$plan.askForApproval();
 
+    assert.ok(this.$plan.disableEditing.called);
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
     assert.strictEqual($("#btn-save").prop("disabled"), true, "btn-save should be disabled");
+
+    this.$plan.disableEditing.restore();
 });
 
-QUnit.test("btn-request-approval should call askForApproval", function (assert) {
+QUnit.test("click on btn-request-approval should call askForApproval", function (assert) {
     sinon.stub(this.$plan, "askForApproval");
     $("#btn-request-approval").trigger("click");
 
@@ -456,18 +452,23 @@ QUnit.test("btn-request-approval should call askForApproval", function (assert) 
     this.$plan.askForApproval.restore();
 });
 
-QUnit.test("on loading, if plan septenal is waiting for approval then both actions (save and ask) should be disabled", function (assert) {
+QUnit.test("on loading, if plan septenal is waiting for approval, editing and actions should be disabled", function (assert) {
     this.sample_state.status = "Esperando aprobación";
     this.server.respondWith(
         [200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]
     );
+    sinon.stub(this.$plan, "disableEditing");
+
     this.$plan.load({ inicio: 2010 });
 
+    assert.ok(this.$plan.disableEditing.called);
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
     assert.strictEqual($("#btn-save").prop("disabled"), true, "btn-save should be disabled");
+
+    this.$plan.disableEditing.restore();
 });
 
-QUnit.test("on loading, if plan septenal is waiting for approval then both actions (save and ask) should be disabled", function (assert) {
+QUnit.test("on loading, if plan septenal is waiting for approval status must match current status", function (assert) {
     this.sample_state.status = "Esperando aprobación";
     this.server.respondWith(
         [200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]
@@ -477,7 +478,49 @@ QUnit.test("on loading, if plan septenal is waiting for approval then both actio
     assert.equal($("#status").text(), this.sample_state.status);
 });
 
+QUnit.test("on loading, if plan septenal is approved all actions should be disabled as well as editing", function (assert) {
+    this.sample_state.status = "Aprobado";
+    this.server.respondWith(
+        [200, { "Content-Type": "application/json" }, JSON.stringify(this.sample_state)]
+    );
+    sinon.stub(this.$plan, "disableEditing");
+
+    this.$plan.load({ inicio: 2010 });
+
+    assert.ok(this.$plan.disableEditing.called);
+    assert.ok($("#btn-request-approval").prop("disabled"), "btn-request-approval should be disabled");
+    assert.ok($("#btn-save").prop("disabled"), "btn-save should be disabled");
+
+    this.$plan.disableEditing.restore();
+});
+
 QUnit.test("status should be visible to user", function (assert) {
     var status = this.$plan.getStatus();
     assert.strictEqual($("#status").text(), status);
+});
+
+QUnit.module("Disable and enable editing", {
+    beforeEach: function() {
+        this.$firstYear = 2010;
+        this.$plan = new PlanSeptenalIndividual( $(".plan-septenal-individual"), this.$firstYear);
+    }
+});
+
+QUnit.test("disable method should prevent manual editing", function (assert) {
+    this.$plan.disableEditing();
+
+    triggerClickRelatedEvents(this.$plan.grid.cell(0));
+    triggerClickRelatedEvents(this.$plan.grid.cell(1));
+
+    assert.notOk(this.$plan.grid.enabled, "grid should not be enabled");
+    assert.equal(0, this.$plan.getSelection().length, "nothing should be selected");
+    assert.notOk($(".grid-clear-btn").is(":visible"), "clear button should be invisible");
+});
+
+QUnit.test("disable method should clear current selection", function (assert) {
+    triggerClickRelatedEvents(this.$plan.grid.cell(0));
+    triggerClickRelatedEvents(this.$plan.grid.cell(1));
+
+    this.$plan.disableEditing();
+    assert.equal(0, this.$plan.getSelection().length, "nothing should be selected");
 });

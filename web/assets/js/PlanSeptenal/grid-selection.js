@@ -95,6 +95,8 @@ function Grid (container, opts) {
         }
     };
 
+    this.enabled = true;
+
     this.config = {
         header: defineComponentData(opts ? opts.header : undefined),
         numeration: defineComponentData(opts ? opts.numeration : undefined)
@@ -150,6 +152,10 @@ function Grid (container, opts) {
 
     $(this.container)
         .on("mousedown", ".grid-cell", function (e) {
+            if (! grid.enabled) {
+                return;
+            }
+
             if (grid.state.multiselection) {
                 $(this).toggleClass("selected");
             } else {
@@ -171,6 +177,10 @@ function Grid (container, opts) {
             updateSelection(grid.state.dragging, this, true, grid);
         })
         .on("dblclick", ".grid-cell", function () {
+            if (! grid.enabled) {
+                return;
+            }
+
             var $siblings = $(this).siblings().add( $(this) );
 
             if ($siblings.length == $siblings.filter(".selected").length) {
@@ -205,7 +215,8 @@ Grid.prototype = {
         return range.addClass('selected');
     },
     unselect: function (start, end) {
-        return this.getRange(start, end).removeClass('selected');
+        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
+        return range.removeClass('selected');
     },
     getSelection: function () {
         return this.$cells.filter('.selected');

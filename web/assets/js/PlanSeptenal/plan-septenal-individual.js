@@ -69,6 +69,11 @@ PlanSeptenalIndividual.prototype = {
         this.grid.$cells.css("background", "").removeData("tramite-type");
         this.starting_year = state.inicio;
         this.grid.numeration.setData( range(state.inicio, state.fin) ).draw();
+
+        if (Object.prototype.toString.call(state.tramites) != "[object Array]") {
+            return;
+        }
+
         for (var i = 0; i < state.tramites.length; i++) {
             var related_range = getRangeFromPeriodo(state.tramites[i].periodo, this),
                 related_tramite = getTramiteIndexFromName(state.tramites[i].tipo);
@@ -110,8 +115,6 @@ PlanSeptenalIndividual.prototype = {
             dataType: "json",
             statusCode: {
                 200: function (data) {
-                    toastr["success"]("Plan septenal cargado satisfactoriamente");
-
                     $("#btn-save").show();
                     $("#btn-request-approval").show();
                     plan.setStatus(data.status).setState(data);
@@ -119,6 +122,14 @@ PlanSeptenalIndividual.prototype = {
                     if (data.status == "Esperando aprobación") {
                         $("#btn-save").prop("disabled", true);
                         $("#btn-request-approval").prop("disabled", true);
+                        plan.disableEditing();
+                        return;
+                    }
+
+                    if (data.status == "Aprobado") {
+                        $("#btn-save").prop("disabled", true);
+                        $("#btn-request-approval").prop("disabled", true);
+                        plan.disableEditing();
                         return;
                     }
 
@@ -151,9 +162,11 @@ PlanSeptenalIndividual.prototype = {
                     toastr["success"]("El plan septenal está en espera por aprobación.");
                     $("#btn-request-approval").show().prop("disabled", true);
                     $("#btn-save").show().prop("disabled", true);
+                    plan.disableEditing();
                 },
                 404: function (data) {
-                    toastr["error"](data.responseJSON[0]);
+                    var msg = (data.responseJSON !== undefined) ? data.responseJSON[0] : "El plan septenal no existe.";
+                    toastr["error"](msg);
                 }
             }
         });
@@ -179,6 +192,13 @@ PlanSeptenalIndividual.prototype = {
     },
     getRange: function (start_date, end_date) {
         return getRangeFromPeriodo({ start : start_date, end: end_date }, this);
+    },
+    disableEditing: function () {
+        this.grid.enabled = false;
+        this.grid.unselect(this.getSelection());
+        this.container.find(".grid-clear-btn").hide();
+
+        return this;
     }
 }
 
@@ -314,7 +334,9 @@ function attemptToLoadPlanIndividual (receiver, inicio) {
                 }
             },
             404: function (data) {
-                receiver.container.html("El plan septenal colectivo aún no existe.");
+                if (receiver.container !== undefined && typeof receiver.container.html == "function") {
+                    receiver.container.html("El plan septenal colectivo aún no existe.");
+                }
             }
         }
     });

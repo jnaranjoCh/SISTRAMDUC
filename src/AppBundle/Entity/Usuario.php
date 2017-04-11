@@ -150,8 +150,7 @@ class Usuario implements UserInterface
     protected $planes_septenales_individuales;
 
     /**
-     * @ORM\OneToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
-     * @ORM\JoinColumn(name="departamento_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
      */
     private $departamento;
 
@@ -585,10 +584,10 @@ class Usuario implements UserInterface
 
     public function setNombreCompleto(string $primerNombre = null, string $segundoNombre = null, string $primerApellido = null, string $segundoApellido = null)
     {
-        $this->primerNombre = $primerNombre;
-        $this->segundoNombre = $segundoNombre;
-        $this->primerApellido = $primerApellido;
-        $this->segundoApellido = $segundoApellido;
+        $this->primerNombre = is_null($primerNombre) ? "" : $primerNombre;
+        $this->segundoNombre = is_null($segundoNombre) ? "" : $segundoNombre;
+        $this->primerApellido = is_null($primerApellido) ? "" : $primerApellido;
+        $this->segundoApellido = is_null($segundoApellido) ? "" : $segundoApellido;
 
         return $this;
     }

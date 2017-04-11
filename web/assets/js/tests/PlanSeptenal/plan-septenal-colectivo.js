@@ -218,7 +218,7 @@ QUnit.test("View button should request plan septenal individual", function (asse
     viewer.planIndividual.load.restore();
 });
 
-QUnit.test("On success a modal should display plan individual", function (assert) {
+QUnit.test("on successful plan individual view details action a modal should display plan individual", function (assert) {
     planSeptenalColectivo.details_viewer.planIndividual.load({id: 1})
     sinon.stub(planSeptenalColectivo.details_viewer, "modal");
 
@@ -226,6 +226,11 @@ QUnit.test("On success a modal should display plan individual", function (assert
 
     assert.ok(planSeptenalColectivo.details_viewer.modal.called);
     planSeptenalColectivo.details_viewer.modal.restore();
+});
+
+QUnit.test("plan individual editing should be disabled", function (assert) {
+    var planIndividual = planSeptenalColectivo.details_viewer.planIndividual;
+    assert.notOk(planIndividual.grid.enabled, "grid should not be enabled");
 });
 
 QUnit.test("approve button must exist per plan that is waiting for approval", function (assert) {
@@ -269,11 +274,29 @@ QUnit.test("click on approve button must make an ajax request", function (assert
     $.ajax.restore();
 });
 
-QUnit.test("click on approve button must make an ajax request", function (assert) {
+QUnit.test("click on approve button must reload the datatable", function (assert) {
     sinon.stub(planSeptenalColectivo.datatable.ajax, "reload");
     this.server.respondWith([200, {}, JSON.stringify({})]);
 
     $(".btn-approve-plan").eq(0).trigger("click");
     assert.ok(planSeptenalColectivo.datatable.ajax.reload.called);
     planSeptenalColectivo.datatable.ajax.reload.restore();
+});
+
+QUnit.test("after approve request is successfully responded a message should be displayed", function (assert) {
+    this.server.respondWith([200, {}, JSON.stringify({})]);
+    sinon.stub(toastr, "success");
+
+    $(".btn-approve-plan").eq(0).trigger("click");
+    assert.ok(toastr.success.calledWith("Plan septenal individual aprobado satisfactoriamente."));
+    toastr.success.restore();
+});
+
+QUnit.test("after approve request is unsuccessfully responded a message should be displayed", function (assert) {
+    this.server.respondWith([500, {}, JSON.stringify({})]);
+    sinon.stub(toastr, "error");
+
+    $(".btn-approve-plan").eq(0).trigger("click");
+    assert.ok(toastr.error.calledWith("Ocurrió un error. En caso de que el problema persista contacte a soporte"));
+    toastr.error.restore();
 });

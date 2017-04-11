@@ -87,6 +87,7 @@ var planSeptenalColectivo = {
 
 planSeptenalColectivo.details_viewer = $("#details-viewer");
 planSeptenalColectivo.details_viewer.planIndividual = new PlanSeptenalIndividual( $(".plan-septenal-individual"), parseInt($("#start_year").val()));
+planSeptenalColectivo.details_viewer.planIndividual.disableEditing();
 
 $(document).on("click", ".btn-view-plan", function (e) {
     var viewer = planSeptenalColectivo.details_viewer;
@@ -102,7 +103,11 @@ $(document).on("click", ".btn-approve-plan", function (e) {
             id: $(this).data("id")
         },
         success: function () {
+            toastr.success("Plan septenal individual aprobado satisfactoriamente.");
             planSeptenalColectivo.datatable.ajax.reload();
+        },
+        error: function () {
+            toastr.error("Ocurrió un error. En caso de que el problema persista contacte a soporte");
         }
     });
 });

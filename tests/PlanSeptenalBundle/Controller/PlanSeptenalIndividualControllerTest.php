@@ -274,7 +274,7 @@ class PlanSeptenalIndividualController extends WebTestCase
             ['inicio' => 2010]
         );
 
-        $list = '{"data":[[' . $planSeptenalIndividual->getId() . ',"Anthony Edward Stark  ",0,"Esperando aprobaci\u00f3n"]]}';
+        $list = '{"data":[[' . $planSeptenalIndividual->getId() . ',"Anthony Edward Stark",0,"Esperando aprobaci\u00f3n"]]}';
         $response = $this->client->getResponse();
         $this->assertEquals($list, $response->getContent());
     }
