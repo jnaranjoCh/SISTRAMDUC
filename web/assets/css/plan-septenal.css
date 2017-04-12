@@ -15,7 +15,7 @@
 }
 
 .grid-control {
-    padding: 20px;
+    padding: 0 20px 10px 20px;
     width: 100%;
     text-align: center;
 }
@@ -101,4 +101,93 @@
 
 #plan-septenal-colectivo-main-section > #details-viewer > .modal-dialog {
     width: 70%;
+}
+
+#plan-septenal-colectivo-main-section .modal-content {
+    border-radius: 3px;
+}
+
+#status {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* an spinner, initially taken from: https://codepen.io/ck/pen/lgtGc
+   @TODO: Add a fallback for older browsers
+*/
+
+div.backdrop-wrapper {
+    height: 25px;
+    width: 100%;
+}
+
+div.backdrop {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+div.backdrop div.p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    height: 6px;
+    margin: -3px 0 0 -30%;
+}
+
+div.backdrop div.p div {
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    background-color: #444;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+div.backdrop div.p div:nth-child(5) {
+    animation: loader 3s linear 1.25s infinite both;
+}
+
+div.backdrop div.p div:nth-child(4) {
+    animation: loader 3s linear 1s infinite both;
+}
+
+div.backdrop div.p div:nth-child(3) {
+    animation: loader 3s linear 0.75s infinite both;
+}
+
+div.backdrop div.p div:nth-child(2) {
+    animation: loader 3s linear 0.5s infinite both;
+}
+
+div.backdrop div.p div:nth-child(1) {
+    animation: loader 3s linear 0.25s infinite both;
+}
+
+@keyframes loader {
+    0% {
+        left: 0;
+        opacity: 0;
+    }
+    33% {
+        opacity: 1;
+    }
+    40% {
+        left: 42%;
+    }
+    50% {
+        opacity: 1;
+    }
+    70% {
+        left: 58%;
+    }
+    76% {
+        opacity: 1;
+    }
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
 }

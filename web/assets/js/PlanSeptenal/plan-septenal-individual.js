@@ -35,6 +35,8 @@ function PlanSeptenalIndividual (container, starting_year) {
         numeration: range(starting_year, starting_year + 6)
     });
 
+    getSpinner().appendTo(this.container);
+
     getControls().appendTo(this.container);
 
     this.setStatus("");
@@ -108,6 +110,9 @@ PlanSeptenalIndividual.prototype = {
             throw "criteria must have a property id or inicio";
         }
 
+        plan.grid.$cells.css("background", "").removeData("tramite-type");
+        plan.container.find(".backdrop").show();
+
         $.ajax({
             url: plan.container.data("route"),
             data: criteria,
@@ -118,15 +123,9 @@ PlanSeptenalIndividual.prototype = {
                     $("#btn-save").show();
                     $("#btn-request-approval").show();
                     plan.setStatus(data.status).setState(data);
+                    plan.container.find(".backdrop").hide();
 
-                    if (data.status == "Esperando aprobación") {
-                        $("#btn-save").prop("disabled", true);
-                        $("#btn-request-approval").prop("disabled", true);
-                        plan.disableEditing();
-                        return;
-                    }
-
-                    if (data.status == "Aprobado") {
+                    if (data.status == "Esperando aprobación" || data.status == "Aprobado") {
                         $("#btn-save").prop("disabled", true);
                         $("#btn-request-approval").prop("disabled", true);
                         plan.disableEditing();
@@ -140,9 +139,11 @@ PlanSeptenalIndividual.prototype = {
                     plan.setStatus("En creación");
                     $("#btn-save").show().prop("disabled", false);;
                     $("#btn-request-approval").show().prop("disabled", true);
+                    plan.container.find(".backdrop").hide();
                 },
                 500: function (data) {
                     toastr["error"]("Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte");
+                    plan.container.find(".backdrop").hide();
                 }
             }
         });
@@ -200,6 +201,18 @@ PlanSeptenalIndividual.prototype = {
 
         return this;
     }
+}
+
+function getSpinner () {
+    return $(
+        '<div class="backdrop-wrapper">' +
+          '<div class="backdrop" style="display: none;">' +
+            '<div class="p">' +
+              '<div></div><div></div><div></div><div></div><div></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>'
+    );
 }
 
 function getControls () {

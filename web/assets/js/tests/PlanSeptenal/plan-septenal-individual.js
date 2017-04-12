@@ -258,6 +258,41 @@ QUnit.test("load must request the plan septenal individual to the server", funct
     $.ajax.restore();
 });
 
+QUnit.test("load must clear all tramites", function (assert) {
+    var $sabatico_btn = $(".grid-action-btn").first();
+
+    this.$plan.select("01/2010", "02/2010");
+
+    triggerClickRelatedEvents($sabatico_btn);
+    sinon.stub($, "ajax");
+
+    this.$plan.load({ inicio: 2010 });
+
+    assert.equal(this.$plan.getState().tramites.length, 0);
+    $.ajax.restore();
+});
+
+QUnit.test("load must make visible the spinner (.backdrop)", function (assert) {
+    this.server.respondImmediately = false;
+    this.$plan.load({ inicio: 2010 });
+
+    assert.ok(this.$plan.container.find(".backdrop").is(":visible"));
+});
+
+QUnit.test("a response will make invisible the spinner (.backdrop)", function (assert) {
+    this.server.respondWith([200, {}, ""]);
+    this.$plan.load({ inicio: 2010 });
+    assert.notOk(this.$plan.container.find(".backdrop").is(":visible"));
+
+    this.server.respondWith([404, {}, ""]);
+    this.$plan.load({ inicio: 2010 });
+    assert.notOk(this.$plan.container.find(".backdrop").is(":visible"));
+
+    this.server.respondWith([500, {}, ""]);
+    this.$plan.load({ inicio: 2010 });
+    assert.notOk(this.$plan.container.find(".backdrop").is(":visible"));
+});
+
 QUnit.test("On server error while requesting plan, a message should be displayed", function (assert) {
     this.server.respondWith([500, {}, ""]);
     sinon.stub(toastr, "error");
