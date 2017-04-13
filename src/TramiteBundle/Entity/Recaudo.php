@@ -27,8 +27,7 @@ class Recaudo
      */
     private $path;
     /**
-     * @ORM\Column(type="string", length=50)
-     * Assert\NotBlank(message="Por favor, ingrese el nombre del Documento.")
+     * @ORM\Column(type="string", length=100)
      */
     private $name;
     /**
@@ -42,6 +41,7 @@ class Recaudo
      * @Assert\NotNull(message="Por favor, cargar el Documento como un archivo PDF.")
      */
     private $file;
+
     private $temp;
 
     /**

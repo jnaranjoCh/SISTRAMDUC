@@ -31,7 +31,7 @@ class SolicitudComisionServicioType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ComisionRemuneradaBundle\Entity\SolicitudComisionServicio'
+            'data_class' => SolicitudComisionServicio::class,
         ));
     }
 

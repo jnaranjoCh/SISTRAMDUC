@@ -2,13 +2,15 @@
 
 namespace ComisionRemuneradaBundle\Controller;
 
-use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank as NotBlankConstraint;
 use Symfony\Component\Form\FormError;
+use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use TramiteBundle\Entity\Recaudo;
+use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 
 /**
  * Solicitudcomisionservicio controller.
@@ -43,31 +45,20 @@ class SolicitudComisionServicioController extends Controller
     public function newAction(Request $request)
     {
         $solicitudComisionServicio = new Solicitudcomisionservicio();
+
         // Se crea el formulario
         $form = $this->createForm('ComisionRemuneradaBundle\Form\SolicitudComisionServicioType', $solicitudComisionServicio);
         $form->handleRequest($request);
 
-        //Validacion de Archios
-        /*$notBlankConstraint = new NotBlankConstraint();
-        $notBlankConstraint->message = 'Por favor, debe cargar un archivo PDF.';*/
-        //Para cada capitulo validamos de ser asi agregamos el error
-        /*foreach ($solicitudComisionServicio->getRecaudos() as $key => $recaudo) {
-            $errors = $this->get('validator')->validateValue(
-                $solicitudComisionServicio->getRecaudos()->get($key)->getFile(),
-                $notBlankConstraint );
-            foreach ($errors as $error) {
-                $form->get('recaudos')->addError( new FormError("Para el Recaudo ".($key + 1)." , debe cargar un archivo PDF."));
-            }
-        }*/
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($solicitudComisionServicio);
-            $em->flush();
-            /*foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
-                $actualRecaudo->setSolicitudComisionServicio($solicitudComisionServicio);
-            }*/
 
+            foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
+                $actualRecaudo->setSolicitudComisionServicio($solicitudComisionServicio);
+            }
+            $em->flush();
+            var_dump($solicitudComisionServicio->getId());
             return $this->redirectToRoute('solicitudcomisionservicio_show', array('id' => $solicitudComisionServicio->getId()));
         }
 

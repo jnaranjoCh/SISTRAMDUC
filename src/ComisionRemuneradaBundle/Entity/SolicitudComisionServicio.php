@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use TramiteBundle\Entity\Recaudo;
-use TramiteBundle\Entity\Tramite;
 
 /**
  * SolicitudComisionServicio
@@ -17,10 +16,8 @@ use TramiteBundle\Entity\Tramite;
 class SolicitudComisionServicio
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -33,21 +30,15 @@ class SolicitudComisionServicio
      *     minMessage = "Debe tener todos los archivos",
      *     maxMessage = "Debe tener todos los archivos"
      * )
-     * @ORM\OneToMany(targetEntity="\TramiteBundle\Entity\Recaudo", mappedBy="SolicitudComisionServicio", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="\TramiteBundle\Entity\Recaudo", mappedBy="SolicitudComisionServicio", cascade={"persist", "remove"})
      */
     protected $recaudos;
 
-    /**
-     * @ORM\OneToOne(targetEntity="\TramiteBundle\Entity\Tramite", mappedBy="SolicitudComisionServicio")
-     * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
-     */
-    protected $tramite;
-
     public function __construct()
     {
-        $this->recaudos = new ArrayCollection(array(new recaudo("Recaudo_1")
-        ,new recaudo("Recaudo_2"),new recaudo("Recaudo_3"),
-            new recaudo("Recaudo_4")
+        $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
+        ,new recaudo("Fotocopia de cédula de Identidad"),new recaudo("Fotocopia del RIF"),
+            new recaudo("Copia de la Designación del cargos en la Administración")
         ));
     }
 
@@ -103,6 +94,10 @@ class SolicitudComisionServicio
     public function removeAllRecaudos()
     {
         $this->recaudos->clear();
+    }
+
+    public function __toString() {
+        return sprintf($this->getId());
     }
 }
 

@@ -3,21 +3,39 @@
 namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use TramiteBundle\Entity\Recaudo;
 
 /**
- * @ORM\Entity
+ * Tramite
+ *
  * @ORM\Table(name="tramite")
+ * @ORM\Entity(repositoryClass="MyBundle\Repository\TramiteRepository")
  */
-
 class Tramite
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    /**
+     * @var array
+     * @Assert\Count(
+     *      min = "1",
+     *      max = "10",
+     *      minMessage = "Debe tener al menos 1 Archivo, en caso de ser el tomo completo",
+     *      maxMessage = "Sólo puede tener como maximo {{ limit }} Archivos"
+     * )
+     * @ORM\OneToMany(targetEntity="Recaudo", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Assert\Valid
+     */
+    protected $recaudos;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -30,11 +48,14 @@ class Tramite
      */
     protected $tipo_tramite;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Transicion", inversedBy="tramite")
-     */
-    protected $transicion;
-
+    public function __construct()
+    {
+        $this->recaudos = new ArrayCollection(array(new Recaudo("Recaudo_1")
+        ,new Recaudo("Recaudo_2"),new Recaudo("Recaudo_3"),
+            new Recaudo("Recaudo_4"),new Recaudo("Recaudoo_5")
+        ));
+    }
+    
     public function getId()
     {
         return $this->id;
@@ -86,5 +107,46 @@ class Tramite
     public function getTipoTramite()
     {
         return $this->tipo_tramite;
+    }
+
+    /**
+     * Get recaudos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecaudos()
+    {
+        return $this->recaudos;
+    }
+    /**
+     * Add recaudo
+     *
+     * @param \TramiteBundle\Entity\Recaudo $recaudo
+     * @return tramite
+     */
+    public function addRecaudo(\TramiteBundle\Entity\Recaudo $recaudo)
+    {
+        $this->recaudos[] = $recaudo;
+        $recaudo->setTramite($this);
+
+        return $this;
+    }
+    /**
+     * Remove recaudo
+     *
+     * @param \TramiteBundle\Entity\Recaudo $recaudo
+     */
+    public function removeRecaudo(\TramiteBundle\Entity\Recaudo $recaudo)
+    {
+        $this->recaudos->removeElement($recaudo);
+        $recaudo->setTramite(null);
+    }
+    /**
+     * Remove recaudos
+     *
+     */
+    public function removeAllRecaudos()
+    {
+        $this->recaudos->clear();
     }
 }
