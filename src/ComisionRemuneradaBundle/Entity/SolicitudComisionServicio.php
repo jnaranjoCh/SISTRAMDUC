@@ -3,9 +3,11 @@
 namespace ComisionRemuneradaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use TramiteBundle\Entity\Recaudo;
+use AppBundle\Entity\Usuario;
 
 /**
  * SolicitudComisionServicio
@@ -33,6 +35,12 @@ class SolicitudComisionServicio
      * @ORM\OneToMany(targetEntity="\TramiteBundle\Entity\Recaudo", mappedBy="SolicitudComisionServicio", cascade={"persist", "remove"})
      */
     protected $recaudos;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="comision_servicio")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     */
+    protected $owner;
 
     public function __construct()
     {
@@ -94,6 +102,14 @@ class SolicitudComisionServicio
     public function removeAllRecaudos()
     {
         $this->recaudos->clear();
+    }
+
+    public function assignTo(Usuario $owner)
+    {
+        $this->owner = $owner;
+        $owner->ownSolicitudComisionServicio($this);
+
+        return $this;
     }
 
     public function __toString() {

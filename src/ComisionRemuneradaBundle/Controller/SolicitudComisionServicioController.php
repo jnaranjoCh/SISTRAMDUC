@@ -4,12 +4,15 @@ namespace ComisionRemuneradaBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Validator\Constraints\NotBlank as NotBlankConstraint;
 use Symfony\Component\Form\FormError;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\Recaudo;
+
 use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 
 /**
@@ -49,8 +52,10 @@ class SolicitudComisionServicioController extends Controller
         // Se crea el formulario
         $form = $this->createForm('ComisionRemuneradaBundle\Form\SolicitudComisionServicioType', $solicitudComisionServicio);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $solicitudComisionServicio->assignTo($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($solicitudComisionServicio);
 
@@ -58,7 +63,7 @@ class SolicitudComisionServicioController extends Controller
                 $actualRecaudo->setSolicitudComisionServicio($solicitudComisionServicio);
             }
             $em->flush();
-            var_dump($solicitudComisionServicio->getId());
+
             return $this->redirectToRoute('solicitudcomisionservicio_show', array('id' => $solicitudComisionServicio->getId()));
         }
 
