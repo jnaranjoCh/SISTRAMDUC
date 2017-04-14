@@ -2,6 +2,7 @@ $('#submitData').click(function(){
     toastr.clear();
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
+    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
     var can_register = true;
     var date = new Date();
     var anio;
@@ -84,7 +85,7 @@ $('#submitData').click(function(){
         $("#headerPersonal").css({ 'color': "red" });
         text = "Error la edad no coincide con la fecha de nacimiento.";
     }
-    
+
     if(countCargo < 1)
     {
          can_register = false;
@@ -96,6 +97,55 @@ $('#submitData').click(function(){
          $("#spanCargosDatos").removeClass("glyphicon-remove");
          $("#divCargosDatos").removeClass("has-error");
          $("#headerCargos").css({ 'color': "black" });
+    }
+    
+    if(countRegistro < 1)
+    {
+         can_register = false;
+         for(var i = 0; i < inputsR.length; i++)
+         {
+            if(inputsR[i] == "InstitucionDatos")
+            {    
+                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de servicio comunitario")
+                {    
+                    $("#headerRegistros").css({ 'color': "red" });
+                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).addClass("has-error");
+                    text = "Error campo mal introducido o obligatorio.";
+                }else
+                {
+                    $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).removeClass("has-error");        
+                }
+            }else if(inputsR[i] == "EmpresaDatos")
+            {   
+                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias")
+                {    
+                    $("#headerRegistros").css({ 'color': "red" });
+                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).addClass("has-error");
+                    text = "Error campo mal introducido o obligatorio.";
+                }else
+                {
+                    $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).removeClass("has-error");        
+                }
+            }else
+            {
+                $("#headerRegistros").css({ 'color': "red" });
+                $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                $("#div"+inputsR[i]).addClass("has-error");
+                text = "Error campo mal introducido o obligatorio.";
+            }
+         }
+    }else
+    {
+        for(var i = 0; i < inputsR.length; i++)
+        {    
+            $("#headerRegistros").css({ 'color': "black" });
+            $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+            $("#div"+inputsR[i]).removeClass("has-error");
+        }
     }
 
     

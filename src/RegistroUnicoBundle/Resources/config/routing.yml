@@ -45,3 +45,9 @@ registro_obteneremails_ajax:
     defaults: { _controller: RegistroUnicoBundle:Default:enviarEmailsAjax }
     requirements:
         _method:  POST
+
+registro_obtenerlastid_ajax:
+    path:    /registro/enviar-lastid
+    defaults: { _controller: RegistroUnicoBundle:Default:obtenerIdAjax }
+    requirements:
+        _method:  POST

@@ -1,45 +1,150 @@
 var countRol =0;
 var countCargo =0;
+var countRegistro =0;
+
 $('#agregarRegistro').click(function(){
-    if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="")
+    var band = false;
+    var participantesId="<option value='0'>Seleccione una opción</option>";
+
+    if(($('#tableRegistros td').length) > 0)
     {
-        tableRegistros.row.add( {
-            "Id del registro": "1",
-            "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-            "Descripcion": $("#DescripcionDatos").val(),
-            "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-            "Estatus": $("#EstatusDatos").find('option:selected').val(),
-            "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-            "Empresa y/o institución": ""
-        } ).draw();
-    }else if($("#EmpresaDatos").val()!="")
-    {
-        tableRegistros.row.add( {
-            "Id del registro": "1",
-            "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-            "Descripcion": $("#DescripcionDatos").val(),
-            "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-            "Estatus": $("#EstatusDatos").find('option:selected').val(),
-            "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-            "Empresa y/o institución": $("#EmpresaDatos").val()
-        } ).draw();
-    }else if($("#InstitucionDatos").val()!="")
-    {
-        tableRegistros.row.add( {
-            "Id del registro": "1",
-            "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-            "Descripcion": $("#DescripcionDatos").val(),
-            "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-            "Estatus": $("#EstatusDatos").find('option:selected').val(),
-            "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-            "Empresa y/o institución": $("#InstitucionDatos").val()
-        } ).draw();
-    }
+         tableRegistros.column(2)
+              .data()
+              .each( function ( value,index ) {
+                    if(value == $("#DescripcionDatos").val())
+                        band = true;
+               });
+   }
+   
+   if(($('#tableRegistros td').length)==0 && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!="")
+   {
+        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias")
+        {
+            tableRegistros.row.add( {
+                "Id del registro": idRegistro,
+                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                "Descripcion": $("#DescripcionDatos").val(),
+                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                "Empresa y/o institución": ""
+            } ).draw();
+            countRegistro++;
+            idRegistro++;
+        }else if($("#EmpresaDatos").val()!="")
+        {
+            tableRegistros.row.add( {
+                "Id del registro": idRegistro,
+                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                "Descripcion": $("#DescripcionDatos").val(),
+                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                "Empresa y/o institución": $("#EmpresaDatos").val()
+            } ).draw();
+            countRegistro++;
+            idRegistro++;
+        }else if($("#InstitucionDatos").val()!="")
+        {
+            tableRegistros.row.add( {
+                "Id del registro": idRegistro,
+                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                "Descripcion": $("#DescripcionDatos").val(),
+                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                "Empresa y/o institución": $("#InstitucionDatos").val()
+            } ).draw();
+            countRegistro++;
+            idRegistro++;
+        }
+   }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!="")
+   {
+        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias")
+        {
+            tableRegistros.row.add( {
+                "Id del registro": idRegistro,
+                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                "Descripcion": $("#DescripcionDatos").val(),
+                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                "Empresa y/o institución": ""
+            } ).draw();
+            countRegistro++;
+            idRegistro++;
+        }else if($("#EmpresaDatos").val()!="")
+        {
+            tableRegistros.row.add( {
+                "Id del registro": idRegistro,
+                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                "Descripcion": $("#DescripcionDatos").val(),
+                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                "Empresa y/o institución": $("#EmpresaDatos").val()
+            } ).draw();
+            countRegistro++;
+            idRegistro++;
+        }else if($("#InstitucionDatos").val()!="")
+        {
+            tableRegistros.row.add( {
+                "Id del registro": idRegistro,
+                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                "Descripcion": $("#DescripcionDatos").val(),
+                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                "Empresa y/o institución": $("#InstitucionDatos").val()
+            } ).draw();
+            countRegistro++;
+            idRegistro++;
+        }
+   }
+   
+   tableRegistros.column(1)
+                 .data()
+                 .each( function ( value1,index1 ) {
+                        if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario")
+                        {
+                           tableRegistros.column(0)
+                                         .data()
+                                         .each( function ( value2,index2 ) {
+                                                if(index1 == index2)
+                                                    participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
+                                          });                         
+                        }
+                  });
+    $('#IdParticipanteRegistro').html(participantesId);
+                                                
+  
     
 });
 
 $('#tableRegistros').on( 'click', 'tbody tr', function () {
+    var participantesId="<option value='0'>Seleccione una opción</option>";
+
     tableRegistros.row( this ).remove().draw();
+    if(countRegistro > 0)
+    {
+       tableRegistros.column(1)
+                     .data()
+                     .each( function ( value1,index1 ) {
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario")
+                            {
+                               tableRegistros.column(0)
+                                             .data()
+                                             .each( function ( value2,index2 ) {
+                                                    if(index1 == index2)
+                                                        participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
+                                              });                         
+                            }
+                      });
+        $('#IdParticipanteRegistro').html(participantesId);
+   
+        countRegistro--;
+        idRegistro--;
+    }
 } );
 
 $('#agregarParticipantes').click(function(){

@@ -1,4 +1,6 @@
+var idRegistro = 0;
 $( window ).load(function() {
+    
     $("#miniPersonal").click();
     $("#miniRegistros").click();
     $("#miniCargos").click();
@@ -39,6 +41,17 @@ $( window ).load(function() {
         }
     });
     
+     $.ajax({
+        method: "POST",
+        url:  "/web/app_dev.php/registro/enviar-lastid",
+        dataType: 'json',
+        success: function(data)
+        {
+            if(data[0].lastId != null)
+                idRegistro = data[0].lastId;
+        }
+    });
+    $('#IdParticipanteRegistro').html("<option value='0'>No existen registro</option>");
     $('#datetimepicker1').datetimepicker();
 });
 

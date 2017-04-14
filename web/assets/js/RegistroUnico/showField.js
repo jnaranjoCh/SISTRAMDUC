@@ -12,10 +12,10 @@ $('#TipoDeRegistroDatos').change(function(){
     }
         
     if(selectedOption.val().localeCompare("Tutoria de pasantias") == 0)
-        $("#divEmpresaDatos").removeClass("hidden");
+        $("#hiddenEmpresaDatos").removeClass("hidden");
     else
     {
-        $("#divEmpresaDatos").addClass("hidden");
+        $("#hiddenEmpresaDatos").addClass("hidden");
         table4.clear().draw();
         $("#EmpresaDatos").val("");
         $("#InstitucionDatos").val("");
@@ -23,10 +23,10 @@ $('#TipoDeRegistroDatos').change(function(){
 
     
     if(selectedOption.val().localeCompare("Tutoria de servicio comunitario") == 0)
-        $("#divInstitucionDatos").removeClass("hidden");
+        $("#hiddenInstitucionDatos").removeClass("hidden");
     else
     {
-        $("#divInstitucionDatos").addClass("hidden");
+        $("#hiddenInstitucionDatos").addClass("hidden");
         table4.clear().draw();
         $("#EmpresaDatos").val("");
         $("#InstitucionDatos").val("");

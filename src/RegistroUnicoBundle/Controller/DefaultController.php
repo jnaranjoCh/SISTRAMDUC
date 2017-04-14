@@ -132,6 +132,20 @@ class DefaultController extends Controller
              throw $this->createNotFoundException('Error al solicitar datos');
     }
 
+    public function obtenerIdAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $value = $this->getDoctrine()
+                          ->getManager()
+                          ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Registro r')
+                          ->getResult();
+            return new JsonResponse($value);
+        }
+        else
+             throw $this->createNotFoundException('Error al obtener los datos');
+    }
+    
     private function getEmails($object)
     {
         $i = 0;
