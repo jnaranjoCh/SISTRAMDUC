@@ -1,10 +1,11 @@
-var countRol =0;
-var countCargo =0;
-var countRegistro =0;
-
+var countRol = 0;
+var countCargo = 0;
+var countRegistro = 0;
 $('#agregarRegistro').click(function(){
-    var band = false;
-    var participantesId="<option value='0'>Seleccione una opción</option>";
+    toastr.clear();
+    var band = false,bandConcatRevist = true,bandConcatPart = true;
+    var participantesId="<option value='0'>No existen registro</option>";
+    var revistasId="<option value='0'>No existen registro</option>";
 
     if(($('#tableRegistros td').length) > 0)
     {
@@ -12,7 +13,13 @@ $('#agregarRegistro').click(function(){
               .data()
               .each( function ( value,index ) {
                     if(value == $("#DescripcionDatos").val())
+                    { 
                         band = true;
+                        toastr.error("Error el registro ya se encuentra en la tabla.", "Error", {
+                            "timeOut": "0",
+                            "extendedTImeout": "0"
+                         });
+                    }
                });
    }
    
@@ -107,22 +114,44 @@ $('#agregarRegistro').click(function(){
                  .each( function ( value1,index1 ) {
                         if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario")
                         {
+                           if(bandConcatPart)
+                           {
+                                participantesId="<option value='0'>Seleccione una opción</option>";
+                                bandConcatPart = false;
+                           }
+                           
                            tableRegistros.column(0)
                                          .data()
                                          .each( function ( value2,index2 ) {
                                                 if(index1 == index2)
                                                     participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
-                                          });                         
+                                          });     
+                        }else if(value1=="Articulo publicado")
+                        {
+                            if(bandConcatRevist)
+                            {
+                                revistasId="<option value='0'>Seleccione una opción</option>";
+                                bandConcatRevist = false;
+                            }
+                            tableRegistros.column(0)
+                                         .data()
+                                         .each( function ( value2,index2 ) {
+                                                if(index1 == index2)
+                                                    revistasId = revistasId+"<option value='"+value2+"'>"+value2+"</option>";
+                                          });
                         }
                   });
     $('#IdParticipanteRegistro').html(participantesId);
+    $('#idRevistaRegistro').html(revistasId);
                                                 
   
     
 });
 
 $('#tableRegistros').on( 'click', 'tbody tr', function () {
-    var participantesId="<option value='0'>Seleccione una opción</option>";
+    var bandConcatRevist = true,bandConcatPart = true;
+    var participantesId="<option value='0'>No existen registro</option>";
+    var revistasId="<option value='0'>No existen registro</option>";
 
     tableRegistros.row( this ).remove().draw();
     if(countRegistro > 0)
@@ -132,18 +161,35 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
                      .each( function ( value1,index1 ) {
                             if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario")
                             {
+                               if(bandConcatPart)
+                               {
+                                    participantesId="<option value='0'>Seleccione una opción</option>";
+                                    bandConcatPart = false;
+                               }
                                tableRegistros.column(0)
                                              .data()
                                              .each( function ( value2,index2 ) {
                                                     if(index1 == index2)
                                                         participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
                                               });                         
+                            }else if(value1=="Articulo publicado")
+                            {
+                                if(bandConcatRevist)
+                                {
+                                    revistasId="<option value='0'>Seleccione una opción</option>";
+                                    bandConcatRevist = false;
+                                }
+                                tableRegistros.column(0)
+                                             .data()
+                                             .each( function ( value2,index2 ) {
+                                                    if(index1 == index2)
+                                                        revistasId = revistasId+"<option value='"+value2+"'>"+value2+"</option>";
+                                              });
                             }
                       });
         $('#IdParticipanteRegistro').html(participantesId);
-   
+        $('#idRevistaRegistro').html(revistasId);
         countRegistro--;
-        idRegistro--;
     }
 } );
 
@@ -161,6 +207,7 @@ $('#tableParticipantes').on( 'click', 'tbody tr', function () {
 
 
 $('#agregarCargoDatos').click(function(){
+    toastr.clear();
     var band = false;
     if(($('#tableCargo td').length) > 0)
     {
@@ -168,7 +215,13 @@ $('#agregarCargoDatos').click(function(){
               .data()
               .each( function ( value,index ) {
                     if(value == $("#cargosDatos").find('option:selected').val())
+                    {
                         band = true;
+                        toastr.error("Error el cargo ya se encuentra en la tabla.", "Error", {
+                            "timeOut": "0",
+                            "extendedTImeout": "0"
+                         });
+                    }
                });
    }
    
@@ -188,18 +241,26 @@ $('#agregarCargoDatos').click(function(){
 });
 
 $('#rolUser').change(function(){
+    toastr.clear();
     var band = false;
-    if(($('#tableRol td').length-1) > 0)
+    if(($('#tableRol td').length) > 0)
     {
          tableRol.column(0)
               .data()
               .each( function ( value,index ) {
+                    //alert($("#rolUser").find('option:selected').val());
                     if(value == $("#rolUser").find('option:selected').val())
+                    {
                         band = true;
+                        toastr.error("Error el rol ya se encuentra en la tabla.", "Error", {
+                            "timeOut": "0",
+                            "extendedTImeout": "0"
+                        });
+                    }
                });
    }
    
-   if(($('#tableRol td').length-1)==0 && $("#rolUser").find('option:selected').val() != "")
+   if(($('#tableRol td').length)==0 && $("#rolUser").find('option:selected').val() != "")
    {
        tableRol.row.add( {
                 "Rol": $("#rolUser").find('option:selected').val()
@@ -226,14 +287,14 @@ $('#tableCargo').on( 'click', 'tbody tr', function () {
         countCargo--;
 } );
 
-$('#arv').click(function(){
-   table4.row.add( {
-            "Id del registro": $("#idR").val(),
-            "Revista": $("#nomR").val()
+$('#agregarRevista').click(function(){
+   tableRevista.row.add( {
+            "Id del registro": $("#idRevistaRegistro").val(),
+            "Revista": $("#descrpcionRevistaRegistro").val()
     } ).draw();
     
 });
 
-$('#table-4').on( 'click', 'tbody tr', function () {
-    table4.row( this ).remove().draw();
+$('#tableRevista').on( 'click', 'tbody tr', function () {
+    tableRevista.row( this ).remove().draw();
 } );
