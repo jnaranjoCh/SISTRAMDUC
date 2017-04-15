@@ -4,8 +4,8 @@ var countRegistro = 0;
 $('#agregarRegistro').click(function(){
     toastr.clear();
     var band = false,bandConcatRevist = true,bandConcatPart = true;
-    var participantesId="<option value='-1'>No existen registro</option>";
-    var revistasId="<option value='-1'>No existen registro</option>";
+    var participantesId="<option value='-1'>No existen registros</option>";
+    var revistasId="<option value='-1'>No existen registros</option>";
 
     if(($('#tableRegistros td').length) > 0)
     {
@@ -150,8 +150,8 @@ $('#agregarRegistro').click(function(){
 
 $('#tableRegistros').on( 'click', 'tbody tr', function () {
     var bandConcatRevist = true,bandConcatPart = true;
-    var participantesId="<option value='-1'>No existen registro</option>";
-    var revistasId="<option value='-1'>No existen registro</option>";
+    var participantesId="<option value='-1'>No existen registros</option>";
+    var revistasId="<option value='-1'>No existen registros</option>";
 
     tableRegistros.row( this ).remove().draw();
     if(countRegistro > 0)
