@@ -250,6 +250,10 @@ $('#agregarCargoDatos').click(function(){
                });
    }
    
+   $("#headerCargos").css({ 'color': "black" });
+   $("#spanCargosDatos").removeClass("glyphicon-remove");
+   $("#divCargosDatos").removeClass("has-error");
+   
    if(($('#tableCargo td').length)==0 && $("#cargosDatos").find('option:selected').val() != "")
    {
        tableCargo.row.add( {
@@ -262,6 +266,15 @@ $('#agregarCargoDatos').click(function(){
                 "Cargo": $("#cargosDatos").find('option:selected').val()
         }).draw();
         countCargo++;
+   }else if(!band)
+   {
+        toastr.error("Error debe seleccionar un cargo.", "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                     });
+        $("#headerCargos").css({ 'color': "red" });
+        $("#spanCargosDatos").addClass("glyphicon-remove");
+        $("#divCargosDatos").addClass("has-error");
    }
 });
 
@@ -313,11 +326,35 @@ $('#tableCargo').on( 'click', 'tbody tr', function () {
 } );
 
 $('#agregarRevista').click(function(){
-   tableRevista.row.add( {
-            "Id del registro": $("#idRevistaRegistro").val(),
-            "Revista": $("#descrpcionRevistaRegistro").val()
-    } ).draw();
-    
+    toastr.clear();
+    var band = false;
+    if(($('#tableRevista td').length) > 0)
+    {
+         tableRevista.column(0)
+              .data()
+              .each( function ( value1,index1 ) {
+                  tableRevista.column(1)
+                      .data()
+                      .each( function ( value2,index2 ) {
+                            if(index1 == index2 && value1 == $("#idRevistaRegistro").val() && value2 ==  $("#descrpcionRevistaRegistro").val())
+                            { 
+                                band = true;
+                                toastr.error("Error la revista ya esta registrada para el registro especificado.", "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                 });
+                            }
+                       });
+               });
+    }
+   
+   if(!band && $("#idRevistaRegistro").val() != -1 && $("#descrpcionRevistaRegistro").val() != "")
+   {
+       tableRevista.row.add( {
+                "Id del registro": $("#idRevistaRegistro").val(),
+                "Revista": $("#descrpcionRevistaRegistro").val()
+        } ).draw();
+   }
 });
 
 $('#tableRevista').on( 'click', 'tbody tr', function () {

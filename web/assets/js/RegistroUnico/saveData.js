@@ -106,7 +106,7 @@ $('#submitData').click(function(){
          {
             if(inputsR[i] == "InstitucionDatos")
             {    
-                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de servicio comunitario")
+                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de servicio comunitario" && $("#"+inputsR[i]).val() == "")
                 {    
                     $("#headerRegistros").css({ 'color': "red" });
                     $("#span"+inputsR[i]).addClass("glyphicon-remove");
@@ -119,7 +119,7 @@ $('#submitData').click(function(){
                 }
             }else if(inputsR[i] == "EmpresaDatos")
             {   
-                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias")
+                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias" && $("#"+inputsR[i]).val() == "")
                 {    
                     $("#headerRegistros").css({ 'color': "red" });
                     $("#span"+inputsR[i]).addClass("glyphicon-remove");
@@ -132,10 +132,18 @@ $('#submitData').click(function(){
                 }
             }else
             {
-                $("#headerRegistros").css({ 'color': "red" });
-                $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                $("#div"+inputsR[i]).addClass("has-error");
-                text = "Error campo mal introducido o obligatorio.";
+                
+                if($("#"+inputsR[i]).val() == "")
+                {
+                    $("#headerRegistros").css({ 'color': "red" });
+                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).addClass("has-error");
+                    text = "Error campo mal introducido o obligatorio.";
+                }else
+                {
+                    $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).removeClass("has-error");        
+                }
             }
          }
     }else
