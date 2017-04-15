@@ -13,8 +13,7 @@ $('#TipoDeRegistroDatos').change(function(){
         
     if(selectedOption.val().localeCompare("Tutoria de pasantias") == 0)
         $("#hiddenEmpresaDatos").removeClass("hidden");
-    else
-    {
+    else{
         $("#hiddenEmpresaDatos").addClass("hidden");
         tableRevista.clear().draw();
         $("#EmpresaDatos").val("");
@@ -24,8 +23,7 @@ $('#TipoDeRegistroDatos').change(function(){
     
     if(selectedOption.val().localeCompare("Tutoria de servicio comunitario") == 0)
         $("#hiddenInstitucionDatos").removeClass("hidden");
-    else
-    {
+    else{
         $("#hiddenInstitucionDatos").addClass("hidden");
         tableRevista.clear().draw();
         $("#EmpresaDatos").val("");

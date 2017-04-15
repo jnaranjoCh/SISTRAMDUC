@@ -1,19 +1,18 @@
 var countRol = 0;
 var countCargo = 0;
 var countRegistro = 0;
+var countParticipante = 0;
 $('#agregarRegistro').click(function(){
     toastr.clear();
     var band = false,bandConcatRevist = true,bandConcatPart = true;
     var participantesId="<option value='-1'>No existen registros</option>";
     var revistasId="<option value='-1'>No existen registros</option>";
 
-    if(($('#tableRegistros td').length) > 0)
-    {
+    if(($('#tableRegistros td').length) > 0){
          tableRegistros.column(2)
               .data()
               .each( function ( value,index ) {
-                    if(value == $("#DescripcionDatos").val())
-                    { 
+                    if(value == $("#DescripcionDatos").val()){ 
                         band = true;
                         toastr.error("Error el registro ya se encuentra en la tabla.", "Error", {
                             "timeOut": "0",
@@ -23,10 +22,8 @@ $('#agregarRegistro').click(function(){
                });
    }
    
-   if(($('#tableRegistros td').length)==0 && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!="")
-   {
-        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias")
-        {
+   if(($('#tableRegistros td').length)==0 && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
+        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias"){
             tableRegistros.row.add( {
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
@@ -38,8 +35,7 @@ $('#agregarRegistro').click(function(){
             } ).draw();
             countRegistro++;
             idRegistro++;
-        }else if($("#EmpresaDatos").val()!="")
-        {
+        }else if($("#EmpresaDatos").val()!=""){
             tableRegistros.row.add( {
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
@@ -51,8 +47,7 @@ $('#agregarRegistro').click(function(){
             } ).draw();
             countRegistro++;
             idRegistro++;
-        }else if($("#InstitucionDatos").val()!="")
-        {
+        }else if($("#InstitucionDatos").val()!=""){
             tableRegistros.row.add( {
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
@@ -65,10 +60,8 @@ $('#agregarRegistro').click(function(){
             countRegistro++;
             idRegistro++;
         }
-   }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!="")
-   {
-        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias")
-        {
+   }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
+        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias"){
             tableRegistros.row.add( {
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
@@ -80,8 +73,7 @@ $('#agregarRegistro').click(function(){
             } ).draw();
             countRegistro++;
             idRegistro++;
-        }else if($("#EmpresaDatos").val()!="")
-        {
+        }else if($("#EmpresaDatos").val()!=""){
             tableRegistros.row.add( {
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
@@ -93,8 +85,7 @@ $('#agregarRegistro').click(function(){
             } ).draw();
             countRegistro++;
             idRegistro++;
-        }else if($("#InstitucionDatos").val()!="")
-        {
+        }else if($("#InstitucionDatos").val()!=""){
             tableRegistros.row.add( {
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
@@ -112,10 +103,8 @@ $('#agregarRegistro').click(function(){
    tableRegistros.column(1)
                  .data()
                  .each( function ( value1,index1 ) {
-                        if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario")
-                        {
-                           if(bandConcatPart)
-                           {
+                        if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
+                           if(bandConcatPart){
                                 participantesId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatPart = false;
                            }
@@ -126,10 +115,8 @@ $('#agregarRegistro').click(function(){
                                                 if(index1 == index2)
                                                     participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
                                           });     
-                        }else if(value1=="Articulo publicado")
-                        {
-                            if(bandConcatRevist)
-                            {
+                        }else if(value1=="Articulo publicado"){
+                            if(bandConcatRevist){
                                 revistasId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatRevist = false;
                             }
@@ -154,15 +141,12 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
     var revistasId="<option value='-1'>No existen registros</option>";
 
     tableRegistros.row( this ).remove().draw();
-    if(countRegistro > 0)
-    {
+    if(countRegistro > 0){
        tableRegistros.column(1)
                      .data()
                      .each( function ( value1,index1 ) {
-                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario")
-                            {
-                               if(bandConcatPart)
-                               {
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
+                               if(bandConcatPart){
                                     participantesId="<option value='-1'>Seleccione una opción</option>";
                                     bandConcatPart = false;
                                }
@@ -172,10 +156,8 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
                                                     if(index1 == index2)
                                                         participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
                                               });                         
-                            }else if(value1=="Articulo publicado")
-                            {
-                                if(bandConcatRevist)
-                                {
+                            }else if(value1=="Articulo publicado"){
+                                if(bandConcatRevist){
                                     revistasId="<option value='-1'>Seleccione una opción</option>";
                                     bandConcatRevist = false;
                                 }
@@ -196,16 +178,14 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
 $('#agregarParticipantes').click(function(){
     toastr.clear();
     var band = false;
-    if(($('#tableParticipantes td').length) > 0)
-    {
+    if(($('#tableParticipantes td').length) > 0){
          tableParticipantes.column(0)
               .data()
               .each( function ( value1,index1 ) {
                   tableParticipantes.column(2)
                       .data()
                       .each( function ( value2,index2 ) {
-                            if(index1 == index2 && value1 == $("#IdParticipanteRegistro").val() && value2 == $("#CedulaParticipanteRegistro").val())
-                            { 
+                            if(index1 == index2 && value1 == $("#IdParticipanteRegistro").val() && value2 == $("#CedulaParticipanteRegistro").val()){ 
                                 band = true;
                                 toastr.error("Error el usuario ya esta registrado para el registro especificado.", "Error", {
                                     "timeOut": "0",
@@ -216,31 +196,31 @@ $('#agregarParticipantes').click(function(){
                });
    }
   
-   if(!band && $("#IdParticipanteRegistro").val() != -1 && $("#NombreParticipanteRegistro").val() != "" && $("#CedulaParticipanteRegistro").val() != "")
-   {
+   if(!band && $("#IdParticipanteRegistro").val() != -1 && $("#NombreParticipanteRegistro").val() != "" && $("#CedulaParticipanteRegistro").val() != ""){
        tableParticipantes.row.add( {
                 "Id del registro": $("#IdParticipanteRegistro").val(),
                 "Nombre": $("#NombreParticipanteRegistro").val(),
                 "Cedula": $("#CedulaParticipanteRegistro").val()
         } ).draw();
+        countParticipante++;
    }
 }); 
 
 $('#tableParticipantes').on( 'click', 'tbody tr', function () {
     tableParticipantes.row( this ).remove().draw();
+    if(countParticipante > 0)
+        countParticipante--;
 } );
 
 
 $('#agregarCargoDatos').click(function(){
     toastr.clear();
     var band = false;
-    if(($('#tableCargo td').length) > 0)
-    {
+    if(($('#tableCargo td').length) > 0){
          tableCargo.column(0)
               .data()
               .each( function ( value,index ) {
-                    if(value == $("#cargosDatos").find('option:selected').val())
-                    {
+                    if(value == $("#cargosDatos").find('option:selected').val()){
                         band = true;
                         toastr.error("Error el cargo ya se encuentra en la tabla.", "Error", {
                             "timeOut": "0",
@@ -254,20 +234,17 @@ $('#agregarCargoDatos').click(function(){
    $("#spanCargosDatos").removeClass("glyphicon-remove");
    $("#divCargosDatos").removeClass("has-error");
    
-   if(($('#tableCargo td').length)==0 && $("#cargosDatos").find('option:selected').val() != "")
-   {
+   if(($('#tableCargo td').length)==0 && $("#cargosDatos").find('option:selected').val() != ""){
        tableCargo.row.add( {
                 "Cargo": $("#cargosDatos").find('option:selected').val()
         }).draw();
         countCargo++;
-   }else if(!band && $("#cargosDatos").find('option:selected').val() != "")
-   {
+   }else if(!band && $("#cargosDatos").find('option:selected').val() != ""){
        tableCargo.row.add( {
                 "Cargo": $("#cargosDatos").find('option:selected').val()
         }).draw();
         countCargo++;
-   }else if(!band)
-   {
+   }else if(!band){
         toastr.error("Error debe seleccionar un cargo.", "Error", {
                         "timeOut": "0",
                         "extendedTImeout": "0"
@@ -281,14 +258,11 @@ $('#agregarCargoDatos').click(function(){
 $('#rolUser').change(function(){
     toastr.clear();
     var band = false;
-    if(($('#tableRol td').length) > 0)
-    {
+    if(($('#tableRol td').length) > 0){
          tableRol.column(0)
               .data()
               .each( function ( value,index ) {
-                    //alert($("#rolUser").find('option:selected').val());
-                    if(value == $("#rolUser").find('option:selected').val())
-                    {
+                    if(value == $("#rolUser").find('option:selected').val()){
                         band = true;
                         toastr.error("Error el rol ya se encuentra en la tabla.", "Error", {
                             "timeOut": "0",
@@ -298,14 +272,12 @@ $('#rolUser').change(function(){
                });
    }
    
-   if(($('#tableRol td').length)==0 && $("#rolUser").find('option:selected').val() != "")
-   {
+   if(($('#tableRol td').length)==0 && $("#rolUser").find('option:selected').val() != ""){
        tableRol.row.add( {
                 "Rol": $("#rolUser").find('option:selected').val()
         }).draw();
         countRol++;
-   }else if(!band && $("#rolUser").find('option:selected').val() != "")
-   {
+   }else if(!band && $("#rolUser").find('option:selected').val() != ""){
        tableRol.row.add( {
                 "Rol": $("#rolUser").find('option:selected').val()
         }).draw();
@@ -317,7 +289,7 @@ $('#tableRol').on( 'click', 'tbody tr', function () {
     tableRol.row( this ).remove().draw();
     if(countRol > 0)
         countRol--;
-} );
+});
 
 $('#tableCargo').on( 'click', 'tbody tr', function () {
     tableCargo.row( this ).remove().draw();
@@ -328,16 +300,14 @@ $('#tableCargo').on( 'click', 'tbody tr', function () {
 $('#agregarRevista').click(function(){
     toastr.clear();
     var band = false;
-    if(($('#tableRevista td').length) > 0)
-    {
+    if(($('#tableRevista td').length) > 0){
          tableRevista.column(0)
               .data()
               .each( function ( value1,index1 ) {
                   tableRevista.column(1)
                       .data()
                       .each( function ( value2,index2 ) {
-                            if(index1 == index2 && value1 == $("#idRevistaRegistro").val() && value2 ==  $("#descrpcionRevistaRegistro").val())
-                            { 
+                            if(index1 == index2 && value1 == $("#idRevistaRegistro").val() && value2 ==  $("#descrpcionRevistaRegistro").val()){ 
                                 band = true;
                                 toastr.error("Error la revista ya esta registrada para el registro especificado.", "Error", {
                                     "timeOut": "0",
@@ -348,8 +318,7 @@ $('#agregarRevista').click(function(){
                });
     }
    
-   if(!band && $("#idRevistaRegistro").val() != -1 && $("#descrpcionRevistaRegistro").val() != "")
-   {
+   if(!band && $("#idRevistaRegistro").val() != -1 && $("#descrpcionRevistaRegistro").val() != ""){
        tableRevista.row.add( {
                 "Id del registro": $("#idRevistaRegistro").val(),
                 "Revista": $("#descrpcionRevistaRegistro").val()

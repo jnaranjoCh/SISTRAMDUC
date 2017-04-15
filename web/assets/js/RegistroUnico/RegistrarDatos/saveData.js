@@ -9,31 +9,25 @@ $('#submitData').click(function(){
     var text = "";
     
     
-    for(var i = 0; i < inputsO.length; i++)
-    {
-        if($("#"+inputsO[i]).val() == "")
-        {
-            if(inputsO[i] != "NumeroDatosII")
-            {
+    for(var i = 0; i < inputsO.length; i++){
+        if($("#"+inputsO[i]).val() == ""){
+            if(inputsO[i] != "NumeroDatosII"){
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-            }else
-            {
+            }else{
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#div"+inputsO[i-1]).addClass("has-error");
             }
             
             text = "Error campo mal introducido o obligatorio.";
-        }else
-        {
+        }else{
             if(inputsO[i] == "FechaNacimientoDatos")
               anio = parseInt($("#"+inputsO[i]).val()[6]+$("#"+inputsO[i]).val()[7]+$("#"+inputsO[i]).val()[8]+$("#"+inputsO[i]).val()[9]); 
               
-            if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18))
-            {
+            if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18)){
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
@@ -45,15 +39,13 @@ $('#submitData').click(function(){
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
                 text = "Error dato invalida.";
-            }else if(inputsO[i] == "NumeroDatosII" &&   (parseInt($("#"+inputsO[i]).val()) > 9999999 || parseInt($("#"+inputsO[i]).val()) < 1000000))
-            {
+            }else if(inputsO[i] == "NumeroDatosII" &&   (parseInt($("#"+inputsO[i]).val()) > 9999999 || parseInt($("#"+inputsO[i]).val()) < 1000000)){
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i-1]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i-1]).addClass("has-error");
                 text = "Error dato invalida.";
-            }else
-            {
+            }else{
                 $("#headerPersonal").css({ 'color': "black" });
                 $("#span"+inputsO[i]).removeClass("glyphicon-remove");
                 $("#div"+inputsO[i]).removeClass("has-error");   
@@ -61,10 +53,8 @@ $('#submitData').click(function(){
         }
     }
     
-    for(var i = 0; i < inputsW.length; i++)
-    {
-        if(!(/^[a-zA-Z]*$/).test($("#"+inputsW[i]).val()))
-        {
+    for(var i = 0; i < inputsW.length; i++){
+        if(!(/^[a-zA-Z]*$/).test($("#"+inputsW[i]).val())){
             can_register = false;
             $("#headerPersonal").css({ 'color': "red" });
             $("#span"+inputsW[i]).addClass("glyphicon-remove");
@@ -79,84 +69,74 @@ $('#submitData').click(function(){
     
     }
     
-    if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0)))
-    {
+    if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         can_register = false;
         $("#headerPersonal").css({ 'color': "red" });
         text = "Error la edad no coincide con la fecha de nacimiento.";
     }
 
-    if(countCargo < 1)
-    {
+    if(countCargo < 1){
          can_register = false;
          $("#spanCargosDatos").addClass("glyphicon-remove");
          $("#divCargosDatos").addClass("has-error");
          $("#headerCargos").css({ 'color': "red" });
-    }else
-    {
+    }else{
          $("#spanCargosDatos").removeClass("glyphicon-remove");
          $("#divCargosDatos").removeClass("has-error");
          $("#headerCargos").css({ 'color': "black" });
     }
     
-    if(countRegistro < 1)
-    {
+    if(countRegistro < 1){
          can_register = false;
-         for(var i = 0; i < inputsR.length; i++)
-         {
-            if(inputsR[i] == "InstitucionDatos")
-            {    
-                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de servicio comunitario" && $("#"+inputsR[i]).val() == "")
-                {    
+         for(var i = 0; i < inputsR.length; i++){
+            if(inputsR[i] == "InstitucionDatos"){    
+                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de servicio comunitario" && $("#"+inputsR[i]).val() == ""){    
                     $("#headerRegistros").css({ 'color': "red" });
                     $("#span"+inputsR[i]).addClass("glyphicon-remove");
                     $("#div"+inputsR[i]).addClass("has-error");
                     text = "Error campo mal introducido o obligatorio.";
-                }else
-                {
+                }else{
                     $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                     $("#div"+inputsR[i]).removeClass("has-error");        
                 }
-            }else if(inputsR[i] == "EmpresaDatos")
-            {   
-                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias" && $("#"+inputsR[i]).val() == "")
-                {    
+            }else if(inputsR[i] == "EmpresaDatos"){   
+                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias" && $("#"+inputsR[i]).val() == ""){    
                     $("#headerRegistros").css({ 'color': "red" });
                     $("#span"+inputsR[i]).addClass("glyphicon-remove");
                     $("#div"+inputsR[i]).addClass("has-error");
                     text = "Error campo mal introducido o obligatorio.";
-                }else
-                {
+                }else{
                     $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                     $("#div"+inputsR[i]).removeClass("has-error");        
                 }
-            }else
-            {
-                
-                if($("#"+inputsR[i]).val() == "")
-                {
+            }else{
+                if($("#"+inputsR[i]).val() == ""){
                     $("#headerRegistros").css({ 'color': "red" });
                     $("#span"+inputsR[i]).addClass("glyphicon-remove");
                     $("#div"+inputsR[i]).addClass("has-error");
                     text = "Error campo mal introducido o obligatorio.";
-                }else
-                {
+                }else{
                     $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                     $("#div"+inputsR[i]).removeClass("has-error");        
                 }
             }
          }
-    }else
-    {
-        for(var i = 0; i < inputsR.length; i++)
-        {    
+    }else{
+        for(var i = 0; i < inputsR.length; i++){    
             $("#headerRegistros").css({ 'color': "black" });
             $("#span"+inputsR[i]).removeClass("glyphicon-remove");
             $("#div"+inputsR[i]).removeClass("has-error");
         }
     }
 
-    
+    tableRegistros.column(1)
+                     .data()
+                     .each( function ( value1,index1 ) {
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
+                             
+                            }else if(value1=="Articulo publicado"){
+                            }
+                      });
     
     /*$.ajax({
         method: "POST",

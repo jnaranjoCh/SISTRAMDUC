@@ -20,8 +20,7 @@ $( window ).load(function() {
         method: "POST",
         url:  "/web/app_dev.php/registro/obtener-datos",
         dataType: 'json',
-        success: function(data)
-        {
+        success: function(data){
             var estatus ="<option value='' selected='selected'>Seleccione una opción</option>";
             for(var i = 0; i < data["estatus"].length; i++)
                 estatus = estatus+"<option value='"+data["estatus"][i]+"'>"+data["estatus"][i]+"</option>";
@@ -45,8 +44,7 @@ $( window ).load(function() {
         method: "POST",
         url:  "/web/app_dev.php/registro/enviar-lastid",
         dataType: 'json',
-        success: function(data)
-        {
+        success: function(data){
             if(data[0].lastId != null)
                 idRegistro = data[0].lastId;
         }

@@ -12,17 +12,14 @@ $('#generate').click(function(){
             data: {"Email":$('#gemail').val()},
             url:  "/web/app_dev.php/registro/buscar-email",
             dataType: 'json',
-            success: function(data)
-            {
-                if(data)
-                {
+            success: function(data){
+                if(data){
                     $("#formPersonal").removeClass("hidden");
                     $("#formRegistros").removeClass("hidden");
                     $("#formCargos").removeClass("hidden");
                     $("#save").removeClass("hidden");
                 }
-                else
-                {
+                else{
                     toastr.error("El usuario no se encuentra registrado o esta inactivo.", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
