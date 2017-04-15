@@ -51,8 +51,8 @@ $( window ).load(function() {
                 idRegistro = data[0].lastId;
         }
     });
-    $('#IdParticipanteRegistro').html("<option value='0'>No existen registro</option>");
-    $('#idRevistaRegistro').html("<option value='0'>No existen registro</option>");
+    $('#IdParticipanteRegistro').html("<option value='-1'>No existen registro</option>");
+    $('#idRevistaRegistro').html("<option value='-1'>No existen registro</option>");
     $('#datetimepicker1').datetimepicker();
 });
 

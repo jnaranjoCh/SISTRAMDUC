@@ -4,8 +4,8 @@ var countRegistro = 0;
 $('#agregarRegistro').click(function(){
     toastr.clear();
     var band = false,bandConcatRevist = true,bandConcatPart = true;
-    var participantesId="<option value='0'>No existen registro</option>";
-    var revistasId="<option value='0'>No existen registro</option>";
+    var participantesId="<option value='-1'>No existen registro</option>";
+    var revistasId="<option value='-1'>No existen registro</option>";
 
     if(($('#tableRegistros td').length) > 0)
     {
@@ -116,7 +116,7 @@ $('#agregarRegistro').click(function(){
                         {
                            if(bandConcatPart)
                            {
-                                participantesId="<option value='0'>Seleccione una opción</option>";
+                                participantesId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatPart = false;
                            }
                            
@@ -130,7 +130,7 @@ $('#agregarRegistro').click(function(){
                         {
                             if(bandConcatRevist)
                             {
-                                revistasId="<option value='0'>Seleccione una opción</option>";
+                                revistasId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatRevist = false;
                             }
                             tableRegistros.column(0)
@@ -150,8 +150,8 @@ $('#agregarRegistro').click(function(){
 
 $('#tableRegistros').on( 'click', 'tbody tr', function () {
     var bandConcatRevist = true,bandConcatPart = true;
-    var participantesId="<option value='0'>No existen registro</option>";
-    var revistasId="<option value='0'>No existen registro</option>";
+    var participantesId="<option value='-1'>No existen registro</option>";
+    var revistasId="<option value='-1'>No existen registro</option>";
 
     tableRegistros.row( this ).remove().draw();
     if(countRegistro > 0)
@@ -163,7 +163,7 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
                             {
                                if(bandConcatPart)
                                {
-                                    participantesId="<option value='0'>Seleccione una opción</option>";
+                                    participantesId="<option value='-1'>Seleccione una opción</option>";
                                     bandConcatPart = false;
                                }
                                tableRegistros.column(0)
@@ -176,7 +176,7 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
                             {
                                 if(bandConcatRevist)
                                 {
-                                    revistasId="<option value='0'>Seleccione una opción</option>";
+                                    revistasId="<option value='-1'>Seleccione una opción</option>";
                                     bandConcatRevist = false;
                                 }
                                 tableRegistros.column(0)
@@ -194,11 +194,36 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
 } );
 
 $('#agregarParticipantes').click(function(){
-   tableParticipantes.row.add( {
-            "Id del registro": $("#IdParticipanteRegistro").val(),
-            "Nombre": $("#NombreParticipanteRegistro").val(),
-            "Cedula": $("#CedulaParticipanteRegistro").val()
-    } ).draw();
+    toastr.clear();
+    var band = false;
+    if(($('#tableParticipantes td').length) > 0)
+    {
+         tableParticipantes.column(0)
+              .data()
+              .each( function ( value1,index1 ) {
+                  tableParticipantes.column(2)
+                      .data()
+                      .each( function ( value2,index2 ) {
+                            if(index1 == index2 && value1 == $("#IdParticipanteRegistro").val() && value2 == $("#CedulaParticipanteRegistro").val())
+                            { 
+                                band = true;
+                                toastr.error("Error el usuario ya esta registrado para el registro especificado.", "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                 });
+                            }
+                       });
+               });
+   }
+  
+   if(!band && $("#IdParticipanteRegistro").val() != -1 && $("#NombreParticipanteRegistro").val() != "" && $("#CedulaParticipanteRegistro").val() != "")
+   {
+       tableParticipantes.row.add( {
+                "Id del registro": $("#IdParticipanteRegistro").val(),
+                "Nombre": $("#NombreParticipanteRegistro").val(),
+                "Cedula": $("#CedulaParticipanteRegistro").val()
+        } ).draw();
+   }
 }); 
 
 $('#tableParticipantes').on( 'click', 'tbody tr', function () {
