@@ -82,7 +82,7 @@ $('#submitData').click(function(){
         text = "Error la edad no coincide con la fecha de nacimiento.";
     }
 
-    if(countCargo < 1){
+    if(can_register && countCargo < 1){
          can_register = false;
          $("#spanCargosDatos").addClass("glyphicon-remove");
          $("#divCargosDatos").addClass("has-error");
@@ -93,7 +93,7 @@ $('#submitData').click(function(){
          $("#headerCargos").css({ 'color': "black" });
     }
     
-    if(countRegistro < 1){
+    if(can_register && countRegistro < 1){
          can_register = false;
          for(var i = 0; i < inputsR.length; i++){
             if(inputsR[i] == "InstitucionDatos"){    
@@ -159,7 +159,8 @@ $('#submitData').click(function(){
                                               });
                             }
                       });
-    if(indRegistroParticipantes>0){
+                      
+    if(can_register &&  indRegistroParticipantes>0){
         tableParticipantes.column(0)
                          .data()
                          .each( function ( value,index ) {
@@ -189,6 +190,32 @@ $('#submitData').click(function(){
         }
     }
                       
+    if(can_register &&  indRegistroRevistas>0){
+        tableRevista.column(0)
+                         .data()
+                         .each( function ( value,index ) {
+                                idRevistas[indRevistas]=value;
+                                indRevistas++;
+                          });
+        idRevistas = idRevistas.unique();
+        
+        if(idRevistas.length != idRegistrosRevistas.length){
+            can_register = false;
+            $("#headerRegistros").css({ 'color': "red" });
+            $("#spanDescrpcionRevistaRegistro").addClass("glyphicon-remove");
+            $("#divDescrpcionRevistaRegistro").addClass("has-error");
+            $("#spanIdRevistaRegistro").addClass("glyphicon-remove");
+            $("#divIdRevistaRegistro").addClass("has-error");
+            text = "Error existen tipos de registros sin revistas asociados.";
+        }else{
+            $("#headerRegistros").css({ 'color': "black" });
+            $("#spanDescrpcionRevistaRegistro").removeClass("glyphicon-remove");
+            $("#divDescrpcionRevistaRegistro").removeClass("has-error");
+            $("#spanIdRevistaRegistro").removeClass("glyphicon-remove");
+            $("#divIdRevistaRegistro").removeClass("has-error");
+        }
+    }
+    
     
     /*$.ajax({
         method: "POST",
