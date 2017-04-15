@@ -3,11 +3,18 @@ $('#submitData').click(function(){
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
+    var idRegistrosParticipantes = [];
+    var idParticipantes = [];
+    var idRegistrosRevistas = [];
+    var idRevistas = [];
     var can_register = true;
     var date = new Date();
     var anio;
     var text = "";
-    
+    var indRegistroParticipantes = 0;
+    var indParticipantes = 0;
+    var indRegistroRevistas = 0;
+    var indRevistas = 0;
     
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
@@ -133,10 +140,55 @@ $('#submitData').click(function(){
                      .data()
                      .each( function ( value1,index1 ) {
                             if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
-                             
+                                tableRegistros.column(0)
+                                             .data()
+                                             .each( function ( value2,index2 ) {
+                                                    if(index1==index2){
+                                                        idRegistrosParticipantes[indRegistroParticipantes] = value2;
+                                                        indRegistroParticipantes++;
+                                                    }
+                                              });                                   
                             }else if(value1=="Articulo publicado"){
+                                tableRegistros.column(0)
+                                             .data()
+                                             .each( function ( value2,index2 ) {
+                                                    if(index1==index2){
+                                                        idRegistrosRevistas[indRegistroRevistas] = value2;
+                                                        indRegistroRevistas++;
+                                                    }
+                                              });
                             }
                       });
+    if(indRegistroParticipantes>0){
+        tableParticipantes.column(0)
+                         .data()
+                         .each( function ( value,index ) {
+                                idParticipantes[indParticipantes]=value;
+                                indParticipantes++;
+                          });
+        idParticipantes = idParticipantes.unique();
+        
+        if(idParticipantes.length != idRegistrosParticipantes.length){
+            can_register = false;
+            $("#headerRegistros").css({ 'color': "red" });
+            $("#spanNombreParticipanteRegistro").addClass("glyphicon-remove");
+            $("#divNombreParticipanteRegistro").addClass("has-error");
+            $("#spanCedulaParticipanteRegistro").addClass("glyphicon-remove");
+            $("#divCedulaParticipanteRegistro").addClass("has-error");
+            $("#spanIdParticipanteRegistro").addClass("glyphicon-remove");
+            $("#divIdParticipanteRegistro").addClass("has-error");
+            text = "Error existen tipos de registros sin participantes asociados.";
+        }else{
+            $("#headerRegistros").css({ 'color': "black" });
+            $("#spanNombreParticipanteRegistro").removeClass("glyphicon-remove");
+            $("#divNombreParticipanteRegistro").removeClass("has-error");
+            $("#spanCedulaParticipanteRegistro").removeClass("glyphicon-remove");
+            $("#divCedulaParticipanteRegistro").removeClass("has-error");
+            $("#spanIdParticipanteRegistro").removeClass("glyphicon-remove");
+            $("#divIdParticipanteRegistro").removeClass("has-error");
+        }
+    }
+                      
     
     /*$.ajax({
         method: "POST",
@@ -155,4 +207,8 @@ $('#submitData').click(function(){
                  });
     else
        toastr.clear();
+});
+
+Array.prototype.unique=function(a){
+  return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
 });
