@@ -122,14 +122,52 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            <button id="ingresarCPEC" type="button" class="btn btn-success" data-dismiss="modal">Registrar</button>
+            <button id="ingresarCPEC" type="button" class="btn btn-success">Registrar</button>
           </div>
         </div>
         
       </div>
     </div>
 
-            <form>
+            <form id="CPEC">
+
+            	<div class="panel panel-danger hide" id="msgFracaso">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Debe llenar todos los campos indicados.</h4>
+            		</div>		            
+		        </div>
+
+		        <div class="panel panel-danger hide" id="msgFracaso1">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar1"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Ocurri&oacute; un problema al insertar.</h4>
+            		</div>		            
+		        </div>
+
+		        <div class="panel panel-success hide" id="msgExito">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar2"></i> Exito</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>CPEC Insertados.</h4>
+            		</div>		            
+		        </div> 
+
+		        <div class="panel panel-danger hide" id="msgFracaso2">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar1"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Hay C&eacute;dulas Repetidas. Por Favor Verifique.</h4>
+            		</div>		            
+		        </div>           	
+
+	            <br/>
 
 				<div class="container">
 	            		<label>CPEC Coordinador<span id="spannombre1" class="label label-danger hide pull-right">Vac&iacute;o</span>
@@ -138,7 +176,7 @@
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 1" id='nombre1' value="" readOnly="true"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 1" id='nombre1' readOnly="true"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -161,7 +199,7 @@
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 2" id='nombre2' value="" readOnly="true"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 2" id='nombre2' readOnly="true"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -184,7 +222,7 @@
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 3" id='nombre3' value="" readOnly="true"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 3" id='nombre3' readOnly="true"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -207,7 +245,7 @@
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 4" id='nombre4' value="" readOnly="true"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 4" id='nombre4' readOnly="true"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -230,7 +268,7 @@
 				        <div class='col-sm-6'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 5" id='nombre5' value="" readOnly="true"/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ingrese CPEC 5" id='nombre5' readOnly="true"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -249,7 +287,7 @@
 
               <div class="row">
                 <div class="col-xs-6">
-                  <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
+                  <button id="limpiarJurado" type="button" class="btn btn-default btn-block btn-flat">Limpiar</button>
                 </div>
                 <div class="col-xs-6">
                   <button id="registrarCPEC" type="button" class="btn btn-success btn-block btn-flat">Registrar CPEC</button>

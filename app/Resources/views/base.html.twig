@@ -410,18 +410,14 @@
 <script>
   // Resolve conflict in jQuery UI tooltip with Bootstrap tooltip
   $.widget.bridge('uibutton', $.ui.button);
-
   // Activate sidebar items accordingly
   var current_route = $("#sidebar").data('current-route'),
     $li = $("[data-route='" + current_route + "']").addClass('active'),
     $ul = $li.parent('ul');
-
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
     $ul.parent('li.treeview').addClass('active');
   }
-
-
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
     $ul.parent('li').addClass('active');

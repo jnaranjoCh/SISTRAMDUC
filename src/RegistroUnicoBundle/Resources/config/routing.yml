@@ -1,4 +1,4 @@
-registro_usuario_index:
+registro_usuario_index: 
     path:     /registro/usuario
     defaults: { _controller: RegistroUnicoBundle:RegistrarUsuario:registrarUsuario }
 
@@ -28,7 +28,7 @@ registro_obtener_ajax:
     path:     /registro/obtener-datos
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
     requirements:
-        _method:  POST
+        _method:  POST 
         
 registro_buscaremail_ajax:
     path:     /registro/buscar-email

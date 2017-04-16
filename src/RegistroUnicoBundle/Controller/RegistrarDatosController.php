@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace RegistroUnicoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
