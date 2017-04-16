@@ -3,6 +3,7 @@ var countCargo = 0;
 var countRegistro = 0;
 var countParticipante = 0;
 $('#agregarRegistro').click(function(){
+    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
     toastr.clear();
     var band = false,bandConcatRevist = true,bandConcatPart = true;
     var participantesId="<option value='-1'>No existen registros</option>";
@@ -60,6 +61,12 @@ $('#agregarRegistro').click(function(){
             countRegistro++;
             idRegistro++;
         }
+        
+        for(var i = 0; i < inputsR.length; i++){
+            $("#headerRegistros").css({ 'color': "black" });
+            $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+            $("#div"+inputsR[i]).removeClass("has-error");
+        }
    }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
         if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias"){
             tableRegistros.row.add( {
@@ -98,6 +105,45 @@ $('#agregarRegistro').click(function(){
             countRegistro++;
             idRegistro++;
         }
+        
+        for(var i = 0; i < inputsR.length; i++){
+            $("#headerRegistros").css({ 'color': "black" });
+            $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+            $("#div"+inputsR[i]).removeClass("has-error");
+        }
+   }else
+   {
+        toastr.error("Error faltan datos.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+        
+        if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de servicio comunitario"){
+            for(var i = 0; i < inputsR.length; i++){
+                if(inputsR[i] != "EmpresaDatos"){
+                    $("#headerRegistros").css({ 'color': "red" });
+                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).addClass("has-error");
+                }
+            }
+        }else if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de pasantias"){
+            for(var i = 0; i < inputsR.length; i++){
+                if(inputsR[i] != "InstitucionDatos"){
+                    $("#headerRegistros").css({ 'color': "red" });
+                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).addClass("has-error");
+                }
+            }
+        }else{
+            for(var i = 0; i < inputsR.length; i++){
+                if(inputsR[i] != "InstitucionDatos" && inputsR[i] != "EmpresaDatos"){
+                    $("#headerRegistros").css({ 'color': "red" });
+                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsR[i]).addClass("has-error");
+                }
+            }
+        }
+        
    }
    
    tableRegistros.column(1)
@@ -131,8 +177,6 @@ $('#agregarRegistro').click(function(){
     $('#IdParticipanteRegistro').html(participantesId);
     $('#idRevistaRegistro').html(revistasId);
                                                 
-  
-    
 });
 
 $('#tableRegistros').on( 'click', 'tbody tr', function () {
