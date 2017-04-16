@@ -3,9 +3,9 @@ var Grid = (function() {
 
 var CTRL_CODE = 17, SHIFT_CODE = 16;
 
-function GridComponent () {
+function GridComponent (data) {
     this.$elements = null;
-    this.data = [];
+    this.data = data === undefined ? [] : data;
     this.display = [];
 };
 
@@ -20,6 +20,14 @@ GridComponent.prototype = {
         }
         this.display = this.data.slice();
         return this;
+    },
+    render: function (container, wrapper, element) {
+        var html = "<div class='" + wrapper + "'>"
+            + ("<div class='" + element + "'></div>").repeat(this.data.length) + "</div>";
+
+        var $component = $(html).appendTo(container);
+        this.$elements = $component.find("." + element);
+        this.draw();
     }
 }
 
@@ -36,9 +44,10 @@ Cell.prototype.isSelected = function () {
 }
 
 function Row (jwrapped_set, cells) {
-    jwrapped_set.__proto__ = {};
     for (i in jwrapped_set) {
-        this[i] = jwrapped_set[i];
+        if (jwrapped_set.hasOwnProperty(i)) {
+            this[i] = jwrapped_set[i];
+        }
     }
     this.cells = cells;
 }
@@ -52,34 +61,7 @@ function Grid (container, opts) {
     if (container === undefined) {
         throw "Container (first argument) is mandatory";
     }
-
     this.container = container = $(container);
-
-    this.header = new GridComponent();
-    this.header.render = function () {
-        var html = "<div class='grid-header'>";
-        for (var i = 0; i < this.data.length; i++) {
-            html += "<div class='grid-header-el'></div>";
-        }
-        html += "</div>";
-
-        $header = $(html).appendTo(container);
-        this.$elements = $header.find(".grid-header-el");
-        this.draw();
-    }
-
-    this.numeration = new GridComponent();
-    this.numeration.render = function () {
-        var html = "<div class='grid-numeration'>";
-        for (var i = 0; i < this.data.length; i++) {
-            html += "<div class='grid-num'></div>";
-        }
-        html += "</div>";
-
-        $numeration = $(html).appendTo(container);
-        this.$elements = $numeration.find(".grid-num");
-        this.draw();
-    }
 
     this.state = {
         multiselection: false,
@@ -102,29 +84,116 @@ function Grid (container, opts) {
         numeration: defineComponentData(opts ? opts.numeration : undefined)
     };
 
-    this.header.setData(this.config.header).render();
-    this.numeration.setData(this.config.numeration).render();
+    this.header = new GridComponent(this.config.header);
+    this.header.render(this.container, 'grid-header', 'grid-header-el');
+
+    this.numeration = new GridComponent(this.config.numeration);
+    this.numeration.render(this.container, 'grid-numeration', 'grid-num');
+
     this.container.append(this._getCellsHtml());
 
     this.$cells = this.container.find(".grid-cell");
     this.$rows = this.container.find(".grid-row");
 
-    this._cells = [];
-    for (var i = 0; i < this.$cells.length; i++) {
-        this._cells[i] = new Cell(this.$cells.eq(i));
+    this._cells = createCells(this.$cells);
+    this._rows = createRows(this.header.data.length, this.$rows, this._cells)
+
+    addDomListeners(this);
+}
+
+Grid.prototype = {
+    cell: function (pos) {
+        return this._cells[pos];
+    },
+    row: function (pos) {
+        return this._rows[pos];
+    },
+    select: function (start, end) {
+        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
+        return range.addClass('selected');
+    },
+    unselect: function (start, end) {
+        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
+        return range.removeClass('selected');
+    },
+    getSelection: function () {
+        return this.$cells.filter('.selected');
+    },
+    getRange: function (point1, point2) {
+        point1 = typeof point1 == "number" ? this.$cells.eq(point1) : point1;
+        point2 = typeof point2 == "number" ? this.$cells.eq(point2) : point2;
+
+        if (point1 === null || point2 === null) {
+            return getOnePointRange(point1, point2);
+        }
+
+        var bounds = getRangeBoundaries(point1, point2, this.$cells),
+            range = $(), i;
+
+        for (i = bounds.start; i <= bounds.end; i++) {
+            range = range.add(this.$cells[i]);
+        }
+
+        return range;
+    },
+    destroy: function () {
+        this.container.empty();
+        this.container.off();
+        // don't remove this comment without adding the corresponding test
+        $(document)
+            .off("keydown keyup", this._keydownkeyup)
+            .off("mouseup", this._mouseup);
+    },
+    _getCellsHtml: function () {
+        var row = "<div class='grid-cell'></div>".repeat(this.header.data.length);
+        return ("<div class='grid-row'>" + row + "</div>").repeat(this.numeration.data.length);
+    }
+};
+
+function updateSelection (selection, curr, should_retreat, grid) {
+    if (selection.active) {
+        var $range = grid.select(curr, selection.start);
+        if (should_retreat && isSameSelection(selection.last_range, selection.start)) {
+            selection.last_range.not($range).removeClass("selected");
+        }
+        selection.last_range = $range;
     }
 
-    this._rows = [];
-    var cells_per_row = this._cells.length / this.numeration.data.length,
-        start, end;
-    for (var i = 0; i < this.$rows.length; i++) {
-        start = cells_per_row * i;
-        end = start + cells_per_row;
-        this._rows[i] = new Row(this.$rows.eq(i), this._cells.slice(start, end));
+    function isSameSelection (last_range, last_start) {
+        return last_range != null && $(last_start).is(last_range);
     }
+}
 
-    var grid = this;
+function getOnePointRange (point1, point2) {
+    var range = $();
+    if (point1 !== null) {
+        range = range.add(point1);
+    }
+    if (point2 !== null) {
+        range = range.add(point1);
+    }
+    return range;
+}
 
+function getRangeBoundaries (point1, point2, cells) {
+    var point1_index = cells.index(point1),
+        point2_index = cells.index(point2),
+        start = Math.min(point1_index, point2_index),
+        end = Math.max(point1_index, point2_index);
+
+    return {start: start, end: end};
+}
+
+function defineComponentData (prop) {
+    if (typeof prop === "number") {
+        prop = (new Array(prop)).fill('');
+    } else if (! prop || ! prop.constructor === Array) {
+        prop = (new Array(5)).fill('');
+    }
+    return prop;
+}
+
+function addDomListeners (grid) {
     function keydownkeyup (e) {
         if ( e.keyCode ==  CTRL_CODE ) {
             grid.state.multiselection = (e.type == "keydown");
@@ -150,7 +219,7 @@ function Grid (container, opts) {
         .on("keydown keyup", keydownkeyup)
         .on("mouseup", mouseup);
 
-    $(this.container)
+    $(grid.container)
         .on("mousedown", ".grid-cell", function (e) {
             if (! grid.enabled) {
                 return;
@@ -191,113 +260,24 @@ function Grid (container, opts) {
         });
 }
 
-Grid.prototype = {
-    _getCellsHtml: function () {
-        var row = "", grid_body = "";
-
-        for (var i = 0; i < this.header.data.length; i++) {
-            row += "<div class='grid-cell'></div>";
-        }
-        for (var i = 0; i < this.numeration.data.length; i++) {
-            grid_body += "<div class='grid-row'>" + row + "</div>";
-        }
-
-        return grid_body;
-    },
-    cell: function (pos) {
-        return this._cells[pos];
-    },
-    row: function (pos) {
-        return this._rows[pos];
-    },
-    select: function (start, end) {
-        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
-        return range.addClass('selected');
-    },
-    unselect: function (start, end) {
-        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
-        return range.removeClass('selected');
-    },
-    getSelection: function () {
-        return this.$cells.filter('.selected');
-    },
-    getRange: function (point1, point2) {
-        point1 = typeof point1 == "number" ? this.$cells.eq(point1) : point1;
-        point2 = typeof point2 == "number" ? this.$cells.eq(point2) : point2;
-
-        if (point1 === null || point2 === null) {
-            return getObviousRange(point1, point2);
-        }
-
-        var bounds = getRangeBoundaries(point1, point2, this.$cells),
-            range = $(), i;
-
-        for (i = bounds.start; i <= bounds.end; i++) {
-            range = range.add(this.$cells[i]);
-        }
-
-        return range;
-    },
-    destroy: function () {
-        this.container.empty();
-        this.container.off();
-        // don't remove this comment without adding the corresponding test
-        $(document)
-            .off("keydown keyup", this._keydownkeyup)
-            .off("mouseup", this._mouseup);
+function createCells ($cells) {
+    var cells = [];
+    for (var i = 0; i < $cells.length; i++) {
+        cells[i] = new Cell($cells.eq(i));
     }
-};
-
-function updateSelection (selection, curr, should_retreat, grid) {
-    if (selection.active) {
-        var $range = grid.select(curr, selection.start);
-        if (should_retreat && isSameSelection(selection.last_range, selection.start)) {
-            selection.last_range.not($range).removeClass("selected");
-        }
-        selection.last_range = $range;
-    }
-
-    function isSameSelection (last_range, last_start) {
-        return last_range != null && $(last_start).is(last_range);
-    }
+    return cells;
 }
 
-function getObviousRange (point1, point2) {
-    var range = $();
-    if (point1 !== null) {
-        range = range.add(point1);
+function createRows (cells_per_row, $rows, cells) {
+    var start, end, rows = [];
+
+    for (var i = 0; i < $rows.length; i++) {
+        start = cells_per_row * i;
+        end = start + cells_per_row;
+        rows[i] = new Row($rows.eq(i), cells.slice(start, end));
     }
-    if (point2 !== null) {
-        range = range.add(point1);
-    }
-    return range;
-}
 
-function getRangeBoundaries (point1, point2, cells) {
-    var point1_index = cells.index(point1),
-        point2_index = cells.index(point2),
-        start = Math.min(point1_index, point2_index),
-        end = Math.max(point1_index, point2_index);
-
-    return {start: start, end: end};
-}
-
-function defineComponentData (prop) {
-    if (typeof prop === "number") {
-        prop = (new Array(prop)).fill('');
-    } else if (! prop || ! prop.constructor === Array) {
-        prop = (new Array(5)).fill('');
-    }
-    return prop;
-}
-
-if (typeof Array.prototype.fill !== "function") {
-    Array.prototype.fill = function (val) {
-        for (var i = 0; i < this.length; i++) {
-            this[i] = val;
-        }
-        return this;
-    };
+    return rows;
 }
 
 return Grid;

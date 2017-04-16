@@ -116,19 +116,19 @@
    @TODO: Add a fallback for older browsers
 */
 
-div.backdrop-wrapper {
+div.spinner-wrapper {
     height: 25px;
     width: 100%;
 }
 
-div.backdrop {
+div.spinner {
     position: relative;
     height: 100%;
     width: 100%;
     display: none;
 }
 
-div.backdrop div.p {
+div.spinner div.p {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -137,7 +137,7 @@ div.backdrop div.p {
     margin: -3px 0 0 -30%;
 }
 
-div.backdrop div.p div {
+div.spinner div.p div {
     width: 6px;
     height: 6px;
     position: absolute;
@@ -146,23 +146,23 @@ div.backdrop div.p div {
     opacity: 0;
 }
 
-div.backdrop div.p div:nth-child(5) {
+div.spinner div.p div:nth-child(5) {
     animation: loader 3s linear 1.25s infinite both;
 }
 
-div.backdrop div.p div:nth-child(4) {
+div.spinner div.p div:nth-child(4) {
     animation: loader 3s linear 1s infinite both;
 }
 
-div.backdrop div.p div:nth-child(3) {
+div.spinner div.p div:nth-child(3) {
     animation: loader 3s linear 0.75s infinite both;
 }
 
-div.backdrop div.p div:nth-child(2) {
+div.spinner div.p div:nth-child(2) {
     animation: loader 3s linear 0.5s infinite both;
 }
 
-div.backdrop div.p div:nth-child(1) {
+div.spinner div.p div:nth-child(1) {
     animation: loader 3s linear 0.25s infinite both;
 }
 
@@ -190,4 +190,53 @@ div.backdrop div.p div:nth-child(1) {
         left: 100%;
         opacity: 0;
     }
+}
+
+/* plan colectivo. Consider moving this to it's own file */
+
+#plan-colectivo-dialog .modal-dialog {
+    width: 95%;
+}
+
+.plan-table {
+    margin: auto;
+    border-spacing:0;
+    border-collapse: collapse;
+}
+
+.plan-table thead td {
+    border: 2px black solid;
+}
+
+.plan-table thead td:nth-child(n+2) {
+    background-color: #ffcc00;
+    text-align: center;
+}
+
+.plan-table thead td:nth-child(1) {
+    width: 160px;
+}
+.plan-table tbody tr td:nth-child(1) {
+    font-size: 0.9em;
+}
+
+.plan-table tbody tr td {
+    width: 10px;
+    height: 10px;
+    border: 1px #777 solid;
+}
+
+.plan-table tbody tr td:nth-child(12n+1) {
+    border-right-width: 2px;
+    border-right-color: #000;
+}
+
+.plan-table tbody tr td:nth-child(1) {
+    border-left-width: 2px;
+    border-left-color: #000;
+}
+
+.plan-table tbody tr:last-child td {
+    border-bottom-width: 2px;
+    border-bottom-color: #000;
 }

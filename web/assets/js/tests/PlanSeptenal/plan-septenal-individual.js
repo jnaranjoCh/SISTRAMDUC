@@ -1,10 +1,3 @@
-function triggerClickRelatedEvents () {
-    $targets = Array.prototype.slice.call(arguments);
-    for (var i = 0; i < $targets.length; i++) {
-        $targets[i].trigger("mouseenter").trigger("mousedown").trigger("mouseup").trigger("click");
-    }
-}
-
 QUnit.module("Initialization", {
     beforeEach: function() {
         this.$plan = new PlanSeptenalIndividual( $(".plan-septenal-individual") , 2010);
@@ -22,16 +15,6 @@ QUnit.test("container is mandatory during PlanSeptenalIndividual creation", func
         },
         /Container/
     );
-});
-
-QUnit.test("container should have data-route attr", function (assert) {
-    assert.throws(
-        function () {
-            var p = new PlanSeptenalIndividual($("<div>"), "x");
-        },
-        /route/
-    );
-
 });
 
 QUnit.test("starting year is mandatory during PlanSeptenalIndividual creation", function (assert) {
@@ -106,27 +89,26 @@ QUnit.module("Loading and saving", {
         this.$plan = new PlanSeptenalIndividual( $(".plan-septenal-individual"), this.$firstYear);
         this.sample_state = {
             inicio: 2010,
-            fin: 2016,
             tramites: [
                 {
-                    tipo: PlanSeptenalIndividual.TRAMITES[0].name,
+                    tipo: TRAMITES[0].name,
                     periodo: {
                         start: "01/2010",
-                        end: "02/2010",
+                        end: "02/2010"
                     }
                 },
                 {
-                    tipo: PlanSeptenalIndividual.TRAMITES[1].name,
+                    tipo: TRAMITES[1].name,
                     periodo: {
                         start: "03/2010",
                         end: "03/2010"
                     }
                 },
                 {
-                    tipo: PlanSeptenalIndividual.TRAMITES[2].name,
+                    tipo: TRAMITES[2].name,
                     periodo: {
                         start: "12/2016",
-                        end: "12/2016",
+                        end: "12/2016"
                     }
                 }
             ]
@@ -148,13 +130,24 @@ QUnit.test("getState()", function (assert) {
     assert.deepEqual(this.$plan.getState(), this.sample_state, "Summary must be properly structured");
 });
 
+QUnit.test("getState() with uncontiguous tramite indexes", function (assert) {
+    this.$plan.assignTramiteToRange(0, this.$plan.getRange("01/2010", "02/2010"));
+    this.$plan.assignTramiteToRange(2, this.$plan.getRange("03/2010", "03/2010"));
+    this.$plan.assignTramiteToRange(5, this.$plan.getRange("12/2016", "12/2016"));
+
+    this.sample_state.tramites[1].tipo = TRAMITES[2].name;
+    this.sample_state.tramites[2].tipo = TRAMITES[5].name;
+
+    assert.deepEqual(this.$plan.getState(), this.sample_state, "Summary must be properly structured");
+});
+
 QUnit.test("On success load, setState must be called", function (assert) {
     this.server.respondWith([200, {}, ""]);
     sinon.stub(this.$plan, "setState");
     this.$plan.load({ inicio: 2010 });
     this.server.respond();
 
-    assert.ok(this.$plan.setState.calledOnce);
+    sinon.assert.called(this.$plan.setState);
     this.$plan.setState.restore();
 });
 
@@ -172,11 +165,11 @@ QUnit.test("save()", function (assert) {
     this.$plan.save();
 
     var ajaxSettings = {
-        url: this.$plan.container.data("route"),
+        url: this.$plan.ajax_url,
         data: this.sample_state,
         method: "POST"
     };
-    assert.ok($.ajax.calledWithMatch(ajaxSettings));
+    assert.calledWithMatch($.ajax, ajaxSettings);
     $.ajax.restore();
 });
 
@@ -187,11 +180,11 @@ QUnit.test("on save() if status is modifying the request should be PUT instead o
     this.$plan.save();
 
     var ajaxSettings = {
-        url: this.$plan.container.data("route"),
+        url: this.$plan.ajax_url,
         data: this.sample_state,
         method: "PUT"
     };
-    assert.ok($.ajax.calledWithMatch(ajaxSettings));
+    assert.calledWithMatch($.ajax, ajaxSettings);
     $.ajax.restore();
 });
 
@@ -199,7 +192,7 @@ QUnit.test("Summit button must call save method", function (assert) {
     sinon.stub(this.$plan, "save");
     $("#btn-save").appendTo( this.$plan.container ).trigger("click");
 
-    assert.ok(this.$plan.save.calledOnce);
+    sinon.assert.calledOnce(this.$plan.save);
     this.$plan.save.restore();
 });
 
@@ -208,8 +201,8 @@ QUnit.test("On successful save, a message should be displayed", function (assert
     sinon.stub(toastr, "success");
     $("#btn-save").appendTo( this.$plan.container ).trigger("click");
 
-    assert.ok(toastr["success"].calledWith("Los cambios han sido guardados"), "A success message is necessary here");
-    toastr["success"].restore();
+    assert.calledWith(toastr.success, "Los cambios han sido guardados");
+    toastr.success.restore();
 });
 
 QUnit.test("On server error, a message should be displayed", function (assert) {
@@ -217,8 +210,8 @@ QUnit.test("On server error, a message should be displayed", function (assert) {
     sinon.stub(toastr, "error");
     $("#btn-save").appendTo( this.$plan.container ).trigger("click");
 
-    assert.ok(toastr["error"].calledWith("Ocurrió un error. En caso de que el problema persista contacte a soporte"), "An error message is necessary here");
-    toastr["error"].restore();
+    assert.calledWith(toastr.error, SERVER_ERROR_MESSAGE);
+    toastr.error.restore();
 });
 
 QUnit.test("load must receive an object with an id or period", function (assert) {
@@ -250,11 +243,11 @@ QUnit.test("load must request the plan septenal individual to the server", funct
     this.$plan.load(data);
 
     var ajaxSettings = {
-        url: this.$plan.container.data("route"),
+        url: this.$plan.ajax_url,
         data: data,
         method: "GET"
     };
-    assert.ok($.ajax.calledWithMatch(ajaxSettings));
+    assert.calledWithMatch($.ajax, ajaxSettings);
     $.ajax.restore();
 });
 
@@ -272,25 +265,25 @@ QUnit.test("load must clear all tramites", function (assert) {
     $.ajax.restore();
 });
 
-QUnit.test("load must make visible the spinner (.backdrop)", function (assert) {
+QUnit.test("load must make visible the spinner", function (assert) {
     this.server.respondImmediately = false;
     this.$plan.load({ inicio: 2010 });
 
-    assert.ok(this.$plan.container.find(".backdrop").is(":visible"));
+    assert.ok(this.$plan.spinner.is(":visible"));
 });
 
-QUnit.test("a response will make invisible the spinner (.backdrop)", function (assert) {
+QUnit.test("after server response spinner should be invisible", function (assert) {
     this.server.respondWith([200, {}, ""]);
     this.$plan.load({ inicio: 2010 });
-    assert.notOk(this.$plan.container.find(".backdrop").is(":visible"));
+    assert.notOk(this.$plan.spinner.is(":visible"));
 
     this.server.respondWith([404, {}, ""]);
     this.$plan.load({ inicio: 2010 });
-    assert.notOk(this.$plan.container.find(".backdrop").is(":visible"));
+    assert.notOk(this.$plan.spinner.is(":visible"));
 
     this.server.respondWith([500, {}, ""]);
     this.$plan.load({ inicio: 2010 });
-    assert.notOk(this.$plan.container.find(".backdrop").is(":visible"));
+    assert.notOk(this.$plan.spinner.is(":visible"));
 });
 
 QUnit.test("On server error while requesting plan, a message should be displayed", function (assert) {
@@ -298,13 +291,8 @@ QUnit.test("On server error while requesting plan, a message should be displayed
     sinon.stub(toastr, "error");
     this.$plan.load({ inicio: 2010 });
 
-    assert.ok(
-        toastr["error"].calledWith(
-            "Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte"
-        ),
-        "An error message is necessary here"
-    );
-    toastr["error"].restore();
+    assert.calledWith(toastr.error, SERVER_ERROR_MESSAGE);
+    toastr.error.restore();
 });
 
 QUnit.test("plan status must be empty initially", function (assert) {
@@ -337,7 +325,7 @@ QUnit.test("if plan septenal colectivo is 'in creation' then plan septenal indiv
     this.container = $(".plan-septenal-individual");
     attemptToLoadPlanIndividual(this, 2018);
 
-    assert.ok(PlanSeptenalIndividual.prototype.load.calledWith({inicio: 2018 }));
+    assert.calledWith(PlanSeptenalIndividual.prototype.load, {inicio: 2018 });
     PlanSeptenalIndividual.prototype.load.restore();
 });
 
@@ -346,7 +334,7 @@ QUnit.test("if plan septenal colectivo is already created then plan septenal ind
     sinon.stub(PlanSeptenalIndividual.prototype, "load");
     attemptToLoadPlanIndividual(this, 2018);
 
-    assert.notOk(PlanSeptenalIndividual.prototype.load.called);
+    sinon.assert.notCalled(PlanSeptenalIndividual.prototype.load);
     PlanSeptenalIndividual.prototype.load.restore();
 });
 
@@ -355,7 +343,7 @@ QUnit.test("if plan septenal colectivo does not exist then plan septenal individ
     sinon.stub(PlanSeptenalIndividual.prototype, "load");
     attemptToLoadPlanIndividual(this, 2018);
 
-    assert.notOk(PlanSeptenalIndividual.prototype.load.called);
+    sinon.assert.notCalled(PlanSeptenalIndividual.prototype.load);
     PlanSeptenalIndividual.prototype.load.restore();
 });
 
@@ -425,11 +413,11 @@ QUnit.test("askForApproval should make an ajax request", function (assert) {
     this.$plan.askForApproval();
 
     var ajaxSettings = {
-        url: "/plan-septenal-individual/ask-for-approval",
+        url: this.$plan.ajax_url + "/ask-for-approval",
         data: { inicio: this.$plan.starting_year },
         method: "PUT"
     };
-    assert.ok($.ajax.calledWithMatch(ajaxSettings));
+    assert.calledWithMatch($.ajax, ajaxSettings);
     $.ajax.restore();
 });
 
@@ -453,8 +441,8 @@ QUnit.test("When the user ask for approval unsuccessfully a message should be di
     this.server.respondWith([404, { "Content-Type": "application/json" }, JSON.stringify(["not found message"])]);
     this.$plan.askForApproval();
 
-    assert.ok(toastr["error"].calledWith("not found message"), "An error message is necessary");
-    toastr["error"].restore();
+    assert.calledWith(toastr.error, "not found message");
+    toastr.error.restore();
 });
 
 QUnit.test("When the user ask for approval unsuccessfully a message should be displayed", function (assert) {
@@ -462,8 +450,8 @@ QUnit.test("When the user ask for approval unsuccessfully a message should be di
     this.server.respondWith([200, {}, ""]);
     this.$plan.askForApproval();
 
-    assert.ok(toastr["success"].calledWith("El plan septenal está en espera por aprobación."), "A success message is necessary");
-    toastr["success"].restore();
+    assert.calledWith(toastr.success, "El plan septenal está en espera por aprobación.");
+    toastr.success.restore();
 });
 
 QUnit.test("on successful ask for approval, editing and actions should be disabled", function (assert) {
@@ -472,7 +460,7 @@ QUnit.test("on successful ask for approval, editing and actions should be disabl
 
     this.$plan.askForApproval();
 
-    assert.ok(this.$plan.disableEditing.called);
+    sinon.assert.called(this.$plan.disableEditing);
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
     assert.strictEqual($("#btn-save").prop("disabled"), true, "btn-save should be disabled");
 
@@ -483,7 +471,7 @@ QUnit.test("click on btn-request-approval should call askForApproval", function 
     sinon.stub(this.$plan, "askForApproval");
     $("#btn-request-approval").trigger("click");
 
-    assert.ok(this.$plan.askForApproval.called);
+    sinon.assert.called(this.$plan.askForApproval);
     this.$plan.askForApproval.restore();
 });
 
@@ -496,7 +484,7 @@ QUnit.test("on loading, if plan septenal is waiting for approval, editing and ac
 
     this.$plan.load({ inicio: 2010 });
 
-    assert.ok(this.$plan.disableEditing.called);
+    sinon.assert.called(this.$plan.disableEditing);
     assert.strictEqual($("#btn-request-approval").prop("disabled"), true, "btn-request-approval should be disabled");
     assert.strictEqual($("#btn-save").prop("disabled"), true, "btn-save should be disabled");
 
@@ -522,7 +510,7 @@ QUnit.test("on loading, if plan septenal is approved all actions should be disab
 
     this.$plan.load({ inicio: 2010 });
 
-    assert.ok(this.$plan.disableEditing.called);
+    sinon.assert.called(this.$plan.disableEditing);
     assert.ok($("#btn-request-approval").prop("disabled"), "btn-request-approval should be disabled");
     assert.ok($("#btn-save").prop("disabled"), "btn-save should be disabled");
 

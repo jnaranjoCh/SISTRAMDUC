@@ -8,7 +8,6 @@
 
     <!-- external libraries -->
     <script src='../../../vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js'></script>
-
     <script src='../../../vendor/qunit/qunit/qunit.js'></script>
     <script src='../../../vendor/sinon-1.17.7/index.js'></script>
   </head>
@@ -31,8 +30,12 @@
       </div>
     </div>
 
+    <script src='qunit-sinon-integration.js'></script>
+    <script src='utils.js'></script>
+
     <!-- JS files under test -->
-    <script src='../../../vendor/toastr/toastr.min.js'></script>
+    <script src='../../PlanSeptenal/polyfill.js'></script>
+    <script src='../../PlanSeptenal/common.js'></script>
     <script src='../../PlanSeptenal/grid-selection.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-individual.js'></script>
 

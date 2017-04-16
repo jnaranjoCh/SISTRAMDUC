@@ -10,13 +10,14 @@
     <script src='../../../vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js'></script>
     <script src='../../../vendor/qunit/qunit/qunit.js'></script>
     <script src='../../../vendor/sinon-1.17.7/index.js'></script>
-    <script src='../../../vendor/toastr/toastr.min.js'></script>
     <script src='../../../vendor/AdminLTE/bootstrap/js/bootstrap.min.js'></script>
     <script src='../../../vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js'></script>
   </head>
   <body>
     <div id='qunit'></div>
     <div id='qunit-fixture'>
+      <section id="plan-septenal-colectivo-main-section" data-resource="/plan-septenal/colectivo">
+
       <div id="plan-septenal-colectivo-creation">
         <form class="form-inline" action="start-creation-of-plan-septenal-colectivo" style="display: none;">
           <div class="form-group">
@@ -39,7 +40,6 @@
             </thead>
           </table>
         </div>
-        <div class="plan-septenal-individual" data-route="endpoint-url"></div>
       </div>
 
       <div class="modal fade" id="details-viewer" role="dialog">
@@ -60,9 +60,33 @@
         </div>
       </div>
 
+      <div class="modal fade" id="plan-colectivo-dialog" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="box box-primary">
+              <div class="box-header with-border modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Plan Septenal Colectivo</h4>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </section>
     </div>
 
+    <!-- Testing aids -->
+    <script src='qunit-sinon-integration.js'></script>
+    <script src='utils.js'></script>
+
     <!-- JS files under test -->
+    <script src='../../PlanSeptenal/polyfill.js'></script>
+    <script src='../../PlanSeptenal/common.js'></script>
     <script src='../../PlanSeptenal/grid-selection.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-individual.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-colectivo.js'></script>

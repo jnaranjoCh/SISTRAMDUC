@@ -23,7 +23,7 @@
             <h4 id="status" class="pull-right"></h4>
           </div>
           <div class="box-body">
-            <div id="plan-septenal-individual" data-route="{{ path('create-plan-septenal-individual') }}"></div>
+            <div id="plan-septenal-individual"></div>
           </div>
           <div class="box-footer">
             <button id="btn-save" class="btn btn-primary btn-flat pull-right" style="display: none;">Guardar cambios</button>
@@ -38,6 +38,7 @@
 {% endblock %}
 
 {% block custom_javascripts %}
+  <script src="{{ asset('assets/js/PlanSeptenal/common.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/grid-selection.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
   <script>
@@ -51,6 +52,6 @@
       next_year: (new Date().getFullYear() + 1)
     };
 
-    attemptToLoadPlanIndividual(app, app.next_year);
+    attemptToLoadPlanIndividual(app, app.next_year, "{{ path('create-plan-septenal-individual') }}");
   </script>
 {% endblock %}
