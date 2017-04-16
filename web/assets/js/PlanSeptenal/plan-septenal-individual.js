@@ -289,7 +289,7 @@ return PlanSeptenalIndividual;
 
 function attemptToLoadPlanIndividual (receiver, inicio, ajax_url) {
     return $.ajax({
-        url: "/plan-septenal-colectivo", // <--- hardcoded url
+        url: routes["plan-septenal-colectivo"],
         method: "GET",
         data: {
             inicio: inicio

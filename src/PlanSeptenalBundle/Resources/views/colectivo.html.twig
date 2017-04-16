@@ -14,7 +14,7 @@
     </ol>
   </section>
 
-  <section class="content" id="plan-septenal-colectivo-main-section" data-resource="{{ path('get-plan-septenal-colectivo') }}">
+  <section class="content" id="plan-septenal-colectivo-main-section">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
@@ -23,7 +23,7 @@
           </div>
           <div class="box-body">
             <div id="plan-septenal-colectivo-creation">
-              <form class="form-inline" action="{{ path('start-creation-of-plan-septenal-colectivo') }}" style="display: none;">
+              <form class="form-inline" style="display: none;">
                 <div class="form-group">
                   <input type="hidden" id="start_year" name="start_year" value="{{ next_year }}">
                   <label for="creation_deadline" class="form-label">Fecha de finalización:</label>
@@ -61,7 +61,7 @@
             </div>
             <div class="modal-body">
               <div class="row">
-                <div class="plan-septenal-individual" data-route="{{ path('create-plan-septenal-individual') }}"></div>
+                <div class="plan-septenal-individual"></div>
               </div>
             </div>
           </div>
@@ -91,9 +91,11 @@
 
 {% block custom_javascripts %}
   <script src="{{ asset('assets/js/PlanSeptenal/common.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/routes.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/grid-selection.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-colectivo.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-colectivo-previewer.js') }}"></script>
   <script>
     $(".datepicker").datepicker({
       startDate: "+1m"
@@ -101,6 +103,7 @@
     toastr.options = {
       positionClass: "toast-bottom-center"
     };
+
     planSeptenalColectivo.get(creationProcess.next_year);
   </script>
 {% endblock %}

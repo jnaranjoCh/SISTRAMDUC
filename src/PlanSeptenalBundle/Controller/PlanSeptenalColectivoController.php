@@ -45,7 +45,7 @@ class PlanSeptenalColectivoController extends Controller
     }
 
     /**
-     * @Route("/plan-septenal-colectivo/start-creation", name="start-creation-of-plan-septenal-colectivo")
+     * @Route("/plan-septenal-colectivo/start-creation", name="start-creation-process")
      * @Method({"POST"})
      */
     public function startCreationAction(Request $request)

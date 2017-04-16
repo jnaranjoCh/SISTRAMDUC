@@ -16,10 +16,10 @@
   <body>
     <div id='qunit'></div>
     <div id='qunit-fixture'>
-      <section id="plan-septenal-colectivo-main-section" data-resource="/plan-septenal/colectivo">
+      <section id="plan-septenal-colectivo-main-section">
 
       <div id="plan-septenal-colectivo-creation">
-        <form class="form-inline" action="start-creation-of-plan-septenal-colectivo" style="display: none;">
+        <form class="form-inline" style="display: none;">
           <div class="form-group">
             <input type="hidden" id="start_year" name="start_year" value="2018">
             <label for="creation_deadline" class="form-label">Fecha de finalización:</label>
@@ -52,7 +52,7 @@
               </div>
               <div class="modal-body">
                 <div class="row">
-                  <div class="plan-septenal-individual" data-route="create-plan-septenal-individual"></div>
+                  <div class="plan-septenal-individual"></div>
                 </div>
               </div>
             </div>
@@ -87,11 +87,14 @@
     <!-- JS files under test -->
     <script src='../../PlanSeptenal/polyfill.js'></script>
     <script src='../../PlanSeptenal/common.js'></script>
+    <script src='../../PlanSeptenal/routes.js'></script>
     <script src='../../PlanSeptenal/grid-selection.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-individual.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-colectivo.js'></script>
+    <script src='../../PlanSeptenal/plan-septenal-colectivo-previewer.js'></script>
 
     <!-- tests to run with the given fixtures above -->
     <script src='plan-septenal-colectivo.js'></script>
+    <script src='plan-septenal-colectivo-previewer.js'></script>
   </body>
 </html>
