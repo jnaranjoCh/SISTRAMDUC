@@ -17,7 +17,41 @@ $('#submitData').click(function(){
     var indParticipantes = 0;
     var indRegistroRevistas = 0;
     var indRevistas = 0;
+    
+    var personalData = [];
+    var cargoData = [];
+    var registrosData = [];
+    var participantesData = [];
+    var revistasData = [];
+    var indCargoData = 0;
+    var indRegistrosData = 0;
+    var indParticipantesData = 0;
+    var indRevistasData = 0;
+    
+    var registro = {
             
+            idRegistro:"",
+            tipoDeReferencia:"",
+            descripcion:"",
+            nivel:"",
+            estatus:"",
+            anio:"",
+            empresaInstitucion:""
+    };
+    
+    var participante = {
+            
+            idRegistro:"",
+            nombre:"",
+            cedula:""
+    };
+    
+    var revista = {
+            
+            idRegistro:"",
+            revista:""
+    };
+    
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
             if(inputsO[i] != "NumeroDatosII"){
@@ -55,6 +89,7 @@ $('#submitData').click(function(){
                 $("#div"+inputsO[i-1]).addClass("has-error");
                 text = "Error dato invalida.";
             }else{
+                personalData[inputsO[i]] = $("#"+inputsO[i]).val();
                 $("#headerPersonal").css({ 'color': "black" });
                 $("#span"+inputsO[i]).removeClass("glyphicon-remove");
                 $("#div"+inputsO[i]).removeClass("has-error");   
@@ -71,12 +106,14 @@ $('#submitData').click(function(){
             text = "Campo mal introducido.";
             
         }else if($("#"+inputsW[i]).val() != ""){
+            personalData[inputsW[i]] = $("#"+inputsW[i]).val();
             $("#headerPersonal").css({ 'color': "black" });
             $("#span"+inputsW[i]).removeClass("glyphicon-remove");
             $("#div"+inputsW[i]).removeClass("has-error");
         }
     
     }
+    
     
     if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         can_register = false;
@@ -89,10 +126,17 @@ $('#submitData').click(function(){
          $("#spanCargosDatos").addClass("glyphicon-remove");
          $("#divCargosDatos").addClass("has-error");
          $("#headerCargos").css({ 'color': "red" });
+         text = "Error debe seleccionar los cargos.";
     }else{
-         $("#spanCargosDatos").removeClass("glyphicon-remove");
-         $("#divCargosDatos").removeClass("has-error");
-         $("#headerCargos").css({ 'color': "black" });
+        tableCargo.column(0)
+                  .data()
+                  .each( function ( value,index ) {
+                    cargoData[indCargoData] = value;
+                    indCargoData++;
+                  });
+        $("#spanCargosDatos").removeClass("glyphicon-remove");
+        $("#divCargosDatos").removeClass("has-error");
+        $("#headerCargos").css({ 'color': "black" });
     }
     
     if(can_register && countRegistro < 1){
@@ -131,6 +175,35 @@ $('#submitData').click(function(){
             }
          }
     }else{
+        tableRegistros.column(0).data().each( function ( value1,index1 ) {
+            registro.idRegistro = value1;
+            tableRegistros.column(1).data().each( function ( value2,index2 ) {
+                if(index1 == index2)
+                    registro.tipoDeReferencia = value2;
+                tableRegistros.column(2).data().each( function ( value3,index3 ) {
+                    if(index1 == index3)
+                        registro.descripcion = value3;
+                    tableRegistros.column(3).data().each( function ( value4,index4 ) {
+                        if(index1 == index4)
+                            registro.nivel = value4;
+                        tableRegistros.column(4).data().each( function ( value5,index5 ) {
+                            if(index1 == index5)
+                                registro.estatus = value5;
+                            tableRegistros.column(5).data().each( function ( value6,index6 ) {
+                                if(index1 == index6)
+                                    registro.anio = value6;
+                                tableRegistros.column(6).data().each( function ( value7,index7 ) {
+                                    if(index1 == index7)
+                                        registro.empresaInstitucion = value7;
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+            registrosData[indRegistrosData] = registro;
+            indRegistrosData++;
+        });
         for(var i = 0; i < inputsR.length; i++){    
             $("#headerRegistros").css({ 'color': "black" });
             $("#span"+inputsR[i]).removeClass("glyphicon-remove");
@@ -254,15 +327,17 @@ $('#submitData').click(function(){
         }
     }
     
-    /*$.ajax({
-        method: "POST",
-        url:  "/web/app_dev.php/registro/guardar-datos",
-        dataType: 'json',
-        success: function(data)
-        {
-            alert(data);
-        }
-    });*/
+    if(can_register){
+        $.ajax({
+            method: "POST",
+            url:  "/web/app_dev.php/registro/guardar-datos",
+            dataType: 'json',
+            success: function(data)
+            {
+                alert(data);
+            }
+        });
+    }
     
     if(!can_register)
         toastr.error(text, "Error", {

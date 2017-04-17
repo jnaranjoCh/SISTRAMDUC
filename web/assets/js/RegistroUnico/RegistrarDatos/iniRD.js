@@ -1,4 +1,5 @@
 var idRegistro = 0;
+
 $( window ).load(function() {
     
     $("#miniPersonal").click();
