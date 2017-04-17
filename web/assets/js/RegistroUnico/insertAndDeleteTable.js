@@ -111,8 +111,7 @@ $('#agregarRegistro').click(function(){
             $("#span"+inputsR[i]).removeClass("glyphicon-remove");
             $("#div"+inputsR[i]).removeClass("has-error");
         }
-   }else
-   {
+   }else if(!band){
         toastr.error("Error faltan datos.", "Error", {
                 "timeOut": "0",
                 "extendedTImeout": "0"
@@ -247,6 +246,26 @@ $('#agregarParticipantes').click(function(){
                 "Cedula": $("#CedulaParticipanteRegistro").val()
         } ).draw();
         countParticipante++;
+        $("#headerRegistros").css({ 'color': "black" });
+        $("#spanIdParticipanteRegistro").removeClass("glyphicon-remove");
+        $("#divIdParticipanteRegistro").removeClass("has-error");
+        $("#spanNombreParticipanteRegistro").removeClass("glyphicon-remove");
+        $("#divNombreParticipanteRegistro").removeClass("has-error");
+        $("#spanCedulaParticipanteRegistro").removeClass("glyphicon-remove");
+        $("#divCedulaParticipanteRegistro").removeClass("has-error");
+   }else if(!band){
+       toastr.error("Error faltan datos.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+
+        $("#headerRegistros").css({ 'color': "red" });
+        $("#spanIdParticipanteRegistro").addClass("glyphicon-remove");
+        $("#divIdParticipanteRegistro").addClass("has-error");
+        $("#spanNombreParticipanteRegistro").addClass("glyphicon-remove");
+        $("#divNombreParticipanteRegistro").addClass("has-error");
+        $("#spanCedulaParticipanteRegistro").addClass("glyphicon-remove");
+        $("#divCedulaParticipanteRegistro").addClass("has-error");
    }
 }); 
 
@@ -367,6 +386,23 @@ $('#agregarRevista').click(function(){
                 "Id del registro": $("#idRevistaRegistro").val(),
                 "Revista": $("#descrpcionRevistaRegistro").val()
         } ).draw();
+        
+        $("#headerRegistros").css({ 'color': "black" });
+        $("#spanIdRevistaRegistro").removeClass("glyphicon-remove");
+        $("#divIdRevistaRegistro").removeClass("has-error");
+        $("#spanDescrpcionRevistaRegistro").removeClass("glyphicon-remove");
+        $("#divDescrpcionRevistaRegistro").removeClass("has-error");
+   }else if(!band){
+       toastr.error("Error faltan datos.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+
+        $("#headerRegistros").css({ 'color': "red" });
+        $("#spanIdRevistaRegistro").addClass("glyphicon-remove");
+        $("#divIdRevistaRegistro").addClass("has-error");
+        $("#spanDescrpcionRevistaRegistro").addClass("glyphicon-remove");
+        $("#divDescrpcionRevistaRegistro").addClass("has-error");
    }
 });
 
