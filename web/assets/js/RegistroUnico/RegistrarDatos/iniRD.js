@@ -4,6 +4,7 @@ $( window ).load(function() {
     $("#miniPersonal").click();
     $("#miniRegistros").click();
     $("#miniCargos").click();
+    $("#miniHijos").click();
     
     $("#tableUsers").DataTable( {
           "ajax": "/web/app_dev.php/registro/enviar-emails",
@@ -52,5 +53,6 @@ $( window ).load(function() {
     $('#IdParticipanteRegistro').html("<option value='-1'>No existen registros</option>");
     $('#idRevistaRegistro').html("<option value='-1'>No existen registros</option>");
     $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker2').datetimepicker();
 });
 

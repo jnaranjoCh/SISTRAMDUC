@@ -30,3 +30,10 @@ $('#TipoDeRegistroDatos').change(function(){
         $("#InstitucionDatos").val("");
     }
 });
+
+$('#checkboxHijos').click(function(){
+    if( $(this).prop('checked') ) {
+        $("#formHijos").removeClass("hidden");
+    }else
+        $("#formHijos").addClass("hidden");
+});

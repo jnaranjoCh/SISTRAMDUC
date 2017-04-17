@@ -2,6 +2,8 @@ $('#gemail').on('input',function(e){
     $("#formPersonal").addClass("hidden");
     $("#formRegistros").addClass("hidden");
     $("#formCargos").addClass("hidden");
+    $("#divCheckbox").addClass("hidden");
+    $("#formHijos").addClass("hidden");
     $("#save").addClass("hidden");
 });
 
@@ -17,6 +19,7 @@ $('#generate').click(function(){
                     $("#formPersonal").removeClass("hidden");
                     $("#formRegistros").removeClass("hidden");
                     $("#formCargos").removeClass("hidden");
+                    $("#divCheckbox").removeClass("hidden");
                     $("#save").removeClass("hidden");
                 }
                 else{
@@ -27,6 +30,7 @@ $('#generate').click(function(){
                     $("#formPersonal").addClass("hidden");
                     $("#formRegistros").addClass("hidden");
                     $("#formCargos").addClass("hidden");
+                    $("#divCheckbox").addClass("hidden");
                     $("#save").addClass("hidden");
                 }
             }

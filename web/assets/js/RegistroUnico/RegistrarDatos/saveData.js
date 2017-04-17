@@ -3,6 +3,8 @@ $('#submitData').click(function(){
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
+    var inputsH = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos","NacionalidadHijoDatos","FechaNacimientoHijoDatos","CedulaMadreHijoDatos","CedulaPadreHijoDatos","CedulaHijoDatos"];
+    var inputsHW = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos"];
     var idRegistrosParticipantes = [];
     var idParticipantes = [];
     var idRegistrosRevistas = [];
@@ -15,7 +17,7 @@ $('#submitData').click(function(){
     var indParticipantes = 0;
     var indRegistroRevistas = 0;
     var indRevistas = 0;
-    
+            
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
             if(inputsO[i] != "NumeroDatosII"){
@@ -216,6 +218,41 @@ $('#submitData').click(function(){
         }
     }
     
+    if($('#checkboxHijos').prop('checked')){
+        if(can_register){
+            for(var i = 0; i < inputsH.length; i++){
+                if($("#"+inputsH[i]).val() == ""){
+                    can_register = false;
+                    $("#headerHijos").css({ 'color': "red" });
+                    $("#span"+inputsH[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsH[i]).addClass("has-error");
+                    text = "Error campo mal introducido o obligatorio.";
+                }else {
+                    $("#headerHijos").css({ 'color': "black" });
+                    $("#span"+inputsH[i]).removeClass("glyphicon-remove");
+                    $("#div"+inputsH[i]).removeClass("has-error");   
+                }
+            }
+        }
+    
+        if(can_register){
+            for(var i = 0; i < inputsHW.length; i++){
+                if(!(/^[a-zA-Z]*$/).test($("#"+inputsHW[i]).val())){
+                    can_register = false;
+                    $("#headerHijos").css({ 'color': "red" });
+                    $("#span"+inputsHW[i]).addClass("glyphicon-remove");
+                    $("#div"+inputsHW[i]).addClass("has-error");
+                    text = "Campo mal introducido.";
+                    
+                }else if($("#"+inputsHW[i]).val() != ""){
+                    $("#headerHijos").css({ 'color': "black" });
+                    $("#span"+inputsHW[i]).removeClass("glyphicon-remove");
+                    $("#div"+inputsHW[i]).removeClass("has-error");
+                }
+            
+            }
+        }
+    }
     
     /*$.ajax({
         method: "POST",
