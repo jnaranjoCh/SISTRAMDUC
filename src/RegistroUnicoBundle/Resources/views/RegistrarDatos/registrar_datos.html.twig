@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/RegistroUnico/RegistrarDatos/inputFile.css') }}">
+{% endblock %}
+
 {% block content %}
     <!--User data header-->
     <section class="content-header">
@@ -211,6 +215,71 @@
                     <!-- /.col -->
                   </div>
                   <!-- /.row -->
+                  <div class="row">    
+                    <div class="col-md-6">
+                      <div class="form-group">  
+                          <label>Cargar cedula</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview">
+                              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">  
+                          <label>Cargar RIF</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview2">
+                              <input type="text" class="form-control image-preview-filename2" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear2" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input2">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title2">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview2"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">  
+                          <label>Cargar acta de nacimiento</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview3">
+                              <input type="text" class="form-control image-preview-filename3" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear3" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input3">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title3">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview3"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <!-- /.box -->
@@ -597,6 +666,27 @@
                     </div>
                   </div>
                   <!-- /.col -->
+                  <div class="col-md-12">
+                      <div class="form-group">  
+                          <label>Cargar acta de nacimiento</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview4">
+                              <input type="text" class="form-control image-preview-filename4" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear4" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input4">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title4">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview4"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
                 </div>
               </div>
               <!-- /.box -->
@@ -626,4 +716,5 @@
   <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/generate.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/saveData.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
 {% endblock %}
