@@ -581,13 +581,12 @@ class Usuario implements UserInterface
     {
         return $this->planes_septenales_individuales;
     }
-
+    
     public function setDepartamento(Departamento $departamento)
     {
         $this->departamento = $departamento;
         return $this;
     }
-
     public function getDepartamento()
     {
         return $this->departamento;

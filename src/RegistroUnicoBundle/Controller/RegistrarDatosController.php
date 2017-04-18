@@ -17,15 +17,27 @@ class RegistrarDatosController extends Controller
         return $this->render('RegistroUnicoBundle:RegistrarDatos:registrar_datos.html.twig');
     }
     
-    /*public function guardarDatosAjaxAction(Request $request)
+    public function guardarDatosAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
         {
+            /*$request->get('hijoData') 
+            $request->get('indHijoData') 
+            $request->get('personalData') 
+            $request->get('indPersonalData') 
+            $request->get('cargoData') 
+            $request->get('indCargoData') 
+            $request->get('registrosData') 
+            $request->get('indRegistrosData') 
+            $request->get('participantesData') 
+            $request->get('indParticipantesData') 
+            $request->get('revistasData') 
+            $request->get('indRevistasData')*/
             return new JsonResponse("if");
         }
         else
             return new JsonResponse("else");
-    }*/
+    }
     
     public function enviarEmailsAjaxAction(Request $request)
     {

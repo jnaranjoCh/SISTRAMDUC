@@ -23,6 +23,12 @@ $('#submitData').click(function(){
     var registrosData = [];
     var participantesData = [];
     var revistasData = [];
+    var hijoData = [];
+
+    var indHijoData = 0;
+    var indHijoData2 = 0;
+    var indPersonalData = 0;
+    var indPersonalData2 = 0;
     var indCargoData = 0;
     var indRegistrosData = 0;
     var indParticipantesData = 0;
@@ -89,7 +95,8 @@ $('#submitData').click(function(){
                 $("#div"+inputsO[i-1]).addClass("has-error");
                 text = "Error dato invalida.";
             }else{
-                personalData[inputsO[i]] = $("#"+inputsO[i]).val();
+                personalData[indPersonalData] = $("#"+inputsO[i]).val();
+                indPersonalData++;
                 $("#headerPersonal").css({ 'color': "black" });
                 $("#span"+inputsO[i]).removeClass("glyphicon-remove");
                 $("#div"+inputsO[i]).removeClass("has-error");   
@@ -106,7 +113,8 @@ $('#submitData').click(function(){
             text = "Campo mal introducido.";
             
         }else if($("#"+inputsW[i]).val() != ""){
-            personalData[inputsW[i]] = $("#"+inputsW[i]).val();
+            personalData[indPersonalData2] = $("#"+inputsW[i]).val();
+            indPersonalData2++;
             $("#headerPersonal").css({ 'color': "black" });
             $("#span"+inputsW[i]).removeClass("glyphicon-remove");
             $("#div"+inputsW[i]).removeClass("has-error");
@@ -255,6 +263,19 @@ $('#submitData').click(function(){
             $("#divIdParticipanteRegistro").addClass("has-error");
             text = "Error existen tipos de registros sin participantes asociados.";
         }else{
+            tableParticipantes.column(0).data().each( function ( value1,index1 ) {
+                participante.idRegistro = value1;
+                tableParticipantes.column(1).data().each( function ( value2,index2 ) {
+                    if(index1 == index2)
+                        participante.nombre = value2;
+                    tableParticipantes.column(2).data().each( function ( value3,index3 ) {
+                        if(index1 == index3)
+                            participante.cedula = value3;
+                    });
+                }); 
+                participantesData[indParticipantesData] = participante;
+                indParticipantesData++;
+            });
             $("#headerRegistros").css({ 'color': "black" });
             $("#spanNombreParticipanteRegistro").removeClass("glyphicon-remove");
             $("#divNombreParticipanteRegistro").removeClass("has-error");
@@ -283,6 +304,15 @@ $('#submitData').click(function(){
             $("#divIdRevistaRegistro").addClass("has-error");
             text = "Error existen tipos de registros sin revistas asociados.";
         }else{
+            tableRevista.column(0).data().each( function ( value1,index1 ) {
+                revista.idRegistro = value1;
+                tableRevista.column(1).data().each( function ( value2,index2 ) {
+                    if(index1 == index2)
+                        revista.revista = value2;
+                }); 
+                revistasData[indRevistasData] = revista;
+                indRevistasData++;
+            });
             $("#headerRegistros").css({ 'color': "black" });
             $("#spanDescrpcionRevistaRegistro").removeClass("glyphicon-remove");
             $("#divDescrpcionRevistaRegistro").removeClass("has-error");
@@ -301,6 +331,8 @@ $('#submitData').click(function(){
                     $("#div"+inputsH[i]).addClass("has-error");
                     text = "Error campo mal introducido o obligatorio.";
                 }else {
+                    hijoData[indHijoData] = $("#"+inputsH[i]).val();
+                    indHijoData++;
                     $("#headerHijos").css({ 'color': "black" });
                     $("#span"+inputsH[i]).removeClass("glyphicon-remove");
                     $("#div"+inputsH[i]).removeClass("has-error");   
@@ -318,6 +350,8 @@ $('#submitData').click(function(){
                     text = "Campo mal introducido.";
                     
                 }else if($("#"+inputsHW[i]).val() != ""){
+                    hijoData[indHijoData2] = $("#"+inputsHW[i]).val();
+                    indHijoData2++;
                     $("#headerHijos").css({ 'color': "black" });
                     $("#span"+inputsHW[i]).removeClass("glyphicon-remove");
                     $("#div"+inputsHW[i]).removeClass("has-error");
@@ -327,14 +361,18 @@ $('#submitData').click(function(){
         }
     }
     
+    for(var i = 0; i < indHijoData; i++)
+        alert(hijoData[i]);
+        
     if(can_register){
         $.ajax({
             method: "POST",
+            data: {"hijoData":hijoData,"indHijoData":indHijoData,"personalData":personalData,"indPersonalData":indPersonalData,"cargoData":cargoData,"indCargoData":indCargoData,"registrosData":registrosData,"indRegistrosData":indRegistrosData,"participantesData":participantesData,"indParticipantesData":indParticipantesData,"revistasData":revistasData,"indRevistasData":indRevistasData},
             url:  "/web/app_dev.php/registro/guardar-datos",
             dataType: 'json',
             success: function(data)
             {
-                alert(data);
+                    alert(data[0].descripcion);
             }
         });
     }
