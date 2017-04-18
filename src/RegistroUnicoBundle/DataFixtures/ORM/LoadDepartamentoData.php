@@ -17,11 +17,11 @@ class LoadDepartamentoData extends AbstractFixture implements OrderedFixtureInte
         $computacion->setDescription('Computación');
         $computacion->setFacultadId($this->getReference('facyt-facultad')->getId());
 
-        $tony = $this->getReference('tony-user');
-        $tony->setDepartamento($computacion);
+        /*$tony = $this->getReference('tony-user');
+        $tony->setDepartamento($computacion);*/
 
         $manager->persist($computacion);
-        $manager->persist($tony);
+        //$manager->persist($tony);
         $manager->flush();
     }
 

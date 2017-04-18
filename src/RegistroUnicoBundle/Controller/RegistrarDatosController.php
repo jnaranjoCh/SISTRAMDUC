@@ -21,10 +21,9 @@ class RegistrarDatosController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
+            $this->registerUser($request->get('personalData'));
             /*$request->get('hijoData') 
             $request->get('indHijoData') 
-            $request->get('personalData') 
-            $request->get('indPersonalData') 
             $request->get('cargoData') 
             $request->get('indCargoData') 
             $request->get('registrosData') 
@@ -172,4 +171,30 @@ class RegistrarDatosController extends Controller
                     ->findOneById($id);
     }
     
+    private function registerUser($user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $newUser = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($user[15]);
+        
+        if (!$newUser) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$user[15]
+            );
+        }
+        
+        $newUser->setPrimerNombre($user[0]);
+        $newUser->setSegundoNombre($user[1]);
+        $newUser->setPrimerApellido($user[2]);
+        $newUser->setSegundoApellido($user[3]);
+        $newUser->setNacionalidad($user[4]);
+        $newUser->setFechaNacimiento(new \DateTime($user[5]));
+        $newUser->setEdad($user[6]);
+        $newUser->setSexo($user[7]);
+        $newUser->setRif('J-'.$user[8]);
+        $newUser->setTelefono($user[9].'-'.$user[10]);
+        $newUser->setDireccion($user[14]);
+        
+        $em->flush();
+    }
 }

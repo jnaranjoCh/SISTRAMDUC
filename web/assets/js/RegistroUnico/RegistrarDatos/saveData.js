@@ -121,7 +121,10 @@ $('#submitData').click(function(){
         }
     
     }
-    
+    personalData[indPersonalData] = $("#DireccionDatos").val();
+    indPersonalData++;
+    personalData[indPersonalData] = $("#gemail").val();
+    indPersonalData++;
     
     if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         can_register = false;
@@ -360,19 +363,16 @@ $('#submitData').click(function(){
             }
         }
     }
-    
-    for(var i = 0; i < indHijoData; i++)
-        alert(hijoData[i]);
-        
+     alert(personalData[5]);   
     if(can_register){
         $.ajax({
             method: "POST",
-            data: {"hijoData":hijoData,"indHijoData":indHijoData,"personalData":personalData,"indPersonalData":indPersonalData,"cargoData":cargoData,"indCargoData":indCargoData,"registrosData":registrosData,"indRegistrosData":indRegistrosData,"participantesData":participantesData,"indParticipantesData":indParticipantesData,"revistasData":revistasData,"indRevistasData":indRevistasData},
+            data: {"hijoData":hijoData,"indHijoData":indHijoData,"personalData":personalData,"cargoData":cargoData,"indCargoData":indCargoData,"registrosData":registrosData,"indRegistrosData":indRegistrosData,"participantesData":participantesData,"indParticipantesData":indParticipantesData,"revistasData":revistasData,"indRevistasData":indRevistasData},
             url:  "/web/app_dev.php/registro/guardar-datos",
             dataType: 'json',
             success: function(data)
             {
-                    alert(data[0].descripcion);
+                    alert(data);
             }
         });
     }

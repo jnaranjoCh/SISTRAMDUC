@@ -73,9 +73,10 @@ class RegistrarUsuarioController extends Controller
         $usuario->setSegundoApellido("");
         $usuario->setNacionalidad("");
         $usuario->setDireccion("");
-        $usuario->setEstatusId(0);
-        $usuario->setTelefono(0);
-        $usuario->setRif(0);
+        $usuario->setTelefono('');
+        $usuario->setRif('');
+        $usuario->setEdad(0);
+        $usuario->setSexo('');
         
         return $usuario;
     }

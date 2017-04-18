@@ -26,7 +26,7 @@ class Usuario implements UserInterface
     /**
      *  @ORM\Column(type="integer")
      */
-    private $estatusId;
+    //private $estatusId;
 
     /**
      * @ORM\Column(type="string", length=25)
@@ -59,7 +59,7 @@ class Usuario implements UserInterface
     private $segundoApellido;
 
     /**
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string")
      */
     private $nacionalidad;
 
@@ -71,10 +71,20 @@ class Usuario implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
+    private $edad;
+    
+    /**
+     * @ORM\Column(type="string")
+     */
     private $telefono;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
+     */
+    private $sexo;
+    
+    /**
+     * @ORM\Column(type="string")
      */
     private $rif;
 
@@ -153,7 +163,7 @@ class Usuario implements UserInterface
      * @ORM\OneToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
      * @ORM\JoinColumn(name="departamento_id", referencedColumnName="id")
      */
-    private $departamento;
+    /*private $departamento;*/
 
     public function __construct()
     {
@@ -171,27 +181,6 @@ class Usuario implements UserInterface
         return $this->id;
     }
 
-    /**
-     * Get estatusId
-     *
-     * @return int
-     */
-    public function getEstatusId()
-    {
-        return $this->estatusId;
-    }
-
-    /**
-     * Set estatusId
-     *
-     * @param int $estatusId
-     */
-    public function setEstatusId($estatusId)
-    {
-        $this->estatusId = $estatusId;
-
-        return $this;
-    }
 
     /**
      * Set cedula
@@ -216,6 +205,55 @@ class Usuario implements UserInterface
     {
         return $this->cedula;
     }
+    
+     /**
+     * Set edad
+     *
+     * @param integer $edad
+     *
+     * @return Usuario
+     */
+    public function setEdad($edad)
+    {
+        $this->edad = $edad;
+
+        return $this;
+    }
+
+    /**
+     * Get edad
+     *
+     * @return integer
+     */
+    public function getEdad()
+    {
+        return $this->edad;
+    }
+    
+     /**
+     * Set sexo
+     *
+     * @param string $sexo
+     *
+     * @return Usuario
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return string
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
 
     /**
      * Set primerNombre
@@ -364,7 +402,7 @@ class Usuario implements UserInterface
     /**
      * Set telefono
      *
-     * @param integer $telefono
+     * @param string $telefono
      *
      * @return Usuario
      */
@@ -378,7 +416,7 @@ class Usuario implements UserInterface
     /**
      * Get telefono
      *
-     * @return int
+     * @return string
      */
     public function getTelefono()
     {
@@ -388,7 +426,7 @@ class Usuario implements UserInterface
     /**
      * Set rif
      *
-     * @param integer $rif
+     * @param string $rif
      *
      * @return Usuario
      */
@@ -402,7 +440,7 @@ class Usuario implements UserInterface
     /**
      * Get rif
      *
-     * @return int
+     * @return string
      */
     public function getRif()
     {
@@ -561,12 +599,12 @@ class Usuario implements UserInterface
 
     public function eraseCredentials(){}
 
-    public function getNombreCorto ()
+    public function getNombreCorto()
     {
         return $this->getPrimerNombre().' '.$this->getPrimerApellido();
     }
 
-    public function getNombreCompleto ()
+    public function getNombreCompleto()
     {
         return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
     }
@@ -582,7 +620,7 @@ class Usuario implements UserInterface
         return $this->planes_septenales_individuales;
     }
     
-    public function setDepartamento(Departamento $departamento)
+    /*public function setDepartamento(Departamento $departamento)
     {
         $this->departamento = $departamento;
         return $this;
@@ -590,5 +628,5 @@ class Usuario implements UserInterface
     public function getDepartamento()
     {
         return $this->departamento;
-    }
+    }*/
 }
