@@ -24,6 +24,14 @@ QUnit.assert.calledWithMatch = function (spy) {
 function sinonAssert (spy, assertion, argums) {
     var args = [].slice.call(argums, 1);
 
+    if (! spy.called) {
+        this.pushResult({
+            result: false,
+            message: spy.printf("%n") + " was never called"
+        });
+        return;
+    }
+
     this.pushResult({
         result: spy[assertion].apply(spy, args),
         actual: spy.getCall(0).args, // this should be the matching call instead, but I don't know how to get it

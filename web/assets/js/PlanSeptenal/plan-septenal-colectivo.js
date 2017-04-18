@@ -112,7 +112,7 @@ var planIndividualDataTable = {
 
 var planIndividualViewer = (function () {
     var viewer = $("#details-viewer"),
-        widget = null, builded = false;
+        widget = null, built = false;
 
     function buildWidget () {
         widget = new PlanSeptenalIndividual(
@@ -126,9 +126,9 @@ var planIndividualViewer = (function () {
     Object.defineProperties(viewer, {
         planWidget: {
             get: function () {
-                if (! builded) {
+                if (! built) {
                     buildWidget();
-                    builded = true;
+                    built = true;
                 }
                 return widget;
             }

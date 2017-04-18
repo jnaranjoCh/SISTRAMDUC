@@ -195,13 +195,14 @@ div.spinner div.p div:nth-child(1) {
 /* plan colectivo. Consider moving this to it's own file */
 
 #plan-colectivo-dialog .modal-dialog {
-    width: 95%;
+    width: 97%;
 }
 
 .plan-table {
     margin: auto;
     border-spacing:0;
     border-collapse: collapse;
+    width: 90%;
 }
 
 .plan-table thead td {
@@ -222,8 +223,7 @@ div.spinner div.p div:nth-child(1) {
 
 .plan-table tbody tr td {
     width: 10px;
-    height: 10px;
-    border: 1px #777 solid;
+    border: 1px #000 solid;
 }
 
 .plan-table tbody tr td:nth-child(12n+1) {

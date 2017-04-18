@@ -17,12 +17,7 @@ use PlanSeptenalBundle\Entity\PlanSeptenalColectivo;
 
 use AppBundle\Entity\Usuario;
 
-/*
-  Checkout this! The first two tests are running slow 3secs and 1.5secs respectively.
-  Gotta be reason for that! I don't remberer this to be happening when I commited these changes :/
-*/
-
-class PlanIndividualTest extends \PHPUnit_Framework_TestCase
+class PlanIndividualControllerUnitTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetAllAction()
     {

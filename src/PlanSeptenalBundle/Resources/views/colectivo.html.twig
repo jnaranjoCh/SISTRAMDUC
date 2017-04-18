@@ -6,6 +6,7 @@
 
 {% block content %}
 
+  <base href="{{ app.request.getSchemeAndHttpHost() }}">
   <section class="content-header">
     <h1>Plan Septenal Colectivo</h1>
     <ol class="breadcrumb">
@@ -44,6 +45,7 @@
                     </tr>
                   </thead>
                 </table>
+                <button id="preview-btn" class="btn btn-primary btn-flat">Ver vista preliminar</button>
               </div>
             </div>
           </div>
@@ -78,7 +80,7 @@
               <h4 class="modal-title">Plan Septenal Colectivo</h4>
             </div>
             <div class="modal-body">
-              <div id="plan-colectivo-container" class="row"></div>
+              <table></table>
             </div>
           </div>
         </div>
@@ -105,5 +107,10 @@
     };
 
     planSeptenalColectivo.get(creationProcess.next_year);
+
+    var previewer = new PlanSeptenalColectivoPreviewer($("#plan-colectivo-dialog"));
+    $(document).on("click", "#preview-btn", function (e) {
+        previewer.load({inicio: creationProcess.next_year});
+    });
   </script>
 {% endblock %}

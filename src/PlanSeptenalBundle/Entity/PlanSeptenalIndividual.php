@@ -193,8 +193,11 @@ class PlanSeptenalIndividual
 
         return [
             'inicio'   => $this->getInicio(),
-            'fin'      => $this->getFin(),
             'status'   => $this->getStatus(),
+            'owner'    => [
+                'id' => $this->owner->getId(),
+                'nombre' => $this->owner->getNombreCorto()
+            ],
             'tramites' => $arrayTramites
         ];
     }

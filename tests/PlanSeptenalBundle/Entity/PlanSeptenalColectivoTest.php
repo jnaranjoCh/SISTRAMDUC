@@ -12,13 +12,18 @@ use RegistroUnicoBundle\Entity\Departamento;
 
 class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
 {
+    private $creator;
+    private $creator_department;
+    private $creation_deadline;
+    private $planSeptenalIndividual;
+
     public function setUp()
     {
         $this->creator = new Usuario();
         $this->creator_department = new Departamento();
         $this->creator->setDepartamento($this->creator_department);
 
-        $this->creation_deadline = (new \DateTime())->modify('+1 day');
+        $this->creation_deadline = new \DateTime();
 
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')

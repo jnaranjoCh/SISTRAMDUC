@@ -29,7 +29,7 @@ class PlanSeptenalColectivoController extends Controller
     public function getAction(Request $request)
     {
         $entity_manager = $this->getDoctrine()->getManager();
-        $plan_septenal_colectivo_repo = $entity_manager->getRepository(PlanSeptenalColectivo::class);
+        $plan_septenal_colectivo_repo = $this->get("plan_septenal.plan_septenal_colectivo_repository");
 
         $plan_septenal_colectivo = $plan_septenal_colectivo_repo
             ->findOneBy([
@@ -41,7 +41,7 @@ class PlanSeptenalColectivoController extends Controller
             return $this->json(["El plan septenal colectivo solicitado no existe."], 404);
         }
 
-        return $this->json(["status" => $plan_septenal_colectivo->getStatus()]);
+        return $this->json($plan_septenal_colectivo->toArray());
     }
 
     /**

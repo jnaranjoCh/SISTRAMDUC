@@ -113,4 +113,18 @@ class PlanSeptenalColectivo
     {
         return $this->inicio + 6;
     }
+
+    public function toArray()
+    {
+        $planes = [];
+        foreach ($this->planes_septenales_individuales as $plan) {
+            $planes[] = $plan->toArray();
+        }
+
+        return [
+            'inicio' => $this->getInicio(),
+            'status' => $this->getStatus(),
+            'planes' => $planes
+        ];
+    }
 }
