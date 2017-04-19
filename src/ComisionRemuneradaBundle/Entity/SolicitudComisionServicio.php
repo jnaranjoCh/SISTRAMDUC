@@ -20,23 +20,6 @@ class SolicitudComisionServicio extends Tramite
 {
     protected $type = "comision";
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
-    ///**
-     //* @var array
-     //* @Assert\Count(
-     //*     min="4",
-     //*     max="4",
-     //*     minMessage = "Debe tener todos los archivos",
-     //*     maxMessage = "Debe tener todos los archivos"
-     //* )
-     //* @ORM\OneToMany(targetEntity="\TramiteBundle\Entity\Recaudo", mappedBy="SolicitudComisionServicio", cascade={"persist", "remove"})
-     //*/
     protected $recaudos;
 
     /**
@@ -45,27 +28,12 @@ class SolicitudComisionServicio extends Tramite
      */
     protected $owner;
 
-    // /**
-     //* @ORM\OneToOne(targetEntity="\TramiteBundle\Entity\Tramite", mappedBy="solicitud_comision_servicio", cascade={"persist", "remove"})
-     //*/
-    //protected $tramite;
-
     public function __construct()
     {
         $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
         ,new recaudo("Fotocopia de cédula de Identidad"),new recaudo("Fotocopia del RIF"),
             new recaudo("Copia de la Designación del cargos en la Administración")
         ));
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -91,22 +59,13 @@ class SolicitudComisionServicio extends Tramite
 
         return $this;
     }
-
-    /**
-     * Remove recaudo
-     *
-     * @param \TramiteBundle\Entity\Recaudo $recaudo
-     */
+    
     public function removeCapitulo(\TramiteBundle\Entity\Recaudo $recaudo)
     {
         $this->recaudos->removeElement($recaudo);
         $recaudo->setSolicitudComisionServicio(null);
     }
-
-    /**
-     * Remove recaudos
-     *
-     */
+    
     public function removeAllRecaudos()
     {
         $this->recaudos->clear();

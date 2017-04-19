@@ -8,13 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use TramiteBundle\Entity\Recaudo;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use TramiteBundle\Entity\Transicion;
 
-///**
-// * Tramite
-// *
-// * @ORM\Table(name="tramite")
-// * @ORM\Entity(repositoryClass="TramiteBundle\Repository\TramiteRepository")
-// */
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -31,6 +26,7 @@ class Tramite
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * @var array
      * @Assert\Count(
@@ -55,11 +51,10 @@ class Tramite
      */
     protected $tipo_tramite;
 
-    ///**
-     //* @ORM\OneToOne(targetEntity="\ComisionRemuneradaBundle\Entity\SolicitudComisionServicio", inversedBy="tramite")
-     //* @ORM\JoinColumn(name="solicitud_comision_servicio_id", referencedColumnName="id")
-     //*/
-    //protected $solicitud_comision_servicio;
+    /**
+     * @ORM\OneToOne(targetEntity="Transicion", mappedBy="tramite")
+     */
+    protected  $transicion;
 
     public function getId()
     {
@@ -123,33 +118,26 @@ class Tramite
     {
         return $this->recaudos;
     }
+
     /**
      * Add recaudo
      *
-     * @param \TramiteBundle\Entity\Recaudo $recaudo
      * @return tramite
      */
-    public function addRecaudo(\TramiteBundle\Entity\Recaudo $recaudo)
+    public function addRecaudo(Recaudo $recaudo)
     {
         $this->recaudos[] = $recaudo;
         $recaudo->setTramite($this);
 
         return $this;
     }
-    /**
-     * Remove recaudo
-     *
-     * @param \TramiteBundle\Entity\Recaudo $recaudo
-     */
-    public function removeRecaudo(\TramiteBundle\Entity\Recaudo $recaudo)
+    
+    public function removeRecaudo(Recaudo $recaudo)
     {
         $this->recaudos->removeElement($recaudo);
         $recaudo->setTramite(null);
     }
-    /**
-     * Remove recaudos
-     *
-     */
+    
     public function removeAllRecaudos()
     {
         $this->recaudos->clear();

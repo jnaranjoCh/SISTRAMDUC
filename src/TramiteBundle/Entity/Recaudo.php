@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use TramiteBundle\Entity\Tramite;
+
 /**
  * Recaudo
  *
@@ -216,24 +218,23 @@ class Recaudo
     }
 
     /**
-     * Set solicitud
+     * Set tramite
      *
-     * @param \ComisionRemuneradaBundle\Entity\SolicitudComisionServicio $solicitud
      * @return recaudo
      */
-    public function setSolicitudComisionServicio(\ComisionRemuneradaBundle\Entity\SolicitudComisionServicio $solicitud = null)
+    public function setTramite(Tramite $tramite = null)
     {
-        $this->solicitud = $solicitud;
+        $this->tramite = $tramite;
         return $this;
     }
     /**
-     * Get solicitud
+     * Get tramite
      *
-     * @return \ComisionRemuneradaBundle\Entity\SolicitudComisionServicio
+     * @return \TramiteBundle\Entity\Tramite
      */
-    public function getSolicitudComisionServicio()
+    public function getTramite()
     {
-        return $this->solicitud;
+        return $this->tramite;
     }
 
     public function __toString() {

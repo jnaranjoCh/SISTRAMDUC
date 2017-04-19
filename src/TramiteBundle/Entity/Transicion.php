@@ -4,7 +4,7 @@ namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use AppBundle\Entity\Usuario;
+use TramiteBundle\Entity\Tramite;
 
 /**
  * @ORM\Entity
@@ -39,13 +39,7 @@ class Transicion
      * @ORM\OneToOne(targetEntity="Tramite", mappedBy="transicion")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
-    private $tramite;
-
-    /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Usuario", mappedBy="transicion")
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     */
-    private $usuario;
+    protected $tramite;
 
     public function getId()
     {

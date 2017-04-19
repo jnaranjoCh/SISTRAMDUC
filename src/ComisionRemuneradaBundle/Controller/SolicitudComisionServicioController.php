@@ -61,7 +61,7 @@ class SolicitudComisionServicioController extends Controller
             $em->persist($solicitudComisionServicio);
 
             foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
-                $actualRecaudo->setSolicitudComisionServicio($solicitudComisionServicio);
+                $actualRecaudo->setTramite($solicitudComisionServicio);
             }
 
             $em->flush();
