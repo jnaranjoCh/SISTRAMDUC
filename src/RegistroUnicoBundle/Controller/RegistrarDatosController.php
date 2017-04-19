@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
-//use RegistroUnicoBundle\Entity\Cargo;
+use RegistroUnicoBundle\Entity\Cargo;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Rol;
 
@@ -23,7 +23,7 @@ class RegistrarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->registerUser($request->get('personalData'));
-            $this->registerCargos($request->get('cargrgata') $,,request->get('personalData')[15]);
+            $this->registerCargos($request->get('cargoData'),$request->get('personalData')[15]);
             ////
             /*$request->get('hijrgata') 
             $request->get('indHijoData') 
@@ -199,8 +199,9 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-    private function registerCargos($cagos,$email)
+    private function registerCargos($cargos,$email)
     {
+        $i = 0;
         $em = $this->getDoctrine()->getManager();
         $newUser = $em->getRepository('AppBundle:Usuario')
                       ->findOneByCorreo($email);
@@ -211,7 +212,15 @@ class RegistrarDatosController extends Controller
             );
         }
         
-        $newUser->addCargos($cagos);
+        foreach($cargos as $cargo)
+        {
+          $cargoss[$i] = $this->getDoctrine()
+                              ->getManager()
+                              ->getRepository('RegistroUnicoBundle:Cargo')
+                              ->findOneByDescription($cargo);
+          $i++;
+        }
+        $newUser->addCargos($cargoss);
         $em->flush();
     }
 }

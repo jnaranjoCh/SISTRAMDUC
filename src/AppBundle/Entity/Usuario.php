@@ -8,7 +8,8 @@
  use AppBundle\Entity\Rol;		
  		
  use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;		
- use RegistroUnicoBundle\Entity\Departamento;		
+ use RegistroUnicoBundle\Entity\Departamento;
+ use RegistroUnicoBundle\Entity\Cargo;
  		
  /**		
   * @ORM\Entity		

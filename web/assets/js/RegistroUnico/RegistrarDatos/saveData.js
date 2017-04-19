@@ -363,7 +363,6 @@ $('#submitData').click(function(){
             }
         }
     }
-     alert(personalData[5]);   
     if(can_register){
         $.ajax({
             method: "POST",
