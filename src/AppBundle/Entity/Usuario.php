@@ -568,7 +568,29 @@
      {		
          return $this->direccion;		
      }		
- 		
+ 	
+ 	 public function getRegistros()
+     {
+        // profiler needs at least one rol to consider the user logged in
+        $registros = array_reduce($this->registros->toArray(), function ($registro_names, $registro) {
+            $registro_names[] = $registro->getDescription();
+            return $registro_names;
+        }, []);
+
+        return $registros;
+     }
+    
+     public function addRegistro($registro)
+     {
+        $this->registros[] = $registro;
+     }
+
+     public function addRegistros($registros)
+     {
+        foreach($registros as $registro)
+            $this->addRegistro($registro);
+     }
+     
      public function getCargos()
      {
         // profiler needs at least one rol to consider the user logged in

@@ -5,6 +5,8 @@ namespace RegistroUnicoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use RegistroUnicoBundle\Entity\Participante;
+use RegistroUnicoBundle\Entity\Registro;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
 use RegistroUnicoBundle\Entity\Cargo;
@@ -24,16 +26,10 @@ class RegistrarDatosController extends Controller
         {
             $this->registerUser($request->get('personalData'));
             $this->registerCargos($request->get('cargoData'),$request->get('personalData')[15]);
+            $this->registerRegistros($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
             ////
-            /*$request->get('hijrgata') 
-            $request->get('indHijoData') 
-            $request->get('registrosData') 
-            $request->get('indRegistrosData') 
-            $request->get('participantesData') 
-            $request->get('indParticipantesData') 
-            $request->get('revistasData') 
-            $request->get('indRevistasData')*/
-            return new JsonResponse("if");
+            /*$request->get('hijoData') */
+            return new JsonResponse('if');
         }
         else
             return new JsonResponse("else");
@@ -212,8 +208,7 @@ class RegistrarDatosController extends Controller
             );
         }
         
-        foreach($cargos as $cargo)
-        {
+        foreach($cargos as $cargo){
           $cargoss[$i] = $this->getDoctrine()
                               ->getManager()
                               ->getRepository('RegistroUnicoBundle:Cargo')
@@ -222,5 +217,91 @@ class RegistrarDatosController extends Controller
         }
         $newUser->addCargos($cargoss);
         $em->flush();
+    }
+    
+    private function registerRegistros($registros,$participantes,$revistas,$email)
+    {
+        $i = 0;
+        $addParticipantes = false;
+        $addRevistas = false;
+        foreach($registros as $registro){
+            
+            $newRegistro =  new Registro();
+            $newRegistro->setTipo($this->getDoctrine()
+                                       ->getManager()
+                                       ->getRepository('RegistroUnicoBundle:TipoRegistro')
+                                       ->findOneByDescription($registro['tipoDeReferencia']));
+            $newRegistro->setNivel($this->getDoctrine()
+                                        ->getManager()
+                                        ->getRepository('RegistroUnicoBundle:Nivel')
+                                        ->findOneByDescription($registro['nivel']));
+            $newRegistro->setEstatus($this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('RegistroUnicoBundle:Estatus')
+                                          ->findOneByDescription($registro['estatus']));
+            $newRegistro->setInstitucionEmpresa($registro['empresaInstitucion']);
+            $newRegistro->setDescription($registro['descripcion']);
+            $newRegistro->setAño($registro['anio']);
+            
+            if($participantes != null){
+                $j = 0;
+                while($i < count($participantes) && $participantes[$i]['idRegistro'] == $registro['idRegistro']){
+                    $addParticipantes = true;
+                    $newParticipante = new Participante();
+                    $newParticipante->setNombre($participantes[$i]['nombre']);
+                    $newParticipante->setCedula($participantes[$i]['cedula']);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($newParticipante);
+                    $em->flush();
+                    
+                    $id = $this->getDoctrine()
+                               ->getManager()
+                               ->createQuery('SELECT MAX(p.id) AS lastId FROM RegistroUnicoBundle:Participante p')
+                               ->getResult();
+                    $participantess[$j] =  $this->getDoctrine()
+                                                ->getManager()
+                                                ->getRepository('RegistroUnicoBundle:Participante')
+                                                ->findOneById($id[0]['lastId']);
+                    $j++;
+                    $i++;
+                    
+                }
+                if($addParticipantes){
+                    $addParticipantes = false;
+                    $newRegistro->addParticipantes($participantess);
+                }
+            }
+            
+            if($revistas != null){
+                $j = 0;
+                while($i < count($revistas) && $revistas[$i]['idRegistro'] == $registro['idRegistro']){
+                    $addRevistas = true;
+                    $newRevista = new Revista();
+                    $newRevista->setDescription($revistas[$i]['revista']);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($newRevista);
+                    $em->flush();
+    
+                    $id = $this->getDoctrine()
+                               ->getManager()
+                               ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Revista r')
+                               ->getResult();
+                    
+                    $revistass[$j] =  $this->getDoctrine()
+                                           ->getManager()
+                                           ->getRepository('RegistroUnicoBundle:Revista')
+                                           ->findOneById($id[0]['lastId']);
+                    $j++;
+                    $i++;
+                }
+                if($addRevistas){
+                    $addRevistas = false;
+                    $newRegistro->addRevistas($revistass);
+                }
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($newRegistro);
+            $em->flush();
+        }
     }
 }

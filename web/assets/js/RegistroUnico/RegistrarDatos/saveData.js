@@ -34,30 +34,6 @@ $('#submitData').click(function(){
     var indParticipantesData = 0;
     var indRevistasData = 0;
     
-    var registro = {
-            
-            idRegistro:"",
-            tipoDeReferencia:"",
-            descripcion:"",
-            nivel:"",
-            estatus:"",
-            anio:"",
-            empresaInstitucion:""
-    };
-    
-    var participante = {
-            
-            idRegistro:"",
-            nombre:"",
-            cedula:""
-    };
-    
-    var revista = {
-            
-            idRegistro:"",
-            revista:""
-    };
-    
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
             if(inputsO[i] != "NumeroDatosII"){
@@ -186,7 +162,8 @@ $('#submitData').click(function(){
             }
          }
     }else{
-        tableRegistros.column(0).data().each( function ( value1,index1 ) {
+       tableRegistros.column(0).data().each( function ( value1,index1 ) {
+            registro = new Object();
             registro.idRegistro = value1;
             tableRegistros.column(1).data().each( function ( value2,index2 ) {
                 if(index1 == index2)
@@ -267,6 +244,7 @@ $('#submitData').click(function(){
             text = "Error existen tipos de registros sin participantes asociados.";
         }else{
             tableParticipantes.column(0).data().each( function ( value1,index1 ) {
+                participante = new Object();
                 participante.idRegistro = value1;
                 tableParticipantes.column(1).data().each( function ( value2,index2 ) {
                     if(index1 == index2)
@@ -308,6 +286,7 @@ $('#submitData').click(function(){
             text = "Error existen tipos de registros sin revistas asociados.";
         }else{
             tableRevista.column(0).data().each( function ( value1,index1 ) {
+                revista = new Object();
                 revista.idRegistro = value1;
                 tableRevista.column(1).data().each( function ( value2,index2 ) {
                     if(index1 == index2)
@@ -363,10 +342,11 @@ $('#submitData').click(function(){
             }
         }
     }
+
     if(can_register){
         $.ajax({
             method: "POST",
-            data: {"hijoData":hijoData,"indHijoData":indHijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"indRegistrosData":indRegistrosData,"participantesData":participantesData,"indParticipantesData":indParticipantesData,"revistasData":revistasData,"indRevistasData":indRevistasData},
+            data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
             url:  "/web/app_dev.php/registro/guardar-datos",
             dataType: 'json',
             success: function(data)

@@ -30,12 +30,7 @@ class Participante
     private $cedula;
 
 
-    protected $registros;
-    
-    public function __construct()
-    {
-        $this->registros = new ArrayCollection();
-    }
+    public function __construct(){}
     
     /**
      * Get id
