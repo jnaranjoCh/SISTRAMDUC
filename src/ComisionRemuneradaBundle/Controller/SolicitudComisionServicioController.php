@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\Tramite;
 
 use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 
@@ -62,8 +63,9 @@ class SolicitudComisionServicioController extends Controller
             foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
                 $actualRecaudo->setSolicitudComisionServicio($solicitudComisionServicio);
             }
-            $em->flush();
 
+            $em->flush();
+            var_dump($solicitudComisionServicio->getId());
             return $this->redirectToRoute('solicitudcomisionservicio_show', array('id' => $solicitudComisionServicio->getId()));
         }
 

@@ -3,24 +3,31 @@
 namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use TramiteBundle\Entity\Recaudo;
 
+use TramiteBundle\Entity\Recaudo;
+use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+
+///**
+// * Tramite
+// *
+// * @ORM\Table(name="tramite")
+// * @ORM\Entity(repositoryClass="TramiteBundle\Repository\TramiteRepository")
+// */
 /**
- * Tramite
- *
- * @ORM\Table(name="tramite")
- * @ORM\Entity(repositoryClass="MyBundle\Repository\TramiteRepository")
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"tramite" = "Tramite", "comision" = "ComisionRemuneradaBundle\Entity\SolicitudComisionServicio"})
  */
 class Tramite
 {
+    protected  $type = "tramite";
+
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -40,7 +47,7 @@ class Tramite
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $observacion;
+    private $observacion = "hola";
 
     /**
      * @ORM\ManyToOne(targetEntity="TipoTramite", inversedBy="tramites")
@@ -48,14 +55,12 @@ class Tramite
      */
     protected $tipo_tramite;
 
-    public function __construct()
-    {
-        $this->recaudos = new ArrayCollection(array(new Recaudo("Recaudo_1")
-        ,new Recaudo("Recaudo_2"),new Recaudo("Recaudo_3"),
-            new Recaudo("Recaudo_4"),new Recaudo("Recaudoo_5")
-        ));
-    }
-    
+    ///**
+     //* @ORM\OneToOne(targetEntity="\ComisionRemuneradaBundle\Entity\SolicitudComisionServicio", inversedBy="tramite")
+     //* @ORM\JoinColumn(name="solicitud_comision_servicio_id", referencedColumnName="id")
+     //*/
+    //protected $solicitud_comision_servicio;
+
     public function getId()
     {
         return $this->id;
@@ -149,4 +154,26 @@ class Tramite
     {
         $this->recaudos->clear();
     }
+
+    /**
+     * Set solicitud comision servicio
+     *
+     * @return Tramite
+     */
+    /*public function setSolicitudComisionServicio(SolicitudComisionServicio $solicitud_comision_servicio)
+    {
+        $this->solicitud_comision_servicio = $solicitud_comision_servicio;
+        $solicitud_comision_servicio->addTramite($this);
+        return $this;
+    }*/
+
+    /**
+     * Get solicitud comision servicio
+     *
+     * @return \ComisionRemuneradaBundle\Entity\SolicitudComisionServicio
+     */
+    /*public function getSolicitudComisionServicio()
+    {
+        return $this->solicitud_comision_servicio;
+    }*/
 }

@@ -14,7 +14,8 @@ class RecaudoType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('file');
+        $builder->add('name', null, array('label' => false));
+        $builder->add('file', null, array('label' => false));
     }
     
     /**
@@ -30,10 +31,10 @@ class RecaudoType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    /*public function getBlockPrefix()
     {
         return 'tramitebundle_recaudo';
-    }
+    }*/
 
 
 }

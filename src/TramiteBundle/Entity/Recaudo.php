@@ -45,11 +45,11 @@ class Recaudo
     private $temp;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\ComisionRemuneradaBundle\Entity\SolicitudComisionServicio", inversedBy="recaudos")
-     * @ORM\JoinColumn(name="solicitud_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Tramite", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
-    protected $solicitud;
+    protected $tramite;
 
     function __construct($name = null){
         $this->name = $name;
