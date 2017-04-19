@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
+//use RegistroUnicoBundle\Entity\Cargo;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Rol;
 
@@ -22,10 +23,10 @@ class RegistrarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->registerUser($request->get('personalData'));
-            /*$request->get('hijoData') 
+            $this->registerCargos($request->get('cargrgata') $,,request->get('personalData')[15]);
+            ////
+            /*$request->get('hijrgata') 
             $request->get('indHijoData') 
-            $request->get('cargoData') 
-            $request->get('indCargoData') 
             $request->get('registrosData') 
             $request->get('indRegistrosData') 
             $request->get('participantesData') 
@@ -195,6 +196,22 @@ class RegistrarDatosController extends Controller
         $newUser->setTelefono($user[9].'-'.$user[10]);
         $newUser->setDireccion($user[14]);
         
+        $em->flush();
+    }
+    
+    private function registerCargos($cagos,$email)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $newUser = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$newUser) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        
+        $newUser->addCargos($cagos);
         $em->flush();
     }
 }

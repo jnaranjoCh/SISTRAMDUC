@@ -367,7 +367,7 @@ $('#submitData').click(function(){
     if(can_register){
         $.ajax({
             method: "POST",
-            data: {"hijoData":hijoData,"indHijoData":indHijoData,"personalData":personalData,"cargoData":cargoData,"indCargoData":indCargoData,"registrosData":registrosData,"indRegistrosData":indRegistrosData,"participantesData":participantesData,"indParticipantesData":indParticipantesData,"revistasData":revistasData,"indRevistasData":indRevistasData},
+            data: {"hijoData":hijoData,"indHijoData":indHijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"indRegistrosData":indRegistrosData,"participantesData":participantesData,"indParticipantesData":indParticipantesData,"revistasData":revistasData,"indRevistasData":indRevistasData},
             url:  "/web/app_dev.php/registro/guardar-datos",
             dataType: 'json',
             success: function(data)
