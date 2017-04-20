@@ -10,6 +10,7 @@ use AppBundle\Entity\Rol;
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use TramiteBundle\Entity\Tramite;
 
 /**
  * @ORM\Entity
@@ -157,15 +158,15 @@ class Usuario implements UserInterface
     private $departamento;
 
     /**
-     * @ORM\OneToMany(targetEntity="ComisionRemuneradaBundle\Entity\SolicitudComisionServicio", mappedBy="owner")
+     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Tramite", mappedBy="owner")
      */
-    protected $comision_servicio;
+    protected $tramite;
 
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->planes_septenales_individuales = new ArrayCollection();
-        $this->comision_servicio = new ArrayCollection();
+        $this->tramite = new ArrayCollection();
     }
 
     /**
@@ -600,14 +601,14 @@ class Usuario implements UserInterface
         return $this->departamento;
     }
 
-    public function ownSolicitudComisionServicio(SolicitudComisionServicio $comision_servicio)
+    public function ownTramite(Tramite $tramite)
     {
-        $this->comision_servicio[] = $comision_servicio;
+        $this->tramite[] = $tramite;
         return $this;
     }
 
-    public function getSolicitudComisionServicio()
+    public function getTramite()
     {
-        return $this->comision_servicio;
+        return $this->tramite;
     }
 }

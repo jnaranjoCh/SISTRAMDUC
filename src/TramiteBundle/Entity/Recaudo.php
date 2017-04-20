@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use TramiteBundle\Entity\Tramite;
+use TramiteBundle\Entity\TipoRecaudo;
 
 /**
  * Recaudo
@@ -52,6 +53,12 @@ class Recaudo
      *
      */
     protected $tramite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoRecaudo", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="tipo_recaudo_id", referencedColumnName="id")
+     */
+    protected $tipo_recaudo;
 
     function __construct($name = null){
         $this->name = $name;
@@ -239,5 +246,29 @@ class Recaudo
 
     public function __toString() {
         return sprintf('%d.pdf', $this->id);
+    }
+
+    /**
+     * Set tipo_recaudo
+     *
+     * @param \TramiteBundle\Entity\TipoRecaudo $tipo_recaudo
+     *
+     * @return Recaudo
+     */
+    public function setTipoRecaudo(TipoRecaudo $tipo_recaudo = null)
+    {
+        $this->tipo_recaudo = $tipo_recaudo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo_recaudo
+     *
+     * @return \TramiteBundle\Entity\TipoRecaudo
+     */
+    public function getTipoRecaudo()
+    {
+        return $this->tipo_recaudo;
     }
 }

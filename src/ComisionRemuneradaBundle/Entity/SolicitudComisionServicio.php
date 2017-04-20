@@ -22,10 +22,8 @@ class SolicitudComisionServicio extends Tramite
 
     protected $recaudos;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="comision_servicio")
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     */
+    protected $tipo_tramite;
+    
     protected $owner;
 
     public function __construct()
@@ -71,13 +69,13 @@ class SolicitudComisionServicio extends Tramite
         $this->recaudos->clear();
     }
 
-    public function assignTo(Usuario $owner)
+    /*public function assignTo(Usuario $owner)
     {
         $this->owner = $owner;
         $owner->ownSolicitudComisionServicio($this);
 
         return $this;
-    }
+    }*/
 
     public function __toString() {
         return sprintf($this->getId());

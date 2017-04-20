@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use TramiteBundle\Entity\Recaudo;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use TramiteBundle\Entity\Transicion;
+use AppBundle\Entity\Usuario;
 
 /**
  * @ORM\Entity
@@ -55,6 +56,12 @@ class Tramite
      * @ORM\OneToOne(targetEntity="Transicion", mappedBy="tramite")
      */
     protected  $transicion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     */
+    protected $owner;
 
     public function getId()
     {
@@ -141,6 +148,14 @@ class Tramite
     public function removeAllRecaudos()
     {
         $this->recaudos->clear();
+    }
+
+    public function assignTo(Usuario $owner)
+    {
+        $this->owner = $owner;
+        $owner->ownTramite($this);
+
+        return $this;
     }
 
     /**

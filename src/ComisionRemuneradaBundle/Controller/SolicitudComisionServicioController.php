@@ -12,7 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\TipoRecaudo;
 use TramiteBundle\Entity\Tramite;
+use TramiteBundle\Entity\TipoTramite;
 
 use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 
@@ -55,9 +57,35 @@ class SolicitudComisionServicioController extends Controller
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $solicitudComisionServicio->assignTo($this->getUser());
             $em = $this->getDoctrine()->getManager();
+            
+            $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
+            $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 6]);
+            
+            $tipo_recaudo1_repo = $em->getRepository(TipoRecaudo::class);
+            $tipo_recaudo1 = $tipo_recaudo1_repo->findOneBy(["id" => 4]);
+
+            $tipo_recaudo2_repo = $em->getRepository(TipoRecaudo::class);
+            $tipo_recaudo2 = $tipo_recaudo2_repo->findOneBy(["id" => 5]);
+
+            $i = 1;
+            foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
+                if ($i == 1){
+                    $actualRecaudo->setTipoRecaudo($tipo_recaudo1);
+                }
+                if ($i == 2){
+                    $actualRecaudo->setTipoRecaudo($tipo_recaudo2);
+                }
+                $i+=1;
+                if ($i == 3){
+                    break;
+                }
+            }
+
+            $solicitudComisionServicio
+                ->assignTo($this->getUser())
+                ->setTipoTramite($tipo_tramite);
+
             $em->persist($solicitudComisionServicio);
 
             foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
@@ -65,7 +93,7 @@ class SolicitudComisionServicioController extends Controller
             }
 
             $em->flush();
-            var_dump($solicitudComisionServicio->getId());
+            
             return $this->redirectToRoute('solicitudcomisionservicio_show', array('id' => $solicitudComisionServicio->getId()));
         }
 
