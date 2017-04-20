@@ -54,6 +54,12 @@ $ php bin/console doctrine:fixtures:load
 $ php bin/console server:run
 ```
 
+### Para que no escriban tanto
+```bash
+$ alias rd='sudo service postgresql start;php bin/console doctrine:database:drop --force --env=dev;php bin/console doctrine:database:create --env=dev;php bin/console doctrine:schema:update --force --env=dev;php bin/console doctrine:fixtures:load --no-interaction --env=dev;'
+$ rd
+```
+
 ### Credenciales
 Cédula: 1234
 Contraseña: 1234

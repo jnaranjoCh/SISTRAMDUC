@@ -303,11 +303,51 @@
                 <li data-route="tablaBasicaConcurso">
                   <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
                 </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>Jurados</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="jurado">
+                  <a href="{{ path('jurado') }}"><i class="fa fa-circle-o"></i>Registrar Jurados</a>
+                </li>
                 <li data-route="listarJurados">
                   <a href="{{ path('listarJurados') }}"><i class="fa fa-circle-o"></i>Listado de Jurados</a>
                 </li>
+                <li data-route="suplentesJurado">
+                  <a href="{{ path('suplentesJurado') }}"><i class="fa fa-circle-o"></i>Registrar Suplentes</a>
+                </li>
                 <li data-route="listarSuplentes">
                   <a href="{{ path('listarSuplentes') }}"><i class="fa fa-circle-o"></i>Listado de Suplentes</a>
+                </li>
+              </ul>
+            </li>
+
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-circle-o"></i><span>CPEC</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="cpec">
+                  <a href="{{ path('cpec') }}"><i class="fa fa-circle-o"></i>Registrar CPEC</a>
+                </li>
+                <li data-route="listarCPEC">
+                  <a href="{{ path('listarCPEC') }}"><i class="fa fa-circle-o"></i>Listado de CPEC</a>
+                </li>
+                <li data-route="suplentesCPEC">
+                  <a href="{{ path('suplentesCPEC') }}"><i class="fa fa-circle-o"></i>Registrar Suplentes</a>
+                </li>
+                <li data-route="listarSuplentesCPEC">
+                  <a href="{{ path('listarSuplentesCPEC') }}"><i class="fa fa-circle-o"></i>Listado de Suplentes</a>
                 </li>
               </ul>
             </li>
@@ -344,7 +384,7 @@
                   <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
                 </li>
               </ul>
-            </li>
+            </li>  
 
             <li class="treeview">
               <a href="#">
@@ -361,7 +401,7 @@
                   <a href="{{ path('listarPruebas') }}"><i class="fa fa-circle-o"></i>Listado de Pruebas</a>
                 </li>
               </ul>
-            </li>
+            </li> 
 
             <li class="treeview">
               <a href="#">
@@ -378,8 +418,8 @@
                   <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
                 </li>
               </ul>
-            </li>
-
+            </li>       
+            
           </ul>
         </li>
       </ul>
@@ -413,18 +453,14 @@
 <script>
   // Resolve conflict in jQuery UI tooltip with Bootstrap tooltip
   $.widget.bridge('uibutton', $.ui.button);
-
   // Activate sidebar items accordingly
   var current_route = $("#sidebar").data('current-route'),
     $li = $("[data-route='" + current_route + "']").addClass('active'),
     $ul = $li.parent('ul');
-
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
     $ul.parent('li.treeview').addClass('active');
   }
-
-
   if ($ul.is('.treeview-menu')) {
     $ul.addClass('menu-open');
     $ul.parent('li').addClass('active');

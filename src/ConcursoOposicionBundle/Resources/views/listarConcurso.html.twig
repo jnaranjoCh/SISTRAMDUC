@@ -9,21 +9,78 @@
         <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
         <li class="active"> Listado de Concurso</li>
       </ol>
-    </section>
+    </section> 
 
     <br/>
     <div class="row">
       <!--Success message-->
-      <section class="content-body col-md-offset-1 col-md-9">
+      <section class="content-body col-md-offset-1 col-md-10">
         <br/>
         <div class="register-box-body">
-            <form>
 
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Concursos</h3>
+                  </div>
 
-            </form>
+                   <div class="box-body">
+
+                      <table id="example2" class="table table-bordered table-striped">
+                          <thead>
+                          <tr>
+                            <th>Fecha Inicio</th>
+                            <th>Nro. Vacantes</th>
+                            <th>Area Postulaci&oacute;n</th>
+                            <th>Fecha Recepci&oacute;n Doc.</th>
+                            <th>Fecha Presentaci&oacute;n</th>                          
+                          </tr>
+                          </thead>
+                          <tbody id="cuerpo">
+
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                              <th>Fecha Inicio</th>
+                              <th>Nro. Vacantes</th>
+                              <th>Area Postulaci&oacute;n</th>
+                              <th>Fecha Recepci&oacute;n Doc.</th>
+                              <th>Fecha Presentaci&oacute;n</th>                          
+                            </tr>
+                          </tfoot>
+                      </table>
+                   </div>
+
+                </div>
         </div>
       </section>
     </div>
     <br/><br/>
     
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script>
+    $(function () {
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+      });
+    });
+  </script>
+
+    <script src="{{ asset('assets/js/concursoOposicion/listarConcursos.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+
 {% endblock %}
