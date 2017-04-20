@@ -5,6 +5,7 @@ namespace RegistroUnicoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use RegistroUnicoBundle\Entity\Revista;
 use RegistroUnicoBundle\Entity\Participante;
 use RegistroUnicoBundle\Entity\Registro;
 use RegistroUnicoBundle\Entity\Estatus;
@@ -24,12 +25,12 @@ class RegistrarDatosController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
-            $this->registerUser($request->get('personalData'));
-            $this->registerCargos($request->get('cargoData'),$request->get('personalData')[15]);
-            $this->registerRegistros($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
+            $this->registerSectionOne($request->get('personalData'));
+            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[15]);
+            $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
             ////
             /*$request->get('hijoData') */
-            return new JsonResponse('if');
+            return new JsonResponse("if");
         }
         else
             return new JsonResponse("else");
@@ -168,7 +169,7 @@ class RegistrarDatosController extends Controller
                     ->findOneById($id);
     }
     
-    private function registerUser($user)
+    private function registerSectionOne($user)
     {
         $em = $this->getDoctrine()->getManager();
         $newUser = $em->getRepository('AppBundle:Usuario')
@@ -195,7 +196,7 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-    private function registerCargos($cargos,$email)
+    private function registerSectionTwo($cargos,$email)
     {
         $i = 0;
         $em = $this->getDoctrine()->getManager();
@@ -219,11 +220,75 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-    private function registerRegistros($registros,$participantes,$revistas,$email)
+    private function registerSectionThree($registros,$participantes,$revistas,$email)
     {
-        $i = 0;
-        $addParticipantes = false;
-        $addRevistas = false;
+        $i = -1;
+        $j = -1;
+        $valaux = -1;
+        $idsparticipantes = [];
+        $participantess[] = [];
+        if($participantes != null){
+            foreach($participantes as $participante){
+                $newParticipante = new Participante();
+                $newParticipante->setNombre($participante['nombre']);
+                $newParticipante->setCedula($participante['cedula']);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($newParticipante);
+                $em->flush();
+                
+                $id = $this->getDoctrine()
+                           ->getManager()
+                           ->createQuery('SELECT MAX(p.id) AS lastId FROM RegistroUnicoBundle:Participante p')
+                           ->getResult();
+                           
+                if($valaux != $participante['idRegistro'])
+                {
+                    $i++;
+                    $valaux = $participante['idRegistro'];
+                    $idsparticipantes[$i] = $participante['idRegistro'];
+                    $j = -1;            
+                }
+                $j++;
+                $participantess[$i][$j] =  $this->getDoctrine()
+                                                ->getManager()
+                                                ->getRepository('RegistroUnicoBundle:Participante')
+                                                ->findOneById($id[0]['lastId']);
+            }
+        }
+        
+        $i = -1;
+        $j = -1;
+        $valaux = -1;
+        $idsrevistas = [];
+        $revistass[] = [];
+        if($revistas != null){
+            foreach($revistas as $revista){
+                $newRevista = new Revista();
+                $newRevista->setDescription($revista['revista']);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($newRevista);
+                $em->flush();
+
+                $id = $this->getDoctrine()
+                           ->getManager()
+                           ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Revista r')
+                           ->getResult();
+                
+                if($valaux != $revista['idRegistro'])
+                {
+                    $i++;
+                    $valaux = $revista['idRegistro'];
+                    $idsrevistas[$i] = $revista['idRegistro'];
+                    $j = -1;
+                }
+                $j++;
+                $revistass[$i][$j] =  $this->getDoctrine()
+                                           ->getManager()
+                                           ->getRepository('RegistroUnicoBundle:Revista')
+                                           ->findOneById($id[0]['lastId']);
+            }
+        }
+        $pos = -1;
         foreach($registros as $registro){
             
             $newRegistro =  new Registro();
@@ -243,62 +308,14 @@ class RegistrarDatosController extends Controller
             $newRegistro->setDescription($registro['descripcion']);
             $newRegistro->setAño($registro['anio']);
             
-            if($participantes != null){
-                $j = 0;
-                while($i < count($participantes) && $participantes[$i]['idRegistro'] == $registro['idRegistro']){
-                    $addParticipantes = true;
-                    $newParticipante = new Participante();
-                    $newParticipante->setNombre($participantes[$i]['nombre']);
-                    $newParticipante->setCedula($participantes[$i]['cedula']);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($newParticipante);
-                    $em->flush();
-                    
-                    $id = $this->getDoctrine()
-                               ->getManager()
-                               ->createQuery('SELECT MAX(p.id) AS lastId FROM RegistroUnicoBundle:Participante p')
-                               ->getResult();
-                    $participantess[$j] =  $this->getDoctrine()
-                                                ->getManager()
-                                                ->getRepository('RegistroUnicoBundle:Participante')
-                                                ->findOneById($id[0]['lastId']);
-                    $j++;
-                    $i++;
-                    
-                }
-                if($addParticipantes){
-                    $addParticipantes = false;
-                    $newRegistro->addParticipantes($participantess);
-                }
+            if(in_array($registro['idRegistro'],$idsrevistas)){
+                $pos = array_search($registro['idRegistro'],$idsrevistas);
+                $newRegistro->addRevistas($revistass[$pos]);
+            }else if(in_array($registro['idRegistro'],$idsparticipantes)){
+                $pos = array_search($registro['idRegistro'],$idsparticipantes);
+                $newRegistro->addParticipantes($participantess[$pos]);
             }
             
-            if($revistas != null){
-                $j = 0;
-                while($i < count($revistas) && $revistas[$i]['idRegistro'] == $registro['idRegistro']){
-                    $addRevistas = true;
-                    $newRevista = new Revista();
-                    $newRevista->setDescription($revistas[$i]['revista']);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($newRevista);
-                    $em->flush();
-    
-                    $id = $this->getDoctrine()
-                               ->getManager()
-                               ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Revista r')
-                               ->getResult();
-                    
-                    $revistass[$j] =  $this->getDoctrine()
-                                           ->getManager()
-                                           ->getRepository('RegistroUnicoBundle:Revista')
-                                           ->findOneById($id[0]['lastId']);
-                    $j++;
-                    $i++;
-                }
-                if($addRevistas){
-                    $addRevistas = false;
-                    $newRegistro->addRevistas($revistass);
-                }
-            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($newRegistro);
             $em->flush();

@@ -351,7 +351,7 @@ $('#submitData').click(function(){
             dataType: 'json',
             success: function(data)
             {
-                    alert(data);
+                    alert(JSON.stringify(data));
             }
         });
     }
