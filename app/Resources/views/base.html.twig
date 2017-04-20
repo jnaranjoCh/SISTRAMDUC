@@ -148,15 +148,39 @@
           <a href="#">
             <i class="fa fa fa-calendar"></i><span>Plan Septenal</span>
             <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="display-plan-septenal-individual">
-              <a href="{{ path('display-plan-septenal-individual') }}"><i class="fa fa-circle-o"></i>Individual</a>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Plan Septenal Individual
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="plan-septenal-individual-creation-view">
+                  <a href="{{ path('plan-septenal-individual-creation-view') }}"><i class="fa fa-circle-o"></i>Creación</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i>Actualización</a>
+                </li>
+              </ul>
             </li>
-            <li data-route="plan-septenal-colectivo">
-              <a href="{{ path('plan-septenal-colectivo') }}"><i class="fa fa-circle-o"></i>Colectivo</a>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Plan Septenal Colectivo
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="plan-septenal-colectivo-creation-view">
+                  <a href="{{ path('plan-septenal-colectivo-creation-view') }}"><i class="fa fa-circle-o"></i>Proceso de Creación</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i>Solicitudes de Actualización</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>

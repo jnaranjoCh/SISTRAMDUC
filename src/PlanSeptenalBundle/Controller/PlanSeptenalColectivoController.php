@@ -13,9 +13,9 @@ use PlanSeptenalBundle\Entity\PlanSeptenalColectivo;
 class PlanSeptenalColectivoController extends Controller
 {
     /**
-     * @Route("/plan-septenal/colectivo", name="plan-septenal-colectivo")
+     * @Route("/plan-septenal/colectivo", name="plan-septenal-colectivo-creation-view")
      */
-    public function showAction()
+    public function getCreationViewAction()
     {
         $next_year = (new \DateTime())->modify("+1 year")->format("Y");
 

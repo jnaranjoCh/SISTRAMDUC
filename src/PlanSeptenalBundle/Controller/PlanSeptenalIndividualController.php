@@ -15,10 +15,10 @@ use PlanSeptenalBundle\Utils\Helpers;
 class PlanSeptenalIndividualController extends Controller
 {
     /**
-     * @Route("/plan-septenal/individual", name="display-plan-septenal-individual")
+     * @Route("/plan-septenal/individual", name="plan-septenal-individual-creation-view")
      * @Method({"GET"})
      */
-    public function displayAction()
+    public function getCreacionViewAction()
     {
         return $this->render('PlanSeptenalBundle::individual.html.twig');
     }
