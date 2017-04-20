@@ -2,10 +2,12 @@
 
 namespace TramiteBundle\Controller;
 
-use TramiteBundle\Entity\Recaudo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Form\RecaudoType;
 
 /**
  * Recaudo controller.
@@ -26,10 +28,11 @@ class RecaudoController extends Controller
 
         $recaudos = $em->getRepository('TramiteBundle:Recaudo')->findAll();
 
-        return $this->render('recaudo/index.html.twig', array(
+        return $this->render('TramiteBundle:recaudo:index.html.twig', array(
             'recaudos' => $recaudos,
         ));
     }
+
 
     /**
      * Creates a new recaudo entity.
@@ -46,12 +49,14 @@ class RecaudoController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($recaudo);
-            $em->flush($recaudo);
+            //$em->flush();
+            $em->persist($recaudo);
+            $em->flush();
 
             return $this->redirectToRoute('recaudo_show', array('id' => $recaudo->getId()));
         }
 
-        return $this->render('recaudo/new.html.twig', array(
+        return $this->render('TramiteBundle:recaudo:new.html.twig', array(
             'recaudo' => $recaudo,
             'form' => $form->createView(),
         ));
@@ -67,7 +72,7 @@ class RecaudoController extends Controller
     {
         $deleteForm = $this->createDeleteForm($recaudo);
 
-        return $this->render('recaudo/show.html.twig', array(
+        return $this->render('TramiteBundle:recaudo:show.html.twig', array(
             'recaudo' => $recaudo,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -91,7 +96,7 @@ class RecaudoController extends Controller
             return $this->redirectToRoute('recaudo_edit', array('id' => $recaudo->getId()));
         }
 
-        return $this->render('recaudo/edit.html.twig', array(
+        return $this->render('TramiteBundle:recaudo:edit.html.twig', array(
             'recaudo' => $recaudo,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

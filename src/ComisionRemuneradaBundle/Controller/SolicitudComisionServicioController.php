@@ -2,13 +2,21 @@
 
 namespace ComisionRemuneradaBundle\Controller;
 
-use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Validator\Constraints\NotBlank as NotBlankConstraint;
 use Symfony\Component\Form\FormError;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use AppBundle\Entity\Usuario;
+use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\TipoRecaudo;
+use TramiteBundle\Entity\Tramite;
+use TramiteBundle\Entity\TipoTramite;
+
+use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 
 /**
  * Solicitudcomisionservicio controller.
@@ -43,31 +51,49 @@ class SolicitudComisionServicioController extends Controller
     public function newAction(Request $request)
     {
         $solicitudComisionServicio = new Solicitudcomisionservicio();
+
         // Se crea el formulario
         $form = $this->createForm('ComisionRemuneradaBundle\Form\SolicitudComisionServicioType', $solicitudComisionServicio);
         $form->handleRequest($request);
-
-        //Validacion de Archios
-        /*$notBlankConstraint = new NotBlankConstraint();
-        $notBlankConstraint->message = 'Por favor, debe cargar un archivo PDF.';*/
-        //Para cada capitulo validamos de ser asi agregamos el error
-        /*foreach ($solicitudComisionServicio->getRecaudos() as $key => $recaudo) {
-            $errors = $this->get('validator')->validateValue(
-                $solicitudComisionServicio->getRecaudos()->get($key)->getFile(),
-                $notBlankConstraint );
-            foreach ($errors as $error) {
-                $form->get('recaudos')->addError( new FormError("Para el Recaudo ".($key + 1)." , debe cargar un archivo PDF."));
-            }
-        }*/
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($solicitudComisionServicio);
-            $em->flush();
-            /*foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
-                $actualRecaudo->setSolicitudComisionServicio($solicitudComisionServicio);
-            }*/
+            
+            $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
+            $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 6]);
+            
+            $tipo_recaudo1_repo = $em->getRepository(TipoRecaudo::class);
+            $tipo_recaudo1 = $tipo_recaudo1_repo->findOneBy(["id" => 4]);
 
+            $tipo_recaudo2_repo = $em->getRepository(TipoRecaudo::class);
+            $tipo_recaudo2 = $tipo_recaudo2_repo->findOneBy(["id" => 5]);
+
+            $i = 1;
+            foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
+                if ($i == 1){
+                    $actualRecaudo->setTipoRecaudo($tipo_recaudo1);
+                }
+                if ($i == 2){
+                    $actualRecaudo->setTipoRecaudo($tipo_recaudo2);
+                }
+                $i+=1;
+                if ($i == 3){
+                    break;
+                }
+            }
+
+            $solicitudComisionServicio
+                ->assignTo($this->getUser())
+                ->setTipoTramite($tipo_tramite);
+
+            $em->persist($solicitudComisionServicio);
+
+            foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
+                $actualRecaudo->setTramite($solicitudComisionServicio);
+            }
+
+            $em->flush();
+            
             return $this->redirectToRoute('solicitudcomisionservicio_show', array('id' => $solicitudComisionServicio->getId()));
         }
 

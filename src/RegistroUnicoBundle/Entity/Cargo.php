@@ -23,11 +23,8 @@ class Cargo
      */
     private $description;
 
-    protected $usuarios;
-    
     public function __construct()
     {
-        $this->usuarios = new ArrayCollection();
     }
     
     /**

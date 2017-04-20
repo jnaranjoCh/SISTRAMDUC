@@ -34,7 +34,7 @@ $(function () {
         ]
     });
     
-    table4 = $('#table-4').DataTable({
+    tableRevista = $('#tableRevista').DataTable({
 	    "language": {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },

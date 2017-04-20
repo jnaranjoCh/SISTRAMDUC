@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use TramiteBundle\Entity\Tramite;
+use TramiteBundle\Entity\TipoRecaudo;
+
 /**
  * Recaudo
  *
@@ -27,8 +30,7 @@ class Recaudo
      */
     private $path;
     /**
-     * @ORM\Column(type="string", length=50)
-     * Assert\NotBlank(message="Por favor, ingrese el nombre del Documento.")
+     * @ORM\Column(type="string", length=100)
      */
     private $name;
     /**
@@ -42,14 +44,21 @@ class Recaudo
      * @Assert\NotNull(message="Por favor, cargar el Documento como un archivo PDF.")
      */
     private $file;
+
     private $temp;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\ComisionRemuneradaBundle\Entity\SolicitudComisionServicio", inversedBy="recaudos")
-     * @ORM\JoinColumn(name="solicitud_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="Tramite", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id", onDelete="CASCADE")
      *
      */
-    protected $solicitud;
+    protected $tramite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoRecaudo", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="tipo_recaudo_id", referencedColumnName="id")
+     */
+    protected $tipo_recaudo;
 
     function __construct($name = null){
         $this->name = $name;
@@ -216,27 +225,50 @@ class Recaudo
     }
 
     /**
-     * Set solicitud
+     * Set tramite
      *
-     * @param \ComisionRemuneradaBundle\Entity\SolicitudComisionServicio $solicitud
      * @return recaudo
      */
-    public function setSolicitudComisionServicio(\ComisionRemuneradaBundle\Entity\SolicitudComisionServicio $solicitud = null)
+    public function setTramite(Tramite $tramite = null)
     {
-        $this->solicitud = $solicitud;
+        $this->tramite = $tramite;
         return $this;
     }
     /**
-     * Get solicitud
+     * Get tramite
      *
-     * @return \ComisionRemuneradaBundle\Entity\SolicitudComisionServicio
+     * @return \TramiteBundle\Entity\Tramite
      */
-    public function getSolicitudComisionServicio()
+    public function getTramite()
     {
-        return $this->solicitud;
+        return $this->tramite;
     }
 
     public function __toString() {
         return sprintf('%d.pdf', $this->id);
+    }
+
+    /**
+     * Set tipo_recaudo
+     *
+     * @param \TramiteBundle\Entity\TipoRecaudo $tipo_recaudo
+     *
+     * @return Recaudo
+     */
+    public function setTipoRecaudo(TipoRecaudo $tipo_recaudo = null)
+    {
+        $this->tipo_recaudo = $tipo_recaudo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo_recaudo
+     *
+     * @return \TramiteBundle\Entity\TipoRecaudo
+     */
+    public function getTipoRecaudo()
+    {
+        return $this->tipo_recaudo;
     }
 }
