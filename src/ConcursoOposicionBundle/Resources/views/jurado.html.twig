@@ -9,7 +9,7 @@
         <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
         <li class="active"> Apertura Concurso</li>
       </ol>
-    </section> 
+    </section>  
 
     <br/>
     <div class="row">
@@ -18,7 +18,36 @@
         <br/>
         <div class="register-box-body">
 
-            <form>
+            <form id="juradosSave">
+
+            	<div class="panel panel-danger hide" id="msgFracaso">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Debe llenar todos los campos indicados.</h4>
+            		</div>		            
+		        </div>
+
+		        <div class="panel panel-danger hide" id="msgFracaso1">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar1"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Ocurri&oacute; un problema al insertar.</h4>
+            		</div>		            
+		        </div>
+
+		        <div class="panel panel-success hide" id="msgExito">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar2"></i> Exito</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Jurados Insertados.</h4>
+            		</div>		            
+		        </div>            	
+
+	            <br/>
 
 				<div class="container">
 	            <label>Jurado Coordinador</label>
@@ -307,10 +336,10 @@
 
               <div class="row">
                 <div class="col-xs-6">
-                  <a href="{{ path('apertura_concurso_oposicion_index') }}" class="btn btn-primary btn-block btn-flat">Cancelar</a>
+                  <button id="limpiarJurado" type="button" class="btn btn-default btn-block btn-flat">Limpiar</button>
                 </div>
                 <div class="col-xs-6">
-                  <button id="registrarJurado" type="button" class="btn btn-success btn-block btn-flat">Registrar Jurado</button>
+                  <button id="registrarJurado" type="button" class="btn btn-success btn-block btn-flat" href="#msgExito">Registrar Jurado</button>
                 </div>
               </div>
             </form>

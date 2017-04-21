@@ -1,3 +1,11 @@
+tramite_recaudo:
+    resource: "@TramiteBundle/Controller/RecaudoController.php"
+    type:     annotation
+
+comision_remunerada_solicitud_comision_servicio:
+    resource: "@ComisionRemuneradaBundle/Controller/SolicitudComisionServicioController.php"
+    type:     annotation
+
 concurso_oposicion:
     resource: "@ConcursoOposicionBundle/Controller/"
     type:     annotation

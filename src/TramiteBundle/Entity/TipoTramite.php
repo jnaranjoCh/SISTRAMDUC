@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Anyelys
- * Date: 03/03/2017
- * Time: 11:34 PM
- */
 
 namespace TramiteBundle\Entity;
 

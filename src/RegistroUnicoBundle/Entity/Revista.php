@@ -24,12 +24,8 @@ class Revista
      */
     private $description;
 
-    protected $registros;
     
-    public function __construct()
-    {
-        $this->registros = new ArrayCollection();
-    }
+    public function __construct(){}
     
     /**
      * Get id

@@ -1,9 +1,13 @@
+var idRegistro = 0;
+
 $( window ).load(function() {
+    
     $("#miniPersonal").click();
     $("#miniRegistros").click();
     $("#miniCargos").click();
+    $("#miniHijos").click();
     
-    $("#table-6").DataTable( {
+    $("#tableUsers").DataTable( {
           "ajax": "/web/app_dev.php/registro/enviar-emails",
           "columns": [
 		        { "data": "Email" },
@@ -18,8 +22,7 @@ $( window ).load(function() {
         method: "POST",
         url:  "/web/app_dev.php/registro/obtener-datos",
         dataType: 'json',
-        success: function(data)
-        {
+        success: function(data){
             var estatus ="<option value='' selected='selected'>Seleccione una opción</option>";
             for(var i = 0; i < data["estatus"].length; i++)
                 estatus = estatus+"<option value='"+data["estatus"][i]+"'>"+data["estatus"][i]+"</option>";
@@ -39,6 +42,18 @@ $( window ).load(function() {
         }
     });
     
+     $.ajax({
+        method: "POST",
+        url:  "/web/app_dev.php/registro/enviar-lastid",
+        dataType: 'json',
+        success: function(data){
+            if(data[0].lastId != null)
+                idRegistro = data[0].lastId;
+        }
+    });
+    $('#IdParticipanteRegistro').html("<option value='-1'>No existen registros</option>");
+    $('#idRevistaRegistro').html("<option value='-1'>No existen registros</option>");
     $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker2').datetimepicker();
 });
 

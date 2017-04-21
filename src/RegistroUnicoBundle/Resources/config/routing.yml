@@ -1,47 +1,53 @@
-registro_usuario_index:
+registro_usuario_index: 
     path:     /registro/usuario
-    defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuario }
+    defaults: { _controller: RegistroUnicoBundle:RegistrarUsuario:registrarUsuario }
 
-registro_datos_index:
-    path:     /registro/datos
-    defaults: { _controller: RegistroUnicoBundle:Default:registrarDatosUsuario }
-
-registro_consulta_index:
-    path:     /registro/consulta
-    defaults: { _controller: RegistroUnicoBundle:Default:consultarRegistro }
-
-registro_guardar_ajax:
-    path:     /registro/guardar-datos
-    defaults: { _controller: RegistroUnicoBundle:Default:guardarDatosAjax }
-    requirements:
-        _method:  POST
-        
-registro_obtener_ajax:
-    path:     /registro/obtener-datos
-    defaults: { _controller: RegistroUnicoBundle:Default:enviarDataAjax }
+registro_registeruser_ajax:
+    path:     /registro/registrar-usuario
+    defaults: { _controller: RegistroUnicoBundle:RegistrarUsuario:registrarUsuarioAjax }
     requirements:
         _method:  POST
         
 registro_buscarcedula_ajax:
     path:     /registro/buscar-cedula
-    defaults: { _controller: RegistroUnicoBundle:Default:buscarCedulaAjax }
+    defaults: { _controller: RegistroUnicoBundle:RegistrarUsuario:buscarCedulaAjax }
     requirements:
         _method:  POST
+        
+registro_datos_index:
+    path:     /registro/datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:registrarDatosUsuario }
+
+registro_guardar_ajax:
+    path:     /registro/guardar-datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:guardarDatosAjax }
+    requirements:
+        _method:  POST
+        
+registro_obtener_ajax:
+    path:     /registro/obtener-datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
+    requirements:
+        _method:  POST 
         
 registro_buscaremail_ajax:
     path:     /registro/buscar-email
-    defaults: { _controller: RegistroUnicoBundle:Default:buscarEmailAjax }
-    requirements:
-        _method:  POST
-        
-registro_registeruser_ajax:
-    path:     /registro/registrar-usuario
-    defaults: { _controller: RegistroUnicoBundle:Default:registrarUsuarioAjax }
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:buscarEmailAjax }
     requirements:
         _method:  POST
         
 registro_obteneremails_ajax:
     path:     /registro/enviar-emails
-    defaults: { _controller: RegistroUnicoBundle:Default:enviarEmailsAjax }
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarEmailsAjax }
     requirements:
         _method:  POST
+
+registro_obtenerlastid_ajax:
+    path:    /registro/enviar-lastid
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:obtenerIdAjax }
+    requirements:
+        _method:  POST
+
+registro_consulta_index:
+    path:     /registro/consulta
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:consultarRegistro }

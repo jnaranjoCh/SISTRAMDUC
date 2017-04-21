@@ -1,5 +1,5 @@
 $('#registrarConcurso').click(function (){ 
-	
+	 
 	var fecha = $('#fechaConcurso').val();
 	var continua = true;
 
@@ -43,7 +43,43 @@ $('#registrarConcurso').click(function (){
 
 	if (continua){
 
-		$('#msgExito').removeClass("hide");
+		/*json*/
+
+		$.ajax({
+            method: "POST",
+            data: {"Inicio":$("#fechaConcurso").val(), 
+            "Vacantes":$("#cedula").val(), 
+            "Area":$("#area").val(), 
+            "fechaDoc":$("#fechaDoc").val(), 
+            "fechaPre":$("#fechaPre").val(), 
+            "observacion":$("#observacion").val()},
+            url:  "http://localhost:8000/concursoOposicion/registroConcursoAjax",
+            dataType: 'json',
+            success: function(data)
+            {
+                if (data == "S"){
+
+                	document.getElementById('aperturaConcurso').reset();
+
+					$('#spanfechaConcurso').addClass("hide");
+					$('#spancedula').addClass("hide");
+					$('#spancedula2').addClass("hide");
+					$('#spanarea').addClass("hide");
+
+                	$('#msgFracaso').addClass("hide");
+                	$('#msgFracaso1').addClass("hide");
+					$('#msgExito').removeClass("hide");	
+                } 
+                else{
+
+                	$('#msgFracaso').addClass("hide");
+                	$('#msgExito').addClass("hide");
+					$('#msgFracaso1').removeClass("hide");
+                }
+            }
+        }); 
+		
+		/*fin del json*/		
 	}
 	else {
 
@@ -61,6 +97,7 @@ $('#limpiarConcurso').click(function (){
 	$('#spanarea').addClass("hide");
 	$('#msgExito').addClass("hide");
 	$('#msgFracaso').addClass("hide");
+	$('#msgFracaso1').addClass("hide");
 });
 
 function justNumbers(e){
@@ -76,6 +113,11 @@ function justNumbers(e){
 $('#quitar').click(function (){
 
 	$('#msgFracaso').addClass("hide");
+});
+
+$('#quitar1').click(function (){
+
+	$('#msgFracaso1').addClass("hide");
 });
 
 $('#quitar2').click(function (){
