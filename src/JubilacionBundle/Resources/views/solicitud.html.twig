@@ -12,9 +12,9 @@
 {% block content %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <h4 style="text-align: center"><b>PROCESO DE ENVÍO DE SOLICITUD</b></h4>
+        <h4 style="text-align: center"><b>PROCESO DE ENVÍO DE SOLICITUD </b></h4>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-fw fa-blind"></i> Jubilación</a></li>
+            <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
             <li class="active">Realizar Solicitud </li>
         </ol>
     </div>
@@ -43,20 +43,6 @@
                         </div>
                         <hr/>
                         <div class="form-group">
-                            <label for="exampleInputFile">Fotocopia de cédula de Identidad</label>
-                            <input type="file" id="exampleInputFile">
-
-                            <p class="help-block">Example block-level help text here.</p>
-                        </div>
-                        <hr/>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Fotocopia del RIF</label>
-                            <input type="file" id="exampleInputFile">
-
-                            <p class="help-block">Example block-level help text here.</p>
-                        </div>
-                        <hr/>
-                        <div class="form-group">
                             <label for="exampleInputFile">Copia de Constancia expedida por la Dirección de Asuntos Profesorales</label>
                             <input type="file" id="exampleInputFile">
 
@@ -65,13 +51,6 @@
                         <hr/>
                         <div class="form-group">
                             <label for="exampleInputFile">Recibo de pago</label>
-                            <input type="file" id="exampleInputFile">
-
-                            <p class="help-block">Example block-level help text here.</p>
-                        </div>
-                        <hr/>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Partida de nacimiento (opcional)</label>
                             <input type="file" id="exampleInputFile">
 
                             <p class="help-block">Example block-level help text here.</p>
@@ -90,18 +69,21 @@
 
                             <p class="help-block">Example block-level help text here.</p>
                         </div>
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-block btn-success">Enviar Solicitud</button>
-                        </div>
                     </div>
                     <!-- /.box-body -->
                 </form>
                 <!-- /.box -->
             </section>
         </div>
+        <div class="box-body">
+            <div class="pull-right">
+                <a href="{{ path('jubilacion-solicitud') }}">
+                    <button type="button" class="btn btn-block btn-success">Enviar Solicitud</button>
+                </a>
+            </div>
+        </div>
         <!-- /.box -->
     </section>
     <!-- /.content -->
     <!-- /.content-wrapper -->
-
 {% endblock %}
