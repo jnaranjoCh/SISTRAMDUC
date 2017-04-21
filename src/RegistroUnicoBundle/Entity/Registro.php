@@ -72,11 +72,10 @@ class Registro
     protected $revistas;
     
     
-    protected $usuarios;
     /**
      * @ORM\Column(type="integer")
      */
-    private $tipoId;
+    private $tipoRegistroId;
 
     /**
      * @ORM\Column(type="integer")
@@ -176,30 +175,6 @@ class Registro
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set tipoId
-     *
-     * @param integer $tipoId
-     *
-     * @return Registro
-     */
-    public function setTipoId($tipoId)
-    {
-        $this->tipoId = $tipoId;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoId
-     *
-     * @return integer
-     */
-    public function getTipoId()
-    {
-        return $this->tipoId;
     }
 
     /**
@@ -322,5 +297,53 @@ class Registro
 
         return $this;
     }
+    
+     public function getParticipantes()
+     {
+        // profiler needs at least one rol to consider the user logged in
+        $participantes = array_reduce($this->participantes->toArray(), function ($participante_names, $participante) {
+            $participante_names[] = $participante->getNombre();
+            return $participante_names;
+        }, []);
+
+        return $participantes;
+     }
+    
+     public function addParticipante($participante)
+     {
+        $this->participantes[] = $participante;
+     }
+
+     public function addParticipantes($participantes)
+     {
+         if($participantes != null){
+            foreach($participantes as $participante)
+                $this->addParticipante($participante);
+         }
+     }
+     
+     public function getRevistas()
+     {
+        // profiler needs at least one rol to consider the user logged in
+        $revistas = array_reduce($this->revistas->toArray(), function ($revista_names, $revista) {
+            $revista_names[] = $revista->getDescription();
+            return $revista_names;
+        }, []);
+
+        return $revistas;
+     }
+    
+     public function addRevista($revista)
+     {
+        $this->revistas[] = $revista;
+     }
+
+     public function addRevistas($revistas)
+     {
+         if($revistas != null){
+            foreach($revistas as $revista)
+                $this->addRevista($revista);
+         }
+     }
     
 }

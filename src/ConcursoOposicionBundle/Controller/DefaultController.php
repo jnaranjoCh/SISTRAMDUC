@@ -1,9 +1,15 @@
-<?php
+<?php 
 
 namespace ConcursoOposicionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use ConcursosBundle\Entity\Concurso;
+use ConcursosBundle\Entity\Jurado;
 
 class DefaultController extends Controller
 {
@@ -21,6 +27,22 @@ class DefaultController extends Controller
     public function juradoAction()
     {
         return $this->render('ConcursoOposicionBundle::jurado.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listarSuplentesCPEC", name="listarSuplentesCPEC")
+     */
+    public function listarSuplentesCpecAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listarSuplentesCPEC.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listarCPEC", name="listarCPEC")
+     */
+    public function listadoCpecAction()
+    {
+        return $this->render('ConcursoOposicionBundle::listarCPEC.html.twig');
     }
 
     /**
@@ -141,5 +163,160 @@ class DefaultController extends Controller
     public function listarResultadosAction()
     {
         return $this->render('ConcursoOposicionBundle::listarResultados.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/registroConcursoAjax", name="registroConcursoAjax")
+     * @Method("POST")
+     */
+    public function registroConcursoAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $concurso = new Concurso();
+
+//             $concurso->setFechaInicio($request->get("Inicio"));
+
+            $concurso->setNroVacantes($request->get("Vacantes"));
+
+            $concurso->setIdUsuario(1);
+	
+//             $concurso->setFechaRecepDoc(DateTime($request->get("fechaDoc")));
+                        
+//             $concurso->setFechaPresentacion(DateTime($request->get("fechaPre")));
+            
+            $concurso->setObservaciones($request->get("observacion"));
+
+            $concurso->setAreaPostulacion($request->get("Area"));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($concurso);
+            $em->flush();
+
+            return new JsonResponse("S");
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');
+    }
+
+     /**
+     * @Route("/concursoOposicion/listadoConcursosAjax", name="listadoConcursosAjax")
+     * @Method("POST")
+     */
+    public function listadoConcursosAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $concurso = $this->getAll("ConcursosBundle:", "Concurso");
+
+            if (!$concurso) {
+                 throw $this->createNotFoundException('Error al obtener datos iniciales');
+            }else
+            {
+                $val = $this->asignarFilaNroVacantes($concurso,'vacantes',$val);
+                $val = $this->asignarFilaAreaPostulacion($concurso,'area',$val);
+                $val = $this->asignarFilaFechaInicio($concurso,'inicio',$val);
+                $val = $this->asignarFilaFechaRecepcion($concurso,'recepcion',$val);
+                $val = $this->asignarFilaFechaPresentacion($concurso,'presentacion',$val);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al insertar datos');
+    }
+
+    private function asignarFilaFechaPresentacion($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getFechaPresentacion();
+           $i++;
+        }
+        return $val;
+    }
+
+    private function asignarFilaFechaRecepcion($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getFechaRecepDoc();
+           $i++;
+        }
+        return $val;
+    }
+
+    private function asignarFilaNroVacantes($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getNroVacantes();
+           $i++;
+        }
+        return $val;
+    }
+
+    private function asignarFilaAreaPostulacion($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getAreaPostulacion();
+           $i++;
+        }
+        return $val;
+    }
+
+    private function asignarFilaFechaInicio($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getFechaInicio();
+           $i++;
+        }
+        return $val;
+    }
+
+    private function getAll($bundle,$entidad)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findAll();
+    }
+
+
+    /**
+     * @Route("/concursoOposicion/registroJuradosAjax", name="registroJuradosAjax")
+     * @Method("POST")
+     */
+    public function registroJuradosAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $jurado = new Jurado();
+
+            $jurado->setNombre($request->get("nombre"));
+            $jurado->setApellido($request->get("apellido"));
+            $jurado->setAreaInvestigacion($request->get("area"));
+            $jurado->setFacultad($request->get("facultad"));
+            $jurado->setUniversidad($request->get("universidad"));
+            $jurado->setIdUsuarioAsigna(1);
+            $jurado->setTipo($request->get("tipo"));
+            $jurado->setCedula($request->get("cedula"));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($jurado);
+            $em->flush();
+
+            return new JsonResponse("S");
+        }
+        else
+             throw $this->createNotFoundException('Error al insertar datos');
     }
 }

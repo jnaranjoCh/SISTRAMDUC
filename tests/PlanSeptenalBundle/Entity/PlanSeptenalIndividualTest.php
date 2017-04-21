@@ -5,6 +5,7 @@ namespace Tests\PlanSeptenal\Entity;
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use PlanSeptenalBundle\Entity\TramitePlanSeptenal;
 use PlanSeptenalBundle\ValueObject\MonthlyDateRange;
+use AppBundle\Entity\Usuario;
 
 class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,15 +13,6 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
     protected static $planSeptenalIndividual;
     protected static $beca;
     protected static $licencia;
-
-    /**
-      * @expectedException     Exception
-      * @expectedExceptionCode 10
-      */
-    public function testPlanSeptenalIndividualMustBeSeptennial()
-    {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2015);
-    }
 
     public function testPlanSeptenalIndividualMustContainTramitesAfterAddition()
     {
@@ -32,7 +24,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ->setTipo('sabatico')
             ->setPeriodo(new MonthlyDateRange('01/2014', '12/2014'));
 
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
         $planSeptenalIndividual->addTramite($beca);
         $planSeptenalIndividual->addTramite($sabatico);
 
@@ -52,7 +44,7 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ->setTipo('beca')
             ->setPeriodo(new MonthlyDateRange('01/2009', '06/2009'));
 
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
 
         $planSeptenalIndividual->addTramite($beca);
     }
@@ -71,87 +63,68 @@ class PlanSeptenalIndividualTest extends \PHPUnit_Framework_TestCase
             ->setTipo('sabatico')
             ->setPeriodo(new MonthlyDateRange('04/2016', '08/2016'));
 
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
 
         $planSeptenalIndividual->addTramite($beca);
         $planSeptenalIndividual->addTramite($sabatico);
     }
 
-    /**
-     * @beforeClass
-     */
-    public static function setUpSomeSharedFixtures()
+    public function testAskForApprovalShouldModifyStatus()
     {
-        static::$arrayRepresentation = [
-            'inicio'   => 2010,
-            'fin'      => 2016,
-            'tramites' => [
-                [
-                    'tipo' => 'beca',
-                    'periodo' => [
-                        'start' => '01/2010',
-                        'end' => '03/2010'
-                    ]
-                ],
-                [
-                    'tipo' => 'licencia',
-                    'periodo' => [
-                        'start' => '05/2013',
-                        'end' => '08/2013'
-                    ]
-                ]
-            ]
-        ];
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+        $planSeptenalIndividual->askForApproval();
 
-        static::$planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
+        $this->assertEquals('Esperando aprobación', $planSeptenalIndividual->getStatus());
+    }
 
-        static::$beca = (new TramitePlanSeptenal)
+    public function testGetTramitesCount()
+    {
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+
+        $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')
             ->setPeriodo(new MonthlyDateRange('01/2010', '03/2010'));
+        $planSeptenalIndividual->addTramite($beca);
+        $this->assertEquals(1, $planSeptenalIndividual->getTramitesCount());
 
-        static::$licencia = (new TramitePlanSeptenal)
-            ->setTipo('licencia')
+        $sabatico = (new TramitePlanSeptenal)
+            ->setTipo('sabatico')
             ->setPeriodo(new MonthlyDateRange('05/2013', '08/2013'));
-
-        static::$planSeptenalIndividual->addTramite(static::$beca);
-        static::$planSeptenalIndividual->addTramite(static::$licencia);
+        $planSeptenalIndividual->addTramite($sabatico);
+        $this->assertEquals(2, $planSeptenalIndividual->getTramitesCount());
     }
 
-    public function testCreateFromArrayMethod()
+    public function testGetOwnerName()
     {
-        $this->assertEquals(
-            static::$planSeptenalIndividual,
-            PlanSeptenalIndividual::createFromArray(static::$arrayRepresentation)
-        );
+        $usuario = $this->getMockBuilder(Usuario::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getNombreCompleto'])
+            ->getMock();
+
+        $usuario->expects($this->once())
+            ->method('getNombreCompleto')
+            ->will($this->returnValue("Tony"));
+
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, $usuario);
+
+        $this->assertEquals("Tony", $planSeptenalIndividual->getOwnerName());
     }
 
-    public function testAddTramitesInArrayForm()
+    /**
+      * @expectedException     Exception
+      * @expectedExceptionCode 100
+      */
+    public function testPlanMustBeWaitingForApprovalToBeApprovable()
     {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
-        $planSeptenalIndividual->addTramites(static::$arrayRepresentation['tramites']);
-
-        $this->assertEquals(
-            static::$planSeptenalIndividual->getTramites(),
-            $planSeptenalIndividual->getTramites()
-        );
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+        $planSeptenalIndividual->approve();
     }
 
-    public function testAddTramitesInClassForm()
+    public function testApprove()
     {
-        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, 2016);
-        $planSeptenalIndividual->addTramites([static::$beca, static::$licencia]);
+        $planSeptenalIndividual = new PlanSeptenalIndividual(2010, new Usuario());
+        $planSeptenalIndividual->askForApproval()->approve();
 
-        $this->assertEquals(
-            static::$planSeptenalIndividual->getTramites(),
-            $planSeptenalIndividual->getTramites()
-        );
-    }
-
-    public function testToArray()
-    {
-        $this->assertEquals(
-            static::$arrayRepresentation,
-            static::$planSeptenalIndividual->toArray()
-        );
+        $this->assertEquals($planSeptenalIndividual->getStatus(), 'Aprobado');
     }
 }

@@ -1,6 +1,7 @@
 $('#registrarJurado').click(function (){ 
 	
 	var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
+	var continua = true;
 
 	for (var i = 1; i < 4; i++) {
 		
@@ -9,10 +10,84 @@ $('#registrarJurado').click(function (){
 			if ($("#"+inputs[j]+i).val() == ""){
 
 				$("#span"+inputs[j]+i).removeClass("hide");
+				continua = false;
 			} 
 			else {
-				$("#span"+inputs[j]+i).addClass("hide");
-			}
+				$("#span"+inputs[j]+i).addClass("hide");					
+			}				
 		}
-	}	
+	}
+
+	if (continua){
+
+		/*json*/
+
+		for (var i = 1; i <= 3; i++) {
+
+			$.ajax({
+	            method: "POST",
+	            data: {"cedula":$("#cedula"+i).val(), 
+	            "nombre":$("#nombre"+i).val(),
+	            "tipo":"Oposicion", 
+	            "apellido":$("#apellido"+i).val(), 
+	            "facultad":$("#facultad"+i).val(), 
+	            "universidad":$("#universidad"+i).val(), 
+	            "area":$("#area"+i).val()},
+	            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+	            dataType: 'json',
+	            success: function(data)
+	            {
+	                if (data == "S"){
+
+						document.getElementById('juradosSave').reset();
+
+						for (var k = 1; k <= 3; k++) {
+			
+							$('#spancedula'+k).addClass("hide");
+							$('#spannombre'+k).addClass("hide");
+							$('#spanapellido'+k).addClass("hide");
+							$('#spanfacultad'+k).addClass("hide");
+							$('#spanuniversidad'+k).addClass("hide");
+							$('#spanarea'+k).addClass("hide");
+						}
+
+						$('#msgFracaso').addClass("hide");
+	                	$('#msgFracaso1').addClass("hide");
+						$('#msgExito').removeClass("hide");
+	                } 
+	                else{
+
+	                	$('#msgFracaso').addClass("hide");
+	                	$('#msgExito').addClass("hide");
+						$('#msgFracaso1').removeClass("hide");
+	                }
+	            }
+	        });			
+		}
+
+		/*fin del json*/
+	}
+	else {
+
+		$('#msgFracaso').removeClass("hide");
+	}
+});
+
+$('#limpiarJurado').click(function (){ 
+
+	document.getElementById('juradosSave').reset();
+
+	for (var i = 1; i <= 3; i++) {
+		
+		$('#spancedula'+i).addClass("hide");
+		$('#spannombre'+i).addClass("hide");
+		$('#spanapellido'+i).addClass("hide");
+		$('#spanfacultad'+i).addClass("hide");
+		$('#spanuniversidad'+i).addClass("hide");
+		$('#spanarea'+i).addClass("hide");
+	}
+
+	$('#msgFracaso').addClass("hide");
+	$('#msgFracaso1').addClass("hide");
+	$('#msgExito').addClass("hide");
 });

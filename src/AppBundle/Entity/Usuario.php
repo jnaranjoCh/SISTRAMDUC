@@ -9,6 +9,8 @@ use AppBundle\Entity\Rol;
 
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
+use RegistroUnicoBundle\Entity\Cargo;
+use TramiteBundle\Entity\Tramite;
 
 /**
  * @ORM\Entity
@@ -26,7 +28,7 @@ class Usuario implements UserInterface
     /**
      *  @ORM\Column(type="integer")
      */
-    private $estatusId;
+    //private $estatusId;
 
     /**
      * @ORM\Column(type="string", length=25)
@@ -59,7 +61,7 @@ class Usuario implements UserInterface
     private $segundoApellido;
 
     /**
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string")
      */
     private $nacionalidad;
 
@@ -71,10 +73,20 @@ class Usuario implements UserInterface
     /**
      * @ORM\Column(type="integer")
      */
+    private $edad;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     private $telefono;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string")
+     */
+    private $sexo;
+
+    /**
+     * @ORM\Column(type="string")
      */
     private $rif;
 
@@ -150,15 +162,21 @@ class Usuario implements UserInterface
     protected $planes_septenales_individuales;
 
     /**
-     * @ORM\OneToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
-     * @ORM\JoinColumn(name="departamento_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
      */
     private $departamento;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Tramite", mappedBy="owner")
+     */
+    protected $tramite;
 
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->cargos = new ArrayCollection();
         $this->planes_septenales_individuales = new ArrayCollection();
+        $this->tramite = new ArrayCollection();
     }
 
     /**
@@ -166,32 +184,11 @@ class Usuario implements UserInterface
      *
      * @return int
      */
-    public function getId()
-    {
+     public function getId()
+     {
         return $this->id;
-    }
+     }
 
-    /**
-     * Get estatusId
-     *
-     * @return int
-     */
-    public function getEstatusId()
-    {
-        return $this->estatusId;
-    }
-
-    /**
-     * Set estatusId
-     *
-     * @param int $estatusId
-     */
-    public function setEstatusId($estatusId)
-    {
-        $this->estatusId = $estatusId;
-
-        return $this;
-    }
 
     /**
      * Set cedula
@@ -200,22 +197,71 @@ class Usuario implements UserInterface
      *
      * @return Usuario
      */
-    public function setCedula($cedula)
-    {
+     public function setCedula($cedula)
+     {
         $this->cedula = $cedula;
 
         return $this;
-    }
+     }
 
     /**
      * Get cedula
      *
      * @return string
      */
-    public function getCedula()
-    {
-        return $this->cedula;
+     public function getCedula()
+     {
+         return $this->cedula;
+     }
+
+     /**
+      * Set edad
+      *
+      * @param integer $edad
+      *
+      * @return Usuario
+      */
+     public function setEdad($edad)
+     {
+        $this->edad = $edad;
+
+        return $this;
     }
+
+    /**
+     * Get edad
+     *
+     * @return integer
+     */
+    public function getEdad()
+    {
+        return $this->edad;
+    }
+
+     /**
+     * Set sexo
+     *
+     * @param string $sexo
+     *
+     * @return Usuario
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
+     *
+     * @return string
+     */
+    public function getSexo()
+    {
+        return $this->sexo;
+    }
+
 
     /**
      * Set primerNombre
@@ -364,7 +410,7 @@ class Usuario implements UserInterface
     /**
      * Set telefono
      *
-     * @param integer $telefono
+     * @param string $telefono
      *
      * @return Usuario
      */
@@ -378,7 +424,7 @@ class Usuario implements UserInterface
     /**
      * Get telefono
      *
-     * @return int
+     * @return string
      */
     public function getTelefono()
     {
@@ -388,7 +434,7 @@ class Usuario implements UserInterface
     /**
      * Set rif
      *
-     * @param integer $rif
+     * @param string $rif
      *
      * @return Usuario
      */
@@ -402,7 +448,7 @@ class Usuario implements UserInterface
     /**
      * Get rif
      *
-     * @return int
+     * @return string
      */
     public function getRif()
     {
@@ -447,7 +493,7 @@ class Usuario implements UserInterface
         return $this;
     }
 
-    /**
+   /**
      * Get fechaFallecimiento
      *
      * @return \DateTime
@@ -529,6 +575,50 @@ class Usuario implements UserInterface
         return $this->direccion;
     }
 
+	 public function getRegistros()
+    {
+       // profiler needs at least one rol to consider the user logged in
+       $registros = array_reduce($this->registros->toArray(), function ($registro_names, $registro) {
+           $registro_names[] = $registro->getDescription();
+           return $registro_names;
+       }, []);
+
+       return $registros;
+    }
+
+    public function addRegistro($registro)
+    {
+       $this->registros[] = $registro;
+    }
+
+    public function addRegistros($registros)
+    {
+       foreach($registros as $registro)
+           $this->addRegistro($registro);
+    }
+
+    public function getCargos()
+    {
+       // profiler needs at least one rol to consider the user logged in
+       $cargos = array_reduce($this->cargos->toArray(), function ($cargo_names, $cargo) {
+           $cargo_names[] = $cargo->getDescription();
+           return $cargo_names;
+       }, []);
+
+       return $cargos;
+    }
+
+    public function addCargo($cargo)
+    {
+       $this->cargos[] = $cargo;
+    }
+
+    public function addCargos($cargos)
+    {
+       foreach($cargos as $cargo)
+           $this->addCargo($cargo);
+    }
+
     public function getRoles()
     {
         // profiler needs at least one rol to consider the user logged in
@@ -561,19 +651,35 @@ class Usuario implements UserInterface
 
     public function eraseCredentials(){}
 
-    public function getNombreCorto ()
+    public function getNombreCorto()
     {
-        return $this->getPrimerNombre().' '.$this->getPrimerApellido();
+        return $this->joinNames([$this->primerNombre, $this->primerApellido]);
     }
 
-    public function getNombreCompleto ()
+    public function getNombreCompleto()
     {
-        return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+        return $this->joinNames([$this->primerNombre, $this->segundoNombre, $this->primerApellido, $this->segundoApellido]);
     }
 
-    public function ownPlanSeptenalIndividual(PlanSeptenalIndividual $plan)
+    private function joinNames(array $names)
     {
-        $this->planes_septenales_individuales[] = $plan;
+        $joined_names = "";
+        foreach ($names as $name) {
+            if (! empty($name)) {
+                $joined_names .= (empty($joined_names) ? "" : " ") . $name;
+            }
+        }
+
+        return $joined_names;
+    }
+
+    public function setNombreCompleto(string $primerNombre = null, string $segundoNombre = null, string $primerApellido = null, string $segundoApellido = null)
+    {
+        $this->primerNombre = is_null($primerNombre) ? "" : $primerNombre;
+        $this->segundoNombre = is_null($segundoNombre) ? "" : $segundoNombre;
+        $this->primerApellido = is_null($primerApellido) ? "" : $primerApellido;
+        $this->segundoApellido = is_null($segundoApellido) ? "" : $segundoApellido;
+
         return $this;
     }
 
@@ -591,5 +697,16 @@ class Usuario implements UserInterface
     public function getDepartamento()
     {
         return $this->departamento;
+    }
+
+    public function ownTramite(Tramite $tramite)
+    {
+        $this->tramite[] = $tramite;
+        return $this;
+    }
+
+    public function getTramite()
+    {
+        return $this->tramite;
     }
 }

@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/plan-septenal.css') }}">
+{% endblock %}
+
 {% block content %}
 
+  <base href="{{ app.request.getSchemeAndHttpHost() }}">
   <section class="content-header">
     <h1>Plan Septenal Colectivo</h1>
     <ol class="breadcrumb">
@@ -10,7 +15,7 @@
     </ol>
   </section>
 
-  <section class="content">
+  <section class="content" id="plan-septenal-colectivo-main-section">
     <div class="row">
       <div class="col-md-12">
         <div class="box box-primary">
@@ -19,7 +24,7 @@
           </div>
           <div class="box-body">
             <div id="plan-septenal-colectivo-creation">
-              <form class="form-inline" action="{{ path('start-creation-of-plan-septenal-colectivo') }}" style="display: none;">
+              <form class="form-inline" style="display: none;">
                 <div class="form-group">
                   <input type="hidden" id="start_year" name="start_year" value="{{ next_year }}">
                   <label for="creation_deadline" class="form-label">Fecha de finalización:</label>
@@ -28,19 +33,71 @@
                 <button class="btn btn-primary btn-flat" id="start-creation-btn" type="submit">Iniciar proceso de creación</button>
               </form>
               <div id="creation-progress" style="display: none;">
-                Información relacionada al proceso de creación.
+                <h4>Lista de Planes Septenales Individuales</h4>
+                <table id="planes-septenales-individuales-table" class="display" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Profesor</th>
+                      <th>Trámites</th>
+                      <th>Status</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                </table>
+                <button id="preview-btn" class="btn btn-primary btn-flat">Ver vista preliminar</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="details-viewer" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="box box-primary">
+            <div class="box-header with-border modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Plan Septenal Individual</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="plan-septenal-individual"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="plan-colectivo-dialog" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="box box-primary">
+            <div class="box-header with-border modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Plan Septenal Colectivo</h4>
+            </div>
+            <div class="modal-body">
+              <table></table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
 {% endblock %}
 
 {% block custom_javascripts %}
+  <script src="{{ asset('assets/js/PlanSeptenal/common.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/routes.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/grid-selection.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-individual.js') }}"></script>
   <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-colectivo.js') }}"></script>
+  <script src="{{ asset('assets/js/PlanSeptenal/plan-septenal-colectivo-previewer.js') }}"></script>
   <script>
     $(".datepicker").datepicker({
       startDate: "+1m"
@@ -48,6 +105,12 @@
     toastr.options = {
       positionClass: "toast-bottom-center"
     };
-    planSeptenalColectivo.getPlanSeptenalColectivoOfNextYear("{{ path('get-plan-septenal-colectivo') }}");
+
+    planSeptenalColectivo.get(creationProcess.next_year);
+
+    var previewer = new PlanSeptenalColectivoPreviewer($("#plan-colectivo-dialog"));
+    $(document).on("click", "#preview-btn", function (e) {
+        previewer.load({inicio: creationProcess.next_year});
+    });
   </script>
 {% endblock %}

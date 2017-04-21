@@ -1,6 +1,5 @@
 <?php
 
-
 namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;

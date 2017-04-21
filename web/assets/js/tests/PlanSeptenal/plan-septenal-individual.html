@@ -8,18 +8,35 @@
 
     <!-- external libraries -->
     <script src='../../../vendor/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js'></script>
-
     <script src='../../../vendor/qunit/qunit/qunit.js'></script>
     <script src='../../../vendor/sinon-1.17.7/index.js'></script>
   </head>
   <body>
     <div id='qunit'></div>
     <div id='qunit-fixture'>
-      <div class="plan-septenal-individual" data-route="endpoint-url"></div>
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h2 class="box-title">Creación de Plan Septenal Individual</h2>
+          <h4 id="status" class="pull-right"></h4>
+        </div>
+        <div class="box-body">
+          <div class="plan-septenal-individual" data-route="endpoint-url"></div>
+        </div>
+        <div class="box-footer">
+          <button id="btn-save" class="btn btn-primary btn-flat pull-right" style="display: none;">Guardar cambios</button>
+          <button id="btn-request-approval" class="btn btn-success btn-flat pull-right" style="display: none;">Solicitar aprobación</button>
+          <a class="btn btn-default btn-flat pull-left" href="/" class="btn btn-default">Cancelar</a>
+        </div>
+      </div>
     </div>
 
+    <script src='qunit-sinon-integration.js'></script>
+    <script src='utils.js'></script>
+
     <!-- JS files under test -->
-    <script src='../../../vendor/toastr/toastr.min.js'></script>
+    <script src='../../PlanSeptenal/polyfill.js'></script>
+    <script src='../../PlanSeptenal/common.js'></script>
+    <script src='../../PlanSeptenal/routes.js'></script>
     <script src='../../PlanSeptenal/grid-selection.js'></script>
     <script src='../../PlanSeptenal/plan-septenal-individual.js'></script>
 

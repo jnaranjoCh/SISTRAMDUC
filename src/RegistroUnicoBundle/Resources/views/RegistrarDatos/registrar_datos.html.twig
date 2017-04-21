@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/RegistroUnico/RegistrarDatos/inputFile.css') }}">
+{% endblock %}
+
 {% block content %}
     <!--User data header-->
     <section class="content-header">
@@ -22,7 +26,7 @@
             <h4 class="modal-title">Usuarios registrados</h4>
           </div>
           <div class="modal-body">
-            <table id="table-6" class="table table-bordered table-striped">
+            <table id="tableUsers" class="table table-bordered table-striped">
               <thead>
               <tr>
                 <th>Email</th>
@@ -46,6 +50,7 @@
 
       </div>
     </div>
+
     <!--User data body-->
     <form>
       <div class="row">
@@ -204,13 +209,78 @@
                     <div class="col-xs-12">
                       <div class="form-group">
                         <label>Dirección</label>
-                        <textarea id="direccionDatosI" class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                        <textarea id="DireccionDatos" class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
                   </div>
                   <!-- /.row -->
+                  <div class="row">    
+                    <div class="col-md-6">
+                      <div id="divCedulaCargaDatos" class="form-group has-feedback">  
+                          <label>Cargar cedula</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview">
+                              <input id="CedulaCargaDatos" type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div id="divRifCargaDatos" class="form-group has-feedback">  
+                          <label>Cargar RIF</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview2">
+                              <input id="RifCargaDatos" type="text" class="form-control image-preview-filename2" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear2" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input2">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title2">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview2"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div id="divActaNacCargaDatos" class="form-group has-feedback">  
+                          <label>Cargar acta de nacimiento</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div class="input-group image-preview3">
+                              <input id="ActaNacCargaDatos" type="text" class="form-control image-preview-filename3" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear3" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input3">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title3">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview3"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <!-- /.box -->
@@ -292,58 +362,65 @@
                   <div class="row">
                     <div class="col-md-6">
                       <!-- /.form-group -->
-                      <div class="form-group">
+                      <div id="divEstatusDatos" class="form-group has-feedback">
                         <label>Estatus</label>
                         <select id="EstatusDatos" class="form-control select2" style="width: 100%;">
                         </select>
+                        <span id="spanEstatusDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
-                      <div class="form-group">
+                      <div id="divNivelDeEstudioDatos" class="form-group has-feedback">
                         <label>Nivel de estudio</label>
                         <select id="NivelDeEstudioDatos" class="form-control select2" style="width: 100%;">
                         </select>
+                        <span id="spanNivelDeEstudioDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                     </div>
 
                     <div class="col-md-12">
-                      <div class="form-group">
+                      <div id="divTipoDeRegistroDatos" class="form-group has-feedback">
                         <label>Tipo de registro</label>
                         <select id="TipoDeRegistroDatos" class="form-control select2" style="width: 100%;">
                         </select>
+                        <span id="spanTipoDeRegistroDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
-                      <div class="form-group">
+                      <div id="divDescripcionDatos" class="form-group has-feedback">
                         <label>Descripción</label>
                         <input id="DescripcionDatos" type="text" class="form-control" placeholder="Nombre">
+                        <span id="spanDescripcionDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
                     <div class="col-md-6">
-                      <div class="form-group">
+                      <div id="divAnoPublicacionDatos" class="form-group has-feedback">
                         <label>Año de publicacion y/o asistencia</label>
                         <input id="AnoPublicacionDatos" type="number" class="form-control" placeholder="Año" min="1">
+                        <span id="spanAnoPublicacionDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
-                    <div id="divEmpresaDatos" class="col-md-12 hidden">
+                    <div id="hiddenEmpresaDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
-                      <div class="form-group">
+                      <div id="divEmpresaDatos" class="form-group has-feedback">
                         <label>Empresa</label>
                         <input id="EmpresaDatos" type="text" class="form-control" placeholder="Empresa">
+                        <span id="spanEmpresaDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
-                    <div id="divInstitucionDatos" class="col-md-12 hidden">
+                    <div id="hiddenInstitucionDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
-                      <div class="form-group">
+                      <div id="divInstitucionDatos" class="form-group has-feedback">
                         <label>Institución</label>
                         <input id="InstitucionDatos" type="text" class="form-control" placeholder="Institución">
+                        <span id="spanInstitucionDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -362,7 +439,7 @@
                     <th>Descripción</th>
                     <th>Nivel</th>
                     <th>Estatus</th>
-                    <th>Año de publicacion y/o asistencia</th>
+                    <th>Año de publicación y/o asistencia</th>
                     <th>Empresa y/o institución</th>
                   </tr>
                   </thead>
@@ -375,7 +452,7 @@
                     <th>Descripción</th>
                     <th>Nivel</th>
                     <th>Estatus</th>
-                    <th>Año de publicacion y/o asistencia</th>
+                    <th>Año de publicación y/o asistencia</th>
                     <th>Empresa y/o institución</th>
                   </tr>
                   </tfoot>
@@ -387,24 +464,28 @@
                     </div>
                     <div class="col-md-4">
                       <!-- /.form-group -->
-                      <div class="form-group">
+                      <div id="divNombreParticipanteRegistro" class="form-group has-feedback">
                         <label>Nombre completo</label>
                         <input id="NombreParticipanteRegistro" type="text" class="form-control" placeholder="Nombre del participantes">
+                        <span id="spanNombreParticipanteRegistro" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
                     </div>
                     <!-- /.col -->
                     <div class="col-md-4">
-                      <div class="form-group">
+                      <div id="divCedulaParticipanteRegistro" class="form-group has-feedback">
                         <label>Cedula</label>
                         <input id="CedulaParticipanteRegistro" type="number" class="form-control" placeholder="cedula" min="1">
+                        <span id="spanCedulaParticipanteRegistro" class="glyphicon form-control-feedback"></span>
                       </div>
                     </div>
                      <!-- /.col -->
                     <div class="col-md-4">
-                      <div class="form-group">
+                      <div id="divIdParticipanteRegistro" class="form-group has-feedback">
                         <label>Id del registro</label>
-                        <input id="IdParticipanteRegistro" type="number" class="form-control" placeholder="Id del registro" min="1">
+                        <select id="IdParticipanteRegistro" class="form-control select2" style="width: 100%;">
+                        </select>
+                        <span id="spanIdParticipanteRegistro" class="glyphicon form-control-feedback"></span>
                       </div>
                     </div>
                     <div class="col-md-offset-4 col-md-4">
@@ -433,34 +514,37 @@
                   </tfoot>
                 </table>
                 <hr/>
-                <div id="revista" class="hidden">
+                <div id="revista">
                   <div class="row">
                       <div class="col-md-12">
                         <h3>Revistas de publicación</h3>
                       </div>
                       <div class="col-md-6">
                         <!-- /.form-group -->
-                        <div class="form-group">
+                        <div id="divDescrpcionRevistaRegistro" class="form-group  has-feedback">
                           <label>Descripcion</label>
-                          <input id="nomR" type="text" class="form-control" placeholder="Nombre de la revista">
+                          <input id="descrpcionRevistaRegistro" type="text" class="form-control" placeholder="Nombre de la revista">
+                          <span id="spanDescrpcionRevistaRegistro" class="glyphicon form-control-feedback"></span>
                         </div>
                         <!-- /.form-group -->
                       </div>
                       <!-- /.col -->
                       <div class="col-md-6">
-                        <div class="form-group">
+                        <div id="divIdRevistaRegistro" class="form-group  has-feedback">
                           <label>Id del registro</label>
-                          <input id="idR" type="number" class="form-control" placeholder="Id del registro" min="1">
+                          <select id="idRevistaRegistro" class="form-control select2" style="width: 100%;">
+                          </select>
+                          <span id="spanIdRevistaRegistro" class="glyphicon form-control-feedback"></span>
                         </div>
                       </div>
                       <div class="col-md-offset-4 col-md-4">
                           <div class="form-group has-feedback">
-                                <button id="arv" type="button" class="btn btn-primary btn-block btn-flat">Agregar revista</button>
+                                <button id="agregarRevista" type="button" class="btn btn-primary btn-block btn-flat">Agregar revista</button>
                           </div>
                       </div>
                   </div>
                   <hr/>
-                  <table id="table-4" class="table table-bordered table-striped">
+                  <table id="tableRevista" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                       <th>Id del registro</th>
@@ -481,7 +565,177 @@
               <!-- /.box -->
             </div>
             <!--research,courses and studies box-->
+          </div>
+          <div id="divCheckbox" class="col-md-offset-1 col-md-10 hidden">
+            <input type="checkbox" id="checkboxHijos"> <strong>Ingresar datos de hijos</strong><br/><br/>
+          </div>
+          <!--+carg box-->
+          <div id="formHijos" class="col-md-offset-1 col-md-10 hidden">
+            <!-- /.box-info -->
+            <div id="headerHijos" class="box-footer">
+              <strong>Sección para ingresar los datos de los hijos.</strong>
             </div>
+             <!-- /.box-header -->
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Sección 4</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="miniHijos" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div id="divCedulaMadreHijoDatos" class="form-group has-feedback">
+                      <label>Cedula de la madre</label>
+                      <input type="number" id="CedulaMadreHijoDatos" class="form-control" placeholder="Cedula de la madre" required>
+                      <span id="spanCedulaMadreHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divCedulaPadreHijoDatos" class="form-group has-feedback">
+                      <label>Cedula del padre</label>
+                      <input type="number" id="CedulaPadreHijoDatos" class="form-control" placeholder="Cedula del padre" required>
+                      <span id="spanCedulaPadreHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div id="divPrimerNombreHijoDatos" class="form-group has-feedback">
+                      <label>Primer nombre</label>
+                      <input type="text" id="PrimerNombreHijoDatos" class="form-control" placeholder="Primer nombre" required>
+                      <span id="spanPrimerNombreHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divSegundoNombreHijoDatos" class="form-group has-feedback">
+                      <label>Segundo nombre</label>
+                      <input type="text" id="SegundoNombreHijoDatos" class="form-control" placeholder="Segundo nombre" required>
+                      <span id="spanSegundoNombreHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divPrimerApellidoHijoDatos" class="form-group has-feedback">
+                      <label>Primer apellido</label>
+                      <input type="text" id="PrimerApellidoHijoDatos" class="form-control" placeholder="Primer apellido" required>
+                      <span id="spanPrimerApellidoHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divSegundoApellidoHijoDatos" class="form-group has-feedback">
+                      <label>Segundo apellido</label>
+                      <input type="text" id="SegundoApellidoHijoDatos" class="form-control" placeholder="Segundo apellido" required>
+                      <span id="spanSegundoApellidoHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divCedulaHijoDatos" class="form-group has-feedback">
+                      <label>Cedula del hijo</label>
+                      <input type="number" id="CedulaHijoDatos" class="form-control" placeholder="Cedula del hijo" required>
+                      <span id="spanCedulaHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divFechaNacimientoHijoDatos" class="form-group has-feedback">
+                      <label>Fecha de nacimiento</label>
+                      <div class='input-group date' id='datetimepicker2'>
+                          <input id="FechaNacimientoHijoDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divNacionalidadHijoDatos" class="form-group has-feedback">
+                      <label>Nacionalidad</label>
+                      <select id="NacionalidadHijoDatos" class="form-control select2" style="width: 100%;" required>
+                        <option selected="selected" value="">Seleccione una opción</option>
+                        <option value="Venezolano">Venezolano</option>
+                        <option value="Extranjero">Extranjero</option>
+                      </select>
+                      <span id="spanNacionalidadHijoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">  
+                          <label>Cargar acta de nacimiento</label>
+                          <!-- image-preview-filename input [CUT FROM HERE]-->
+                          <div id="divActaNacCargaHijoDatos" class="input-group image-preview4">
+                              <input  id="ActaNacCargaHijoDatos" type="text" class="form-control image-preview-filename4" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+                              <span class="input-group-btn">
+                                  <!-- image-preview-clear button -->
+                                  <button type="button" class="btn btn-default image-preview-clear4" style="display:none;">
+                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
+                                  </button>
+                                  <!-- image-preview-input -->
+                                  <div class="btn btn-default image-preview-input4">
+                                      <span class="glyphicon glyphicon-folder-open"></span>
+                                      <span class="image-preview-input-title4">Examinar</span>
+                                      <input type="file" accept="application/pdf" name="input-file-preview4"/> <!-- rename it -->
+                                  </div>
+                              </span>
+                          </div><!-- /input-group image-preview [TO HERE]-->
+                        </div>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group has-feedback">
+                              <button id="agregarHijo" type="button" class="btn btn-primary btn-block btn-flat">Agregar hijo</button>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableHijos" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>CI Madre</th>
+                      <th>CI Padre</th>
+                      <th>CI Hijo</th>
+                      <th>1er Nombre</th>
+                      <th>2do Nombre</th>
+                      <th>1er Apellido</th>
+                      <th>2do Apellido</th>
+                      <th>A Nacimiento</th>
+                      <th>F Nacimiento</th>
+                      <th>Nacionalidad</th>                  
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>CI Madre</th>
+                      <th>CI Padre</th>
+                      <th>CI Hijo</th>
+                      <th>1er Nombre</th>
+                      <th>2do Nombre</th>
+                      <th>1er Apellido</th>
+                      <th>2do Apellido</th>
+                      <th>A Nacimiento</th>
+                      <th>F Nacimiento</th>
+                      <th>Nacionalidad</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box -->
+           </div>
+           <!--research,courses and studies box-->
+          </div>
+          <!--+carg box-->
+          
         </section>
         <div id="save" class="col-md-offset-4 col-md-4 hidden">
             <div class="form-group has-feedback">
@@ -491,13 +745,17 @@
       </div>
       <!--User data body-->
     </form>
+    <!--<br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/><br/><br/><br/>-->
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/RegistroUnico/iniRD.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/iniRD.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/showField.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showField.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/generate.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/saveData.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/generate.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/saveData.js') }}"></script>
 {% endblock %}

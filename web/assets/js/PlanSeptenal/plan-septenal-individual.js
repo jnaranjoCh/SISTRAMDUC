@@ -1,55 +1,49 @@
 /* @author: Cesar Manrique <cesar.manrique.h@gmail.com> */
-var TRAMITES = [
-    { name: "Sabático", color: "#00a7d0" },
-    { name: "Licencia No Remunerada", color: "#30bbbb" },
-    { name: "Estudios de Postgrado con Carga Docente", color: "#368763" },
-    { name: "Licencia Remunerada", color: "#00e765" },
-    { name: "Beca", color: "#ff7701" },
-    { name: "Curso de Formación Docente", color: "#db0ead" },
-    { name: "Programa de Formación Especial", color: "#555299" },
-    { name: "Plan Conjunto", color: "#ca195a" },
-    { name: "Posible Extensión de Beca", color: "#00a65a" }
-];
 
 var PlanSeptenalIndividual = (function () {
 
 var MONTHS = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
 
-function PlanSeptenalIndividual (container, starting_year) {
+function PlanSeptenalIndividual (container, starting_year, ajax_url) {
     if (container === undefined) {
         throw "Container (first argument) is mandatory";
     }
     this.container = $(container);
 
-    if ($(container).data("route") === undefined) {
-        throw "Container (first argument) must have a data-route attribute";
-    }
-
-    if (! isInt(starting_year)) {
+    if (! Number.isInteger(starting_year)) {
         throw "Starting year (second argument) must be a valid integer";
     }
     this.starting_year = starting_year;
 
+    this.ajax_url = ajax_url || '';
+
     var $grid = $("<div class='grid'></div>").appendTo(this.container);
     this.grid = new Grid($grid, {
         header: MONTHS,
-        numeration: range(starting_year, starting_year + 6)
+        numeration: rangoSeptenal(starting_year)
     });
 
+    var spinner_wrapper = getSpinner();
+    this.spinner = spinner_wrapper.find(".spinner");
+
+    spinner_wrapper.appendTo(this.container);
     getControls().appendTo(this.container);
 
-    this.status = "unknown";
+    this.setStatus("");
 
     var plan = this;
 
     this.container.on("click", ".grid-clear-btn", function (e) {
-        plan.grid.getSelection().css("background", "").removeData("tramite-type");
+        removeTramite(plan.grid.getSelection());
     });
     this.container.on("click", ".grid-action-btn", function (e) {
         assignTramiteToRange( $(e.target).data("tramite-type"), plan.grid.getSelection() );
     });
-    $(document).on("click", "button[type='submit']", function (e) {
+    $(document).on("click", "#btn-save", function (e) {
         plan.save();
+    });
+    $(document).on("click", "#btn-request-approval", function (e) {
+        plan.askForApproval();
     });
 }
 
@@ -57,14 +51,18 @@ PlanSeptenalIndividual.prototype = {
     getState: function () {
         return {
             inicio: this.starting_year,
-            fin: this.starting_year + 6,
             tramites: getTramitesSummary(this)
         };
     },
     setState : function (state) {
-        this.grid.$cells.css("background", "").removeData("tramite-type");
+        removeTramite(this.grid.$cells);
         this.starting_year = state.inicio;
-        this.grid.numeration.setData( range(state.inicio, state.fin) ).draw();
+        this.grid.numeration.setData( rangoSeptenal(state.inicio) ).draw();
+
+        if (! Array.isArray(state.tramites)) {
+            return;
+        }
+
         for (var i = 0; i < state.tramites.length; i++) {
             var related_range = getRangeFromPeriodo(state.tramites[i].periodo, this),
                 related_tramite = getTramiteIndexFromName(state.tramites[i].tipo);
@@ -74,45 +72,106 @@ PlanSeptenalIndividual.prototype = {
     },
     save: function () {
         var plan = this,
-            method = (this.status === "modifying") ? "PUT" : "POST";
+            method = (this.status === "Modificando") ? "PUT" : "POST";
         $.ajax({
-            url: this.container.data("route"),
-            data: this.getState(),
+            url: plan.ajax_url,
+            data: plan.getState(),
             method: method,
             success: function (data) {
-                toastr["success"]("Los cambios han sido guardados");
-                plan.status = "modifying";
+                $("#btn-save").show().prop("disabled", false);
+                $("#btn-request-approval").show().prop("disabled", false);
+
+                plan.setStatus("Modificando");
+                toastr.success("Los cambios han sido guardados");
             },
             error: function (data) {
-                toastr["error"]("Ocurrió un error. En caso de que el problema persista contacte a soporte");
+                toastr.error(SERVER_ERROR_MESSAGE);
             }
         });
     },
-    load: function (inicio, fin) {
+    load: function (criteria) {
         var plan = this;
+        if (typeof criteria != "object") {
+            throw "criteria must be an object";
+        }
+        if (criteria.id === undefined && criteria.inicio === undefined) {
+            throw "criteria must have a property id or inicio";
+        }
+
+        removeTramite(plan.grid.$cells);
+        plan.spinner.show();
+
         $.ajax({
-            url: plan.container.data("route"),
-            data: {
-                inicio: inicio,
-                fin: fin
-            },
+            url: plan.ajax_url,
+            data: criteria,
             method: "GET",
+            dataType: "json",
             statusCode: {
                 200: function (data) {
-                    toastr["success"]("Plan septenal cargado satisfactoriamente");
-                    plan.status = "modifying";
-                    plan.setState(data);
-                    $("button[type='submit']").show();
+                    $("#btn-save").show();
+                    $("#btn-request-approval").show();
+
+                    plan.setStatus(data.status).setState(data);
+                    plan.spinner.hide();
+
+                    if (data.status == "Esperando aprobación" || data.status == "Aprobado") {
+                        $("#btn-save").prop("disabled", true);
+                        $("#btn-request-approval").prop("disabled", true);
+                        plan.disableEditing();
+                        return;
+                    }
+
+                    $("#btn-save").prop("disabled", false);
+                    $("#btn-request-approval").prop("disabled", false);
                 },
                 404: function () {
-                    plan.status = "creating";
-                    $("button[type='submit']").show();
+                    $("#btn-save").show().prop("disabled", false);
+                    $("#btn-request-approval").show().prop("disabled", true);
+
+                    plan.setStatus("En creación");
+                    plan.spinner.hide();
                 },
                 500: function (data) {
-                    toastr["error"]("Ocurrió un error al intentar cargar el plan septenal. En caso de que el problema persista contacte a soporte");
+                    toastr.error(SERVER_ERROR_MESSAGE);
+                    plan.spinner.hide();
                 }
             }
         });
+    },
+    askForApproval: function () {
+        var plan = this;
+        $.ajax({
+            url: plan.ajax_url + "/ask-for-approval",
+            data: {
+                inicio: plan.starting_year
+            },
+            method: "PUT",
+            dataType: "json",
+            statusCode: {
+                200: function () {
+                    $("#btn-save").show().prop("disabled", true);
+                    $("#btn-request-approval").show().prop("disabled", true);
+
+                    plan.setStatus("Esperando aprobación");
+                    plan.disableEditing();
+
+                    toastr.success("El plan septenal está en espera por aprobación.");
+                },
+                404: function (jqXHR) {
+                    var msg = (jqXHR.responseJSON !== undefined) ? jqXHR.responseJSON[0] : "El plan septenal no existe.";
+                    toastr.error(msg);
+                }
+            }
+        });
+    },
+    getStatus: function () {
+        return this.status;
+    },
+    setStatus: function (status) {
+        $("#status").text(status);
+        this.status = status;
+
+        return this;
     },
     assignTramiteToRange: function (tramite, range) {
         assignTramiteToRange(tramite, range);
@@ -126,7 +185,24 @@ PlanSeptenalIndividual.prototype = {
     },
     getRange: function (start_date, end_date) {
         return getRangeFromPeriodo({ start : start_date, end: end_date }, this);
+    },
+    disableEditing: function () {
+        this.grid.enabled = false;
+        this.grid.unselect(this.getSelection());
+        this.container.find(".grid-clear-btn").hide();
+
+        return this;
     }
+}
+
+function getSpinner () {
+    return $(
+        '<div class="spinner-wrapper">' +
+          '<div class="spinner" style="display: none;">' +
+            '<div class="p">' + '<div></div>'.repeat(5) + '</div>' +
+          '</div>' +
+        '</div>'
+    );
 }
 
 function getControls () {
@@ -158,10 +234,10 @@ function getTramitesSummary ($plan) {
 }
 
 function getTramiteGroups ($plan) {
-    var tramite_groups = [];
+    var tramite_groups = [], group, cells = $plan.grid.$cells;
     for (var i = 0; i < TRAMITES.length; i++) {
         tramite_groups.push(
-            $plan.grid.$cells.filter(function () {
+            cells.filter(function () {
                 return $(this).data("tramite-type") == i;
             })
         );
@@ -171,9 +247,10 @@ function getTramiteGroups ($plan) {
 
 function pushTramitesIntoTramitesSummary (tramites_summary, tramite_group, tramite_index, $plan) {
     var j, index, prev_index = -1, last_tramite;
+
     for (j = 0; j < tramite_group.length; j++) {
         index = $plan.grid.$cells.index( tramite_group[j] );
-        related_date = cellIndexToDate(index, $plan);
+        related_date = getDateFromCellIndex(index, $plan.starting_year);
 
         if (j == 0 || index - 1 != prev_index) {
             last_tramite = {
@@ -191,82 +268,44 @@ function pushTramitesIntoTramitesSummary (tramites_summary, tramite_group, trami
     }
 }
 
-function cellIndexToDate (index, $plan) {
-    var year = Math.floor($plan.starting_year + (index / 12)),
-        month = ("0" + (1 + index % 12)).slice(-2);
-
-    return month + "/" + year;
-}
-
 function getRangeFromPeriodo (periodo, $plan) {
-    var start = getCellFromDate(periodo.start, $plan),
-        end = getCellFromDate(periodo.end, $plan);
+    var start = getCellIndexFromDate(periodo.start, $plan.starting_year),
+        end = getCellIndexFromDate(periodo.end, $plan.starting_year);
 
-    return $plan.grid.getRange(start, end);
+    return $plan.grid.getRange($plan.grid.cell(start), $plan.grid.cell(end));
 }
 
-function getCellFromDate (date, $plan) {
-    var date_parts = date.split("/"),
-        month = date_parts[0],
-        year = date_parts[1];
-
-    return $plan.grid.cell( (year - $plan.starting_year) * 12 + parseInt(month - 1) );
-}
-
-function getTramiteIndexFromName (name) {
-    var index = TRAMITES.length;
-    while (index-- && TRAMITES[index].name != name);
-
-    return index;
-}
-
-function assignTramiteToRange (tramite, range) {
-    range.data("tramite-type", tramite).css("background", TRAMITES[ tramite ].color);
-}
-
-function range (start, end) {
-    var r = [], i;
+function rangoSeptenal (start) {
+    var r = [], i, end = start + 6;
     for (i = start; i <= end; i++) {
         r.push(i);
     }
     return r;
 }
 
-function isInt (value) {
-    var x;
-    if (isNaN(value)) {
-        return false;
-    }
-    x = parseFloat(value);
-    return (x | 0) === x;
-}
-
 return PlanSeptenalIndividual;
 
 }());
 
-function attemptToLoadPlanIndividual (receiver, starting_year) {
-    var inicio = starting_year,
-        fin = inicio + 6;
-
+function attemptToLoadPlanIndividual (receiver, inicio, ajax_url) {
     return $.ajax({
-        url: '/plan-septenal-colectivo',
-        data: {
-            inicio: inicio,
-            fin: fin
-        },
+        url: routes["plan-septenal-colectivo"],
         method: "GET",
+        data: {
+            inicio: inicio
+        },
+        dataType: "json",
         statusCode: {
             200: function (data) {
-                var json_data = (typeof data === "object") ? data : $.parseJSON(data);
-
-                if (json_data.status === "En creación") {
-                    receiver.plan = new PlanSeptenalIndividual(receiver.container, inicio);
-                    receiver.plan.load(inicio, fin);
+                if (data.status === "En creación") {
+                    receiver.plan = new PlanSeptenalIndividual(receiver.container, inicio, ajax_url);
+                    receiver.plan.load({inicio: inicio});
                 }
             },
-            404: function (data) {
-                receiver.container.html("El plan septenal colectivo aún no existe.");
+            404: function () {
+                if (receiver.container !== undefined && typeof receiver.container.html == "function") {
+                    receiver.container.html("El plan septenal colectivo aún no existe.");
+                }
             }
         }
     });

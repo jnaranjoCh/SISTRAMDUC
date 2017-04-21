@@ -3,9 +3,9 @@ var Grid = (function() {
 
 var CTRL_CODE = 17, SHIFT_CODE = 16;
 
-function GridComponent () {
+function GridComponent (data) {
     this.$elements = null;
-    this.data = [];
+    this.data = data === undefined ? [] : data;
     this.display = [];
 };
 
@@ -20,6 +20,14 @@ GridComponent.prototype = {
         }
         this.display = this.data.slice();
         return this;
+    },
+    render: function (container, wrapper, element) {
+        var html = "<div class='" + wrapper + "'>"
+            + ("<div class='" + element + "'></div>").repeat(this.data.length) + "</div>";
+
+        var $component = $(html).appendTo(container);
+        this.$elements = $component.find("." + element);
+        this.draw();
     }
 }
 
@@ -36,9 +44,10 @@ Cell.prototype.isSelected = function () {
 }
 
 function Row (jwrapped_set, cells) {
-    jwrapped_set.__proto__ = {};
     for (i in jwrapped_set) {
-        this[i] = jwrapped_set[i];
+        if (jwrapped_set.hasOwnProperty(i)) {
+            this[i] = jwrapped_set[i];
+        }
     }
     this.cells = cells;
 }
@@ -52,34 +61,7 @@ function Grid (container, opts) {
     if (container === undefined) {
         throw "Container (first argument) is mandatory";
     }
-
     this.container = container = $(container);
-
-    this.header = new GridComponent();
-    this.header.render = function () {
-        var html = "<div class='grid-header'>";
-        for (var i = 0; i < this.data.length; i++) {
-            html += "<div class='grid-header-el'></div>";
-        }
-        html += "</div>";
-
-        $header = $(html).appendTo(container);
-        this.$elements = $header.find(".grid-header-el");
-        this.draw();
-    }
-
-    this.numeration = new GridComponent();
-    this.numeration.render = function () {
-        var html = "<div class='grid-numeration'>";
-        for (var i = 0; i < this.data.length; i++) {
-            html += "<div class='grid-num'></div>";
-        }
-        html += "</div>";
-
-        $numeration = $(html).appendTo(container);
-        this.$elements = $numeration.find(".grid-num");
-        this.draw();
-    }
 
     this.state = {
         multiselection: false,
@@ -95,105 +77,31 @@ function Grid (container, opts) {
         }
     };
 
+    this.enabled = true;
+
     this.config = {
         header: defineComponentData(opts ? opts.header : undefined),
         numeration: defineComponentData(opts ? opts.numeration : undefined)
     };
 
-    this.header.setData(this.config.header).render();
-    this.numeration.setData(this.config.numeration).render();
+    this.header = new GridComponent(this.config.header);
+    this.header.render(this.container, 'grid-header', 'grid-header-el');
+
+    this.numeration = new GridComponent(this.config.numeration);
+    this.numeration.render(this.container, 'grid-numeration', 'grid-num');
+
     this.container.append(this._getCellsHtml());
 
     this.$cells = this.container.find(".grid-cell");
     this.$rows = this.container.find(".grid-row");
 
-    this._cells = [];
-    for (var i = 0; i < this.$cells.length; i++) {
-        this._cells[i] = new Cell(this.$cells.eq(i));
-    }
+    this._cells = createCells(this.$cells);
+    this._rows = createRows(this.header.data.length, this.$rows, this._cells)
 
-    this._rows = [];
-    var cells_per_row = this._cells.length / this.numeration.data.length,
-        start, end;
-    for (var i = 0; i < this.$rows.length; i++) {
-        start = cells_per_row * i;
-        end = start + cells_per_row;
-        this._rows[i] = new Row(this.$rows.eq(i), this._cells.slice(start, end));
-    }
-
-    var grid = this;
-
-    function keydownkeyup (e) {
-        if ( e.keyCode ==  CTRL_CODE ) {
-            grid.state.multiselection = (e.type == "keydown");
-        } else if ( e.keyCode == SHIFT_CODE ) {
-            grid.state.rangeselection.active = (e.type == "keydown");
-        }
-    }
-
-    function mouseup (e) {
-        if ($(e.target).not(".grid-cell, .grid-action-btn, .grid-clear-btn").length) {
-            grid.state.rangeselection.active = false;
-            grid.state.rangeselection.start = null;
-
-            if (! grid.state.dragging.active) {
-                grid.$cells.removeClass("selected");
-            }
-        }
-        grid.state.dragging.active = false;
-        grid.state.dragging.start = null;
-    }
-
-    $(document)
-        .on("keydown keyup", keydownkeyup)
-        .on("mouseup", mouseup);
-
-    $(this.container)
-        .on("mousedown", ".grid-cell", function (e) {
-            if (grid.state.multiselection) {
-                $(this).toggleClass("selected");
-            } else {
-                grid.$cells.removeClass("selected");
-                $(this).addClass("selected");
-            }
-
-            updateSelection(grid.state.rangeselection, this, ! grid.state.multiselection, grid);
-
-            if (! grid.state.rangeselection.active || grid.state.rangeselection.start == null) {
-                grid.state.rangeselection.start = this;
-            }
-
-            grid.state.dragging.active = true;
-            grid.state.dragging.start = this;
-        })
-        .on("mouseenter", ".grid-cell", function (e) {
-
-            updateSelection(grid.state.dragging, this, true, grid);
-        })
-        .on("dblclick", ".grid-cell", function () {
-            var $siblings = $(this).siblings().add( $(this) );
-
-            if ($siblings.length == $siblings.filter(".selected").length) {
-                $siblings.removeClass("selected");
-            } else {
-                $siblings.addClass("selected");
-            }
-        });
+    addDomListeners(this);
 }
 
 Grid.prototype = {
-    _getCellsHtml: function () {
-        var row = "", grid_body = "";
-
-        for (var i = 0; i < this.header.data.length; i++) {
-            row += "<div class='grid-cell'></div>";
-        }
-        for (var i = 0; i < this.numeration.data.length; i++) {
-            grid_body += "<div class='grid-row'>" + row + "</div>";
-        }
-
-        return grid_body;
-    },
     cell: function (pos) {
         return this._cells[pos];
     },
@@ -205,7 +113,8 @@ Grid.prototype = {
         return range.addClass('selected');
     },
     unselect: function (start, end) {
-        return this.getRange(start, end).removeClass('selected');
+        var range = (start instanceof jQuery) ? start : this.getRange(start, end);
+        return range.removeClass('selected');
     },
     getSelection: function () {
         return this.$cells.filter('.selected');
@@ -215,7 +124,7 @@ Grid.prototype = {
         point2 = typeof point2 == "number" ? this.$cells.eq(point2) : point2;
 
         if (point1 === null || point2 === null) {
-            return getObviousRange(point1, point2);
+            return getOnePointRange(point1, point2);
         }
 
         var bounds = getRangeBoundaries(point1, point2, this.$cells),
@@ -234,6 +143,10 @@ Grid.prototype = {
         $(document)
             .off("keydown keyup", this._keydownkeyup)
             .off("mouseup", this._mouseup);
+    },
+    _getCellsHtml: function () {
+        var row = "<div class='grid-cell'></div>".repeat(this.header.data.length);
+        return ("<div class='grid-row'>" + row + "</div>").repeat(this.numeration.data.length);
     }
 };
 
@@ -251,7 +164,7 @@ function updateSelection (selection, curr, should_retreat, grid) {
     }
 }
 
-function getObviousRange (point1, point2) {
+function getOnePointRange (point1, point2) {
     var range = $();
     if (point1 !== null) {
         range = range.add(point1);
@@ -280,13 +193,91 @@ function defineComponentData (prop) {
     return prop;
 }
 
-if (typeof Array.prototype.fill !== "function") {
-    Array.prototype.fill = function (val) {
-        for (var i = 0; i < this.length; i++) {
-            this[i] = val;
+function addDomListeners (grid) {
+    function keydownkeyup (e) {
+        if ( e.keyCode ==  CTRL_CODE ) {
+            grid.state.multiselection = (e.type == "keydown");
+        } else if ( e.keyCode == SHIFT_CODE ) {
+            grid.state.rangeselection.active = (e.type == "keydown");
         }
-        return this;
-    };
+    }
+
+    function mouseup (e) {
+        if ($(e.target).not(".grid-cell, .grid-action-btn, .grid-clear-btn").length) {
+            grid.state.rangeselection.active = false;
+            grid.state.rangeselection.start = null;
+
+            if (! grid.state.dragging.active) {
+                grid.$cells.removeClass("selected");
+            }
+        }
+        grid.state.dragging.active = false;
+        grid.state.dragging.start = null;
+    }
+
+    $(document)
+        .on("keydown keyup", keydownkeyup)
+        .on("mouseup", mouseup);
+
+    $(grid.container)
+        .on("mousedown", ".grid-cell", function (e) {
+            if (! grid.enabled) {
+                return;
+            }
+
+            if (grid.state.multiselection) {
+                $(this).toggleClass("selected");
+            } else {
+                grid.$cells.removeClass("selected");
+                $(this).addClass("selected");
+            }
+
+            updateSelection(grid.state.rangeselection, this, ! grid.state.multiselection, grid);
+
+            if (! grid.state.rangeselection.active || grid.state.rangeselection.start == null) {
+                grid.state.rangeselection.start = this;
+            }
+
+            grid.state.dragging.active = true;
+            grid.state.dragging.start = this;
+        })
+        .on("mouseenter", ".grid-cell", function (e) {
+
+            updateSelection(grid.state.dragging, this, true, grid);
+        })
+        .on("dblclick", ".grid-cell", function () {
+            if (! grid.enabled) {
+                return;
+            }
+
+            var $siblings = $(this).siblings().add( $(this) );
+
+            if ($siblings.length == $siblings.filter(".selected").length) {
+                $siblings.removeClass("selected");
+            } else {
+                $siblings.addClass("selected");
+            }
+        });
+}
+
+function createCells ($cells) {
+    var cells = [];
+    for (var i = 0; i < $cells.length; i++) {
+        cells[i] = new Cell($cells.eq(i));
+    }
+    return cells;
+}
+
+function createRows (cells_per_row, $rows, cells) {
+    var start, end, rows = [];
+
+    for (var i = 0; i < $rows.length; i++) {
+        start = cells_per_row * i;
+        end = start + cells_per_row;
+        rows[i] = new Row($rows.eq(i), cells.slice(start, end));
+    }
+
+    return rows;
 }
 
 return Grid;

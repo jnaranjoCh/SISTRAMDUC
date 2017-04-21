@@ -11,7 +11,7 @@ use RegistroUnicoBundle\Entity\Departamento;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="plan_septenal_colectivo")
+ * @ORM\Table(name="plan_septenal_colectvo", uniqueConstraints={@ORM\UniqueConstraint(name="one_plan_per_department", columns={"departamento_id", "inicio"})})
  */
 class PlanSeptenalColectivo
 {
@@ -26,11 +26,6 @@ class PlanSeptenalColectivo
      * @ORM\Column(type="integer")
      */
     private $inicio;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $fin;
 
     /**
      * @ORM\Column(type="string")
@@ -54,21 +49,14 @@ class PlanSeptenalColectivo
      **/
     private $planes_septenales_individuales;
 
-    public function __construct($inicio, $fin, Usuario $creator, \DateTime $creation_deadline)
+    public function __construct(int $inicio, Usuario $creator, \DateTime $creation_deadline)
     {
-        $inicio = (int) $inicio;
-        $fin = (int) $fin;
-
-        if (($fin - $inicio + 1) != 7) {
-            throw new \Exception('El rango septenal debe ser de 7 años.', 10);
-        }
-
         $this->inicio = $inicio;
-        $this->fin = $fin;
         $this->status = 'En creación';
         $this->setCreator($creator);
 
-        if ($creation_deadline < new \DateTime()) {
+        $now = new \DateTime();
+        if ($creation_deadline < $now) {
             throw new \Exception('Fecha de finalización de proceso de creación debe ser superior a fecha actual', 50);
         }
 
@@ -79,7 +67,7 @@ class PlanSeptenalColectivo
 
     public function addPlanSeptenalIndividual(PlanSeptenalIndividual $planSeptenalIndividual)
     {
-        if ($planSeptenalIndividual->getInicio() != $this->inicio || $planSeptenalIndividual->getFin() != $this->fin) {
+        if ($planSeptenalIndividual->getInicio() != $this->inicio || $planSeptenalIndividual->getFin() != $this->getFin()) {
             throw new \Exception('Los rangos septenales no coinciden', 20);
         }
 
@@ -115,5 +103,29 @@ class PlanSeptenalColectivo
     public function getDepartamento()
     {
         return $this->departamento;
+    }
+
+    public function getInicio()
+    {
+        return $this->inicio;
+    }
+
+    public function getFin()
+    {
+        return $this->inicio + 6;
+    }
+
+    public function toArray()
+    {
+        $planes = [];
+        foreach ($this->planes_septenales_individuales as $plan) {
+            $planes[] = $plan->toArray();
+        }
+
+        return [
+            'inicio' => $this->getInicio(),
+            'status' => $this->getStatus(),
+            'planes' => $planes
+        ];
     }
 }

@@ -62,7 +62,7 @@ class Jurado
      * @ORM\Column(name="tipo", type="string", length=50)
      */
     private $tipo;
-
+ 
     /**
      * @var int
      *

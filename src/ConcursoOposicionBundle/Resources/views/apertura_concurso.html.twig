@@ -10,7 +10,7 @@
         <li class="active"> Apertura Concurso</li>
       </ol>
     </section>
-
+ 
     <br/>
     <div class="row">
       <!--Success message-->
@@ -28,6 +28,15 @@
             		</div>		            
 		        </div>
 
+		        <div class="panel panel-danger hide" id="msgFracaso1">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar1"></i> Error</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Ocurri&oacute; un problema al insertar.</h4>
+            		</div>		            
+		        </div>
+
 		        <div class="panel panel-success hide" id="msgExito">
             		<div class="panel-heading">
             			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar2"></i> Exito</h3>
@@ -35,29 +44,7 @@
             		<div class="panel-body">
             			<h4>Concurso Insertado.</h4>
             		</div>		            
-		        </div>
-
-            	<div class="row">
-	                <div class="col-xs-6">
-	                  <a href="{{ path('jurado') }}" class="btn btn-primary btn-block btn-flat">+ Jurado</a>
-	                </div>
-
-	                <div class="col-xs-6">
-	               		<a href="{{ path('cpec') }}" class="btn btn-primary btn-block btn-flat">+ CPEC</a>
-	                </div>
-	            </div>
-
-	            <br/>
-
-	            <div class="row">
-	                <div class="col-xs-6">
-	                  <a href="{{ path('suplentesJurado') }}" class="btn btn-primary btn-block btn-flat">+ Suplentes de Jurado</a>
-	                </div>
-
-	                <div class="col-xs-6">
-	               		<a href="{{ path('suplentesCPEC') }}" class="btn btn-primary btn-block btn-flat">+ Suplentes de CPEC</a>
-	                </div>
-	            </div>
+		        </div>            	
 
 	            <br/>
 
@@ -169,13 +156,14 @@
 				<br/><br/>
 
               <div class="row">
-              <div class="col-xs-6">
-                  <button id="limpiarConcurso" type="button" class="btn btn-default btn-block btn-flat">Limpiar</button>
-                </div>
-                <div class="col-xs-6">
-                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar</button>
-                </div>
+	              <div class="col-xs-6">
+	                  <button id="limpiarConcurso" type="button" class="btn btn-default btn-block btn-flat">Limpiar</button>
+	                </div>
+	                <div class="col-xs-6">
+	                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar</button>
+	                </div>
               </div>
+
             </form>
         </div>
       </section>
