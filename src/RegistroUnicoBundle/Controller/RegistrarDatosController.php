@@ -5,6 +5,7 @@ namespace RegistroUnicoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use ClausulasContractualesBundle\Entity\Hijo;
 use RegistroUnicoBundle\Entity\Revista;
 use RegistroUnicoBundle\Entity\Participante;
 use RegistroUnicoBundle\Entity\Registro;
@@ -28,8 +29,7 @@ class RegistrarDatosController extends Controller
             $this->registerSectionOne($request->get('personalData'));
             $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[15]);
             $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
-            ////
-            /*$request->get('hijoData') */
+            //$this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[15]);
             return new JsonResponse("if");
         }
         else
@@ -222,6 +222,16 @@ class RegistrarDatosController extends Controller
     
     private function registerSectionThree($registros,$participantes,$revistas,$email)
     {
+        $em = $this->getDoctrine()->getManager();
+        $newUser = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$newUser) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        
         $i = -1;
         $j = -1;
         $valaux = -1;
@@ -288,7 +298,10 @@ class RegistrarDatosController extends Controller
                                            ->findOneById($id[0]['lastId']);
             }
         }
+        
         $pos = -1;
+        $i = 0;
+        $registross = [];
         foreach($registros as $registro){
             
             $newRegistro =  new Registro();
@@ -316,9 +329,30 @@ class RegistrarDatosController extends Controller
                 $newRegistro->addParticipantes($participantess[$pos]);
             }
             
+            $registross[$i] = $newRegistro;
             $em = $this->getDoctrine()->getManager();
             $em->persist($newRegistro);
             $em->flush();
+      
+            $i++;
         }
+        
+        $newUser->addRegistros($registross);
+        $em->flush();
     }
+    
+     private function registerSectionFour($hijos,$email)
+     {
+         $newHijo = new Hijo();
+         $newHijo->setCedulaMadre($hijos[6]);
+         $newHijo->setCedulaPadre($hijos[7]);
+         $newHijo->setCedulaHijo($hijos[8]);
+         $newHijo->setFechaNacimiento($hijos[5]);
+         $newHijo->setPrimerNombre($hijos[0]);
+         $newHijo->setSegundoNombre($hijos[1]);
+         $newHijo->setPrimerApellido($hijos[2]);
+         $newHijo->setSegundoApellido($hijos[3]);
+         $newHijo->setNacionalidad($hijos[4]);
+         //$newHijo->setPartidaNacimientoUrl();
+     }
 }

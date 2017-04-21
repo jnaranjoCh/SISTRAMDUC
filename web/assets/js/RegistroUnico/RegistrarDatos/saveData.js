@@ -304,7 +304,7 @@ $('#submitData').click(function(){
     }
     
     if($('#checkboxHijos').prop('checked')){
-        if(can_register){
+        /*if(can_register){
             for(var i = 0; i < inputsH.length; i++){
                 if($("#"+inputsH[i]).val() == ""){
                     can_register = false;
@@ -340,7 +340,7 @@ $('#submitData').click(function(){
                 }
             
             }
-        }
+        }*/
     }
 
     if(can_register){
@@ -351,7 +351,7 @@ $('#submitData').click(function(){
             dataType: 'json',
             success: function(data)
             {
-                    alert(JSON.stringify(data));
+                    alert(data);
             }
         });
     }
