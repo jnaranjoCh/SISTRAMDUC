@@ -45,15 +45,25 @@ $('#registrarConcurso').click(function (){
 
 		/*json*/
 
+		String fecha1 = $("#fechaDoc").val().ToShortDateString();
+
+		if ($("#fechaDoc").val() != '' && $("#fechaDoc").val() != null)
+			fecha1 = $("#fechaDoc").val();
+		else fecha1 = null;
+
+		if ($("#fechaPre").val() != '' && $("#fechaPre").val() != null)
+			fecha2 = $("#fechaPre").val();
+		else fecha2 = null;
+
 		$.ajax({
             method: "POST",
             data: {"Inicio":$("#fechaConcurso").val(), 
             "Vacantes":$("#cedula").val(), 
             "Area":$("#area").val(), 
-            "fechaDoc":$("#fechaDoc").val(), 
-            "fechaPre":$("#fechaPre").val(), 
-            "observacion":$("#observacion").val()},
-            url:  "http://localhost:8000/concursoOposicion/registroConcursoAjax",
+            "fechaDoc":fecha1, 
+            "fechaPre":fecha2, 
+            "observacion":"Oposicion"},
+            url:  "/concursoOposicion/registroConcursoAjax",
             dataType: 'json',
             success: function(data)
             {
@@ -72,9 +82,29 @@ $('#registrarConcurso').click(function (){
                 } 
                 else{
 
-                	$('#msgFracaso').addClass("hide");
-                	$('#msgExito').addClass("hide");
-					$('#msgFracaso1').removeClass("hide");
+                	if (data == "N"){
+
+                		$('#spanfechaConcurso').addClass("hide");
+						$('#spancedula').addClass("hide");
+						$('#spancedula2').addClass("hide");
+						$('#spanarea').addClass("hide");
+	                	$('#msgFracaso').addClass("hide");
+	                	$('#msgFracaso1').addClass("hide");
+	                	$('#msgExito').addClass("hide");
+	                	$('#msgPermiso').removeClass("hide");	
+                	}
+                	else {
+
+                		$('#spanfechaConcurso').addClass("hide");
+						$('#spancedula').addClass("hide");
+						$('#spancedula2').addClass("hide");
+						$('#spanarea').addClass("hide");
+	                	$('#msgFracaso').addClass("hide");
+	                	$('#msgExito').addClass("hide");
+	                	$('#msgPermiso').addClass("hide");
+
+						$('#msgFracaso1').removeClass("hide");
+                	}                	
                 }
             }
         }); 
@@ -98,6 +128,7 @@ $('#limpiarConcurso').click(function (){
 	$('#msgExito').addClass("hide");
 	$('#msgFracaso').addClass("hide");
 	$('#msgFracaso1').addClass("hide");
+	$('#msgPermiso').addClass("hide");
 });
 
 function justNumbers(e){
@@ -120,7 +151,17 @@ $('#quitar1').click(function (){
 	$('#msgFracaso1').addClass("hide");
 });
 
+$('#quitar3').click(function (){
+
+	$('#msgFracaso2').addClass("hide");
+});
+
 $('#quitar2').click(function (){
 
 	$('#msgExito').addClass("hide");
+});
+
+$('#quitar3').click(function (){
+
+	$('#msgPermiso').addClass("hide");
 });
