@@ -20,53 +20,64 @@ $('#registrarSuplentesJurado').click(function (){
 
 	if (continua){
 
-		/*json*/
+		if ($("#cedula1").val() != $("#cedula2").val() &&
+			$("#cedula1").val() != $("#cedula3").val() &&
+			$("#cedula2").val() != $("#cedula3").val()){
 
-		for (var i = 1; i <= 3; i++) {
+			/*json*/
 
-			$.ajax({
-	            method: "POST",
-	            data: {"cedula":$("#cedula"+i).val(), 
-	            "nombre":$("#nombre"+i).val(),
-	            "tipo":"OposicionSuplentes", 
-	            "apellido":$("#apellido"+i).val(), 
-	            "facultad":$("#facultad"+i).val(), 
-	            "universidad":$("#universidad"+i).val(), 
-	            "area":$("#area"+i).val()},
-	            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
-	            dataType: 'json',
-	            success: function(data)
-	            {
-	                if (data == "S"){
+			for (var i = 1; i <= 3; i++) {
 
-						document.getElementById('juradosSave').reset();
+				$.ajax({
+		            method: "POST",
+		            data: {"cedula":$("#cedula"+i).val(), 
+		            "nombre":$("#nombre"+i).val(),
+		            "tipo":"OposicionSuplentes", 
+		            "apellido":$("#apellido"+i).val(), 
+		            "facultad":$("#facultad"+i).val(), 
+		            "universidad":$("#universidad"+i).val(), 
+		            "area":$("#area"+i).val()},
+		            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+		            dataType: 'json',
+		            success: function(data)
+		            {
+		                if (data == "S"){
 
-						for (var k = 1; k <= 3; k++) {
-			
-							$('#spancedula'+k).addClass("hide");
-							$('#spannombre'+k).addClass("hide");
-							$('#spanapellido'+k).addClass("hide");
-							$('#spanfacultad'+k).addClass("hide");
-							$('#spanuniversidad'+k).addClass("hide");
-							$('#spanarea'+k).addClass("hide");
-						}
+							document.getElementById('juradosSave').reset();
 
-						$('#msgFracaso').addClass("hide");
-	                	$('#msgFracaso1').addClass("hide");
-						$('#msgExito').removeClass("hide");
-	                } 
-	                else{
+							for (var k = 1; k <= 3; k++) {
+				
+								$('#spancedula'+k).addClass("hide");
+								$('#spannombre'+k).addClass("hide");
+								$('#spanapellido'+k).addClass("hide");
+								$('#spanfacultad'+k).addClass("hide");
+								$('#spanuniversidad'+k).addClass("hide");
+								$('#spanarea'+k).addClass("hide");
+							}
 
-	                	$('#msgFracaso').addClass("hide");
-	                	$('#msgExito').addClass("hide");
-						$('#msgFracaso1').removeClass("hide");
-	                }
-	            }
-	        });			
+							$('#msgFracaso').addClass("hide");
+		                	$('#msgFracaso1').addClass("hide");
+		                	$('#msgFracaso2').addClass("hide");
+							$('#msgExito').removeClass("hide");
+		                } 
+		                else{
+
+		                	$('#msgFracaso').addClass("hide");
+		                	$('#msgExito').addClass("hide");
+							$('#msgFracaso1').removeClass("hide");
+		                }
+		            }
+		        });			
+			}
+
+			/*function del json*/
+
+		} // fin si cedulas
+		else{
+			$('#msgFracaso2').removeClass("hide");
 		}
 
-		/*fin del json*/
-	}
+	} // fin si continua
 	else {
 
 		$('#msgFracaso').removeClass("hide");

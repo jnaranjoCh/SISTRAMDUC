@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content %} 
+
     <section class="content-header">
       <h1>
         Apertura del Concurso de Oposici&oacute;n
@@ -43,6 +44,15 @@
             		</div>
             		<div class="panel-body">
             			<h4>Concurso Insertado.</h4>
+            		</div>		            
+		        </div> 
+
+		        <div class="panel panel-warning hide" id="msgPermiso">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar3"></i> Exito</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Usted no tiene permisos para esta acci&oacute;n.</h4>
             		</div>		            
 		        </div>            	
 
@@ -134,22 +144,6 @@
 				                </div>
 				            </div>
 				        </div>				  
-				    </div>
-				</div>
-
-				<div class="container">
-	            <label>Observaci&oacute;n</label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" id="observacion" maxlength="254" placeholder="Que quiere mencionar?"/>
-				                    <span class="input-group-addon">
-				                        <span class="glyphicon glyphicon-eye-open"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
 				    </div>
 				</div>
 

@@ -28,6 +28,15 @@ registro_obtener_ajax:
     path:     /registro/obtener-datos
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
     requirements:
+<<<<<<< Updated upstream
+=======
+        _method:  POST
+        
+registro_buscarcedula_ajax:
+    path:     /registro/buscar-cedula
+    defaults: { _controller: RegistroUnicoBundle:Default:buscarCedulaAjax }
+    requirements:
+>>>>>>> Stashed changes
         _method:  POST 
         
 registro_buscaremail_ajax:

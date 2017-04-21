@@ -10,9 +10,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ConcursosBundle\Entity\Concurso;
 use ConcursosBundle\Entity\Jurado;
+use AppBundle\Entity\Usuario;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DefaultController extends Controller
 {
+    private $idUsuario;
+
     /**
      * @Route("/concursoOposicion/apertura_concurso_oposicion_index", name="apertura_concurso_oposicion_index")
      */
@@ -171,32 +176,47 @@ class DefaultController extends Controller
      */
     public function registroConcursoAjaxAction(Request $request){
 
-        if($request->isXmlHttpRequest())
-        {
-            $concurso = new Concurso();
+        if($request->isXmlHttpRequest()){
 
-//             $concurso->setFechaInicio($request->get("Inicio"));
+            $encontrado = false;
 
-            $concurso->setNroVacantes($request->get("Vacantes"));
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
 
-            $concurso->setIdUsuario(1);
-	
-//             $concurso->setFechaRecepDoc(DateTime($request->get("fechaDoc")));
-                        
-//             $concurso->setFechaPresentacion(DateTime($request->get("fechaPre")));
-            
-            $concurso->setObservaciones($request->get("observacion"));
+            if ($encontrado){
 
-            $concurso->setAreaPostulacion($request->get("Area"));
+                $concurso = new Concurso();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($concurso);
-            $em->flush();
+               $concurso->setFechaInicio(date_create($request->get("Inicio")));
 
-            return new JsonResponse("S");
+                $concurso->setNroVacantes($request->get("Vacantes"));
+
+                $concurso->setIdUsuario($this->getUser()->getId());
+        
+                $concurso->setFechaRecepDoc(date_create($request->get("fechaDoc")));
+                            
+                $concurso->setFechaPresentacion(date_create($request->get("fechaPre")));
+                
+                $concurso->setObservaciones($request->get("observacion"));
+
+                $concurso->setAreaPostulacion($request->get("Area"));
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($concurso);
+                $em->flush();
+
+                return new JsonResponse("S");
+
+            } else {
+
+                return new JsonResponse("N");
+            }               
         }
         else
-             throw $this->createNotFoundException('Error al solicitar datos');
+             throw $this->createNotFoundException('Error al solicitar datos');      
     }
 
      /**
@@ -290,7 +310,6 @@ class DefaultController extends Controller
                     ->findAll();
     }
 
-
     /**
      * @Route("/concursoOposicion/registroJuradosAjax", name="registroJuradosAjax")
      * @Method("POST")
@@ -306,7 +325,7 @@ class DefaultController extends Controller
             $jurado->setAreaInvestigacion($request->get("area"));
             $jurado->setFacultad($request->get("facultad"));
             $jurado->setUniversidad($request->get("universidad"));
-            $jurado->setIdUsuarioAsigna(1);
+            $jurado->setIdUsuarioAsigna($this->getUser()->getId());
             $jurado->setTipo($request->get("tipo"));
             $jurado->setCedula($request->get("cedula"));
 
