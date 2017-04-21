@@ -4,13 +4,6 @@ var CTRL_CODE = 17, SHIFT_CODE = 16,
     shiftDown = jQuery.Event("keydown", { keyCode : SHIFT_CODE }),
     shiftUp   = jQuery.Event("keyup", { keyCode : SHIFT_CODE });
 
-function triggerClickRelatedEvents () {
-    $targets = Array.prototype.slice.call(arguments);
-    for (var i = 0; i < $targets.length; i++) {
-        $targets[i].trigger("mouseenter").trigger("mousedown").trigger("mouseup").trigger("click");
-    }
-}
-
 function addGridReferences (that) {
     that.$cells  = that.grid.$cells;
     that.$first  = that.grid.cell(0);
@@ -127,14 +120,14 @@ QUnit.test("Range selection must start in current clicked cell if no other cell 
 
 QUnit.test("Range selection must work across different rows", function (assert) {
     $(document).trigger(shiftDown);
-    triggerClickRelatedEvents(this.$third, this.$cells.eq(this.cols * 2 + 4));
+    triggerClickRelatedEvents(this.$third, this.grid.cell(this.cols * 2 + 4));
 
     assert.equal(this.grid.getSelection().length, 2 * this.cols + 3, 2 * this.cols + 3 + " cells should be selected");
 });
 
 QUnit.test("Range selection must work across different rows, backwards", function (assert) {
     $(document).trigger(shiftDown);
-    triggerClickRelatedEvents(this.$cells.eq(this.cols * 2 + 4), this.$third);
+    triggerClickRelatedEvents(this.grid.cell(this.cols * 2 + 4), this.$third);
 
     assert.equal(this.grid.getSelection().length, 2 * this.cols + 3, 2 * this.cols + 3 + " cells should be selected");
 });
@@ -177,10 +170,26 @@ QUnit.module("Unselecting cells", {
 });
 
 QUnit.test("A click outside of the grid should unselect selected cells", function (assert) {
-    var $target = this.grid.$cells.first();
+    var $target = this.grid.cell(0);
     triggerClickRelatedEvents($target, $("#qunit-fixture"));
 
     assert.equal(this.grid.getSelection().length, 0, "There should be no selected cells");
+});
+
+QUnit.test("Unselecting programmatically with numeric range", function (assert) {
+    this.grid.select(0, 4);
+    assert.equal(this.grid.getSelection().length, 5);
+
+    this.grid.unselect(0, 3);
+    assert.equal(this.grid.getSelection().length, 1);
+});
+
+QUnit.test("Unselecting programmatically with jquery range", function (assert) {
+    this.grid.select(0, 4);
+    assert.equal(this.grid.getSelection().length, 5);
+
+    this.grid.unselect(this.grid.getSelection());
+    assert.equal(this.grid.getSelection().length, 0);
 });
 
 QUnit.module("Dragging", {
@@ -509,8 +518,34 @@ QUnit.test("Select allows to marks cells as selected", function (assert) {
     assert.equal(this.grid.getSelection().length, 5);
 });
 
-QUnit.test("Select also can receive jquery objects", function (assert) {
-    var range = this.grid.getRange(this.$cells.eq(0), this.$cells.eq(4));
+QUnit.test("Select also can receive a jquery object as first parameter representing the range", function (assert) {
+    var range = this.grid.getRange(this.grid.cell(0), this.grid.cell(4));
     this.grid.select(range);
     assert.equal(this.grid.getSelection().length, 5);
+});
+
+QUnit.module("Disabling the grid", {
+    beforeEach: function () {
+        this.grid = new Grid($(".grid"), {
+            header: 5,
+            numeration: 5
+        });
+        addGridReferences(this);
+    }
+});
+
+QUnit.test("default value of enabled property should be true", function (assert) {
+    assert.strictEqual(true, this.grid.enabled);
+});
+
+QUnit.test("when grid is disabled click on cells should not select them", function (assert) {
+    this.grid.enabled = false;
+    triggerClickRelatedEvents(this.$first);
+    assert.equal(this.grid.getSelection().length, 0, "Nothing should be selected");
+});
+
+QUnit.test("when grid is disabled dblclick to select a row should not work", function (assert) {
+    this.grid.enabled = false;
+    this.$first.trigger("dblclick");
+    assert.equal(this.grid.getSelection().length, 0, "Nothing should be selected");
 });

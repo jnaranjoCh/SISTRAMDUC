@@ -409,3 +409,90 @@ $('#agregarRevista').click(function(){
 $('#tableRevista').on( 'click', 'tbody tr', function () {
     tableRevista.row( this ).remove().draw();
 } );
+
+$('#agregarHijo').click(function(){
+    toastr.clear();
+    var band = false;
+    if(($('#tableHijos td').length) > 0){
+         tableHijos.column(2)
+              .data()
+              .each( function ( value,index ) {
+                    if(value == $("#CedulaHijoDatos").val()){ 
+                        band = true;
+                        toastr.error("Error el hijo ya se encuentra registrado.", "Error", {
+                            "timeOut": "0",
+                            "extendedTImeout": "0"
+                         });
+                    }
+               });
+    }
+   
+   if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#CedulaHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#ActaNacCargaHijoDatos").val() != ""){
+       tableHijos.row.add( {
+            "CI Madre":$("#CedulaMadreHijoDatos").val(),
+            "CI Padre":$("#CedulaPadreHijoDatos").val(),
+            "CI Hijo":$("#CedulaHijoDatos").val(),
+            "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+            "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+            "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+            "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+            "A Nacimiento":$("#ActaNacCargaHijoDatos").val(),
+            "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+            "Nacionalidad":$("#NacionalidadHijoDatos").val()
+        } ).draw();
+        
+        $("#headerHijos").css({ 'color': "black" });
+        $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
+        $("#divCedulaMadreHijoDatos").removeClass("has-error");
+        $("#spanCedulaPadreHijoDatos").removeClass("glyphicon-remove");
+        $("#divCedulaPadreHijoDatos").removeClass("has-error");
+        $("#spanCedulaHijoDatos").removeClass("glyphicon-remove");
+        $("#divCedulaHijoDatos").removeClass("has-error");
+        $("#spanPrimerNombreHijoDatos").removeClass("glyphicon-remove");
+        $("#divPrimerNombreHijoDatos").removeClass("has-error");
+        $("#spanSegundoNombreHijoDatos").removeClass("glyphicon-remove");
+        $("#divSegundoNombreHijoDatos").removeClass("has-error");
+        $("#spanPrimerApellidoHijoDatos").removeClass("glyphicon-remove");
+        $("#divPrimerApellidoHijoDatos").removeClass("has-error");
+        $("#spanSegundoApellidoHijoDatos").removeClass("glyphicon-remove");
+        $("#divSegundoApellidoHijoDatos").removeClass("has-error");
+        $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
+        $("#divNacionalidadHijoDatos").removeClass("has-error");
+        $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
+        $("#divFechaNacimientoHijoDatos").removeClass("has-error");
+        $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
+        $("#divActaNacCargaHijoDatos").removeClass("has-error");
+   }else if(!band){
+       toastr.error("Error faltan datos.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+
+        $("#headerHijos").css({ 'color': "red" });
+        $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+        $("#divCedulaMadreHijoDatos").addClass("has-error");
+        $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+        $("#divCedulaPadreHijoDatos").addClass("has-error");
+        $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+        $("#divCedulaHijoDatos").addClass("has-error");
+        $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+        $("#divPrimerNombreHijoDatos").addClass("has-error");
+        $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+        $("#divSegundoNombreHijoDatos").addClass("has-error");
+        $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+        $("#divPrimerApellidoHijoDatos").addClass("has-error");
+        $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+        $("#divSegundoApellidoHijoDatos").addClass("has-error");
+        $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
+        $("#divNacionalidadHijoDatos").addClass("has-error");
+        $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
+        $("#divFechaNacimientoHijoDatos").addClass("has-error");
+        $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
+        $("#divActaNacCargaHijoDatos").addClass("has-error");
+   }
+});
+
+
+$('#tableHijos').on( 'click', 'tbody tr', function () {
+    tableHijos.row( this ).remove().draw();
+});

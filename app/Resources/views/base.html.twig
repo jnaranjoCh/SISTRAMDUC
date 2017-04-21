@@ -20,6 +20,8 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/datepicker3.css') }}">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
 
@@ -146,15 +148,39 @@
           <a href="#">
             <i class="fa fa fa-calendar"></i><span>Plan Septenal</span>
             <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="display-plan-septenal-individual">
-              <a href="{{ path('display-plan-septenal-individual') }}"><i class="fa fa-circle-o"></i>Individual</a>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Plan Septenal Individual
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="plan-septenal-individual-creation-view">
+                  <a href="{{ path('plan-septenal-individual-creation-view') }}"><i class="fa fa-circle-o"></i>Creación</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i>Actualización</a>
+                </li>
+              </ul>
             </li>
-            <li data-route="plan-septenal-colectivo">
-              <a href="{{ path('plan-septenal-colectivo') }}"><i class="fa fa-circle-o"></i>Colectivo</a>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Plan Septenal Colectivo
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="plan-septenal-colectivo-creation-view">
+                  <a href="{{ path('plan-septenal-colectivo-creation-view') }}"><i class="fa fa-circle-o"></i>Proceso de Creación</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-circle-o"></i>Solicitudes de Actualización</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
@@ -267,17 +293,20 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-fw fa-wheelchair"></i><span>Jubilación</span>
+            <i class="fa fa-fw fa-child"></i><span>Jubilación</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li data-route="jubilacion-informacion">
-              <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+              <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
             </li>
             <li data-route="jubilacion-solicitud">
               <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+            </li>
+            <li data-route="jubilacion-solicitud">
+              <a href="#"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
             </li>
           </ul>
         </li>
@@ -474,8 +503,8 @@
 <!-- daterangepicker -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/moment.js') }}"></script>
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- datatable -->
-<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
@@ -492,6 +521,12 @@
 
 <script>
   $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+
+  $.extend( true, $.fn.dataTable.defaults, {
+    "language": {
+      "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+    }
+  });
 </script>
 
 <!-- Add extra libraries and plugins here -->

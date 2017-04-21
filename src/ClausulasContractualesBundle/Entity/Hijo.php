@@ -62,7 +62,7 @@ class Hijo
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $nacionalidadd;
+    private $nacionalidad;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -285,9 +285,9 @@ class Hijo
      *
      * @return Hijo
      */
-    public function setNacionalidadd($nacionalidadd)
+    public function setNacionalidad($nacionalidad)
     {
-        $this->nacionalidadd = $nacionalidadd;
+        $this->nacionalidad = $nacionalidad;
 
         return $this;
     }
@@ -297,9 +297,9 @@ class Hijo
      *
      * @return string
      */
-    public function getNacionalidadd()
+    public function getNacionalidad()
     {
-        return $this->nacionalidadd;
+        return $this->nacionalidad;
     }
 
     /**
