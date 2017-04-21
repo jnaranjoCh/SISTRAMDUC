@@ -24,7 +24,6 @@ class UsuarioTest extends \PHPUnit_Framework_TestCase
         $this->tony->setRif(0);
         $this->tony->setActivo(true);
         $this->tony->setDireccion('Malibu');
-        $this->tony->setEstatusId(1);
     }
 
     public function testGetNombreCorto()
