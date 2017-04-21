@@ -30,7 +30,10 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "twig/twig": "^1.0||^2.0",
         "knplabs/knp-snappy-bundle": "^1.4",
-        "sg/datatablesbundle": "^0.13.0"
+        "sg/datatablesbundle": "^0.13.0",
+        "dompdf/dompdf": "dev-master",
+        "royopa/fpdf-symfony2": "^2.0",
+        "hackzilla/barcode-bundle": "~2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
