@@ -19,7 +19,7 @@ class PlanSeptenalColectivoArrayConversionTest extends \PHPUnit_Framework_TestCa
 
     public function setUp()
     {
-        $this->creation_deadline = new \DateTime();
+        $this->creation_deadline = new \DateTime('tomorrow');
 
         $this->creator = $this->getMockBuilder(Usuario::class)
             ->disableOriginalConstructor()

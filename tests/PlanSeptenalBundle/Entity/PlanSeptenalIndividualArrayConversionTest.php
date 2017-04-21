@@ -22,6 +22,7 @@ class PlanSeptenalIndividualArrayConversionTest extends \PHPUnit_Framework_TestC
             'status'   => 'Modificando',
             'tramites' => [
                 [
+                    'id' => null,
                     'tipo' => 'beca',
                     'periodo' => [
                         'start' => '01/2010',
@@ -29,6 +30,7 @@ class PlanSeptenalIndividualArrayConversionTest extends \PHPUnit_Framework_TestC
                     ]
                 ],
                 [
+                    'id' => null,
                     'tipo' => 'licencia',
                     'periodo' => [
                         'start' => '05/2013',

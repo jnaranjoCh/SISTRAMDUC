@@ -51,6 +51,7 @@ class TramitePlanSeptenalTest extends \PHPUnit_Framework_TestCase
         $beca->setPeriodo(new MonthlyDateRange('01/2017', '06/2017'));
 
         $beca_array = [
+            'id' => null,
             'tipo' => 'beca',
             'periodo' => [
                 'start' => '01/2017',

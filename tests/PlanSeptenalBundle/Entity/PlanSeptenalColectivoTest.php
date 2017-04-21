@@ -23,7 +23,7 @@ class PlanSeptenalColectivoTest extends \PHPUnit_Framework_TestCase
         $this->creator_department = new Departamento();
         $this->creator->setDepartamento($this->creator_department);
 
-        $this->creation_deadline = new \DateTime();
+        $this->creation_deadline = new \DateTime('tomorrow');
 
         $beca = (new TramitePlanSeptenal)
             ->setTipo('beca')

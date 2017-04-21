@@ -197,13 +197,15 @@ class PlanSeptenalIndividualController extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('"success"', $response->getContent());
 
+        $plan = $this->plan_septenal_individual_repo->findOneBy([]);
+
         $this->plan_septenal_individual_array['status'] = 'Modificando';
         $this->plan_septenal_individual_array['owner'] = [
             'id' => $usuario->getId(),
             'nombre' => $usuario->getNombreCorto()
         ];
+        $this->plan_septenal_individual_array['tramites'][0]['id'] = $plan->getTramites()[0]->getId();
 
-        $plan = $this->plan_septenal_individual_repo->findOneBy([]);
         $this->assertEquals($this->plan_septenal_individual_array, $plan->toArray());
     }
 
@@ -276,7 +278,7 @@ class PlanSeptenalIndividualController extends WebTestCase
             ['inicio' => 2010]
         );
 
-        $list = '{"data":[[' . $planSeptenalIndividual->getId() . ',"Anthony Edward Stark",0,"Esperando aprobaci\u00f3n"]]}';
+        $list = '{"data":[[' . $planSeptenalIndividual->getId() . ',"'. $usuario->getNombreCompleto() .'",0,"Esperando aprobaci\u00f3n"]]}';
         $response = $this->client->getResponse();
         $this->assertEquals($list, $response->getContent());
     }

@@ -33,7 +33,7 @@ class PlanSeptenalColectivoControllerTest extends WebTestCase
     {
         $data = [
             'inicio' => 2010,
-            'creation_deadline' => (new \DateTime())->modify('+1 day')->format("d/m/Y")
+            'creation_deadline' => (new \DateTime('tomorrow'))->format("d/m/Y")
         ];
 
         $this->client->request(

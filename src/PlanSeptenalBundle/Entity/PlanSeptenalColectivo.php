@@ -55,7 +55,8 @@ class PlanSeptenalColectivo
         $this->status = 'En creación';
         $this->setCreator($creator);
 
-        if ($creation_deadline < new \DateTime()) {
+        $now = new \DateTime();
+        if ($creation_deadline < $now) {
             throw new \Exception('Fecha de finalización de proceso de creación debe ser superior a fecha actual', 50);
         }
 

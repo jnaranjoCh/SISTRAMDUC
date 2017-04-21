@@ -67,6 +67,11 @@ class TramitePlanSeptenal
         return $tramite;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function setTipo($tipo)
     {
         $this->tipo = $tipo;
@@ -109,6 +114,7 @@ class TramitePlanSeptenal
     public function toArray()
     {
         return [
+            'id' => $this->getId(),
             'tipo' => $this->getTipo(),
             'periodo' => [
                 'start' => $this->getPeriodo()->getStartAsString(),
