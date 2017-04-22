@@ -190,7 +190,7 @@ class DefaultController extends Controller
 
                 $concurso = new Concurso();
 
-               $concurso->setFechaInicio(date_create($request->get("Inicio")));
+                $concurso->setFechaInicio(date_create($request->get("Inicio")));
 
                 $concurso->setNroVacantes($request->get("Vacantes"));
 
@@ -318,22 +318,36 @@ class DefaultController extends Controller
 
         if($request->isXmlHttpRequest())
         {
-            $jurado = new Jurado();
+            $encontrado = false;
 
-            $jurado->setNombre($request->get("nombre"));
-            $jurado->setApellido($request->get("apellido"));
-            $jurado->setAreaInvestigacion($request->get("area"));
-            $jurado->setFacultad($request->get("facultad"));
-            $jurado->setUniversidad($request->get("universidad"));
-            $jurado->setIdUsuarioAsigna($this->getUser()->getId());
-            $jurado->setTipo($request->get("tipo"));
-            $jurado->setCedula($request->get("cedula"));
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($jurado);
-            $em->flush();
+            if ($encontrado){
 
-            return new JsonResponse("S");
+                $jurado = new Jurado();
+
+                $jurado->setNombre($request->get("nombre"));
+                $jurado->setApellido($request->get("apellido"));
+                $jurado->setAreaInvestigacion($request->get("area"));
+                $jurado->setFacultad($request->get("facultad"));
+                $jurado->setUniversidad($request->get("universidad"));
+                $jurado->setIdUsuarioAsigna($this->getUser()->getId());
+                $jurado->setTipo($request->get("tipo"));
+                $jurado->setCedula($request->get("cedula"));
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($jurado);
+                $em->flush();
+
+                return new JsonResponse("S");
+            }
+            else{
+                return new JsonResponse("N");
+            }            
         }
         else
              throw $this->createNotFoundException('Error al insertar datos');

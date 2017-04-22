@@ -37,7 +37,7 @@ $('#registrarSuplentesJurado').click(function (){
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
 		            "area":$("#area"+i).val()},
-		            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
 		            {

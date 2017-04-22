@@ -271,7 +271,7 @@ $('#registrarCPEC').click(function (){
 				$.ajax({
 		            method: "POST",
 		            data: Arreglo,
-		            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
 		            {
