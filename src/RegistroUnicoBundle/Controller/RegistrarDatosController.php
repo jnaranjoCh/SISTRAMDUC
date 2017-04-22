@@ -345,16 +345,18 @@ class RegistrarDatosController extends Controller
     
      /*private function registerSectionFour($hijos,$email)
      {
-         $newHijo = new Hijo();
-         $newHijo->setCedulaMadre($hijos[6]);
-         $newHijo->setCedulaPadre($hijos[7]);
-         $newHijo->setCedulaHijo($hijos[8]);
-         $newHijo->setFechaNacimiento($hijos[5]);
-         $newHijo->setPrimerNombre($hijos[0]);
-         $newHijo->setSegundoNombre($hijos[1]);
-         $newHijo->setPrimerApellido($hijos[2]);
-         $newHijo->setSegundoApellido($hijos[3]);
-         $newHijo->setNacionalidad($hijos[4]);
+        foreach($cargos as $cargo){
+             $newHijo = new Hijo();
+             $newHijo->setCedulaMadre($hijos[6]);
+             $newHijo->setCedulaPadre($hijos[7]);
+             $newHijo->setCedulaHijo($hijos[8]);
+             $newHijo->setFechaNacimiento($hijos[5]);
+             $newHijo->setPrimerNombre($hijos[0]);
+             $newHijo->setSegundoNombre($hijos[1]);
+             $newHijo->setPrimerApellido($hijos[2]);
+             $newHijo->setSegundoApellido($hijos[3]);
+             $newHijo->setNacionalidad($hijos[4]);
+        }
          //$newHijo->setPartidaNacimientoUrl();
      }*/
 }

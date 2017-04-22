@@ -289,16 +289,19 @@ $('#submitData').click(function(){
             $("#divActaNacCargaHijoDatos").removeClass("has-error");
         }
     }
-    alert(JSON.stringify(revistasData));
     if(can_register){
         $.ajax({
             method: "POST",
             data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
             url:  "/web/app_dev.php/registro/guardar-datos",
             dataType: 'json',
+            beforeSend: function() {
+              $("#myModal2").modal("show");
+            },
             success: function(data)
             {
                     alert(data);
+                    $("#myModal2").modal("hide");
             }
         });
     }

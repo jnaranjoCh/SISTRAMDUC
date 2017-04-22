@@ -65,6 +65,9 @@ $("#registrarUsuario").click(function (){
                 data: {"Cedula":$("#CedulaUser").val()},
                 url:  "/web/app_dev.php/registro/buscar-cedula",
                 dataType: 'json',
+                beforeSend: function() {
+                  $("#myModal").modal("show");
+                },
                 success: function(data){
                      if(data == "S")
                         toastr.error("El usuario ya se encuentra registrado.", "Error", {
@@ -85,6 +88,9 @@ $("#registrarUsuario").click(function (){
                                 data: {"Cedula":$("#CedulaUser").val(), "Password":$("#PasswordUser").val(), "Roles":array, "Email":$("#EmailUser").val()},
                                 url:  "/web/app_dev.php/registro/registrar-usuario",
                                 dataType: 'json',
+                                beforeSend: function() {
+                                  $("#myModal").modal("show");
+                                },
                                 success: function(data){
                                      if(data == "insertado"){
                                          $("#PasswordUser").val("");
@@ -97,6 +103,7 @@ $("#registrarUsuario").click(function (){
                                          });
                                          tableRol.clear().draw();
                                      }
+                                     $("#myModal").modal("hide");
                                 }
                             });
                      }
@@ -106,10 +113,13 @@ $("#registrarUsuario").click(function (){
     }
     
     if(!can_register)
+    {
+        $("#myModal").modal("hide");
         toastr.error(text, "Error", {
                     "timeOut": "0",
                     "extendedTImeout": "0"
                  });
+    }
     else
        toastr.clear();
 });
