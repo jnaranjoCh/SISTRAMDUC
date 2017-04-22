@@ -24,6 +24,7 @@ $("#registrarUsuario").click(function (){
         $("#spanEmailUser").removeClass("glyphicon-envelope");
         $("#spanEmailUser").addClass("glyphicon-remove");
         $("#divEmailUser").addClass("has-error");
+        text = "Error correo mal introducido.";
     }else{
         $("#spanEmailUser").addClass("glyphicon-envelope");
         $("#spanEmailUser").removeClass("glyphicon-remove");
@@ -55,6 +56,7 @@ $("#registrarUsuario").click(function (){
          can_register = false;
          $("#spanRolUser").addClass("glyphicon-remove");
          $("#divRolUser").addClass("has-error");
+         text = "Error no se han seleccionado roles para este usuario.";
     }
     else{
         $("#spanRolUser").removeClass("glyphicon-remove");
