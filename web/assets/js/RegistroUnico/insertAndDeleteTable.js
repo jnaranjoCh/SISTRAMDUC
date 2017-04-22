@@ -1,13 +1,22 @@
 var countRol = 0;
+var countHijo = 0;
 var countCargo = 0;
 var countRegistro = 0;
 var countParticipante = 0;
+var countRevista = 0;
+
+var registrosData = [];
+var participantesData = [];
+var revistasData = [];
+var hijoData = [];
+
 $('#agregarRegistro').click(function(){
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
     toastr.clear();
     var band = false,bandConcatRevist = true,bandConcatPart = true;
     var participantesId="<option value='-1'>No existen registros</option>";
     var revistasId="<option value='-1'>No existen registros</option>";
+    var registro = new Object();
 
     if(($('#tableRegistros td').length) > 0){
          tableRegistros.column(2)
@@ -34,6 +43,14 @@ $('#agregarRegistro').click(function(){
                 "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
                 "Empresa y/o institución": ""
             } ).draw();
+            registro.idRegistro = idRegistro;
+            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+            registro.descripcion = $("#DescripcionDatos").val();
+            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+            registro.estatus = $("#EstatusDatos").find('option:selected').val();
+            registro.anio = $("#AnoPublicacionDatos").val();
+            registro.empresaInstitucion = "";
+            registrosData[countRegistro] = registro;
             countRegistro++;
             idRegistro++;
         }else if($("#EmpresaDatos").val()!=""){
@@ -46,6 +63,14 @@ $('#agregarRegistro').click(function(){
                 "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
                 "Empresa y/o institución": $("#EmpresaDatos").val()
             } ).draw();
+            registro.idRegistro = idRegistro;
+            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+            registro.descripcion = $("#DescripcionDatos").val();
+            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+            registro.estatus = $("#EstatusDatos").find('option:selected').val();
+            registro.anio = $("#AnoPublicacionDatos").val();
+            registro.empresaInstitucion = $("#EmpresaDatos").val();
+            registrosData[countRegistro] = registro;
             countRegistro++;
             idRegistro++;
         }else if($("#InstitucionDatos").val()!=""){
@@ -58,6 +83,14 @@ $('#agregarRegistro').click(function(){
                 "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
                 "Empresa y/o institución": $("#InstitucionDatos").val()
             } ).draw();
+            registro.idRegistro = idRegistro;
+            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+            registro.descripcion = $("#DescripcionDatos").val();
+            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+            registro.estatus = $("#EstatusDatos").find('option:selected').val();
+            registro.anio = $("#AnoPublicacionDatos").val();
+            registro.empresaInstitucion = $("#InstitucionDatos").val();
+            registrosData[countRegistro] = registro;
             countRegistro++;
             idRegistro++;
         }
@@ -69,7 +102,7 @@ $('#agregarRegistro').click(function(){
         }
    }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
         if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias"){
-            tableRegistros.row.add( {
+            tableRegistros.row.add({
                 "Id del registro": idRegistro,
                 "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                 "Descripcion": $("#DescripcionDatos").val(),
@@ -77,7 +110,15 @@ $('#agregarRegistro').click(function(){
                 "Estatus": $("#EstatusDatos").find('option:selected').val(),
                 "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
                 "Empresa y/o institución": ""
-            } ).draw();
+            }).draw();
+            registro.idRegistro = idRegistro;
+            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+            registro.descripcion = $("#DescripcionDatos").val();
+            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+            registro.estatus = $("#EstatusDatos").find('option:selected').val();
+            registro.anio = $("#AnoPublicacionDatos").val();
+            registro.empresaInstitucion = "";
+            registrosData[countRegistro] = registro;
             countRegistro++;
             idRegistro++;
         }else if($("#EmpresaDatos").val()!=""){
@@ -90,6 +131,14 @@ $('#agregarRegistro').click(function(){
                 "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
                 "Empresa y/o institución": $("#EmpresaDatos").val()
             } ).draw();
+            registro.idRegistro = idRegistro;
+            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+            registro.descripcion = $("#DescripcionDatos").val();
+            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+            registro.estatus = $("#EstatusDatos").find('option:selected').val();
+            registro.anio = $("#AnoPublicacionDatos").val();
+            registro.empresaInstitucion = $("#EmpresaDatos").val();
+            registrosData[countRegistro] = registro;
             countRegistro++;
             idRegistro++;
         }else if($("#InstitucionDatos").val()!=""){
@@ -102,6 +151,14 @@ $('#agregarRegistro').click(function(){
                 "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
                 "Empresa y/o institución": $("#InstitucionDatos").val()
             } ).draw();
+            registro.idRegistro = idRegistro;
+            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+            registro.descripcion = $("#DescripcionDatos").val();
+            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+            registro.estatus = $("#EstatusDatos").find('option:selected').val();
+            registro.anio = $("#AnoPublicacionDatos").val();
+            registro.empresaInstitucion = $("#InstitucionDatos").val();
+            registrosData[countRegistro] = registro;
             countRegistro++;
             idRegistro++;
         }
@@ -175,6 +232,10 @@ $('#agregarRegistro').click(function(){
                   });
     $('#IdParticipanteRegistro').html(participantesId);
     $('#idRevistaRegistro').html(revistasId);
+    if($('#tableRevista td').length == 1){
+        revistasData.splice(0,revistasData.length);
+        revistasData = new Array();
+    }
                                                 
 });
 
@@ -214,6 +275,7 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
                       });
         $('#IdParticipanteRegistro').html(participantesId);
         $('#idRevistaRegistro').html(revistasId);
+        registrosData.splice(this._DT_RowIndex,1);
         countRegistro--;
     }
 } );
@@ -221,6 +283,7 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
 $('#agregarParticipantes').click(function(){
     toastr.clear();
     var band = false;
+    var participante = new Object();
     if(($('#tableParticipantes td').length) > 0){
          tableParticipantes.column(0)
               .data()
@@ -245,6 +308,10 @@ $('#agregarParticipantes').click(function(){
                 "Nombre": $("#NombreParticipanteRegistro").val(),
                 "Cedula": $("#CedulaParticipanteRegistro").val()
         } ).draw();
+        participante.idRegistro = $("#IdParticipanteRegistro").val();
+        participante.nombre = $("#NombreParticipanteRegistro").val();
+        participante.cedula = $("#CedulaParticipanteRegistro").val();
+        participantesData[countParticipante] = participante;
         countParticipante++;
         $("#headerRegistros").css({ 'color': "black" });
         $("#spanIdParticipanteRegistro").removeClass("glyphicon-remove");
@@ -271,6 +338,7 @@ $('#agregarParticipantes').click(function(){
 
 $('#tableParticipantes').on( 'click', 'tbody tr', function () {
     tableParticipantes.row( this ).remove().draw();
+    participantesData.splice(this._DT_RowIndex,1);
     if(countParticipante > 0)
         countParticipante--;
 } );
@@ -361,6 +429,7 @@ $('#tableCargo').on( 'click', 'tbody tr', function () {
 } );
 
 $('#agregarRevista').click(function(){
+    var revista = new Object();
     toastr.clear();
     var band = false;
     if(($('#tableRevista td').length) > 0){
@@ -386,7 +455,10 @@ $('#agregarRevista').click(function(){
                 "Id del registro": $("#idRevistaRegistro").val(),
                 "Revista": $("#descrpcionRevistaRegistro").val()
         } ).draw();
-        
+        revista.idRegistro = $("#idRevistaRegistro").val();
+        revista.revista = $("#descrpcionRevistaRegistro").val();
+        revistasData[countRevista] = revista;
+        countRevista++;
         $("#headerRegistros").css({ 'color': "black" });
         $("#spanIdRevistaRegistro").removeClass("glyphicon-remove");
         $("#divIdRevistaRegistro").removeClass("has-error");
@@ -408,9 +480,13 @@ $('#agregarRevista').click(function(){
 
 $('#tableRevista').on( 'click', 'tbody tr', function () {
     tableRevista.row( this ).remove().draw();
+    revistasData.splice(this._DT_RowIndex,1);
+    if(countRevista > 0)
+        countRevista--;
 } );
 
 $('#agregarHijo').click(function(){
+    var hijo = new Object();
     toastr.clear();
     var band = false;
     if(($('#tableHijos td').length) > 0){
@@ -440,7 +516,18 @@ $('#agregarHijo').click(function(){
             "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
             "Nacionalidad":$("#NacionalidadHijoDatos").val()
         } ).draw();
-        
+        hijo.ciMadre = $("#CedulaMadreHijoDatos").val();
+        hijo.ciPadre = $("#CedulaPadreHijoDatos").val();
+        hijo.ciHijo = $("#CedulaHijoDatos").val();
+        hijo.primerNombre = $("#PrimerNombreHijoDatos").val();
+        hijo.segundoNombre = $("#SegundoNombreHijoDatos").val();
+        hijo.primerApellido = $("#PrimerApellidoHijoDatos").val();
+        hijo.segundoApellido = $("#SegundoApellidoHijoDatos").val();
+        hijo.actaNacimiento = $("#ActaNacCargaHijoDatos").val();
+        hijo.fechaNacimiento = $("#FechaNacimientoHijoDatos").val();
+        hijo.nacionalidad = $("#NacionalidadHijoDatos").val();
+        hijoData[countHijo] = hijo;
+        countHijo++;
         $("#headerHijos").css({ 'color': "black" });
         $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
         $("#divCedulaMadreHijoDatos").removeClass("has-error");
@@ -492,7 +579,9 @@ $('#agregarHijo').click(function(){
    }
 });
 
-
 $('#tableHijos').on( 'click', 'tbody tr', function () {
     tableHijos.row( this ).remove().draw();
+    hijoData.splice(this._DT_RowIndex,1);
+    if(countHijo > 0)
+        countHijo--;
 });

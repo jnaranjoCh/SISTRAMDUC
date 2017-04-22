@@ -17,22 +17,13 @@ $('#submitData').click(function(){
     var indParticipantes = 0;
     var indRegistroRevistas = 0;
     var indRevistas = 0;
-    
     var personalData = [];
     var cargoData = [];
-    var registrosData = [];
-    var participantesData = [];
-    var revistasData = [];
-    var hijoData = [];
-
-    var indHijoData = 0;
-    var indHijoData2 = 0;
+    
     var indPersonalData = 0;
     var indPersonalData2 = 0;
     var indCargoData = 0;
-    var indRegistrosData = 0;
-    var indParticipantesData = 0;
-    var indRevistasData = 0;
+ 
     
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
@@ -162,36 +153,6 @@ $('#submitData').click(function(){
             }
          }
     }else{
-       tableRegistros.column(0).data().each( function ( value1,index1 ) {
-            registro = new Object();
-            registro.idRegistro = value1;
-            tableRegistros.column(1).data().each( function ( value2,index2 ) {
-                if(index1 == index2)
-                    registro.tipoDeReferencia = value2;
-                tableRegistros.column(2).data().each( function ( value3,index3 ) {
-                    if(index1 == index3)
-                        registro.descripcion = value3;
-                    tableRegistros.column(3).data().each( function ( value4,index4 ) {
-                        if(index1 == index4)
-                            registro.nivel = value4;
-                        tableRegistros.column(4).data().each( function ( value5,index5 ) {
-                            if(index1 == index5)
-                                registro.estatus = value5;
-                            tableRegistros.column(5).data().each( function ( value6,index6 ) {
-                                if(index1 == index6)
-                                    registro.anio = value6;
-                                tableRegistros.column(6).data().each( function ( value7,index7 ) {
-                                    if(index1 == index7)
-                                        registro.empresaInstitucion = value7;
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-            registrosData[indRegistrosData] = registro;
-            indRegistrosData++;
-        });
         for(var i = 0; i < inputsR.length; i++){    
             $("#headerRegistros").css({ 'color': "black" });
             $("#span"+inputsR[i]).removeClass("glyphicon-remove");
@@ -243,20 +204,6 @@ $('#submitData').click(function(){
             $("#divIdParticipanteRegistro").addClass("has-error");
             text = "Error existen tipos de registros sin participantes asociados.";
         }else{
-            tableParticipantes.column(0).data().each( function ( value1,index1 ) {
-                participante = new Object();
-                participante.idRegistro = value1;
-                tableParticipantes.column(1).data().each( function ( value2,index2 ) {
-                    if(index1 == index2)
-                        participante.nombre = value2;
-                    tableParticipantes.column(2).data().each( function ( value3,index3 ) {
-                        if(index1 == index3)
-                            participante.cedula = value3;
-                    });
-                }); 
-                participantesData[indParticipantesData] = participante;
-                indParticipantesData++;
-            });
             $("#headerRegistros").css({ 'color': "black" });
             $("#spanNombreParticipanteRegistro").removeClass("glyphicon-remove");
             $("#divNombreParticipanteRegistro").removeClass("has-error");
@@ -285,16 +232,6 @@ $('#submitData').click(function(){
             $("#divIdRevistaRegistro").addClass("has-error");
             text = "Error existen tipos de registros sin revistas asociados.";
         }else{
-            tableRevista.column(0).data().each( function ( value1,index1 ) {
-                revista = new Object();
-                revista.idRegistro = value1;
-                tableRevista.column(1).data().each( function ( value2,index2 ) {
-                    if(index1 == index2)
-                        revista.revista = value2;
-                }); 
-                revistasData[indRevistasData] = revista;
-                indRevistasData++;
-            });
             $("#headerRegistros").css({ 'color': "black" });
             $("#spanDescrpcionRevistaRegistro").removeClass("glyphicon-remove");
             $("#divDescrpcionRevistaRegistro").removeClass("has-error");
@@ -304,45 +241,55 @@ $('#submitData').click(function(){
     }
     
     if($('#checkboxHijos').prop('checked')){
-        /*if(can_register){
-            for(var i = 0; i < inputsH.length; i++){
-                if($("#"+inputsH[i]).val() == ""){
-                    can_register = false;
-                    $("#headerHijos").css({ 'color': "red" });
-                    $("#span"+inputsH[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsH[i]).addClass("has-error");
-                    text = "Error campo mal introducido o obligatorio.";
-                }else {
-                    hijoData[indHijoData] = $("#"+inputsH[i]).val();
-                    indHijoData++;
-                    $("#headerHijos").css({ 'color': "black" });
-                    $("#span"+inputsH[i]).removeClass("glyphicon-remove");
-                    $("#div"+inputsH[i]).removeClass("has-error");   
-                }
-            }
+          if(can_register && countHijo < 1){
+              can_register = false;
+              $("#headerHijos").css({ 'color': "red" });
+              $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+              $("#divCedulaMadreHijoDatos").addClass("has-error");
+              $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+              $("#divCedulaPadreHijoDatos").addClass("has-error");
+              $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+              $("#divCedulaHijoDatos").addClass("has-error");
+              $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+              $("#divPrimerNombreHijoDatos").addClass("has-error");
+              $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+              $("#divSegundoNombreHijoDatos").addClass("has-error");
+              $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+              $("#divPrimerApellidoHijoDatos").addClass("has-error");
+              $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+              $("#divSegundoApellidoHijoDatos").addClass("has-error");
+              $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
+              $("#divNacionalidadHijoDatos").addClass("has-error");
+              $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
+              $("#divFechaNacimientoHijoDatos").addClass("has-error");
+              $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
+              $("#divActaNacCargaHijoDatos").addClass("has-error");
+              text = "Error no ha ingresado ningun hijo.";
+          }else{
+            $("#headerHijos").css({ 'color': "black" });
+            $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
+            $("#divCedulaMadreHijoDatos").removeClass("has-error");
+            $("#spanCedulaPadreHijoDatos").removeClass("glyphicon-remove");
+            $("#divCedulaPadreHijoDatos").removeClass("has-error");
+            $("#spanCedulaHijoDatos").removeClass("glyphicon-remove");
+            $("#divCedulaHijoDatos").removeClass("has-error");
+            $("#spanPrimerNombreHijoDatos").removeClass("glyphicon-remove");
+            $("#divPrimerNombreHijoDatos").removeClass("has-error");
+            $("#spanSegundoNombreHijoDatos").removeClass("glyphicon-remove");
+            $("#divSegundoNombreHijoDatos").removeClass("has-error");
+            $("#spanPrimerApellidoHijoDatos").removeClass("glyphicon-remove");
+            $("#divPrimerApellidoHijoDatos").removeClass("has-error");
+            $("#spanSegundoApellidoHijoDatos").removeClass("glyphicon-remove");
+            $("#divSegundoApellidoHijoDatos").removeClass("has-error");
+            $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
+            $("#divNacionalidadHijoDatos").removeClass("has-error");
+            $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
+            $("#divFechaNacimientoHijoDatos").removeClass("has-error");
+            $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
+            $("#divActaNacCargaHijoDatos").removeClass("has-error");
         }
-    
-        if(can_register){
-            for(var i = 0; i < inputsHW.length; i++){
-                if(!(/^[a-zA-Z]*$/).test($("#"+inputsHW[i]).val())){
-                    can_register = false;
-                    $("#headerHijos").css({ 'color': "red" });
-                    $("#span"+inputsHW[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsHW[i]).addClass("has-error");
-                    text = "Campo mal introducido.";
-                    
-                }else if($("#"+inputsHW[i]).val() != ""){
-                    hijoData[indHijoData2] = $("#"+inputsHW[i]).val();
-                    indHijoData2++;
-                    $("#headerHijos").css({ 'color': "black" });
-                    $("#span"+inputsHW[i]).removeClass("glyphicon-remove");
-                    $("#div"+inputsHW[i]).removeClass("has-error");
-                }
-            
-            }
-        }*/
     }
-
+    alert(JSON.stringify(revistasData));
     if(can_register){
         $.ajax({
             method: "POST",

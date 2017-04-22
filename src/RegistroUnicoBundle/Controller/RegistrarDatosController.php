@@ -273,29 +273,31 @@ class RegistrarDatosController extends Controller
         $revistass[] = [];
         if($revistas != null){
             foreach($revistas as $revista){
-                $newRevista = new Revista();
-                $newRevista->setDescription($revista['revista']);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($newRevista);
-                $em->flush();
-
-                $id = $this->getDoctrine()
-                           ->getManager()
-                           ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Revista r')
-                           ->getResult();
-                
-                if($valaux != $revista['idRegistro'])
-                {
-                    $i++;
-                    $valaux = $revista['idRegistro'];
-                    $idsrevistas[$i] = $revista['idRegistro'];
-                    $j = -1;
-                }
-                $j++;
-                $revistass[$i][$j] =  $this->getDoctrine()
-                                           ->getManager()
-                                           ->getRepository('RegistroUnicoBundle:Revista')
-                                           ->findOneById($id[0]['lastId']);
+                if($revista != null){
+                    $newRevista = new Revista();
+                    $newRevista->setDescription($revista['revista']);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($newRevista);
+                    $em->flush();
+    
+                    $id = $this->getDoctrine()
+                               ->getManager()
+                               ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Revista r')
+                               ->getResult();
+                    
+                    if($valaux != $revista['idRegistro'])
+                    {
+                        $i++;
+                        $valaux = $revista['idRegistro'];
+                        $idsrevistas[$i] = $revista['idRegistro'];
+                        $j = -1;
+                    }
+                    $j++;
+                    $revistass[$i][$j] =  $this->getDoctrine()
+                                               ->getManager()
+                                               ->getRepository('RegistroUnicoBundle:Revista')
+                                               ->findOneById($id[0]['lastId']);
+                }    
             }
         }
         
@@ -341,7 +343,7 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-     private function registerSectionFour($hijos,$email)
+     /*private function registerSectionFour($hijos,$email)
      {
          $newHijo = new Hijo();
          $newHijo->setCedulaMadre($hijos[6]);
@@ -354,5 +356,5 @@ class RegistrarDatosController extends Controller
          $newHijo->setSegundoApellido($hijos[3]);
          $newHijo->setNacionalidad($hijos[4]);
          //$newHijo->setPartidaNacimientoUrl();
-     }
+     }*/
 }
