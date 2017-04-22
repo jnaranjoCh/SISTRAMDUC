@@ -6,10 +6,6 @@ solicitudcomisionservicio:
     path: /solicitudcomisionservicio_new
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
 
-#solicitud_serv_remun:
- #   path: /solicitud_serv_remun
-  #  defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}
-
 solicitudes_serv_remun:
     path: /solicitudes_serv_remun
     defaults: {_controller: ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun}
@@ -17,6 +13,16 @@ solicitudes_serv_remun:
 estado_sol_prof:
     path: /estado-solicitud
     defaults: {_controller: ComisionRemuneradaBundle:Default:estado_sol_prof}
+
+informe_pdf:
+    path: /comision-servicio/informe-pdf
+    defaults: {_controller: ComisionRemuneradaBundle:Default:informePDF}
+
+
+#solicitud_serv_remun:
+ #   path: /solicitud_serv_remun
+  #  defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}
+
 
 #envio_solicitud:
  #   path: /envio_solicitud

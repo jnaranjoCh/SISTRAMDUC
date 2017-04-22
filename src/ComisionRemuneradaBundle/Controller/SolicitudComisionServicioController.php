@@ -62,11 +62,9 @@ class SolicitudComisionServicioController extends Controller
             $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
             $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 6]);
             
-            $tipo_recaudo1_repo = $em->getRepository(TipoRecaudo::class);
-            $tipo_recaudo1 = $tipo_recaudo1_repo->findOneBy(["id" => 4]);
-
-            $tipo_recaudo2_repo = $em->getRepository(TipoRecaudo::class);
-            $tipo_recaudo2 = $tipo_recaudo2_repo->findOneBy(["id" => 5]);
+            $tipo_recaudo_repo = $em->getRepository(TipoRecaudo::class);
+            $tipo_recaudo1 = $tipo_recaudo_repo->findOneBy(["id" => 4]);
+            $tipo_recaudo2 = $tipo_recaudo_repo->findOneBy(["id" => 5]);
 
             $i = 1;
             foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
