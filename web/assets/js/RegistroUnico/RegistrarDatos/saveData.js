@@ -288,22 +288,38 @@ $('#submitData').click(function(){
             $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
             $("#divActaNacCargaHijoDatos").removeClass("has-error");
         }
-    }
-    if(can_register){
-        $.ajax({
-            method: "POST",
-            data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
-            url:  "/web/app_dev.php/registro/guardar-datos",
-            dataType: 'json',
-            beforeSend: function() {
-              $("#myModal2").modal("show");
-            },
-            success: function(data)
-            {
-                    alert(data);
+        
+        if(can_register){
+            $.ajax({
+                method: "POST",
+                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                url:  "/web/app_dev.php/registro/guardar-datos",
+                dataType: 'json',
+                beforeSend: function(){
+                  $("#myModal2").modal("show");
+                },
+                success: function(data){
+                        $("#myModal2").modal("hide");
+                }
+            });
+        }
+    }else{
+        
+        if(can_register){
+            $.ajax({
+                method: "POST",
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                url:  "/web/app_dev.php/registro/guardar-datos",
+                dataType: 'json',
+                beforeSend: function(){
+                  $("#myModal2").modal("show");
+                },
+                success: function(data){
+                    
                     $("#myModal2").modal("hide");
-            }
-        });
+                }
+            });
+        }
     }
     
     if(!can_register)

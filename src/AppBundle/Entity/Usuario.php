@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\Rol;
-
+use ClausulasContractualesBundle\Entity\Hijo;
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
 use RegistroUnicoBundle\Entity\Cargo;
@@ -177,6 +177,7 @@ class Usuario implements UserInterface
         $this->cargos = new ArrayCollection();
         $this->planes_septenales_individuales = new ArrayCollection();
         $this->tramite = new ArrayCollection();
+        $this->hijos = new ArrayCollection();
     }
 
     /**
@@ -617,6 +618,28 @@ class Usuario implements UserInterface
     {
        foreach($cargos as $cargo)
            $this->addCargo($cargo);
+    }
+    
+    public function getHijos()
+    {
+       // profiler needs at least one rol to consider the user logged in
+       $hijos = array_reduce($this->hijos->toArray(), function ($hijo_names, $hijo) {
+           $hijo_names[] = $hijo->getNombreCompleto();
+           return $hijo_names;
+       }, []);
+
+       return $hijos;
+    }
+
+    public function addHijo($hijo)
+    {
+       $this->hijos[] = $hijo;
+    }
+
+    public function addHijos($hijos)
+    {
+       foreach($hijos as $hijo)
+           $this->addHijo($hijo);
     }
 
     public function getRoles()

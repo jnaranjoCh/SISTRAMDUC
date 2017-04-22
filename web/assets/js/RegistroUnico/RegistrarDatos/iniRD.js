@@ -1,4 +1,8 @@
 var idRegistro = 0;
+var miniPersonal = true;
+var miniRegistros = true;
+var miniCargos = true;
+var miniHijos = true;
 
 $( window ).load(function() {
     

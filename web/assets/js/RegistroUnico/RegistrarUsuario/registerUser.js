@@ -107,6 +107,7 @@ $("#registrarUsuario").click(function (){
                                 }
                             });
                      }
+                     $("#myModal").modal("hide");
                 }
             });
         }

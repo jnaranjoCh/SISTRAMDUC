@@ -19,8 +19,10 @@
     <div class="modal fade" id="myModal2" role="dialog">
       <div class="modal-dialog">
         <!-- Modal content-->
-        <div class="modal-content">
-          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>      
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+          <br/>
+          <label style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;">Guardando datos...</label>
         </div>
       </div>
     </div>
@@ -330,20 +332,22 @@
                       </div>
                   </div>
                   <hr/>
-                  <table id="tableCargo" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th>Cargo</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                     <th>Cargo</th>
-                    </tr>
-                    </tfoot>
-                  </table>
+                  <div style="overflow-x: scroll; white-space: nowrap;">
+                    <table id="tableCargo" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>Cargo</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                       <th>Cargo</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
                 <!-- /.box -->
              </div>
@@ -440,32 +444,34 @@
                     </div>
                   </div>
                   <hr/>
-                  <table id="tableRegistros" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Id del registro</th>
-                    <th>Tipo de referencia</th>
-                    <th>Descripción</th>
-                    <th>Nivel</th>
-                    <th>Estatus</th>
-                    <th>Año de publicación y/o asistencia</th>
-                    <th>Empresa y/o institución</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Id del registro</th>
-                    <th>Tipo de referencia</th>
-                    <th>Descripción</th>
-                    <th>Nivel</th>
-                    <th>Estatus</th>
-                    <th>Año de publicación y/o asistencia</th>
-                    <th>Empresa y/o institución</th>
-                  </tr>
-                  </tfoot>
-                </table>
+                  <div style="overflow-x: scroll; white-space: nowrap;">
+                   <table id="tableRegistros" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
                 <hr/>
                 <div class="row">
                     <div class="col-md-12">
@@ -504,24 +510,26 @@
                     </div>
                 </div>
                 <hr/>
-                <table id="tableParticipantes" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Id del registro</th>
-                    <th>Nombre</th>
-                    <th>Cedula</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Id del registro</th>
-                    <th>Nombre</th>
-                    <th>Cedula</th>
-                  </tr>
-                  </tfoot>
-                </table>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableParticipantes" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Nombre</th>
+                      <th>Cedula</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Nombre</th>
+                      <th>Cedula</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
                 <hr/>
                 <div id="revista">
                   <div class="row">
@@ -553,22 +561,24 @@
                       </div>
                   </div>
                   <hr/>
-                  <table id="tableRevista" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th>Id del registro</th>
-                      <th>Revista</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                      <th>Id del registro</th>
-                      <th>Revista</th>
-                    </tr>
-                    </tfoot>
-                  </table>
+                  <div style="overflow-x: scroll; white-space: nowrap;">
+                    <table id="tableRevista" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>Id del registro</th>
+                        <th>Revista</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Id del registro</th>
+                        <th>Revista</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
                 </div>
               </div>
               <!-- /.box -->
@@ -754,9 +764,6 @@
       </div>
       <!--User data body-->
     </form>
-    <!--<br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/>
-    <br/><br/><br/><br/><br/><br/><br/>-->
 {% endblock %}
 
 {% block custom_javascripts %}
@@ -767,4 +774,5 @@
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/generate.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/saveData.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showBoxes.js') }}"></script>
 {% endblock %}

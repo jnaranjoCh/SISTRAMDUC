@@ -60,7 +60,7 @@ class Hijo
     private $segundoApellido;
 
     /**
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string", length=50)
      */
     private $nacionalidad;
 
@@ -324,6 +324,16 @@ class Hijo
     public function getPartidaNacimientoUrl()
     {
         return $this->partidaNacimientoUrl;
+    }
+    
+    /**
+     * Get nombreCompleto
+     *
+     * @return string
+     */
+    public function getNombreCompleto()
+    {
+        return $this->primerNombre." ".$this->segundoNombre." ".$this->primerApellido." ".$this->segundoApellido;
     }
 }
 

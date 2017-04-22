@@ -29,7 +29,7 @@ class RegistrarDatosController extends Controller
             $this->registerSectionOne($request->get('personalData'));
             $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[15]);
             $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
-            //$this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[15]);
+            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[15]);
             return new JsonResponse("if");
         }
         else
@@ -200,10 +200,10 @@ class RegistrarDatosController extends Controller
     {
         $i = 0;
         $em = $this->getDoctrine()->getManager();
-        $newUser = $em->getRepository('AppBundle:Usuario')
+        $user = $em->getRepository('AppBundle:Usuario')
                       ->findOneByCorreo($email);
     
-        if (!$newUser) {
+        if (!$user) {
             throw $this->createNotFoundException(
                 'Usuario no encontrado por el correo '.$email
             );
@@ -216,17 +216,17 @@ class RegistrarDatosController extends Controller
                               ->findOneByDescription($cargo);
           $i++;
         }
-        $newUser->addCargos($cargoss);
+        $user->addCargos($cargoss);
         $em->flush();
     }
     
     private function registerSectionThree($registros,$participantes,$revistas,$email)
     {
         $em = $this->getDoctrine()->getManager();
-        $newUser = $em->getRepository('AppBundle:Usuario')
+        $user = $em->getRepository('AppBundle:Usuario')
                       ->findOneByCorreo($email);
     
-        if (!$newUser) {
+        if (!$user) {
             throw $this->createNotFoundException(
                 'Usuario no encontrado por el correo '.$email
             );
@@ -339,24 +339,46 @@ class RegistrarDatosController extends Controller
             $i++;
         }
         
-        $newUser->addRegistros($registross);
+        $user->addRegistros($registross);
         $em->flush();
     }
     
-     /*private function registerSectionFour($hijos,$email)
+     private function registerSectionFour($hijos,$email)
      {
-        foreach($cargos as $cargo){
-             $newHijo = new Hijo();
-             $newHijo->setCedulaMadre($hijos[6]);
-             $newHijo->setCedulaPadre($hijos[7]);
-             $newHijo->setCedulaHijo($hijos[8]);
-             $newHijo->setFechaNacimiento($hijos[5]);
-             $newHijo->setPrimerNombre($hijos[0]);
-             $newHijo->setSegundoNombre($hijos[1]);
-             $newHijo->setPrimerApellido($hijos[2]);
-             $newHijo->setSegundoApellido($hijos[3]);
-             $newHijo->setNacionalidad($hijos[4]);
-        }
-         //$newHijo->setPartidaNacimientoUrl();
-     }*/
+         if($hijos != null){
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('AppBundle:Usuario')
+                          ->findOneByCorreo($email);
+        
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'Usuario no encontrado por el correo '.$email
+                );
+            }
+            
+            $i = 0;
+            $hijoss = [];
+            foreach($hijos as $hijo){
+                 $newHijo = new Hijo();
+                 $newHijo->setCedulaMadre($hijo['ciMadre']);
+                 $newHijo->setCedulaPadre($hijo['ciPadre']);
+                 $newHijo->setCedulaHijo($hijo['ciHijo']);
+                 $newHijo->setFechaNacimiento(new \DateTime($hijo['fechaNacimiento']));
+                 $newHijo->setPrimerNombre($hijo['primerNombre']);
+                 $newHijo->setSegundoNombre($hijo['segundoNombre']);
+                 $newHijo->setPrimerApellido($hijo['primerApellido']);
+                 $newHijo->setSegundoApellido($hijo['segundoApellido']);
+                 $newHijo->setNacionalidad($hijo['nacionalidad']);
+                 $newHijo->setPartidaNacimientoUrl('');
+                 $hijoss[$i] = $newHijo;
+                 $em = $this->getDoctrine()->getManager();
+                 $em->persist($newHijo);
+                 $em->flush();
+                 $i++;
+            }
+            $user->addHijos($hijoss);
+            $em->flush();
+             //$newHijo->setPartidaNacimientoUrl($hijo['actaNacimiento']);
+        } 
+    }
 }
