@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tramitejubilacions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tramiteJubilacion in tramiteJubilacions %}
+            <tr>
+                <td><a href="{{ path('tramitejubilacion_show', { 'id': tramiteJubilacion.id }) }}">{{ tramiteJubilacion.id }}</a></td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tramitejubilacion_show', { 'id': tramiteJubilacion.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tramitejubilacion_edit', { 'id': tramiteJubilacion.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('tramitejubilacion_new') }}">Create a new tramiteJubilacion</a>
+        </li>
+    </ul>
+{% endblock %}

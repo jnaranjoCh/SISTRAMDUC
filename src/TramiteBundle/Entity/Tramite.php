@@ -13,9 +13,11 @@ use AppBundle\Entity\Usuario;
 
 /**
  * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"tramite" = "Tramite", "comision" = "ComisionRemuneradaBundle\Entity\SolicitudComisionServicio"})
+ * @ORM\DiscriminatorMap({"tramite" = "Tramite",
+ *                        "comision" = "ComisionRemuneradaBundle\Entity\SolicitudComisionServicio",
+ *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion"})
  */
 class Tramite
 {
@@ -158,25 +160,4 @@ class Tramite
         return $this;
     }
 
-    /**
-     * Set solicitud comision servicio
-     *
-     * @return Tramite
-     */
-    /*public function setSolicitudComisionServicio(SolicitudComisionServicio $solicitud_comision_servicio)
-    {
-        $this->solicitud_comision_servicio = $solicitud_comision_servicio;
-        $solicitud_comision_servicio->addTramite($this);
-        return $this;
-    }*/
-
-    /**
-     * Get solicitud comision servicio
-     *
-     * @return \ComisionRemuneradaBundle\Entity\SolicitudComisionServicio
-     */
-    /*public function getSolicitudComisionServicio()
-    {
-        return $this->solicitud_comision_servicio;
-    }*/
 }
