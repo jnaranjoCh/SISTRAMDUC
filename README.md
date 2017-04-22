@@ -54,6 +54,11 @@ $ php bin/console doctrine:fixtures:load
 $ php bin/console server:run
 ```
 
+### Para agregar el BarcodeBundle (permite generar el código de barra)
+...bash
+$ composer require hackzilla/barcode-bundle ~2.0
+...
+
 ### Para que no escriban tanto
 ```bash
 $ alias rd='sudo service postgresql start;php bin/console doctrine:database:drop --force --env=dev;php bin/console doctrine:database:create --env=dev;php bin/console doctrine:schema:update --force --env=dev;php bin/console doctrine:fixtures:load --no-interaction --env=dev;'
