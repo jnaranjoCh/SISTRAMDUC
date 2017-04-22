@@ -299,7 +299,7 @@ class Recaudo
      * Get fecha_vencimiento
      * @return datetime
      */
-    public function getFechaVencimiento($fecha_vencimiento)
+    public function getFechaVencimiento()
     {
         return $this->fecha_vencimiento;
     }
