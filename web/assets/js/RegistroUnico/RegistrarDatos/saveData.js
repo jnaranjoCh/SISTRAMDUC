@@ -24,7 +24,7 @@ $('#submitData').click(function(){
     var indPersonalData2 = 0;
     var indCargoData = 0;
  
-    
+    $("#modalLabel").html("Guardando datos...");
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
             if(inputsO[i] != "NumeroDatosII"){
@@ -288,7 +288,6 @@ $('#submitData').click(function(){
             $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
             $("#divActaNacCargaHijoDatos").removeClass("has-error");
         }
-        
         if(can_register){
             $.ajax({
                 method: "POST",
@@ -299,7 +298,8 @@ $('#submitData').click(function(){
                   $("#myModal2").modal("show");
                 },
                 success: function(data){
-                        $("#myModal2").modal("hide");
+                  $("#modalLabel").html("Subiendo archivos del usuario...");
+                  document.getElementById("completeForm").submit();
                 }
             });
         }
@@ -315,13 +315,12 @@ $('#submitData').click(function(){
                   $("#myModal2").modal("show");
                 },
                 success: function(data){
-                    
-                    $("#myModal2").modal("hide");
+                    $("#modalLabel").html("Subiendo archivos del usuario...");
+                    document.getElementById("completeForm").submit();
                 }
             });
         }
     }
-    
     if(!can_register)
         toastr.error(text, "Error", {
                     "timeOut": "0",

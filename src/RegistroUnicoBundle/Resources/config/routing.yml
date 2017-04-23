@@ -23,18 +23,18 @@ registro_guardar_ajax:
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:guardarDatosAjax }
     requirements:
         _method:  POST
+
+registro_guardararchivos_ajax:
+    path:     /registro/guardar-archivos-datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:guardarArchivosAjax }
+    requirements:
+        _method:  POST
         
 registro_obtener_ajax:
     path:     /registro/obtener-datos
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
     requirements:
         _method:  POST
-        
-registro_buscarcedula_ajax:
-    path:     /registro/buscar-cedula
-    defaults: { _controller: RegistroUnicoBundle:Default:buscarCedulaAjax }
-    requirements:
-        _method:  POST 
         
 registro_buscaremail_ajax:
     path:     /registro/buscar-email

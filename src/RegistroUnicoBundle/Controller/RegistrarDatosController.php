@@ -5,6 +5,8 @@ namespace RegistroUnicoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use ClausulasContractualesBundle\Entity\Hijo;
 use RegistroUnicoBundle\Entity\Revista;
 use RegistroUnicoBundle\Entity\Participante;
@@ -30,10 +32,50 @@ class RegistrarDatosController extends Controller
             $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[15]);
             $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
             $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[15]);
-            return new JsonResponse("if");
+            return new JsonResponse("Datos guardados");
         }
         else
-            return new JsonResponse("else");
+            return new JsonResponse("Error");
+    }
+    
+    public function guardarArchivosAjaxAction(Request $request)
+    {
+        $hola = "hola";
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/';
+        $fichero_subido = $dir_subida.basename($_FILES['input-file-preview']['name']);
+        
+        if(move_uploaded_file($_FILES['input-file-preview']['tmp_name'], $fichero_subido)) {
+            
+            $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/RIF/';
+            $fichero_subido = $dir_subida.basename($_FILES['input-file-preview2']['name']);
+            if(move_uploaded_file($_FILES['input-file-preview2']['tmp_name'], $fichero_subido)) {
+                
+                $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/acta_nacimiento/users/';
+                $fichero_subido = $dir_subida.basename($_FILES['input-file-preview3']['name']);
+                if(move_uploaded_file($_FILES['input-file-preview3']['tmp_name'], $fichero_subido)) {
+                    //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+                    $hola = "hola";
+                }else{
+                    $hola = "hola";
+                    //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+                }
+            }else{
+                $hola = "hola";
+                //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+            }
+        }else{
+            $hola = "hola";
+            //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+        }
+        
+        if($_POST["checkboxHijos"])
+        {
+            return new Response("hijos seleccionados");
+        }else {
+            return new Response("hijos no seleccionados");
+        }
+        //return new Response("<script lenguaje=\"JavaScript\">$('#myModal2').modal('hide');</script>");
+        //return new JsonResponse($_FILES['input-file-preview']['name']);
     }
     
     public function enviarEmailsAjaxAction(Request $request)

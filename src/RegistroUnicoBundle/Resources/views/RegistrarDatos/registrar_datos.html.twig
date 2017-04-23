@@ -22,7 +22,7 @@
         <div>
           <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
           <br/>
-          <label style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;">Guardando datos...</label>
+          <label id="modalLabel" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
     </div>
 
     <!--User data body-->
-    <form>
+    <form name="completeForm" id="completeForm" action="/web/app_dev.php/registro/guardar-archivos-datos" method="post" enctype="multipart/form-data" novalidate>
       <div class="row">
         <section class="content-body">
             <!--seccion for generate box-->
@@ -243,7 +243,7 @@
                                   <div class="btn btn-default image-preview-input">
                                       <span class="glyphicon glyphicon-folder-open"></span>
                                       <span class="image-preview-input-title">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview"/> <!-- rename it -->
+                                      <input type="file" accept="application/pdf" name="input-file-preview" id="input-file-preview"/> <!-- rename it -->
                                   </div>
                               </span>
                           </div><!-- /input-group image-preview [TO HERE]-->
@@ -264,7 +264,7 @@
                                   <div class="btn btn-default image-preview-input2">
                                       <span class="glyphicon glyphicon-folder-open"></span>
                                       <span class="image-preview-input-title2">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview2"/> <!-- rename it -->
+                                      <input type="file" accept="application/pdf" name="input-file-preview2" id="input-file-preview2"/> <!-- rename it -->
                                   </div>
                               </span>
                           </div><!-- /input-group image-preview [TO HERE]-->
@@ -285,7 +285,7 @@
                                   <div class="btn btn-default image-preview-input3">
                                       <span class="glyphicon glyphicon-folder-open"></span>
                                       <span class="image-preview-input-title3">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview3"/> <!-- rename it -->
+                                      <input type="file" accept="application/pdf" name="input-file-preview3" id="input-file-preview2"/> <!-- rename it -->
                                   </div>
                               </span>
                           </div><!-- /input-group image-preview [TO HERE]-->
@@ -586,7 +586,7 @@
             <!--research,courses and studies box-->
           </div>
           <div id="divCheckbox" class="col-md-offset-1 col-md-10 hidden">
-            <input type="checkbox" id="checkboxHijos"> <strong>Ingresar datos de hijos</strong><br/><br/>
+            <input type="checkbox" id="checkboxHijos" name="checkboxHijos"> <strong>Ingresar datos de hijos</strong><br/><br/>
           </div>
           <!--+carg box-->
           <div id="formHijos" class="col-md-offset-1 col-md-10 hidden">
@@ -758,7 +758,7 @@
         </section>
         <div id="save" class="col-md-offset-4 col-md-4 hidden">
             <div class="form-group has-feedback">
-                  <button id="submitData" type="button" class="btn btn-primary btn-block btn-flat">Guardar Datos</button>
+                  <input id="submitData" type="button" class="btn btn-primary btn-block btn-flat" value="Guardar Datos"/>
             </div>
         </div>
       </div>
