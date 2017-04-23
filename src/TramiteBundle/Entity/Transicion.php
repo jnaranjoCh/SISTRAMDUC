@@ -3,7 +3,7 @@
 namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
 use TramiteBundle\Entity\Tramite;
 
 /**
@@ -21,7 +21,7 @@ class Transicion
     private $id;
     
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $fecha;
 
@@ -31,15 +31,21 @@ class Transicion
     private $doc_info;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $estado;
-
-    /**
      * @ORM\OneToOne(targetEntity="Tramite", mappedBy="transicion")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     protected $tramite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transiciones")
+     * @ORM\JoinColumn(name="estado_id", referencedColumnName="id")
+     */
+    protected $estado;
+
+
+    function __construct(\DateTime $fecha = null){
+        $this->fecha = $fecha;
+    }
 
     public function getId()
     {
@@ -49,49 +55,21 @@ class Transicion
     /**
      * Set fecha
      *
-     * @param date $fecha
-     *
-     * @return Transicion
+     * @param datetime $fecha
      */
     public function setFecha($fecha)
     {
         $this->fecha = $fecha;
-
-        return $this;
     }
 
     /**
      * Get fecha
      *
-     * @return date
+     * @return datetime
      */
     public function getFecha()
     {
         return $this->fecha;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     *
-     * @return Transicion
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return string
-     */
-    public function getEstado()
-    {
-        return $this->estado;
     }
 
     /**
@@ -116,5 +94,29 @@ class Transicion
     public function getDoc_info()
     {
         return $this->doc_info;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param \TramiteBundle\Entity\Estado $estado
+     *
+     * @return Estado
+     */
+    public function setEstado(Estado $estado = null)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return \TramiteBundle\Entity\Estado
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

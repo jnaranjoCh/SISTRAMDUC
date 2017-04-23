@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ConcursosBundle\Entity\Concurso;
 use ConcursosBundle\Entity\Jurado;
+use ConcursoOposicionBundle\Entity\Recusacion;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -190,15 +191,17 @@ class DefaultController extends Controller
 
                 $concurso = new Concurso();
 
-               $concurso->setFechaInicio(date_create($request->get("Inicio")));
+                $concurso->setFechaInicio(date_create($request->get("Inicio")));
 
                 $concurso->setNroVacantes($request->get("Vacantes"));
 
                 $concurso->setIdUsuario($this->getUser()->getId());
         
-                $concurso->setFechaRecepDoc(date_create($request->get("fechaDoc")));
-                            
-                $concurso->setFechaPresentacion(date_create($request->get("fechaPre")));
+                if ($request->get("fechaDoc") != null || $request->get("fechaDoc") != "")
+                    $concurso->setFechaRecepDoc(date_create($request->get("fechaDoc")));
+                
+                if ($request->get("fechaPre") != null || $request->get("fechaPre") != "")
+                    $concurso->setFechaPresentacion(date_create($request->get("fechaPre")));
                 
                 $concurso->setObservaciones($request->get("observacion"));
 
@@ -318,24 +321,91 @@ class DefaultController extends Controller
 
         if($request->isXmlHttpRequest())
         {
-            $jurado = new Jurado();
+            $encontrado = false;
 
-            $jurado->setNombre($request->get("nombre"));
-            $jurado->setApellido($request->get("apellido"));
-            $jurado->setAreaInvestigacion($request->get("area"));
-            $jurado->setFacultad($request->get("facultad"));
-            $jurado->setUniversidad($request->get("universidad"));
-            $jurado->setIdUsuarioAsigna($this->getUser()->getId());
-            $jurado->setTipo($request->get("tipo"));
-            $jurado->setCedula($request->get("cedula"));
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($jurado);
-            $em->flush();
+            if ($encontrado){
 
-            return new JsonResponse("S");
+                $jurado = new Jurado();
+
+                $jurado->setNombre($request->get("nombre"));
+                $jurado->setApellido($request->get("apellido"));
+                $jurado->setAreaInvestigacion($request->get("area"));
+                $jurado->setFacultad($request->get("facultad"));
+                $jurado->setUniversidad($request->get("universidad"));
+                $jurado->setIdUsuarioAsigna($this->getUser()->getId());
+                $jurado->setTipo($request->get("tipo"));
+                $jurado->setCedula($request->get("cedula"));
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($jurado);
+                $em->flush();
+
+                return new JsonResponse("S");
+            }
+            else{
+                return new JsonResponse("N");
+            }            
         }
         else
+             throw $this->createNotFoundException('Error al insertar datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/registroRecusacionAjax", name="registroRecusacionAjax")
+     * @Method("POST")
+     */
+    public function registroRecusacionAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){
+
+                $query = $this->getDoctrine()->getManager()->createQuery("select 1 from ConcursosBundle:Jurado a where '".$request->get("jurado")."' = a.cedula");
+
+                $existeJ = $query->getResult();
+
+                if ($existeJ != null){
+
+                    $query = $this->getDoctrine()->getManager()->createQuery("select 1 from ConcursosBundle:Aspirante a where '".$request->get("aspirante")."' = a.cedula");
+
+                    $existeA = $query->getResult();
+
+                    if ($existeA != null){
+
+                        $recusacion = new Recusacion();
+
+                        $recusacion->setCedulaAspirante($request->get("aspirante"));
+                        $recusacion->setCedulaJurado($request->get("jurado"));
+                        $recusacion->setFecha(date_create($request->get("fecha")));
+                        $recusacion->setUsuario($this->getUser()->getId());
+
+                        $em = $this->getDoctrine()->getManager();
+                        $em->persist($recusacion);
+                        $em->flush();
+
+                        return new JsonResponse("S");
+
+                    } else
+                        return new JsonResponse("A");                
+                } else 
+                    return new JsonResponse("J");                
+            } else
+                return new JsonResponse("N");          
+        } else
              throw $this->createNotFoundException('Error al insertar datos');
     }
 }

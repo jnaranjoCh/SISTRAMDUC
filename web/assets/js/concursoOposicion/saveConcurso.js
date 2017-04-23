@@ -43,9 +43,10 @@ $('#registrarConcurso').click(function (){
 
 	if (continua){
 
-		/*json*/
+		/*json
 
-		String fecha1 = $("#fechaDoc").val().ToShortDateString();
+			new Hackzilla\BarcodeBundle\HackzillaBarcodeBundle(),
+		*/
 
 		if ($("#fechaDoc").val() != '' && $("#fechaDoc").val() != null)
 			fecha1 = $("#fechaDoc").val();

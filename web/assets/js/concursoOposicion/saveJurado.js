@@ -28,6 +28,8 @@ $('#registrarJurado').click(function (){
 
 			for (var i = 1; i <= 3; i++) {
 
+				//8980725
+
 				$.ajax({
 		            method: "POST",
 		            data: {"cedula":$("#cedula"+i).val(), 
@@ -37,35 +39,49 @@ $('#registrarJurado').click(function (){
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
 		            "area":$("#area"+i).val()},
-		            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
 		            {
 		                if (data == "S"){
 
-							document.getElementById('juradosSave').reset();
-
-							for (var k = 1; k <= 3; k++) {
-				
-								$('#spancedula'+k).addClass("hide");
-								$('#spannombre'+k).addClass("hide");
-								$('#spanapellido'+k).addClass("hide");
-								$('#spanfacultad'+k).addClass("hide");
-								$('#spanuniversidad'+k).addClass("hide");
-								$('#spanarea'+k).addClass("hide");
-							}
+							document.getElementById('juradosSave').reset();				
 
 							$('#msgFracaso').addClass("hide");
 		                	$('#msgFracaso1').addClass("hide");
 		                	$('#msgFracaso2').addClass("hide");
+		                	$('#msgPermiso').addClass("hide");
 							$('#msgExito').removeClass("hide");
 		                } 
 		                else{
 
-		                	$('#msgFracaso').addClass("hide");
-		                	$('#msgExito').addClass("hide");
-							$('#msgFracaso1').removeClass("hide");
+		                	if (data == "N"){
+
+		                		$('#msgFracaso2').addClass("hide");
+			                	$('#msgPermiso').addClass("hide");
+		                		$('#msgFracaso').addClass("hide");
+			                	$('#msgExito').addClass("hide");
+								$('#msgFracaso1').removeClass("hide");
+		                	}
+		                	else {
+
+			                	$('#msgFracaso2').addClass("hide");
+			                	$('#msgPermiso').addClass("hide");
+		                		$('#msgFracaso').addClass("hide");
+			                	$('#msgExito').addClass("hide");
+								$('#msgFracaso1').removeClass("hide");
+		                	}		                	
 		                }
+
+		                for (var k = 1; k <= 3; k++) {
+				
+							$('#spancedula'+k).addClass("hide");
+							$('#spannombre'+k).addClass("hide");
+							$('#spanapellido'+k).addClass("hide");
+							$('#spanfacultad'+k).addClass("hide");
+							$('#spanuniversidad'+k).addClass("hide");
+							$('#spanarea'+k).addClass("hide");
+						}
 		            }
 		        });			
 			}

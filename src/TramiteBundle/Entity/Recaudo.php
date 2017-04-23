@@ -29,10 +29,17 @@ class Recaudo
      * @ORM\Column(type="string", length=255)
      */
     private $path;
+
     /**
      * @ORM\Column(type="string", length=100)
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fecha_vencimiento;
+
     /**
      * @var UploadedFile
      *
@@ -60,9 +67,11 @@ class Recaudo
      */
     protected $tipo_recaudo;
 
-    function __construct($name = null){
+    function __construct($name = null, \DateTime $fecha_vencimiento = null){
         $this->name = $name;
+        $this->fecha_vencimiento = $fecha_vencimiento;
     }
+
     /**
      * Sets file.
      *
@@ -71,6 +80,7 @@ class Recaudo
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+
         // check if we have an old pdf path
         if (isset($this->path)) {
             // store the old name to delete after the update
@@ -80,6 +90,7 @@ class Recaudo
             $this->path = 'initial';
         }
     }
+
     /**
      * Get file.
      *
@@ -96,24 +107,26 @@ class Recaudo
             ? null
             : $this->getUploadRootDir().'/'.$this->path;
     }
+
     public function getWebPath()
     {
         return null === $this->path
             ? null
             : $this->getUploadDir().'/'.$this->path;
     }
+
     protected function getUploadRootDir()
     {
         // la ruta absoluta del directorio donde se deben
         // guardar los archivos cargados
         return __DIR__.'/../../../web/'.$this->getUploadDir();
     }
+
     protected function getUploadDir()
     {
-        // se deshace del __DIR__ para no meter la pata
-        // al mostrar el documento/pdf cargada en la vista.
         return 'uploads/recaudos';
     }
+
     /**
      * Get id
      *
@@ -123,6 +136,7 @@ class Recaudo
     {
         return $this->id;
     }
+
     /**
      * Set name
      *
@@ -134,6 +148,7 @@ class Recaudo
         $this->name = $name;
         return $this;
     }
+
     /**
      * Get name
      *
@@ -143,6 +158,7 @@ class Recaudo
     {
         return $this->name;
     }
+
     /**
      * Set path
      *
@@ -154,6 +170,7 @@ class Recaudo
         $this->path = $path;
         return $this;
     }
+
     /**
      * Get path
      *
@@ -163,6 +180,7 @@ class Recaudo
     {
         return $this->path;
     }
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
@@ -173,6 +191,7 @@ class Recaudo
             $this->path = $this->getFile()->guessExtension();
         }
     }
+
     /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
@@ -203,17 +222,11 @@ class Recaudo
         /* Actualizamos al nuevo Path
          * para que se guarde en la base de datos el nombre asignado al archivo*/
         $this->setPath($this->id.'.'.$this->path);
-        /*printf("<pre>");
-        print_r($this->getPath());
-        printf("</pre>");
-        printf("<pre>");
-        print_r($this->getId());
-        printf("</pre>");*/
-
 
         // limpia la propiedad «file» ya que no la necesitas más
         $this->file = null;
     }
+
     /**
      * @ORM\PostRemove()
      */
@@ -234,6 +247,7 @@ class Recaudo
         $this->tramite = $tramite;
         return $this;
     }
+
     /**
      * Get tramite
      *
@@ -270,5 +284,23 @@ class Recaudo
     public function getTipoRecaudo()
     {
         return $this->tipo_recaudo;
+    }
+
+    /**
+     * Set fecha_vencimiento
+     * @param datetime $fecha_vencimiento
+     */
+    public function setFechaVencimiento($fecha_vencimiento)
+    {
+        $this->fecha_vencimiento = $fecha_vencimiento;
+    }
+
+    /**
+     * Get fecha_vencimiento
+     * @return datetime
+     */
+    public function getFechaVencimiento()
+    {
+        return $this->fecha_vencimiento;
     }
 }
