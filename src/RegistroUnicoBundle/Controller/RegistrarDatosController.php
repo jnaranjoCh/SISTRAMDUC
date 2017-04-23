@@ -19,7 +19,7 @@ use AppBundle\Entity\Rol;
 
 class RegistrarDatosController extends Controller
 {
-    public function registrarDatosUsuarioAction()
+    public function registrarDatosUsuarioAction($apr = "initial")
     {
         return $this->render('RegistroUnicoBundle:RegistrarDatos:registrar_datos.html.twig');
     }
@@ -29,9 +29,9 @@ class RegistrarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->registerSectionOne($request->get('personalData'));
-            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[15]);
-            $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[15]);
-            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[15]);
+            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[13]);
+            $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[13]);
+            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[13]);
             return new JsonResponse("Datos guardados");
         }
         else
@@ -40,42 +40,37 @@ class RegistrarDatosController extends Controller
     
     public function guardarArchivosAjaxAction(Request $request)
     {
-        $hola = "hola";
+        $email = $_POST['gemail'];
         $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/';
-        $fichero_subido = $dir_subida.basename($_FILES['input-file-preview']['name']);
-        
-        if(move_uploaded_file($_FILES['input-file-preview']['tmp_name'], $fichero_subido)) {
+        $fichero_subido = $dir_subida."cedula.pdf";
+        if(move_uploaded_file($_FILES['input3']['tmp_name'][0], $fichero_subido)) {
             
             $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/RIF/';
-            $fichero_subido = $dir_subida.basename($_FILES['input-file-preview2']['name']);
-            if(move_uploaded_file($_FILES['input-file-preview2']['tmp_name'], $fichero_subido)) {
+            $fichero_subido = $dir_subida."rif.pdf";
+            if(move_uploaded_file($_FILES['input3']['tmp_name'][1], $fichero_subido)) {
                 
                 $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/acta_nacimiento/users/';
-                $fichero_subido = $dir_subida.basename($_FILES['input-file-preview3']['name']);
-                if(move_uploaded_file($_FILES['input-file-preview3']['tmp_name'], $fichero_subido)) {
-                    //return new RedirectResponse($this->generateUrl('registro_datos_index'));
-                    $hola = "hola";
+                $fichero_subido = $dir_subida."acta_nacimiento.pdf";
+                if(move_uploaded_file($_FILES['input3']['tmp_name'][2], $fichero_subido)) {
+                    return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'success')));
                 }else{
-                    $hola = "hola";
-                    //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+                    return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'error')));
                 }
             }else{
-                $hola = "hola";
-                //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+                return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'error')));
             }
         }else{
-            $hola = "hola";
-            //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+            return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'error')));
         }
         
-        if($_POST["checkboxHijos"])
+        /*if(empty($_FILES["input-file-preview4"]['tmp_name']))
         {
             return new Response("hijos seleccionados");
         }else {
             return new Response("hijos no seleccionados");
-        }
-        //return new Response("<script lenguaje=\"JavaScript\">$('#myModal2').modal('hide');</script>");
-        //return new JsonResponse($_FILES['input-file-preview']['name']);
+        }*/
+        //return new RedirectResponse($this->generateUrl('registro_datos_index'));
+
     }
     
     public function enviarEmailsAjaxAction(Request $request)
@@ -215,11 +210,11 @@ class RegistrarDatosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $newUser = $em->getRepository('AppBundle:Usuario')
-                      ->findOneByCorreo($user[15]);
+                      ->findOneByCorreo($user[13]);
         
         if (!$newUser) {
             throw $this->createNotFoundException(
-                'Usuario no encontrado por el correo '.$user[15]
+                'Usuario no encontrado por el correo '.$user[13]
             );
         }
         
@@ -233,7 +228,7 @@ class RegistrarDatosController extends Controller
         $newUser->setSexo($user[7]);
         $newUser->setRif('J-'.$user[8]);
         $newUser->setTelefono($user[9].'-'.$user[10]);
-        $newUser->setDireccion($user[14]);
+        $newUser->setDireccion($user[12]);
         
         $em->flush();
     }

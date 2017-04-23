@@ -73,7 +73,7 @@
                     <div class="row">
                       <div class="col-md-offset-1 col-md-5">
                         <div class="form-group has-feedback">
-                              <input id="gemail" type="email" class="form-control" placeholder="Email del usuario">
+                              <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Email del usuario">
                               <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div>
                       </div>
@@ -228,69 +228,13 @@
                   </div>
                   <!-- /.row -->
                   <div class="row">    
-                    <div class="col-md-6">
-                      <div id="divCedulaCargaDatos" class="form-group has-feedback">  
-                          <label>Cargar cedula</label>
-                          <!-- image-preview-filename input [CUT FROM HERE]-->
-                          <div class="input-group image-preview">
-                              <input id="CedulaCargaDatos" type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                              <span class="input-group-btn">
-                                  <!-- image-preview-clear button -->
-                                  <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
-                                  </button>
-                                  <!-- image-preview-input -->
-                                  <div class="btn btn-default image-preview-input">
-                                      <span class="glyphicon glyphicon-folder-open"></span>
-                                      <span class="image-preview-input-title">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview" id="input-file-preview"/> <!-- rename it -->
-                                  </div>
-                              </span>
-                          </div><!-- /input-group image-preview [TO HERE]-->
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div id="divRifCargaDatos" class="form-group has-feedback">  
-                          <label>Cargar RIF</label>
-                          <!-- image-preview-filename input [CUT FROM HERE]-->
-                          <div class="input-group image-preview2">
-                              <input id="RifCargaDatos" type="text" class="form-control image-preview-filename2" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                              <span class="input-group-btn">
-                                  <!-- image-preview-clear button -->
-                                  <button type="button" class="btn btn-default image-preview-clear2" style="display:none;">
-                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
-                                  </button>
-                                  <!-- image-preview-input -->
-                                  <div class="btn btn-default image-preview-input2">
-                                      <span class="glyphicon glyphicon-folder-open"></span>
-                                      <span class="image-preview-input-title2">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview2" id="input-file-preview2"/> <!-- rename it -->
-                                  </div>
-                              </span>
-                          </div><!-- /input-group image-preview [TO HERE]-->
-                        </div>
-                    </div>
                     <div class="col-md-12">
-                      <div id="divActaNacCargaDatos" class="form-group has-feedback">  
-                          <label>Cargar acta de nacimiento</label>
-                          <!-- image-preview-filename input [CUT FROM HERE]-->
-                          <div class="input-group image-preview3">
-                              <input id="ActaNacCargaDatos" type="text" class="form-control image-preview-filename3" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                              <span class="input-group-btn">
-                                  <!-- image-preview-clear button -->
-                                  <button type="button" class="btn btn-default image-preview-clear3" style="display:none;">
-                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
-                                  </button>
-                                  <!-- image-preview-input -->
-                                  <div class="btn btn-default image-preview-input3">
-                                      <span class="glyphicon glyphicon-folder-open"></span>
-                                      <span class="image-preview-input-title3">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview3" id="input-file-preview2"/> <!-- rename it -->
-                                  </div>
-                              </span>
-                          </div><!-- /input-group image-preview [TO HERE]-->
-                        </div>
+                    <div id="divCedulaRifActaCargaDatos" class="form-group has-feedback">
+                      <label class="control-label">Seleccione la cedula, Rif y actas de nacimiento</label>
+                      <input id="CedulaRifActaCargaDatos" name="input3[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                      <span id="spanCedulaRifActaCargaDatos" class="glyphicon form-control-feedback"></span>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -687,31 +631,18 @@
                   </div>
                   <!-- /.col -->
                   <div class="col-md-12">
-                      <div class="form-group has-feedback">  
-                          <label>Cargar acta de nacimiento</label>
-                          <!-- image-preview-filename input [CUT FROM HERE]-->
-                          <div id="divActaNacCargaHijoDatos" class="input-group image-preview4">
-                              <input  id="ActaNacCargaHijoDatos" type="text" class="form-control image-preview-filename4" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-                              <span class="input-group-btn">
-                                  <!-- image-preview-clear button -->
-                                  <button type="button" class="btn btn-default image-preview-clear4" style="display:none;">
-                                      <span class="glyphicon glyphicon-remove"></span> Limpiar
-                                  </button>
-                                  <!-- image-preview-input -->
-                                  <div class="btn btn-default image-preview-input4">
-                                      <span class="glyphicon glyphicon-folder-open"></span>
-                                      <span class="image-preview-input-title4">Examinar</span>
-                                      <input type="file" accept="application/pdf" name="input-file-preview4"/> <!-- rename it -->
-                                  </div>
-                              </span>
-                          </div><!-- /input-group image-preview [TO HERE]-->
-                        </div>
+                    <div id="divActaNacCargaHijoDatos" class="form-group has-feedback">
+                      <label class="control-label">Seleccione las actas de nacimiento</label>
+                      <input id="ActaNacCargaHijoDatos" name="input2[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                      <span id="spanActaNacCargaHijoDatos" class="glyphicon form-control-feedback"></span>
                     </div>
-                    <div class="col-md-offset-4 col-md-4">
-                        <div class="form-group has-feedback">
-                              <button id="agregarHijo" type="button" class="btn btn-primary btn-block btn-flat">Agregar hijo</button>
-                        </div>
-                    </div>
+                  </div>
+                  <div class="col-md-offset-4 col-md-4">
+                      <br/>
+                      <div class="form-group has-feedback">
+                            <button id="agregarHijo" type="button" class="btn btn-primary btn-block btn-flat">Agregar hijo</button>
+                      </div>
+                  </div>
                 </div>
                 <hr/>
                 <div style="overflow-x: scroll; white-space: nowrap;">
@@ -725,7 +656,6 @@
                       <th>2do Nombre</th>
                       <th>1er Apellido</th>
                       <th>2do Apellido</th>
-                      <th>A Nacimiento</th>
                       <th>F Nacimiento</th>
                       <th>Nacionalidad</th>                  
                     </tr>
@@ -741,7 +671,6 @@
                       <th>2do Nombre</th>
                       <th>1er Apellido</th>
                       <th>2do Apellido</th>
-                      <th>A Nacimiento</th>
                       <th>F Nacimiento</th>
                       <th>Nacionalidad</th>
                     </tr>

@@ -503,7 +503,7 @@ $('#agregarHijo').click(function(){
                });
     }
    
-   if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#CedulaHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#ActaNacCargaHijoDatos").val() != ""){
+   if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#CedulaHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""){
        tableHijos.row.add( {
             "CI Madre":$("#CedulaMadreHijoDatos").val(),
             "CI Padre":$("#CedulaPadreHijoDatos").val(),
@@ -512,7 +512,6 @@ $('#agregarHijo').click(function(){
             "2do Nombre":$("#SegundoNombreHijoDatos").val(),
             "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
             "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
-            "A Nacimiento":$("#ActaNacCargaHijoDatos").val(),
             "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
             "Nacionalidad":$("#NacionalidadHijoDatos").val()
         } ).draw();
@@ -523,7 +522,6 @@ $('#agregarHijo').click(function(){
         hijo.segundoNombre = $("#SegundoNombreHijoDatos").val();
         hijo.primerApellido = $("#PrimerApellidoHijoDatos").val();
         hijo.segundoApellido = $("#SegundoApellidoHijoDatos").val();
-        hijo.actaNacimiento = $("#ActaNacCargaHijoDatos").val();
         hijo.fechaNacimiento = $("#FechaNacimientoHijoDatos").val();
         hijo.nacionalidad = $("#NacionalidadHijoDatos").val();
         hijoData[countHijo] = hijo;

@@ -65,7 +65,6 @@ $(function () {
             {"data":"2do Nombre"},
             {"data":"1er Apellido"},
             {"data":"2do Apellido"},
-            {"data":"A Nacimiento"},
             {"data":"F Nacimiento"},
             {"data":"Nacionalidad"}
         ]

@@ -30,6 +30,8 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
 
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/skins/_all-skins.min.css') }}">
+  <!-- Multiple inputs css -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
 
@@ -137,7 +139,7 @@
               <a href="{{ path('registro_usuario_index') }}"><i class="fa fa-circle-o"></i>Registro de usuario</a>
             </li>
             <li data-route="registro_datos_index">
-              <a href="{{ path('registro_datos_index') }}"><i class="fa fa-circle-o"></i>Registro de datos</a>
+              <a href="{{ path('registro_datos_index', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Registro de datos</a>
             </li>
             <li data-route="registro_consulta_index">
               <a href="{{ path('registro_consulta_index') }}"><i class="fa fa-circle-o"></i>Consultar y editar datos</a>
@@ -518,6 +520,13 @@
 <script src="{{ asset('assets/vendor/toastr/toastr.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
+<!-- Multiple Inputs Js -->
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/plugins/sortable.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/plugins/purify.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/themes/fa/theme.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/locales/es.js') }}"></script>
 
 <script>
   $.fn.datepicker.defaults.format = "dd/mm/yyyy";

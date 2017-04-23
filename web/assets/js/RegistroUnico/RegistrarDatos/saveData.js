@@ -1,6 +1,6 @@
 $('#submitData').click(function(){
     toastr.clear();
-    var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaCargaDatos","RifCargaDatos","ActaNacCargaDatos"];
+    var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
     var inputsH = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos","NacionalidadHijoDatos","FechaNacimientoHijoDatos","CedulaMadreHijoDatos","CedulaPadreHijoDatos","CedulaHijoDatos","ActaNacCargaHijoDatos"];
@@ -29,15 +29,13 @@ $('#submitData').click(function(){
         if($("#"+inputsO[i]).val() == ""){
             if(inputsO[i] != "NumeroDatosII"){
                 can_register = false;
-                $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
             }else{
                 can_register = false;
-                $("#headerPersonal").css({ 'color': "red" });
                 $("#div"+inputsO[i-1]).addClass("has-error");
             }
-            
+            $("#headerPersonal").css({ 'color': "red" });
             text = "Error campo mal introducido o obligatorio.";
         }else{
             if(inputsO[i] == "FechaNacimientoDatos")
@@ -88,6 +86,8 @@ $('#submitData').click(function(){
         }
     
     }
+    if(!can_register)
+        $("#headerPersonal").css({ 'color': "red" });
     personalData[indPersonalData] = $("#DireccionDatos").val();
     indPersonalData++;
     personalData[indPersonalData] = $("#gemail").val();

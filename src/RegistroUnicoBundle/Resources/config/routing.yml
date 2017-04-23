@@ -15,7 +15,7 @@ registro_buscarcedula_ajax:
         _method:  POST
         
 registro_datos_index:
-    path:     /registro/datos
+    path:     /registro/datos/{apr}
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:registrarDatosUsuario }
 
 registro_guardar_ajax:
