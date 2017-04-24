@@ -64,7 +64,7 @@ $("#registrarUsuario").click(function (){
         if(can_register){
             $.ajax({
                 method: "POST",
-                data: {"Cedula":$("#CedulaUser").val()},
+                data: {"Cedula":$("#CedulaUser").val(),"Email":$("#EmailUser").val()},
                 url:  "/web/app_dev.php/registro/buscar-cedula",
                 dataType: 'json',
                 beforeSend: function() {
@@ -72,7 +72,7 @@ $("#registrarUsuario").click(function (){
                 },
                 success: function(data){
                      if(data == "S")
-                        toastr.error("El usuario ya se encuentra registrado.", "Error", {
+                        toastr.error("La cedula o el email ya se encuentran registrados.", "Error", {
                             "timeOut": "0",
                             "extendedTImeout": "0"
                         });

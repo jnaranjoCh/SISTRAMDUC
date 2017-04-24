@@ -1,6 +1,6 @@
 $('#submitData').click(function(){
     toastr.clear();
-    var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos"];
+    var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos","FechaVencimientoCedulaDatos","FechaVencimientoRifDatos","FechaVencimientoActaNacimientoDatos"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
     var inputsH = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos","NacionalidadHijoDatos","FechaNacimientoHijoDatos","CedulaMadreHijoDatos","CedulaPadreHijoDatos","CedulaHijoDatos","ActaNacCargaHijoDatos"];
@@ -23,7 +23,7 @@ $('#submitData').click(function(){
     var indPersonalData = 0;
     var indPersonalData2 = 0;
     var indCargoData = 0;
- 
+    
     $("#modalLabel").html("Guardando datos...");
     for(var i = 0; i < inputsO.length; i++){
         if($("#"+inputsO[i]).val() == ""){
@@ -41,6 +41,13 @@ $('#submitData').click(function(){
             if(inputsO[i] == "FechaNacimientoDatos")
               anio = parseInt($("#"+inputsO[i]).val()[6]+$("#"+inputsO[i]).val()[7]+$("#"+inputsO[i]).val()[8]+$("#"+inputsO[i]).val()[9]); 
               
+            if(inputsO[i] == "CedulaRifActaCargaDatos" && ($("#CedulaRifActaCargaDatos").fileinput("getFilesCount") > 3 || $("#CedulaRifActaCargaDatos").fileinput("getFilesCount") < 3)){
+                can_register = false;
+                $("#span"+inputsO[i]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i]).addClass("has-error");
+                text = "Error son solo tres archivos en el orden especificado (Cedula,RIF,Acta de nacimiento).";
+            }
+            
             if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18)){
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
@@ -88,6 +95,7 @@ $('#submitData').click(function(){
     }
     if(!can_register)
         $("#headerPersonal").css({ 'color': "red" });
+        
     personalData[indPersonalData] = $("#DireccionDatos").val();
     indPersonalData++;
     personalData[indPersonalData] = $("#gemail").val();
@@ -241,30 +249,36 @@ $('#submitData').click(function(){
     }
     
     if($('#checkboxHijos').prop('checked')){
-          if(can_register && countHijo < 1){
-              can_register = false;
-              $("#headerHijos").css({ 'color': "red" });
-              $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
-              $("#divCedulaMadreHijoDatos").addClass("has-error");
-              $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
-              $("#divCedulaPadreHijoDatos").addClass("has-error");
-              $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
-              $("#divCedulaHijoDatos").addClass("has-error");
-              $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
-              $("#divPrimerNombreHijoDatos").addClass("has-error");
-              $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
-              $("#divSegundoNombreHijoDatos").addClass("has-error");
-              $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
-              $("#divPrimerApellidoHijoDatos").addClass("has-error");
-              $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
-              $("#divSegundoApellidoHijoDatos").addClass("has-error");
-              $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
-              $("#divNacionalidadHijoDatos").addClass("has-error");
-              $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
-              $("#divFechaNacimientoHijoDatos").addClass("has-error");
-              $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
-              $("#divActaNacCargaHijoDatos").addClass("has-error");
-              text = "Error no ha ingresado ningun hijo.";
+          if(can_register && (countHijo < 1 || countHijo != $("#ActaNacCargaHijoDatos").fileinput("getFilesCount"))){
+             if(countHijo < 1){
+                  can_register = false;
+                  $("#headerHijos").css({ 'color': "red" });
+                  $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+                  $("#divCedulaMadreHijoDatos").addClass("has-error");
+                  $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+                  $("#divCedulaPadreHijoDatos").addClass("has-error");
+                  $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+                  $("#divCedulaHijoDatos").addClass("has-error");
+                  $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+                  $("#divPrimerNombreHijoDatos").addClass("has-error");
+                  $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+                  $("#divSegundoNombreHijoDatos").addClass("has-error");
+                  $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+                  $("#divPrimerApellidoHijoDatos").addClass("has-error");
+                  $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+                  $("#divSegundoApellidoHijoDatos").addClass("has-error");
+                  $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
+                  $("#divNacionalidadHijoDatos").addClass("has-error");
+                  $("#divFechaVencimientoActaNacimientoHijoDatos").addClass("has-error");
+                  $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
+                  $("#divFechaNacimientoHijoDatos").addClass("has-error");
+                  $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
+                  $("#divActaNacCargaHijoDatos").addClass("has-error");
+                  text = "Error no ha ingresado ningun hijo.";
+             }else if(countHijo != $("#ActaNacCargaHijoDatos").fileinput("getFilesCount")){
+                 can_register = false;
+                 text = "Error la cantidad de actas de nacimiento no es la misma que la de hijos ingresados.";
+             }
           }else{
             $("#headerHijos").css({ 'color': "black" });
             $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
@@ -283,6 +297,7 @@ $('#submitData').click(function(){
             $("#divSegundoApellidoHijoDatos").removeClass("has-error");
             $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
             $("#divNacionalidadHijoDatos").removeClass("has-error");
+            $("#divFechaVencimientoActaNacimientoHijoDatos").removeClass("has-error");
             $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
             $("#divFechaNacimientoHijoDatos").removeClass("has-error");
             $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");

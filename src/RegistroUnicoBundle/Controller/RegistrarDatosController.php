@@ -14,11 +14,13 @@ use RegistroUnicoBundle\Entity\Registro;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
 use RegistroUnicoBundle\Entity\Cargo;
+use TramiteBundle\Entity\Recaudo;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Rol;
 
 class RegistrarDatosController extends Controller
 {
+
     public function registrarDatosUsuarioAction($apr = "initial")
     {
         return $this->render('RegistroUnicoBundle:RegistrarDatos:registrar_datos.html.twig');
@@ -29,9 +31,9 @@ class RegistrarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->registerSectionOne($request->get('personalData'));
-            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[13]);
-            $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[13]);
-            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[13]);
+            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
+            $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
+            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[16]);
             return new JsonResponse("Datos guardados");
         }
         else
@@ -40,17 +42,86 @@ class RegistrarDatosController extends Controller
     
     public function guardarArchivosAjaxAction(Request $request)
     {
-        $email = $_POST['gemail'];
+        $em = $this->getDoctrine()->getManager();
+        if($_POST['checkboxHijos'] == "on"){
+            $i = 0;
+            $countIdHijo = $this->getDoctrine()
+                               ->getManager()
+                               ->createQuery('SELECT MAX(r.id) AS lastId FROM TramiteBundle:Recaudo r')
+                               ->getResult();
+            $countIdCountHijo = count($_FILES['input2']['tmp_name']);
+            
+            $aux = ($countIdHijo[0]['lastId'] - $countIdCountHijo)+1;
+            while($i < $countIdCountHijo){
+                $recaudo = $em->getRepository('TramiteBundle:Recaudo')
+                             ->findOneById($aux);
+                $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/acta_nacimiento/hijos/';
+                $fichero_subido = $dir_subida.$recaudo->getName();
+                $arr = explode("_",$recaudo->getName());
+                $arr = $arr[count($arr)-1];
+                $arr = explode(".",$arr);
+                $hijo = $em->getRepository('ClausulasContractualesBundle:Hijo')
+                             ->findOneByCedulaHijo($arr[0]);
+                $hijo->setPartidaNacimientoUrl($fichero_subido);
+                $recaudo->setPath($fichero_subido);
+                $em->flush();
+                move_uploaded_file($_FILES['input2']['tmp_name'][$i], $fichero_subido);
+                $aux++;
+                $i++;
+            }
+        }
+        
+        $user = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($_POST['gemail']);
+        
+        
         $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/';
-        $fichero_subido = $dir_subida."cedula.pdf";
+        $fichero_subido = $dir_subida."cedula_".$user->getCedula().".pdf";
+        
+        $newRecaudo = new Recaudo();
+        $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                            ->findOneByNombre('Cedula');
+        $newRecaudo->setPath($fichero_subido);
+        $newRecaudo->setName("cedula_".$user->getCedula().".pdf");
+        $newRecaudo->setFechaVencimiento(new \DateTime($_POST['FechaVencimientoCedulaDatos']));
+        $newRecaudo->setUsuario($user);
+        $newRecaudo->setTipoRecaudo($tipo_recaudo);
+        $newRecaudo->setTabla("Usuario");
+        $em->persist($newRecaudo);
+        
         if(move_uploaded_file($_FILES['input3']['tmp_name'][0], $fichero_subido)) {
             
             $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/RIF/';
-            $fichero_subido = $dir_subida."rif.pdf";
+            $fichero_subido = $dir_subida."rif_".$user->getCedula().".pdf";
+            
+            $newRecaudo = new Recaudo();
+            $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                                ->findOneByNombre('RIF');
+            $newRecaudo->setPath($fichero_subido);
+            $newRecaudo->setName("rif_".$user->getCedula().".pdf");
+            $newRecaudo->setFechaVencimiento(new \DateTime($_POST['FechaVencimientoRifDatos']));
+            $newRecaudo->setUsuario($user);
+            $newRecaudo->setTipoRecaudo($tipo_recaudo);
+            $newRecaudo->setTabla("Usuario");
+            $em->persist($newRecaudo);
+            
             if(move_uploaded_file($_FILES['input3']['tmp_name'][1], $fichero_subido)) {
                 
                 $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/acta_nacimiento/users/';
-                $fichero_subido = $dir_subida."acta_nacimiento.pdf";
+                $fichero_subido = $dir_subida."acta_nacimiento_".$user->getCedula().".pdf";
+
+                $newRecaudo = new Recaudo();
+                $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                                    ->findOneByNombre('Partida de Nacimiento');
+                $newRecaudo->setPath($fichero_subido);
+                $newRecaudo->setName("acta_nacimiento_".$user->getCedula().".pdf");
+                $newRecaudo->setFechaVencimiento(new \DateTime($_POST['FechaVencimientoActaNacimientoDatos']));
+                $newRecaudo->setUsuario($user);
+                $newRecaudo->setTipoRecaudo($tipo_recaudo);
+                $newRecaudo->setTabla("Usuario");
+                $em->persist($newRecaudo);
+                $em->flush();
+                
                 if(move_uploaded_file($_FILES['input3']['tmp_name'][2], $fichero_subido)) {
                     return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'success')));
                 }else{
@@ -69,8 +140,6 @@ class RegistrarDatosController extends Controller
         }else {
             return new Response("hijos no seleccionados");
         }*/
-        //return new RedirectResponse($this->generateUrl('registro_datos_index'));
-
     }
     
     public function enviarEmailsAjaxAction(Request $request)
@@ -210,11 +279,11 @@ class RegistrarDatosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $newUser = $em->getRepository('AppBundle:Usuario')
-                      ->findOneByCorreo($user[13]);
+                      ->findOneByCorreo($user[16]);
         
         if (!$newUser) {
             throw $this->createNotFoundException(
-                'Usuario no encontrado por el correo '.$user[13]
+                'Usuario no encontrado por el correo '.$user[16]
             );
         }
         
@@ -228,7 +297,7 @@ class RegistrarDatosController extends Controller
         $newUser->setSexo($user[7]);
         $newUser->setRif('J-'.$user[8]);
         $newUser->setTelefono($user[9].'-'.$user[10]);
-        $newUser->setDireccion($user[12]);
+        $newUser->setDireccion($user[15]);
         
         $em->flush();
     }
@@ -396,6 +465,18 @@ class RegistrarDatosController extends Controller
             $i = 0;
             $hijoss = [];
             foreach($hijos as $hijo){
+                 $newRecaudo  = new Recaudo();
+                 $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                                    ->findOneByNombre('Partida de Nacimiento');
+                 $newRecaudo->setName("acta_nacimiento_".$hijo['ciHijo'].".pdf");
+                 $newRecaudo->setFechaVencimiento(new \DateTime($hijo['fechaVencimiento']));
+                 $newRecaudo->setUsuario($user);
+                 $newRecaudo->setTipoRecaudo($tipo_recaudo);
+                 $newRecaudo->setTabla("Hijo");
+                 $newRecaudo->setPath("");
+                 $em->persist($newRecaudo);
+                 
+                               
                  $newHijo = new Hijo();
                  $newHijo->setCedulaMadre($hijo['ciMadre']);
                  $newHijo->setCedulaPadre($hijo['ciPadre']);
@@ -415,7 +496,6 @@ class RegistrarDatosController extends Controller
             }
             $user->addHijos($hijoss);
             $em->flush();
-             //$newHijo->setPartidaNacimientoUrl($hijo['actaNacimiento']);
         } 
     }
 }

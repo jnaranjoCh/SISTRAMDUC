@@ -162,6 +162,11 @@ class Usuario implements UserInterface
     protected $planes_septenales_individuales;
 
     /**
+     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Recaudo", mappedBy="usuario")
+     */
+    protected $recaudos;
+
+    /**
      * @ORM\ManyToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
      */
     private $departamento;

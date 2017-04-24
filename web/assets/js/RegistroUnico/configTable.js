@@ -66,6 +66,7 @@ $(function () {
             {"data":"1er Apellido"},
             {"data":"2do Apellido"},
             {"data":"F Nacimiento"},
+            {"data":"F Vencimiento Acta"},
             {"data":"Nacionalidad"}
         ]
     });

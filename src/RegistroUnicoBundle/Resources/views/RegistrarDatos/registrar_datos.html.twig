@@ -227,6 +227,51 @@
                     <!-- /.col -->
                   </div>
                   <!-- /.row -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div id="divFechaVencimientoCedulaDatos" class="form-group has-feedback">
+                        <label>Fecha de vencimiento de la cedula</label>
+                        <div class='input-group date' id='datetimepicker3'>
+                            <input id="FechaVencimientoCedulaDatos" name="FechaVencimientoCedulaDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                      <div id="divFechaVencimientoRifDatos" class="form-group has-feedback">
+                        <label>Fecha de vencimiento del RIF</label>
+                        <div class='input-group date' id='datetimepicker4'>
+                            <input id="FechaVencimientoRifDatos" name="FechaVencimientoRifDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div id="divFechaVencimientoActaNacimientoDatos" class="form-group has-feedback">
+                        <label>Fecha de vencimiento del acta de nacimiento</label>
+                        <div class='input-group date' id='datetimepicker5'>
+                            <input id="FechaVencimientoActaNacimientoDatos" name="FechaVencimientoActaNacimientoDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
                   <div class="row">    
                     <div class="col-md-12">
                     <div id="divCedulaRifActaCargaDatos" class="form-group has-feedback">
@@ -530,7 +575,7 @@
             <!--research,courses and studies box-->
           </div>
           <div id="divCheckbox" class="col-md-offset-1 col-md-10 hidden">
-            <input type="checkbox" id="checkboxHijos" name="checkboxHijos"> <strong>Ingresar datos de hijos</strong><br/><br/>
+            <input type="checkbox" id="checkboxHijos" name="checkboxHijos"/> <strong>Ingresar datos de hijos</strong><br/><br/>
           </div>
           <!--+carg box-->
           <div id="formHijos" class="col-md-offset-1 col-md-10 hidden">
@@ -631,6 +676,19 @@
                   </div>
                   <!-- /.col -->
                   <div class="col-md-12">
+                    <div id="divFechaVencimientoActaNacimientoHijoDatos" class="form-group has-feedback">
+                      <label>Fecha de vencimiento del acta de nacimiento</label>
+                      <div class='input-group date' id='datetimepicker6'>
+                          <input id="FechaVencimientoActaNacimientoHijoDatos" name="FechaVencimientoActaNacimientoHijoDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-12">
                     <div id="divActaNacCargaHijoDatos" class="form-group has-feedback">
                       <label class="control-label">Seleccione las actas de nacimiento</label>
                       <input id="ActaNacCargaHijoDatos" name="input2[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
@@ -657,6 +715,7 @@
                       <th>1er Apellido</th>
                       <th>2do Apellido</th>
                       <th>F Nacimiento</th>
+                      <th>F Vencimiento Acta</th>
                       <th>Nacionalidad</th>                  
                     </tr>
                     </thead>
@@ -672,6 +731,7 @@
                       <th>1er Apellido</th>
                       <th>2do Apellido</th>
                       <th>F Nacimiento</th>
+                      <th>F Vencimiento Acta</th>
                       <th>Nacionalidad</th>
                     </tr>
                     </tfoot>

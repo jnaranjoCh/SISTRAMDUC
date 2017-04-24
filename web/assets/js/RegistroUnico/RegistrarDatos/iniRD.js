@@ -6,6 +6,18 @@ var miniHijos = true;
 
 $( window ).load(function() {
     
+    var status = window.location.href.split("/");
+    if(status[status.length-1] == "success")
+        toastr.success("Datos registrados exitosamente!.", "Exito!", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+         });
+    else if(status[status.length-1] == "error")
+        toastr.error("Error hubo problemas al subir los archivos!", "Error", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+         });
+    
     $("#miniPersonal").click();
     $("#miniRegistros").click();
     $("#miniCargos").click();
@@ -59,5 +71,15 @@ $( window ).load(function() {
     $('#idRevistaRegistro').html("<option value='-1'>No existen registros</option>");
     $('#datetimepicker1').datetimepicker();
     $('#datetimepicker2').datetimepicker();
+    $('#datetimepicker3').datetimepicker();
+    $('#datetimepicker4').datetimepicker();
+    $('#datetimepicker5').datetimepicker();
+    $('#datetimepicker6').datetimepicker();
+    $("#CedulaRifActaCargaDatos").fileinput({
+        language: "es"
+    });
+    $("#ActaNacCargaHijoDatos").fileinput({
+        language: "es"
+    });
 });
 
