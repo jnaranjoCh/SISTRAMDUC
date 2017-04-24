@@ -27,7 +27,8 @@ $( window ).load(function() {
           "ajax": "/web/app_dev.php/registro/enviar-emails",
           "columns": [
 		        { "data": "Email" },
-		        { "data": "Estatus" }
+		        { "data": "Estatus" },
+		        { "data": "Registro Completo" }
 	       ],
 	       "language": {
             	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"

@@ -61,6 +61,11 @@ class Usuario implements UserInterface
     private $segundoApellido;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isRegister;
+    
+    /**
      * @ORM\Column(type="string")
      */
     private $nacionalidad;
@@ -555,6 +560,30 @@ class Usuario implements UserInterface
     public function getActivo()
     {
         return $this->activo;
+    }
+    
+    /**
+     * Set activo
+     *
+     * @param boolean $isRegister
+     *
+     * @return Usuario
+     */
+    public function setIsRegister($isRegister)
+    {
+        $this->isRegister = $isRegister;
+
+        return $this;
+    }
+
+    /**
+     * Get isRegister
+     *
+     * @return bool
+     */
+    public function getIsRegister()
+    {
+        return $this->isRegister;
     }
 
     /**

@@ -36,6 +36,7 @@ class RegistrarUsuarioController extends Controller
             }
             $usuario->addRoles($roles);
             $usuario->setActivo(1);
+            $usuario->setIsRegister(0);
             $usuario->setCorreo($request->get("Email"));
             
             $em = $this->getDoctrine()->getManager();

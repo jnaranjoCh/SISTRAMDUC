@@ -120,6 +120,7 @@ class RegistrarDatosController extends Controller
                 $newRecaudo->setTipoRecaudo($tipo_recaudo);
                 $newRecaudo->setTabla("Usuario");
                 $em->persist($newRecaudo);
+                $user->setIsRegister(1);
                 $em->flush();
                 
                 if(move_uploaded_file($_FILES['input3']['tmp_name'][2], $fichero_subido)) {
@@ -133,13 +134,6 @@ class RegistrarDatosController extends Controller
         }else{
             return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'error')));
         }
-        
-        /*if(empty($_FILES["input-file-preview4"]['tmp_name']))
-        {
-            return new Response("hijos seleccionados");
-        }else {
-            return new Response("hijos no seleccionados");
-        }*/
     }
     
     public function enviarEmailsAjaxAction(Request $request)
@@ -156,7 +150,7 @@ class RegistrarDatosController extends Controller
             if (!$encontrado) {
                 return new JsonResponse(0);
             }else
-                return new JsonResponse($encontrado->getActivo());
+                return new JsonResponse($encontrado->getActivo() && !$encontrado->getIsRegister());
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');
@@ -210,6 +204,7 @@ class RegistrarDatosController extends Controller
         $datas=null;
         $data["Email"]="";
         $data["Estatus"]="";
+        $data["Registro Completo"]="";
         foreach($object as $value)
         {
            $data["Email"] = $value->getCorreo();
@@ -217,6 +212,11 @@ class RegistrarDatosController extends Controller
                $data["Estatus"]="Activo";
            else
                $data["Estatus"]="Inactivo";
+           
+           if($value->getIsRegister())
+               $data["Registro Completo"]="SI";
+           else
+               $data["Registro Completo"]="NO";
            $datas[$i] = $data;
            $i++;
         }
