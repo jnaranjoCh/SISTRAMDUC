@@ -12,7 +12,7 @@ $('#generate').click(function(){
         $.ajax({
             method: "POST",
             data: {"Email":$('#gemail').val()},
-            url:  "/web/app_dev.php/registro/buscar-email",
+            url:   routes["registro_buscaremail_ajax"],
             dataType: 'json',
             success: function(data){
                 if(data){

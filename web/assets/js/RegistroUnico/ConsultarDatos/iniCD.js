@@ -1,6 +1,6 @@
 $( window ).load(function() {
     $("#tableUsers").DataTable( {
-          "ajax": "/web/app_dev.php/consulta/enviar-emails",
+          "ajax": routes["registro_obteneremails_ajax"],
           "columns": [
 		        { "data": "Email" },
 		        { "data": "Estatus" }
