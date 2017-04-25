@@ -793,12 +793,12 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/iniRD.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+  {% include('RegistroUnicoBundle::configTable.html.twig') %}
+  {% include('RegistroUnicoBundle:RegistrarDatos:iniRD.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showField.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/generate.js') }}"></script>
+  {% include('RegistroUnicoBundle:RegistrarDatos:generate.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/saveData.js') }}"></script>
+  {% include('RegistroUnicoBundle:RegistrarDatos:saveData.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showBoxes.js') }}"></script>
 {% endblock %}

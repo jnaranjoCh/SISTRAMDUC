@@ -84,5 +84,5 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/iniCD.js') }}"></script>
+  {% include('RegistroUnicoBundle:ConsultarDatos:iniCD.html.twig') %}
 {% endblock %}
