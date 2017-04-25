@@ -24,7 +24,7 @@ $( window ).load(function() {
     $("#miniHijos").click();
     
     $("#tableUsers").DataTable( {
-          "ajax": routes["registro_obteneremails_ajax"],
+          "ajax": "/web/app_dev.php/registro/enviar-emails",
           "columns": [
 		        { "data": "Email" },
 		        { "data": "Estatus" },
@@ -37,7 +37,7 @@ $( window ).load(function() {
     
     $.ajax({
         method: "POST",
-        url:  routes["registro_obtener_ajax"],
+        url:  "/web/app_dev.php/registro/obtener-datos",
         dataType: 'json',
         success: function(data){
             var estatus ="<option value='' selected='selected'>Seleccione una opción</option>";
@@ -61,7 +61,7 @@ $( window ).load(function() {
     
      $.ajax({
         method: "POST",
-        url:  routes["registro_obtenerlastid_ajax"],
+        url:  "/web/app_dev.php/registro/enviar-lastid",
         dataType: 'json',
         success: function(data){
             if(data[0].lastId != null)

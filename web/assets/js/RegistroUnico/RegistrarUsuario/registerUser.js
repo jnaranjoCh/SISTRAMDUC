@@ -65,7 +65,7 @@ $("#registrarUsuario").click(function (){
             $.ajax({
                 method: "POST",
                 data: {"Cedula":$("#CedulaUser").val(),"Email":$("#EmailUser").val()},
-                url:  routes["registro_buscarcedula_ajax"],
+                url:  "/web/app_dev.php/registro/buscar-cedula",
                 dataType: 'json',
                 beforeSend: function() {
                   $("#myModal").modal("show");
@@ -88,7 +88,7 @@ $("#registrarUsuario").click(function (){
                          $.ajax({
                                 method: "POST",
                                 data: {"Cedula":$("#CedulaUser").val(), "Password":$("#PasswordUser").val(), "Roles":array, "Email":$("#EmailUser").val()},
-                                url:  routes["registro_registeruser_ajax"],
+                                url:  "/web/app_dev.php/registro/registrar-usuario",
                                 dataType: 'json',
                                 beforeSend: function() {
                                   $("#myModal").modal("show");

@@ -1,7 +1,7 @@
 $( window ).load(function() {
     $.ajax({
         method: "POST",
-        url:  routes["registro_obtener_ajax"],
+        url:   "/web/app_dev.php/registro/obtener-datos",
         dataType: 'json',
         success: function(data){
             var rol ="<option value='' selected='selected'>Seleccione una opción</option>";

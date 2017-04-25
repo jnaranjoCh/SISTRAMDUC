@@ -358,7 +358,7 @@ $("#continue").click(function(){
         $.ajax({
                 method: "POST",
                 data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
-                url:  routes["registro_guardar_ajax"],
+                url:  "/web/app_dev.php/registro/guardar-datos",
                 dataType: 'json',
                 beforeSend: function(){
                   $("#myModal2").modal("show");
@@ -372,7 +372,7 @@ $("#continue").click(function(){
         $.ajax({
                 method: "POST",
                 data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
-                url:  routes["registro_guardar_ajax"],
+                url:  "/web/app_dev.php/registro/guardar-datos",
                 dataType: 'json',
                 beforeSend: function(){
                   $("#myModal2").modal("show");
