@@ -42,8 +42,9 @@ class RegistrarDatosController extends Controller
     
     public function guardarArchivosAjaxAction(Request $request)
     {
+        //return new Response();
         $em = $this->getDoctrine()->getManager();
-        if($_POST['checkboxHijos'] == "on"){
+        if(isset($_POST['checkboxHijos'])){
             $i = 0;
             $countIdHijo = $this->getDoctrine()
                                ->getManager()
@@ -75,7 +76,7 @@ class RegistrarDatosController extends Controller
                       ->findOneByCorreo($_POST['gemail']);
         
         
-        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/';
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/users/';
         $fichero_subido = $dir_subida."cedula_".$user->getCedula().".pdf";
         
         $newRecaudo = new Recaudo();
@@ -91,7 +92,7 @@ class RegistrarDatosController extends Controller
         
         if(move_uploaded_file($_FILES['input3']['tmp_name'][0], $fichero_subido)) {
             
-            $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/RIF/';
+            $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/RIF/users/';
             $fichero_subido = $dir_subida."rif_".$user->getCedula().".pdf";
             
             $newRecaudo = new Recaudo();

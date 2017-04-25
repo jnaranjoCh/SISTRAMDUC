@@ -9,9 +9,80 @@
       </ol>
     </section>
     <br/>
-    <section class="content-body">
-    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <!--Form-->
+    <form name="Form" id="Form" action="" method="post" enctype="multipart/form-data" novalidate>
+      <div class="row">
+        <section class="content-body">
+          <!--seccion for generate box-->
+          <div class="col-md-offset-1 col-md-10">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                  <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                      <div class="form-group has-feedback">
+                            <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Email del usuario">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ver usuarios</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+          <!--seccion for generate boxes-->
+        </section>
+      </div>
+    </form>
+    <!--Form-->
 {% endblock %}
 
 {% block custom_javascripts %}
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/iniCD.js') }}"></script>
 {% endblock %}

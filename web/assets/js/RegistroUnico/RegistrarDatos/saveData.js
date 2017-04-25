@@ -1,3 +1,6 @@
+var personalData = [];
+var cargoData = [];
+
 $('#submitData').click(function(){
     toastr.clear();
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos","FechaVencimientoCedulaDatos","FechaVencimientoRifDatos","FechaVencimientoActaNacimientoDatos"];
@@ -17,8 +20,6 @@ $('#submitData').click(function(){
     var indParticipantes = 0;
     var indRegistroRevistas = 0;
     var indRevistas = 0;
-    var personalData = [];
-    var cargoData = [];
     
     var indPersonalData = 0;
     var indPersonalData2 = 0;
@@ -303,7 +304,7 @@ $('#submitData').click(function(){
             $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
             $("#divActaNacCargaHijoDatos").removeClass("has-error");
         }
-        if(can_register){
+        /*if(can_register){
             $.ajax({
                 method: "POST",
                 data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
@@ -317,8 +318,8 @@ $('#submitData').click(function(){
                   document.getElementById("completeForm").submit();
                 }
             });
-        }
-    }else{
+        }*/
+    }/*else{
         
         if(can_register){
             $.ajax({
@@ -335,16 +336,51 @@ $('#submitData').click(function(){
                 }
             });
         }
-    }
+    }*/
     if(!can_register)
         toastr.error(text, "Error", {
                     "timeOut": "0",
                     "extendedTImeout": "0"
                  });
-    else
+    else{
        toastr.clear();
+       $("#myModal3").modal("show");
+    }
 });
 
 Array.prototype.unique=function(a){
   return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+});
+
+$("#continue").click(function(){
+    $("#myModal3").modal("hide");
+    if($('#checkboxHijos').prop('checked')){
+        $.ajax({
+                method: "POST",
+                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                url:  "/web/app_dev.php/registro/guardar-datos",
+                dataType: 'json',
+                beforeSend: function(){
+                  $("#myModal2").modal("show");
+                },
+                success: function(data){
+                  $("#modalLabel").html("Subiendo archivos del usuario...");
+                  document.getElementById("completeForm").submit();
+                }
+            });
+    }else{
+        $.ajax({
+                method: "POST",
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                url:  "/web/app_dev.php/registro/guardar-datos",
+                dataType: 'json',
+                beforeSend: function(){
+                  $("#myModal2").modal("show");
+                },
+                success: function(data){
+                    $("#modalLabel").html("Subiendo archivos del usuario...");
+                    document.getElementById("completeForm").submit();
+                }
+            });
+    }
 });

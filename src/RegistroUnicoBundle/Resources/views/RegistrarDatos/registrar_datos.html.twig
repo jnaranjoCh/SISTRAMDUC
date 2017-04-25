@@ -16,6 +16,42 @@
     <!--User data header-->
     <br/>
     <!-- Modal -->
+    <div class="modal fade" id="myModal3" role="dialog"  data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content alert alert-warning" style="border-radius: 25px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Advertencia!</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-offset-2 col-md-3">
+                <img src="{{ asset('assets/images/danger-34250_640.png') }}" class="img-rounded" alt="Cinque Terre" width="70%" height="70%" />
+                <!--<img src="{{ asset('assets/images/danger-34250_640.png') }}"/>-->
+              </div>
+              <div class="col-xs-pul-1 col-md-6">
+                <h3>Por favor verifique que los datos y los archivos esten correctos!</h3>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-1">
+                  <button id="continue" type="button" class="btn btn-default">Continuar</button>
+              </div>
+              <div class="col-xs-10">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Modal -->
+    
     <div class="modal fade" id="myModal2" role="dialog" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -26,7 +62,7 @@
         </div>
       </div>
     </div>
-     <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
 
@@ -37,27 +73,29 @@
             <h4 class="modal-title">Usuarios registrados</h4>
           </div>
           <div class="modal-body">
-            <table id="tableUsers" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>Email</th>
-                <th>Estatus</th>
-                <th>Registro Completo</th>
-              </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-              <tr>
-               <th>Email</th>
-               <th>Estatus</th>
-               <th>Registro Completo</th>
-              </tr>
-              </tfoot>
-            </table>
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                  <th>Registro Completo</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                 <th>Registro Completo</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
 
@@ -577,7 +615,7 @@
             <!--research,courses and studies box-->
           </div>
           <div id="divCheckbox" class="col-md-offset-1 col-md-10 hidden">
-            <input type="checkbox" id="checkboxHijos" name="checkboxHijos"/> <strong>Ingresar datos de hijos</strong><br/><br/>
+            <input type="checkbox" id="checkboxHijos" name="checkboxHijos" value="activo"/> <strong>Ingresar datos de hijos</strong><br/><br/>
           </div>
           <!--+carg box-->
           <div id="formHijos" class="col-md-offset-1 col-md-10 hidden">
@@ -675,9 +713,6 @@
                       </select>
                       <span id="spanNacionalidadHijoDatos" class="glyphicon form-control-feedback"></span>
                     </div>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-md-12">
                     <div id="divFechaVencimientoActaNacimientoHijoDatos" class="form-group has-feedback">
                       <label>Fecha de vencimiento del acta de nacimiento</label>
                       <div class='input-group date' id='datetimepicker6'>
