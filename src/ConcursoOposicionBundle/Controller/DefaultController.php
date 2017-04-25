@@ -346,6 +346,10 @@ class DefaultController extends Controller
                 $em->persist($jurado);
                 $em->flush();
 
+                $concurso = 1;
+
+                $this->interJurado($concurso, $concurso);
+
                 return new JsonResponse("S");
             }
             else{
@@ -354,6 +358,15 @@ class DefaultController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al insertar datos');
+    }
+             
+    public function interJurado($concurso, $cedula)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $oposicion = $em->getRepository('ConcursosBundle:Concurso')->find($concurso);
+     
+        $oposicion->addJurado($cedula);
+        $em->flush();
     }
 
     /**

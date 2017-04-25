@@ -3,7 +3,7 @@ $( window ).load( function(){
 	$.ajax({
 
 		method:"POST",
-		url: "http://localhost:8000/concursoOposicion/listadoConcursosAjax",
+		url: "/concursoOposicion/listadoConcursosAjax",
 		dataType: 'json',
         success: function(data)
         {

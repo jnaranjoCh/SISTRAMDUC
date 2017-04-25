@@ -4,6 +4,8 @@ namespace ConcursosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Concurso
  *
@@ -87,6 +89,11 @@ class Concurso
      *      )
      */
     protected $jurado;
+
+    public function __construct()
+    {
+        $this->jurado = new ArrayCollection();
+    }
     
     /**
      * Get id
@@ -264,6 +271,17 @@ class Concurso
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+
+    public function addJurado($jurados)
+    {
+       $this->jurado[] = $jurados;
+    }
+
+    public function addJurados($jurado)
+    {
+       foreach($jurado as $jurados)
+           $this->addJurado($jurados);
     }
 }
 

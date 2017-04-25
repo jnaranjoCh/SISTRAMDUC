@@ -4,6 +4,8 @@ namespace ConcursosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Jurado
  *
@@ -77,9 +79,16 @@ class Jurado
      */
     private $cedula;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="Concurso")
+     * @ORM\JoinTable(name="concurso_jurado",
+     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="jurado_id", referencedColumnName="id")}
+     *      )
+     */
     protected $concurso;
 
-
+    
     /**
      * Get id
      *
