@@ -28,8 +28,6 @@ $('#registrarJurado').click(function (){
 
 			for (var i = 1; i <= 3; i++) {
 
-				//8980725
-
 				$.ajax({
 		            method: "POST",
 		            data: {"cedula":$("#cedula"+i).val(), 
@@ -38,7 +36,8 @@ $('#registrarJurado').click(function (){
 		            "apellido":$("#apellido"+i).val(), 
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
-		            "area":$("#area"+i).val()},
+		            "area":$("#area"+i).val(),
+		        	"concurso": 1},
 		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
@@ -83,7 +82,7 @@ $('#registrarJurado').click(function (){
 							$('#spanarea'+k).addClass("hide");
 						}
 		            }
-		        });			
+		        });		
 			}
 
 			/*fin del json*/

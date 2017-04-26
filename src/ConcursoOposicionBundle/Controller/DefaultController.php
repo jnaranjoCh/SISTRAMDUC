@@ -238,6 +238,8 @@ class DefaultController extends Controller
                  throw $this->createNotFoundException('Error al obtener datos iniciales');
             }else
             {
+                $val = $this->asignarFilaId($concurso,'id',$val);
+                $val = $this->asignarFilaObservacion($concurso,'observacion',$val);
                 $val = $this->asignarFilaNroVacantes($concurso,'vacantes',$val);
                 $val = $this->asignarFilaAreaPostulacion($concurso,'area',$val);
                 $val = $this->asignarFilaFechaInicio($concurso,'inicio',$val);
@@ -248,6 +250,28 @@ class DefaultController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al insertar datos');
+    }
+
+    private function asignarFilaObservacion($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getObservaciones();
+           $i++;
+        }
+        return $val;
+    }
+
+    private function asignarFilaId($object,$entidad,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val[$entidad][$i] = $value->getId();
+           $i++;
+        }
+        return $val;
     }
 
     private function asignarFilaFechaPresentacion($object,$entidad,$val)
@@ -346,9 +370,7 @@ class DefaultController extends Controller
                 $em->persist($jurado);
                 $em->flush();
 
-                $concurso = 1;
-
-                $this->interJurado($concurso, $concurso);
+                $this->ConcursoJurado($request->get("concurso"));
 
                 return new JsonResponse("S");
             }
@@ -359,13 +381,28 @@ class DefaultController extends Controller
         else
              throw $this->createNotFoundException('Error al insertar datos');
     }
-             
-    public function interJurado($concurso, $cedula)
-    {
+
+    private function ConcursoJurado($concurso){
+
         $em = $this->getDoctrine()->getManager();
-        $oposicion = $em->getRepository('ConcursosBundle:Concurso')->find($concurso);
-     
-        $oposicion->addJurado($cedula);
+
+        $idJurado = $this->getDoctrine()
+                        ->getManager()
+                        ->createQuery('SELECT MAX(j.id) AS lastId FROM ConcursosBundle:Jurado j')
+                        ->getResult();
+
+        $id = $idJurado[0]['lastId'];
+
+        $jurado = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('ConcursosBundle:Jurado')
+                    ->findOneById($id);
+
+        $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById(intval($concurso));
+
+        $concursoObjeto->addJurado($jurado);
+
         $em->flush();
     }
 

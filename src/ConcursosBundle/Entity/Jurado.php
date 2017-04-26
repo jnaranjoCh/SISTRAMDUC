@@ -78,14 +78,7 @@ class Jurado
      * @ORM\Column(name="cedula", type="string", length=25)
      */
     private $cedula;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Concurso")
-     * @ORM\JoinTable(name="concurso_jurado",
-     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="jurado_id", referencedColumnName="id")}
-     *      )
-     */
+  
     protected $concurso;
 
     
