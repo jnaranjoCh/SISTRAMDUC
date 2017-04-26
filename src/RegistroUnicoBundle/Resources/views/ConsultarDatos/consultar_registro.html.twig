@@ -77,6 +77,54 @@
              </div>
           </div>
           <!--seccion for generate boxes-->
+          <!--+carg box-->
+          <div id="formRegistros" class="col-md-offset-1 col-md-10">
+            <!-- /.box-info -->
+            <div id="headerRegistros" class="box-footer">
+              <strong>Sección para consultar y editar los cargos desempeñados en la UC.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Sección 2</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="miniRegistros" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableRegistros" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box -->
+           </div>
+           <!--research,courses and studies box-->
+          </div>
+          <!--+carg box-->
         </section>
       </div>
     </form>
@@ -85,4 +133,5 @@
 
 {% block custom_javascripts %}
   {% include('RegistroUnicoBundle:ConsultarDatos:iniCD.html.twig') %}
+  {% include('RegistroUnicoBundle:ConsultarDatos:generate.html.twig') %}
 {% endblock %}

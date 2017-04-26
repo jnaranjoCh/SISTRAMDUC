@@ -1,0 +1,108 @@
+<script type="text/javascript">
+$('#generate').click(function(){
+    toastr.clear();
+    $.ajax({
+        method: "POST",
+        data: {"Email":$('#gemail').val()},
+        url:   "{{ path('registro_consultarbuscaremail_ajax') }}",
+        dataType: 'json',
+        success: function(data){
+            $.ajax({
+                method: "POST",
+                url:  "{{ path('registro_obtener_ajax') }}",
+                dataType: 'json',
+                success: function(data2){
+                    if(data){
+                        tableRegistros = $('#tableRegistros').DataTable({
+                    	    "ajax":{
+                               "url": "{{ path('registro_consultarregistros_ajax') }}",
+                               "type": 'POST',
+                               "data": {"email":$('#gemail').val()}
+                            },
+                    	    "language": {
+                                	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                            },
+                            columns: [
+                                {
+                                  sortable: false,
+                                     "render": function ( data, type, full, meta ) {
+                                                    var tipo_registro = '<select id="Tipo'+full.Id+'" class="form-control select2" style="width: 170px;">';
+                                                    for(var i = 0; i < data2["tipo_registro"].length; i++)
+                                                    {
+                                                        if(data2["tipo_registro"][i] == full.TipoDeReferencia){
+                                                            tipo_registro = tipo_registro+"<option value='"+data2["tipo_registro"][i]+"' selected='selected'>"+data2["tipo_registro"][i]+"</option>";
+                                                        }else
+                                                            tipo_registro = tipo_registro+"<option value='"+data2["tipo_registro"][i]+"'>"+data2["tipo_registro"][i]+"</option>";
+                                                    }
+                                                    tipo_registro = tipo_registro+"</select>";
+                                            
+                                                    return tipo_registro;
+                                                }
+                                },
+                                {
+                                  sortable: false,
+                                     "render": function ( data, type, full, meta ) {
+                                                    return '<input id="Descripcion'+full.Id+'" value="'+full.Descripcion+'" type="text" class="form-control" placeholder="Descripción">';
+                                                }
+                                },
+                                {
+                                  sortable: false,
+                                     "render": function ( data, type, full, meta ) {
+                                                    var nivel = '<select id="Nivel'+full.Id+'" class="form-control select2" style="width: 110px;">';
+                                                    for(var i = 0; i < data2["nivel"].length; i++)
+                                                    {
+                                                        if(data2["nivel"][i] == full.Nivel){
+                                                            nivel = nivel+"<option value='"+data2["nivel"][i]+"' selected='selected'>"+data2["nivel"][i]+"</option>";
+                                                        }else
+                                                            nivel = nivel+"<option value='"+data2["nivel"][i]+"'>"+data2["nivel"][i]+"</option>";
+                                                    }
+                                                    nivel = nivel+"</select>";
+                                            
+                                                    return nivel;
+                                                }
+                                },
+                                {
+                                  sortable: false,
+                                     "render": function ( data, type, full, meta ) {
+                                                    var estatus = '<select id="Estatus'+full.Id+'" class="form-control select2" style="width: 120px;">';
+                                                    for(var i = 0; i < data2["estatus"].length; i++)
+                                                    {
+                                                        if(data2["estatus"][i] == full.Estatus){
+                                                            estatus = estatus+"<option value='"+data2["estatus"][i]+"' selected='selected'>"+data2["estatus"][i]+"</option>";
+                                                        }else
+                                                            estatus = estatus+"<option value='"+data2["estatus"][i]+"'>"+data2["estatus"][i]+"</option>";
+                                                    }
+                                                    estatus = estatus+"</select>";
+                                            
+                                                    return estatus;
+                                                }
+                                },
+                                {
+                                  sortable: false,
+                                     "render": function ( data, type, full, meta ) {
+                                                    return '<input id="AnoDePublicacionAsistencia'+full.Id+'" value="'+full.AnoDePublicacionAsistencia+'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
+                                                }
+                                },
+                                {
+                                  sortable: false,
+                                     "render": function ( data, type, full, meta ) {
+                                                  if(full.EmpresaInstitucion != "No posee")
+                                                    return '<input id="EmpresaInstitucion'+full.Id+'" value="'+full.EmpresaInstitucion+'" type="text" class="form-control" placeholder="Empresa y/o institución">';
+                                                  else
+                                                    return '<input id="EmpresaInstitucion'+full.Id+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">';
+                                                }
+                                }
+                            ]
+                        });
+                    }else{
+                        toastr.error("El usuario no se encuentra registrado, esta inactivo o no a realizado el registro de datos.", "Error", {
+                                        "timeOut": "0",
+                                        "extendedTImeout": "0"
+                                     });
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
