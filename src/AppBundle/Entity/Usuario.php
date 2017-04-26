@@ -167,7 +167,7 @@ class Usuario implements UserInterface
     private $departamento;
 
     /**
-     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Tramite", mappedBy="owner")
+     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Tramite", mappedBy="usuario_id")
      */
     protected $tramite;
 
@@ -731,5 +731,9 @@ class Usuario implements UserInterface
     public function getTramite()
     {
         return $this->tramite;
+    }
+
+    public function __toString() {
+        return sprintf($this->getId().' ('.$this->getPrimerNombre().')'.' ('.$this->getPrimerApellido());
     }
 }

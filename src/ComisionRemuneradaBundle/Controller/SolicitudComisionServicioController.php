@@ -10,12 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
-use AppBundle\Entity\Usuario;
-use TramiteBundle\Entity\Recaudo;
 use TramiteBundle\Entity\TipoRecaudo;
-use TramiteBundle\Entity\Tramite;
 use TramiteBundle\Entity\TipoTramite;
-
+use TramiteBundle\Entity\Transicion;
+use TramiteBundle\Entity\Estado;
 use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 
 /**
@@ -33,13 +31,7 @@ class SolicitudComisionServicioController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $solicitudComisionServicios = $em->getRepository('ComisionRemuneradaBundle:SolicitudComisionServicio')->findAll();
         return $this->redirectToRoute('solicitudcomisionservicio_new');
-        /*return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:index.html.twig', array(
-            'solicitudComisionServicios' => $solicitudComisionServicios,
-        ));*/
     }
 
     /**
@@ -51,6 +43,7 @@ class SolicitudComisionServicioController extends Controller
     public function newAction(Request $request)
     {
         $solicitudComisionServicio = new Solicitudcomisionservicio();
+        $transicion = new Transicion();
 
         // Se crea el formulario
         $form = $this->createForm('ComisionRemuneradaBundle\Form\SolicitudComisionServicioType', $solicitudComisionServicio);
@@ -58,14 +51,20 @@ class SolicitudComisionServicioController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+            /* Se obtienen todos los registros de la tabla tipo_tramite y se busca el registro que 
+            corresponda a Comision */
             $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
             $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 6]);
-            
+            /* Se obtienen todos los registros de la tabla tipo_recaudo y se extrae los requeridos de 
+            acuerdo al tramite correspondiente*/
             $tipo_recaudo_repo = $em->getRepository(TipoRecaudo::class);
             $tipo_recaudo1 = $tipo_recaudo_repo->findOneBy(["id" => 4]);
             $tipo_recaudo2 = $tipo_recaudo_repo->findOneBy(["id" => 5]);
 
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => 6]);
+
+            /* Se le asigna a cada recaudo su tipo*/
             $i = 1;
             foreach ($solicitudComisionServicio->getRecaudos() as $actualRecaudo) {
                 if ($i == 1){
@@ -83,6 +82,10 @@ class SolicitudComisionServicioController extends Controller
             $solicitudComisionServicio
                 ->assignTo($this->getUser())
                 ->setTipoTramite($tipo_tramite);
+
+            $transicion
+                ->asignarA($solicitudComisionServicio)
+                ->setEstado($estado);
 
             $em->persist($solicitudComisionServicio);
 

@@ -16,8 +16,8 @@ class TipoTramite
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+//* @ORM\GeneratedValue(strategy="AUTO")
     private $id;
 
     /**
@@ -36,7 +36,7 @@ class TipoTramite
     private $descripcion;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tramite", mappedBy="tipo_tramite")
+     * @ORM\OneToMany(targetEntity="Tramite", mappedBy="tipo_tramite_id")
      */
     protected $tramites;
 
@@ -53,6 +53,20 @@ class TipoTramite
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return TipoTramite
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**

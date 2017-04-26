@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use TramiteBundle\Entity\Recaudo;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use TramiteBundle\Entity\Transicion;
 use AppBundle\Entity\Usuario;
@@ -52,10 +51,10 @@ class Tramite
      * @ORM\ManyToOne(targetEntity="TipoTramite", inversedBy="tramites")
      * @ORM\JoinColumn(name="tipo_tramite_id", referencedColumnName="id")
      */
-    protected $tipo_tramite;
+    protected $tipo_tramite_id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Transicion", mappedBy="tramite")
+     * @ORM\OneToOne(targetEntity="Transicion", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected  $transicion;
 
@@ -63,7 +62,7 @@ class Tramite
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
-    protected $owner;
+    protected $usuario_id;
 
     public function getId()
     {
@@ -95,27 +94,27 @@ class Tramite
     }
 
     /**
-     * Set tipo_tramite
+     * Set tipo_tramite_id
      *
-     * @param \TramiteBundle\Entity\TipoTramite $tipoTramite
+     * @param \TramiteBundle\Entity\TipoTramite $tipoTramite_id
      *
      * @return Tramite
      */
-    public function setTipoTramite(\TramiteBundle\Entity\TipoTramite $tipo_tramite = null)
+    public function setTipoTramite(\TramiteBundle\Entity\TipoTramite $tipo_tramite_id = null)
     {
-        $this->tipo_tramite = $tipo_tramite;
+        $this->tipo_tramite_id = $tipo_tramite_id;
 
         return $this;
     }
 
     /**
-     * Get tipo_tramite
+     * Get tipo_tramite_id
      *
      * @return \TramiteBundle\Entity\TipoTramite
      */
     public function getTipoTramite()
     {
-        return $this->tipo_tramite;
+        return $this->tipo_tramite_id;
     }
 
     /**
@@ -154,10 +153,25 @@ class Tramite
 
     public function assignTo(Usuario $owner)
     {
-        $this->owner = $owner;
+        $this->usuario_id = $owner;
         $owner->ownTramite($this);
 
         return $this;
     }
-
+    
+    public function getUsuarioId()
+    {
+        return $this->usuario_id;
+    }
+    
+    public function __toString()
+    {
+        return sprintf($this->getUsuarioId());
+    }
+    
+    public function ownTransicion(Transicion $transicion)
+    {
+        $this->transicion = $transicion;
+        return $this;
+    }
 }

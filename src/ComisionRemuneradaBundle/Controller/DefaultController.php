@@ -2,9 +2,11 @@
 
 namespace ComisionRemuneradaBundle\Controller;
 
+use Proxies\__CG__\AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
+use TramiteBundle\Entity\Tramite;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,7 +31,13 @@ class DefaultController extends Controller
      */
     public function solicitudes_serv_remunAction()
     {
-        return $this->render('ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        /*$tramites = $em->getRepository(Tramite::class);
+        $tramites_comision = $tramites->findBy(["tipo_tramite_id" => 6]);*/
+        $query = $em->createQuery("SELECT u, t FROM TramiteBundle:Tramite t JOIN t.usuario_id u WHERE t.usuario_id = u.id AND t.tipo_tramite_id = 6");
+        $tramites_comision = $query->getResult();
+        return $this->render('ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun.html.twig',
+            array('tramites_comision' => $tramites_comision));
     }
     /**
      * @Route("/estado-solicitud", name="estado-solicitud")

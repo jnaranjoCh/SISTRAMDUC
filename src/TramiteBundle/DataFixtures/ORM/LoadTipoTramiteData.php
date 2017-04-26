@@ -14,6 +14,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
     public function load(ObjectManager $manager)
     {
         $tipo_registro = new TipoTramite();
+        $tipo_registro->setId(1);
         $tipo_registro->setNombre('Registro Unico');
         $tipo_registro->setDescripcion('');
         $tipo_registro->setDuracion('');
@@ -22,6 +23,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_plan = new TipoTramite();
+        $tipo_plan->setId(2);
         $tipo_plan->setNombre('Plan Septenal');
         $tipo_plan->setDescripcion('');
         $tipo_plan->setDuracion('');
@@ -30,6 +32,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_reincorporacion = new TipoTramite();
+        $tipo_reincorporacion->setId(3);
         $tipo_reincorporacion->setNombre('Reincorporacion');
         $tipo_reincorporacion->setDescripcion('');
         $tipo_reincorporacion->setDuracion('');
@@ -38,6 +41,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_clausulas = new TipoTramite();
+        $tipo_clausulas->setId(4);
         $tipo_clausulas->setNombre('Clausulas Contractuales');
         $tipo_clausulas->setDescripcion('');
         $tipo_clausulas->setDuracion('');
@@ -46,6 +50,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_preparadores = new TipoTramite();
+        $tipo_preparadores->setId(5);
         $tipo_preparadores->setNombre('Preparadores');
         $tipo_preparadores->setDescripcion('');
         $tipo_preparadores->setDuracion('');
@@ -54,6 +59,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_comision = new TipoTramite();
+        $tipo_comision->setId(6);
         $tipo_comision->setNombre('Comision de Servicio');
         $tipo_comision->setDescripcion('');
         $tipo_comision->setDuracion('30 dias');
@@ -62,6 +68,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_jubilacion = new TipoTramite();
+        $tipo_jubilacion->setId(7);
         $tipo_jubilacion->setNombre('Jubilacion');
         $tipo_jubilacion->setDescripcion('');
         $tipo_jubilacion->setDuracion('30 dias');
@@ -70,6 +77,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $tipo_concurso = new TipoTramite();
+        $tipo_concurso->setId(8);
         $tipo_concurso->setNombre('Concurso de Oposicion');
         $tipo_concurso->setDescripcion('');
         $tipo_concurso->setDuracion('');

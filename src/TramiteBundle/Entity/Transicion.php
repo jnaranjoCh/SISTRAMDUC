@@ -28,7 +28,7 @@ class Transicion
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $doc_info;
+    private $doc_info = "Doc_info";
 
     /**
      * @ORM\OneToOne(targetEntity="Tramite", mappedBy="transicion")
@@ -119,4 +119,13 @@ class Transicion
     {
         return $this->estado;
     }
+
+    public function asignarA(Tramite $tramite)
+    {
+        $this->tramite = $tramite;
+        $tramite->ownTransicion($this);
+
+        return $this;
+    }
+    
 }
