@@ -57,3 +57,15 @@ registro_obtenerlastid_ajax:
 registro_consulta_index:
     path:     /registro/consulta
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:consultarRegistro }
+
+registro_consultaobteneremails_ajax:
+    path:     /consulta/enviar-emails
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarEmailsAjax }
+
+registro_consultarregistros_ajax:
+    path:     /consulta/enviar-registros
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeUsuarioAjax }
+
+registro_consultarbuscaremail_ajax:
+    path:     /consulta/buscar-email
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarEmailAjax }

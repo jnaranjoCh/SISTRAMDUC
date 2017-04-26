@@ -36,6 +36,7 @@ class RegistrarUsuarioController extends Controller
             }
             $usuario->addRoles($roles);
             $usuario->setActivo(1);
+            $usuario->setIsRegister(0);
             $usuario->setCorreo($request->get("Email"));
             
             $em = $this->getDoctrine()->getManager();
@@ -51,9 +52,10 @@ class RegistrarUsuarioController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
-            $encontrado = $this->getOneCedula("AppBundle:","Usuario",$request->get("Cedula"));
+            $encontradoId = $this->getOneCedula("AppBundle:","Usuario",$request->get("Cedula"));
+            $encontradoEmail = $this->getOneEmail("AppBundle:","Usuario",$request->get("Email"));
 
-            if (!$encontrado) {
+            if (!$encontradoId && !$encontradoEmail) {
                  return new JsonResponse("N");
             }else
             {
@@ -87,6 +89,14 @@ class RegistrarUsuarioController extends Controller
                     ->getManager()
                     ->getRepository($bundle.$entidad)
                     ->findOneByCedula($cedula);
+    }
+    
+    private function getOneEmail($bundle,$entidad,$cedula)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByCorreo($cedula);
     }
     
 

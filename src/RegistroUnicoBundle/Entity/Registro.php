@@ -249,6 +249,25 @@ class Registro
 
         return $this;
     }
+    
+    public function getTipoRegitroId()
+    {
+        return $this->tipoRegistroId;
+    }
+
+    /**
+     * Set tipo_registro
+     *
+     * @param TipoRegistro $tipo_registro
+     *
+     * @return Registro
+     */
+    public function setTipoRegitroId($tipoRegistroId)
+    {
+        $this->tipoRegistroId = $tipoRegistroId;
+
+        return $this;
+    }
 
     /**
      * Get nivel

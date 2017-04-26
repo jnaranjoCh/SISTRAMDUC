@@ -11,6 +11,7 @@ use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
 use RegistroUnicoBundle\Entity\Cargo;
 use TramiteBundle\Entity\Tramite;
+use \stdClass;
 
 /**
  * @ORM\Entity
@@ -60,6 +61,11 @@ class Usuario implements UserInterface
      */
     private $segundoApellido;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isRegister;
+    
     /**
      * @ORM\Column(type="string")
      */
@@ -160,6 +166,11 @@ class Usuario implements UserInterface
      * @ORM\OneToMany(targetEntity="PlanSeptenalBundle\Entity\PlanSeptenalIndividual", mappedBy="owner")
      */
     protected $planes_septenales_individuales;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Recaudo", mappedBy="usuario")
+     */
+    protected $recaudos;
 
     /**
      * @ORM\ManyToOne(targetEntity="RegistroUnicoBundle\Entity\Departamento")
@@ -551,6 +562,30 @@ class Usuario implements UserInterface
     {
         return $this->activo;
     }
+    
+    /**
+     * Set activo
+     *
+     * @param boolean $isRegister
+     *
+     * @return Usuario
+     */
+    public function setIsRegister($isRegister)
+    {
+        $this->isRegister = $isRegister;
+
+        return $this;
+    }
+
+    /**
+     * Get isRegister
+     *
+     * @return bool
+     */
+    public function getIsRegister()
+    {
+        return $this->isRegister;
+    }
 
     /**
      * Set direccion
@@ -576,15 +611,30 @@ class Usuario implements UserInterface
         return $this->direccion;
     }
 
-	 public function getRegistros()
-    {
-       // profiler needs at least one rol to consider the user logged in
-       $registros = array_reduce($this->registros->toArray(), function ($registro_names, $registro) {
-           $registro_names[] = $registro->getDescription();
-           return $registro_names;
-       }, []);
-
-       return $registros;
+	public function getRegistros()
+    { 
+        $registros = new stdClass;
+        
+        $i = 0;
+        $data[] = [];
+        foreach($this->registros->toArray() as $registro){
+            $data[$i]['Id'] = $registro->getId();
+            $data[$i]['TipoDeReferencia'] = $registro->getTipo()->getDescription();
+            $data[$i]['Descripcion'] = $registro->getDescription();
+            $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
+            $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
+            $data[$i]['AnoDePublicacionAsistencia'] = $registro->getAño();
+            if($registro->getInstitucionEmpresa() == "")
+                $data[$i]['EmpresaInstitucion'] = "No posee";
+            else
+                $data[$i]['EmpresaInstitucion'] = $registro->getInstitucionEmpresa();
+            $i++;
+        }
+        
+        $registros->data = $data;
+        $registros->num = $i;
+        
+        return $registros;
     }
 
     public function addRegistro($registro)

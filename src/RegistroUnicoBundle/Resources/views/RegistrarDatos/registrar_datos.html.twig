@@ -16,7 +16,43 @@
     <!--User data header-->
     <br/>
     <!-- Modal -->
-    <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal fade" id="myModal3" role="dialog"  data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content alert alert-warning" style="border-radius: 25px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Advertencia!</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-offset-2 col-md-3">
+                <img src="{{ asset('assets/images/danger-34250_640.png') }}" class="img-rounded" alt="Cinque Terre" width="70%" height="70%" />
+                <!--<img src="{{ asset('assets/images/danger-34250_640.png') }}"/>-->
+              </div>
+              <div class="col-xs-pul-1 col-md-6">
+                <h3>Por favor verifique que los datos y los archivos esten correctos!</h3>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-1">
+                  <button id="continue" type="button" class="btn btn-default">Continuar</button>
+              </div>
+              <div class="col-xs-10">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Modal -->
+    
+    <div class="modal fade" id="myModal2" role="dialog" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog">
         <!-- Modal content-->
         <div>
@@ -26,7 +62,7 @@
         </div>
       </div>
     </div>
-     <!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
 
@@ -37,25 +73,29 @@
             <h4 class="modal-title">Usuarios registrados</h4>
           </div>
           <div class="modal-body">
-            <table id="tableUsers" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>Email</th>
-                <th>Estatus</th>
-              </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-              <tr>
-               <th>Email</th>
-               <th>Estatus</th>
-              </tr>
-              </tfoot>
-            </table>
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                  <th>Registro Completo</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                 <th>Registro Completo</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
 
@@ -221,6 +261,51 @@
                       <div class="form-group">
                         <label>Dirección</label>
                         <textarea id="DireccionDatos" class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div id="divFechaVencimientoCedulaDatos" class="form-group has-feedback">
+                        <label>Fecha de vencimiento de la cedula</label>
+                        <div class='input-group date' id='datetimepicker3'>
+                            <input id="FechaVencimientoCedulaDatos" name="FechaVencimientoCedulaDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                      <div id="divFechaVencimientoRifDatos" class="form-group has-feedback">
+                        <label>Fecha de vencimiento del RIF</label>
+                        <div class='input-group date' id='datetimepicker4'>
+                            <input id="FechaVencimientoRifDatos" name="FechaVencimientoRifDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div id="divFechaVencimientoActaNacimientoDatos" class="form-group has-feedback">
+                        <label>Fecha de vencimiento del acta de nacimiento</label>
+                        <div class='input-group date' id='datetimepicker5'>
+                            <input id="FechaVencimientoActaNacimientoDatos" name="FechaVencimientoActaNacimientoDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -530,7 +615,7 @@
             <!--research,courses and studies box-->
           </div>
           <div id="divCheckbox" class="col-md-offset-1 col-md-10 hidden">
-            <input type="checkbox" id="checkboxHijos" name="checkboxHijos"> <strong>Ingresar datos de hijos</strong><br/><br/>
+            <input type="checkbox" id="checkboxHijos" name="checkboxHijos" value="activo"/> <strong>Ingresar datos de hijos</strong><br/><br/>
           </div>
           <!--+carg box-->
           <div id="formHijos" class="col-md-offset-1 col-md-10 hidden">
@@ -628,6 +713,16 @@
                       </select>
                       <span id="spanNacionalidadHijoDatos" class="glyphicon form-control-feedback"></span>
                     </div>
+                    <div id="divFechaVencimientoActaNacimientoHijoDatos" class="form-group has-feedback">
+                      <label>Fecha de vencimiento del acta de nacimiento</label>
+                      <div class='input-group date' id='datetimepicker6'>
+                          <input id="FechaVencimientoActaNacimientoHijoDatos" name="FechaVencimientoActaNacimientoHijoDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
                   </div>
                   <!-- /.col -->
                   <div class="col-md-12">
@@ -657,6 +752,7 @@
                       <th>1er Apellido</th>
                       <th>2do Apellido</th>
                       <th>F Nacimiento</th>
+                      <th>F Vencimiento Acta</th>
                       <th>Nacionalidad</th>                  
                     </tr>
                     </thead>
@@ -672,6 +768,7 @@
                       <th>1er Apellido</th>
                       <th>2do Apellido</th>
                       <th>F Nacimiento</th>
+                      <th>F Vencimiento Acta</th>
                       <th>Nacionalidad</th>
                     </tr>
                     </tfoot>
@@ -696,12 +793,12 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/iniRD.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+  {% include('RegistroUnicoBundle::configTable.html.twig') %}
+  {% include('RegistroUnicoBundle:RegistrarDatos:iniRD.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showField.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/generate.js') }}"></script>
+  {% include('RegistroUnicoBundle:RegistrarDatos:generate.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/saveData.js') }}"></script>
+  {% include('RegistroUnicoBundle:RegistrarDatos:saveData.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showBoxes.js') }}"></script>
 {% endblock %}

@@ -37,6 +37,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $tony->setTelefono('');
         $tony->setRif('');
         $tony->setActivo(true);
+        $tony->setIsRegister(true);
         $tony->setDireccion('Malibu');
         //$tony->setEstatusId(1);
 
