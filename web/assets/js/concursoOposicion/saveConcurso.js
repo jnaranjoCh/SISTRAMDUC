@@ -11,7 +11,7 @@ $('#registrarConcurso').click(function (){
 
 	var cedula = $('#cedula').val();
 
-	if (cedula == ""){
+	if (cedula == "" || cedula == 0 || cedula == '0'){
 
 		continua = false;
 		$('#spancedula').removeClass("hide");
@@ -51,8 +51,9 @@ $('#registrarConcurso').click(function (){
             "Vacantes":$("#cedula").val(), 
             "Area":$("#area").val(), 
             "fechaDoc":$("#fechaDoc").val(), 
-            "fechaPre":$("#fechaPre").val(), 
-            "observacion":"Oposicion"},
+            "fechaPre":$("#fechaPre").val(),
+            "": $("observacion").val(), 
+            "tipo":"Oposicion"},
             url:  "/concursoOposicion/registroConcursoAjax",
             dataType: 'json',
             success: function(data)

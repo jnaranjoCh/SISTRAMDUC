@@ -1,12 +1,4 @@
-var id;
-
 $( window ).load(function (){
-
-/*
-
-  <!-- Select -->
-  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
-*/
 
 	$.ajax({
         method: "POST",
@@ -14,16 +6,13 @@ $( window ).load(function (){
         dataType: 'json',
         success: function(data)
         {
-        	var opcion = "<option selected='selected'>...</option>";
-        	var n;
-
-        	if (data["id"].length-1 > 10)
-        		n = 10;
-        	else n = data["id"].length;
+        	var opcion = "<option id='sel' selected='selected'>...</option>";
  
-        	for (var i = 0; i < n; i++) {
+        	for (var i = 0; i < data["id"].length; i++) {
         		
-        		opcion = opcion+"<option><b>Area:</b> "+data["area"][i]+
+        		var num = data["id"][i];
+
+        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
         		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
         		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
         		+"</option>";   		
@@ -34,10 +23,18 @@ $( window ).load(function (){
     });	
 });
 
+
 $('#registrarJurado').click(function (){ 
 	
 	var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
 	var continua = true;
+
+	if ($("#lista").val() == null || 
+		$("#lista").val() == "..." || 
+		$("#lista").val() == "") {
+
+		continua = false;
+	}
 
 	for (var i = 1; i < 4; i++) {
 		
@@ -73,7 +70,7 @@ $('#registrarJurado').click(function (){
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
 		            "area":$("#area"+i).val(),
-		        	"concurso": id},
+		        	"concurso": $("#lista").val()},
 		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)

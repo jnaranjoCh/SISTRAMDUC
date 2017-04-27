@@ -178,6 +178,21 @@
 
 	            <br/>
 
+	            <div class="box-body">
+		          <div class="row">
+		            <div class="col-md-2">
+			            <label>Concurso</label>
+		            </div>
+		            <div class="col-md-7">
+		                <select class="form-control select2" style="width: 100%;" id="lista">
+		                	
+		                </select> 
+		            </div>
+		          </div>
+		        </div>	     
+
+	            <br/>
+
 				<div class="container">
 	            		<label>CPEC Coordinador<span id="spannombre1" class="label label-danger hide pull-right">Vac&iacute;o</span>
 	            	</label>
@@ -314,5 +329,15 @@
 
   <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
   <script src="{{ asset('assets/js/concursoOposicion/saveCPEC.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+
+  <script>
+  $(function () {
+
+    	$(".select2").select2();
+
+	});
+  </script>
 
 {% endblock %}
