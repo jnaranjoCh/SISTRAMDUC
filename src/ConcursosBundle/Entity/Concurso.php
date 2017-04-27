@@ -71,6 +71,13 @@ class Concurso
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
      */
     private $observaciones;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=100)
+     */
+    private $tipo;
     
     /**
      * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Aspirante")
@@ -271,6 +278,30 @@ class Concurso
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     *
+     * @return Concurso
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 
     public function addJurado($jurados)
