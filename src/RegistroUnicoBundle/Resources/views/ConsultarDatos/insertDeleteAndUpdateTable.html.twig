@@ -1,0 +1,69 @@
+<script type="text/javascript">
+    $('#tableRegistros tbody').on( 'click', 'td', function () {
+        var object = tableRegistros.cell( this ).data();
+        var row = tableRegistros.cell( this ).index().row;
+        var column = tableRegistros.cell( this ).index().column;
+        var cell = new Object();
+        
+        var id = object.split('id="')[1];
+        id = id.split('"')[0];
+        
+        cell.row = row;
+        cell.column = "5";
+        cell.columnVisible = "0";
+    
+        $("#"+id).change(function(){
+            if(column == 0 && ($("#"+id).val() == "Tutoria de pasantias" || $("#"+id).val() == "Tutoria de servicio comunitario"))
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">').draw();
+            else if(column == 0  && ($("#"+id).val() != "Tutoria de pasantias" && $("#"+id).val() != "Tutoria de servicio comunitario"))
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>').draw();
+        });
+    });
+    
+    $('#restablecerRegistros').click(function(){
+        $('#tableRegistros').dataTable().fnDestroy();
+        tableRegistros = $('#tableRegistros').DataTable({
+                        	    "ajax":{
+                                   "url": "{{ path('registro_consultarregistros_ajax') }}",
+                                   "type": 'POST',
+                                   "data": {"email":$('#gemail').val()}
+                                },
+                        	    "language": {
+                                    	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                },
+                                columns: [
+                                   {"data":"TipoDeReferencia"},
+                                   {"data":"Descripcion"},
+                                   {"data":"Nivel"},
+                                   {"data":"Estatus"},
+                                   {"data":"AnoDePublicacionAsistencia"},
+                                   {"data":"EmpresaInstitucion"}
+                                ]
+                            });
+    });
+    
+    $('#agregarRegistros').click(function(){
+        var cell = new Object();
+        cell.row = "0";
+        cell.column = "0";
+        cell.columnVisible = "0";
+        var tipo = tableRegistros.cell(cell).data().replace("Tipo0", "Tipo"+$('#tableRegistros >tbody >tr').length).replace("selected='selected'", "");
+        cell.row = "0";
+        cell.column = "2";
+        cell.columnVisible = "0";
+        var nivel = tableRegistros.cell(cell).data().replace("Nivel0", "Nivel"+$('#tableRegistros >tbody >tr').length).replace("selected='selected'", "");
+        cell.row = "0";
+        cell.column = "3";
+        cell.columnVisible = "0";
+        var estatus = tableRegistros.cell(cell).data().replace("Estatus0", "Estatus"+$('#tableRegistros >tbody >tr').length).replace("selected='selected'", "");
+        tableRegistros.row.add( {
+            "TipoDeReferencia":tipo,
+            "Descripcion":'<input id="Descripcion'+$('#tableRegistros >tbody >tr').length+'" value="" type="text" class="form-control" placeholder="Descripción">',
+            "Nivel":nivel,
+            "Estatus":estatus,
+            "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+$('#tableRegistros >tbody >tr').length+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
+            "EmpresaInstitucion": '<input id="EmpresaInstitucion'+$('#tableRegistros >tbody >tr').length+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
+        } ).draw();
+
+    });
+</script>
