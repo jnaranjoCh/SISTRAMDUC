@@ -11,6 +11,7 @@ use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
 use RegistroUnicoBundle\Entity\Cargo;
 use TramiteBundle\Entity\Tramite;
+use \stdClass;
 
 /**
  * @ORM\Entity
@@ -610,15 +611,30 @@ class Usuario implements UserInterface
         return $this->direccion;
     }
 
-	 public function getRegistros()
-    {
-       // profiler needs at least one rol to consider the user logged in
-       $registros = array_reduce($this->registros->toArray(), function ($registro_names, $registro) {
-           $registro_names[] = $registro->getDescription();
-           return $registro_names;
-       }, []);
-
-       return $registros;
+	public function getRegistros()
+    { 
+        $registros = new stdClass;
+        
+        $i = 0;
+        $data[] = [];
+        foreach($this->registros->toArray() as $registro){
+            $data[$i]['Id'] = $registro->getId();
+            $data[$i]['TipoDeReferencia'] = $registro->getTipo()->getDescription();
+            $data[$i]['Descripcion'] = '<input id="Descripcion'.$i.'" value="'.$registro->getDescription().'" type="text" class="form-control" placeholder="Descripción">';
+            $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
+            $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
+            $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
+            if($registro->getInstitucionEmpresa() == "")
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>';
+            else
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Empresa y/o institución">';
+            $i++;
+        }
+        
+        $registros->data = $data;
+        $registros->num = $i;
+        
+        return $registros;
     }
 
     public function addRegistro($registro)
