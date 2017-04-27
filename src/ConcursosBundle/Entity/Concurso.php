@@ -92,7 +92,7 @@ class Concurso
 
     public function __construct()
     {
-        $this->jurado = new ArrayCollection();
+       $this->jurado = new ArrayCollection();
     }
     
     /**

@@ -191,18 +191,20 @@ class DefaultController extends Controller
 
                 $concurso = new Concurso();
 
-                $concurso->setFechaInicio(date_create($request->get("Inicio")));
+                $date = strtotime($request->get("Inicio"));
 
-                $concurso->setNroVacantes($request->get("Vacantes"));
+                $concurso->setFechaInicio(date_create("2017-01-01"));
+
+                $concurso->setNroVacantes(intval($request->get("Vacantes")));
 
                 $concurso->setIdUsuario($this->getUser()->getId());
-        
+        /*
                 if ($request->get("fechaDoc") != null || $request->get("fechaDoc") != "")
-                    $concurso->setFechaRecepDoc(date_create($request->get("fechaDoc")));
+                    $concurso->setFechaRecepDoc($request->get("fechaDoc"));
                 
                 if ($request->get("fechaPre") != null || $request->get("fechaPre") != "")
-                    $concurso->setFechaPresentacion(date_create($request->get("fechaPre")));
-                
+                    $concurso->setFechaPresentacion($request->get("fechaPre"));
+                */
                 $concurso->setObservaciones($request->get("observacion"));
 
                 $concurso->setAreaPostulacion($request->get("Area"));
@@ -323,7 +325,7 @@ class DefaultController extends Controller
         $i = 0;
         foreach($object as $value)
         {
-           $val[$entidad][$i] = $value->getFechaInicio();
+           $val[$entidad][$i] = date_format($value->getFechaInicio(), 'd-m-Y');
            $i++;
         }
         return $val;

@@ -1,3 +1,39 @@
+var id;
+
+$( window ).load(function (){
+
+/*
+
+  <!-- Select -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
+*/
+
+	$.ajax({
+        method: "POST",
+        url:  "/concursoOposicion/listadoConcursosAjax",
+        dataType: 'json',
+        success: function(data)
+        {
+        	var opcion = "<option selected='selected'>...</option>";
+        	var n;
+
+        	if (data["id"].length-1 > 10)
+        		n = 10;
+        	else n = data["id"].length;
+ 
+        	for (var i = 0; i < n; i++) {
+        		
+        		opcion = opcion+"<option><b>Area:</b> "+data["area"][i]+
+        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+        		+"</option>";   		
+        	}
+
+        	$("#lista").html(opcion);
+        }
+    });	
+});
+
 $('#registrarJurado').click(function (){ 
 	
 	var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
@@ -37,7 +73,7 @@ $('#registrarJurado').click(function (){
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
 		            "area":$("#area"+i).val(),
-		        	"concurso": 1},
+		        	"concurso": id},
 		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
