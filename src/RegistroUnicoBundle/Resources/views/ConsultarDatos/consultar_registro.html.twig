@@ -72,6 +72,7 @@
                             <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ver usuarios</button>
                       </div>
                     </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
                   </div>
                 </div>
              </div>
@@ -81,7 +82,7 @@
           <div id="formRegistros" class="col-md-offset-1 col-md-10">
             <!-- /.box-info -->
             <div id="headerRegistros" class="box-footer">
-              <strong>Sección para consultar y editar los cargos desempeñados en la UC.</strong>
+              <strong>Sección para consultar y editar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
             </div>
              <!-- /.box-header -->
             <div class="box box-danger">
@@ -119,6 +120,20 @@
                     </tfoot>
                   </table>
                 </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group has-feedback">
+                            <button  id="restablecerRegistros" type="button" class="btn btn-primary btn-block btn-flat">Restablecer&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                      </div>
+                  </div><!-- text-center -->
+                  <div class="col-md-6">
+                      <div class="form-group has-feedback">
+                            <button  id="agregarRegistros" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                      </div>
+                  </div><!--col-xs-12   col-md-offset-5 -->
+                </div>
+                
               </div>
               <!-- /.box -->
            </div>
@@ -134,4 +149,5 @@
 {% block custom_javascripts %}
   {% include('RegistroUnicoBundle:ConsultarDatos:iniCD.html.twig') %}
   {% include('RegistroUnicoBundle:ConsultarDatos:generate.html.twig') %}
+  {% include('RegistroUnicoBundle:ConsultarDatos:insertDeleteAndUpdateTable.html.twig') %}
 {% endblock %}

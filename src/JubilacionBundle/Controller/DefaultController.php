@@ -59,6 +59,14 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/jubilacion/estado-solicitud", name="jubilacion-estado-solicitud")
+     */
+    public function estadoSolicitudAction()
+    {
+        return $this->render('JubilacionBundle::progresoSolicitudProf.html.twig');
+    }
+
+    /**
      * @Route("/jubilacion/codigo-barra", name="jubilacion-codigo-barra")
      * Muestra el codigo como una imagen png
      */

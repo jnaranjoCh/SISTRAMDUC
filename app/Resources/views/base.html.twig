@@ -25,6 +25,9 @@
   <!-- Toastr -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
 
+  <!-- Select -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
@@ -34,7 +37,6 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-
   {% block stylesheets %}{% endblock %}
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -307,8 +309,8 @@
             <li data-route="jubilacion-solicitud">
               <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
             </li>
-            <li data-route="jubilacion-solicitud">
-              <a href="#"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
+            <li data-route="jubilacion-estado-solicitud">
+              <a href="{{ path('jubilacion-estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
             </li>
           </ul>
         </li>

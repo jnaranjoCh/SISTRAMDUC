@@ -620,14 +620,14 @@ class Usuario implements UserInterface
         foreach($this->registros->toArray() as $registro){
             $data[$i]['Id'] = $registro->getId();
             $data[$i]['TipoDeReferencia'] = $registro->getTipo()->getDescription();
-            $data[$i]['Descripcion'] = $registro->getDescription();
+            $data[$i]['Descripcion'] = '<input id="Descripcion'.$i.'" value="'.$registro->getDescription().'" type="text" class="form-control" placeholder="Descripción">';
             $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
-            $data[$i]['AnoDePublicacionAsistencia'] = $registro->getAño();
+            $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
             if($registro->getInstitucionEmpresa() == "")
-                $data[$i]['EmpresaInstitucion'] = "No posee";
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>';
             else
-                $data[$i]['EmpresaInstitucion'] = $registro->getInstitucionEmpresa();
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Empresa y/o institución">';
             $i++;
         }
         

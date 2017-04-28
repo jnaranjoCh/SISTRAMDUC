@@ -6,6 +6,31 @@ var c4 = new Array();
 var c5 = new Array();
 var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
 
+$( window ).load(function (){
+
+	$.ajax({
+        method: "POST",
+        url:  "/concursoOposicion/listadoConcursosAjax",
+        dataType: 'json',
+        success: function(data)
+        {
+        	var opcion = "<option id='sel' selected='selected'>...</option>";
+ 
+        	for (var i = 0; i < data["id"].length; i++) {
+        		
+        		var num = data["id"][i];
+
+        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+        		+"</option>";   		
+        	}
+
+        	$("#lista").html(opcion);
+        }
+    });	
+});
+
 $('#ingresarCPEC').click(function (){ 
 		
 	var continua = true;
@@ -208,6 +233,13 @@ $('#registrarCPEC').click(function (){
 
 	var continua = true;
 
+	if ($("#lista").val() == null || 
+		$("#lista").val() == "..." || 
+		$("#lista").val() == "") {
+
+		continua = false;
+	}
+
 	for (var j = 1; j < 6; j++) {
 		
 		if ($("#nombre"+j).val() == ""){
@@ -237,35 +269,40 @@ $('#registrarCPEC').click(function (){
 
 					Arreglo = {"cedula":c1[0], "nombre":c1[1], 
 						"tipo":"OposicionCpec", "apellido":c1[2], 
-						"facultad":c1[3], "universidad":c1[4], "area":c1[5]};
+						"facultad":c1[3], "universidad":c1[4], "area":c1[5],
+						"concurso": $("#lista").val()};
 		        }
 
 		        if (i == 2){
 
 					Arreglo = {"cedula":c2[0], "nombre":c2[1], 
 						"tipo":"OposicionCpec", "apellido":c2[2], 
-						"facultad":c2[3], "universidad":c2[4], "area":c2[5]};
+						"facultad":c2[3], "universidad":c2[4], "area":c2[5],
+						"concurso": $("#lista").val()};
 		        }
 
 		        if (i == 3){
 
 					Arreglo = {"cedula":c3[0], "nombre":c3[1], 
 						"tipo":"OposicionCpec", "apellido":c3[2], 
-						"facultad":c3[3], "universidad":c3[4], "area":c3[5]};
+						"facultad":c3[3], "universidad":c3[4], "area":c3[5],
+						"concurso": $("#lista").val()};
 		        }
 
 		        if (i == 4){
 
 					Arreglo = {"cedula":c4[0], "nombre":c4[1], 
 						"tipo":"OposicionCpec", "apellido":c4[2], 
-						"facultad":c4[3], "universidad":c4[4], "area":c4[5]};
+						"facultad":c4[3], "universidad":c4[4], "area":c4[5],
+						"concurso": $("#lista").val()};
 		        }
 
 		        if (i == 5){
 
 					Arreglo = {"cedula":c5[0], "nombre":c5[1], 
 						"tipo":"OposicionCpec", "apellido":c5[2], 
-						"facultad":c5[3], "universidad":c5[4], "area":c5[5]};
+						"facultad":c5[3], "universidad":c5[4], "area":c5[5],
+						"concurso": $("#lista").val()};
 		        }
 
 				$.ajax({
