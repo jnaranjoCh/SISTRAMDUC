@@ -4,6 +4,8 @@ namespace ConcursosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Concurso
  *
@@ -69,6 +71,13 @@ class Concurso
      * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
      */
     private $observaciones;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=100)
+     */
+    private $tipo;
     
     /**
      * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Aspirante")
@@ -87,6 +96,11 @@ class Concurso
      *      )
      */
     protected $jurado;
+
+    public function __construct()
+    {
+       $this->jurado = new ArrayCollection();
+    }
     
     /**
      * Get id
@@ -264,6 +278,41 @@ class Concurso
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     *
+     * @return Concurso
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    public function addJurado($jurados)
+    {
+       $this->jurado[] = $jurados;
+    }
+
+    public function addJurados($jurado)
+    {
+       foreach($jurado as $jurados)
+           $this->addJurado($jurados);
     }
 }
 

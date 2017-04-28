@@ -1,7 +1,40 @@
+$( window ).load(function (){
+
+	$.ajax({
+        method: "POST",
+        url:  "/concursoOposicion/listadoConcursosAjax",
+        dataType: 'json',
+        success: function(data)
+        {
+        	var opcion = "<option id='sel' selected='selected'>...</option>";
+ 
+        	for (var i = 0; i < data["id"].length; i++) {
+        		
+        		var num = data["id"][i];
+
+        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+        		+"</option>";   		
+        	}
+
+        	$("#lista").html(opcion);
+        }
+    });	
+});
+
+
 $('#registrarJurado').click(function (){ 
 	
 	var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
 	var continua = true;
+
+	if ($("#lista").val() == null || 
+		$("#lista").val() == "..." || 
+		$("#lista").val() == "") {
+
+		continua = false;
+	}
 
 	for (var i = 1; i < 4; i++) {
 		
@@ -36,38 +69,53 @@ $('#registrarJurado').click(function (){
 		            "apellido":$("#apellido"+i).val(), 
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
-		            "area":$("#area"+i).val()},
-		            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+		            "area":$("#area"+i).val(),
+		        	"concurso": $("#lista").val()},
+		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
 		            {
 		                if (data == "S"){
 
-							document.getElementById('juradosSave').reset();
-
-							for (var k = 1; k <= 3; k++) {
-				
-								$('#spancedula'+k).addClass("hide");
-								$('#spannombre'+k).addClass("hide");
-								$('#spanapellido'+k).addClass("hide");
-								$('#spanfacultad'+k).addClass("hide");
-								$('#spanuniversidad'+k).addClass("hide");
-								$('#spanarea'+k).addClass("hide");
-							}
+							document.getElementById('juradosSave').reset();				
 
 							$('#msgFracaso').addClass("hide");
 		                	$('#msgFracaso1').addClass("hide");
 		                	$('#msgFracaso2').addClass("hide");
+		                	$('#msgPermiso').addClass("hide");
 							$('#msgExito').removeClass("hide");
 		                } 
 		                else{
 
-		                	$('#msgFracaso').addClass("hide");
-		                	$('#msgExito').addClass("hide");
-							$('#msgFracaso1').removeClass("hide");
+		                	if (data == "N"){
+
+		                		$('#msgFracaso2').addClass("hide");
+			                	$('#msgPermiso').addClass("hide");
+		                		$('#msgFracaso').addClass("hide");
+			                	$('#msgExito').addClass("hide");
+								$('#msgFracaso1').removeClass("hide");
+		                	}
+		                	else {
+
+			                	$('#msgFracaso2').addClass("hide");
+			                	$('#msgPermiso').addClass("hide");
+		                		$('#msgFracaso').addClass("hide");
+			                	$('#msgExito').addClass("hide");
+								$('#msgFracaso1').removeClass("hide");
+		                	}		                	
 		                }
+
+		                for (var k = 1; k <= 3; k++) {
+				
+							$('#spancedula'+k).addClass("hide");
+							$('#spannombre'+k).addClass("hide");
+							$('#spanapellido'+k).addClass("hide");
+							$('#spanfacultad'+k).addClass("hide");
+							$('#spanuniversidad'+k).addClass("hide");
+							$('#spanarea'+k).addClass("hide");
+						}
 		            }
-		        });			
+		        });		
 			}
 
 			/*fin del json*/

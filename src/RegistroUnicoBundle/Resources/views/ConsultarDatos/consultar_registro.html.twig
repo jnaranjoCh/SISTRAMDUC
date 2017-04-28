@@ -9,9 +9,145 @@
       </ol>
     </section>
     <br/>
-    <section class="content-body">
-    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <!--Form-->
+    <form name="Form" id="Form" action="" method="post" enctype="multipart/form-data" novalidate>
+      <div class="row">
+        <section class="content-body">
+          <!--seccion for generate box-->
+          <div class="col-md-offset-1 col-md-10">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                  <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                      <div class="form-group has-feedback">
+                            <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Email del usuario">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ver usuarios</button>
+                      </div>
+                    </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
+                  </div>
+                </div>
+             </div>
+          </div>
+          <!--seccion for generate boxes-->
+          <!--+carg box-->
+          <div id="formRegistros" class="col-md-offset-1 col-md-10">
+            <!-- /.box-info -->
+            <div id="headerRegistros" class="box-footer">
+              <strong>Sección para consultar y editar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Sección 2</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="miniRegistros" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableRegistros" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <br/>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group has-feedback">
+                            <button  id="restablecerRegistros" type="button" class="btn btn-primary btn-block btn-flat">Restablecer&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                      </div>
+                  </div><!-- text-center -->
+                  <div class="col-md-6">
+                      <div class="form-group has-feedback">
+                            <button  id="agregarRegistros" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                      </div>
+                  </div><!--col-xs-12   col-md-offset-5 -->
+                </div>
+                
+              </div>
+              <!-- /.box -->
+           </div>
+           <!--research,courses and studies box-->
+          </div>
+          <!--+carg box-->
+        </section>
+      </div>
+    </form>
+    <!--Form-->
 {% endblock %}
 
 {% block custom_javascripts %}
+  {% include('RegistroUnicoBundle:ConsultarDatos:iniCD.html.twig') %}
+  {% include('RegistroUnicoBundle:ConsultarDatos:generate.html.twig') %}
+  {% include('RegistroUnicoBundle:ConsultarDatos:insertDeleteAndUpdateTable.html.twig') %}
 {% endblock %}

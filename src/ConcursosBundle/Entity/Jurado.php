@@ -4,6 +4,8 @@ namespace ConcursosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Jurado
  *
@@ -76,10 +78,10 @@ class Jurado
      * @ORM\Column(name="cedula", type="string", length=25)
      */
     private $cedula;
-    
+  
     protected $concurso;
 
-
+    
     /**
      * Get id
      *

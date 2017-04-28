@@ -15,12 +15,18 @@ registro_buscarcedula_ajax:
         _method:  POST
         
 registro_datos_index:
-    path:     /registro/datos
+    path:     /registro/datos/{apr}
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:registrarDatosUsuario }
 
 registro_guardar_ajax:
     path:     /registro/guardar-datos
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:guardarDatosAjax }
+    requirements:
+        _method:  POST
+
+registro_guardararchivos_ajax:
+    path:     /registro/guardar-archivos-datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:guardarArchivosAjax }
     requirements:
         _method:  POST
         
@@ -29,12 +35,6 @@ registro_obtener_ajax:
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
     requirements:
         _method:  POST
-        
-registro_buscarcedula_ajax:
-    path:     /registro/buscar-cedula
-    defaults: { _controller: RegistroUnicoBundle:Default:buscarCedulaAjax }
-    requirements:
-        _method:  POST 
         
 registro_buscaremail_ajax:
     path:     /registro/buscar-email
@@ -57,3 +57,15 @@ registro_obtenerlastid_ajax:
 registro_consulta_index:
     path:     /registro/consulta
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:consultarRegistro }
+
+registro_consultaobteneremails_ajax:
+    path:     /consulta/enviar-emails
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarEmailsAjax }
+
+registro_consultarregistros_ajax:
+    path:     /consulta/enviar-registros
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeUsuarioAjax }
+
+registro_consultarbuscaremail_ajax:
+    path:     /consulta/buscar-email
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarEmailAjax }

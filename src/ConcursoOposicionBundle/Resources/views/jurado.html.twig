@@ -9,7 +9,7 @@
         <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
         <li class="active"> Apertura Concurso</li>
       </ol>
-    </section>  
+    </section>   
 
     <br/>
     <div class="row">
@@ -54,7 +54,31 @@
             		<div class="panel-body">
             			<h4>Hay C&eacute;dulas Repetidas. Por Favor Verifique.</h4>
             		</div>		            
+		        </div>
+
+		        <div class="panel panel-warning hide" id="msgPermiso">
+            		<div class="panel-heading">
+            			<h3 class="panel-title"> <i class="glyphicon glyphicon-remove-circle" id="quitar3"></i> Exito</h3>
+            		</div>
+            		<div class="panel-body">
+            			<h4>Usted no tiene permisos para esta acci&oacute;n.</h4>
+            		</div>		            
 		        </div>             	
+
+	            <br/>
+
+		        <div class="box-body">
+		          <div class="row">
+		            <div class="col-md-2">
+			            <label>Concurso</label>
+		            </div>
+		            <div class="col-md-7">
+		                <select class="form-control select2" style="width: 100%;" id="lista">
+		                	
+		                </select> 
+		            </div>
+		          </div>
+		        </div>	     
 
 	            <br/>
 
@@ -363,5 +387,14 @@
 
   <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
   <script src="{{ asset('assets/js/concursoOposicion/saveJurado.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+
+  <script>
+  $(function () {
+
+    	$(".select2").select2();
+
+	});
+  </script>
 
 {% endblock %}

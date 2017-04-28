@@ -1,4 +1,4 @@
-.image-preview-input, .image-preview-input2, .image-preview-input3, .image-preview-input4{
+.image-preview-input, .image-preview-input2, .image-preview-input3{
     position: relative;
 	overflow: hidden;
 	margin: 0px;    
@@ -6,7 +6,7 @@
     background-color: #fff;
     border-color: #ccc;    
 }
-.image-preview-input input[type=file], .image-preview-input2 input[type=file], .image-preview-input3 input[type=file], .image-preview-input4 input[type=file] {
+.image-preview-input input[type=file], .image-preview-input2 input[type=file], .image-preview-input3 input[type=file]{
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -17,7 +17,7 @@
 	opacity: 0;
 	filter: alpha(opacity=0);
 }
-.image-preview-input-title, .image-preview-input-title2, .image-preview-input-title3, .image-preview-input-title4  {
+.image-preview-input-title, .image-preview-input-title2, .image-preview-input-title3{
     margin-left:2px;
 }
 

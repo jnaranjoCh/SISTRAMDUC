@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use TramiteBundle\Entity\Tramite;
 use TramiteBundle\Entity\TipoRecaudo;
+use AppBundle\Entity\Usuario;
 
 /**
  * Recaudo
@@ -41,6 +42,11 @@ class Recaudo
     private $fecha_vencimiento;
 
     /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $tabla;
+
+    /**
      * @var UploadedFile
      *
      * @Assert\File(
@@ -66,6 +72,14 @@ class Recaudo
      * @ORM\JoinColumn(name="tipo_recaudo_id", referencedColumnName="id")
      */
     protected $tipo_recaudo;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     */
+    protected $usuario;
+    
+    
 
     function __construct($name = null, \DateTime $fecha_vencimiento = null){
         $this->name = $name;
@@ -299,8 +313,54 @@ class Recaudo
      * Get fecha_vencimiento
      * @return datetime
      */
-    public function getFechaVencimiento($fecha_vencimiento)
+    public function getFechaVencimiento()
     {
         return $this->fecha_vencimiento;
+    }
+    
+    /**
+     * Get usuario
+     *
+     * @return integer
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+    
+    /**
+     * Set estatus
+     *
+     * @param Usuario $usuario
+     *
+     * @return Recaudo
+     */
+    public function setUsuario(Usuario $usuario)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+    
+    /**
+     * Set tabla
+     *
+     * @param string $tabla
+     * @return Recaudo
+     */
+    public function setTabla($tabla)
+    {
+        $this->tabla = $tabla;
+        return $this;
+    }
+
+    /**
+     * Get tabla
+     *
+     * @return string
+     */
+    public function getTabla()
+    {
+        return $this->tabla;
     }
 }

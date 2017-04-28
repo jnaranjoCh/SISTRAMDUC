@@ -1,7 +1,7 @@
-$(function () {
+<script type="text/javascript">
     tableRegistros = $('#tableRegistros').DataTable({
 	    "language": {
-            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
         },
         columns: [
             { "data": "Id del registro" },
@@ -16,7 +16,7 @@ $(function () {
     
     tableParticipantes = $('#tableParticipantes').DataTable({
 	    "language": {
-            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
         },
         columns: [
             { "data": "Id del registro" },
@@ -27,7 +27,7 @@ $(function () {
     
     tableCargo = $('#tableCargo').DataTable({
 	    "language": {
-            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
         },
         columns: [
             { "data": "Cargo" }
@@ -36,7 +36,7 @@ $(function () {
     
     tableRevista = $('#tableRevista').DataTable({
 	    "language": {
-            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
         },
         columns: [
             { "data": "Id del registro" },
@@ -46,7 +46,7 @@ $(function () {
     
     tableRol = $('#tableRol').DataTable({
 	    "language": {
-            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
         },
         columns: [
             { "data": "Rol" }
@@ -55,7 +55,7 @@ $(function () {
     
     tableHijos = $('#tableHijos').DataTable({
 	    "language": {
-            	"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
         },
         columns: [
             {"data":"CI Madre"},
@@ -65,9 +65,9 @@ $(function () {
             {"data":"2do Nombre"},
             {"data":"1er Apellido"},
             {"data":"2do Apellido"},
-            {"data":"A Nacimiento"},
             {"data":"F Nacimiento"},
+            {"data":"F Vencimiento Acta"},
             {"data":"Nacionalidad"}
         ]
     });
-});
+</script>

@@ -1,7 +1,39 @@
+$( window ).load(function (){
+
+	$.ajax({
+        method: "POST",
+        url:  "/concursoOposicion/listadoConcursosAjax",
+        dataType: 'json',
+        success: function(data)
+        {
+        	var opcion = "<option id='sel' selected='selected'>...</option>";
+ 
+        	for (var i = 0; i < data["id"].length; i++) {
+        		
+        		var num = data["id"][i];
+
+        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+        		+"</option>";   		
+        	}
+
+        	$("#lista").html(opcion);
+        }
+    });	
+});
+
 $('#registrarSuplentesJurado').click(function (){ 
 
 	var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
 	var continua = true;
+
+	if ($("#lista").val() == null || 
+		$("#lista").val() == "..." || 
+		$("#lista").val() == "") {
+
+		continua = false;
+	}
 
 	for (var i = 1; i < 4; i++) {
 		
@@ -36,8 +68,9 @@ $('#registrarSuplentesJurado').click(function (){
 		            "apellido":$("#apellido"+i).val(), 
 		            "facultad":$("#facultad"+i).val(), 
 		            "universidad":$("#universidad"+i).val(), 
-		            "area":$("#area"+i).val()},
-		            url:  "http://localhost:8000/concursoOposicion/registroJuradosAjax",
+		            "area":$("#area"+i).val(),
+		        	"concurso": $("#lista").val()},
+		            url:  "/concursoOposicion/registroJuradosAjax",
 		            dataType: 'json',
 		            success: function(data)
 		            {

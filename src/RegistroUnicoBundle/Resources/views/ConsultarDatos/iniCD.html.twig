@@ -1,0 +1,16 @@
+<script type="text/javascript">
+    $( window ).load(function() {
+        $("#tableUsers").DataTable( {
+              "ajax": "{{ path('registro_consultaobteneremails_ajax') }}",
+              "columns": [
+    		        { "data": "Email" },
+    		        { "data": "Estatus" }
+    	       ],
+    	       "language": {
+                	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                },
+                "bDestroy": true
+        });
+        
+    });
+</script>

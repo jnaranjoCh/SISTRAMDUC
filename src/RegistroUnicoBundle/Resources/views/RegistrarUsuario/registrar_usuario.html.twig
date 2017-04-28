@@ -11,7 +11,7 @@
     
     <br/>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog">
         <!-- Modal content-->
         <div>
@@ -83,8 +83,8 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarUsuario/iniRU.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+  {% include('RegistroUnicoBundle::configTable.html.twig') %}
+  {% include('RegistroUnicoBundle:RegistrarUsuario:iniRU.html.twig') %}
   <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
-  <script src="{{ asset('assets/js/RegistroUnico/RegistrarUsuario/registerUser.js') }}"></script>
+  {% include('RegistroUnicoBundle:RegistrarUsuario:registerUser.html.twig') %}
 {% endblock %}
