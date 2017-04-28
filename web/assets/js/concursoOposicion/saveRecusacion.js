@@ -1,51 +1,39 @@
 $('#registrar').click(function (){ 
 
+	toastr.clear();
+	var text = "";
+
 	var continua = true;
 	var fecha = $('#fecha').val();
 
 	if (fecha == ""){
 		continua = false;
 		$('#fechaSpam').removeClass("hide");
+		text = "Campo vacío";
 	} else {
 
 		$('#aspitanteSpam').addClass("hide");
 		$('#fechaSpam').addClass("hide");
 		$('#juradoSpam').addClass("hide");
-		$('#msgExito').addClass("hide");
-		$('#msgFracaso1').addClass("hide");
-		$('#msgFracaso2').addClass("hide");
-		$('#msgPermiso').addClass("hide");
-		$('#msgAspirante').addClass("hide");
-		$('#msgJurado').addClass("hide");
 	}
 
 	if ($('#aspirante').val() == ""){
 		continua = false;
 		$('#aspitanteSpam').removeClass("hide");
+		text = "Campo vacío";
 	} else {
 
 		$('#aspitanteSpam').addClass("hide");
 		$('#juradoSpam').addClass("hide");
-		$('#msgExito').addClass("hide");
-		$('#msgFracaso1').addClass("hide");
-		$('#msgFracaso2').addClass("hide");
-		$('#msgPermiso').addClass("hide");
-		$('#msgAspirante').addClass("hide");
-		$('#msgJurado').addClass("hide");
 	}
 
 	if ($('#jurado').val() == ""){
 		continua = false;
 		$('#juradoSpam').removeClass("hide");
+		text = "Campo vacío";
 	} else {
 
 		$('#juradoSpam').addClass("hide");
-		$('#msgExito').addClass("hide");
-		$('#msgFracaso1').addClass("hide");
-		$('#msgFracaso2').addClass("hide");
-		$('#msgPermiso').addClass("hide");
-		$('#msgAspirante').addClass("hide");
-		$('#msgJurado').addClass("hide");
 	}
 
 	if (continua){
@@ -68,61 +56,42 @@ $('#registrar').click(function (){
 					$('#aspitanteSpam').addClass("hide");
 					$('#juradoSpam').addClass("hide");
 					$('#fechaSpam').addClass("hide");
-					$('#msgExito').removeClass("hide");
-					$('#msgFracaso').addClass("hide");
-					$('#msgFracaso1').addClass("hide");
-					$('#msgFracaso2').addClass("hide");
-					$('#msgPermiso').addClass("hide");
-					$('#msgAspirante').addClass("hide");
-					$('#msgJurado').addClass("hide");
+
+					text = "Recusación Registrado";
+
+			        toastr.success(text, "Exito", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
 
 				} else {
 					if (data == "N") {
 
-						$('#msgExito').addClass("hide");
-						$('#msgFracaso').addClass("hide");
-						$('#msgFracaso1').addClass("hide");
-						$('#msgFracaso2').addClass("hide");
-						$('#msgPermiso').removeClass("hide");
-						$('#msgAspirante').addClass("hide");
-						$('#msgJurado').addClass("hide");
+						text = "Usted No Tiene Permiso";
 					}
 					else {
 
 						if (data == "A") {
 
-							$('#msgExito').addClass("hide");
-							$('#msgFracaso').addClass("hide");
-							$('#msgFracaso1').addClass("hide");
-							$('#msgFracaso2').addClass("hide");
-							$('#msgPermiso').addClass("hide");
-							$('#msgAspirante').removeClass("hide");
-							$('#msgJurado').addClass("hide");
+							text = "El Aspirante No Existe";
 						}
 						else{
 
 							if (data == "J") {
 
-								$('#msgExito').addClass("hide");
-								$('#msgFracaso').addClass("hide");
-								$('#msgFracaso1').addClass("hide");
-								$('#msgFracaso2').addClass("hide");
-								$('#msgPermiso').addClass("hide");
-								$('#msgAspirante').addClass("hide");
-								$('#msgJurado').removeClass("hide");
+								text = "El Jurado No Existe";
 							}
 							else {
 
-								$('#msgExito').addClass("hide");
-								$('#msgFracaso').addClass("hide");
-								$('#msgFracaso1').removeClass("hide");
-								$('#msgFracaso2').addClass("hide");
-								$('#msgPermiso').addClass("hide");
-								$('#msgAspirante').addClass("hide");
-								$('#msgJurado').addClass("hide");
+								text = "Error al Registrar Concurso";
 							}
 						}						
 					}
+
+					toastr.error(text, "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			        });
 				}
 			}
 		});
@@ -130,7 +99,10 @@ $('#registrar').click(function (){
 		/*fin json*/
 
 	} else{
-		$('#msgFracaso').removeClass("hide");
+		toastr.error(text, "Error", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+         });
 	}
 });
 
@@ -141,21 +113,6 @@ $('#limpiarRecusacion').click(function (){
 	$('#aspitanteSpam').addClass("hide");
 	$('#juradoSpam').addClass("hide");
 	$('#fechaSpam').addClass("hide");
-	$('#msgExito').addClass("hide");
-	$('#msgFracaso').addClass("hide");
-	$('#msgFracaso1').addClass("hide");
-	$('#msgFracaso2').addClass("hide");
-	$('#msgPermiso').addClass("hide");
-	$('#msgAspirante').addClass("hide");
-	$('#msgJurado').addClass("hide");
-});
 
-$('#quitar4').click(function (){
-
-	$('#msgAspirante').addClass("hide");
-});
-
-$('#quitar5').click(function (){
-
-	$('#msgJurado').addClass("hide");
+	toastr.clear();
 });
