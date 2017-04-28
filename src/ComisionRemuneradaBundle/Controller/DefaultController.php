@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
 use TramiteBundle\Entity\Tramite;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +20,7 @@ class DefaultController extends Controller
     {
         return $this->render('ComisionRemuneradaBundle:Default:comision_remunerada_info.html.twig');
     }
+
     /**
      * @Route("/solicitud_serv_remun", name="solicitud_serv_remun")
      */
@@ -26,19 +28,7 @@ class DefaultController extends Controller
     {
         return $this->render('ComisionRemuneradaBundle:Default:solicitud_serv_remun.html.twig');
     }
-    /**
-     * @Route("/solicitudes_serv_remun", name="solicitudes_serv_remun")
-     */
-    public function solicitudes_serv_remunAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        /*$tramites = $em->getRepository(Tramite::class);
-        $tramites_comision = $tramites->findBy(["tipo_tramite_id" => 6]);*/
-        $query = $em->createQuery("SELECT u, t FROM TramiteBundle:Tramite t JOIN t.usuario_id u WHERE t.usuario_id = u.id AND t.tipo_tramite_id = 6");
-        $tramites_comision = $query->getResult();
-        return $this->render('ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun.html.twig',
-            array('tramites_comision' => $tramites_comision));
-    }
+
     /**
      * @Route("/estado-solicitud", name="estado-solicitud")
      */
@@ -82,5 +72,32 @@ class DefaultController extends Controller
                 'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
             )
         );
+    }
+
+    /********************************/
+    /* ÁREA DE ASUNTOS PROFESORALES */
+    /********************************/
+
+    /**
+     * @Route("/comision-de-servicio/solicitudes", name="comision_servicio_solicitudes")
+     */
+    public function solicitudesComisionServicioAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tramites = $em->getRepository(Tramite::class);
+        $tramites_comision = $tramites->findBy(["tipo_tramite_id" => 6]);
+        return $this->render('ComisionRemuneradaBundle:AAPP:solicitudes_comision_servicio.html.twig',
+            array('tramites_comision' => $tramites_comision));
+    }
+
+    /**
+     * @Route("/comision-de-servicio/solicitud/{id}", name="comision_servicio_ver_solicitud")
+     * @Method("GET")
+     */    
+    public function verSolicitudAction(Tramite $tramite)
+    {
+        $recaudos = $tramite->getRecaudos();
+        return $this->render('ComisionRemuneradaBundle:AAPP:ver_solicitud.html.twig', array(
+            'tramite' => $tramite, 'recaudos' => $recaudos));
     }
 }

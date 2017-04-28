@@ -51,18 +51,21 @@ class SolicitudComisionServicioController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            
             /* Se obtienen todos los registros de la tabla tipo_tramite y se busca el registro que 
             corresponda a Comision */
             $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
             $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 6]);
+            
             /* Se obtienen todos los registros de la tabla tipo_recaudo y se extrae los requeridos de 
             acuerdo al tramite correspondiente*/
             $tipo_recaudo_repo = $em->getRepository(TipoRecaudo::class);
             $tipo_recaudo1 = $tipo_recaudo_repo->findOneBy(["id" => 4]);
             $tipo_recaudo2 = $tipo_recaudo_repo->findOneBy(["id" => 5]);
-
+            
+            /* Se obtienen los datos de la tabla estado y se exttrae el requerido (enviada) */
             $estado_repo = $em->getRepository(Estado::class);
-            $estado = $estado_repo->findOneBy(["id" => 6]);
+            $estado = $estado_repo->findOneBy(["id" => 1]);
 
             /* Se le asigna a cada recaudo su tipo*/
             $i = 1;
@@ -78,14 +81,14 @@ class SolicitudComisionServicioController extends Controller
                     break;
                 }
             }
-
+            
             $solicitudComisionServicio
-                ->assignTo($this->getUser())
-                ->setTipoTramite($tipo_tramite);
+                ->assignTo($this->getUser())     // Se asigna un usuario a la solicitud
+                ->setTipoTramite($tipo_tramite); // Se modifica el tipo de tramite
 
             $transicion
-                ->asignarA($solicitudComisionServicio)
-                ->setEstado($estado);
+                ->asignarA($solicitudComisionServicio) // Se asigna una transicion a la solicitud
+                ->setEstado($estado);                  // Se cambia el estado de la transición
 
             $em->persist($solicitudComisionServicio);
 

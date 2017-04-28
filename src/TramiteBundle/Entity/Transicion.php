@@ -127,5 +127,9 @@ class Transicion
 
         return $this;
     }
-    
+
+    public function __toString()
+    {
+        return sprintf($this->getEstado());
+    }
 }

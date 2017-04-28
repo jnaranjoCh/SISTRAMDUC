@@ -6,9 +6,9 @@ solicitudcomisionservicio:
     path: /solicitudcomisionservicio_new
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
 
-solicitudes_serv_remun:
-    path: /solicitudes_serv_remun
-    defaults: {_controller: ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun}
+solicitudes-comision-de-servicio:
+    path: /comision-de-servicio/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:solicitudesComisionServicio}
 
 estado_sol_prof:
     path: /estado-solicitud

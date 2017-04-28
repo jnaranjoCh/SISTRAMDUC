@@ -163,10 +163,15 @@ class Tramite
     {
         return $this->usuario_id;
     }
+
+    public function getTransicion()
+    {
+        return $this->transicion;
+    }
     
     public function __toString()
     {
-        return sprintf($this->getUsuarioId());
+        return sprintf($this->getUsuarioId().' ('.$this->getTransicion().')'.' ('.$this->getRecaudos().')');
     }
     
     public function ownTransicion(Transicion $transicion)

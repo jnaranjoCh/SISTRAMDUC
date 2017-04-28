@@ -133,5 +133,10 @@ class Estado
     {
         return $this->transiciones;
     }
+
+    public function __toString()
+    {
+        return sprintf($this->getNombre());
+    }
 }
 

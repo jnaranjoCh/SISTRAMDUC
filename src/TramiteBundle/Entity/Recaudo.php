@@ -44,7 +44,7 @@ class Recaudo
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $tabla;
+    private $tabla = " ";
 
     /**
      * @var UploadedFile
@@ -273,7 +273,7 @@ class Recaudo
     }
 
     public function __toString() {
-        return sprintf('%d.pdf', $this->id);
+        return sprintf('%d.pdf', $this->id.' ('.$this->getUploadRootDir().')'.' ('.$this->getWebPath().')');
     }
 
     /**

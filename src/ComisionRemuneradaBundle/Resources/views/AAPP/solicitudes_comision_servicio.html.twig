@@ -35,9 +35,9 @@
                                 </tr>
                                 {% for tramite_comision in tramites_comision %}
                                     <tr>
-                                        <td><a href="{{ path('solicitudcomisionservicio_show', { 'id': tramite_comision.id }) }}">{{ tramite_comision.id }}</a></td>
+                                        <td><a href="{{ path('comision_servicio_ver_solicitud', { 'id': tramite_comision.id }) }}">{{ tramite_comision.id }}</a></td>
                                         <td>{{ tramite_comision.getUsuarioId().getPrimerNombre() }} {{ tramite_comision.getUsuarioId().getPrimerApellido() }}</td>
-                                        <td><span class="label label-success">Approved</span></td>
+                                        <td><span class="label label-success">{{ tramite_comision.getTransicion().getEstado() }}</span></td>
                                         <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
                                     </tr>
                                 {% endfor %}

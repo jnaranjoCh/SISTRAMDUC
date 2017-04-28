@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Solicitudes de Comisión de Servicio
+        </h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
+            <li class="active">Revisar Solicitudes</li>
+        </ol>
+    </section>
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-solid box-default">
+            <section class="content">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Solcitiud n° {{ tramite.id }}</h3>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="box-body">
+                            <h4>Nombre:
+                                {{ tramite.getUsuarioId().getPrimerNombre() }}
+                                {{ tramite.getUsuarioId().getSegundoNombre() }}
+                                {{ tramite.getUsuarioId().getPrimerApellido() }}
+                                {{ tramite.getUsuarioId().getSegundoApellido() }}
+                                <br>
+                                C.I:
+                                {{ tramite.getUsuarioId().getCedula() }}
+                            </h4>
+                            {% for recaudo in recaudos %}
+                                <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
+                                    <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+{% endblock %}
