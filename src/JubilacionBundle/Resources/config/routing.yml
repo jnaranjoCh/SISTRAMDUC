@@ -26,6 +26,10 @@ informe-jubilacion-pdf:
     path: /informe-jubilacion-pdf
     defaults: {_controller: JubilacionBundle::informeJubilacionPDF}
 
+estado-solicitud:
+    path: /estado-solicitud
+    defaults: {_controller: JubilacionBundle::progresoSolicitudProf}
+
 codigo-barra:
     path: /codigo-barra
     defaults: {_controller: JubilacionBundle::barcodeImage}
