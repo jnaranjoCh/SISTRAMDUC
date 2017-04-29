@@ -1,6 +1,5 @@
 <script type="text/javascript">    
     var personalData = [];
-    var cargoData = [];
     
     $('#submitData').click(function(){
         toastr.clear();
@@ -113,15 +112,10 @@
              can_register = false;
              $("#spanCargosDatos").addClass("glyphicon-remove");
              $("#divCargosDatos").addClass("has-error");
+             $("#divFechaInicioCargoDatos").addClass("has-error");
              $("#headerCargos").css({ 'color': "red" });
              text = "Error debe seleccionar los cargos.";
         }else{
-            tableCargo.column(0)
-                      .data()
-                      .each( function ( value,index ) {
-                        cargoData[indCargoData] = value;
-                        indCargoData++;
-                      });
             $("#spanCargosDatos").removeClass("glyphicon-remove");
             $("#divCargosDatos").removeClass("has-error");
             $("#headerCargos").css({ 'color': "black" });

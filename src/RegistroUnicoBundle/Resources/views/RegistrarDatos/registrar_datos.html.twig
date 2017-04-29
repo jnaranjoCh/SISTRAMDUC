@@ -344,7 +344,7 @@
                 <!-- /.box-body -->
                 <div class="box-body">
                   <div class="row">
-                      <div class="col-md-12">
+                      <div class="col-md-6">
                         <!-- /.form-group -->
                         <div id="divCargosDatos" class="form-group has-feedback">
                           <label>Cargos</label>
@@ -354,6 +354,18 @@
                         </div>
                         <!-- /.form-group -->
                       </div>
+                      <div class="col-md-6">
+                      <div id="divFechaInicioCargoDatos" class="form-group has-feedback">
+                        <label>Fecha de inicio en el cargo</label>
+                        <div class='input-group date' id='datetimepicker7'>
+                            <input id="FechaInicioCargoDatos" name="FechaInicioCargoDatos" type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
                       <div class="col-md-offset-4 col-md-4">
                           <div class="form-group has-feedback">
                                 <button id="agregarCargoDatos" type="button" class="btn btn-primary btn-block btn-flat">Agregar cargo</button>
@@ -366,6 +378,7 @@
                       <thead>
                       <tr>
                         <th>Cargo</th>
+                        <th>Fecha de inicio en el cargo</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -373,6 +386,7 @@
                       <tfoot>
                       <tr>
                        <th>Cargo</th>
+                       <th>Fecha de inicio en el cargo</th>
                       </tr>
                       </tfoot>
                     </table>

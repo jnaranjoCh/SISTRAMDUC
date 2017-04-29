@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use RegistroUnicoBundle\Entity\UsuarioFechaCargo;
 use ClausulasContractualesBundle\Entity\Hijo;
 use RegistroUnicoBundle\Entity\Revista;
 use RegistroUnicoBundle\Entity\Participante;
@@ -317,13 +318,16 @@ class RegistrarDatosController extends Controller
         }
         
         foreach($cargos as $cargo){
-          $cargoss[$i] = $this->getDoctrine()
-                              ->getManager()
-                              ->getRepository('RegistroUnicoBundle:Cargo')
-                              ->findOneByDescription($cargo);
-          $i++;
+          $car = $this->getDoctrine()
+                      ->getManager()
+                      ->getRepository('RegistroUnicoBundle:Cargo')
+                      ->findOneByDescription($cargo['nombre']);
+          $UsuarioFechaCargo = new UsuarioFechaCargo();
+          $UsuarioFechaCargo->setDate(new \DateTime($cargo['fechaInicio']));
+        
+          $user->addUsuarioFechaCargos($UsuarioFechaCargo);
+          $car->addUsuarioFechaCargos($UsuarioFechaCargo);
         }
-        $user->addCargos($cargoss);
         $em->flush();
     }
     

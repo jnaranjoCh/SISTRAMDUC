@@ -23,8 +23,14 @@ class Cargo
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UsuarioFechaCargo", mappedBy="cargos", cascade={"persist", "remove"})
+     */
+    protected $UsuarioFechaCargos;
+    
     public function __construct()
     {
+         $this->UsuarioFechaCargos = new ArrayCollection();
     }
     
     /**
@@ -60,4 +66,21 @@ class Cargo
     {
         return $this->description;
     }
+    
+    
+    public function getUsuarioFechaCargos()
+    {
+        return $this->UsuarioFechaCargos->toArray();
+    }
+
+    public function addUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargo)
+    {
+        if (!$this->UsuarioFechaCargos->contains($UsuarioFechaCargo)) {
+            $this->UsuarioFechaCargos->add($UsuarioFechaCargo);
+            $UsuarioFechaCargo->setCargo($this);
+        }
+
+        return $this;
+    }
+
 }
