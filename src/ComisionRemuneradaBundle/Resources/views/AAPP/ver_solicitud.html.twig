@@ -12,7 +12,6 @@
         </ol>
     </section>
     <section class="content">
-        <!-- Default box -->
         <div class="box box-solid box-default">
             <section class="content">
                 <div class="box">
@@ -38,34 +37,97 @@
                                         <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
                                     </a>
                                 {% endfor %}
+                                <br>
+                            </th>
+                        <tr>
+                            <th>
+                                <h4>Dar respuesta</h4>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <h5><b>Estado</b></h5>
+                                <div class="btn-group">
+                                    <select id="estatus" class="btn dropdown-toggle btn-default">
+                                        <ul class="dropdown-menu" role="menu">
+                                            <option value="1">{{ tramite.getTransicion().getEstado() }}</option>
+                                            <option value="2">Negado</option>
+                                            <option value="3">Aprobado</option>
+                                        </ul>
+                                    </select><br><br>
+                                    <!--TextBox1<br>
+                                    <input type="text" id="srt" placeholder="get value on option select"><br>-->
+                                </div>
+                                <h5><b>Motivo&nbsp;&nbsp;<span id="spanMotivo" class="label label-danger hide">Vacío</span></b></h5>
+                                <input id="motivo" action="action_page.php" class="form-control" type="text" placeholder="Escribir...">
+                                <div >
+                                    <button id="enviarRespuesta" class="btn btn-success btn-block btn-flat">Registrar</button>
+                                </div>
                             </th>
                         </tr>
                     </table>
-                    {#<div class="box-header">
-                        <h3 class="box-title">Solcitiud n° {{ tramite.id }}</h3>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="box-body">
-                            <h4>
-                                <b>{{ tramite.getUsuarioId().getNombreCompleto() }} </b>
-                                C.I. {{ tramite.getUsuarioId().getCedula() }}
-                                <br><br>
-                                {% for cargo in tramite.getUsuarioId().getCargos() %}
-                                    {{ cargo.getDescription }}
-                                {% endfor %}
-                            </h4>
-                            <h4>Recaudos</h4>
-                            {% for recaudo in recaudos %}
-                                <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
-                                    <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </div>#}
                 </div>
             </section>
         </div>
     </section>
+    {% block custom_javascripts %}
+        <script>
+            $("#enviarRespuesta").click(function (){
+
+                toastr.clear();
+                var text = "";
+
+                var motivo = $('#motivo').val();
+                var continua = true;
+
+                if (motivo == ""){
+                    continua = false;
+                    $('#spanMotivo').removeClass("hide");
+                    text = "Campo vacío";
+                }
+
+                if(continua){
+                    $.ajax({
+                        method: "POST",
+                        data: {"Solicitud": 2,
+                            "Estatus": document.getElementById("estatus").value,
+                            "Motivo": document.getElementById("motivo").value},
+                        url:  "{{ path('jubilacion-insertar') }}",
+                        dataType: 'json',
+                        success: function(data)
+                        {
+                            if (data == "S"){
+
+                                $('#spanMotivo').addClass("hide");
+                                text = "Respuesta de solicitud enviada";
+
+                                toastr.success(text, "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                            else{
+                                $('#spanMotivo').addClass("hide");
+                                text = "Error al enviar respuesta de solicitud";
+
+                                toastr.error(text, "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                        }
+                    });
+                }
+                else{
+                    toastr.error(text, "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
 
