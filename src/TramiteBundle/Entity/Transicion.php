@@ -26,9 +26,9 @@ class Transicion
     private $fecha;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="text")
      */
-    private $doc_info = "Doc_info";
+    private $doc_info = "Motivo";
 
     /**
      * @ORM\OneToOne(targetEntity="Tramite", inversedBy="transicion")

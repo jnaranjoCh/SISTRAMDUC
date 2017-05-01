@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use TramiteBundle\Entity\TipoTramite;
 use TramiteBundle\Entity\TipoRecaudo;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use TramiteBundle\Entity\Transicion;
+use TramiteBundle\Entity\Estado;
 
 /**
  * Tramitejubilacion controller.
@@ -45,6 +47,7 @@ class TramiteJubilacionController extends Controller
     public function newAction(Request $request)
     {
         $tramiteJubilacion = new Tramitejubilacion();
+        $transicion = new Transicion();
         $form = $this->createForm('JubilacionBundle\Form\TramiteJubilacionType', $tramiteJubilacion);
         $form->handleRequest($request);
 
@@ -64,6 +67,10 @@ class TramiteJubilacionController extends Controller
             $tipo_recaudo3 = $tipo_recaudo1_repo->findOneBy(["id" => 8]);
             $tipo_recaudo4 = $tipo_recaudo1_repo->findOneBy(["id" => 9]);
             $tipo_recaudo5 = $tipo_recaudo1_repo->findOneBy(["id" => 10]);
+
+             /* Se obtienen los datos de la tabla estado y se extrae el requerido (enviada) */
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => 1]);
 
             /* Se le asigna a cada recaudo su tipo*/
             $i = 1;
@@ -93,6 +100,12 @@ class TramiteJubilacionController extends Controller
             $tramiteJubilacion
                 ->assignTo($this->getUser())
                 ->setTipoTramite($tipo_tramite);
+
+            $transicion
+                ->asignarA($tramiteJubilacion) // Se asigna una transicion a la solicitud
+                ->setEstado($estado);                  // Se cambia el estado de la transición
+
+            $transicion->setFecha(new \DateTime("now"));
             
             $em->persist($tramiteJubilacion);
 

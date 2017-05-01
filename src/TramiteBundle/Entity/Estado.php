@@ -136,7 +136,7 @@ class Estado
 
     public function __toString()
     {
-        return sprintf($this->getNombre());
+        return sprintf($this->getNombre().' ('.$this->getId().')');
     }
 }
 

@@ -33,3 +33,9 @@ estado-solicitud:
 codigo-barra:
     path: /codigo-barra
     defaults: {_controller: JubilacionBundle::barcodeImage}
+
+insertar:
+  path:     /insertar
+  defaults: { _controller: JubilacionBundle::insertar }
+  requirements:
+    _method: POST
