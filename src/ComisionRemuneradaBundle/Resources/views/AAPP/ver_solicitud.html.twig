@@ -1,4 +1,4 @@
-{#{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block content %}
     <section class="content-header">
@@ -16,7 +16,32 @@
         <div class="box box-solid box-default">
             <section class="content">
                 <div class="box">
-                    <div class="box-header">
+                    <table>
+                        <tr>
+                            <th>
+                                <h4>Solicitud Nº<b> {{ tramite.id }}</b></h4>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>
+                                <h5><b>Nombres y Apellidos:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getNombreCompleto() }}</h5>
+                                <h5><b>Cédula de Identidad:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getCedula() }}</h5>
+                                <h5><b>Nacionalidad:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getNacionalidad() }}</h5>
+                                <h5><b>Correo:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getCorreo() }}</h5>
+                                <h5><b>Tlf:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getTelefono() }}</h5>
+
+                                <h5><b>Recaudos</b></h5>
+                                {% for recaudo in recaudos %}
+                                    <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
+                                        <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
+                                    </a>
+                                {% endfor %}
+                            </th>
+                        </tr>
+                    </table>
+                    {#<div class="box-header">
                         <h3 class="box-title">Solcitiud n° {{ tramite.id }}</h3>
                     </div>
 
@@ -37,10 +62,10 @@
                                 </a>
                             {% endfor %}
                         </div>
-                    </div>
+                    </div>#}
                 </div>
             </section>
         </div>
     </section>
-{% endblock %}#}
+{% endblock %}
 

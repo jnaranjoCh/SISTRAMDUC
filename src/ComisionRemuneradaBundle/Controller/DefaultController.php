@@ -93,11 +93,16 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/comision-de-servicio/solicitud", name="comision_servicio_ver_solicitud")
+     * @Route("/comision-de-servicio/solicitud/{id}", name="comision_servicio_ver_solicitud")
      */    
-    public function verSolicitudAction(Request $request)
+    public function verSolicitudAction(/*Request $request*/SolicitudComisionServicio $tramite)
     {
-        $tramite[] = "";
+        $recaudos = $tramite->getRecaudos();
+        
+        return $this->render('ComisionRemuneradaBundle:AAPP:ver_solicitud.html.twig',
+            array('tramite' => $tramite, 'recaudos' => $recaudos));
+        
+        /*$tramite[] = "";
         if($request->isXmlHttpRequest())
         {
             $em = $this->getDoctrine()->getManager();
@@ -110,6 +115,6 @@ class DefaultController extends Controller
             $tramite['Telefono'] = $tramite_comision->getUsuarioId()->getTelefono();
             $tramite['fechaRecibido'] = $tramite_comision->getTransicion()->getFecha();
         }
-        return new JsonResponse($tramite);
+        return new JsonResponse($tramite);*/
     }
 }
