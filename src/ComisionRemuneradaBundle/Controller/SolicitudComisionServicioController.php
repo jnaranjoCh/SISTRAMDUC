@@ -51,7 +51,7 @@ class SolicitudComisionServicioController extends Controller
         
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            
+
             /* Se obtienen todos los registros de la tabla tipo_tramite y se busca el registro que 
             corresponda a Comision */
             $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
@@ -87,8 +87,10 @@ class SolicitudComisionServicioController extends Controller
                 ->setTipoTramite($tipo_tramite); // Se modifica el tipo de tramite
 
             $transicion
-                ->asignarA($solicitudComisionServicio) // Se asigna una transicion a la solicitud
-                ->setEstado($estado);                  // Se cambia el estado de la transición
+                ->asignarA($solicitudComisionServicio)        // Se asigna una transicion a la solicitud
+                ->setEstado($estado);                         // Se cambia el estado de la transición
+            
+            $transicion->setFecha(new \DateTime("now"));      // Se asigna la fecha del sistema a la solicitud
 
             $em->persist($solicitudComisionServicio);
 

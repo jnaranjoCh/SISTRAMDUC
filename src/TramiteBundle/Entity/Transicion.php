@@ -31,7 +31,7 @@ class Transicion
     private $doc_info = "Doc_info";
 
     /**
-     * @ORM\OneToOne(targetEntity="Tramite", mappedBy="transicion")
+     * @ORM\OneToOne(targetEntity="Tramite", inversedBy="transicion")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     protected $tramite;

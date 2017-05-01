@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{#{% extends 'base.html.twig' %}
 
 {% block content %}
     <section class="content-header">
@@ -8,6 +8,7 @@
         <ol class="breadcrumb">
             <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
             <li class="active">Revisar Solicitudes</li>
+            <li class="active">Solicitud {{ tramite.id }}</li>
         </ol>
     </section>
     <section class="content">
@@ -21,15 +22,15 @@
 
                     <div class="col-md-6">
                         <div class="box-body">
-                            <h4>Nombre:
-                                {{ tramite.getUsuarioId().getPrimerNombre() }}
-                                {{ tramite.getUsuarioId().getSegundoNombre() }}
-                                {{ tramite.getUsuarioId().getPrimerApellido() }}
-                                {{ tramite.getUsuarioId().getSegundoApellido() }}
-                                <br>
-                                C.I:
-                                {{ tramite.getUsuarioId().getCedula() }}
+                            <h4>
+                                <b>{{ tramite.getUsuarioId().getNombreCompleto() }} </b>
+                                C.I. {{ tramite.getUsuarioId().getCedula() }}
+                                <br><br>
+                                {% for cargo in tramite.getUsuarioId().getCargos() %}
+                                    {{ cargo.getDescription }}
+                                {% endfor %}
                             </h4>
+                            <h4>Recaudos</h4>
                             {% for recaudo in recaudos %}
                                 <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
                                     <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
@@ -41,4 +42,5 @@
             </section>
         </div>
     </section>
-{% endblock %}
+{% endblock %}#}
+

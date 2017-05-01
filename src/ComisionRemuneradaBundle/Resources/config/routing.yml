@@ -6,6 +6,10 @@ solicitudcomisionservicio:
     path: /solicitudcomisionservicio_new
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
 
+comision_servicio_ver_solicitud:
+    path: /comision-de-servicio/solicitud
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitud}
+
 solicitudes-comision-de-servicio:
     path: /comision-de-servicio/solicitudes
     defaults: {_controller: ComisionRemuneradaBundle:Default:solicitudesComisionServicio}

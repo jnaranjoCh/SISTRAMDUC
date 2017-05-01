@@ -2,8 +2,10 @@
 
 namespace ComisionRemuneradaBundle\Controller;
 
+use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use Proxies\__CG__\AppBundle\Entity\Usuario;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
 use TramiteBundle\Entity\Tramite;
@@ -84,20 +86,30 @@ class DefaultController extends Controller
     public function solicitudesComisionServicioAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $tramites = $em->getRepository(Tramite::class);
-        $tramites_comision = $tramites->findBy(["tipo_tramite_id" => 6]);
+        $tramites = $em->getRepository(SolicitudComisionServicio::class);
+        $tramites_comision = $tramites->findAll();
         return $this->render('ComisionRemuneradaBundle:AAPP:solicitudes_comision_servicio.html.twig',
             array('tramites_comision' => $tramites_comision));
     }
 
     /**
-     * @Route("/comision-de-servicio/solicitud/{id}", name="comision_servicio_ver_solicitud")
-     * @Method("GET")
+     * @Route("/comision-de-servicio/solicitud", name="comision_servicio_ver_solicitud")
      */    
-    public function verSolicitudAction(Tramite $tramite)
+    public function verSolicitudAction(Request $request)
     {
-        $recaudos = $tramite->getRecaudos();
-        return $this->render('ComisionRemuneradaBundle:AAPP:ver_solicitud.html.twig', array(
-            'tramite' => $tramite, 'recaudos' => $recaudos));
+        $tramite[] = "";
+        if($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository(SolicitudComisionServicio::class);
+            $tramite_comision = $repository->findOneBy(["id" => $request->get("tramite")]);
+            $tramite['id'] = $tramite_comision->getId();
+            $tramite['nombreCompleto'] = $tramite_comision->getUsuarioId()->getNombreCompleto();
+            $tramite['cedula'] = $tramite_comision->getUsuarioId()->getCedula();
+            $tramite['correo'] = $tramite_comision->getUsuarioId()->getCorreo();
+            $tramite['Telefono'] = $tramite_comision->getUsuarioId()->getTelefono();
+            $tramite['fechaRecibido'] = $tramite_comision->getTransicion()->getFecha();
+        }
+        return new JsonResponse($tramite);
     }
 }

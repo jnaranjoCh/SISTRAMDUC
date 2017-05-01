@@ -60,4 +60,9 @@ class Cargo
     {
         return $this->description;
     }
+    
+    public function __toString()
+    {
+        return sprintf($this->getId());
+    }
 }
