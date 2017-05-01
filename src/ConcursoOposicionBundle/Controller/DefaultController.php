@@ -17,8 +17,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class DefaultController extends Controller
 {
-    private $idUsuario;
-
     /**
      * @Route("/concursoOposicion/apertura_concurso_oposicion_index", name="apertura_concurso_oposicion_index")
      */
@@ -232,142 +230,6 @@ class DefaultController extends Controller
              throw $this->createNotFoundException('Error al solicitar datos');      
     }
 
-     /**
-     * @Route("/concursoOposicion/listadoConcursosAjax", name="listadoConcursosAjax")
-     * @Method("POST")
-     */
-    public function listadoConcursosAjaxAction(Request $request){
-
-        $val[][] = "";
-
-        if($request->isXmlHttpRequest())
-        {
-            $repository = $this->getDoctrine()
-                ->getRepository('ConcursosBundle:Concurso');
-             
-            $query = $repository->createQueryBuilder('p')
-                ->where('p.tipo = :cadena')
-                ->setParameter('cadena', 'Oposicion')
-                ->orderBy('p.id', 'DESC')
-                ->getQuery();
-             
-            $concurso = $query->getResult();
-
-            if (!$concurso) {
-                 throw $this->createNotFoundException('Error al obtener datos iniciales');
-            }else
-            {
-                $val = $this->asignarFilaId($concurso,'id',$val);
-                $val = $this->asignarFilaUsuario($concurso,'usuario',$val);
-                $val = $this->asignarFilaObservacion($concurso,'observacion',$val);
-                $val = $this->asignarFilaNroVacantes($concurso,'vacantes',$val);
-                $val = $this->asignarFilaAreaPostulacion($concurso,'area',$val);
-                $val = $this->asignarFilaFechaInicio($concurso,'inicio',$val);
-                $val = $this->asignarFilaFechaRecepcion($concurso,'recepcion',$val);
-                $val = $this->asignarFilaFechaPresentacion($concurso,'presentacion',$val);
-            }
-            return new JsonResponse($val);
-        }
-        else
-             throw $this->createNotFoundException('Error al insertar datos');
-    }
-
-    private function asignarFilaUsuario($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getIdUsuario();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaObservacion($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getObservaciones();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaId($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getId();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaFechaPresentacion($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getFechaPresentacion();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaFechaRecepcion($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getFechaRecepDoc();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaNroVacantes($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getNroVacantes();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaAreaPostulacion($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = $value->getAreaPostulacion();
-           $i++;
-        }
-        return $val;
-    }
-
-    private function asignarFilaFechaInicio($object,$entidad,$val)
-    {
-        $i = 0;
-        foreach($object as $value)
-        {
-           $val[$entidad][$i] = date_format($value->getFechaInicio(), 'd-m-Y');
-           $i++;
-        }
-        return $val;
-    }
-
-    private function getAll($bundle,$entidad)
-    {
-        return $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository($bundle.$entidad)
-                    ->findAll();
-    }
-
     /**
      * @Route("/concursoOposicion/registroJuradosAjax", name="registroJuradosAjax")
      * @Method("POST")
@@ -492,7 +354,6 @@ class DefaultController extends Controller
         } else
              throw $this->createNotFoundException('Error al insertar datos');
     }
-
 
     public function cambiarFormatoFecha($fecha){
 

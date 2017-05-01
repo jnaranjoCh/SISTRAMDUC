@@ -25,7 +25,7 @@
 
                    <div class="box-body">
 
-                      <table id="example2" class="table table-bordered table-striped">
+                      <table id="tabla" class="table table-bordered table-striped">
                           <thead>
                           <tr>
                             <th>Fecha Inicio</th>
@@ -60,19 +60,6 @@
 
 {% block custom_javascripts %}
 
-  <script>
-    $(function () {
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-      });
-    });
-  </script>
-
     <script src="{{ asset('assets/js/concursoOposicion/listarConcursos.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -82,5 +69,22 @@
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+
+  <script>
+    
+      tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "inicio" },
+              { "data": "vacantes" },
+              { "data": "area" },
+              { "data": "doc" },
+              { "data": "pre" }
+          ]
+      });
+
+  </script>
 
 {% endblock %}

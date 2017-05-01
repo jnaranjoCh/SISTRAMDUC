@@ -1,5 +1,8 @@
 $( window ).load( function(){
 
+        toastr.clear();
+        var text = "";
+
 	$.ajax({
 
 		method:"POST",
@@ -7,27 +10,49 @@ $( window ).load( function(){
 		dataType: 'json',
         success: function(data)
         {
-        	var rol = "";
+                if (data == "N"){
 
-        	for (var i = 0; i <= data["vacantes"].length-1; i++) {
-        		
-        		if (data["inicio"][i] == null) rol = rol+"<tr><td align=center></td>";
-        		else rol = rol+"<tr><td align=center>"+data["inicio"][i]+"</td>";       		
+                        text = "No Hay Concursos Registrados";
 
-        		if (data["vacantes"][i] != null) rol = rol+"<td align=right>"+data["vacantes"][i]+"</td>";
-        		else rol = rol+"<td align=center></td>";
+                        toastr.error(text, "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                 });
 
-        		if (data["area"][i] != null) rol = rol+"<td align=left>"+data["area"][i]+"</td>"; 
-        		else rol = rol+"<td align=center></td>"; 
-        		
-        		if (data["recepcion"][i] != null) rol = rol+"<td align=center>"+data["recepcion"][i]+"</td>"; 
-        		else rol = rol+"<td align=center></td>"; 
+                } else{
+                var rol = "";
 
-        		if (data["presentacion"][i] != null) rol = rol+"<td align=center>"+data["presentacion"][i]+"</td></tr>"; 
-        		else rol = rol+"<td align=center></td></tr>"; 
-        	}
+                for (var i = 0; i <= data["vacantes"].length-1; i++) {
 
-        	$("#cuerpo").html(rol);
+                        tabla.row.add( {
+                                "inicio": data["inicio"][i],
+                                "vacantes": data["vacantes"][i],
+                                "area": data["area"][i],
+                                "doc": data["recepcion"][i],
+                                "pre": data["presentacion"][i]
+                        }).draw();
+                        
+                        /*
+                        rol = rol+"<tr><td align=center>"+data["inicio"][i]+"</td>";                    
+
+                        rol = rol+"<td align=right>"+data["vacantes"][i]+"</td>";
+
+                        rol = rol+"<td align=left>"+data["area"][i]+"</td>"; 
+                        
+                        if (data["recepcion"][i] != null) 
+                                rol = rol+"<td align=center>"+data["recepcion"][i]+"</td>"; 
+                        else 
+                                rol = rol+"<td align=center></td>"; 
+
+                        if (data["presentacion"][i] != null) 
+                                rol = rol+"<td align=center>"+data["presentacion"][i]+"</td></tr>"; 
+                        else 
+                                rol = rol+"<td align=center></td></tr>";
+                        */                                 
+                }                       
+
+                //$("#cuerpo").html(rol);                        
+                }        	
         }
-	});
+        });
 });
