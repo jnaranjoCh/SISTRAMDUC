@@ -6,6 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use TramiteBundle\Entity\Transicion;
+use JubilacionBundle\Entity\TramiteJubilacion;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Proxies\__CG__\TramiteBundle\Entity\Estado;
 
 class DefaultController extends Controller
 {
@@ -30,7 +36,13 @@ class DefaultController extends Controller
      */
     public function consejoAction()
     {
-        return $this->render('JubilacionBundle::consejoFacultad.html.twig');
+        $em = $this->getDoctrine()->getManager();
+        $tramites = $em->getRepository(TramiteJubilacion::class);
+        $tramites = $tramites->findAll();
+        return $this->render('JubilacionBundle::consejoFacultad.html.twig',
+            array('tramites' => $tramites));
+        
+        //return $this->render('JubilacionBundle::consejoFacultad.html.twig');
     }
 
     /**
@@ -106,5 +118,37 @@ class DefaultController extends Controller
         );
     }
 
+    /**
+     * @Route("/jubilacion/insertar", name="jubilacion-insertar")
+     * @Method("POST")
+     */
+    public function insertarAction(Request $request) {
 
+        if($request->isXmlHttpRequest()){
+
+            //Entity Manager
+            $em = $this->getDoctrine()->getManager();
+
+            $transicionRepo = $em->getRepository(Transicion::class);
+            $transicion = $transicionRepo->findOneBy(["tramite" => $request->get("Solicitud")]);
+
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => $request->get("Estatus")]);
+
+            $transicion->setEstado($estado);
+            $transicion->setFecha(new \DateTime("now"));
+            $transicion->setDoc_info($request->get("Motivo"));
+
+            //Persistimos en el objeto
+            $em->persist($transicion);
+
+            //Insertarmos en la base de datos
+            $em->flush();
+
+            return new JsonResponse("S");
+        }
+        else
+            throw $this->createNotFoundException('Error al solicitar datos de inserción');
+
+    }
 }

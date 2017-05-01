@@ -91,6 +91,6 @@ knp_snappy:
         binary:     "%wkhtmltopdf%"
         options:    []
     image:
-        enabled:    false
+        enabled:    true
         binary:     "%wkhtmltoimage%"
         options:    []
