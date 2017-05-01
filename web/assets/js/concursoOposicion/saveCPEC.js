@@ -226,10 +226,8 @@ $('#s5').click(function (){
 
 $('#registrarCPEC').click(function (){
 
-	$('#msgFracaso').addClass("hide");
-	$('#msgFracaso1').addClass("hide");
-	$('#msgFracaso2').addClass("hide");
-	$('#msgExito').addClass("hide"); 
+	toastr.clear();
+	var text = ""; 
 
 	var continua = true;
 
@@ -238,6 +236,7 @@ $('#registrarCPEC').click(function (){
 		$("#lista").val() == "") {
 
 		continua = false;
+		text = "Concurso vacío";
 	}
 
 	for (var j = 1; j < 6; j++) {
@@ -246,6 +245,7 @@ $('#registrarCPEC').click(function (){
 
 			$("#spannombre"+j).removeClass("hide");
 			continua = false;
+			text = "Campo vacío";
 		} 
 		else {
 			$("#spannombre"+j).addClass("hide");
@@ -314,20 +314,36 @@ $('#registrarCPEC').click(function (){
 		            {
 		                if (data == "S"){
 
+		                	continua = true;
+
 							$('#spannombre'+i).addClass("hide");
 							
-							$('#span'+inputs[i]).addClass("hide");
+							$('#span'+inputs[i]).addClass("hide");						
 
-		                	$('#msgFracaso').addClass("hide");
-		                	$('#msgFracaso1').addClass("hide");
-		                	$('#msgFracaso2').addClass("hide");
-							$('#msgExito').removeClass("hide");	
+		                	toastr.clear();
+
+							text = "Jurados Insertados";
+
+							toastr.success(text, "Exito", {
+			                    "timeOut": "0",
+			                    "extendedTImeout": "0"
+			                 });	
 		                } 
 		                else{
 
-		                	$('#msgFracaso').addClass("hide");
-		                	$('#msgExito').addClass("hide");
-							$('#msgFracaso1').removeClass("hide");
+		                	continua = false;
+
+		                	toastr.clear();
+
+		                	if (data == "N")		                		
+		                		text = "Usted no tiene permiso";		                	
+		                	else
+			                	text = "Error al Registrar Jurados";			                		                	
+		                	
+		                	toastr.error(text, "Error", {
+					            "timeOut": "0",
+					            "extendedTImeout": "0"
+				         	});
 		                }
 		            }
 		        });	
@@ -335,26 +351,32 @@ $('#registrarCPEC').click(function (){
 		        Arreglo = null;
 			}
 
-			for (var i = 0; i <= 5; i++){
+			if (continua){
+				for (var i = 0; i <= 5; i++){
 
-				$('#nombre'+i).val('');
-				c1[i] = null;
-				c2[i] = null;
-				c3[i] = null;
-				c4[i] = null;
-				c5[i] = null;
+					$('#nombre'+i).val('');
+					c1[i] = null;
+					c2[i] = null;
+					c3[i] = null;
+					c4[i] = null;
+					c5[i] = null;
+				}
 			}			
 			
 			//fin json
 		}
 		else{
-			$('#msgFracaso2').removeClass("hide");
+			toastr.error("Hay Cédulas Repetidas", "Error", {
+	            "timeOut": "0",
+	            "extendedTImeout": "0"
+         	});
 		}
-
 	}
 	else{
-
-		$("#msgFracaso").removeClass("hide");
+		toastr.error(text, "Error", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+         });
 	}
 });
 
@@ -369,7 +391,8 @@ $('#limpiarJurado').click(function (){
 	for (var i = 0; i <= 5; i++) $('#span'+inputs[i]).addClass("hide");
 
 	for (var i = 0; i <= 5; i++){
-
+		
+		$('#nombre'+i).val('');
 		c1[i] = null;
 		c2[i] = null;
 		c3[i] = null;
@@ -377,8 +400,5 @@ $('#limpiarJurado').click(function (){
 		c5[i] = null;
 	}	
 
-	$('#msgFracaso').addClass("hide");
-	$('#msgFracaso1').addClass("hide");
-	$('#msgFracaso2').addClass("hide");
-	$('#msgExito').addClass("hide");
+	toastr.clear();
 });

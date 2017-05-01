@@ -1,5 +1,8 @@
 $('#registrarConcurso').click(function (){ 
-	 
+	
+	toastr.clear();
+	var text = "";
+
 	var fecha = $('#fechaConcurso').val();
 	var continua = true;
 
@@ -7,6 +10,7 @@ $('#registrarConcurso').click(function (){
 
 		continua = false;
 		$('#spanfechaConcurso').removeClass("hide");
+		text = "Campo vacío";
 	}
 
 	var cedula = $('#cedula').val();
@@ -15,30 +19,14 @@ $('#registrarConcurso').click(function (){
 
 		continua = false;
 		$('#spancedula').removeClass("hide");
-	}
-	else {
-
-		for (var i = 0; i < cedula.length; i++) {
-			
-			var letra = cedula.charAt(i)
-
-			if (letra < "0" || letra > "9"){
-
-				continua = false;
-				$('#spancedula2').removeClass("hide");
-				break;
-			}
-			else {
-
-				$('#spancedula2').addClass("hide");
-			}
-		}
+		text = "Campo vacío";
 	}
 
 	if ($('#area').val() == ""){
 
 		continua = false;
 		$('#spanarea').removeClass("hide");
+		text = "Campo vacío";
 	}
 
 	if (continua){
@@ -67,9 +55,12 @@ $('#registrarConcurso').click(function (){
 					$('#spancedula2').addClass("hide");
 					$('#spanarea').addClass("hide");
 
-                	$('#msgFracaso').addClass("hide");
-                	$('#msgFracaso1').addClass("hide");
-					$('#msgExito').removeClass("hide");	
+					text = "Concurso Insertado";
+
+			        toastr.success(text, "Exito", {
+			                    "timeOut": "0",
+			                    "extendedTImeout": "0"
+			                 });			
                 } 
                 else{
 
@@ -79,10 +70,8 @@ $('#registrarConcurso').click(function (){
 						$('#spancedula').addClass("hide");
 						$('#spancedula2').addClass("hide");
 						$('#spanarea').addClass("hide");
-	                	$('#msgFracaso').addClass("hide");
-	                	$('#msgFracaso1').addClass("hide");
-	                	$('#msgExito').addClass("hide");
-	                	$('#msgPermiso').removeClass("hide");	
+
+	                	text = "Usted no tiene permiso";
                 	}
                 	else {
 
@@ -90,12 +79,14 @@ $('#registrarConcurso').click(function (){
 						$('#spancedula').addClass("hide");
 						$('#spancedula2').addClass("hide");
 						$('#spanarea').addClass("hide");
-	                	$('#msgFracaso').addClass("hide");
-	                	$('#msgExito').addClass("hide");
-	                	$('#msgPermiso').addClass("hide");
 
-						$('#msgFracaso1').removeClass("hide");
-                	}                	
+						text = "Error al Registrar Concurso";
+                	} 
+
+			        toastr.error(text, "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });	               	
                 }
             }
         }); 
@@ -103,8 +94,10 @@ $('#registrarConcurso').click(function (){
 		/*fin del json*/		
 	}
 	else {
-
-		$('#msgFracaso').removeClass("hide");
+         toastr.error(text, "Error", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+         });
 	}
 });
 
@@ -116,10 +109,8 @@ $('#limpiarConcurso').click(function (){
 	$('#spancedula').addClass("hide");
 	$('#spancedula2').addClass("hide");
 	$('#spanarea').addClass("hide");
-	$('#msgExito').addClass("hide");
-	$('#msgFracaso').addClass("hide");
-	$('#msgFracaso1').addClass("hide");
-	$('#msgPermiso').addClass("hide");
+
+	toastr.clear();
 });
 
 function justNumbers(e){
@@ -131,28 +122,3 @@ function justNumbers(e){
 	}
 	else return /\d/.test(String.fromCharCode(keynum));
 }
-
-$('#quitar').click(function (){
-
-	$('#msgFracaso').addClass("hide");
-});
-
-$('#quitar1').click(function (){
-
-	$('#msgFracaso1').addClass("hide");
-});
-
-$('#quitar3').click(function (){
-
-	$('#msgFracaso2').addClass("hide");
-});
-
-$('#quitar2').click(function (){
-
-	$('#msgExito').addClass("hide");
-});
-
-$('#quitar3').click(function (){
-
-	$('#msgPermiso').addClass("hide");
-});

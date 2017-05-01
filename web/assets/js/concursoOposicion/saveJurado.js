@@ -25,6 +25,9 @@ $( window ).load(function (){
 
 
 $('#registrarJurado').click(function (){ 
+
+	toastr.clear();
+	var text = "";
 	
 	var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
 	var continua = true;
@@ -34,6 +37,7 @@ $('#registrarJurado').click(function (){
 		$("#lista").val() == "") {
 
 		continua = false;
+		text = "Concurso vacío";
 	}
 
 	for (var i = 1; i < 4; i++) {
@@ -44,6 +48,7 @@ $('#registrarJurado').click(function (){
 
 				$("#span"+inputs[j]+i).removeClass("hide");
 				continua = false;
+				text = "Campo vacío";
 			} 
 			else {
 				$("#span"+inputs[j]+i).addClass("hide");					
@@ -79,30 +84,28 @@ $('#registrarJurado').click(function (){
 
 							document.getElementById('juradosSave').reset();				
 
-							$('#msgFracaso').addClass("hide");
-		                	$('#msgFracaso1').addClass("hide");
-		                	$('#msgFracaso2').addClass("hide");
-		                	$('#msgPermiso').addClass("hide");
-							$('#msgExito').removeClass("hide");
+							toastr.clear();
+
+							text = "Jurados Insertados";
+
+							toastr.success(text, "Exito", {
+			                    "timeOut": "0",
+			                    "extendedTImeout": "0"
+			                 });
 		                } 
 		                else{
 
-		                	if (data == "N"){
+		                	toastr.clear();
 
-		                		$('#msgFracaso2').addClass("hide");
-			                	$('#msgPermiso').addClass("hide");
-		                		$('#msgFracaso').addClass("hide");
-			                	$('#msgExito').addClass("hide");
-								$('#msgFracaso1').removeClass("hide");
-		                	}
-		                	else {
-
-			                	$('#msgFracaso2').addClass("hide");
-			                	$('#msgPermiso').addClass("hide");
-		                		$('#msgFracaso').addClass("hide");
-			                	$('#msgExito').addClass("hide");
-								$('#msgFracaso1').removeClass("hide");
-		                	}		                	
+		                	if (data == "N")		                		
+		                		text = "Usted no tiene permiso";		                	
+		                	else
+			                	text = "Error al Registrar Jurados";			                		                	
+		                	
+		                	toastr.error(text, "Error", {
+					            "timeOut": "0",
+					            "extendedTImeout": "0"
+				         	});
 		                }
 
 		                for (var k = 1; k <= 3; k++) {
@@ -116,17 +119,23 @@ $('#registrarJurado').click(function (){
 						}
 		            }
 		        });		
-			}
+			}		
 
 			/*fin del json*/
 		}
 		else {
-			$('#msgFracaso2').removeClass("hide");
+			toastr.error("Hay Cédulas Repetidas", "Error", {
+	            "timeOut": "0",
+	            "extendedTImeout": "0"
+         	});
 		}		
 	}
 	else {
 
-		$('#msgFracaso').removeClass("hide");
+		toastr.error(text, "Error", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+         });
 	}
 });
 
@@ -144,7 +153,5 @@ $('#limpiarJurado').click(function (){
 		$('#spanarea'+i).addClass("hide");
 	}
 
-	$('#msgFracaso').addClass("hide");
-	$('#msgFracaso1').addClass("hide");
-	$('#msgExito').addClass("hide");
+	toastr.clear();
 });

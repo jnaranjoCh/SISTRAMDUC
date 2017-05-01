@@ -9,6 +9,7 @@ var registrosData = [];
 var participantesData = [];
 var revistasData = [];
 var hijoData = [];
+var cargoData = [];
 
 $('#agregarRegistro').click(function(){
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
@@ -345,6 +346,7 @@ $('#tableParticipantes').on( 'click', 'tbody tr', function () {
 
 
 $('#agregarCargoDatos').click(function(){
+    var cargo = new Object();
     toastr.clear();
     var band = false;
     if(($('#tableCargo td').length) > 0){
@@ -364,25 +366,35 @@ $('#agregarCargoDatos').click(function(){
    $("#headerCargos").css({ 'color': "black" });
    $("#spanCargosDatos").removeClass("glyphicon-remove");
    $("#divCargosDatos").removeClass("has-error");
+   $("#divFechaInicioCargoDatos").removeClass("has-error");
    
-   if(($('#tableCargo td').length)==0 && $("#cargosDatos").find('option:selected').val() != ""){
+   if(($('#tableCargo td').length)==0 && $("#cargosDatos").find('option:selected').val() != "" && $("#FechaInicioCargoDatos").val() != ""){
        tableCargo.row.add( {
-                "Cargo": $("#cargosDatos").find('option:selected').val()
-        }).draw();
-        countCargo++;
-   }else if(!band && $("#cargosDatos").find('option:selected').val() != ""){
+                "Cargo": $("#cargosDatos").find('option:selected').val(),
+                "Fecha de inicio en el cargo": $("#FechaInicioCargoDatos").val()
+       }).draw();
+       cargo.nombre = $("#cargosDatos").find('option:selected').val();
+       cargo.fechaInicio = $("#FechaInicioCargoDatos").val();
+       cargoData[countCargo] = cargo;
+       countCargo++;
+   }else if(!band && $("#cargosDatos").find('option:selected').val() != "" && $("#FechaInicioCargoDatos").val() != ""){
        tableCargo.row.add( {
-                "Cargo": $("#cargosDatos").find('option:selected').val()
+                "Cargo": $("#cargosDatos").find('option:selected').val(),
+                "Fecha de inicio en el cargo": $("#FechaInicioCargoDatos").val()
         }).draw();
-        countCargo++;
+       cargo.nombre = $("#cargosDatos").find('option:selected').val();
+       cargo.fechaInicio = $("#FechaInicioCargoDatos").val();
+       cargoData[countCargo] = cargo;
+       countCargo++;
    }else if(!band){
-        toastr.error("Error debe seleccionar un cargo.", "Error", {
+        toastr.error("Error debe seleccionar un cargo y la fecha de inicio.", "Error", {
                         "timeOut": "0",
                         "extendedTImeout": "0"
                      });
         $("#headerCargos").css({ 'color': "red" });
         $("#spanCargosDatos").addClass("glyphicon-remove");
         $("#divCargosDatos").addClass("has-error");
+        $("#divFechaInicioCargoDatos").addClass("has-error");
    }
 });
 

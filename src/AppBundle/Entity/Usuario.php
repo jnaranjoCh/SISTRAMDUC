@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\Rol;
+use RegistroUnicoBundle\Entity\UsuarioFechaCargo;
 use ClausulasContractualesBundle\Entity\Hijo;
 use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
@@ -135,14 +136,11 @@ class Usuario implements UserInterface
      */
     protected $registros;
 
+
     /**
-     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Cargo")
-     * @ORM\JoinTable(name="usuarios_cargos",
-     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="cargo_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToMany(targetEntity="RegistroUnicoBundle\Entity\UsuarioFechaCargo", mappedBy="usuarios", cascade={"persist", "remove"})
      */
-    protected $cargos;
+    protected $UsuarioFechaCargos;
 
     /**
      * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Facultad")
@@ -185,12 +183,27 @@ class Usuario implements UserInterface
     public function __construct()
     {
         $this->roles = new ArrayCollection();
-        $this->cargos = new ArrayCollection();
+        $this->UsuarioFechaCargos = new ArrayCollection();
         $this->planes_septenales_individuales = new ArrayCollection();
         $this->tramite = new ArrayCollection();
         $this->hijos = new ArrayCollection();
     }
+    
+    public function getUsuarioFechaCargos()
+    {
+        return $this->UsuarioFechaCargos->toArray();
+    }
 
+    public function addUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargos)
+    {
+        if (!$this->UsuarioFechaCargos->contains($UsuarioFechaCargos)) {
+            $this->UsuarioFechaCargos->add($UsuarioFechaCargos);
+            $UsuarioFechaCargos->setUsuario($this);
+        }
+
+        return $this;
+    }
+    
     /**
      * Get id
      *
@@ -646,28 +659,6 @@ class Usuario implements UserInterface
     {
        foreach($registros as $registro)
            $this->addRegistro($registro);
-    }
-
-    public function getCargos()
-    {
-       // profiler needs at least one rol to consider the user logged in
-       $cargos = array_reduce($this->cargos->toArray(), function ($cargo_names, $cargo) {
-           $cargo_names[] = $cargo->getDescription();
-           return $cargo_names;
-       }, []);
-
-       return $cargos;
-    }
-
-    public function addCargo($cargo)
-    {
-       $this->cargos[] = $cargo;
-    }
-
-    public function addCargos($cargos)
-    {
-       foreach($cargos as $cargo)
-           $this->addCargo($cargo);
     }
     
     public function getHijos()
