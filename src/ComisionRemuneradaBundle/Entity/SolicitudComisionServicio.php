@@ -25,11 +25,17 @@ class SolicitudComisionServicio extends Tramite
     
     protected $usuario_id;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fecha_recibido;
+
+    public function __construct(\DateTime $fecha = null)
     {
         $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
         , new recaudo("Copia de la Designación del cargos en la Administración")
         ));
+        $this->fecha = $fecha;
     }
 
     /**
@@ -103,5 +109,25 @@ class SolicitudComisionServicio extends Tramite
     public function getTransicion()
     {
         return $this->transicion;
+    }
+
+    /**
+     * Set fecha_recibido
+     *
+     * @param datetime $fecha_recibido
+     */
+    public function setFechaRecibido($fecha_recibido)
+    {
+        $this->fecha_recibido = $fecha_recibido;
+    }
+
+    /**
+     * Get fecha_recibido
+     *
+     * @return datetime
+     */
+    public function getFechaRecibido()
+    {
+        return $this->fecha_recibido;
     }
 }

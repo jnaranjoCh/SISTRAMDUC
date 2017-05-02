@@ -10,6 +10,10 @@ comision_servicio_ver_solicitud:
     path: /comision-de-servicio/solicitud/{id}
     defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitud}
 
+comision-de-servicio-insertar:
+    path: /comision-de-servicio/insertar
+    defaults: {_controller: ComisionRemuneradaBundle:Default:insertar}
+
 solicitudes-comision-de-servicio:
     path: /comision-de-servicio/solicitudes
     defaults: {_controller: ComisionRemuneradaBundle:Default:solicitudesComisionServicio}
@@ -21,6 +25,10 @@ estado_sol_prof:
 informe_pdf:
     path: /comision-servicio/informe-pdf
     defaults: {_controller: ComisionRemuneradaBundle:Default:informePDF}
+
+informe:
+    path: /comision-servicio/informe
+    defaults: {_controller: ComisionRemuneradaBundle:Default:informe}
 
 
 #solicitud_serv_remun:

@@ -12,66 +12,94 @@
         </ol>
     </section>
     <section class="content">
-        <div class="box box-solid box-default">
-            <section class="content">
-                <div class="box">
-                    <table>
-                        <tr>
-                            <th>
-                                <h4>Solicitud Nº<b> {{ tramite.id }}</b></h4>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th>
-                                <h5><b>Nombres y Apellidos:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getNombreCompleto() }}</h5>
-                                <h5><b>Cédula de Identidad:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getCedula() }}</h5>
-                                <h5><b>Nacionalidad:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getNacionalidad() }}</h5>
-                                <h5><b>Correo:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getCorreo() }}</h5>
-                                <h5><b>Tlf:</b>&nbsp;&nbsp;{{ tramite.getUsuarioId().getTelefono() }}</h5>
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Solicitud Nº</h3>
+                <input style="border: 0; background-color: white" type="button" id="numSolicitud" value="{{ tramite.id }}">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    <dt>Nombres y Apellidos</dt>
+                    <dd>{{ tramite.getUsuarioId().getNombreCompleto() }}</dd>
+                    <dt>Cédula de Identidad</dt>
+                    <dd>{{ tramite.getUsuarioId().getCedula() }}</dd>
+                    <dt>Nacionalidad</dt>
+                    <dd>{{ tramite.getUsuarioId().getNacionalidad() }}</dd>
+                    <dt>Correo</dt>
+                    <dd>{{ tramite.getUsuarioId().getCorreo() }}</dd>
+                </dl>
 
-                                <h5><b>Recaudos</b></h5>
-                                {% for recaudo in recaudos %}
-                                    <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
-                                        <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
-                                    </a>
-                                {% endfor %}
-                                <br>
-                            </th>
-                        <tr>
-                            <th>
-                                <h4>Dar respuesta</h4>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th>
-                                <h5><b>Estado</b></h5>
-                                <div class="btn-group">
-                                    <select id="estatus" class="btn dropdown-toggle btn-default">
-                                        <ul class="dropdown-menu" role="menu">
-                                            <option value="1">{{ tramite.getTransicion().getEstado() }}</option>
-                                            <option value="2">Negado</option>
-                                            <option value="3">Aprobado</option>
-                                        </ul>
-                                    </select><br><br>
-                                    <!--TextBox1<br>
-                                    <input type="text" id="srt" placeholder="get value on option select"><br>-->
-                                </div>
-                                <h5><b>Motivo&nbsp;&nbsp;<span id="spanMotivo" class="label label-danger hide">Vacío</span></b></h5>
-                                <input id="motivo" action="action_page.php" class="form-control" type="text" placeholder="Escribir...">
-                                <div >
-                                    <button id="enviarRespuesta" class="btn btn-success btn-block btn-flat">Registrar</button>
-                                </div>
-                            </th>
-                        </tr>
-                    </table>
+                <dl class="dl-horizontal">
+                    <dt>Recaudos</dt>
+                    {% for recaudo in recaudos %}
+                        <dd>
+                        <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
+                            <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
+                        </a>
+                        </dd>
+                    {% endfor %}
+                </dl>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Dar razón</h3>
+
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <div class="col-xs-4">
+                    <h5><b>Estado</b></h5>
+                    <div class="btn-group">
+                        {% if tramite.getTransicion().getEstado() == "Pendiente" %}
+                        <select id="estatus" class="btn dropdown-toggle btn-default">
+                            <ul class="dropdown-menu" role="menu">
+                                <option value="1">{{ tramite.getTransicion().getEstado() }}</option>
+                                <option value="2">Negado</option>
+                                <option value="3">Aprobado</option>
+                            </ul>
+                        </select><br><br>
+                        {% else %}
+                            <select disabled id="estatus" class="btn dropdown-toggle btn-default">
+                                <ul class="dropdown-menu" role="menu">
+                                    <option value="1">{{ tramite.getTransicion().getEstado() }}</option>
+                                    <option value="2">Negado</option>
+                                    <option value="3">Aprobado</option>
+                                </ul>
+                            </select><br><br>
+                        {% endif %}
+                        <!--TextBox1<br>
+                        <input type="text" id="srt" placeholder="get value on option select"><br>-->
+                    </div>
                 </div>
-            </section>
+
+                <div class="col-xs-4">
+                    <h5><b>Motivo&nbsp;&nbsp;<span id="spanMotivo" class="label label-danger hide">Vacío</span></b></h5>
+                    <input id="motivo" action="action_page.php" class="form-control" type="text" placeholder="Escribir...">
+                </div>
+
+                <div class="col-xs-4">
+                    <h5>&nbsp;</h5>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info">Enviar</button>
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a id="enviarRespuesta" href="#">Profesor</a></li>
+                            <li ><a href="{{ path('comision-servicio-informe') }}">AAPP</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
         </div>
     </section>
+
     {% block custom_javascripts %}
         <script>
             $("#enviarRespuesta").click(function (){
@@ -91,7 +119,7 @@
                 if(continua){
                     $.ajax({
                         method: "POST",
-                        data: {"Solicitud": 2,
+                        data: {"Solicitud": document.getElementById("numSolicitud").value,
                             "Estatus": document.getElementById("estatus").value,
                             "Motivo": document.getElementById("motivo").value},
                         url:  "{{ path('jubilacion-insertar') }}",
