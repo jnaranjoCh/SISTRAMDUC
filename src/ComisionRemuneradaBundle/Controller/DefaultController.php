@@ -4,13 +4,14 @@ namespace ComisionRemuneradaBundle\Controller;
 
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use Proxies\__CG__\AppBundle\Entity\Usuario;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
-use TramiteBundle\Entity\Tramite;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use TramiteBundle\Entity\Transicion;
+use TramiteBundle\Entity\Estado;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -37,6 +38,18 @@ class DefaultController extends Controller
     public function estado_sol_profAction()
     {
         return $this->render('ComisionRemuneradaBundle:Default:estado_sol_prof.html.twig');
+    }
+
+    /********************************/
+    /*        ÁREA DE INFORME       */
+    /********************************/
+
+    /**
+     * @Route("/comision-servicio/informe", name="comision-servicio-informe")
+     */
+    public function informeAction()
+    {
+        return $this->render('ComisionRemuneradaBundle:Rectora:informeJubilacion.html.twig');
     }
     /**
      * @Route("/comision-servicio/codigo-de-barra", name="comision-servicio-codigo-de-barra")
@@ -93,11 +106,16 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/comision-de-servicio/solicitud", name="comision_servicio_ver_solicitud")
+     * @Route("/comision-de-servicio/solicitud/{id}", name="comision_servicio_ver_solicitud")
      */    
-    public function verSolicitudAction(Request $request)
+    public function verSolicitudAction(SolicitudComisionServicio $tramite)
     {
-        $tramite[] = "";
+        $recaudos = $tramite->getRecaudos();
+        
+        return $this->render('ComisionRemuneradaBundle:AAPP:ver_solicitud.html.twig',
+            array('tramite' => $tramite, 'recaudos' => $recaudos));
+        
+        /*$tramite[] = "";
         if($request->isXmlHttpRequest())
         {
             $em = $this->getDoctrine()->getManager();
@@ -110,6 +128,34 @@ class DefaultController extends Controller
             $tramite['Telefono'] = $tramite_comision->getUsuarioId()->getTelefono();
             $tramite['fechaRecibido'] = $tramite_comision->getTransicion()->getFecha();
         }
-        return new JsonResponse($tramite);
+        return new JsonResponse($tramite);*/
+    }
+
+    /**
+     * @Route("/comision-de-servicio/insertar", name="comision-de-servicio-insertar")
+     * @Method("POST")
+     */
+    public function insertarAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $transicionRepo = $em->getRepository(Transicion::class);
+            $transicion = $transicionRepo->findOneBy(["tramite" => $request->get("Solicitud")]);
+
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => $request->get("Estatus")]);
+
+            $transicion->setEstado($estado);
+            $transicion->setFecha(new \DateTime("now"));
+            $transicion->setDoc_info($request->get("Motivo"));
+
+            $em->persist($transicion);
+            $em->flush();
+
+            return new JsonResponse("S");
+        }
+        else
+            throw $this->createNotFoundException('Error al solicitar datos de inserción');
     }
 }

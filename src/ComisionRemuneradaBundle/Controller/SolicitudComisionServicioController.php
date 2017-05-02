@@ -83,8 +83,11 @@ class SolicitudComisionServicioController extends Controller
             }
             
             $solicitudComisionServicio
-                ->assignTo($this->getUser())     // Se asigna un usuario a la solicitud
-                ->setTipoTramite($tipo_tramite); // Se modifica el tipo de tramite
+                ->assignTo($this->getUser())      // Se asigna un usuario a la solicitud
+                ->setTipoTramite($tipo_tramite);  // Se modifica el tipo de tramite
+
+            $solicitudComisionServicio
+                ->setFechaRecibido(new \DateTime("now")); // Se asigna la fecha del sistema a la solicitud
 
             $transicion
                 ->asignarA($solicitudComisionServicio)        // Se asigna una transicion a la solicitud
