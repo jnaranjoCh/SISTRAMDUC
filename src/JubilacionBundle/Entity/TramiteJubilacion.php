@@ -25,12 +25,35 @@ class TramiteJubilacion extends Tramite
 
     protected $owner;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fecha_recibido;
+
     public function __construct()
     {
         $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de Jubilación")
         ,new recaudo("Constancia para efecto de Jubilación"),new recaudo("Constancia de Antecedentes de servicios del ente de la administración pública donde laboró"),
             new recaudo("Constancia de cumplimiento de labores como preparador"), new recaudo("Recibo de Pago")
         ));
+    }
+
+    /**
+     * Get fecha_recibido
+     * @return datetime
+     */
+    public function getfecha_recibido()
+    {
+        return $this->fecha_recibido;
+    }
+
+    /**
+     * Set fecha_recibido
+     * @param datetime fecha_recibido
+     */
+    public function setfecha_recibido($fecha_recibido)
+    {
+        $this->fecha_recibido = $fecha_recibido;
     }
 
     /**

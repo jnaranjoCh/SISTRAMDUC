@@ -101,6 +101,9 @@ class TramiteJubilacionController extends Controller
                 ->assignTo($this->getUser())
                 ->setTipoTramite($tipo_tramite);
 
+            /* Se asigna la fecha en que se realiza la solicitud al tramite*/
+            $tramiteJubilacion->setfecha_recibido(new \DateTime("now"));
+
             $transicion
                 ->asignarA($tramiteJubilacion) // Se asigna una transicion a la solicitud
                 ->setEstado($estado);                  // Se cambia el estado de la transición
