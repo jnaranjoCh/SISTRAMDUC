@@ -246,24 +246,45 @@ class DefaultController extends Controller
                     $encontrado = true;
             }
 
-            if ($encontrado){
-
-                $jurado = new Jurado();
-
-                $jurado->setNombre($request->get("nombre"));
-                $jurado->setApellido($request->get("apellido"));
-                $jurado->setAreaInvestigacion($request->get("area"));
-                $jurado->setFacultad($request->get("facultad"));
-                $jurado->setUniversidad($request->get("universidad"));
-                $jurado->setIdUsuarioAsigna($this->getUser()->getId());
-                $jurado->setTipo($request->get("tipo"));
-                $jurado->setCedula($request->get("cedula"));
+            if ($encontrado){               
 
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($jurado);
-                $em->flush();
+                $query = $em->createQuery(
+                    'SELECT p
+                       FROM ConcursosBundle:Jurado p
+                      WHERE p.cedula = :cedula and p.tipo = :tipo'
+                )->setParameter('cedula', intval($request->get("cedula")))->setParameter('tipo', $request->get("tipo"));
+                 
+                $existe = $query->getResult();
 
-                $this->ConcursoJurado(intval($request->get("concurso")));
+                if ($existe == null){
+
+                    $jurado = new Jurado();
+
+                    $jurado->setNombre($request->get("nombre"));
+                    $jurado->setApellido($request->get("apellido"));
+                    $jurado->setAreaInvestigacion($request->get("area"));
+                    $jurado->setFacultad($request->get("facultad"));
+                    $jurado->setUniversidad($request->get("universidad"));
+                    $jurado->setIdUsuarioAsigna($this->getUser()->getId());
+                    $jurado->setTipo($request->get("tipo"));
+                    $jurado->setCedula($request->get("cedula"));
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($jurado);
+                    $em->flush();
+
+                    $this->ConcursoJurado(intval($request->get("concurso")));
+                } else {  
+
+                    try{
+                        $this->ConcursoJuradoExistente(intval($request->get("concurso")), $existe[0]);
+                        
+                    } catch(\Doctrine\DBAL\DBALException $e){
+
+                        return new JsonResponse("S");
+                    }
+                }                
 
                 return new JsonResponse("S");
             }
@@ -273,6 +294,18 @@ class DefaultController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al insertar datos');
+    }
+
+    private function ConcursoJuradoExistente($concurso, $jurado){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById(intval($concurso));
+
+        $concursoObjeto->addJurado($jurado);
+
+        $em->flush();                
     }
 
     private function ConcursoJurado($concurso){
