@@ -92,7 +92,7 @@ class ListadosOposicionController extends Controller
         foreach($object as $value)
         {
            switch ($pos) {
-               case 1: $val[$entidad][$i] = $value->getIdUsuario(); break;
+               case 1: $val[$entidad][$i] = $this->usuarioAsigna($value->getIdUsuario()); break;
                case 2: $val[$entidad][$i] = $value->getObservaciones(); break;
                case 3: $val[$entidad][$i] = $value->getNroVacantes();break;
                case 4: $val[$entidad][$i] = $value->getAreaPostulacion(); break;
@@ -156,7 +156,7 @@ class ListadosOposicionController extends Controller
                case 3: $val[$entidad][$i] = $value->getAreaInvestigacion(); break;
                case 4: $val[$entidad][$i] = $value->getFacultad(); break;
                case 5: $val[$entidad][$i] = $value->getUniversidad(); break;
-               case 6: $val[$entidad][$i] = $value->getIdUsuarioAsigna(); break;
+               case 6: $val[$entidad][$i] = $this->usuarioAsigna($value->getIdUsuarioAsigna()); break;
                case 7: $val[$entidad][$i] = $value->getCedula(); break;
 
                default: $val[$entidad][$i] = $value->getId(); break;
@@ -164,6 +164,27 @@ class ListadosOposicionController extends Controller
            $i++;
         }
         return $val;
+    }
+
+    private function usuarioAsigna($id){
+
+        if ($id == null)
+            return "";
+        else {
+
+            $repository = $this->getDoctrine()
+                ->getRepository('AppBundle:Usuario');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :cadena')
+                ->setParameter('cadena', $id)
+                ->getQuery();
+             
+            $usuario = $query->getResult();
+
+            if ($usuario == null) return "";
+            else return $usuario[0]->getNombreCorto();
+        }
     }
 
      /**
@@ -246,7 +267,6 @@ class ListadosOposicionController extends Controller
              throw $this->createNotFoundException('Error al devolver datos');
     }
 
-
      /**
      * @Route("/concursoOposicion/listadoSuplenteCPECAjax", name="listadoSuplenteCPECAjax")
      * @Method("POST")
@@ -273,6 +293,392 @@ class ListadosOposicionController extends Controller
             }else
             {
                 $val = $this->asignarFilaJurado($jurados,'id',$val, 0);
+                $val = $this->asignarFilaJurado($jurados,'nombre',$val, 1);
+                $val = $this->asignarFilaJurado($jurados,'apellido',$val, 2);
+                $val = $this->asignarFilaJurado($jurados,'areainvestigacion',$val, 3);
+                $val = $this->asignarFilaJurado($jurados,'facultad',$val, 4);
+                $val = $this->asignarFilaJurado($jurados,'universidad',$val, 5);
+                $val = $this->asignarFilaJurado($jurados,'idusuarioasigna',$val, 6);
+                $val = $this->asignarFilaJurado($jurados,'cedula',$val, 7);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarConcursoAjax", name="buscarConcursoAjax")
+     * @Method("POST")
+     */
+    public function buscarConcursoAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Concurso');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :id')
+                ->setParameter('id', $request->get("id"))
+                ->getQuery();
+             
+            $concurso = $query->getResult();
+
+            if (!$concurso) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaConcursos($concurso,'usuario',$val, 1);
+                $val = $this->asignarFilaConcursos($concurso,'observacion',$val, 2);
+                $val = $this->asignarFilaConcursos($concurso,'vacantes',$val, 3);
+                $val = $this->asignarFilaConcursos($concurso,'area',$val, 4);
+                $val = $this->asignarFilaConcursos($concurso,'inicio',$val, 5);
+                $val = $this->asignarFilaFechaRecepcion($concurso,'recepcion',$val);
+                $val = $this->asignarFilaFechaPresentacion($concurso,'presentacion',$val);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/borrarConcursoAjax", name="borrarConcursoAjax")
+     * @Method("POST")
+     */
+    public function borrarConcursoAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){
+
+                $em = $this->getDoctrine()->getManager();
+
+                $concurso = $em->getRepository('ConcursosBundle:Concurso')->find($request->get("id"));
+
+                $em->remove($concurso);
+
+                $em->flush();
+                
+                return new JsonResponse("S");
+
+            } else return new JsonResponse("N");             
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/modificarConcursoAjax", name="modificarConcursoAjax")
+     * @Method("POST")
+     */
+    public function modificarConcursoAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){
+
+                $em = $this->getDoctrine()->getManager();
+
+                $concurso = $em->getRepository('ConcursosBundle:Concurso')->find($request->get("id"));
+
+                if ($request->get("Inicio") != null || $request->get("Inicio") != "")
+                {
+                    $fecha = $this->cambiarFormatoFecha($request->get("Inicio"));
+                    $concurso->setFechaInicio(date_create($fecha));
+                }               
+
+                if ($request->get("Vacantes") != null || $request->get("Vacantes") != "")
+                    $concurso->setNroVacantes(intval($request->get("Vacantes")));
+
+                if ($request->get("Area") != null || $request->get("Area") != "")
+                    $concurso->setAreaPostulacion($request->get("Area"));
+
+                $concurso->setIdUsuario($this->getUser()->getId());
+
+                $concurso->setObservaciones($request->get("observacion"));
+
+                if ($request->get("fechaDoc") != null || $request->get("fechaDoc") != "")
+                {
+                    $fecha = $this->cambiarFormatoFecha($request->get("fechaDoc"));
+                    $concurso->setFechaRecepDoc(date_create($fecha));
+                }
+                else $concurso->setFechaRecepDoc("");
+                
+                if ($request->get("fechaPre") != null || $request->get("fechaPre") != "")
+                {
+                    $fecha = $this->cambiarFormatoFecha($request->get("fechaPre"));
+                    $concurso->setFechaPresentacion(date_create($fecha));
+                }
+                else $concurso->setFechaPresentacion("");
+
+                $em->flush();
+                
+                return new JsonResponse("S");
+
+            } else return new JsonResponse("N");             
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    public function cambiarFormatoFecha($fecha){
+
+        $dia = substr($fecha, 0, 2);
+        $mes = substr($fecha, 3, 2);
+        $ano = substr($fecha, 6, 4);
+
+        return $mes."/".$dia."/".$ano;
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarJuradoAjax", name="buscarJuradoAjax")
+     * @Method("POST")
+     */
+    public function buscarJuradoAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Jurado');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :id and p.tipo = :cadena')
+                ->setParameter('id', $request->get("id"))
+                ->setParameter('cadena', 'Oposicion')
+                ->getQuery();
+             
+            $jurados = $query->getResult();
+
+            if (!$jurados) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaJurado($jurados,'nombre',$val, 1);
+                $val = $this->asignarFilaJurado($jurados,'apellido',$val, 2);
+                $val = $this->asignarFilaJurado($jurados,'areainvestigacion',$val, 3);
+                $val = $this->asignarFilaJurado($jurados,'facultad',$val, 4);
+                $val = $this->asignarFilaJurado($jurados,'universidad',$val, 5);
+                $val = $this->asignarFilaJurado($jurados,'idusuarioasigna',$val, 6);
+                $val = $this->asignarFilaJurado($jurados,'cedula',$val, 7);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarJuradoSuplenteAjax", name="buscarJuradoSuplenteAjax")
+     * @Method("POST")
+     */
+    public function buscarJuradoSuplenteAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Jurado');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :id and p.tipo = :cadena')
+                ->setParameter('id', $request->get("id"))
+                ->setParameter('cadena', 'OposicionSuplentes')
+                ->getQuery();
+             
+            $jurados = $query->getResult();
+
+            if (!$jurados) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaJurado($jurados,'nombre',$val, 1);
+                $val = $this->asignarFilaJurado($jurados,'apellido',$val, 2);
+                $val = $this->asignarFilaJurado($jurados,'areainvestigacion',$val, 3);
+                $val = $this->asignarFilaJurado($jurados,'facultad',$val, 4);
+                $val = $this->asignarFilaJurado($jurados,'universidad',$val, 5);
+                $val = $this->asignarFilaJurado($jurados,'idusuarioasigna',$val, 6);
+                $val = $this->asignarFilaJurado($jurados,'cedula',$val, 7);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/borrarJuradoAjax", name="borrarJuradoAjax")
+     * @Method("POST")
+     */
+    public function borrarJuradoAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){
+
+                $em = $this->getDoctrine()->getManager();
+
+                $jurado = $em->getRepository('ConcursosBundle:Jurado')->find($request->get("id"));
+
+                $em->remove($jurado);
+
+                $em->flush();
+                
+                return new JsonResponse("S");
+
+            } else return new JsonResponse("N");             
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+
+    /**
+     * @Route("/concursoOposicion/modificarJuradoAjax", name="modificarJuradoAjax")
+     * @Method("POST")
+     */
+    public function modificarJuradoAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){
+
+                $em = $this->getDoctrine()->getManager();
+
+                $jurado = $em->getRepository('ConcursosBundle:Jurado')->find($request->get("id"));
+
+                if ($request->get("cedula") != null || $request->get("cedula") != "")
+                    $jurado->setCedula($request->get("cedula"));
+
+                if ($request->get("nombre") != null || $request->get("nombre") != "")
+                    $jurado->setNombre($request->get("nombre"));
+
+                if ($request->get("apellido") != null || $request->get("apellido") != "")
+                    $jurado->setApellido($request->get("apellido"));
+
+                if ($request->get("facultad") != null || $request->get("facultad") != "")
+                    $jurado->setFacultad($request->get("facultad"));
+
+                if ($request->get("universidad") != null || $request->get("universidad") != "")
+                    $jurado->setUniversidad($request->get("universidad"));
+
+                if ($request->get("area") != null || $request->get("area") != "")
+                    $jurado->setAreaInvestigacion($request->get("area"));
+
+                $jurado->setIdUsuarioAsigna($this->getUser()->getId());
+
+                $em->flush();
+                
+                return new JsonResponse("S");
+
+            } else return new JsonResponse("N");             
+        }
+        else
+            throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarCpecAjax", name="buscarCpecAjax")
+     * @Method("POST")
+     */
+    public function buscarCpecAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Jurado');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :id and p.tipo = :cadena')
+                ->setParameter('id', $request->get("id"))
+                ->setParameter('cadena', 'OposicionCpec')
+                ->getQuery();
+             
+            $jurados = $query->getResult();
+
+            if (!$jurados) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaJurado($jurados,'nombre',$val, 1);
+                $val = $this->asignarFilaJurado($jurados,'apellido',$val, 2);
+                $val = $this->asignarFilaJurado($jurados,'areainvestigacion',$val, 3);
+                $val = $this->asignarFilaJurado($jurados,'facultad',$val, 4);
+                $val = $this->asignarFilaJurado($jurados,'universidad',$val, 5);
+                $val = $this->asignarFilaJurado($jurados,'idusuarioasigna',$val, 6);
+                $val = $this->asignarFilaJurado($jurados,'cedula',$val, 7);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarCpecSuplenteAjax", name="buscarCpecSuplenteAjax")
+     * @Method("POST")
+     */
+    public function buscarCpecSuplenteAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Jurado');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :id and p.tipo = :cadena')
+                ->setParameter('id', $request->get("id"))
+                ->setParameter('cadena', 'OposicionSuplenteCpec')
+                ->getQuery();
+             
+            $jurados = $query->getResult();
+
+            if (!$jurados) {
+                 return new JsonResponse("N");
+            }else
+            {
                 $val = $this->asignarFilaJurado($jurados,'nombre',$val, 1);
                 $val = $this->asignarFilaJurado($jurados,'apellido',$val, 2);
                 $val = $this->asignarFilaJurado($jurados,'areainvestigacion',$val, 3);

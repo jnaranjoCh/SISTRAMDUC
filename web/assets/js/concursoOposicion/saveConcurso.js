@@ -40,7 +40,7 @@ $('#registrarConcurso').click(function (){
             "Area":$("#area").val(), 
             "fechaDoc":$("#fechaDoc").val(), 
             "fechaPre":$("#fechaPre").val(),
-            "observacion": $("observacion").val(), 
+            "observacion": $("#observacion").val(), 
             "tipo":"Oposicion"},
             url:  "/concursoOposicion/registroConcursoAjax",
             dataType: 'json',

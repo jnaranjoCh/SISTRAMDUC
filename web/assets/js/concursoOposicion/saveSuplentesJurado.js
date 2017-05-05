@@ -95,7 +95,7 @@ $('#registrarSuplentesJurado').click(function (){
 
 							toastr.clear();
 
-							text = "Jurados Insertados";
+							text = "Suplentes Insertados";
 
 							toastr.success(text, "Exito", {
 			                    "timeOut": "0",
