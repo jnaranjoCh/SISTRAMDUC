@@ -14,7 +14,7 @@
     <br/>
     <div class="row">
       <!--Success message-->
-      <section class="content-body col-md-offset-1 col-md-9">
+      <section class="content-body col-md-offset-1 col-md-10">
         <br/>
         <div class="register-box-body">
             <form id="recusa">           		
@@ -23,65 +23,37 @@
 
 	            <div class="callout callout-info">        
 		            <h4><i class="fa fa-info-circle"></i> Debe estar seguro de acusar a un miembro del jurado ya que amerita comprobaci&oacute;n de la solicitud.</h4>
-		        </div>          	
+		        </div>
 
-	            <br/>
+		        <br/>
 
-		        <div class="container">
-	            <label>C&eacute;dula del Aspirante Recusador
-	            	<span id="aspitanteSpam" class="label label-danger hide">Vac&iacute;o</span>
-	            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group'>
-				                    <input id="aspirante" type="text" class="form-control" maxlength="9" placeholder="Ejemplo: 12345678"
-				                    onkeypress="return justNumbers(event);"/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-hashtag"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+		        <div class="box-body">
+		          <div class="row">
+		            <div class="col-md-1">
+			            <label>Jurado</label>
+		            </div>
+		            <div class="col-md-10">
+		                <select class="form-control select2" style="width: 100%;" id="juradoLista">
+		                	
+		                </select> 
+		            </div>
+		          </div>
+		        </div>
 
-		        <div class="container">
-	            <label>C&eacute;dula del Jurado a Recusar
-	            	<span id="juradoSpam" class="label label-danger hide">Vac&iacute;o</span>
-	            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group'>
-				                    <input id="jurado" type="text" class="form-control" maxlength="9" placeholder="Ejemplo: 12345678"
-				                    onkeypress="return justNumbers(event);"/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-hashtag"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+		        <br/>
 
-				<div class="container">
-	            <label>Fecha de Acusaci&oacute;n
-	            	<span id="fechaSpam" class="label label-danger hide">Vac&iacute;o</span>
-	            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group date'>
-				                    <input id="fecha" type='text' class="form-control" placeholder="dd/MM/yyyy"/>
-				                    <span class="input-group-addon">
-				                        <span class="glyphicon glyphicon-calendar"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+		        <div class="box-body">
+		          <div class="row">
+		            <div class="col-md-1">
+			            <label>Aspirante</label>
+		            </div>
+		            <div class="col-md-10">
+		                <select class="form-control select2" style="width: 100%;" id="aspiranteLista">
+		                	
+		                </select> 
+		            </div>
+		          </div>
+		        </div>	          	
 
 				<br/><br/>
 
@@ -112,5 +84,14 @@
 
   <script src="{{ asset('assets/js/concursoOposicion/saveRecusacion.js') }}"></script>
   <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+
+  <script>
+  $(function () {
+
+    	$(".select2").select2();
+
+	});
+  </script>
 
 {% endblock %}

@@ -692,4 +692,67 @@ class ListadosOposicionController extends Controller
         else
              throw $this->createNotFoundException('Error al devolver datos');
     }
+
+     /**
+     * @Route("/concursoOposicion/listadoAspirantesAjax", name="listadoAspirantesAjax")
+     * @Method("POST")
+     */
+    public function listadoAspirantesAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Aspirante');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->orderBy('p.id', 'DESC')
+                ->getQuery();
+             
+            $jurados = $query->getResult();
+
+            if (!$jurados) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaAspirante($jurados,'id',$val, 0);
+                $val = $this->asignarFilaAspirante($jurados,'nombre1',$val, 1);
+                $val = $this->asignarFilaAspirante($jurados,'nombre2',$val, 2);
+                $val = $this->asignarFilaAspirante($jurados,'apellido1',$val, 3);
+                $val = $this->asignarFilaAspirante($jurados,'apellido2',$val, 4);
+                $val = $this->asignarFilaAspirante($jurados,'telefono',$val, 5);
+                $val = $this->asignarFilaAspirante($jurados,'correo',$val, 6);
+                $val = $this->asignarFilaAspirante($jurados,'cedula',$val, 7);
+                $val = $this->asignarFilaAspirante($jurados,'universidadegresado',$val, 8);
+                $val = $this->asignarFilaAspirante($jurados,'observaciones',$val, 9);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    private function asignarFilaAspirante($object,$entidad,$val, $pos)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           switch ($pos) {
+               case 1: $val[$entidad][$i] = $value->getPrimerNombre(); break;
+               case 2: $val[$entidad][$i] = $value->getSegundoNombre(); break;
+               case 3: $val[$entidad][$i] = $value->getPrimerApellido(); break;
+               case 4: $val[$entidad][$i] = $value->getSegundoApellido(); break;
+               case 5: $val[$entidad][$i] = $value->getTelefono(); break;
+               case 6: $val[$entidad][$i] = $value->getCorreo(); break;
+               case 7: $val[$entidad][$i] = $value->getCedula(); break;
+               case 8: $val[$entidad][$i] = $value->getUniversidadEgresado(); break;
+               case 9: $val[$entidad][$i] = $value->getObservaciones(); break;
+
+               default: $val[$entidad][$i] = $value->getId(); break;
+           }
+           $i++;
+        }
+        return $val;
+    }
 }
