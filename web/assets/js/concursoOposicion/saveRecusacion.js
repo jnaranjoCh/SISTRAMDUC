@@ -54,24 +54,47 @@ $('#registrar').click(function (){
 
 	var continua = true;
 
+    if ($("#juradoLista").val() == "" ||
+     $("#juradoLista").val() == "..." || 
+     $("#juradoLista").val() == null){
+
+        continua = false;
+        text = "Jurado vacío";
+    }
+
+    if ($("#aspiranteLista").val() == "" ||
+     $("#aspiranteLista").val() == "..." || 
+     $("#aspiranteLista").val() == null){
+
+        continua = false;
+        text = "Aspirante vacío";
+    }
+
 	if (continua){
 
 		/*json*/
 
 		$.ajax({
 			method: "POST",
-			data: {"aspirante": $('#aspirante').val(),
-			"jurado": $('#jurado').val()},
+			data: {"aspirante": $('#aspiranteLista').val(),
+			"jurado": $('#juradoLista').val()},
 			url: "/concursoOposicion/registroRecusacionAjax",
 			dataType: "json",
 			success: function(data)
 			{
 				if (data == "S") {
 
+                    toastr.success("Recusación registrada", "Exito", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                     });
 
 				} else {
 
-
+                    toastr.error("Usted no tiene permiso", "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                     });
 				}
 			}
 		});
@@ -89,10 +112,6 @@ $('#registrar').click(function (){
 $('#limpiarRecusacion').click(function (){ 
 
 	document.getElementById('recusa').reset();
-
-	$('#aspitanteSpam').addClass("hide");
-	$('#juradoSpam').addClass("hide");
-	$('#fechaSpam').addClass("hide");
 
 	toastr.clear();
 });

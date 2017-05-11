@@ -4,6 +4,9 @@ namespace ConcursoOposicionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ConcursosBundle\Entity\Jurado;
+use ConcursosBundle\Entity\Aspirante;
+
 /**
  * Recusacion
  *
@@ -22,18 +25,16 @@ class Recusacion
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="cedula_aspirante", type="integer")
+     * @ORM\ManyToOne(targetEntity="ConcursosBundle\Entity\Jurado", inversedBy="recusa")
+     * @ORM\JoinColumn(name="jurado_id", referencedColumnName="id")
      */
-    private $cedulaAspirante;
+    protected $jurado_id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="cedula_jurado", type="integer")
+     * @ORM\ManyToOne(targetEntity="ConcursosBundle\Entity\Aspirante", inversedBy="recusa")
+     * @ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")
      */
-    private $cedulaJurado;
+    protected $aspirante_id;
 
     /**
      * @var \DateTime
@@ -58,54 +59,6 @@ class Recusacion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set cedulaAspirante
-     *
-     * @param integer $cedulaAspirante
-     *
-     * @return Recusacion
-     */
-    public function setCedulaAspirante($cedulaAspirante)
-    {
-        $this->cedulaAspirante = $cedulaAspirante;
-
-        return $this;
-    }
-
-    /**
-     * Get cedulaAspirante
-     *
-     * @return int
-     */
-    public function getCedulaAspirante()
-    {
-        return $this->cedulaAspirante;
-    }
-
-    /**
-     * Set cedulaJurado
-     *
-     * @param integer $cedulaJurado
-     *
-     * @return Recusacion
-     */
-    public function setCedulaJurado($cedulaJurado)
-    {
-        $this->cedulaJurado = $cedulaJurado;
-
-        return $this;
-    }
-
-    /**
-     * Get cedulaJurado
-     *
-     * @return int
-     */
-    public function getCedulaJurado()
-    {
-        return $this->cedulaJurado;
     }
 
     /**
@@ -154,6 +107,28 @@ class Recusacion
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    public function getJuradoId()
+    {
+        return $this->jurado_id;
+    }
+
+    public function setJuradoId(Jurado $jurado = null)
+    {
+        $this->jurado_id = $jurado;
+        return $this;
+    }
+
+    public function getAspiranteId()
+    {
+        return $this->aspirante_id;
+    }
+
+    public function setAspiranteId(Aspirante $aspirante = null)
+    {
+        $this->aspirante_id = $aspirante;
+        return $this;
     }
 }
 

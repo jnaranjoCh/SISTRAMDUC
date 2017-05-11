@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+use ConcursoOposicionBundle\Entity\Recusacion;
+
 /**
  * Jurado
  *
@@ -81,6 +83,33 @@ class Jurado
   
     protected $concurso;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Recusacion", mappedBy="jurado_id", cascade={"persist", "remove"})
+     */
+    
+    protected $recusa;   
+
+
+    public function __construct()
+    {
+        $this->recusa = new ArrayCollection();
+    }
+    
+    public function getRecusa()
+    {
+        return $this->recusa->toArray();
+    }
+
+    public function addRecusa(Recusacion $recusa)
+    {
+        if (!$this->recusa->contains($recusa)) {
+            $this->recusa->add($recusa);
+            $recusa->setJuradoId($this);
+        }
+
+        return $this;
+    }
     
     /**
      * Get id

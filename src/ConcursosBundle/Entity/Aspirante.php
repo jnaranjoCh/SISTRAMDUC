@@ -4,6 +4,10 @@ namespace ConcursosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
+use ConcursoOposicionBundle\Entity\Recusacion;
+
 /**
  * Aspirante
  *
@@ -156,6 +160,33 @@ class Aspirante
     
    
     protected $concursos;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Recusacion", mappedBy="aspirante_id", cascade={"persist", "remove"})
+     */
+    protected $recusa;
+
+
+    public function __construct()
+    {
+        $this->recusa = new ArrayCollection();
+    }
+    
+    public function getRecusa()
+    {
+        return $this->recusa->toArray();
+    }
+
+    public function addRecusa(Recusacion $recusa)
+    {
+        if (!$this->recusa->contains($recusa)) {
+            $this->recusa->add($recusa);
+            $recusa->setAspiranteId($this);
+        }
+
+        return $this;
+    }
 
     /**
      * Get id

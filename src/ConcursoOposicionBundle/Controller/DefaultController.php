@@ -350,38 +350,41 @@ class DefaultController extends Controller
 
             if ($encontrado){
 
-                $query = $this->getDoctrine()->getManager()->createQuery("select 1 from ConcursosBundle:Jurado a where '".$request->get("jurado")."' = a.cedula");
+                $recusacion = new Recusacion();
 
-                $existeJ = $query->getResult();
+                $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Aspirante');
+             
+                $query = $repository->createQueryBuilder('p')
+                    ->where('p.id = :cadena')
+                    ->setParameter('cadena', $request->get("aspirante"))
+                    ->getQuery();
+                 
+                $aspirante = $query->getResult();
 
-                if ($existeJ != null){
+                $recusacion->setAspiranteId($aspirante[0]);
 
-                    $query = $this->getDoctrine()->getManager()->createQuery("select 1 from ConcursosBundle:Aspirante a where '".$request->get("aspirante")."' = a.cedula");
+                $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Jurado');
+             
+                $query = $repository->createQueryBuilder('p')
+                    ->where('p.id = :cadena')
+                    ->setParameter('cadena', $request->get("jurado"))
+                    ->getQuery();
+                 
+                $jurado = $query->getResult();
 
-                    $existeA = $query->getResult();
+                $recusacion->setJuradoId($jurado[0]);
 
-                    if ($existeA != null){
+                $recusacion->setFecha(date_create(""));
+                $recusacion->setUsuario($this->getUser()->getId());
 
-                        $recusacion = new Recusacion();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($recusacion);
+                $em->flush();
 
-                        $recusacion->setCedulaAspirante($request->get("aspirante"));
-                        $recusacion->setCedulaJurado($request->get("jurado"));
-
-                        $fecha = $this->cambiarFormatoFecha($request->get("fecha"));
-
-                        $recusacion->setFecha(date_create($fecha));
-                        $recusacion->setUsuario($this->getUser()->getId());
-
-                        $em = $this->getDoctrine()->getManager();
-                        $em->persist($recusacion);
-                        $em->flush();
-
-                        return new JsonResponse("S");
-
-                    } else
-                        return new JsonResponse("A");                
-                } else 
-                    return new JsonResponse("J");                
+                return new JsonResponse("S");
+                          
             } else
                 return new JsonResponse("N");          
         } else
