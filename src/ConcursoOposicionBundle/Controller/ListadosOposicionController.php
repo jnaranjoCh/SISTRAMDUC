@@ -755,4 +755,172 @@ class ListadosOposicionController extends Controller
         }
         return $val;
     }
+
+    /**
+     * @Route("/concursoOposicion/listadoRecusacionAjax", name="listadoRecusacionAjax")
+     * @Method("POST")
+     */
+    public function listadoRecusacionAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Recusacion');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->orderBy('p.id', 'DESC')
+                ->getQuery();
+             
+            $recusacion = $query->getResult();
+
+            if (!$recusacion) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaRec($recusacion,'id',$val, 0);
+                $val = $this->asignarFilaRec($recusacion,'jurado',$val, 1);
+                $val = $this->asignarFilaRec($recusacion,'aspirante',$val, 2);
+                $val = $this->asignarFilaRec($recusacion,'fecha',$val, 3);
+                $val = $this->asignarFilaRec($recusacion,'usuario',$val, 4);
+
+                return new JsonResponse($val);
+            }
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    private function asignarFilaRec($object,$entidad,$val, $pos)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           switch ($pos) {
+               case 1: $val[$entidad][$i] = $this->juradoAsigna($value->getJuradoId()); break;
+               case 2: $val[$entidad][$i] = $this->aspiranteAsigna($value->getAspiranteId()); break;
+               case 3: $val[$entidad][$i] = date_format($value->getFecha(), 'd-m-Y'); break;
+               case 4: $val[$entidad][$i] = $this->usuarioAsigna($value->getUsuario()); break;
+
+               default: $val[$entidad][$i] = $value->getId(); break;
+           }
+           $i++;
+        }
+        return $val;
+    }
+
+    private function juradoAsigna($id){
+
+        if ($id == null)
+            return "";
+        else {
+
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Jurado');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :cadena')
+                ->setParameter('cadena', $id)
+                ->getQuery();
+             
+            $usuario = $query->getResult();
+
+            if ($usuario == null) return "";
+            else return $usuario[0]->getNombre()." ".$usuario[0]->getApellido();
+        }
+    }
+
+    private function aspiranteAsigna($id){
+
+        if ($id == null)
+            return "";
+        else {
+
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursosBundle:Aspirante');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :cadena')
+                ->setParameter('cadena', $id)
+                ->getQuery();
+             
+            $usuario = $query->getResult();
+
+            if ($usuario == null) return "";
+            else return $usuario[0]->getPrimerNombre()." ".$usuario[0]->getPrimerApellido();
+        }
+    }
+
+
+    /**
+     * @Route("/concursoOposicion/buscarRecusadoAjax", name="buscarRecusadoAjax")
+     * @Method("POST")
+     */
+    public function buscarRecusadoAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Recusacion');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.id = :id')
+                ->setParameter('id', $request->get("id"))
+                ->getQuery();
+             
+            $recusacion = $query->getResult();
+
+            if (!$recusacion) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaRec($recusacion,'id',$val, 0);
+                $val = $this->asignarFilaRec($recusacion,'jurado',$val, 1);
+                $val = $this->asignarFilaRec($recusacion,'aspirante',$val, 2);
+                $val = $this->asignarFilaRec($recusacion,'fecha',$val, 3);
+                $val = $this->asignarFilaRec($recusacion,'usuario',$val, 4);
+
+                return new JsonResponse($val);
+            }
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/borrarRecusacionAjax", name="borrarRecusacionAjax")
+     * @Method("POST")
+     */
+    public function borrarRecusacionAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){
+
+                $em = $this->getDoctrine()->getManager();
+
+                $recusacion = $em->getRepository('ConcursoOposicionBundle:Recusacion')->find($request->get("id"));
+
+                $em->remove($recusacion);
+
+                $em->flush();
+                
+                return new JsonResponse("S");
+
+            } else return new JsonResponse("N");             
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
 }
