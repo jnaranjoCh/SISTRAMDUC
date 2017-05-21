@@ -4,23 +4,99 @@
         var row = tableRegistros.cell( this ).index().row;
         var column = tableRegistros.cell( this ).index().column;
         var cell = new Object();
-        
         var id = object.split('id="')[1];
-        id = id.split('"')[0];
+        var execute = true;
+        var cellRegAux =  new Object();
         
+        cellRegAux.row = row;
+        cellRegAux.column = "0";
+        cellRegAux.columnVisible = "0";
+        
+        var iid = tableRegistros.cell(cellRegAux).data();
+        
+        id = id.split('"')[0];
         cell.row = row;
-        cell.column = "5";
+        cell.column = "6";
         cell.columnVisible = "0";
-    
-        $("#"+id).change(function(){
-            if(column == 0 && ($("#"+id).val() == "Tutoria de pasantias" || $("#"+id).val() == "Tutoria de servicio comunitario"))
+        
+        $("#"+id).change(function(e){
+            if(column == 1 && ($("#"+id).val() == "Tutoria de pasantias" || $("#"+id).val() == "Tutoria de servicio comunitario"))
+            {
+                updateReferencesAdd(tableParticipantes,iid);
+                updateReferencesDelete(tableRevista,iid);
                 tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">').draw();
-            else if(column == 0  && ($("#"+id).val() != "Tutoria de pasantias" && $("#"+id).val() != "Tutoria de servicio comunitario"))
+            }
+            else if(column == 1 && $("#"+id).val() == "Articulo publicado")
+            {
+                updateReferencesAdd(tableRevista,iid);
+                updateReferencesDelete(tableParticipantes,iid);
+            }
+            else if(column == 1  && ($("#"+id).val() == "Estudio" || $("#"+id).val() == "Asistencia a congresos"))
+            {
+                updateReferencesDelete(tableParticipantes,iid);
+                updateReferencesDelete(tableRevista,iid);
                 tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>').draw();
+            }
         });
     });
     
-    $('#restablecerRegistros').click(function(){
+    function updateReferencesAdd(table,iid)
+    {
+        if(table.page.info().recordsTotal > 0)
+        {
+            var cellPar = new Object();
+            for(var i = 0; i < table.page.info().recordsTotal; i++)
+            {
+                cellPar.row = i;
+                cellPar.column = "0";
+                cellPar.columnVisible = "0";
+                if(table.cell(cellPar).data().indexOf(iid+"</option>") == -1)
+                {
+                    table.cell(cellPar).data(table.cell(cellPar).data().replace("</select>","<option value='"+iid+"'>"+iid+"</option></select>"));
+                }
+            }
+        }
+        else
+        {
+            if(table.table().node().id == "tableParticipantes")
+                table.row.add( {
+                    "IdDelRegistro":'<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;"><option value="'+iid+'">'+iid+'</option></select>',
+                    "Nombre":'<input id="Nombre'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Nombre">',
+                    "Cedula": '<input id="Cedula'+table.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula">',
+                }).draw();            
+            else if(table.table().node().id == "tableRevista")
+                tableRevista.row.add( {
+                    "IdDelRegistro":'<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;"><option value="'+iid+'">'+iid+'</option></select>',
+                    "Revista":'<input id="Revista'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
+                }).draw();
+            //alert(table.page.info().recordsTotal+" == 0");
+        }
+    }
+    
+    function updateReferencesDelete(table,iid)
+    {
+        if(table.page.info().recordsTotal > 0)
+        {
+            var cellPar = new Object();
+            for(var i = 0; i < table.page.info().recordsTotal; i++)
+            {
+                cellPar.row = i;
+                cellPar.column = "0";
+                cellPar.columnVisible = "0";
+                if(table.cell(cellPar).data().indexOf(iid+"</option>") != -1)
+                {
+                    if((table.cell(cellPar).data().split("</option>").length-1) > 1)
+                    {
+                        table.cell(cellPar).data(table.cell(cellPar).data().replace("<option value='"+iid+"'>"+iid+"</option>",""));
+                        table.cell(cellPar).data(table.cell(cellPar).data().replace("<option value='"+iid+"'  selected='selected'>"+iid+"</option>",""));
+                    }else
+                        table.clear().draw();
+                }
+            }
+        }
+    }
+    
+    $('#restablecer').click(function(){
         $('#tableRegistros').dataTable().fnDestroy();
         tableRegistros = $('#tableRegistros').DataTable({
                         	    "ajax":{
@@ -28,10 +104,13 @@
                                    "type": 'POST',
                                    "data": {"email":$('#gemail').val()}
                                 },
+                                "pagingType": "full_numbers",
+                                "bDestroy": true,
                         	    "language": {
                                     	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
                                 },
                                 columns: [
+                                   {"data": "Id"},
                                    {"data":"TipoDeReferencia"},
                                    {"data":"Descripcion"},
                                    {"data":"Nivel"},
@@ -40,30 +119,104 @@
                                    {"data":"EmpresaInstitucion"}
                                 ]
                             });
+                            
+        $('#tableParticipantes').dataTable().fnDestroy();  
+        tableParticipantes = $('#tableParticipantes').DataTable({
+                        	    "ajax":{
+                                   "url": "{{ path('registro_consultarparticipantes_ajax') }}",
+                                   "type": 'POST',
+                                   "data": {"email":$('#gemail').val()}
+                                },
+                                "pagingType": "full_numbers",
+                                "bDestroy": true,
+                        	    "language": {
+                                    	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                },
+                                columns: [
+                                    { "data": "IdDelRegistro"},
+                                    { "data": "Nombre"},
+                                    { "data": "Cedula"}
+                                ]
+                            });
+                            
+        $('#tableRevista').dataTable().fnDestroy();
+        tableRevista = $('#tableRevista').DataTable({
+                        	    "ajax":{
+                                   "url": "{{ path('registro_consultarrevistas_ajax') }}",
+                                   "type": 'POST',
+                                   "data": {"email":$('#gemail').val()}
+                                },
+                                "pagingType": "full_numbers",
+                                "bDestroy": true,
+                        	    "language": {
+                                    	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                },
+                                columns: [
+                                    { "data": "IdDelRegistro" },
+                                    { "data": "Revista" }
+                                ]
+                            });
     });
     
     $('#agregarRegistros').click(function(){
         var cell = new Object();
         cell.row = "0";
-        cell.column = "0";
+        cell.column = "1";
         cell.columnVisible = "0";
-        var tipo = tableRegistros.cell(cell).data().replace("Tipo0", "Tipo"+$('#tableRegistros >tbody >tr').length).replace("selected='selected'", "");
-        cell.row = "0";
-        cell.column = "2";
-        cell.columnVisible = "0";
-        var nivel = tableRegistros.cell(cell).data().replace("Nivel0", "Nivel"+$('#tableRegistros >tbody >tr').length).replace("selected='selected'", "");
+        var tipo = tableRegistros.cell(cell).data().replace("Tipo0", "Tipo"+tableRegistros.page.info().recordsTotal).replace("selected='selected'", "");
         cell.row = "0";
         cell.column = "3";
         cell.columnVisible = "0";
-        var estatus = tableRegistros.cell(cell).data().replace("Estatus0", "Estatus"+$('#tableRegistros >tbody >tr').length).replace("selected='selected'", "");
+        var nivel = tableRegistros.cell(cell).data().replace("Nivel0", "Nivel"+tableRegistros.page.info().recordsTotal).replace("selected='selected'", "");
+        cell.row = "0";
+        cell.column = "4";
+        cell.columnVisible = "0";
+        var estatus = tableRegistros.cell(cell).data().replace("Estatus0", "Estatus"+tableRegistros.page.info().recordsTotal).replace("selected='selected'", "");
+        cell.row = tableRegistros.page.info().recordsTotal-1;
+        cell.column = "0";
+        cell.columnVisible = "0";
+        var id = tableRegistros.cell(cell).data();
+        
         tableRegistros.row.add( {
+            "Id":id+1,
             "TipoDeReferencia":tipo,
-            "Descripcion":'<input id="Descripcion'+$('#tableRegistros >tbody >tr').length+'" value="" type="text" class="form-control" placeholder="Descripción">',
+            "Descripcion":'<input id="Descripcion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Descripción">',
             "Nivel":nivel,
             "Estatus":estatus,
-            "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+$('#tableRegistros >tbody >tr').length+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-            "EmpresaInstitucion": '<input id="EmpresaInstitucion'+$('#tableRegistros >tbody >tr').length+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
-        } ).draw();
+            "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
+            "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
+        }).draw();
+        $('#tableRegistros_last').click();
+    });
 
+    
+    $('#agregarParticipantes').click(function(){
+        var cell = new Object();
+        cell.row = "0";
+        cell.column = "0";
+        cell.columnVisible = "0";
+        var idDelRegistro = tableParticipantes.cell(cell).data();
+
+        tableParticipantes.row.add( {
+            "IdDelRegistro":idDelRegistro,
+            "Nombre":'<input id="Nombre'+tableParticipantes.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Nombre">',
+            "Cedula": '<input id="Cedula'+tableParticipantes.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula">',
+        }).draw();
+        $('#tableParticipantes_last').click();
+    });
+
+    
+    $('#agregarRevistas').click(function(){
+         var cell = new Object();
+        cell.row = "0";
+        cell.column = "0";
+        cell.columnVisible = "0";
+        var idDelRegistro = tableRevista.cell(cell).data();
+        
+        tableRevista.row.add( {
+            "IdDelRegistro":idDelRegistro,
+            "Revista":'<input id="Revista'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
+        }).draw();
+        $('#tableRevista_last').click();
     });
 </script>

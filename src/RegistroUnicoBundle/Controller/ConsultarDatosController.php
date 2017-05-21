@@ -10,6 +10,7 @@ use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Rol;
+use \stdClass;
 
 class ConsultarDatosController extends Controller
 {
@@ -92,6 +93,64 @@ class ConsultarDatosController extends Controller
         }
         
         return new JsonResponse( array(
+            "draw"            => 1,
+	        "recordsTotal"    => $data->num,
+	        "recordsFiltered" => $data->num,
+	        "data"            => $data->data 
+        ));
+    }
+    
+    public function enviarRegistrosDeParticipantesAjaxAction(Request $request)
+    {
+        $data = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT u,r,p
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN u.registros r
+                                        INNER JOIN r.participantes p
+                                     WHERE u.correo = :email')
+                      ->setParameter('email',$request->get('email'))
+                      ->getResult();
+        
+        if($data != null)        
+            $data = $data[0]->getRegistrosParticipantes();
+        else 
+        {
+            $data = new stdClass;
+            $data->data = null;
+            $data->num = 0;
+        }
+        
+        return new JsonResponse( array(
+            "draw"            => 1,
+	        "recordsTotal"    => $data->num,
+	        "recordsFiltered" => $data->num,
+	        "data"            => $data->data 
+        ));
+    }
+    
+    public function enviarRegistrosDeRevistasAjaxAction(Request $request)
+    { 
+        $data = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT u,r,rr
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN u.registros r
+                                        INNER JOIN r.revistas rr
+                                     WHERE u.correo = :email')
+                      ->setParameter('email',$request->get('email'))
+                      ->getResult();
+        
+        if($data != null)              
+            $data = $data[0]->getRegistrosRevistas();
+        else 
+        {
+            $data = new stdClass;
+            $data->data = null;
+            $data->num = 0;
+        }
+        
+        return new JsonResponse(array(
             "draw"            => 1,
 	        "recordsTotal"    => $data->num,
 	        "recordsFiltered" => $data->num,

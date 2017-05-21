@@ -66,6 +66,14 @@ registro_consultarregistros_ajax:
     path:     /consulta/enviar-registros
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeUsuarioAjax }
 
+registro_consultarparticipantes_ajax:
+    path:     /consulta/enviar-participantes
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeParticipantesAjax }
+
+registro_consultarrevistas_ajax:
+    path:     /consulta/enviar-revistas
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeRevistasAjax }
+    
 registro_consultarbuscaremail_ajax:
     path:     /consulta/buscar-email
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarEmailAjax }

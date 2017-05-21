@@ -98,6 +98,7 @@
                   <table id="tableRegistros" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th>Id</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
                       <th>Nivel</th>
@@ -110,6 +111,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th>Id</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
                       <th>Nivel</th>
@@ -120,23 +122,94 @@
                     </tfoot>
                   </table>
                 </div>
-                <br/>
                 <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group has-feedback">
-                            <button  id="restablecerRegistros" type="button" class="btn btn-primary btn-block btn-flat">Restablecer&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
-                      </div>
-                  </div><!-- text-center -->
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                       <div class="form-group has-feedback">
                             <button  id="agregarRegistros" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
                       </div>
                   </div><!--col-xs-12   col-md-offset-5 -->
                 </div>
-                
+                <br/>
+                <hr/>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Participantes</h3>
+                  </div>
+                </div>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableParticipantes" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Nombre</th>
+                      <th>Cedula</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Nombre</th>
+                      <th>Cedula</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                            <button  id="agregarParticipantes" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                      </div>
+                  </div><!--col-xs-12   col-md-offset-5 -->
+                </div>
+                <br/>
+                <hr/>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3>Revistas de publicación</h3>
+                  </div>
+                </div>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableRevista" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Revista</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Revista</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                 <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                            <button  id="agregarRevistas" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                      </div>
+                  </div><!--col-xs-12   col-md-offset-5 -->
+                </div>
               </div>
               <!-- /.box -->
            </div>
+           <div class="row">
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                      <button  id="restablecer" type="button" class="btn btn-primary btn-block btn-flat">Restablecer&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+                </div>
+            </div><!-- text-center -->
+            <div class="col-md-6">
+                <div class="form-group has-feedback">
+                      <button  id="guardar" type="button" class="btn btn-danger btn-block btn-flat">Guardar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                </div>
+            </div><!--col-xs-12   col-md-offset-5 -->
+          </div>
            <!--research,courses and studies box-->
           </div>
           <!--+carg box-->

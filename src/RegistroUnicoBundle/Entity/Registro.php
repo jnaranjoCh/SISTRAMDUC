@@ -4,6 +4,7 @@ namespace RegistroUnicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use \stdClass;
 
 /**
  * @ORM\Entity
@@ -317,14 +318,20 @@ class Registro
         return $this;
     }
     
-     public function getParticipantes()
+     public function getParticipantes($select)
      {
-        // profiler needs at least one rol to consider the user logged in
-        $participantes = array_reduce($this->participantes->toArray(), function ($participante_names, $participante) {
-            $participante_names[] = $participante->getNombre();
-            return $participante_names;
-        }, []);
+        $participantes = new stdClass;
+        $i = 0;
+        $data[] = [];
+        foreach($this->participantes->toArray() as $participante){
+            $data[$i]['IdDelRegistro'] = $select;
+            $data[$i]['Nombre'] = '<input id="Nombre'.$i.'" value="'.$participante->getNombre().'" type="text" class="form-control" placeholder="Nombre">';
+            $data[$i]['Cedula'] = '<input id="Cedula'.$i.'" value="'.$participante->getCedula().'" type="number" class="form-control" placeholder="Cédula">';
+            $i++;
+        }
 
+        $participantes->data = $data;
+        $participantes->num = $i;
         return $participantes;
      }
     
@@ -341,14 +348,20 @@ class Registro
          }
      }
      
-     public function getRevistas()
+     public function getRevistas($select)
      {
-        // profiler needs at least one rol to consider the user logged in
-        $revistas = array_reduce($this->revistas->toArray(), function ($revista_names, $revista) {
-            $revista_names[] = $revista->getDescription();
-            return $revista_names;
-        }, []);
+        $revistas = new stdClass;
+        $i = 0;
+        $data[] = [];
+        foreach($this->revistas->toArray() as $revista){
+            $selectAux = str_replace('<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;">','<select id="IdDelRegistro'.$i.'" class="form-control select2" style="width: 240px;">',$select);
+            $data[$i]['IdDelRegistro'] = $selectAux;
+            $data[$i]['Revista'] = '<input id="Revista'.$i.'" value="'.$revista->getDescription().'" type="text" class="form-control" placeholder="Revista">';
+            $i++;
+        }
 
+        $revistas->data = $data;
+        $revistas->num = $i;
         return $revistas;
      }
     

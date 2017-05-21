@@ -650,6 +650,67 @@ class Usuario implements UserInterface
         return $registros;
     }
 
+	public function getRegistrosParticipantes()
+    { 
+        $registros = new stdClass;
+        
+        $i = 0;
+        $data[] = [];
+        $aux[] = [];
+        
+        $htmlIdRegistros = '<select id="IdDelRegistro'.$i.'" class="form-control select2" style="width: 240px;">';
+        foreach($this->registros->toArray() as $registro){
+            $htmlIdRegistros = $htmlIdRegistros."<option value='".$registro->getId()."'>".$registro->getId()."</option>";
+        }
+        $htmlIdRegistros = $htmlIdRegistros."</select>";
+        
+        foreach($this->registros->toArray() as $registro){
+            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
+            $aux = $registro->getParticipantes($htmlIdRegistrosAux);
+            for($j = 0; $j < $aux->num; $j++)
+            {
+                $data[$i]['IdDelRegistro'] = $aux->data[$j]['IdDelRegistro'];
+                $data[$i]['Nombre'] = $aux->data[$j]['Nombre'];
+                $data[$i]['Cedula'] = $aux->data[$j]['Cedula'];
+                $i++;
+            }
+        }
+        
+        $registros->data = $data;
+        $registros->num = $i;
+        return $registros;
+    }
+    
+    public function getRegistrosRevistas()
+    { 
+        $registros = new stdClass;
+        
+        $i = 0;
+        $data[] = [];
+        $aux[] = [];
+
+        $htmlIdRegistros = '<select id="IdDelRegistro'.$i.'" class="form-control select2" style="width: 240px;">';
+        foreach($this->registros->toArray() as $registro){
+            $htmlIdRegistros = $htmlIdRegistros."<option value='".$registro->getId()."'>".$registro->getId()."</option>";
+        }
+        $htmlIdRegistros = $htmlIdRegistros."</select>";
+
+        foreach($this->registros->toArray() as $registro){
+            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
+            $aux = $registro->getRevistas($htmlIdRegistrosAux);
+            for($j = 0; $j < $aux->num; $j++)
+            {
+                $data[$i]['IdDelRegistro'] = $aux->data[$j]['IdDelRegistro'];
+                $data[$i]['Revista'] = $aux->data[$j]['Revista'];
+                $i++;
+            }
+        }
+        
+        $registros->data = $data;
+        $registros->num = $i;
+        return $registros;
+    }
+    
     public function addRegistro($registro)
     {
        $this->registros[] = $registro;
