@@ -17,7 +17,7 @@
       <section class="content-body col-md-offset-1 col-md-9">
         <br/>
         <div class="register-box-body">
-            <form>          		
+            <form id='aspiranteForm'>          		
 
 	            <br/>
         
@@ -31,7 +31,7 @@
 				                <div class='input-group' >
 				                    <input type="number" class="form-control" max="9" placeholder="Ejemplo: 12345678" id='cedula'  onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
-				                        <span class="fa fa-hashtag"></span>
+				                        <span class="fa fa-credit-card"></span>
 				                    </span>
 				                </div>
 				            </div>
@@ -119,9 +119,9 @@
 				        <div class='col-sm-7'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 0000 - 1122 33 44" id='tlf1'/>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 000011223344" id='tlf1' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
-				                        <span class="fa fa-hashtag"></span>
+				                        <span class="glyphicon glyphicon-earphone"></span>
 				                    </span>
 				                </div>
 				            </div>
@@ -137,9 +137,9 @@
 				        <div class='col-sm-7'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 0000 - 1122 33 44" id='tlf2'/>
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 000011223344" id='tlf2' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
-				                        <span class="fa fa-hashtag"></span>
+				                        <span class="glyphicon glyphicon-earphone"></span>
 				                    </span>
 				                </div>
 				            </div>
@@ -166,25 +166,7 @@
 				</div>
 
 				<div class="container">
-	            <label>Repita el Correo
-	            	<span id="spanemail2" class="label label-danger hide">Vac&iacute;o</span>
-	            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="mail" class="form-control" maxlength="50" placeholder="Ejemplo: abdcef123@mail.com" id='email2'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-at"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-		            <label>Egresado de la Universidad?
+		            <label>Egresado de?
 		            	<span id="spanuniversidad" class="label label-danger hide">Vac&iacute;o</span>
 		            </label>
 				    <div class="row">
@@ -209,7 +191,7 @@
 				        <div class='col-sm-7'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Lic. Computaci&oacute;n" id='tiulo'/>
+				                    <input type="text" class="form-control" maxlength="50" placeholder="Ejemplo: Lic. Computaci&oacute;n" id='tiulo'/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-buysellads"></span>
 				                    </span>
@@ -227,7 +209,7 @@
 				        <div class='col-sm-7'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 2017" id='graduacion' onkeypress="return justNumbers(event);"/>
+				                    <input type="text" class="form-control" maxlength="4" placeholder="Ejemplo: 2017" id='graduacion' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-hashtag"></span>
 				                    </span>
@@ -245,7 +227,7 @@
 				        <div class='col-sm-7'>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="3" placeholder="Que quiere mencionar?" id='observacion'/>
+				                    <input type="text" class="form-control" maxlength="250" placeholder="Que quiere mencionar?" id='observacion'/>
 				                    <span class="input-group-addon">
 				                        <span class="glyphicon glyphicon-eye-open"></span>
 				                    </span>
@@ -259,7 +241,7 @@
 
               <div class="row">
                 <div class="col-xs-6">
-                	<a href="{{ path('documentacion_oposicion') }}" class="btn btn-primary btn-block btn-flat">Adjuntar Documentos</a>
+                  <button id="limpiarAspirante" type="button" class="btn btn-default btn-block btn-flat">Limpiar</button>
                 </div>
                 <div class="col-xs-6">
                   <button id="registrarAspirante" type="button" class="btn btn-success btn-block btn-flat">Registrar Aspirante</button>

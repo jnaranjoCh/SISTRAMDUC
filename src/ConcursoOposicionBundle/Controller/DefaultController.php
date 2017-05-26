@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ConcursosBundle\Entity\Concurso;
+use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
 use ConcursoOposicionBundle\Entity\Recusacion;
 use AppBundle\Entity\Usuario;
@@ -398,5 +399,64 @@ class DefaultController extends Controller
         $ano = substr($fecha, 6, 4);
 
         return $mes."/".$dia."/".$ano;
+    }
+
+    /**
+     * @Route("/concursoOposicion/registroAspiranteAjax", name="registroAspiranteAjax")
+     * @Method("POST")
+     */
+    public function registroAspiranteAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){               
+
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT p
+                       FROM ConcursosBundle:Aspirante p
+                      WHERE p.cedula = :cedula')->setParameter('cedula', intval($request->get("cedula")));
+                 
+                $existe = $query->getResult();
+
+                if ($existe == null){
+
+                    $aspirante = new Aspirante();
+
+                    $aspirante->setPrimerNombre($request->get("nombre1"));
+                    $aspirante->setSegundoNombre($request->get("nombre2"));
+                    $aspirante->setPrimerApellido($request->get("apellido1"));
+                    $aspirante->setSegundoApellido($request->get("apellido2"));
+                    $aspirante->setTelefono($request->get("tlf1"));
+                    $aspirante->setCorreo($request->get("email1"));
+                    $aspirante->setCedula($request->get("cedula"));
+                    $aspirante->setTelefonoSecundario($request->get("tlf2"));
+                    $aspirante->setUniversidadEgresado($request->get("universidad"));
+                    $aspirante->setDescripcionTituloUniv($request->get("tiulo"));
+                    $aspirante->setAnyoGraduacion($request->get("graduacion"));
+                    $aspirante->setObservaciones($request->get("observacion"));
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($aspirante);
+                    $em->flush();
+
+                    return new JsonResponse("S");
+
+                } else return new JsonResponse("R");
+            }
+            else{
+                return new JsonResponse("N");
+            }            
+        }
+        else
+             throw $this->createNotFoundException('Error al insertar datos');
     }
 }
