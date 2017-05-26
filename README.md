@@ -55,9 +55,9 @@ $ php bin/console server:run
 ```
 
 ### Para agregar el BarcodeBundle (permite generar el código de barra)
-...bash
-$ composer require hackzilla/barcode-bundle ~2.0
-...
+```bash
+$ composer require hackzilla/barcode-bundle~2.0
+```
 
 ### Para que no escriban tanto
 ```bash
