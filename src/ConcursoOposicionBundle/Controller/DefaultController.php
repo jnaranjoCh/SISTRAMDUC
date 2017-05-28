@@ -448,9 +448,22 @@ class DefaultController extends Controller
                     $em->persist($aspirante);
                     $em->flush();
 
+                    $this->ConcursoAspirante(intval($request->get("concurso")));
+
                     return new JsonResponse("S");
 
-                } else return new JsonResponse("R");
+                } else {
+
+                    try{
+                        $this->ConcursoAspiranteExistente(intval($request->get("concurso")), $existe[0]);
+                        
+                    } catch(\Doctrine\DBAL\DBALException $e){
+
+                        return new JsonResponse("S");
+                    }
+
+                    return new JsonResponse("S");
+                } 
             }
             else{
                 return new JsonResponse("N");
@@ -458,5 +471,41 @@ class DefaultController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al insertar datos');
+    }
+
+    private function ConcursoAspiranteExistente($concurso, $aspirante){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById(intval($concurso));
+
+        $concursoObjeto->addAspirante($aspirante);
+
+        $em->flush();                
+    }
+
+    private function ConcursoAspirante($concurso){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $idJurado = $this->getDoctrine()
+                        ->getManager()
+                        ->createQuery('SELECT MAX(j.id) AS lastId FROM ConcursosBundle:Aspirante j')
+                        ->getResult();
+
+        $id = $idJurado[0]['lastId'];
+
+        $jurado = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('ConcursosBundle:Aspirante')
+                    ->findOneById($id);
+
+        $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById(intval($concurso));
+
+        $concursoObjeto->addAspirante($jurado);
+
+        $em->flush();
     }
 }
