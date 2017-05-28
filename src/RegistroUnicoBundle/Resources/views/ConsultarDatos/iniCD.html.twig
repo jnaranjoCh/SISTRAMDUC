@@ -1,5 +1,22 @@
 <script type="text/javascript">
+    var miniPersonal = true;
+    var miniRegistros = true;
+    var miniCargos = true;
+    var miniHijos = true;
+    
     $( window ).load(function() {
+        
+        $("#miniPersonal").click();
+        $("#miniRegistros").click();
+        $("#miniCargos").click();
+        $("#miniHijos").click();
+        
+        $('#datetimepickerFN').datetimepicker();
+        $('#datetimepickerFVC').datetimepicker();
+        $('#datetimepickerFVR').datetimepicker();
+        $('#datetimepickerFVAN').datetimepicker();
+
+        
         $("#tableUsers").DataTable( {
               "ajax": "{{ path('registro_consultaobteneremails_ajax') }}",
               "columns": [

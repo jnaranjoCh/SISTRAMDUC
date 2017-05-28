@@ -55,6 +55,7 @@ class ConsultarDatosController extends Controller
         for($i = 0; $i < $data->num; $i++)
         {
             $htmlEstatus = '<select id="Estatus'.$i.'" class="form-control select2" style="width: 240px;">';
+            $htmlEstatus = $htmlEstatus.'<option value="">Seleccione una opción</option>';
             foreach($estatus as $estatu){
                 if($estatu->getDescription() == $data->data[$i]['Estatus']){
                      $htmlEstatus =  $htmlEstatus."<option value='".$data->data[$i]['Estatus']."' selected='selected'>".$data->data[$i]['Estatus']."</option>";
@@ -67,6 +68,7 @@ class ConsultarDatosController extends Controller
             $data->data[$i]['Estatus'] = $htmlEstatus;
             
             $htmlNivel = '<select id="Nivel'.$i.'" class="form-control select2" style="width: 240px;">';
+            $htmlNivel = $htmlNivel.'<option value="">Seleccione una opción</option>';
             foreach($niveles as $nivel){
                 if($nivel->getDescription() == $data->data[$i]['Nivel']){
                      $htmlNivel =  $htmlNivel."<option value='".$data->data[$i]['Nivel']."' selected='selected'>".$data->data[$i]['Nivel']."</option>";
@@ -79,6 +81,7 @@ class ConsultarDatosController extends Controller
             $data->data[$i]['Nivel'] = $htmlNivel;
             
             $htmlTipoRegistro = '<select id="Tipo'.$i.'" class="form-control select2" style="width: 240px;">';
+            $htmlTipoRegistro = $htmlTipoRegistro.'<option value="">Seleccione una opción</option>';
             foreach($tipo_registros as $tipo_registro){
                 if($tipo_registro->getDescription() == $data->data[$i]['TipoDeReferencia']){
                     $htmlTipoRegistro = $htmlTipoRegistro."<option value='".$data->data[$i]['TipoDeReferencia']."' selected='selected'>".$data->data[$i]['TipoDeReferencia']."</option>";
@@ -158,6 +161,181 @@ class ConsultarDatosController extends Controller
         ));
     }
     
+    public function enviarDatosPersonalesAjaxAction(Request $request)
+    { 
+        $entity = $this->getOneEmail("AppBundle:","Usuario",$request->get("email"));
+        $files = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT r.path, r.fecha_vencimiento
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN  u.recaudos r
+                                     WHERE u.id = :id AND r.tabla = :tabla')
+                      ->setParameter('id',$entity->getId())
+                      ->setParameter('tabla','Usuario')
+                      ->getResult();
+        $dataUser = new stdClass;
+        $dataUser->PrimerNombre = $entity->getPrimerNombre();
+        $dataUser->SegundoNombre = $entity->getSegundoNombre();
+        $dataUser->PrimerApellido = $entity->getPrimerApellido();
+        $dataUser->SegundoApellido = $entity->getSegundoApellido();
+        $dataUser->Nacionalidad = $entity->getNacionalidad();
+        $dataUser->Telefono = $entity->getTelefono();
+        $dataUser->Rif = $entity->getRif();
+        $dataUser->FechaNacimiento = $entity->getFechaNacimiento();
+        $dataUser->Direccion = $entity->getDireccion();
+        $dataUser->Sexo = $entity->getSexo();
+        $dataUser->Edad = $entity->getEdad();
+        $dataUser->Cedula = $entity->getCedula();
+        $dataUser->Files = $files;
+        
+        return new JsonResponse($dataUser);
+    }
+    
+    public function enviarDatosPersonalesHijosPathAjaxAction(Request $request)
+    {
+        $entity = $this->getOneEmail("AppBundle:","Usuario",$request->get("email"));
+        $files = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT r.path
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN  u.recaudos r
+                                     WHERE u.id = :id AND r.tabla = :tabla')
+                      ->setParameter('id',$entity->getId())
+                      ->setParameter('tabla','Hijo')
+                      ->getResult();
+        return new JsonResponse($files);
+    }
+    
+    public function enviarDatosPersonalesHijosAjaxAction(Request $request)
+    { 
+        $entity = $this->getOneEmail("AppBundle:","Usuario",$request->get("email"));
+        $files = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT r.path, r.fecha_vencimiento
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN  u.recaudos r
+                                     WHERE u.id = :id AND r.tabla = :tabla')
+                      ->setParameter('id',$entity->getId())
+                      ->setParameter('tabla','Hijo')
+                      ->getResult();
+                      
+        $hijos = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT h.cedulaHijo, h.cedulaMadre, h.cedulaPadre,
+                                            h.primerNombre, h.segundoNombre, h.primerApellido,
+                                            h.segundoApellido, h.nacionalidad, h.fechaNacimiento,
+                                            h.partidaNacimientoUrl
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN  u.hijos h
+                                     WHERE u.id = :id')
+                      ->setParameter('id',$entity->getId())
+                      ->getResult();
+        $i = 0;
+        $data[] = [];
+        foreach($hijos as $hijo){
+            $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+            $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
+            $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
+            $data[$i]['CIHijo'] = '<input id="CIHijo'.$i.'" value="'.$hijo['cedulaHijo'].'" type="number" class="form-control" placeholder="Cedula Hijo">';
+            $data[$i]['1erNombre'] = '<input id="1erNombre'.$i.'" value="'.$hijo['primerNombre'].'" type="text" class="form-control" placeholder="Primer Nombre">';
+            $data[$i]['2doNombre'] = '<input id="2doNombre'.$i.'" value="'.$hijo['segundoNombre'].'" type="text" class="form-control" placeholder="Segundo Nombre">';
+            $data[$i]['1erApellido'] = '<input id="1erApellido'.$i.'" value="'.$hijo['primerApellido'].'" type="text" class="form-control" placeholder="Primer Apellido">';
+            $data[$i]['2doApellido'] = '<input id="2doApellido'.$i.'" value="'.$hijo['segundoApellido'].'" type="text" class="form-control" placeholder="Segundo Apellido">';
+            $data[$i]['FNacimiento'] = "<div class='row'>
+                                          <div class='col-xs-12'>
+                                            <div class='form-group has-feedback'>
+                                                <div class='input-group date'>
+                                                    <input id='datepickerHijo1".$i."' value='".$hijo['fechaNacimiento']->format('d/m/Y H:i')."' name='FNacimiento".$i."' type='text' class='form-control' style='width: 240px;'/>
+                                                    <span class='input-group-addon'>
+                                                        <span class='glyphicon glyphicon-calendar'></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                       </div>";
+            foreach($files as $file)
+            {
+                if($file['path'] == $hijo['partidaNacimientoUrl'])
+                    $data[$i]['FVencimientoActa'] = "<div class='row'>
+                                                      <div class='col-xs-12'>
+                                                        <div class='form-group has-feedback'>
+                                                            <div class='input-group date'>
+                                                                <input id='datepickerHijo2".$i."' value='".$file['fecha_vencimiento']->format('d/m/Y H:i')."' name='FVencimientoActa".$i."' type='text' class='form-control' style='width: 200px;'/>
+                                                                <span class='input-group-addon'>
+                                                                    <span class='glyphicon glyphicon-calendar'></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                   </div>";
+            }
+            $data[$i]['Nacionalidad'] = '<input id="Nacionalidad'.$i.'" value="'.$hijo['nacionalidad'].'" type="text" class="form-control" placeholder="Nacionalidad">';
+            $i++;
+        }
+        
+        return new JsonResponse(array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $data 
+        ));
+    }
+    
+    public function enviarCargosDeUsuarioAjaxAction(Request $request)
+    { 
+        $i = 0;
+        $data[] = [];
+        $cargos = $this->getDoctrine()
+                               ->getManager()
+                               ->getRepository('RegistroUnicoBundle:Cargo')
+                               ->findAll();
+        
+        $cargosDates = $this->getDoctrine()
+                            ->getManager()
+                            ->createQuery('SELECT c.description, ufc.date
+                                             FROM AppBundle:Usuario u
+                                                INNER JOIN u.UsuarioFechaCargos ufc
+                                                INNER JOIN ufc.cargos c
+                                             WHERE u.correo = :email')
+                            ->setParameter('email',$request->get('email'))
+                            ->getResult();
+        foreach($cargosDates as $cargoDate)
+        {
+            $htmlCargos = '<select id="Cargos'.$i.'" class="form-control select2" style="width: 240px;">';
+            $htmlCargos = $htmlCargos.'<option value="">Seleccione una opción</option>';
+            foreach($cargos as $cargo)
+            {
+                if($cargoDate['description'] == $cargo->getDescription()){
+                     $htmlCargos =  $htmlCargos."<option value='".$cargoDate['description']."' selected='selected'>".$cargoDate['description']."</option>";
+                }else{
+                     $htmlCargos =  $htmlCargos."<option value='".$cargo->getDescription()."'>".$cargo->getDescription()."</option>";
+                }
+            }
+            $htmlCargos =  $htmlCargos."</select>";
+            $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+            $data[$i]['Cargo'] = $htmlCargos; 
+            $data[$i]['FechaDeInicioEnElCargo'] = "<div class='row'>
+                                                      <div class='col-xs-12'>
+                                                        <div class='form-group has-feedback'>
+                                                            <div class='input-group date'>
+                                                                <input id='datepicker".$i."' value='".$cargoDate['date']->format('d/m/Y H:i')."' name='FechaInicioCargoDatos".$i."' type='text' class='form-control'/>
+                                                                <span class='input-group-addon'>
+                                                                    <span class='glyphicon glyphicon-calendar'></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                   </div>";
+            $i++;
+        }
+        return new JsonResponse(array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $data 
+        ));
+    }
+    
     public function buscarEmailAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest())
@@ -216,5 +394,4 @@ class ConsultarDatosController extends Controller
                     ->getRepository($bundle.$entidad)
                     ->findOneByCorreo($email);
     }
-    
 }

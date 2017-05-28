@@ -78,16 +78,260 @@
              </div>
           </div>
           <!--seccion for generate boxes-->
-          <!--+carg box-->
-          <div id="formRegistros" class="col-md-offset-1 col-md-10">
+          <!--personal and contact box-->
+          <div id="formPersonal" class="col-md-offset-1 col-md-10 hidden">
             <!-- /.box-info -->
-            <div id="headerRegistros" class="box-footer">
-              <strong>Sección para consultar y editar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
+            <div id="headerPersonal" class="box-footer">
+              <strong>Sección para consultar y editar datos personales y de contactos.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-warning">
+              <div class="box-header with-border">
+                <h3 class="box-title">Sección 1</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="miniPersonal" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div id="divPrimerNombreDatos" class="form-group has-feedback">
+                      <label>Primer nombre</label>
+                      <input type="text" id="PrimerNombreDatos" class="form-control" placeholder="Primer nombre" required>
+                      <span id="spanPrimerNombreDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divSegundoNombreDatos" class="form-group has-feedback">
+                      <label>Segundo nombre</label>
+                      <input type="text" id="SegundoNombreDatos" class="form-control" placeholder="Segundo nombre" required>
+                      <span id="spanSegundoNombreDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divPrimerApellidoDatos" class="form-group has-feedback">
+                      <label>Primer apellido</label>
+                      <input type="text" id="PrimerApellidoDatos" class="form-control" placeholder="Primer apellido" required>
+                      <span id="spanPrimerApellidoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divSegundoApellidoDatos" class="form-group has-feedback">
+                      <label>Segundo apellido</label>
+                      <input type="text" id="SegundoApellidoDatos" class="form-control" placeholder="Segundo apellido" required>
+                      <span id="spanSegundoApellidoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divNacionalidadDatos" class="form-group has-feedback">
+                      <label>Nacionalidad</label>
+                      <select id="NacionalidadDatos" class="form-control select2" style="width: 100%;" required>
+                        <option selected="selected" value="">Seleccione una opción</option>
+                        <option value="Venezolano">Venezolano</option>
+                        <option value="Extranjero">Extranjero</option>
+                      </select>
+                      <span id="spanNacionalidadDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divFechaNacimientoDatos" class="form-group has-feedback">
+                      <label>Fecha de nacimiento</label>
+                      <div class='input-group date' id='datetimepickerFN'>
+                          <input id="FechaNacimientoDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divEdadDatos" class="form-group has-feedback">
+                      <label>Edad</label>
+                      <input type="number" id="EdadDatos" class="form-control" placeholder="Edad" min="18" max="80" required>
+                      <span id="spanEdadDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                    <div id="divSexoDatos" class="form-group has-feedback">
+                      <label>Sexo</label>
+                      <select class="form-control select2" id="SexoDatos" style="width: 100%;" required>
+                        <option selected="selected" value="">Seleccione una opción</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                      </select>
+                      <span id="spanSexoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div id="divRifDatos" class="form-group has-feedback">
+                      <label>RIF</label>
+                      <input id="RifDatos" type="number" class="form-control" placeholder="RIF">
+                      <span id="spanRifDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divNumeroDatos" class="form-group">
+                      <label>Telefono</label>
+                      <div class="row">
+                          <div class="col-xs-4">
+                            <input id="NumeroDatos" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
+                          </div>
+                          <strong><label class="col-xs-1">—</label></strong>
+                          <div class="col-xs-7">
+                            <input id="NumeroDatosII" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
+                          </div>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="form-group">
+                      <label>Dirección</label>
+                      <textarea id="DireccionDatos" class="form-control" rows="3" placeholder="Dirección" style="resize:none"></textarea>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <div class="col-md-6">
+                    <div id="divFechaVencimientoCedulaDatos" class="form-group has-feedback">
+                      <label>Fecha de vencimiento de la cedula</label>
+                      <div class='input-group date' id='datetimepickerFVC'>
+                          <input id="FechaVencimientoCedulaDatos" name="FechaVencimientoCedulaDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-6">
+                    <div id="divFechaVencimientoRifDatos" class="form-group has-feedback">
+                      <label>Fecha de vencimiento del RIF</label>
+                      <div class='input-group date' id='datetimepickerFVR'>
+                          <input id="FechaVencimientoRifDatos" name="FechaVencimientoRifDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div id="divFechaVencimientoActaNacimientoDatos" class="form-group has-feedback">
+                      <label>Fecha de vencimiento del acta de nacimiento</label>
+                      <div class='input-group date' id='datetimepickerFVAN'>
+                          <input id="FechaVencimientoActaNacimientoDatos" name="FechaVencimientoActaNacimientoDatos" type='text' class="form-control" />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                    </div>
+                    <!-- /.form-group -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">    
+                  <div class="col-md-12">
+                  <div id="divCedulaRifActaCargaDatos" class="form-group has-feedback">
+                    <label class="control-label">Seleccione la cedula, Rif y actas de nacimiento</label>
+                    <input id="CedulaRifActaCargaDatos" name="input3[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="false" data-show-caption="true">
+                    <span id="spanCedulaRifActaCargaDatos" class="glyphicon form-control-feedback"></span>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.box -->
+          </div>
+          <!--personal and contact data box-->
+          
+          <!--+carg box-->
+          <div id="formCargos" class="col-md-offset-1 col-md-10 hidden">
+            <!-- /.box-info -->
+            <div id="headerCargos" class="box-footer">
+              <strong>Sección para consultar y editar los cargos desempeñados en la UC.</strong>
             </div>
              <!-- /.box-header -->
             <div class="box box-danger">
               <div class="box-header with-border">
                 <h3 class="box-title">Sección 2</h3>
+                <div class="box-tools pull-right">
+                  <button type="button" id="miniCargos" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                  <table id="tableCargo" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th></th>
+                      <th>Cargo</th>
+                      <th>Fecha de inicio en el cargo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                     <th></th>
+                     <th>Cargo</th>
+                     <th>Fecha de inicio en el cargo</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                            <button  id="agregarCargo" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                      </div>
+                  </div><!--col-xs-12   col-md-offset-5 -->
+                </div>
+              </div>
+              <!-- /.box -->
+           </div>
+           <!--research,courses and studies box-->
+          </div>
+          <!--+carg box-->
+            
+          <!--+carg box-->
+          <div id="formRegistros" class="col-md-offset-1 col-md-10 hidden">
+            <!-- /.box-info -->
+            <div id="headerRegistros" class="box-footer">
+              <strong>Sección para consultar y editar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
+            </div>
+             <!-- /.box-header -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Sección 3</h3>
                 <div class="box-tools pull-right">
                   <button type="button" id="miniRegistros" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -98,6 +342,7 @@
                   <table id="tableRegistros" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
@@ -111,6 +356,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
@@ -140,6 +386,7 @@
                   <table id="tableParticipantes" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Nombre</th>
                       <th>Cedula</th>
@@ -149,6 +396,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Nombre</th>
                       <th>Cedula</th>
@@ -174,6 +422,7 @@
                   <table id="tableRevista" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Revista</th>
                     </tr>
@@ -182,6 +431,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Revista</th>
                     </tr>
@@ -198,6 +448,78 @@
               </div>
               <!-- /.box -->
            </div>
+           <div id="divCheckbox" class="hidden">
+              <input type="checkbox" id="checkboxHijos" name="checkboxHijos" value="activo"/> <strong>Ingresar datos de hijos</strong><br/><br/>
+           </div>
+           <!--+carg box-->
+            <div id="formHijos" class="hidden">
+              <!-- /.box-info -->
+              <div id="headerHijos" class="box-footer">
+                <strong>Sección para consultar y editar los datos de los hijos.</strong>
+              </div>
+               <!-- /.box-header -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Sección 4</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="miniHijos" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-body">
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div id="divActaNacCargaHijoDatos" class="form-group has-feedback">
+                        <label class="control-label">Seleccione las actas de nacimiento</label>
+                        <input id="ActaNacCargaHijoDatos" name="input2[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="false" data-show-caption="true">
+                        <span id="spanActaNacCargaHijoDatos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div style="overflow-x: scroll; white-space: nowrap;">
+                    <table id="tableHijos" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th>CI Madre</th>
+                        <th>CI Padre</th>
+                        <th>CI Hijo</th>
+                        <th>1er Nombre</th>
+                        <th>2do Nombre</th>
+                        <th>1er Apellido</th>
+                        <th>2do Apellido</th>
+                        <th>F Nacimiento</th>
+                        <th>F Vencimiento Acta</th>
+                        <th>Nacionalidad</th>                  
+                      </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th></th>
+                        <th>CI Madre</th>
+                        <th>CI Padre</th>
+                        <th>CI Hijo</th>
+                        <th>1er Nombre</th>
+                        <th>2do Nombre</th>
+                        <th>1er Apellido</th>
+                        <th>2do Apellido</th>
+                        <th>F Nacimiento</th>
+                        <th>F Vencimiento Acta</th>
+                        <th>Nacionalidad</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.box -->
+             </div>
+             <!--research,courses and studies box-->
+            </div>
+            <!--+carg box-->
            <div class="row">
             <div class="col-md-6">
                 <div class="form-group has-feedback">
@@ -206,7 +528,7 @@
             </div><!-- text-center -->
             <div class="col-md-6">
                 <div class="form-group has-feedback">
-                      <button  id="guardar" type="button" class="btn btn-danger btn-block btn-flat">Guardar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                      <button  id="guardar" type="button" class="btn btn-danger btn-block btn-flat">Guardar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></button>
                 </div>
             </div><!--col-xs-12   col-md-offset-5 -->
           </div>
@@ -223,4 +545,5 @@
   {% include('RegistroUnicoBundle:ConsultarDatos:iniCD.html.twig') %}
   {% include('RegistroUnicoBundle:ConsultarDatos:generate.html.twig') %}
   {% include('RegistroUnicoBundle:ConsultarDatos:insertDeleteAndUpdateTable.html.twig') %}
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showBoxes.js') }}"></script>
 {% endblock %}
