@@ -1,10 +1,14 @@
-comision_remunerada_info:
-    path: /comision_remunerada_info
-    defaults: {_controller: ComisionRemuneradaBundle:Default:comision_remunerada_info}
+comision-servicio-informacion:
+    path: /comision-servicio/informacion
+    defaults: {_controller: ComisionRemuneradaBundle:Default:comisionServicioInfo}
 
 solicitudcomisionservicio:
     path: /solicitudcomisionservicio_new
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
+
+validador:
+    path: /validar-usuario
+    defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:validador}
 
 comision_servicio_ver_solicitud:
     path: /comision-de-servicio/solicitud/{id}
@@ -19,7 +23,7 @@ solicitudes-comision-de-servicio:
     defaults: {_controller: ComisionRemuneradaBundle:Default:solicitudesComisionServicio}
 
 estado_sol_prof:
-    path: /estado-solicitud
+    path: /comision-de-servicio/estado-solicitud
     defaults: {_controller: ComisionRemuneradaBundle:Default:estado_sol_prof}
 
 informe_pdf:

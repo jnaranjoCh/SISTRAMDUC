@@ -12,18 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
 use TramiteBundle\Entity\Transicion;
 use TramiteBundle\Entity\Estado;
+use TramiteBundle\Entity\Tramite;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/comision-servicio-remunerada/info", name="comision-servicio-remunerada-info")
-     */
-    public function comision_remunerada_infoAction()
-    {
-        return $this->render('ComisionRemuneradaBundle:Default:comision_remunerada_info.html.twig');
-    }
-
     /**
      * @Route("/solicitud_serv_remun", name="solicitud_serv_remun")
      */
@@ -31,13 +24,38 @@ class DefaultController extends Controller
     {
         return $this->render('ComisionRemuneradaBundle:Default:solicitud_serv_remun.html.twig');
     }
+    /********************************/
+    /*       ÁREA DE PROFESOR       */
+    /********************************/
 
     /**
-     * @Route("/estado-solicitud", name="estado-solicitud")
+     * @Route("/comision-servicio/informacion", name="comision-servicio-informacion")
+     */
+    public function comisionServicioInfoAction()
+    {
+        return $this->render('ComisionRemuneradaBundle:Profesor:informacion.html.twig');
+    }
+    
+    /**
+     * @Route("/comision-de-servicio/estado-solicitud", name="estado-solicitud")
      */
     public function estado_sol_profAction()
     {
-        return $this->render('ComisionRemuneradaBundle:Default:estado_sol_prof.html.twig');
+        $user = $this->getUser();
+
+        $tramite = $this->getDoctrine()
+                        ->getManager()
+                        ->createQuery('SELECT MAX(r.id) FROM ComisionRemuneradaBundle:SolicitudComisionServicio r WHERE r.usuario_id = :user ')
+                        ->setParameter('user', $user)
+                        ->getOneOrNullResult();
+
+        $tramite_actual = $this->getDoctrine()
+                               ->getManager()
+                               ->getRepository(SolicitudComisionServicio::class)
+                               ->findBy(["id" => $tramite]);
+        
+        return $this->render('ComisionRemuneradaBundle:Profesor:estado_sol_prof.html.twig',
+            array('tramite_actual' => $tramite_actual));
     }
 
     /********************************/
@@ -49,7 +67,7 @@ class DefaultController extends Controller
      */
     public function informeAction()
     {
-        return $this->render('ComisionRemuneradaBundle:Rectora:informeJubilacion.html.twig');
+        return $this->render('ComisionRemuneradaBundle:Rectora:informeComision.html.twig');
     }
     /**
      * @Route("/comision-servicio/codigo-de-barra", name="comision-servicio-codigo-de-barra")
@@ -73,7 +91,7 @@ class DefaultController extends Controller
     {
         $snappy = $this->get('knp_snappy.pdf');
 
-        $html = $this->renderView('ComisionRemuneradaBundle:Rectora:informeJubilacion-print.html.twig', array(
+        $html = $this->renderView('ComisionRemuneradaBundle:Rectora:informeComision-print.html.twig', array(
             //..Send some data to your view if you need to //
         ));
 

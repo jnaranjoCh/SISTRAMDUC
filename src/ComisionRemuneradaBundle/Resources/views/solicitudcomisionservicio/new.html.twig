@@ -12,28 +12,59 @@
     </section>
 
     <section class="content">
-        <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Recaudos</h3>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
             {{ form_start(form) }}
             <div class="box-body">
                 <div class="form-group">
                     <label for="exampleInputFile">Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario</label>
                     {{ form_widget(form) }}
+                    {#{{ form(form, {'attr':{'id':'new-form'}}) }}#}
                     <p class="help-block">Example block-level help text here.</p>
                 </div>
             </div>
-            <!-- /.box-body -->
             <div class="box-footer">
                 <button name="submit" class="btn btn-primary">Subir</button>
             </div>
+            {#{% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    <div class="flash-notice" id="flash_message">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}#}
+
             {{ form_end(form) }}
         </div>
-        <!-- /.box -->
     </section>
-    <!-- /.content -->
+
+    {#<script>
+        var $form = $('#new-form');
+
+        $form.submit(function(e) {
+            //Agregamos los campos del formulario
+            var data = $form.serialize();
+            //Realizamos la petición
+            $.ajax({
+                url : {{ path('solicitudcomisionservicio_new') }},//$form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+
+                    // Remplazamos la forma actual.
+                    $('#comisionremuneradabundle_solicitudcomisionservicio').replaceWith(
+                            // ... Con la respuesta ajax
+                            $(html).find('#comisionremuneradabundle_solicitudcomisionservicio')
+                    );
+                    $('#notice').html('#notice');
+                    /*$('#notice').replaceWith(
+                            // ... Con la respuesta ajax
+                            $(html).show('#notice')
+                    );*/
+                }
+            });
+            e.preventDefault();
+        });
+    </script>#}
 {% endblock %}
