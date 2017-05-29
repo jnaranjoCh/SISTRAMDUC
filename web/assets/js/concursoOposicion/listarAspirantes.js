@@ -36,7 +36,7 @@ $( window ).load( function(){
                         "correo": data["correo"][i],
                         "profesion": data["titulo"][i],
                         "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-                        ,"elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+                        //,"elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
                     }).draw();                      
                 }                                             
             }                       	
