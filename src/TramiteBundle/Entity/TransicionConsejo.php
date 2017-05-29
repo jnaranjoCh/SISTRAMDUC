@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use TramiteBundle\Entity\Tramite;
 
 /**
- * @ORM\Entity(repositoryClass="TransicionRepository")
- * @ORM\Table(name="transicion")
+ * @ORM\Entity
+ * @ORM\Table(name="transicion_consejo")
  */
 
-class Transicion
+class TransicionConsejo
 {
     /**
      * @ORM\Id
@@ -19,7 +19,7 @@ class Transicion
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -31,17 +31,16 @@ class Transicion
     private $doc_info = "Motivo";
 
     /**
-     * @ORM\OneToOne(targetEntity="Tramite", inversedBy="transicion")
+     * @ORM\OneToOne(targetEntity="Tramite", inversedBy="transicionConsejo")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     protected $tramite;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transiciones")
+     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transicionesConsejo")
      * @ORM\JoinColumn(name="estado_id", referencedColumnName="id")
      */
     protected $estado;
-
 
     function __construct(\DateTime $fecha = null){
         $this->fecha = $fecha;
@@ -103,7 +102,7 @@ class Transicion
      *
      * @return Estado
      */
-    public function setEstado(Estado $estado = null)
+    public function setEstado(Estado $estado)
     {
         $this->estado = $estado;
 
@@ -141,5 +140,43 @@ class Transicion
     public function getTramite()
     {
         return $this->tramite;
+    }
+
+    /**
+     * Set docInfo
+     *
+     * @param string $docInfo
+     *
+     * @return TransicionConsejo
+     */
+    public function setDocInfo($docInfo)
+    {
+        $this->doc_info = $docInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get docInfo
+     *
+     * @return string
+     */
+    public function getDocInfo()
+    {
+        return $this->doc_info;
+    }
+
+    /**
+     * Set tramite
+     *
+     * @param \TramiteBundle\Entity\Tramite $tramite
+     *
+     * @return TransicionConsejo
+     */
+    public function setTramite(\TramiteBundle\Entity\Tramite $tramite = null)
+    {
+        $this->tramite = $tramite;
+
+        return $this;
     }
 }

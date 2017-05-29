@@ -14,21 +14,25 @@ consejo-facultad:
     path: /consejo-facultad
     defaults: {_controller: JubilacionBundle::consejo}
 
-constancia-jubilacion:
-    path: /constancia-jubilacion
-    defaults: {_controller: JubilacionBundle::constanciaJubilacion}
-
-informe-jubilacion:
-    path: /informe-jubilacion
+/jubilacion/informe-jubilacion:
+    path: /jubilacion/informe-jubilacion
     defaults: {_controller: JubilacionBundle::informeJubilacion}
+    requirements:
+        _method: POST|GET
 
-informe-jubilacion-pdf:
-    path: /informe-jubilacion-pdf
+/jubilacion/informe-jubilacion-pdf:
+    path: /jubilacion/informe-jubilacion-pdf
     defaults: {_controller: JubilacionBundle::informeJubilacionPDF}
+    requirements:
+        _method: GET
 
 estado-solicitud:
     path: /estado-solicitud
     defaults: {_controller: JubilacionBundle::progresoSolicitudProf}
+
+revisar-solicitud:
+    path: /revisar-solicitud/{id}
+    defaults: {_controller: JubilacionBundle::revisarSolicitud}
 
 codigo-barra:
     path: /codigo-barra
@@ -39,3 +43,13 @@ insertar:
   defaults: { _controller: JubilacionBundle::insertar }
   requirements:
     _method: POST
+
+llenarPDF:
+  path:     /llenarPDF
+  defaults: { _controller: JubilacionBundle::llenarPDF }
+  requirements:
+    _method: GET, POST
+
+revisar-solicitud-consejo:
+    path: /revisar-solicitud-consejo/{id}
+    defaults: {_controller: JubilacionBundle::revisarSolicitudConsejo}

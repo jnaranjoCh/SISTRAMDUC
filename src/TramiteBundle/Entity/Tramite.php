@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use TramiteBundle\Entity\Transicion;
+use TramiteBundle\Entity\Documento;
 use AppBundle\Entity\Usuario;
+use TramiteBundle\Entity\TransicionConsejo;
 
 /**
  * @ORM\Entity
@@ -63,6 +65,16 @@ class Tramite
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario_id;
+
+    /**
+     *@ORM\OneToOne(targetEntity="Documento", mappedBy="tramite_id", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $documento_id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="TransicionConsejo", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected  $transicionConsejo;
 
     public function getId()
     {
@@ -168,15 +180,37 @@ class Tramite
     {
         return $this->transicion;
     }
-    
+
     public function __toString()
     {
-        return sprintf($this->getUsuarioId().' ('.$this->getTransicion().')'.' ('.$this->getRecaudos().')');
+        return sprintf($this->getUsuarioId().'('.$this->getTransicionConsejo().')'.'('.$this->getTransicion().')'.' ('.$this->getRecaudos().')');
     }
     
     public function ownTransicion(Transicion $transicion)
     {
         $this->transicion = $transicion;
+        return $this;
+    }
+
+    public function getDocumento()
+    {
+        return $this->documento_id;
+    }
+
+    public function ownDocumento(Documento $documento)
+    {
+        $this->documento_id = $documento;
+        return $this;
+    }
+
+    public function getTransicionConsejo()
+    {
+        return $this->transicionConsejo;
+    }
+
+    public function ownTransicionConsejo(TransicionConsejo $transicionConsejo)
+    {
+        $this->transicionConsejo = $transicionConsejo;
         return $this;
     }
 }
