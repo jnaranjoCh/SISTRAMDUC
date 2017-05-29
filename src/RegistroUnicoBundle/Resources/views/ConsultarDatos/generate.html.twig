@@ -89,7 +89,7 @@ function initTableConsultar(){
             url:   "{{ path('registro_consultardocumentshijos_ajax') }}",
             dataType: 'json',
             success: function(data){
-                if(data != null)
+                if(data.length > 0)
                 {
                     var paths = [];
                     var config = [];
@@ -104,6 +104,8 @@ function initTableConsultar(){
                         config[i] = hijo;
                         paths[i] = data[i]['path'].split("..")[1];
                     }
+                 
+                    $("#ActaNacCargaHijoDatos").fileinput('destroy');;
                     $("#ActaNacCargaHijoDatos").fileinput({
                         //language: "es",
                         overwriteInitial: true,
@@ -115,7 +117,12 @@ function initTableConsultar(){
                     $("#formHijos").removeClass("hidden");
                     $('#checkboxHijos').prop('checked', true);
                 }else
+                {
+                    $("#ActaNacCargaHijoDatos").fileinput('destroy');
+                    $("#ActaNacCargaHijoDatos").fileinput('refresh');
                     $('#checkboxHijos').prop('checked', false);
+                    $("#formHijos").addClass("hidden");
+                }
             }
         });
         

@@ -203,6 +203,8 @@ class ConsultarDatosController extends Controller
                       ->setParameter('id',$entity->getId())
                       ->setParameter('tabla','Hijo')
                       ->getResult();
+        if(!$files)
+            $files = null;
         return new JsonResponse($files);
     }
     
@@ -232,47 +234,51 @@ class ConsultarDatosController extends Controller
                       ->getResult();
         $i = 0;
         $data[] = [];
-        foreach($hijos as $hijo){
-            $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
-            $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
-            $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
-            $data[$i]['CIHijo'] = '<input id="CIHijo'.$i.'" value="'.$hijo['cedulaHijo'].'" type="number" class="form-control" placeholder="Cedula Hijo">';
-            $data[$i]['1erNombre'] = '<input id="1erNombre'.$i.'" value="'.$hijo['primerNombre'].'" type="text" class="form-control" placeholder="Primer Nombre">';
-            $data[$i]['2doNombre'] = '<input id="2doNombre'.$i.'" value="'.$hijo['segundoNombre'].'" type="text" class="form-control" placeholder="Segundo Nombre">';
-            $data[$i]['1erApellido'] = '<input id="1erApellido'.$i.'" value="'.$hijo['primerApellido'].'" type="text" class="form-control" placeholder="Primer Apellido">';
-            $data[$i]['2doApellido'] = '<input id="2doApellido'.$i.'" value="'.$hijo['segundoApellido'].'" type="text" class="form-control" placeholder="Segundo Apellido">';
-            $data[$i]['FNacimiento'] = "<div class='row'>
-                                          <div class='col-xs-12'>
-                                            <div class='form-group has-feedback'>
-                                                <div class='input-group date'>
-                                                    <input id='datepickerHijo1".$i."' value='".$hijo['fechaNacimiento']->format('d/m/Y H:i')."' name='FNacimiento".$i."' type='text' class='form-control' style='width: 240px;'/>
-                                                    <span class='input-group-addon'>
-                                                        <span class='glyphicon glyphicon-calendar'></span>
-                                                    </span>
+        if($hijos)
+        {
+            foreach($hijos as $hijo){
+                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+                $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
+                $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
+                $data[$i]['CIHijo'] = '<input id="CIHijo'.$i.'" value="'.$hijo['cedulaHijo'].'" type="number" class="form-control" placeholder="Cedula Hijo">';
+                $data[$i]['1erNombre'] = '<input id="1erNombre'.$i.'" value="'.$hijo['primerNombre'].'" type="text" class="form-control" placeholder="Primer Nombre">';
+                $data[$i]['2doNombre'] = '<input id="2doNombre'.$i.'" value="'.$hijo['segundoNombre'].'" type="text" class="form-control" placeholder="Segundo Nombre">';
+                $data[$i]['1erApellido'] = '<input id="1erApellido'.$i.'" value="'.$hijo['primerApellido'].'" type="text" class="form-control" placeholder="Primer Apellido">';
+                $data[$i]['2doApellido'] = '<input id="2doApellido'.$i.'" value="'.$hijo['segundoApellido'].'" type="text" class="form-control" placeholder="Segundo Apellido">';
+                $data[$i]['FNacimiento'] = "<div class='row'>
+                                              <div class='col-xs-12'>
+                                                <div class='form-group has-feedback'>
+                                                    <div class='input-group date'>
+                                                        <input id='datepickerHijo1".$i."' value='".$hijo['fechaNacimiento']->format('d/m/Y H:i')."' name='FNacimiento".$i."' type='text' class='form-control' style='width: 240px;'/>
+                                                        <span class='input-group-addon'>
+                                                            <span class='glyphicon glyphicon-calendar'></span>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                          </div>
-                                       </div>";
-            foreach($files as $file)
-            {
-                if($file['path'] == $hijo['partidaNacimientoUrl'])
-                    $data[$i]['FVencimientoActa'] = "<div class='row'>
-                                                      <div class='col-xs-12'>
-                                                        <div class='form-group has-feedback'>
-                                                            <div class='input-group date'>
-                                                                <input id='datepickerHijo2".$i."' value='".$file['fecha_vencimiento']->format('d/m/Y H:i')."' name='FVencimientoActa".$i."' type='text' class='form-control' style='width: 200px;'/>
-                                                                <span class='input-group-addon'>
-                                                                    <span class='glyphicon glyphicon-calendar'></span>
-                                                                </span>
+                                              </div>
+                                           </div>";
+                foreach($files as $file)
+                {
+                    if($file['path'] == $hijo['partidaNacimientoUrl'])
+                        $data[$i]['FVencimientoActa'] = "<div class='row'>
+                                                          <div class='col-xs-12'>
+                                                            <div class='form-group has-feedback'>
+                                                                <div class='input-group date'>
+                                                                    <input id='datepickerHijo2".$i."' value='".$file['fecha_vencimiento']->format('d/m/Y H:i')."' name='FVencimientoActa".$i."' type='text' class='form-control' style='width: 200px;'/>
+                                                                    <span class='input-group-addon'>
+                                                                        <span class='glyphicon glyphicon-calendar'></span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                      </div>
-                                                   </div>";
+                                                          </div>
+                                                       </div>";
+                }
+                $data[$i]['Nacionalidad'] = '<input id="Nacionalidad'.$i.'" value="'.$hijo['nacionalidad'].'" type="text" class="form-control" placeholder="Nacionalidad">';
+                $i++;
             }
-            $data[$i]['Nacionalidad'] = '<input id="Nacionalidad'.$i.'" value="'.$hijo['nacionalidad'].'" type="text" class="form-control" placeholder="Nacionalidad">';
-            $i++;
-        }
-        
+        }else
+            $data = null;
+            
         return new JsonResponse(array(
             "draw"            => 1,
 	        "recordsTotal"    => $i,
@@ -299,35 +305,39 @@ class ConsultarDatosController extends Controller
                                              WHERE u.correo = :email')
                             ->setParameter('email',$request->get('email'))
                             ->getResult();
-        foreach($cargosDates as $cargoDate)
+        if($cargos && $cargosDates)
         {
-            $htmlCargos = '<select id="Cargos'.$i.'" class="form-control select2" style="width: 240px;">';
-            $htmlCargos = $htmlCargos.'<option value="">Seleccione una opción</option>';
-            foreach($cargos as $cargo)
+            foreach($cargosDates as $cargoDate)
             {
-                if($cargoDate['description'] == $cargo->getDescription()){
-                     $htmlCargos =  $htmlCargos."<option value='".$cargoDate['description']."' selected='selected'>".$cargoDate['description']."</option>";
-                }else{
-                     $htmlCargos =  $htmlCargos."<option value='".$cargo->getDescription()."'>".$cargo->getDescription()."</option>";
+                $htmlCargos = '<select id="Cargos'.$i.'" class="form-control select2" style="width: 240px;">';
+                $htmlCargos = $htmlCargos.'<option value="">Seleccione una opción</option>';
+                foreach($cargos as $cargo)
+                {
+                    if($cargoDate['description'] == $cargo->getDescription()){
+                         $htmlCargos =  $htmlCargos."<option value='".$cargoDate['description']."' selected='selected'>".$cargoDate['description']."</option>";
+                    }else{
+                         $htmlCargos =  $htmlCargos."<option value='".$cargo->getDescription()."'>".$cargo->getDescription()."</option>";
+                    }
                 }
-            }
-            $htmlCargos =  $htmlCargos."</select>";
-            $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
-            $data[$i]['Cargo'] = $htmlCargos; 
-            $data[$i]['FechaDeInicioEnElCargo'] = "<div class='row'>
-                                                      <div class='col-xs-12'>
-                                                        <div class='form-group has-feedback'>
-                                                            <div class='input-group date'>
-                                                                <input id='datepicker".$i."' value='".$cargoDate['date']->format('d/m/Y H:i')."' name='FechaInicioCargoDatos".$i."' type='text' class='form-control'/>
-                                                                <span class='input-group-addon'>
-                                                                    <span class='glyphicon glyphicon-calendar'></span>
-                                                                </span>
+                $htmlCargos =  $htmlCargos."</select>";
+                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+                $data[$i]['Cargo'] = $htmlCargos; 
+                $data[$i]['FechaDeInicioEnElCargo'] = "<div class='row'>
+                                                          <div class='col-xs-12'>
+                                                            <div class='form-group has-feedback'>
+                                                                <div class='input-group date'>
+                                                                    <input id='datepicker".$i."' value='".$cargoDate['date']->format('d/m/Y H:i')."' name='FechaInicioCargoDatos".$i."' type='text' class='form-control'/>
+                                                                    <span class='input-group-addon'>
+                                                                        <span class='glyphicon glyphicon-calendar'></span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                      </div>
-                                                   </div>";
-            $i++;
-        }
+                                                          </div>
+                                                       </div>";
+                $i++;
+            }
+        }else
+            $data = null;
         return new JsonResponse(array(
             "draw"            => 1,
 	        "recordsTotal"    => $i,
