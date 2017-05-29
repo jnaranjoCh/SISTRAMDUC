@@ -277,7 +277,6 @@
 {% block custom_javascripts %}
 
   <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
-  <script src="{{ asset('assets/js/concursoOposicion/saveSuplentesCPEC.js') }}"></script>
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
 
   <script>
@@ -287,5 +286,7 @@
 
 	});
   </script>
+
+  {% include('ConcursoOposicionBundle:Cpec:saveSuplenteCpec.html.twig') %}
 
 {% endblock %}

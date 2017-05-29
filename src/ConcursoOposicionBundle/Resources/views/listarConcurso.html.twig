@@ -176,7 +176,7 @@
                             <th>Nro. Vacantes</th>
                             <th>Area Postulaci&oacute;n</th>
                             <th>Fecha Recepci&oacute;n Doc.</th>
-                            <th>Fecha Presentaci&oacute;n</th>                          
+                            <th>Fecha Presentaci&oacute;n</th>                         
                           </tr>
                           </thead>
                           <tbody id="cuerpo">
@@ -188,7 +188,7 @@
                               <th>Nro. Vacantes</th>
                               <th>Area Postulaci&oacute;n</th>
                               <th>Fecha Recepci&oacute;n Doc.</th>
-                              <th>Fecha Presentaci&oacute;n</th>                          
+                              <th>Fecha Presentaci&oacute;n</th>                        
                             </tr>
                           </tfoot>
                       </table>
@@ -203,8 +203,6 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-
-  <script src="{{ asset('assets/js/concursoOposicion/listarConcursos.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 
@@ -227,7 +225,7 @@
               { "data": "doc" },
               { "data": "pre" },
               { "data": "modif" },
-              { "data": "elim" }
+              { "data": "elim" }              
           ]
       });
 
@@ -248,5 +246,7 @@
     });
 
   </script>
+
+  {% include('ConcursoOposicionBundle:Concurso:listadoConcurso.html.twig') %}
 
 {% endblock %}

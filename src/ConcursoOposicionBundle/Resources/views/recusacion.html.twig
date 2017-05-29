@@ -82,7 +82,6 @@
 
   </script>
 
-  <script src="{{ asset('assets/js/concursoOposicion/saveRecusacion.js') }}"></script>
   <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
 
@@ -93,5 +92,7 @@
 
 	});
   </script>
+
+  {% include('ConcursoOposicionBundle:Recusacion:saveRecusacion.html.twig') %}
 
 {% endblock %}

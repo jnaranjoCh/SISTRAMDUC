@@ -153,8 +153,6 @@
 
 {% block custom_javascripts %}
 
-  <script src="{{ asset('assets/js/concursoOposicion/listarRecusacion.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
@@ -179,5 +177,7 @@
       });
 
   </script>
+
+  {% include('ConcursoOposicionBundle:Recusacion:listadoRecusacion.html.twig') %}
 
 {% endblock %}
