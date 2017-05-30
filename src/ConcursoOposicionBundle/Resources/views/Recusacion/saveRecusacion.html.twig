@@ -1,5 +1,8 @@
 <script type="text/javascript">
 
+	var opcion;
+	var opcion1;
+
 	$( window ).load(function (){
 
 		$.ajax({
@@ -8,7 +11,7 @@
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	var opcion = "<option id='jur' selected='selected'>...</option>";
+	        	opcion = "<option id='jur' selected='selected'>...</option>";
 	 
 	        	for (var i = 0; i < data["id"].length; i++) {
 	        		
@@ -32,19 +35,19 @@
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	var opcion = "<option id='asp' selected='selected'>...</option>";
+	        	opcion1 = "<option id='asp' selected='selected'>...</option>";
 	 
 	        	for (var i = 0; i < data["id"].length; i++) {
 	        		
 	        		var num = data["id"][i];
 
-	        		opcion = opcion+"<option value="+num+">"+data["nombre1"][i]
+	        		opcion1 = opcion+"<option value="+num+">"+data["nombre1"][i]
 	        		+" "+data["nombre2"][i]+" "+data["apellido1"][i]+" "+data["apellido2"][i]
 	        		+"   -   <b>Cedula:</b> "+data["cedula"][i]
 	        		+"</option>";   		
 	        	}
 
-	        	$("#aspiranteLista").html(opcion);
+	        	$("#aspiranteLista").html(opcion1);
 	        }
 	    });	
 	});
@@ -91,6 +94,9 @@
 	                        "extendedTImeout": "0"
 	                     });
 
+	                    $("#aspiranteLista").html(opcion1);
+						$("#juradoLista").html(opcion);
+
 					} else {
 
 	                    toastr.error("Usted no tiene permiso", "Error", {
@@ -113,7 +119,8 @@
 
 	$('#limpiarRecusacion').click(function (){ 
 
-		document.getElementById('recusa').reset();
+		$("#aspiranteLista").html(opcion1);
+		$("#juradoLista").html(opcion);
 
 		toastr.clear();
 	});

@@ -35,204 +35,246 @@
 		        </div>         		
 
 	            <br/>
+
+	            <div class="box box-warning">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Datos Personales</h3>
+					  <div class="box-tools pull-right">
+					    <button type="button" id="miniPersonal" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					  </div>
+					</div>
+					<div class="box-body">
+					  <div class="row">
+						    
+					  	<div class="container">
+			            	<label>C&eacute;dula
+			            		<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span>
+			            	</label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="number" class="form-control" max="9" placeholder="Ejemplo: 12345678" id='cedula'  onkeypress="return justNumbers(event);"/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-credit-card"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+						<div class="container">
+			            <label>Primer Nombre
+			            	<span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
+			            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Jes&uacute;s" id='nombre1'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-buysellads"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+						<div class="container">
+				            <label>Segundo Nombre
+				            	<span id="spannombre2" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Manuel" id='nombre2'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-buysellads"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+						<div class="container">
+				            <label>Primer Apellido
+				            	<span id="spanapellido1" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Gonzalez" id='apellido1'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-buysellads"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+						<div class="container">
+				            <label>Segundo Apellido
+				            	<span id="spanapellido2" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Perez" id='apellido2'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-buysellads"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+					  </div>                                  
+					</div>
+				</div>
         
-				<div class="container">
-	            	<label>C&eacute;dula del aspirante
-	            		<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span>
-	            	</label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="number" class="form-control" max="9" placeholder="Ejemplo: 12345678" id='cedula'  onkeypress="return justNumbers(event);"/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-credit-card"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
+				
+				<div class="box box-warning">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Contactos</h3>
+					  <div class="box-tools pull-right">
+					    <button type="button" id="miniContactos" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					  </div>
+					</div>
+					<div class="box-body">
+					  <div class="row">
+						    
+					  	<div class="container">
+				            <label>Primer Telefono
+				            	<span id="spantlf1" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 000011223344" id='tlf1' onkeypress="return justNumbers(event);"/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-earphone"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+						<div class="container">
+				            <label>Segundo Telefono
+				            	<span id="spantlf2" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 000011223344" id='tlf2' onkeypress="return justNumbers(event);"/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-earphone"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+						<div class="container">
+			            <label>Correo
+			            	<span id="spanemail1" class="label label-danger hide">Vac&iacute;o</span>
+			            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="mail" class="form-control" maxlength="50" placeholder="Ejemplo: abdcef123@mail.com" id='email1'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-at"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+
+					  </div>                                  
+					</div>
 				</div>
 
-				<div class="container">
-	            <label>Primer Nombre
-	            	<span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
-	            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Jes&uacute;s" id='nombre1'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
 
-				<div class="container">
-		            <label>Segundo Nombre
-		            	<span id="spannombre2" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Manuel" id='nombre2'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+				<div class="box box-warning">
+					<div class="box-header with-border">
+					  <h3 class="box-title">Datos Academicos</h3>
+					  <div class="box-tools pull-right">
+					    <button type="button" id="miniaca" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+					  </div>
+					</div>
+					<div class="box-body">
+					  <div class="row">
+						 <div class="container">
+				            <label>Egresado de?
+				            	<span id="spanuniversidad" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Universidad de Carabobo" id='universidad'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-buysellads"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
 
-				<div class="container">
-		            <label>Primer Apellido
-		            	<span id="spanapellido1" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Gonzalez" id='apellido1'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+						<div class="container">
+				            <label>Descrici&oacute;n del titulo
+				            	<span id="spantiulo" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="50" placeholder="Ejemplo: Lic. Computaci&oacute;n" id='tiulo'/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-buysellads"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
 
-				<div class="container">
-		            <label>Segundo Apellido
-		            	<span id="spanapellido2" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Perez" id='apellido2'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-		            <label>Primer Telefono
-		            	<span id="spantlf1" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 000011223344" id='tlf1' onkeypress="return justNumbers(event);"/>
-				                    <span class="input-group-addon">
-				                        <span class="glyphicon glyphicon-earphone"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-		            <label>Segundo Telefono
-		            	<span id="spantlf2" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: 000011223344" id='tlf2' onkeypress="return justNumbers(event);"/>
-				                    <span class="input-group-addon">
-				                        <span class="glyphicon glyphicon-earphone"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-	            <label>Correo
-	            	<span id="spanemail1" class="label label-danger hide">Vac&iacute;o</span>
-	            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="mail" class="form-control" maxlength="50" placeholder="Ejemplo: abdcef123@mail.com" id='email1'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-at"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-		            <label>Egresado de?
-		            	<span id="spanuniversidad" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Ejemplo: Universidad de Carabobo" id='universidad'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-		            <label>Descrici&oacute;n del titulo
-		            	<span id="spantiulo" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="50" placeholder="Ejemplo: Lic. Computaci&oacute;n" id='tiulo'/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				<div class="container">
-		            <label>Año de Graduaci&oacute;n
-		            	<span id="spangraduacion" class="label label-danger hide">Vac&iacute;o</span>
-		            </label>
-				    <div class="row">
-				        <div class='col-sm-7'>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="4" placeholder="Ejemplo: 2017" id='graduacion' onkeypress="return justNumbers(event);"/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-hashtag"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
+						<div class="container">
+				            <label>Año de Graduaci&oacute;n
+				            	<span id="spangraduacion" class="label label-danger hide">Vac&iacute;o</span>
+				            </label>
+						    <div class="row">
+						        <div class='col-sm-7'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="4" placeholder="Ejemplo: 2017" id='graduacion' onkeypress="return justNumbers(event);"/>
+						                    <span class="input-group-addon">
+						                        <span class="fa fa-hashtag"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>  
+					  </div>                                  
+					</div>
+				</div>			
 
 				<div class="container">
 		            <label>Observaci&oacute;n
@@ -283,5 +325,7 @@
 
 	});
   </script>
+
+  {% include('ConcursoOposicionBundle:Aspirante:saveAspirante.html.twig') %}
 
 {% endblock %}

@@ -1,5 +1,7 @@
 <script type="text/javascript">
 
+	var opcion;
+	
 	$( window ).load(function (){
 
 		$.ajax({
@@ -8,7 +10,7 @@
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	var opcion = "<option id='sel' selected='selected'>...</option>";
+	        	opcion = "<option id='sel' selected='selected'>...</option>";
 	 
 	        	for (var i = 0; i < data["id"].length; i++) {
 	        		

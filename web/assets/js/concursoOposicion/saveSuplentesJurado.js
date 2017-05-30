@@ -12,5 +12,7 @@ $('#limpiarJurado').click(function (){
 		$('#spanarea'+i).addClass("hide");
 	}
 
+	$("#lista").html(opcion);
+
 	toastr.clear();
 });
