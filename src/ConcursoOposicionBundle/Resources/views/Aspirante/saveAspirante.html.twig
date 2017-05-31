@@ -1,8 +1,15 @@
 <script type="text/javascript">
 
 	var opcion;
+	var personal = true;
+	var contactos = true;
+	var miniaca = true;
 
 	$( window ).load(function (){
+
+		$("#personal").click();
+		$("#contactos").click();
+		$("#miniaca").click();
 
 		$.ajax({
 	        method: "POST",
@@ -128,7 +135,53 @@
 
 	    $("#lista").html(opcion);
 
+	    if(personal)
+	        $("#personal").click();
+
+	    if(miniaca)
+	        $("#miniaca").click();
+
+	    if(contactos)
+	        $("#contactos").click();
+
+	    personal = true;
+		contactos = true;
+		miniaca = true;
+
 		toastr.clear();
+	});
+
+	$("#personal").click(function(){
+	    if(!personal){
+	        if(contactos)
+	            $("#contactos").click();
+	        if(miniaca)
+	            $("#miniaca").click();
+	        personal = true;
+	    }else
+	        personal = false;
+	});
+
+	$("#contactos").click(function(){
+	    if(!contactos){
+	        if(personal)
+	            $("#personal").click();
+	        if(miniaca)
+	            $("#miniaca").click();
+	        contactos = true;
+	    }else
+	        contactos = false;
+	});
+
+	$("#miniaca").click(function(){
+	    if(!miniaca){
+	        if(contactos)
+	            $("#contactos").click();
+	        if(miniaca)
+	            $("#miniaca").click();
+	        miniaca = true;
+	    }else
+	        miniaca = false;
 	});
 
 </script>

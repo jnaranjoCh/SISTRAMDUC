@@ -14,5 +14,18 @@ $('#limpiarJurado').click(function (){
 
 	$("#lista").html(opcion);
 
+	if(personal)
+        $("#personal").click();
+
+    if(jurado2)
+        $("#jurado2").click();
+
+    if(jurado3)
+        $("#jurado3").click();
+
+    personal = false;
+	jurado2 = false;
+	jurado3 = false;
+
 	toastr.clear();
 });

@@ -54,9 +54,9 @@ class Aspirante
     private $segundoApellido;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefono", type="integer")
+     * @ORM\Column(name="telefono", type="string", length=30)
      */
     private $telefono;
 
@@ -75,9 +75,9 @@ class Aspirante
     private $cedula;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefonoSecundario", type="integer", nullable=true)
+     * @ORM\Column(name="telefonoSecundario", type="string", length=30, nullable=true)
      */
     private $telefonoSecundario;
 
@@ -297,7 +297,7 @@ class Aspirante
     /**
      * Set telefono
      *
-     * @param integer $telefono
+     * @param string $telefono
      *
      * @return Aspirante
      */
@@ -311,7 +311,7 @@ class Aspirante
     /**
      * Get telefono
      *
-     * @return int
+     * @return string
      */
     public function getTelefono()
     {
@@ -369,7 +369,7 @@ class Aspirante
     /**
      * Set telefonoSecundario
      *
-     * @param integer $telefonoSecundario
+     * @param string $telefonoSecundario
      *
      * @return Aspirante
      */
@@ -383,7 +383,7 @@ class Aspirante
     /**
      * Get telefonoSecundario
      *
-     * @return int
+     * @return string
      */
     public function getTelefonoSecundario()
     {

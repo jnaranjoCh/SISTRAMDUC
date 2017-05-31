@@ -2,10 +2,9 @@ $('#limpiarConcurso').click(function (){
 
 	document.getElementById('aperturaConcurso').reset();
 
-	$('#spanfechaConcurso').addClass("hide");
-	$('#spancedula').addClass("hide");
-	$('#spancedula2').addClass("hide");
-	$('#spanarea').addClass("hide");
+	$('#fa').removeClass("has-error");
+	$('#fi').removeClass("has-error");
+	$('#fe').removeClass("has-error");
 
 	toastr.clear();
 });

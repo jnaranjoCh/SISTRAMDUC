@@ -1,8 +1,16 @@
 <script type="text/javascript">
 
 	var opcion;
+
+	var personal = true;
+	var jurado2 = true;
+	var jurado3 = true;
 	
 	$( window ).load(function (){
+
+		$("#personal").click();
+		$("#jurado2").click();
+		$("#jurado3").click();
 
 		$.ajax({
 	        method: "POST",
@@ -144,5 +152,37 @@
 		}
 	});
 
+	$("#personal").click(function(){
+	    if(!personal){
+	        if(jurado2)
+	            $("#jurado2").click();
+	        if(jurado3)
+	            $("#jurado3").click();
+	        personal = true;
+	    }else
+	        personal = false;
+	});
+
+	$("#jurado2").click(function(){
+	    if(!jurado2){
+	        if(personal)
+	            $("#personal").click();
+	        if(jurado3)
+	            $("#jurado3").click();
+	        jurado2 = true;
+	    }else
+	        jurado2 = false;
+	});
+
+	$("#jurado3").click(function(){
+	    if(!jurado3){
+	        if(jurado2)
+	            $("#jurado2").click();
+	        if(personal)
+	            $("#personal").click();
+	        jurado3 = true;
+	    }else
+	        jurado3 = false;
+	});
 
 </script>

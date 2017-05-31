@@ -201,8 +201,6 @@
 
 {% block custom_javascripts %}
 
-  <script src="{{ asset('assets/js/concursoOposicion/listarAspirantes.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
@@ -230,5 +228,7 @@
       });
 
   </script>
+
+  {% include('ConcursoOposicionBundle:Aspirante:listadoAspirante.html.twig') %}
 
 {% endblock %}

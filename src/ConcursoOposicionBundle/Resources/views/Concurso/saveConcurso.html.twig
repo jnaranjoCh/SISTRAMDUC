@@ -8,26 +8,32 @@
         var fecha = $('#fechaConcurso').val();
         var continua = true;
 
+        $('#fi').removeClass("has-error");
+
         if (fecha == ""){
 
             continua = false;
-            $('#spanfechaConcurso').removeClass("hide");
             text = "Campo vacío";
+            $('#fi').addClass("has-error");
         }
 
         var cedula = $('#cedula').val();
 
+        $('#fa').removeClass("has-error");
+
         if (cedula == "" || cedula == 0 || cedula == '0'){
 
             continua = false;
-            $('#spancedula').removeClass("hide");
+            $('#fa').addClass("has-error");
             text = "Campo vacío";
         }
+
+        $('#fe').removeClass("has-error");
 
         if ($('#area').val() == ""){
 
             continua = false;
-            $('#spanarea').removeClass("hide");
+            $('#fe').addClass("has-error");
             text = "Campo vacío";
         }
 
@@ -50,13 +56,7 @@
                 {
                     if (data == "S"){
 
-                        document.getElementById('aperturaConcurso').reset();
-
-                        $('#spanfechaConcurso').addClass("hide");
-                        $('#spancedula').addClass("hide");
-                        $('#spancedula2').addClass("hide");
-                        $('#spanarea').addClass("hide");
-
+                        document.getElementById('aperturaConcurso').reset();                     
                         text = "Concurso Insertado";
 
                         toastr.success(text, "Exito", {
@@ -68,19 +68,9 @@
 
                         if (data == "N"){
 
-                            $('#spanfechaConcurso').addClass("hide");
-                            $('#spancedula').addClass("hide");
-                            $('#spancedula2').addClass("hide");
-                            $('#spanarea').addClass("hide");
-
                             text = "Usted no tiene permiso";
                         }
                         else {
-
-                            $('#spanfechaConcurso').addClass("hide");
-                            $('#spancedula').addClass("hide");
-                            $('#spancedula2').addClass("hide");
-                            $('#spanarea').addClass("hide");
 
                             text = "Error al Registrar Concurso";
                         } 
@@ -90,6 +80,10 @@
                             "extendedTImeout": "0"
                          });                    
                     }
+
+                    $('#fe').removeClass("has-error");
+                    $('#fa').removeClass("has-error");
+                    $('#fi').removeClass("has-error");
                 }
             }); 
             
