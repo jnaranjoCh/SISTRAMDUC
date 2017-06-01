@@ -64,6 +64,8 @@ class Tramite
      */
     protected $usuario_id;
 
+    
+
     public function getId()
     {
         return $this->id;
@@ -171,7 +173,7 @@ class Tramite
     
     public function __toString()
     {
-        return sprintf($this->getUsuarioId().' ('.$this->getTransicion().')'.' ('.$this->getRecaudos().')');
+        return sprintf($this->getUsuarioId().' ('.$this->getTransicion().')'.' ('.$this->getRecaudos().')'.' ('.$this->getPrimeraVez().')');
     }
     
     public function ownTransicion(Transicion $transicion)
@@ -179,4 +181,6 @@ class Tramite
         $this->transicion = $transicion;
         return $this;
     }
+
+  
 }

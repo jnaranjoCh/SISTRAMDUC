@@ -30,6 +30,11 @@ class SolicitudComisionServicio extends Tramite
      */
     protected $fecha_recibido;
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $posible_respuesta;
+
     public function __construct(\DateTime $fecha = null)
     {
         $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
@@ -129,5 +134,15 @@ class SolicitudComisionServicio extends Tramite
     public function getFechaRecibido()
     {
         return $this->fecha_recibido;
+    }
+
+    public function getPosibleRespuesta()
+    {
+        return $this->posible_respuesta;
+    }
+
+    public function setPosibleRespuesta($posible_respuesta)
+    {
+        $this->posible_respuesta = $posible_respuesta;
     }
 }

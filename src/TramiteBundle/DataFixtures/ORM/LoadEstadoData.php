@@ -33,6 +33,8 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($estado_aprobada);
         $manager->flush();
+
+       
     }
 
     public function getOrder()

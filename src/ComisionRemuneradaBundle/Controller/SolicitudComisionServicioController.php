@@ -24,39 +24,6 @@ use ComisionRemuneradaBundle\Form\SolicitudComisionServicioType;
 class SolicitudComisionServicioController extends Controller
 {
     /**
-     * Creates a new solicitudComisionServicio entity.
-     *
-     * @Route("/new", name="solicitudcomisionservicio_new")
-     * @Method({"GET", "POST"})
-     */
-    public function validadorAction()
-    {
-        $maxId = $this->getDoctrine()
-                        ->getManager()
-                        ->createQuery('SELECT MAX(r.id) FROM ComisionRemuneradaBundle:SolicitudComisionServicio r WHERE r.usuario_id = :user ')
-                        ->setParameter('user', $this->getUser())
-                        ->getOneOrNullResult();
-        if ($maxId){
-            $tramites = $this->getDoctrine()
-                ->getManager()
-                ->getRepository(SolicitudComisionServicio::class)
-                ->findBy(["id" => $maxId]);
-            if ($tramites){
-                foreach ($tramites as $existe) {
-                    if ($existe && ($existe->getTransicion()->getEstado() == "Pendiente")) {
-                        return new JsonResponse("noValido");
-                    }
-                    if ($existe && ($existe->getTransicion()->getEstado() == "Aprobada")) {
-                        return new JsonResponse("valido");
-                    }
-                }
-            }
-        }
-        else{
-            return new JsonResponse("valido");
-        }
-    }
-    /**
      * Lists all solicitudComisionServicio entities.
      *
      * @Route("/", name="solicitudcomisionservicio_index")

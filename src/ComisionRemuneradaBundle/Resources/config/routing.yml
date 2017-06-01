@@ -34,7 +34,13 @@ informe:
     path: /comision-servicio/informe
     defaults: {_controller: ComisionRemuneradaBundle:Default:informe}
 
+comision_servicio_solicitudes_catedra:
+    path: /comision-de-servicio/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudes}
 
+comision-de-servicio-insertar-posible-respuesta:
+    path: /comision-de-servicio/insertar-posible-respuesta
+        defaults: {_controller: ComisionRemuneradaBundle:Default:insertarPosibleRespuesta}
 #solicitud_serv_remun:
  #   path: /solicitud_serv_remun
   #  defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}

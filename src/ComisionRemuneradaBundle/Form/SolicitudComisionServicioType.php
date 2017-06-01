@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use TramiteBundle\Form\RecaudoType;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class SolicitudComisionServicioType extends AbstractType
 {
@@ -26,7 +27,8 @@ class SolicitudComisionServicioType extends AbstractType
         ;
         $builder
             ->add('submit', SubmitType::class, array(
-                'attr' => array('class' => 'save'),
+                    'label' => "Enviar",
+                'attr' => array('class' => 'save btn btn-primary'),
                 )
             )
         ;
