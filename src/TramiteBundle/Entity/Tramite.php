@@ -67,7 +67,7 @@ class Tramite
     protected $usuario_id;
 
     /**
-     *@ORM\OneToOne(targetEntity="Documento", mappedBy="tramite_id", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="tramite_id")
      */
     protected $documento_id;
 

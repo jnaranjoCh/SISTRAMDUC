@@ -40,8 +40,8 @@
                                     <th>Fecha Enviada</th>
                                     <th>Estatus</th>
                                     <th>Motivo</th>
-                                   <!-- <th>Informe DAP</th>
-                                    <th>Informe</th> -->
+                                    <!-- <th>Informe DAP</th>
+                                     <th>Informe</th> -->
                                 </tr>
                                 {% for tramiteJubilacion in tramites %}
                                     <tr>
@@ -61,14 +61,14 @@
                                                 <td>{{ tramiteJubilacion.getFecha()|date('d-m-Y') }}</td>
                                             {% endif %}
                                         {% endif %}
-                                        {% if tramiteJubilacion.getEstado() == "Pendiente" %}
-                                            <td><span class="label label-warning">{{ tramiteJubilacion.getEstado() }}</span></td>
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Pendiente" %}
+                                            <td><span class="label label-warning">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
                                         {% endif %}
-                                        {% if tramiteJubilacion.getEstado() == "Aprobada" %}
-                                            <td><span class="label label-success">{{ tramiteJubilacion.getEstado() }}</span></td>
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Aprobada" %}
+                                            <td><span class="label label-success">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
                                         {% endif %}
-                                        {% if tramiteJubilacion.getEstado() == "Negada" %}
-                                            <td><span class="label label-danger">{{ tramiteJubilacion.getEstado() }}</span></td>
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Negada" %}
+                                            <td><span class="label label-danger">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
                                         {% endif %}
 
                                         {% if tramiteJubilacion.getDoc_info() %}

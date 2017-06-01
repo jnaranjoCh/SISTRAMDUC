@@ -48,14 +48,14 @@
                     </dl>
                 </div>
                 <div class="col-xs-5" align="right">
-                        <dl class="dl-horizontal">
-                            <dt>Asunto:&nbsp;&nbsp;<span id="spanAsunto" class="label label-danger hide">Vacío</span></dt>
-                            <dd><input id="asunto" class="form-control" type="text" placeholder="Ingresar texto"></dd>
-                            <dt>Acta:&nbsp;&nbsp;<span id="spanActa" class="label label-danger hide">Vacío</span></dt>
-                            <dd><input id="acta" class="form-control" type="text" placeholder="Ingresar texto"></dd>
-                            <dt>Fecha:&nbsp;&nbsp;<span id="spanFecha" class="label label-danger hide">Vacío</span></dt>
-                            <dd> {{ "now"|date('d-m-Y') }}</dd>
-                        </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Asunto:&nbsp;&nbsp;<span id="spanAsunto" class="label label-danger hide">Vacío</span></dt>
+                        <dd><input id="asunto" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                        <dt>Acta:&nbsp;&nbsp;<span id="spanActa" class="label label-danger hide">Vacío</span></dt>
+                        <dd><input id="acta" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                        <dt>Fecha:&nbsp;&nbsp;<span id="spanFecha" class="label label-danger hide">Vacío</span></dt>
+                        <dd> {{ "now"|date('d-m-Y') }}</dd>
+                    </dl>
                 </div>
             </div>
         </div>
@@ -125,21 +125,21 @@
         <br> <br>
 
         <div class="row no-print">
-                <div class="col-xs-1"></div>
-                <div class="col-xs-4">
-                    <!--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>-->
-                    <!--href="/jubilacion/informe-jubilacion-pdf"-->
-                    <a id="llenarPDF" href="#" class="btn bg-maroon">
-                        <i class="fa fa-download"></i>&nbsp;&nbsp;Generar PDF
-                    </a>
-                </div>
+            <div class="col-xs-1"></div>
+            <div class="col-xs-4">
+                <!--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>-->
+                <!--href="/jubilacion/informe-jubilacion-pdf"-->
+                <a id="llenarPDF" href="#" class="btn bg-maroon">
+                    <i class="fa fa-download"></i>&nbsp;&nbsp;Generar PDF
+                </a>
+            </div>
             <div class="col-xs-2"></div>
-                <div class="col-xs-4">
-                    <button type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
-                        <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar
-                    </button>
-                </div>
-                <div class="col-xs-1"></div>
+            <div class="col-xs-4">
+                <button type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
+                    <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar
+                </button>
+            </div>
+            <div class="col-xs-1"></div>
         </div>
     </section>
     <!-- /.content -->
@@ -192,12 +192,12 @@
                             "Acta": document.getElementById("acta").value,
                             "Contenido": document.getElementById("contenido").value,
                             "Tramite": document.getElementById("llenarPDF").value,
-                                "TipoDocumento": 1},
+                            "TipoDocumento": 2},
                         url:  "{{ path('jubilacion-llenarPDF') }}",
                         dataType: 'json',
                         success: function(data)
                         {
-                            if (data["alerta"] == "S"){
+                            if (data == "S"){
 
                                 $('#spanNumero').addClass("hide");
                                 text = "Informe generado con Exito";
@@ -207,8 +207,7 @@
                                     "extendedTImeout": "0"
                                 });
 
-                                window.location = '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"];
-                                //window.location = '/jubilacion/informe-jubilacion-pdf';
+                                window.location = '/jubilacion/informe-jubilacion-pdf';
                                 //window.location = '/jubilacion/informe-jubilacion-pdf?Tramite=' + 7;
                             }
                             else{
@@ -233,4 +232,3 @@
         </script>
     {% endblock %}
 {% endblock %}
-

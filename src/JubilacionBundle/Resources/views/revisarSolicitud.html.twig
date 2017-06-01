@@ -82,7 +82,7 @@
                                 </select>
                             {% else %}
                                 <div class="btn-group">
-                                    <button disabled type="button" class="btn btn-info">Hola</button>
+                                    <button disabled type="button" class="btn btn-info">{{ tramite.getTransicion().getEstado() }}</button>
                                 </div>
                             {% endif %}
                         </div>

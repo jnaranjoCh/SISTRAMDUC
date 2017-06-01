@@ -108,6 +108,8 @@ class TramiteJubilacionController extends Controller
                 ->asignarA($tramiteJubilacion) // Se asigna una transicion a la solicitud
                 ->setEstado($estado);                  // Se cambia el estado de la transición
 
+            $transicion->setEstadoConsejo($estado);
+
             $transicion->setFecha(new \DateTime("now"));
             
             $em->persist($tramiteJubilacion);

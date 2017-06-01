@@ -53,3 +53,15 @@ llenarPDF:
 revisar-solicitud-consejo:
     path: /revisar-solicitud-consejo/{id}
     defaults: {_controller: JubilacionBundle::revisarSolicitudConsejo}
+
+insertarConsejo:
+  path:     /insertar-consejo
+  defaults: { _controller: JubilacionBundle::insertarConsejo }
+  requirements:
+    _method: POST
+
+/jubilacion/informe-jubilacion-consejo:
+    path: /jubilacion/informe-jubilacion-consejo
+    defaults: {_controller: JubilacionBundle::informeConsejo}
+    requirements:
+        _method: POST|GET

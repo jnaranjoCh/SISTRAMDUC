@@ -53,13 +53,13 @@ class Documento
     //private $codBarra;
 
     /**
-     * @ORM\OneToOne(targetEntity="Tramite", inversedBy="documento_id")
+     * @ORM\ManyToOne(targetEntity="Tramite", inversedBy="documento_id")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     protected $tramite_id;
 
     /**
-     * @ORM\OneToOne(targetEntity="TipoDocumento", inversedBy="documento")
+     * @ORM\ManyToOne(targetEntity="TipoDocumento", inversedBy="documento")
      * @ORM\JoinColumn(name="tipo_documento_id", referencedColumnName="id")
      */
     protected $tipo_documento_id;
@@ -236,14 +236,15 @@ class Documento
         return sprintf($this->getId());
     }
 
+
     /**
      * Set tipo_documento_id
      *
-     * @param \TramiteBundle\Entity\TipoDocumento $tipoDocumento_id
+     * @param \TramiteBundle\Entity\TipoDocumento $tipoTramite_id
      *
      * @return Documento
      */
-    public function setTipoTramite(\TramiteBundle\Entity\TipoDocumento $tipo_documento_id = null)
+    public function setTipoDocumento(\TramiteBundle\Entity\TipoDocumento $tipo_documento_id = null)
     {
         $this->tipo_documento_id = $tipo_documento_id;
 
@@ -251,12 +252,13 @@ class Documento
     }
 
     /**
-     * Get $tipo_documento_id
+     * Get tipo_documento_id
      *
      * @return \TramiteBundle\Entity\TipoDocumento
      */
-    public function getTipoTramite()
+    public function getTipoDocumento()
     {
         return $this->tipo_documento_id;
     }
+
 }

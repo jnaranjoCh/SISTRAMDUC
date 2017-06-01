@@ -17,7 +17,6 @@ class TipoDocumento
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
-//* @ORM\GeneratedValue(strategy="AUTO")
     private $id;
 
     /**
@@ -26,7 +25,7 @@ class TipoDocumento
     private $nombre;
 
     /**
-     * @ORM\OneToOne(targetEntity="Documento", mappedBy="tipo_documento_id")
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tipo_documento_id")
      */
     protected $documento;
 
@@ -43,6 +42,20 @@ class TipoDocumento
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set id
+     *
+     * @param string $id
+     *
+     * @return TipoDocumento
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
     
     /**

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use TramiteBundle\Entity\TipoDocumento;
 use TramiteBundle\Entity\Transicion;
 use TramiteBundle\Entity\Documento;
 use JubilacionBundle\Entity\TramiteJubilacion;
@@ -54,6 +55,13 @@ class DefaultController extends Controller
     public function consejoAction()
     {
         $entityManager = $this->getDoctrine()->getManager();
+        $transicionRepository = $entityManager->getRepository('TramiteBundle:Transicion');
+        $tramites = $transicionRepository->getListadoAprobado();
+        
+        return $this->render('JubilacionBundle::consejoFacultad.html.twig',
+            array('tramites' => $tramites));
+        
+       /* $entityManager = $this->getDoctrine()->getManager();
         
         // Se consulta en DAP todas las solicitudes que han sido aprobadas
         $transicionRepository = $entityManager->getRepository('TramiteBundle:Transicion');
@@ -94,7 +102,7 @@ class DefaultController extends Controller
         $tramites = $tramites->findAll();
 
         return $this->render('JubilacionBundle::consejoFacultad.html.twig',
-            array('tramites' => $tramites));
+            array('tramites' => $tramites));*/
     }
 
     /**
@@ -111,37 +119,18 @@ class DefaultController extends Controller
      * @Route("/jubilacion/informe-jubilacion-pdf", name="jubilacion-informe-jubilacion-pdf")
      * @Method("GET")
      */
-    public function informeJubilacionPDFAction()
+    public function informePDFAction(Request $request)
     {
         $snappy = $this->get('knp_snappy.pdf');
 
-        $em = $this->getDoctrine()->getManager();
-        $documento = $em->getRepository(Documento::class);
-        $documento = $documento->findAll();
-        //$documento = $documento->findOneBy(["id" => $request->get("Solicitud")]);
-
         $html = $this->renderView('JubilacionBundle::informeJubilacion-print.html.twig', array(
-            'documento' => $documento
+            'documento' => $request->get("Documento")
         ));
 
-        $filename = 'InformeJubilacion';
+        $filename = 'InformePDF-ComisionServicio';
 
         return new Response(
-            $snappy->getOutputFromHtml($html,
-                array('lowquality' => false,
-                    'print-media-type' => true,
-                    'encoding' => 'utf-8',
-                    'page-size' => 'Letter',
-                    'outline-depth' => 8,
-                    'orientation' => 'Portrait',
-                    'user-style-sheet'=> 'css/bootstrap.css',
-                    'header-right'=>'Pag. [page] de [toPage]',
-                    'header-font-size'=>7,
-                    'margin-top'    => 20,
-                    'margin-right'  => 20,
-                    'margin-bottom' => 20,
-                    'margin-left'   => 20,
-                )),
+            $snappy->getOutputFromHtml($html),
             200,
             array(
                 'Content-Type'          => 'application/pdf',
@@ -203,7 +192,7 @@ class DefaultController extends Controller
 
             $estado_repo = $em->getRepository(Estado::class);
             $estado = $estado_repo->findOneBy(["id" => $request->get("Estatus")]);
-
+            
             $transicion->setEstado($estado);
             $transicion->setFecha(new \DateTime("now"));
             $transicion->setDoc_info($request->get("Motivo"));
@@ -232,17 +221,23 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
            // $tramiteJubilacion = new TramiteJubilacion();
             $tramiteJubilacion =  $em->getRepository(TramiteJubilacion::class);
-            $numTramite = $tramiteJubilacion->findOneBy(["id" => '3']); //Probar el request metido entre las comillas. $request->get("Tramite")
+            $numTramite = $tramiteJubilacion->findOneBy(["id" => '2']); //Probar el request metido entre las comillas. $request->get("Tramite")
+
+
+            $tipo_documento_repo = $em->getRepository(TipoDocumento::class);
+            $tipo_documento = $tipo_documento_repo->findOneBy(["id" => 2]);
+
 
             $documento = new Documento();
             $documento
                 ->asignarDocA($numTramite);
-
+            $documento->setTipoDocumento($tipo_documento);
             $documento->setAsunto($request->get("Asunto"));
             $documento->setActa($request->get("Acta"));
             $documento->setFecha(new \DateTime("now"));
             $documento->setNum($request->get("Numero"));
             $documento->setContenido($request->get("Contenido"));
+
 
             //Persistimos en el objeto
             $em->persist($documento);
@@ -250,7 +245,11 @@ class DefaultController extends Controller
             //Insertarmos en la base de datos
             $em->flush();
 
-            return new JsonResponse("S");
+            $respuesta[] = "";
+            $respuesta['numDoc'] = $documento->getId();
+            $respuesta['alerta'] = "S";
+
+            return new JsonResponse($respuesta);
         }
         else{
             throw $this->createNotFoundException('Error al solicitar datos de inserción');
@@ -270,5 +269,49 @@ class DefaultController extends Controller
             array('tramite' => $tramite, 'recaudos' => $recaudos));
     }
 
+    /**
+     * @Route("/jubilacion/insertar-consejo", name="jubilacion-insertar-consejo")
+     * @Method("POST")
+     */
+    public function insertarConsejoAction(Request $request) {
+
+        if($request->isXmlHttpRequest()){
+
+            //Entity Manager
+            $em = $this->getDoctrine()->getManager();
+
+            $transicionRepo = $em->getRepository(Transicion::class);
+            $transicion = $transicionRepo->findOneBy(["tramite" => $request->get("Solicitud")]);
+
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => $request->get("Estatus")]);
+
+            $transicion->setEstadoConsejo($estado);
+            $transicion->setEstado($estado);
+            $transicion->setFechaConsejo(new \DateTime("now"));
+            $transicion->setMotivoConsejo($request->get("Motivo"));
+
+            //Persistimos en el objeto
+            $em->persist($transicion);
+
+            //Insertarmos en la base de datos
+            $em->flush();
+
+            return new JsonResponse("S");
+        }
+        else
+            throw $this->createNotFoundException('Error al solicitar datos de inserción');
+
+    }
+
+    /**
+     * @Route("/jubilacion/informe-jubilacion-consejo", name="jubilacion-informe-jubilacion-consejo")
+     * @Method({"GET", "POST"})
+     */
+    public function informeConsejoAction(Request $request)
+    {
+        return $this->render('JubilacionBundle::informeConsejo.html.twig',
+            array('tramite' => $request->get("Solicitud")));
+    }
 
 }

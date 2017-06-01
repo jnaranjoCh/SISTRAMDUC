@@ -38,7 +38,7 @@ class Estado
     protected $transiciones;
 
     /**
-     * @ORM\OneToMany(targetEntity="TransicionConsejo", mappedBy="estado")
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_consejo")
      */
     protected $transicionesConsejo;
     
