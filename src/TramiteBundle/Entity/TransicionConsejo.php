@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use TramiteBundle\Entity\Tramite;
 
 /**
- * @ORM\Entity(repositoryClass="TransicionRepository")
- * @ORM\Table(name="transicion")
+ * @ORM\Entity
+ * @ORM\Table(name="transicion_consejo")
  */
 
-class Transicion
+class TransicionConsejo
 {
     /**
      * @ORM\Id
@@ -19,7 +19,7 @@ class Transicion
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -31,33 +31,16 @@ class Transicion
     private $doc_info = "Motivo";
 
     /**
-     * @ORM\OneToOne(targetEntity="Tramite", inversedBy="transicion")
+     * @ORM\OneToOne(targetEntity="Tramite", inversedBy="transicionConsejo")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     protected $tramite;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transiciones")
+     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transicionesConsejo")
      * @ORM\JoinColumn(name="estado_id", referencedColumnName="id")
      */
     protected $estado;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $fecha_consejo;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $motivo_consejo = "Motivo";
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transicionesConsejo")
-     * @ORM\JoinColumn(name="estadoConsejo_id", referencedColumnName="id")
-     */
-    protected $estado_consejo;
-
 
     function __construct(\DateTime $fecha = null){
         $this->fecha = $fecha;
@@ -119,7 +102,7 @@ class Transicion
      *
      * @return Estado
      */
-    public function setEstado(Estado $estado = null)
+    public function setEstado(Estado $estado)
     {
         $this->estado = $estado;
 
@@ -160,71 +143,40 @@ class Transicion
     }
 
     /**
-     * Set fecha_consejo
+     * Set docInfo
      *
-     * @param datetime $fecha_consejo
+     * @param string $docInfo
+     *
+     * @return TransicionConsejo
      */
-    public function setFechaConsejo($fecha_consejo)
+    public function setDocInfo($docInfo)
     {
-        $this->fecha_consejo = $fecha_consejo;
-    }
-
-    /**
-     * Get fecha_consejo
-     *
-     * @return datetime
-     */
-    public function getFechaConsejo()
-    {
-        return $this->fecha_consejo;
-    }
-
-    /**
-     * Set motivo_consejo
-     *
-     * @param string $motivo_consejo
-     *
-     * @return Transicion
-     */
-    public function setMotivoConsejo($motivo_consejo)
-    {
-        $this->motivo_consejo = $motivo_consejo;
+        $this->doc_info = $docInfo;
 
         return $this;
     }
 
     /**
-     * Get motivo_consejo
+     * Get docInfo
      *
      * @return string
      */
-    public function getMotivoConsejo()
+    public function getDocInfo()
     {
-        return $this->motivo_consejo;
+        return $this->doc_info;
     }
-    
+
     /**
-     * Set estado_consejo
+     * Set tramite
      *
-     * @param \TramiteBundle\Entity\Estado $estado_consejo
+     * @param \TramiteBundle\Entity\Tramite $tramite
      *
-     * @return Estado
+     * @return TransicionConsejo
      */
-    public function setEstadoConsejo(Estado $estado_consejo = null)
+    public function setTramite(\TramiteBundle\Entity\Tramite $tramite = null)
     {
-        $this->estado_consejo = $estado_consejo;
+        $this->tramite = $tramite;
 
         return $this;
     }
-
-    /**
-     * Get estado_consejo
-     *
-     * @return \TramiteBundle\Entity\Estado
-     */
-    public function getEstadoConsejo()
-    {
-        return $this->estado_consejo;
-    }
-
 }

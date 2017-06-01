@@ -4,29 +4,26 @@
     <li data-route="jubilacion-informacion">
         <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Revisar Solicitudes</a>
     </li>
-    <li data-route="comision_remunerada_solicitar">
-        <a href="{{ path('solicitud_serv_remun') }}"><i class="fa fa-circle-o"></i>Generar Informe</a>
+    <li data-route="jubilacion-informacion">
+        <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Generar Informe</a>
     </li>>
 {% endblock %}
 
 {% block content %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
-
+        <h1>Consejo de Facultad</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
             <li class="active">Consejo de Facultad </li>
             <li class="active">Revisar Solicitudes </li>
         </ol>
     </div>
-    <br>
 
     <!-- Main content -->
     <section class="content">
-        <h4 style="text-align: center"><b>CONSEJO DE FACULTAD</b></h4>
-        <br>
         <!-- Default box -->
-        <div class="box box-solid box-default">
+        <div class="box box-solid box-info">
             <div class="box-header ">
                 <h3 class="box-title"><b>Solicitudes:</b></h3>
             </div>
@@ -42,51 +39,43 @@
                                     <th>Fecha Recibida</th>
                                     <th>Fecha Enviada</th>
                                     <th>Estatus</th>
-                                    <th>Motivo&nbsp;&nbsp;<span id="spanMotivo" class="label label-danger hide">Vacío</span></th>
-                                    <th>Enviar Respuesta</th>
+                                    <th>Motivo</th>
+                                    <!-- <th>Informe DAP</th>
+                                     <th>Informe</th> -->
                                 </tr>
                                 {% for tramiteJubilacion in tramites %}
                                     <tr>
                                         <td>
-                                            <button id="numSolicitud" type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                                <i class="fa fa-info-circle"></i>&nbsp;&nbsp;{{ tramiteJubilacion.id }}
-                                            </button>
-                                        </td>
-                                        <td>{{ tramiteJubilacion.getUsuarioId().getPrimerNombre() }} {{ tramiteJubilacion.getUsuarioId().getPrimerApellido() }}</td>
-                                        <td>11-7-2014</td>
-                                        <td>11-7-2014</td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <select id="estatus" class="btn dropdown-toggle btn-default">  <!--Call run() function-->
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <option value="1">{{ tramiteJubilacion.getTransicion().getEstado() }}</option>
-                                                        <option value="2">Negado</option>
-                                                        <option value="3">Aprobado</option>
-                                                    </ul>
-                                                </select><br><br>
-                                                <!--TextBox1<br>
-                                                <input type="text" id="srt" placeholder="get value on option select"><br>-->
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input id="motivo" action="action_page.php" class="form-control" type="text" placeholder="Escribir...">
-                                        </td>
-                                        <td>
-                                            <div >
-                                                <button id="enviarRespuesta" class="btn btn-success btn-block btn-flat">Registrar</button>
-                                            </div>
-                                            <!--<div class="btn-group">
-                                                <button type="button" class="btn btn-info">Enviar</button>
-                                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
+                                            <a href="{{ path('jubilacion-revisar-solicitud-consejo', { 'id': tramiteJubilacion.getTramite().getId() }) }}">
+                                                <button type="button" class="btn btn-info" data-toggle="modal">
+                                                    <i class="fa fa-info-circle"></i>&nbsp;&nbsp;{{ tramiteJubilacion.getTramite().getId() }}
                                                 </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a id="enviarRespuesta" href="#">Profesor</a></li>
-                                                    <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">AAPP</a></li>
-                                                </ul>
-                                            </div>-->
+                                            </a>
                                         </td>
+                                        <td>{{ tramiteJubilacion.getTramite().getUsuarioId().getNombreCompleto() }}</td>
+                                        <td>{{ tramiteJubilacion.getTramite().getfecha_recibido()|date('d-m-Y') }}</td>
+                                        {% if tramiteJubilacion.getFecha() and tramiteJubilacion.getTramite().getfecha_recibido() %}
+                                            {% if tramiteJubilacion.getFecha() == tramiteJubilacion.getTramite().getfecha_recibido() %}
+                                                <td align="center">-</td>
+                                            {% else %}
+                                                <td>{{ tramiteJubilacion.getFecha()|date('d-m-Y') }}</td>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Pendiente" %}
+                                            <td><span class="label label-warning">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Aprobada" %}
+                                            <td><span class="label label-success">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Negada" %}
+                                            <td><span class="label label-danger">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
+                                        {% endif %}
+
+                                        {% if tramiteJubilacion.getDoc_info() %}
+                                            <td>{{ tramiteJubilacion.getDoc_info() }}</td>
+                                        {% else %}
+                                            <td align="center">-</td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                             </table>
@@ -137,20 +126,6 @@
     <!-- /.content -->
 
     <!-- Scripts -->
-{% block custom_javascripts %}
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-
-    <script>
-       // function run() {
-            //document.getElementById("srt").value = document.getElementById("estatus").value;
-           // var estatus = document.getElementById("estatus").value;
-       // }
-    </script>
-
     <script>
         $("#enviarRespuesta").click(function (){
 
@@ -170,7 +145,7 @@
                 /*json*/
                 $.ajax({
                     method: "POST",
-                    data: {"Solicitud": 2,
+                    data: {"Solicitud": document.getElementById("numSolicitud").value,
                         "Estatus": document.getElementById("estatus").value,
                         "Motivo": document.getElementById("motivo").value},
                     url:  "{{ path('jubilacion-insertar') }}",
@@ -214,8 +189,5 @@
             }
         });
     </script>
-
-{% endblock %}
     <!-- /.Scripts -->
-
 {% endblock %}

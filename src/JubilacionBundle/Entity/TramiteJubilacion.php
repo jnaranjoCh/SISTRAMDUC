@@ -25,6 +25,16 @@ class TramiteJubilacion extends Tramite
 
     protected $owner;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fecha_recibido;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $fecha_recibido_consejo;
+
     public function __construct()
     {
         $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de Jubilación")
@@ -33,6 +43,42 @@ class TramiteJubilacion extends Tramite
         ));
     }
 
+    /**
+     * Get fecha_recibido
+     * @return datetime
+     */
+    public function getfecha_recibido()
+    {
+        return $this->fecha_recibido;
+    }
+
+    /**
+     * Set fecha_recibido
+     * @param datetime fecha_recibido
+     */
+    public function setfecha_recibido($fecha_recibido)
+    {
+        $this->fecha_recibido = $fecha_recibido;
+    }
+
+    /**
+     * Get fecha_recibido_consejo
+     * @return datetime
+     */
+    public function getfecha_recibido_consejo()
+    {
+        return $this->fecha_recibido_consejo;
+    }
+
+    /**
+     * Set fecha_recibido_consejo
+     * @param datetime fecha_recibido_consejo
+     */
+    public function setfecha_recibido_consejo($fecha_recibido_consejo)
+    {
+        $this->fecha_recibido_consejo = $fecha_recibido_consejo;
+    }
+    
     /**
      * Get recaudos
      *
