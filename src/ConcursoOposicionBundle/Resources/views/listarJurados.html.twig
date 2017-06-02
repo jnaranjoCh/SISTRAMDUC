@@ -72,7 +72,7 @@
                         <div class='col-sm-6'>
                             <div class="form-group">
                                 <div class='input-group' >
-                                    <input class="form-control" id='cedula' value=""  maxlength="10" placeholder="Cedula" onkeypress="return justNumbers(event);" type="number"/>
+                                    <input class="form-control" id='cedula' value=""  maxlength="10" placeholder="Cedula" onkeypress="return justNumbers(event);" type="text"/>
                                     <span class="input-group-addon">
                                         <span class="fa fa-address-card-o"></span>
                                     </span>
@@ -208,8 +208,6 @@
 
 {% block custom_javascripts %}
 
-    <script src="{{ asset('assets/js/concursoOposicion/listarJurados.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
@@ -236,5 +234,7 @@
       });
 
   </script>
+
+  {% include('ConcursoOposicionBundle:Jurado:listadoJurado.html.twig') %}
 
 {% endblock %}

@@ -34,7 +34,7 @@
 				        	<span id="spancedula" class="label label-danger hide">Vac&iacute;o</span>
 				            <div class="form-group">
 				                <div class='input-group' >
-				                    <input type="number" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula' onkeypress="return justNumbers(event);"/>
+				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula" id='cedula' onkeypress="return justNumbers(event);"/>
 				                    <span class="input-group-addon">
 				                        <span class="fa fa-address-card-o"></span>
 				                    </span>
@@ -277,7 +277,6 @@
 {% block custom_javascripts %}
 
   <script src="{{ asset('assets/js/concursoOposicion/saveConcurso.js') }}"></script>
-  <script src="{{ asset('assets/js/concursoOposicion/saveSuplentesCPEC.js') }}"></script>
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
 
   <script>
@@ -287,5 +286,7 @@
 
 	});
   </script>
+
+  {% include('ConcursoOposicionBundle:Cpec:saveSuplenteCpec.html.twig') %}
 
 {% endblock %}

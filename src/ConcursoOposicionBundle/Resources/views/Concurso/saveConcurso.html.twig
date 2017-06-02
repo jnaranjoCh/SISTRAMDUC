@@ -1,0 +1,100 @@
+<script type="text/javascript">
+    
+    $('#registrarConcurso').click(function (){ 
+    
+        toastr.clear();
+        var text = "";
+
+        var fecha = $('#fechaConcurso').val();
+        var continua = true;
+
+        $('#fi').removeClass("has-error");
+
+        if (fecha == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#fi').addClass("has-error");
+        }
+
+        var cedula = $('#cedula').val();
+
+        $('#fa').removeClass("has-error");
+
+        if (cedula == "" || cedula == 0 || cedula == '0'){
+
+            continua = false;
+            $('#fa').addClass("has-error");
+            text = "Campo vacío";
+        }
+
+        $('#fe').removeClass("has-error");
+
+        if ($('#area').val() == ""){
+
+            continua = false;
+            $('#fe').addClass("has-error");
+            text = "Campo vacío";
+        }
+
+        if (continua){
+
+            /*json*/
+
+            $.ajax({
+                method: "POST",
+                data: {"Inicio":$("#fechaConcurso").val(), 
+                "Vacantes":$("#cedula").val(), 
+                "Area":$("#area").val(), 
+                "fechaDoc":$("#fechaDoc").val(), 
+                "fechaPre":$("#fechaPre").val(),
+                "observacion": $("#observacion").val(), 
+                "tipo":"Oposicion"},
+                url:  "{{ path('registroConcursoAjax') }}",
+                dataType: 'json',
+                success: function(data)
+                {
+                    if (data == "S"){
+
+                        document.getElementById('aperturaConcurso').reset();                     
+                        text = "Concurso Insertado";
+
+                        toastr.success(text, "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                 });            
+                    } 
+                    else{
+
+                        if (data == "N"){
+
+                            text = "Usted no tiene permiso";
+                        }
+                        else {
+
+                            text = "Error al Registrar Concurso";
+                        } 
+
+                        toastr.error(text, "Error", {
+                            "timeOut": "0",
+                            "extendedTImeout": "0"
+                         });                    
+                    }
+
+                    $('#fe').removeClass("has-error");
+                    $('#fa').removeClass("has-error");
+                    $('#fi').removeClass("has-error");
+                }
+            }); 
+            
+            /*fin del json*/        
+        }
+        else {
+             toastr.error(text, "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+        }
+    });
+
+</script>

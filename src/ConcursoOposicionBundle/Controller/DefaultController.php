@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use ConcursosBundle\Entity\Concurso;
+use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
 use ConcursoOposicionBundle\Entity\Recusacion;
 use AppBundle\Entity\Usuario;
@@ -398,5 +399,113 @@ class DefaultController extends Controller
         $ano = substr($fecha, 6, 4);
 
         return $mes."/".$dia."/".$ano;
+    }
+
+    /**
+     * @Route("/concursoOposicion/registroAspiranteAjax", name="registroAspiranteAjax")
+     * @Method("POST")
+     */
+    public function registroAspiranteAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = false;
+
+            foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                
+                if ($valor == "Asuntos Profesorales")
+                    $encontrado = true;
+            }
+
+            if ($encontrado){               
+
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT p
+                       FROM ConcursosBundle:Aspirante p
+                      WHERE p.cedula = :cedula')->setParameter('cedula', intval($request->get("cedula")));
+                 
+                $existe = $query->getResult();
+
+                if ($existe == null){
+
+                    $aspirante = new Aspirante();
+
+                    $aspirante->setPrimerNombre($request->get("nombre1"));
+                    $aspirante->setSegundoNombre($request->get("nombre2"));
+                    $aspirante->setPrimerApellido($request->get("apellido1"));
+                    $aspirante->setSegundoApellido($request->get("apellido2"));
+                    $aspirante->setTelefono($request->get("tlf1"));
+                    $aspirante->setCorreo($request->get("email1"));
+                    $aspirante->setCedula($request->get("cedula"));
+                    $aspirante->setTelefonoSecundario($request->get("tlf2"));
+                    $aspirante->setUniversidadEgresado($request->get("universidad"));
+                    $aspirante->setDescripcionTituloUniv($request->get("tiulo"));
+                    $aspirante->setAnyoGraduacion($request->get("graduacion"));
+                    $aspirante->setObservaciones($request->get("observacion"));
+
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($aspirante);
+                    $em->flush();
+
+                    $this->ConcursoAspirante(intval($request->get("concurso")));
+
+                    return new JsonResponse("S");
+
+                } else {
+
+                    try{
+                        $this->ConcursoAspiranteExistente(intval($request->get("concurso")), $existe[0]);
+                        
+                    } catch(\Doctrine\DBAL\DBALException $e){
+
+                        return new JsonResponse("S");
+                    }
+
+                    return new JsonResponse("S");
+                } 
+            }
+            else{
+                return new JsonResponse("N");
+            }            
+        }
+        else
+             throw $this->createNotFoundException('Error al insertar datos');
+    }
+
+    private function ConcursoAspiranteExistente($concurso, $aspirante){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById(intval($concurso));
+
+        $concursoObjeto->addAspirante($aspirante);
+
+        $em->flush();                
+    }
+
+    private function ConcursoAspirante($concurso){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $idJurado = $this->getDoctrine()
+                        ->getManager()
+                        ->createQuery('SELECT MAX(j.id) AS lastId FROM ConcursosBundle:Aspirante j')
+                        ->getResult();
+
+        $id = $idJurado[0]['lastId'];
+
+        $jurado = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('ConcursosBundle:Aspirante')
+                    ->findOneById($id);
+
+        $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById(intval($concurso));
+
+        $concursoObjeto->addAspirante($jurado);
+
+        $em->flush();
     }
 }
