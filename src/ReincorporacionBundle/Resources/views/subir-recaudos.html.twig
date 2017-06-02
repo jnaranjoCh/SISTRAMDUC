@@ -25,47 +25,84 @@
             </div>
             <div class="box-body">
               <form action="">
-              <div class="input-group">
+              {#<div class="input-group">
                   <input type="text" class="form-control" placeholder="Designación como docente" readonly="true">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
                   </span>
               </div>                
-              <br>
-              <div class="input-group">
+              <br>#}
+              <div class="form-group">
+                  <label for="exampleInputFile">Designación como docente</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              {#<div class="input-group">
                   <input type="text" class="form-control" placeholder="Oficio de la Ubicación" readonly="true">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
                   </span>                
-              </div>
+              </div>#}
               <br>
-              <div class="input-group">
+              <div class="form-group">
+                  <label for="exampleInputFile">Oficio de la Ubicación</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              {#<div class="input-group">
                   <input type="text" class="form-control" placeholder="Oficio del úitimo ascenso" readonly="true">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
                   </span>  
+              </div>#}
+              <br>
+              <div class="form-group">
+                  <label for="exampleInputFile">Oficio del úitimo ascenso</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
               </div>
               <br>
-              <div class="input-group">
+              <div class="form-group">
+                  <label for="exampleInputFile">Oficio de la aceptación de la renuncia</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              {#<div class="input-group">
                   <input type="text" class="form-control" placeholder="Oficio de la aceptación de la renuncia" readonly="true">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
                   </span> 
-              </div>
+              </div>#}
               <br>
-              <div class="input-group">
+              <div class="form-group">
+                  <label for="exampleInputFile">Fondo negro del título (solo IV o V nivel)</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              {#<div class="input-group">
                   <input type="text" class="form-control" placeholder="Fondo negro del título (solo IV o V nivel)" readonly="true">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
                   </span> 
-              </div>
+              </div>#}
               <br>
-              <div class="input-group">
+              <div class="form-group">
+                  <label for="exampleInputFile">Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo</label>
+                  <input type="file" id="exampleInputFile">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              {#<div class="input-group">
                   <input type="text" class="form-control" placeholder="Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo" readonly="true">
                   <span class="input-group-btn">
                       <button class="btn btn-default" type="button"><i class="fa fa-paperclip"></i></button>
                   </span>                
-              </div>
+              </div>#}
               <br><br>
               <div class="col-md-12 col-sm-12 right-block">                
                   <a href="{{ path('actualizar-curriculum') }}" class="btn btn-lg btn-default">Volver</a>  

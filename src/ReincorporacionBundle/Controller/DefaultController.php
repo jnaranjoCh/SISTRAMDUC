@@ -4,6 +4,12 @@ namespace ReincorporacionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+
+use ReincorporacionBundle\Entity\TramiteReincorporacion;
 
 class DefaultController extends Controller
 {
@@ -28,6 +34,7 @@ class DefaultController extends Controller
      */ 
     public function mostrarCrearEntradaEnCurriculum()
     {
+        // Creacion de form aqui!
         return $this->render('ReincorporacionBundle::nueva-entrada-curriculum.html.twig');
     }
     
@@ -47,4 +54,13 @@ class DefaultController extends Controller
     {
         return $this->render('ReincorporacionBundle::verificar-datos.html.twig');
     }
+
+    /** 
+     * @Route("/reincorporacion-docente/upload-recaudos", name="upload-recaudos")
+     */
+     public function uploadRecaudos()
+     {
+         // Validacion de form aqui!
+         // This would help -> http://symfony.com/doc/current/forms.html
+     }
 }
