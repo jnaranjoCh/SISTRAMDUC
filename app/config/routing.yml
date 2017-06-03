@@ -9,6 +9,7 @@ tramite_recaudo:
 comision_remunerada_solicitud_comision_servicio:
     resource: "@ComisionRemuneradaBundle/Controller/SolicitudComisionServicioController.php"
     type:     annotation
+    prefix:   /
 
 concurso_oposicion:
     resource: "@ConcursoOposicionBundle/Controller/"

@@ -67,7 +67,7 @@ class DefaultController extends Controller
      */
     public function informeAction()
     {
-        return $this->render('ComisionRemuneradaBundle:Rectora:informeComision.html.twig');
+        return $this->render('ComisionRemuneradaBundle:Catedra:informeComision.html.twig');
     }
     /**
      * @Route("/comision-servicio/codigo-de-barra", name="comision-servicio-codigo-de-barra")
@@ -91,7 +91,7 @@ class DefaultController extends Controller
     {
         $snappy = $this->get('knp_snappy.pdf');
 
-        $html = $this->renderView('ComisionRemuneradaBundle:Rectora:informeComision-print.html.twig', array(
+        $html = $this->renderView('ComisionRemuneradaBundle:Catedra:informeComision-print.html.twig', array(
             //..Send some data to your view if you need to //
         ));
 
@@ -204,7 +204,7 @@ class DefaultController extends Controller
             $solicitud = $solicitudRepo->findOneBy(["id" => $request->get("solicitud")]);
 
             $estado_repo = $em->getRepository(Estado::class);
-            $estado = $estado_repo->findOneBy(["id" => 4]);
+            $estado = $estado_repo->findOneBy(["id" => "4"]);
 
             $transicion->setEstado($estado);
             $transicion->setFecha(new \DateTime("now"));

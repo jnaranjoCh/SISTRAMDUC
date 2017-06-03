@@ -5,6 +5,14 @@ comision-servicio-informacion:
 solicitudcomisionservicio:
     path: /solicitudcomisionservicio_new
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
+    requirements:
+            _method:  POST
+
+solicitudcomisionservicio:
+    path: /solicitudcomisionservicio_newsave
+    defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:newSave}
+    requirements:
+            _method:  POST
 
 validador:
     path: /validar-usuario
@@ -41,6 +49,46 @@ comision_servicio_solicitudes_catedra:
 comision-de-servicio-insertar-posible-respuesta:
     path: /comision-de-servicio/insertar-posible-respuesta
         defaults: {_controller: ComisionRemuneradaBundle:Default:insertarPosibleRespuesta}
+
+solicitud_buscarcedula_ajax:
+    path:     /solicitud/buscar-cedula
+    defaults: { _controller: ComisionRemuneradaBundle:SolicitudComisionServicio:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+
+solicitud_guardar_ajax:
+    path:     /solicitud/guardar-datos
+    defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarDatosAjax }
+    requirements:
+        _method:  POST
+
+solicitud_guardararchivos_ajax:
+    path:     /solicitud/guardar-archivos-datos
+    defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarArchivosAjax }
+    requirements:
+        _method:  POST
+
+#realizar_solicitud_index:
+ #   path:     /comision-de-servicio/realizar/solicitud/{apr}
+  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:realizarSolicitudProfesor }
+
+#solicitud_obtener_ajax:
+ #   path:     /comision-de-servicio/solicitud/obtener-datos
+  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:enviarDataAjax }
+   # requirements:
+    #    _method:  POST
+
+#solicitud_obteneremails_ajax:
+ #   path:     /comision-de-servicio/solicitud/enviar-emails
+  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:enviarEmailsAjax }
+   # requirements:
+    #    _method:  POST
+
+#solicitud_buscaremail_ajax:
+ #   path:     /comision-de-servicio/solicitud/buscar-email
+  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:buscarEmailAjax }
+   # requirements:
+    #    _method:  POST
 #solicitud_serv_remun:
  #   path: /solicitud_serv_remun
   #  defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}

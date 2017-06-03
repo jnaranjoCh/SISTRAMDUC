@@ -37,9 +37,7 @@ class SolicitudComisionServicio extends Tramite
 
     public function __construct(\DateTime $fecha = null)
     {
-        $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
-        , new recaudo("Copia de la Designación del cargos en la Administración")
-        ));
+        $this->recaudos = new ArrayCollection();
         $this->fecha_recibido = $fecha;
     }
 
