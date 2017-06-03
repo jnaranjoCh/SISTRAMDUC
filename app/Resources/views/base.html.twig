@@ -284,14 +284,20 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="comision-servicio-remunerada-info">
-              <a href="{{ path('comision-servicio-remunerada-info') }}"><i class="fa fa-circle-o"></i>Información</a>
+            <li data-route="comision-servicio-informacion">
+              <a href="{{ path('comision-servicio-informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
             </li>
-            <li data-route="comision_servicio_solicitar">
-              <a href="{{ path('solicitudcomisionservicio_new') }}"><i class="fa fa-circle-o"></i>Solicitar</a>
+            <li data-route="solicitudcomisionservicio_new" id="solicitarComision">
+              <a href="{{ path('solicitudcomisionservicio_new') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
             </li>
-            <li data-route="comision_remunerada_solicitar">
+            <li data-route="estado-solicitud">
               <a href="{{ path('estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
+            </li>
+            <li data-route="comision_servicio_solicitudes">
+              <a href="{{ path('comision_servicio_solicitudes') }}"><i class="fa fa-circle-o"></i>Ver Solicitudes</a>
+            </li>
+            <li data-route="comision_servicio_solicitudes_catedra">
+              <a href="{{ path('comision_servicio_solicitudes_catedra') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesCatedra</a>
             </li>
           </ul>
         </li>
@@ -538,6 +544,78 @@
       "url": "{{ asset('assets/js/datatable-spanish.json') }}"
     }
   });
+</script>
+{#
+<script>
+  $("#solicitarComision").click(function (){
+    $.ajax({
+      url : {{ path('validar-usuario') }},
+      dataType: 'json',
+      success: function(data){
+
+        if (data == "valido"){
+          $form.submit(function(e) {
+            var data = $form.serialize();
+            $.ajax({
+              url : {{ path('validar-usuario') }},
+              type: $form.attr('method'),
+              success: function(html) {
+
+                $('#comisionremuneradabundle_solicitudcomisionservicio').replaceWith(
+                        $(html).find('#comisionremuneradabundle_solicitudcomisionservicio')
+                );
+                $('#notice').html('#notice');
+                /*$('#notice').replaceWith(
+                 // ... Con la respuesta ajax
+                 $(html).show('#notice')
+                 );*/
+              }
+            });
+          });
+        }
+        else(){
+
+        }
+      }
+    });
+  });
+    toastr.clear();
+    var text = "";
+
+    var motivo = $('#motivo').val();
+    var continua = true;
+
+    if (motivo == ""){
+      continua = false;
+      $('#spanMotivo').removeClass("hide");
+      text = "Campo vacío";
+    }
+  });
+
+  $form.submit(function(e) {
+    //Agregamos los campos del formulario
+    var data = $form.serialize();
+    //Realizamos la petición
+    $.ajax({
+      url : {{ path('solicitudcomisionservicio_new') }},//$form.attr('action'),
+      type: $form.attr('method'),
+      data : data,
+      success: function(html) {
+
+        // Remplazamos la forma actual.
+        $('#comisionremuneradabundle_solicitudcomisionservicio').replaceWith(
+                // ... Con la respuesta ajax
+                $(html).find('#comisionremuneradabundle_solicitudcomisionservicio')
+        );
+        $('#notice').html('#notice');
+        /*$('#notice').replaceWith(
+         // ... Con la respuesta ajax
+         $(html).show('#notice')
+         );*/
+      }
+    });
+    e.preventDefault();
+  });#}
 </script>
 
 <!-- Add extra libraries and plugins here -->

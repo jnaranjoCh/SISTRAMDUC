@@ -41,7 +41,7 @@
                                         {% if tramite_comision.getTransicion().getFecha() == tramite_comision.getFechaRecibido() %}
                                             <td>---</td>
                                         {% else %}
-                                            <td>02-05-2017</td>
+                                            <td>{{ tramite_comision.getTransicion().getFecha()|date('d-m-Y') }}</td>
                                         {% endif %}
                                     {% endif %}
 

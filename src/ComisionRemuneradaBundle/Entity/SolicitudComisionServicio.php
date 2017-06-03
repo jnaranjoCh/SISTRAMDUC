@@ -28,14 +28,17 @@ class SolicitudComisionServicio extends Tramite
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $fecha_recibido;
+    protected $fecha_recibido;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $posible_respuesta;
 
     public function __construct(\DateTime $fecha = null)
     {
-        $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
-        , new recaudo("Copia de la Designación del cargos en la Administración")
-        ));
-        $this->fecha = $fecha;
+        $this->recaudos = new ArrayCollection();
+        $this->fecha_recibido = $fecha;
     }
 
     /**
@@ -49,7 +52,7 @@ class SolicitudComisionServicio extends Tramite
     }
 
     public function __toString() {
-        return sprintf($this->getId());
+        return sprintf($this->getId().'('.$this->getFechaRecibido().')');
     }
 
     public function getUsuarioId()
@@ -114,20 +117,30 @@ class SolicitudComisionServicio extends Tramite
     /**
      * Set fecha_recibido
      *
-     * @param datetime $fecha_recibido
+     * @param datetime $fecha
      */
-    public function setFechaRecibido($fecha_recibido)
+    public function setFechaRecibido($fecha)
     {
-        $this->fecha_recibido = $fecha_recibido;
+        $this->fecha_recibido = $fecha;
     }
 
     /**
-     * Get fecha_recibido
+     * Get fecha
      *
      * @return datetime
      */
     public function getFechaRecibido()
     {
         return $this->fecha_recibido;
+    }
+
+    public function getPosibleRespuesta()
+    {
+        return $this->posible_respuesta;
+    }
+
+    public function setPosibleRespuesta($posible_respuesta)
+    {
+        $this->posible_respuesta = $posible_respuesta;
     }
 }

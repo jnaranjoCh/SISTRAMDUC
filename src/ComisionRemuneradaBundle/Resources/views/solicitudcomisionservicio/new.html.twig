@@ -7,33 +7,183 @@
         </h1>
         <ol class="breadcrumb">
             <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
-            <li class="active">solicitar</li>
+            <li class="active">Realizar Solicitud</li>
         </ol>
     </section>
+    <br/>
+    <div class="modal fade" id="myModal3" role="dialog"  data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
 
-    <section class="content">
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Recaudos</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            {{ form_start(form) }}
-            <div class="box-body">
-                <div class="form-group">
-                    <label for="exampleInputFile">Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario</label>
-                    {{ form_widget(form) }}
-                    <p class="help-block">Example block-level help text here.</p>
+            <!-- Modal content-->
+            <div class="modal-content alert alert-warning" style="border-radius: 25px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Advertencia!</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-offset-2 col-md-3">
+                            <img src="{{ asset('assets/images/danger-34250_640.png') }}" class="img-rounded" alt="Cinque Terre" width="70%" height="70%" />
+                            <!--<img src="{{ asset('assets/images/danger-34250_640.png') }}"/>-->
+                        </div>
+                        <div class="col-xs-pul-1 col-md-6">
+                            <h3>Por favor verifique que los archivos esten correctos!</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-xs-1">
+                            <button id="continue" type="button" class="btn btn-default">Continuar</button>
+                        </div>
+                        <div class="col-xs-10">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <button name="submit" class="btn btn-primary">Subir</button>
-            </div>
-            {{ form_end(form) }}
+
         </div>
-        <!-- /.box -->
-    </section>
-    <!-- /.content -->
+    </div>
+    <!-- Modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div>
+                <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+                <br/>
+                <label id="modalLabel" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+            </div>
+        </div>
+    </div>
+
+    <form name="completeForm" id="completeForm" action="solicitud/guardar-archivos-datos" method="post" enctype="multipart/form-data" novalidate>
+        <div class="row">
+            <section class="content-body">
+                <!--seccion for generate box-->
+                <div class="col-md-offset-1 col-md-10">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <div class="row">
+                                <div class="col-md-offset-1 col-md-5">
+                                    <div class="form-group has-feedback">
+                                        <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Cédula del usuario">
+                                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group has-feedback">
+                                        <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Realizar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--seccion for generate boxes-->
+
+                <!--files box-->
+                <div id="formPersonal" class="col-md-offset-1 col-md-10 hidden">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Recaudos</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" id="miniPersonal" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="divOficioSolicitud" class="form-group has-feedback">
+                                        <label class="control-label">Seleccione el Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario</label>
+                                        <input id="OficioSolicitud" name="input1[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                                        <span id="spanOficioSolicitud" class="glyphicon form-control-feedback"></span>
+                                    </div>
+                                    <div id="divCartaDesignacion" class="form-group has-feedback">
+                                        <label class="control-label">Seleccione la Copia de la Designación del cargos en la Administración</label>
+                                        <input id="CartaDesignacion" name="input2[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                                        <span id="spanCartaDesignacion" class="glyphicon form-control-feedback"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!--personal and contact data box-->
+            </section>
+            <div id="save" class="col-md-offset-4 col-md-4 hidden">
+                <div class="form-group has-feedback">
+                    <input id="submitData" type="button" class="btn btn-primary btn-block btn-flat" value="Enviar Solicitud"/>
+                </div>
+            </div>
+        </div>
+        <!--User data body-->
+    </form>
+
+    {#<section class="content">
+        <div class="box box-warning">
+            <form name="completeForm" id="completeForm" action="newSave" method="post" enctype="multipart/form-data" novalidate>
+                <div class="box-header with-border">
+                    <h3 class="box-title">Recaudos</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="divCedulaRifActaCargaDatos" class="form-group has-feedback">
+                            <label class="control-label">Seleccione el Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario</label>
+                            <input id="CedulaRifActaCargaDatos" name="input1[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                            <span id="spanCedulaRifActaCargaDatos" class="glyphicon form-control-feedback"></span>
+
+                            <label class="control-label">Seleccione la Copia de la Designación del cargos en la Administración</label>
+                            <input id="CedulaRifActaCargaDatos" name="input2[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                            <span id="spanCedulaRifActaCargaDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="save" class="col-md-offset-4 col-md-4">
+                    <div class="form-group has-feedback">
+                        <input  type="submit" class="btn btn-primary btn-block btn-flat"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>#}
 {% endblock %}
+
+{% block custom_javascripts %}
+    {% include('ComisionRemuneradaBundle:solicitudcomisionservicio:generate.html.twig') %}
+    <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
+    {% include('ComisionRemuneradaBundle:solicitudcomisionservicio:saveSolicitud.html.twig') %}
+{% endblock %}
+
+    {#<script>
+        var $form = $('#new-form');
+
+        $form.submit(function(e) {
+            //Agregamos los campos del formulario
+            var data = $form.serialize();
+            //Realizamos la petición
+            $.ajax({
+                url : {{ path('solicitudcomisionservicio_new') }},//$form.attr('action'),
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+
+                    // Remplazamos la forma actual.
+                    $('#comisionremuneradabundle_solicitudcomisionservicio').replaceWith(
+                            // ... Con la respuesta ajax
+                            $(html).find('#comisionremuneradabundle_solicitudcomisionservicio')
+                    );
+                    $('#notice').html('#notice');
+                    /*$('#notice').replaceWith(
+                            // ... Con la respuesta ajax
+                            $(html).show('#notice')
+                    );*/
+                }
+            });
+            e.preventDefault();
+        });
+    </script>#}

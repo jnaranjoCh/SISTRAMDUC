@@ -1,0 +1,61 @@
+<script type="text/javascript">
+    var personalData;
+
+    $('#submitData').click(function(){
+        toastr.clear();
+        var inputsO = ["OficioSolicitud", "CartaDesignacion"];
+        var can_register = true;
+        var text = "";
+
+        //$("#modalLabel").html("Guardando archivos...");
+        for(var i = 0; i < inputsO.length; i++){
+
+            if(inputsO[i] == "OficioSolicitud" && ($("#OficioSolicitud").fileinput("getFilesCount") > 1 || $("#OficioSolicitud").fileinput("getFilesCount") < 1)){
+                can_register = false;
+                $("#span"+inputsO[i]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i]).addClass("has-error");
+                text = "Error debe ser un archivo obligatoriamente.";
+            }
+            if(inputsO[i] == "CartaDesignacion" && ($("#CartaDesignacion").fileinput("getFilesCount") > 1 || $("#CartaDesignacion").fileinput("getFilesCount") < 1)){
+                can_register = false;
+                $("#span"+inputsO[i]).addClass("glyphicon-remove");
+                $("#div"+inputsO[i]).addClass("has-error");
+                text = "Error debe ser un archivo obligatoriamente.";
+            }
+
+        }
+
+        personalData = $("#gemail").val();
+
+        if(!can_register)
+            toastr.error(text, "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+            });
+        else{
+            toastr.clear();
+            $("#myModal3").modal("show");
+        }
+    });
+
+    Array.prototype.unique=function(a){
+        return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
+    });
+
+    $("#continue").click(function(){
+        $("#myModal3").modal("hide");
+        $.ajax({
+            method: "POST",
+            data: {"personalData":personalData},
+            url:  "{{ path('solicitud_guardar_ajax') }}",
+            dataType: 'json',
+            beforeSend: function(){
+                $("#myModal2").modal("show");
+            },
+            success: function(data){
+                $("#modalLabel").html("Subiendo archivos del usuario...");
+                document.getElementById("completeForm").submit();
+            }
+        });
+    });
+</script>

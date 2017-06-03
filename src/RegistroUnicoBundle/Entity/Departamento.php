@@ -100,4 +100,9 @@ class Departamento
     {
         return $this->facultadId;
     }
+
+    public function __toString()
+    {
+        return sprintf($this->getId().' ('.$this->getDescription().')');
+    }
 }
