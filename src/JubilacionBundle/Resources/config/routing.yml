@@ -65,3 +65,7 @@ insertarConsejo:
     defaults: {_controller: JubilacionBundle::informeConsejo}
     requirements:
         _method: POST|GET
+
+tramites-atendidos-consejo:
+    path: /tramites-atendidos-consejo
+    defaults: {_controller: JubilacionBundle::tramitesAtendidosConsejo}

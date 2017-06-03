@@ -29,7 +29,8 @@
                     <br>
                     UNIVERSIDAD DE CARABOBO <br>
                     <div align="center">
-                        <img align="center" src="{{ asset('assets/images/UC.png') }}" width="90" height="110" alt="Logo UC"/> <br>
+                        <img src="https://raw.githubusercontent.com/CesarManriqueH/SISTRAMDUC/fadac8798b9392556ba6adabf251314883114cab/web/assets/images/UC.png" width="90" height="110" alt="Logo UC" />
+                        <br/>
                     </div>
                     CONSEJO UNIVERSITARIO
                 </h3>
@@ -183,7 +184,7 @@
                     $('#spanContenido').removeClass("hide");
                     text = "Campo vacío";
                 }
-
+                alert(window.location.href.split("=")[1][0]);
                 if(continua){
                     $.ajax({
                         method: "POST",
@@ -191,7 +192,7 @@
                             "Asunto": document.getElementById("asunto").value,
                             "Acta": document.getElementById("acta").value,
                             "Contenido": document.getElementById("contenido").value,
-                            "Tramite": document.getElementById("llenarPDF").value,
+                            "Tramite": window.location.href.split("=")[1][0],
                                 "TipoDocumento": 1},
                         url:  "{{ path('jubilacion-llenarPDF') }}",
                         dataType: 'json',
@@ -206,6 +207,8 @@
                                     "timeOut": "0",
                                     "extendedTImeout": "0"
                                 });
+
+                                alert(window.location = data["numDoc"]);
 
                                 window.location = '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"];
                                 //window.location = '/jubilacion/informe-jubilacion-pdf';

@@ -12,7 +12,7 @@
 {% block content %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <h1>Consejo de Facultad</h1>
+        <h1>Listado de Solicitudes atendidas por Consejo de Facultad</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
             <li class="active">Consejo de Facultad </li>
@@ -79,9 +79,6 @@
                                     </tr>
                                 {% endfor %}
                             </table>
-                            <a href="{{ asset('web/uploads/' ~ hola) }}">
-                                <button type="button" class="btn btn-default btn-block">Mostrar</button>
-                            </a>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -89,72 +86,43 @@
             </section>
         </div>
         <!-- /.box -->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" align="center"><b>Información del Solicitante</b></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th>
+                                    <h4>Solicitud Nº<b> 183</b></h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>
+                                    <h5><b>Nombres y Apellidos:</b>&nbsp;&nbsp;Carlos Enrique Campos Cobeña</h5>
+                                    <h5><b>Cédula de Identidad:</b>&nbsp;&nbsp;20.765.356</h5>
+                                    <h5><b>Nacionalidad:</b>&nbsp;&nbsp;Venezolano</h5>
+                                    <h5><b>Correo:</b>&nbsp;&nbsp;carloscampos@gmail.com</h5>
+                                    <h5><b>Tlf:</b>&nbsp;&nbsp;(0412)-451-2323</h5>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- /.content -->
 
-    <!-- Scripts -->
-    <script>
-        $("#enviarRespuesta").click(function (){
-
-            toastr.clear();
-            var text = "";
-
-            var motivo = $('#motivo').val();
-            var continua = true;
-
-            if (motivo == ""){
-                continua = false;
-                $('#spanMotivo').removeClass("hide");
-                text = "Campo vacío";
-            }
-
-            if(continua){
-                /*json*/
-                $.ajax({
-                    method: "POST",
-                    data: {"Solicitud": document.getElementById("numSolicitud").value,
-                        "Estatus": document.getElementById("estatus").value,
-                        "Motivo": document.getElementById("motivo").value},
-                    url:  "{{ path('jubilacion-insertar') }}",
-                    dataType: 'json',
-                    success: function(data)
-                    {
-                        if (data == "S"){
-
-                            $('#spanMotivo').addClass("hide");
-                            text = "Respuesta de solicitud enviada";
-
-                            toastr.success(text, "Exito", {
-                                "timeOut": "0",
-                                "extendedTImeout": "0"
-                            });
-                        }
-                        /*else{
-                         if (data == "N"){
-                         $('#spanMotivo').addClass("hide");
-                         text = "Usted no tiene permiso";
-                         }*/
-                        else{
-                            $('#spanMotivo').addClass("hide");
-                            text = "Error al enviar respuesta de solicitud";
-
-                            toastr.error(text, "Error", {
-                                "timeOut": "0",
-                                "extendedTImeout": "0"
-                            });
-                        }
-                    }
-                    // alert(JSON.stringify(data));
-                });
-                /*fin del json*/
-            }
-            else{
-                toastr.error(text, "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                });
-            }
-        });
-    </script>
-    <!-- /.Scripts -->
 {% endblock %}

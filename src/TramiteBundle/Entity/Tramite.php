@@ -183,7 +183,7 @@ class Tramite
 
     public function __toString()
     {
-        return sprintf($this->getUsuarioId().'('.$this->getTransicionConsejo().')'.'('.$this->getTransicion().')'.' ('.$this->getRecaudos().')');
+        return sprintf($this->getUsuarioId().'('.$this->getTransicionConsejo().')'.'('.$this->getTransicion().')'.' ('.$this->getRecaudos().')'.' ('.$this->getDocumento().')');
     }
     
     public function ownTransicion(Transicion $transicion)

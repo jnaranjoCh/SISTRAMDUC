@@ -17,4 +17,17 @@ class TransicionRepository extends EntityRepository
             ->getResult();
 
     }
+
+    public function getListadoAprobadosNegados()
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->select('t')
+            ->where('t.estado = :estado1 OR t.estado = :estado2')
+            ->setParameter('estado1', '2')
+            ->setParameter('estado2', '3');
+
+        return $qb->getQuery()
+            ->getResult();
+
+    }
 }

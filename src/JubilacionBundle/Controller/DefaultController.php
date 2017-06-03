@@ -123,20 +123,47 @@ class DefaultController extends Controller
     {
         $snappy = $this->get('knp_snappy.pdf');
 
-        $html = $this->renderView('JubilacionBundle::informeJubilacion-print.html.twig', array(
-            'documento' => $request->get("Documento")
-        ));
+        $em = $this->getDoctrine()->getManager();
+        //$DocumentoRepo = $em->getRepository(Documento::class);
+        $numDocumento = $em->getRepository(Documento::class)->findAll();
+        //$numDocumento = $DocumentoRepo->findOneBy(["id" => $request->get("Documento")]);
 
-        $filename = 'InformePDF-ComisionServicio';
+        $html = $this->renderView('JubilacionBundle::informeJubilacion-print.html.twig',
+            array(
+            'documento' => $numDocumento
+            ));
+
+        $filename = 'Informe-Jubilacion';
 
         return new Response(
-            $snappy->getOutputFromHtml($html),
+            $snappy->getOutputFromHtml($html,
+                [
+                    'page-width'=>1280,
+                    'margin-top'=>15,
+                    'margin-left'=>25,
+                    'margin-right'=>25,
+                ]),
             200,
             array(
                 'Content-Type'          => 'application/pdf',
                 'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
             )
         );
+
+        //$filename = 'Informe-Jubilacion';
+        /*$filename = $_SERVER['DOCUMENT_ROOT'].'/uploads/Informes-Jubilacion/'.$numDocumento[0].'/pdf/';
+         return new Response(
+             $this->get('knp_snappy.pdf')->generateFromHtml(
+                 $this->renderView(
+                     'JubilacionBundle::informeJubilacion-print.html.twig',
+                     array(
+                         'documento' => $numDocumento,
+                         'Content-Type'          => 'application/pdf',
+                         'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+                     )
+                 )
+             )
+         );*/
     }
 
     /**
@@ -221,11 +248,11 @@ class DefaultController extends Controller
             $em = $this->getDoctrine()->getManager();
            // $tramiteJubilacion = new TramiteJubilacion();
             $tramiteJubilacion =  $em->getRepository(TramiteJubilacion::class);
-            $numTramite = $tramiteJubilacion->findOneBy(["id" => '2']); //Probar el request metido entre las comillas. $request->get("Tramite")
+            $numTramite = $tramiteJubilacion->findOneBy(["id" => $request->get("Tramite")]); //Probar el request metido entre las comillas. $request->get("Tramite")
 
 
             $tipo_documento_repo = $em->getRepository(TipoDocumento::class);
-            $tipo_documento = $tipo_documento_repo->findOneBy(["id" => 2]);
+            $tipo_documento = $tipo_documento_repo->findOneBy(["id" => $request->get("TipoDocumento")]);
 
 
             $documento = new Documento();
@@ -312,6 +339,19 @@ class DefaultController extends Controller
     {
         return $this->render('JubilacionBundle::informeConsejo.html.twig',
             array('tramite' => $request->get("Solicitud")));
+    }
+
+    /**
+     * @Route("/jubilacion/tramites-atendidos-consejo", name="jubilacion-tramites-atendidos-consejo")
+     */
+    public function tramitesAtendidosConsejoAction()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $transicionRepository = $entityManager->getRepository('TramiteBundle:Transicion');
+        $tramites = $transicionRepository->getListadoAprobadosNegados();
+
+        return $this->render('JubilacionBundle::tramAtendidosConsejo.html.twig',
+            array('tramites' => $tramites));
     }
 
 }
