@@ -1,7 +1,7 @@
 <script type="text/javascript">
     var personalData;
 
-    $('#submitData').click(function(){
+    $('#submit').click(function(){
         toastr.clear();
         var inputsO = ["OficioSolicitud", "CartaDesignacion"];
         var can_register = true;
@@ -38,9 +38,7 @@
         }
     });
 
-    Array.prototype.unique=function(a){
-        return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
-    });
+
 
     $("#continue").click(function(){
         $("#myModal3").modal("hide");

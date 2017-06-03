@@ -29,10 +29,10 @@ class SolicitudComisionServicioController extends Controller
     /**
      * Creates a new solicitudComisionServicio entity.
      *
-     * @Route("/new", name="solicitudcomisionservicio_new")
+     * @Route("/new/{apr}", name="solicitudcomisionservicio_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction()
+    public function newAction($apr = "initial")
     {
         return $this->render('ComisionRemuneradaBundle:SolicitudComisionServicio:new.html.twig');
     }

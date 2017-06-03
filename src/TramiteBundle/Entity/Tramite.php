@@ -71,13 +71,6 @@ class Tramite
      */
     protected $documento_id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="TransicionConsejo", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    protected  $transicionConsejo;
-    
-    
-
     public function getId()
     {
         return $this->id;
@@ -200,19 +193,8 @@ class Tramite
         return $this;
     }
 
-    public function getTransicionConsejo()
-    {
-        return $this->transicionConsejo;
-    }
-
-    public function ownTransicionConsejo(TransicionConsejo $transicionConsejo)
-    {
-        $this->transicionConsejo = $transicionConsejo;
-        return $this;
-    }
-
     public function __toString()
     {
-        return sprintf($this->getUsuarioId().'('.$this->getTransicionConsejo().')'.'('.$this->getTransicion().')');
+        return sprintf($this->getUsuarioId().'('.$this->getTransicion().')'.'('.$this->getRecaudos().')'.'('.$this->getDocumento().')');
     }
 }

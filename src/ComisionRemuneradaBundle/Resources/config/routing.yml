@@ -3,7 +3,7 @@ comision-servicio-informacion:
     defaults: {_controller: ComisionRemuneradaBundle:Default:comisionServicioInfo}
 
 solicitudcomisionservicio:
-    path: /solicitudcomisionservicio_new
+    path: /solicitudcomisionservicio_new/{apr}
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
     requirements:
             _method:  POST
@@ -67,39 +67,3 @@ solicitud_guardararchivos_ajax:
     defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarArchivosAjax }
     requirements:
         _method:  POST
-
-#realizar_solicitud_index:
- #   path:     /comision-de-servicio/realizar/solicitud/{apr}
-  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:realizarSolicitudProfesor }
-
-#solicitud_obtener_ajax:
- #   path:     /comision-de-servicio/solicitud/obtener-datos
-  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:enviarDataAjax }
-   # requirements:
-    #    _method:  POST
-
-#solicitud_obteneremails_ajax:
- #   path:     /comision-de-servicio/solicitud/enviar-emails
-  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:enviarEmailsAjax }
-   # requirements:
-    #    _method:  POST
-
-#solicitud_buscaremail_ajax:
- #   path:     /comision-de-servicio/solicitud/buscar-email
-  #  defaults: { _controller: ComisionRemuneradaBundle:Solicitud:buscarEmailAjax }
-   # requirements:
-    #    _method:  POST
-#solicitud_serv_remun:
- #   path: /solicitud_serv_remun
-  #  defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}
-
-
-#envio_solicitud:
- #   path: /envio_solicitud
-  #  defaults: {_controller: ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun}
-
-#descarga_archivo_ajax:
-    #path:     /solicitud_serv_remun/envio-solicitud
-    #defaults: { _controller: ComisionRemuneradaBundle:Default:descargaArchivo }
-    #requirements:
-        #_method:  POST
