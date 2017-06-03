@@ -505,7 +505,7 @@ $('#agregarHijo').click(function(){
          tableHijos.column(2)
               .data()
               .each( function ( value,index ) {
-                    if(value == $("#CedulaHijoDatos").val()){ 
+                    if(value == $("#CedulaHijoDatos").val() && $("#CedulaHijoDatos").val() != 0){ 
                         band = true;
                         toastr.error("Error el hijo ya se encuentra registrado.", "Error", {
                             "timeOut": "0",
@@ -515,19 +515,33 @@ $('#agregarHijo').click(function(){
                });
     }
    
-   if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#CedulaHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
-       tableHijos.row.add( {
-            "CI Madre":$("#CedulaMadreHijoDatos").val(),
-            "CI Padre":$("#CedulaPadreHijoDatos").val(),
-            "CI Hijo":$("#CedulaHijoDatos").val(),
-            "1er Nombre":$("#PrimerNombreHijoDatos").val(),
-            "2do Nombre":$("#SegundoNombreHijoDatos").val(),
-            "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
-            "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
-            "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
-            "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
-            "Nacionalidad":$("#NacionalidadHijoDatos").val()
-        } ).draw();
+   if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
+        if($("#CedulaHijoDatos").val() != "")
+           tableHijos.row.add( {
+                "CI Madre":$("#CedulaMadreHijoDatos").val(),
+                "CI Padre":$("#CedulaPadreHijoDatos").val(),
+                "CI Hijo":$("#CedulaHijoDatos").val(),
+                "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+                "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+                "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+                "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+                "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+                "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
+                "Nacionalidad":$("#NacionalidadHijoDatos").val()
+            } ).draw();
+        else
+            tableHijos.row.add( {
+                "CI Madre":$("#CedulaMadreHijoDatos").val(),
+                "CI Padre":$("#CedulaPadreHijoDatos").val(),
+                "CI Hijo":0,
+                "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+                "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+                "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+                "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+                "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+                "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
+                "Nacionalidad":$("#NacionalidadHijoDatos").val()
+            } ).draw();
         hijo.ciMadre = $("#CedulaMadreHijoDatos").val();
         hijo.ciPadre = $("#CedulaPadreHijoDatos").val();
         hijo.ciHijo = $("#CedulaHijoDatos").val();

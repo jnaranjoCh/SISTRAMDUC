@@ -193,6 +193,7 @@ class ConsultarDatosController extends Controller
     
     public function enviarDatosPersonalesHijosPathAjaxAction(Request $request)
     {
+        $data = new stdClass;
         $entity = $this->getOneEmail("AppBundle:","Usuario",$request->get("email"));
         $files = $this->getDoctrine()
                       ->getManager()
@@ -203,9 +204,20 @@ class ConsultarDatosController extends Controller
                       ->setParameter('id',$entity->getId())
                       ->setParameter('tabla','Hijo')
                       ->getResult();
-        if(!$files)
+        /*$data->Files = $files;
+        $hijos = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT h
+                                     FROM ClausulasContractualesBundle:Hijo h')
+                      ->getResult();
+        $data->Hijos = $hijos;*/
+        if(/*!$data->Hijos && !$data->Files*/!$files)
+        {
+            /*$data->Hijos = null;
+            $data->Files = null;*/
             $files = null;
-        return new JsonResponse($files);
+        }
+        return new JsonResponse(/*$data*/$files);
     }
     
     public function enviarDatosPersonalesHijosAjaxAction(Request $request)
