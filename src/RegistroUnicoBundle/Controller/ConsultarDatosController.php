@@ -2,6 +2,7 @@
 
 namespace RegistroUnicoBundle\Controller;
 
+use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,7 +32,7 @@ class ConsultarDatosController extends Controller
                       ->getManager()
                       ->createQuery('SELECT u,r FROM AppBundle:Usuario u JOIN u.registros r WHERE u.correo = :email')
                       ->setParameter('email',$request->get('email'))
-                      ->getResult()[0]->getRegistros();
+                      ->getResult()[0]->getRegistros($request->get('assets'));
                       
         $htmlTipoRegistro = "";
         $htmlNivel = "";
@@ -116,7 +117,7 @@ class ConsultarDatosController extends Controller
                       ->getResult();
         
         if($data != null)        
-            $data = $data[0]->getRegistrosParticipantes();
+            $data = $data[0]->getRegistrosParticipantes($request->get('assets'));
         else 
         {
             $data = new stdClass;
@@ -145,7 +146,7 @@ class ConsultarDatosController extends Controller
                       ->getResult();
         
         if($data != null)              
-            $data = $data[0]->getRegistrosRevistas();
+            $data = $data[0]->getRegistrosRevistas($request->get('assets'));
         else 
         {
             $data = new stdClass;
@@ -248,8 +249,12 @@ class ConsultarDatosController extends Controller
         $data[] = [];
         if($hijos)
         {
+            
             foreach($hijos as $hijo){
-                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+                if($request->get('assets') == "assets")
+                    $data[$i]['Delete'] = "<img src='/assets/images/delete.png' width='30px' heigth='30px'/>";
+                else
+                    $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
                 $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
                 $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
                 $data[$i]['CIHijo'] = '<input id="CIHijo'.$i.'" value="'.$hijo['cedulaHijo'].'" type="number" class="form-control" placeholder="Cedula Hijo">';
@@ -332,7 +337,10 @@ class ConsultarDatosController extends Controller
                     }
                 }
                 $htmlCargos =  $htmlCargos."</select>";
-                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+                if($request->get('assets') == "assets")
+                    $data[$i]['Delete'] = "<img src='/assets/images/delete.png' width='30px' heigth='30px'/>";
+                else
+                    $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
                 $data[$i]['Cargo'] = $htmlCargos; 
                 $data[$i]['FechaDeInicioEnElCargo'] = "<div class='row'>
                                                           <div class='col-xs-12'>

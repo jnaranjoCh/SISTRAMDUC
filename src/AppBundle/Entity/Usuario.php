@@ -624,14 +624,17 @@ class Usuario implements UserInterface
         return $this->direccion;
     }
 
-	public function getRegistros()
+	public function getRegistros($assets)
     { 
         $registros = new stdClass;
         
         $i = 0;
         $data[] = [];
         foreach($this->registros->toArray() as $registro){
-            $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+            if($assets == "assets")
+                $data[$i]['Delete'] = "<img src='/assets/images/delete.png' width='30px' heigth='30px'/>";
+            else
+                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
             $data[$i]['Id'] = $registro->getId();
             $data[$i]['TipoDeReferencia'] = $registro->getTipo()->getDescription();
             $data[$i]['Descripcion'] = '<input id="Descripcion'.$i.'" value="'.$registro->getDescription().'" type="text" class="form-control" placeholder="Descripción">';
@@ -651,7 +654,7 @@ class Usuario implements UserInterface
         return $registros;
     }
 
-	public function getRegistrosParticipantes()
+	public function getRegistrosParticipantes($assets)
     { 
         $registros = new stdClass;
         
@@ -670,7 +673,10 @@ class Usuario implements UserInterface
             $aux = $registro->getParticipantes($htmlIdRegistrosAux);
             for($j = 0; $j < $aux->num; $j++)
             {
-                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+                if($assets == "assets")
+                    $data[$i]['Delete'] = "<img src='/assets/images/delete.png' width='30px' heigth='30px'/>";
+                else
+                    $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
                 $data[$i]['IdDelRegistro'] = $aux->data[$j]['IdDelRegistro'];
                 $data[$i]['Nombre'] = $aux->data[$j]['Nombre'];
                 $data[$i]['Cedula'] = $aux->data[$j]['Cedula'];
@@ -683,7 +689,7 @@ class Usuario implements UserInterface
         return $registros;
     }
     
-    public function getRegistrosRevistas()
+    public function getRegistrosRevistas($assets)
     { 
         $registros = new stdClass;
         
@@ -702,7 +708,10 @@ class Usuario implements UserInterface
             $aux = $registro->getRevistas($htmlIdRegistrosAux);
             for($j = 0; $j < $aux->num; $j++)
             {
-                $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
+                if($assets == "assets")
+                    $data[$i]['Delete'] = "<img src='/assets/images/delete.png' width='30px' heigth='30px'/>";
+                else
+                    $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
                 $data[$i]['IdDelRegistro'] = $aux->data[$j]['IdDelRegistro'];
                 $data[$i]['Revista'] = $aux->data[$j]['Revista'];
                 $i++;
