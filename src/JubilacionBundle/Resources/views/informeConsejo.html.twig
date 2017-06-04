@@ -191,13 +191,13 @@
                             "Asunto": document.getElementById("asunto").value,
                             "Acta": document.getElementById("acta").value,
                             "Contenido": document.getElementById("contenido").value,
-                            "Tramite": document.getElementById("llenarPDF").value,
+                            "Tramite": window.location.href.split("=")[1][0],
                             "TipoDocumento": 2},
                         url:  "{{ path('jubilacion-llenarPDF') }}",
                         dataType: 'json',
                         success: function(data)
                         {
-                            if (data == "S"){
+                            if (data["alerta"] == "S"){
 
                                 $('#spanNumero').addClass("hide");
                                 text = "Informe generado con Exito";
@@ -207,7 +207,7 @@
                                     "extendedTImeout": "0"
                                 });
 
-                                window.location = '/jubilacion/informe-jubilacion-pdf';
+                                window.location = '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"];
                                 //window.location = '/jubilacion/informe-jubilacion-pdf?Tramite=' + 7;
                             }
                             else{
