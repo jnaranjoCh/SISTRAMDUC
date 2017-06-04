@@ -1,4 +1,3 @@
-<script type="text/javascript">
 var refreshIntervalId;
 var tableRegistros;
 var tableParticipantes;
@@ -18,7 +17,7 @@ $('#generate').click(function(){
     $.ajax({
         method: "POST",
         data: {"Email":$('#gemail').val()},
-        url:   "{{ path('registro_consultarbuscaremail_ajax') }}",
+        url:   routeRegistroUnico['registro_consultarbuscaremail_ajax'],
         dataType: 'json',
         success: function(data){
             if(data){
@@ -86,7 +85,7 @@ function initTableConsultar(){
         $.ajax({
             method: "POST",
             data: {"email":$('#gemail').val()},
-            url:   "{{ path('registro_consultardocumentshijos_ajax') }}",
+            url:   routeRegistroUnico['registro_consultardocumentshijos_ajax'],
             dataType: 'json',
             success: function(data){
                 if(data.length > 0)
@@ -131,14 +130,14 @@ function initTableConsultar(){
         
         tableHijos = $('#tableHijos').DataTable({
                     "ajax":{
-                       "url": "{{ path('registro_consultarhijos_ajax') }}",
+                       "url": routeRegistroUnico['registro_consultarhijos_ajax'],
                        "type": 'POST',
                        "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
                     },
                     "pagingType": "full_numbers",
                     "bDestroy": true,
             	    "language": {
-                        	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                        	"url": tableLenguage['datatable-spanish']
                     },
                     columns: [
                         {"data":"Delete"},
@@ -158,7 +157,7 @@ function initTableConsultar(){
         $.ajax({
             method: "POST",
             data: {"email":$('#gemail').val()},
-            url:   "{{ path('registro_consultardatospersonales_ajax') }}",
+            url:  routeRegistroUnico['registro_consultardatospersonales_ajax'],
             dataType: 'json',
             success: function(data){
                 var paths = [];
@@ -177,7 +176,6 @@ function initTableConsultar(){
                 $("#FechaVencimientoCedulaDatos").val(DateFormat(data.Files[2].fecha_vencimiento.date));
                 $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
                 $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
-                alert($("#url").val().split('/')[1]);
                 if($("#url").val().split('/')[1] == "assets")
                 {
                     paths[0] = data.Files[2].path.split("../web")[1];
@@ -209,14 +207,14 @@ function initTableConsultar(){
         
         tableCargo = $('#tableCargo').DataTable({
                                 "ajax":{
-                                   "url": "{{ path('registro_consultarcargos_ajax') }}",
+                                   "url": routeRegistroUnico['registro_consultarcargos_ajax'],
                                    "type": 'POST',
                                    "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
                         	    "language": {
-                                    	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                    	"url": tableLenguage['datatable-spanish']
                                 },
                                 columns: [
                                     { "data": "Delete"},
@@ -227,14 +225,14 @@ function initTableConsultar(){
         
         tableRegistros = $('#tableRegistros').DataTable({
                     	    "ajax":{
-                               "url": "{{ path('registro_consultarregistros_ajax') }}",
+                               "url": routeRegistroUnico['registro_consultarregistros_ajax'],
                                "type": 'POST',
                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
                     	    "language": {
-                                	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                	"url": tableLenguage['datatable-spanish']
                             },
                             columns: [
                                {"data": "Delete"},
@@ -250,14 +248,14 @@ function initTableConsultar(){
         
         tableParticipantes = $('#tableParticipantes').DataTable({
                         	    "ajax":{
-                                   "url": "{{ path('registro_consultarparticipantes_ajax') }}",
+                                   "url": routeRegistroUnico['registro_consultarparticipantes_ajax'],
                                    "type": 'POST',
                                    "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
                         	    "language": {
-                                    	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                    	"url": tableLenguage['datatable-spanish']
                                 },
                                 columns: [
                                     {"data": "Delete"},
@@ -269,14 +267,14 @@ function initTableConsultar(){
                           
         tableRevista = $('#tableRevista').DataTable({
                         	    "ajax":{
-                                   "url": "{{ path('registro_consultarrevistas_ajax') }}",
+                                   "url": routeRegistroUnico['registro_consultarrevistas_ajax'],
                                    "type": 'POST',
                                    "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
                         	    "language": {
-                                    	"url": "{{ asset('assets/js/datatable-spanish.json') }}"
+                                    	"url": tableLenguage['datatable-spanish']
                                 },
                                 columns: [
                                     {"data": "Delete"},
@@ -300,4 +298,3 @@ function DateFormat(date)
     ddmmyy = date.replace("-","/").replace("-","/").replace(":00.000000","").split(" ")[0].split("/");
     return ddmmyy[2]+"/"+ddmmyy[1]+"/"+ddmmyy[0]+" "+hrs;
 }
-</script>
