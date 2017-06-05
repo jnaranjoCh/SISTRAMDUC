@@ -2,15 +2,9 @@ comision-servicio-informacion:
     path: /comision-servicio/informacion
     defaults: {_controller: ComisionRemuneradaBundle:Default:comisionServicioInfo}
 
-solicitudcomisionservicio:
+solicitudcomisionservicio_new:
     path: /solicitudcomisionservicio_new/{apr}
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
-    requirements:
-            _method:  POST
-
-solicitudcomisionservicio:
-    path: /solicitudcomisionservicio_newsave
-    defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:newSave}
     requirements:
             _method:  POST
 
@@ -65,5 +59,3 @@ solicitud_guardar_ajax:
 solicitud_guardararchivos_ajax:
     path:     /solicitud/guardar-archivos-datos
     defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarArchivosAjax }
-    requirements:
-        _method:  POST
