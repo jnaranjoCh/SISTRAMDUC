@@ -1,9 +1,9 @@
 <script type="text/javascript">
     var personalData;
 
-    $('#submitData').click(function(){
-        toastr.clear();
-        var inputsO = ["OficioSolicitud", "CartaDesignacion"];
+    $('#submit').click(function(){
+        $("#completeForm").submit();
+        /*ar inputsO = ["OficioSolicitud", "CartaDesignacion"];
         var can_register = true;
         var text = "";
 
@@ -35,27 +35,25 @@
         else{
             toastr.clear();
             $("#myModal3").modal("show");
-        }
+        }*/
     });
 
-    Array.prototype.unique=function(a){
-        return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
-    });
-
-    $("#continue").click(function(){
+    /*$("#continue").click(function(){
         $("#myModal3").modal("hide");
         $.ajax({
             method: "POST",
             data: {"personalData":personalData},
-            url:  "{{ path('solicitud_guardar_ajax') }}",
+            url:  "
             dataType: 'json',
             beforeSend: function(){
                 $("#myModal2").modal("show");
             },
             success: function(data){
+                //alert("Solicitar: " + personalData);
                 $("#modalLabel").html("Subiendo archivos del usuario...");
                 document.getElementById("completeForm").submit();
+
             }
         });
-    });
+    });*/
 </script>

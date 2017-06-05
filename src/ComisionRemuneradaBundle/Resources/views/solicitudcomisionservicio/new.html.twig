@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <form name="completeForm" id="completeForm" action="solicitud/guardar-archivos-datos" method="post" enctype="multipart/form-data" novalidate>
+    <form name="completeForm" id="completeForm" action="{{ path("solicitud_guardararchivos_ajax") }}" method="post" enctype="multipart/form-data" novalidate>
         <div class="row">
             <section class="content-body">
                 <!--seccion for generate box-->
@@ -99,7 +99,7 @@
                                 <div class="col-md-12">
                                     <div id="divOficioSolicitud" class="form-group has-feedback">
                                         <label class="control-label">Seleccione el Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario</label>
-                                        <input id="OficioSolicitud" name="input1[]" accept="application/pdf"  type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                                        <input id="OficioSolicitud" name="input3[]" accept="application/pdf" type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
                                         <span id="spanOficioSolicitud" class="glyphicon form-control-feedback"></span>
                                     </div>
                                     <div id="divCartaDesignacion" class="form-group has-feedback">
@@ -117,7 +117,7 @@
             </section>
             <div id="save" class="col-md-offset-4 col-md-4 hidden">
                 <div class="form-group has-feedback">
-                    <input id="submitData" type="button" class="btn btn-primary btn-block btn-flat" value="Enviar Solicitud"/>
+                    <input type="submit" class="btn btn-primary btn-block btn-flat" value="Enviar Solicitud"/>
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@
 {% block custom_javascripts %}
     {% include('ComisionRemuneradaBundle:solicitudcomisionservicio:generate.html.twig') %}
     <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/inputFile.js') }}"></script>
-    {% include('ComisionRemuneradaBundle:solicitudcomisionservicio:saveSolicitud.html.twig') %}
+   {# {% include('ComisionRemuneradaBundle:solicitudcomisionservicio:saveSolicitud.html.twig') %}#}
 {% endblock %}
 
     {#<script>

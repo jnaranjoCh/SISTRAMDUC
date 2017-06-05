@@ -29,10 +29,10 @@ class SolicitudComisionServicioController extends Controller
     /**
      * Creates a new solicitudComisionServicio entity.
      *
-     * @Route("/new", name="solicitudcomisionservicio_new")
+     * @Route("/new/{apr}", name="solicitudcomisionservicio_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction()
+    public function newAction($apr = "initial")
     {
         return $this->render('ComisionRemuneradaBundle:SolicitudComisionServicio:new.html.twig');
     }
@@ -53,11 +53,11 @@ class SolicitudComisionServicioController extends Controller
 
     /**
      * @Route("/solicitud/guardar-archivos-datos", name="solicitud_guardararchivos_ajax")
-     * @Method("POST")
+     * @Method({"GET", "POST"})
      */
     public function guardarArchivosAjaxAction(Request $request)
     {
-        //return new Response();
+        //Return new response($_FILES['input3']['name'][0]);
         $band1=0;
         $band2=0;
         $em = $this->getDoctrine()->getManager();
@@ -89,32 +89,32 @@ class SolicitudComisionServicioController extends Controller
         $solicitudComisionServicio
             ->setFechaRecibido(new \DateTime("now")); // Se asigna la fecha del sistema a la solicitud
 
-        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/oficioSolicitud/users/';
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/oficioSolicitud/';
         $fichero_subido = $dir_subida."oficioSolicitud_".$user->getId().".pdf";
 
         $newRecaudo = new Recaudo();
-        $newRecaudo->setPath($fichero_subido);
+        $newRecaudo->setPath($dir_subida);
         $newRecaudo->setName("oficioSolicitud_".$user->getId().".pdf");
         $newRecaudo->setUsuario($user);
         $newRecaudo->setTipoRecaudo($tipo_recaudo1);
         $em->persist($newRecaudo);
 
         $solicitudComisionServicio->addRecaudo($newRecaudo);
-        if (move_uploaded_file($_FILES['input1']['name'][0], $fichero_subido))        
+        if (move_uploaded_file($_FILES['input3']['tmp_name'][0], $dir_subida))
             $band1 = 1;
 
-        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cartaDesignacion/users/';
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cartaDesignacion/';
         $fichero_subido = $dir_subida."cartaDesignacion_".$user->getId().".pdf";
 
         $newRecaudo = new Recaudo();
-        $newRecaudo->setPath($fichero_subido);
+        $newRecaudo->setPath($dir_subida);
         $newRecaudo->setName("cartaDesignacion_".$user->getId().".pdf");
         $newRecaudo->setUsuario($user);
         $newRecaudo->setTipoRecaudo($tipo_recaudo2);
         $em->persist($newRecaudo);
 
         $solicitudComisionServicio->addRecaudo($newRecaudo);
-        if (move_uploaded_file($_FILES['input2']['name'][0], $fichero_subido))
+        if (move_uploaded_file($_FILES['input2']['tmp_name'][0], $dir_subida))
             $band2 = 1;
         
         $transicion
@@ -132,9 +132,9 @@ class SolicitudComisionServicioController extends Controller
         $em->flush();
         
         if($band1 == 1 and $band2 == 1) {
-            return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'success')));
+            return new RedirectResponse($this->generateUrl('solicitudcomisionservicio_new',array('apr' => 'success')));
         }else{
-            return new RedirectResponse($this->generateUrl('registro_datos_index',array('apr' => 'error')));
+            return new RedirectResponse($this->generateUrl('solicitudcomisionservicio_new',array('apr' => 'error')));
         }
     }    
 
@@ -190,103 +190,5 @@ class SolicitudComisionServicioController extends Controller
         }
         else
             throw $this->createNotFoundException('Error al solicitar datos');
-    }
-    
-    /**
-     * Lists all solicitudComisionServicio entities.
-     *
-     * @Route("/", name="solicitudcomisionservicio_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        return $this->redirectToRoute('solicitudcomisionservicio_new');
-    }
-
-    /**
-     * Creates a new solicitudComisionServicio entity.
-     *
-     * @Route("/newSave", name="solicitudcomisionservicio_newsave")
-     * @Method({"GET", "POST"})
-     */
-    public function newSaveAction(Request $request)
-    {
-        return new Response($_FILES['input1']['name'][0]);
-    }
-    /**
-     * Finds and displays a solicitudComisionServicio entity.
-     *
-     * @Route("/{id}", name="solicitudcomisionservicio_show")
-     * @Method("GET")
-     */
-    public function showAction(SolicitudComisionServicio $solicitudComisionServicio)
-    {
-        $deleteForm = $this->createDeleteForm($solicitudComisionServicio);
-
-        return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:show.html.twig', array(
-            'solicitudComisionServicio' => $solicitudComisionServicio,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing solicitudComisionServicio entity.
-     *
-     * @Route("/{id}/edit", name="solicitudcomisionservicio_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, SolicitudComisionServicio $solicitudComisionServicio)
-    {
-        $deleteForm = $this->createDeleteForm($solicitudComisionServicio);
-        $editForm = $this->createForm('ComisionRemuneradaBundle\Form\SolicitudComisionServicioType', $solicitudComisionServicio);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('solicitudcomisionservicio_edit', array('id' => $solicitudComisionServicio->getId()));
-        }
-
-        return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:edit.html.twig', array(
-            'solicitudComisionServicio' => $solicitudComisionServicio,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a solicitudComisionServicio entity.
-     *
-     * @Route("/{id}", name="solicitudcomisionservicio_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, SolicitudComisionServicio $solicitudComisionServicio)
-    {
-        $form = $this->createDeleteForm($solicitudComisionServicio);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($solicitudComisionServicio);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('solicitudcomisionservicio_index');
-    }
-
-    /**
-     * Creates a form to delete a solicitudComisionServicio entity.
-     *
-     * @param SolicitudComisionServicio $solicitudComisionServicio The solicitudComisionServicio entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(SolicitudComisionServicio $solicitudComisionServicio)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('solicitudcomisionservicio_delete', array('id' => $solicitudComisionServicio->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

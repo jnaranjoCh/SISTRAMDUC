@@ -71,7 +71,7 @@ class Tramite
      */
     protected $documento_id;
 
-
+    
     public function getId()
     {
         return $this->id;
