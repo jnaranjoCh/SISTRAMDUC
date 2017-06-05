@@ -354,4 +354,19 @@ class DefaultController extends Controller
             array('tramites' => $tramites));
     }
 
+    /**
+     * @Route("/jubilacion/cargar-informe-consejo", name="jubilacion-cargar-informe-consejo")
+     */
+    public function cargarInformeConsejoAction()
+    {
+        return $this->render('JubilacionBundle::cargarInformeConsejo.html.twig');
+    }
+
+    /**
+     * @Route("/jubilacion/cargar-informe-direccion", name="jubilacion-cargar-informe-direccion")
+     */
+    public function cargarInformeDireccionAction()
+    {
+        return $this->render('JubilacionBundle::cargarInformeDireccion.html.twig');
+    }
 }

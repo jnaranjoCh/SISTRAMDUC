@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block opcionsidebar %}
+    <li data-route="jubilacion-informacion">
+        <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+    </li>
+    <li data-route="jubilacion-solicitud">
+        <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+    </li>>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <h1>Carga de Informe para Efecto de Jubilación</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
+            <li class="active">Consejo de Facultad </li>
+            <li class="active">Cargar Informe </li>
+        </ol>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+
+        <!-- row -->
+        <br/>
+        <div class="col-xs-8">
+            <div class="alert alert-warning alert-dismissible">
+                <h4><i class="icon fa fa-warning"></i> Importante!</h4>
+                Para continuar con el proceso y dar cierre a la solicitud atendida cargue el informe generado.
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+{% endblock %}
