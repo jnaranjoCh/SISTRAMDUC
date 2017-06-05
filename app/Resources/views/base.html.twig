@@ -283,27 +283,41 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="comision-servicio-informacion">
-              <a href="{{ path('comision-servicio-informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
-            </li>
-            <li data-route="solicitudcomisionservicio_new" id="solicitarComision">
-              <a href="{{ path('solicitudcomisionservicio_new', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
-            </li>
-            <li data-route="estado-solicitud">
-              <a href="{{ path('estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
-            </li>
-            <li data-route="comision_servicio_solicitudes">
-              <a href="{{ path('comision_servicio_solicitudes') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesConsejo</a>
-            </li>
-            <li data-route="comision_servicio_solicitudes_catedra">
-              <a href="{{ path('comision_servicio_solicitudes_catedra') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesCatedra</a>
-            </li>
-            <li data-route="comision_servicio_solicitudes_facultad">
-              <a href="{{ path('comision_servicio_solicitudes_facultad') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesFacultad</a>
-            </li>
-            <li data-route="comision_servicio_solicitudes_aapp">
-              <a href="{{ path('comision_servicio_solicitudes_aapp') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesAAPP</a>
-            </li>
+            {% if userHasPermission("comisión de servicio - ver información") %}
+              <li data-route="comision-servicio-informacion">
+                <a href="{{ path('comision-servicio-informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - consultar") %}
+              <li data-route="solicitudcomisionservicio_new" id="solicitarComision">
+                <a href="{{ path('solicitudcomisionservicio_new', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - estado de solicitud") %}
+              <li data-route="estado-solicitud">
+                <a href="{{ path('estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - departamento - ver solicitud") %}
+              <li data-route="comision_servicio_solicitudes">
+                <a href="{{ path('comision_servicio_solicitudes') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesConsejo</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - catedra - ver solicitud") %}
+              <li data-route="comision_servicio_solicitudes_catedra">
+                <a href="{{ path('comision_servicio_solicitudes_catedra') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesCatedra</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - facultad - ver solicitud") %}
+              <li data-route="comision_servicio_solicitudes_facultad">
+                <a href="{{ path('comision_servicio_solicitudes_facultad') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesFacultad</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - ver solicitudes AAPP") %}
+              <li data-route="comision_servicio_solicitudes_aapp">
+                <a href="{{ path('comision_servicio_solicitudes_aapp') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesAAPP</a>
+              </li>
+            {% endif %}
             </li>
           </ul>
         </li>
@@ -429,7 +443,7 @@
                   <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
                 </li>
               </ul>
-            </li>   
+            </li>
 
             <li class="treeview">
               <a href="#">
@@ -446,8 +460,8 @@
                   <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
                 </li>
               </ul>
-            </li>       
-            
+            </li>
+
           </ul>
         </li>
       </ul>
@@ -614,4 +628,3 @@
 
 <!-- Add your own code here -->
 {% block custom_javascripts %}{% endblock %}
-

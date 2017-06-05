@@ -39,13 +39,13 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $tony->setActivo(true);
         $tony->setIsRegister(true);
         $tony->setDireccion('Malibu');
-        //$tony->setEstatusId(1);
 
         $encoder = $this->container->get('security.password_encoder');
         $password = $encoder->encodePassword($tony, '1234');
         $tony->setPassword($password);
 
         $tony->addRol($this->getReference('administrador-rol'));
+        $tony->addRol($this->getReference('profesor-rol'));
 
         $manager->persist($tony);
         $manager->flush();

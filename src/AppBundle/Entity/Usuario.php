@@ -66,7 +66,7 @@ class Usuario implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isRegister;
-    
+
     /**
      * @ORM\Column(type="string")
      */
@@ -119,7 +119,7 @@ class Usuario implements UserInterface
     private $activo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Rol")
+     * @ORM\ManyToMany(targetEntity="Rol", fetch="EAGER")
      * @ORM\JoinTable(name="usuario_rol",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
@@ -188,7 +188,7 @@ class Usuario implements UserInterface
         $this->tramite = new ArrayCollection();
         $this->hijos = new ArrayCollection();
     }
-    
+
     public function getUsuarioFechaCargos()
     {
         return $this->UsuarioFechaCargos->toArray();
@@ -203,7 +203,7 @@ class Usuario implements UserInterface
 
         return $this;
     }
-    
+
     /**
      * Get id
      *
@@ -575,7 +575,7 @@ class Usuario implements UserInterface
     {
         return $this->activo;
     }
-    
+
     /**
      * Set activo
      *
@@ -625,9 +625,9 @@ class Usuario implements UserInterface
     }
 
 	public function getRegistros($assets)
-    { 
+    {
         $registros = new stdClass;
-        
+
         $i = 0;
         $data[] = [];
         foreach($this->registros->toArray() as $registro){
@@ -647,27 +647,27 @@ class Usuario implements UserInterface
                 $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Empresa y/o institución">';
             $i++;
         }
-        
+
         $registros->data = $data;
         $registros->num = $i;
-        
+
         return $registros;
     }
 
 	public function getRegistrosParticipantes($assets)
-    { 
+    {
         $registros = new stdClass;
-        
+
         $i = 0;
         $data[] = [];
         $aux[] = [];
-        
+
         $htmlIdRegistros = '<select id="IdDelRegistro'.$i.'" class="form-control select2" style="width: 240px;">';
         foreach($this->registros->toArray() as $registro){
             $htmlIdRegistros = $htmlIdRegistros."<option value='".$registro->getId()."'>".$registro->getId()."</option>";
         }
         $htmlIdRegistros = $htmlIdRegistros."</select>";
-        
+
         foreach($this->registros->toArray() as $registro){
             $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
             $aux = $registro->getParticipantes($htmlIdRegistrosAux);
@@ -683,16 +683,16 @@ class Usuario implements UserInterface
                 $i++;
             }
         }
-        
+
         $registros->data = $data;
         $registros->num = $i;
         return $registros;
     }
-    
+
     public function getRegistrosRevistas($assets)
-    { 
+    {
         $registros = new stdClass;
-        
+
         $i = 0;
         $data[] = [];
         $aux[] = [];
@@ -717,12 +717,12 @@ class Usuario implements UserInterface
                 $i++;
             }
         }
-        
+
         $registros->data = $data;
         $registros->num = $i;
         return $registros;
     }
-    
+
     public function addRegistro($registro)
     {
        $this->registros[] = $registro;
@@ -733,7 +733,7 @@ class Usuario implements UserInterface
        foreach($registros as $registro)
            $this->addRegistro($registro);
     }
-    
+
     public function getHijos()
     {
        // profiler needs at least one rol to consider the user logged in
@@ -765,6 +765,11 @@ class Usuario implements UserInterface
         }, []);
 
         return $roles;
+    }
+
+    public function getRolesAsObjects()
+    {
+        return $this->roles;
     }
 
     public function addRol($rol)
