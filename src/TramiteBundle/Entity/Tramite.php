@@ -71,6 +71,7 @@ class Tramite
      */
     protected $documento_id;
 
+
     public function getId()
     {
         return $this->id;
@@ -102,8 +103,6 @@ class Tramite
 
     /**
      * Set tipo_tramite_id
-     *
-     * @param \TramiteBundle\Entity\TipoTramite $tipoTramite_id
      *
      * @return Tramite
      */
@@ -176,6 +175,11 @@ class Tramite
         return $this->transicion;
     }
     
+    public function __toString()
+    {
+        return sprintf($this->getUsuarioId().'('.$this->getTransicion().')'.' ('.$this->getRecaudos().')'.' ('.$this->getDocumento().')');
+    }
+    
     public function ownTransicion(Transicion $transicion)
     {
         $this->transicion = $transicion;
@@ -191,10 +195,5 @@ class Tramite
     {
         $this->documento_id = $documento;
         return $this;
-    }
-
-    public function __toString()
-    {
-        return sprintf($this->getUsuarioId().'('.$this->getTransicion().')'.'('.$this->getRecaudos().')'.'('.$this->getDocumento().')');
     }
 }

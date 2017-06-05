@@ -53,12 +53,12 @@
                                             </a>
                                         </td>
                                         <td>{{ tramiteJubilacion.getTramite().getUsuarioId().getNombreCompleto() }}</td>
-                                        <td>{{ tramiteJubilacion.getTramite().getfecha_recibido()|date('d-m-Y') }}</td>
-                                        {% if tramiteJubilacion.getFecha() and tramiteJubilacion.getTramite().getfecha_recibido() %}
-                                            {% if tramiteJubilacion.getFecha() == tramiteJubilacion.getTramite().getfecha_recibido() %}
+                                        <td>{{ tramiteJubilacion.getTramite().getfecha_recibido_consejo()|date('d-m-Y') }}</td>
+                                        {% if tramiteJubilacion.getFechaConsejo() and tramiteJubilacion.getTramite().getfecha_recibido_consejo() %}
+                                            {% if tramiteJubilacion.getFechaConsejo() == tramiteJubilacion.getTramite().getfecha_recibido_consejo() %}
                                                 <td align="center">-</td>
                                             {% else %}
-                                                <td>{{ tramiteJubilacion.getFecha()|date('d-m-Y') }}</td>
+                                                <td>{{ tramiteJubilacion.getFechaConsejo()|date('d-m-Y') }}</td>
                                             {% endif %}
                                         {% endif %}
                                         {% if tramiteJubilacion.getEstadoConsejo() == "Pendiente" %}
@@ -79,9 +79,6 @@
                                     </tr>
                                 {% endfor %}
                             </table>
-                            <a href="{{ asset('web/uploads/' ~ hola) }}">
-                                <button type="button" class="btn btn-default btn-block">Mostrar</button>
-                            </a>
                         </div>
                         <!-- /.box-body -->
                     </div>

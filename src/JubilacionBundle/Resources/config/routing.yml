@@ -69,3 +69,11 @@ insertarConsejo:
 tramites-atendidos-consejo:
     path: /tramites-atendidos-consejo
     defaults: {_controller: JubilacionBundle::tramitesAtendidosConsejo}
+
+cargar-informe-consejo:
+    path: /cargar-informe-consejo
+    defaults: {_controller: JubilacionBundle::cargarInformeConsejo}
+
+cargar-informe-direccion:
+    path: /cargar-informe-direccion
+    defaults: {_controller: JubilacionBundle::cargarInformeDireccion}

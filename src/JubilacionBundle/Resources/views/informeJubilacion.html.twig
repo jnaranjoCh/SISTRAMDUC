@@ -12,10 +12,10 @@
 {% block content %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <h4 style="text-align: center"><b>INFORME PARA EFECTO DE JUBILACIÓN</b></h4>
+        <h1>Informe para Efecto de Jubilación</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
-            <li class="active">Consejo de Facultad </li>
+            <li class="active">Direccion de Asuntos Profesorales </li>
             <li class="active">Generar Informe </li>
         </ol>
     </div>
@@ -74,17 +74,6 @@
                         </form>
                     </div>
                 </div>
-                <!--<div>
-                    <br> <br>
-                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                        Hago de su conocimiento que la Comisión Delegada del Consejo Universitario en su
-                        Sesión Nº 534 de fecha de 30 de mayo de 2016, haciendo uso de la atribución que le compete
-                        el Artículo 44 del Reglamento interno respectivo, en atención a la solicitud contenida en el
-                        oficio asignado con el Nº CF 11316 de fecha 20 de abril de 2016 y visto el informe de
-                        asunto legal de la Dirección de Recursos Humanos Nro DRRHH/AL/053 del 05 de mayo de 2016,
-                        acuerdo aprobar el beneficio de su JUBILACIÓN a partir del 01 de junio de 2016.
-                    </p>
-                </div>-->
                 <div align="center">
                     <br> <br>
                     <p>
@@ -93,7 +82,6 @@
                         Secretario
                     </p>
                 </div>
-
                 <div>
                     <br> <br>
                     <p class="-align-left" style="margin-top: 10px;">
@@ -136,7 +124,7 @@
                 </div>
             <div class="col-xs-2"></div>
                 <div class="col-xs-4">
-                    <button type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
+                    <button id="enviar" type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
                         <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar
                     </button>
                 </div>
@@ -184,7 +172,7 @@
                     $('#spanContenido').removeClass("hide");
                     text = "Campo vacío";
                 }
-                alert(window.location.href.split("=")[1][0]);
+                //alert(window.location.href.split("=")[1][0]);
                 if(continua){
                     $.ajax({
                         method: "POST",
@@ -208,11 +196,10 @@
                                     "extendedTImeout": "0"
                                 });
 
-                                alert(window.location = data["numDoc"]);
+                                //alert(window.location = data["numDoc"]);
 
-                                window.location = '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"];
-                                //window.location = '/jubilacion/informe-jubilacion-pdf';
-                                //window.location = '/jubilacion/informe-jubilacion-pdf?Tramite=' + 7;
+                                window.open( '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"]);
+                               // window.location = '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"];
                             }
                             else{
                                 $('#spanNumero').addClass("hide");
@@ -232,6 +219,11 @@
                         "extendedTImeout": "0"
                     });
                 }
+            });
+        </script>
+        <script>
+            $("#enviar").click(function (){
+                window.location = '/jubilacion/cargar-informe-direccion';
             });
         </script>
     {% endblock %}

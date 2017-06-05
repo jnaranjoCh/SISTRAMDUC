@@ -226,5 +226,15 @@ class Transicion
     {
         return $this->estado_consejo;
     }
+    
+    public function fechaNula()
+    {
+        if ($this->fecha_consejo == null)
+        {
+            return(true);
+        }else{
+           return(false); 
+        }
+    }
 
 }
