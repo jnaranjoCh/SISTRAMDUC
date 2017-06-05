@@ -107,9 +107,9 @@ class DefaultController extends Controller
         );
     }
 
-    /********************************/
-    /* ÁREA DE ASUNTOS PROFESORALES */
-    /********************************/
+    /***********************************/
+    /* ÁREA DE CONSEJO DE DEPARTAMENTO */
+    /***********************************/
 
     /**
      * @Route("/comision-de-servicio/solicitudes", name="comision_servicio_solicitudes")
@@ -221,5 +221,37 @@ class DefaultController extends Controller
         }
         else
             throw $this->createNotFoundException('Error al solicitar datos de inserción');
+    }
+
+    /*******************************/
+    /* ÁREA DE CONSEJO DE FACULTAD */
+    /*******************************/
+
+    /**
+     * @Route("/comision-de-servicio/solicitudes", name="comision_servicio_solicitudes_facultad")
+     */
+    public function verSolicitudesFacultadAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tramites = $em->getRepository(SolicitudComisionServicio::class);
+        $tramites_comision = $tramites->findAll();
+        return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:verSolicitudesFacultad.html.twig',
+            array('tramites_comision' => $tramites_comision));
+    }
+
+    /********************************/
+    /* ÁREA DE ASUNTOS PROFESORALES */
+    /********************************/
+
+    /**
+     * @Route("/comision-de-servicio/solicitudes", name="comision_servicio_solicitudes_aapp")
+     */
+    public function verSolicitudesAAPPAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $tramites = $em->getRepository(SolicitudComisionServicio::class);
+        $tramites_comision = $tramites->findAll();
+        return $this->render('ComisionRemuneradaBundle:AsuntosProfesorales:verSolicitudesAAPP.html.twig',
+            array('tramites_comision' => $tramites_comision));
     }
 }

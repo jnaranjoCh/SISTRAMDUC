@@ -15,7 +15,7 @@
                 $("#myModal2").modal("show");
             },
             success: function(data){
-                alert("Solicitar: " + data["Solicitar"] + "Primera_vez: " + data["Primera_vez"] + "Existe: " + data["Existe"]);
+                //alert("Solicitar: " + data["Solicitar"] + "Primera_vez: " + data["Primera_vez"] + "Existe: " + data["Existe"]);
                 if(data["Existe"] == "N"){
                     toastr.error("El usuario no se encuentra registrado", "Error", {
                         "timeOut": "0",
@@ -34,6 +34,7 @@
                         $("#formPersonal").addClass("hidden");
                         $("#save").addClass("hidden");
                     }else {
+
                         $("#myModal2").modal("hide");
                         $("#formPersonal").removeClass("hidden");
                         $("#save").removeClass("hidden");

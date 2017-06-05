@@ -26,6 +26,11 @@ class SolicitudComisionServicio extends Tramite
     protected $usuario_id;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $usuario;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $fecha_recibido;
@@ -39,6 +44,11 @@ class SolicitudComisionServicio extends Tramite
     {
         $this->recaudos = new ArrayCollection();
         $this->fecha_recibido = $fecha;
+    }
+    
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -142,5 +152,14 @@ class SolicitudComisionServicio extends Tramite
     public function setPosibleRespuesta($posible_respuesta)
     {
         $this->posible_respuesta = $posible_respuesta;
+    }
+    
+    public function getUsuario(){
+        return $this->usuario = $this->getUsuarioId();        
+    }
+
+    public function setUsuario($id_usuario)
+    {
+        $this->usuario = $id_usuario;
     }
 }

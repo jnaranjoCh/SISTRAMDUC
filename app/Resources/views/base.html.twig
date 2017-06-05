@@ -294,10 +294,16 @@
               <a href="{{ path('estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
             </li>
             <li data-route="comision_servicio_solicitudes">
-              <a href="{{ path('comision_servicio_solicitudes') }}"><i class="fa fa-circle-o"></i>Ver Solicitudes</a>
+              <a href="{{ path('comision_servicio_solicitudes') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesConsejo</a>
             </li>
             <li data-route="comision_servicio_solicitudes_catedra">
               <a href="{{ path('comision_servicio_solicitudes_catedra') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesCatedra</a>
+            </li>
+            <li data-route="comision_servicio_solicitudes_facultad">
+              <a href="{{ path('comision_servicio_solicitudes_facultad') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesFacultad</a>
+            </li>
+            <li data-route="comision_servicio_solicitudes_aapp">
+              <a href="{{ path('comision_servicio_solicitudes_aapp') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesAAPP</a>
             </li>
           </ul>
         </li>
@@ -615,14 +621,13 @@
       }
     });
     e.preventDefault();
-  });#}
-</script>
-
+  });
+</script>#}
+</body>
+</html>
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}
 
 <!-- Add your own code here -->
 {% block custom_javascripts %}{% endblock %}
 
-</body>
-</html>

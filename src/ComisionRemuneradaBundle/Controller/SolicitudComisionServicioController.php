@@ -2,6 +2,7 @@
 
 namespace ComisionRemuneradaBundle\Controller;
 
+use ComisionRemuneradaBundle\ComisionRemuneradaBundle;
 use Doctrine\ORM\Query\Expr\Select;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,20 +39,6 @@ class SolicitudComisionServicioController extends Controller
     }
 
     /**
-     * @Route("/solicitud/guardar-datos", name="solicitud_guardar_ajax")
-     * @Method("POST")
-     */
-    public function guardarDatosAjaxAction(Request $request)
-    {
-        if($request->isXmlHttpRequest())
-        {
-            return new JsonResponse("Datos guardados");
-        }
-        else
-            return new JsonResponse("Error");
-    }
-
-    /**
      * @Route("/solicitud/guardar-archivos-datos", name="solicitud_guardararchivos_ajax")
      * @Method({"GET", "POST"})
      */
@@ -85,6 +72,9 @@ class SolicitudComisionServicioController extends Controller
         $solicitudComisionServicio
             ->assignTo($user)// Se asigna un usuario a la solicitud
             ->setTipoTramite($tipo_tramite);  // Se modifica el tipo de tramite
+
+        $solicitudComisionServicio
+            ->setUsuario($user->getId());
 
         $solicitudComisionServicio
             ->setFechaRecibido(new \DateTime("now")); // Se asigna la fecha del sistema a la solicitud
@@ -150,6 +140,11 @@ class SolicitudComisionServicioController extends Controller
             $data['Solicitar'] = "S";
             $data['Existe'] = "S";
             $em = $this->getDoctrine()->getManager();
+            $solicitudRepository = $em->getRepository('ComisionRemuneradaBundle:SolicitudComisionServicio');
+
+            /*$usuario = $em->getRepository(Usuario::class)
+                ->findOneByCedula($request->get("Cedula"));*/
+
             $usuario_id = $em->createQuery('SELECT u.id FROM AppBundle:Usuario u WHERE u.cedula = :ci')
                             ->setParameter('ci', $request->get("Cedula"))
                             ->getOneOrNullResult();
@@ -160,16 +155,21 @@ class SolicitudComisionServicioController extends Controller
             if (!$usuario){ //no existe usuario con esa cedula
                 $data['Existe'] = "N";
             }else{
-                $solicitud_MaxId = $em->createQuery('SELECT MAX(r.id) FROM ComisionRemuneradaBundle:SolicitudComisionServicio r WHERE r.usuario_id = :user ')
+                $solicitud_MaxId = $solicitudRepository->findByUsuario($usuario_id);
+                /*$solicitud_MaxId = $em->createQuery('SELECT MAX(r.id) FROM ComisionRemuneradaBundle:SolicitudComisionServicio r WHERE r.usuario_id = :user ')
                     ->setParameter('user', $usuario)
-                    ->getOneOrNullResult();
+                    ->getOneOrNullResult();*/
 
                 $data['Existe'] = "S";
                 if (!$solicitud_MaxId){ //No existe una solicitud para ese usuario, es primera vez
                     $data['Primera_vez'] = "S";
                 }else{
+                    $id = $em->createQuery('SELECT u.id FROM ComisionRemuneradaBundle:SolicitudComisionServicio u WHERE u.id = :id')
+                        ->setParameter('id', 1)
+                        ->getOneOrNullResult();
+
                     $solicitud = $em->getRepository(SolicitudComisionServicio::class)
-                        ->findOneBy(["id" => $solicitud_MaxId]);
+                        ->findOneBy(["id" => $id]);
 
                     if ($solicitud){
                         if (!$solicitud->getTransicion()->getFecha() or ($solicitud->getTransicion()->getEstado() == ("Pendiente"|"Enviada"))){

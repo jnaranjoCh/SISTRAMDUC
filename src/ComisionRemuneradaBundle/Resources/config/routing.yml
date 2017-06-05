@@ -50,12 +50,14 @@ solicitud_buscarcedula_ajax:
     requirements:
         _method:  POST
 
-solicitud_guardar_ajax:
-    path:     /solicitud/guardar-datos
-    defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarDatosAjax }
-    requirements:
-        _method:  POST
-
 solicitud_guardararchivos_ajax:
     path:     /solicitud/guardar-archivos-datos
     defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarArchivosAjax }
+
+comision_servicio_solicitudes_facultad:
+    path: /comision-de-servicio/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudesFacultad}
+
+comision_servicio_solicitudes_aapp:
+    path: /comision-de-servicio/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudesAAPP}
