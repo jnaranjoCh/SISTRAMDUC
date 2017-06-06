@@ -35,7 +35,7 @@
                                         </a>
                                     </td>
                                     <td>{{ tramite_comision.getUsuarioId().getNombreCompleto() }}</td>
-                                    <td>{{ tramite_comision.getFechaRecibido()|date('d-m-Y') }}</td>
+                                    <td>{{ tramite_comision.getFechaRecibidoDepartamento()|date('d-m-Y') }}</td>
                                     {#{% if tramite_comision.getTransicion().getFecha() and tramite_comision.getFechaRecibido() %}
                                         {% if tramite_comision.getTransicion().getFecha() == tramite_comision.getFechaRecibido() %}
                                             <td>---</td>

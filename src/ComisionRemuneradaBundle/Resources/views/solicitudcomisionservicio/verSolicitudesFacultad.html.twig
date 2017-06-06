@@ -38,13 +38,13 @@
                                     </td>
                                     <td>{{ tramite_comision.getUsuarioId().getNombreCompleto() }}</td>
                                     <td>{{ tramite_comision.getFechaRecibido()|date('d-m-Y') }}</td>
-                                    {% if tramite_comision.getTransicion().getFecha() and tramite_comision.getFechaRecibido() %}
+                                    {#{% if tramite_comision.getTransicion().getFecha() and tramite_comision.getFechaRecibido() %}
                                         {% if tramite_comision.getTransicion().getFecha() == tramite_comision.getFechaRecibido() %}
                                             <td>---</td>
-                                        {% else %}
-                                            <td>{{ tramite_comision.getTransicion().getFecha()|date('d-m-Y') }}</td>
-                                        {% endif %}
-                                    {% endif %}
+                                        {% else %}#}
+                                            <td>{{ tramite_comision.getTransicion().getFechaConsejo()|date('d-m-Y') }}</td>
+                                    {#{% endif %}
+                                    {% endif %}#}
 
                                     {% if tramite_comision.getTransicion().getEstado() == "Pendiente" %}
                                         <td><span class="label label-warning">{{ tramite_comision.getTransicion().getEstado() }}</span></td>

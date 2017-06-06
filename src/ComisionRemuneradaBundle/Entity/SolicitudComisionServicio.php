@@ -40,6 +40,16 @@ class SolicitudComisionServicio extends Tramite
      */
     protected $posible_respuesta;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha_recibido_catedra;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha_recibido_departamento;
+
     public function __construct(\DateTime $fecha = null)
     {
         $this->recaudos = new ArrayCollection();
@@ -161,5 +171,25 @@ class SolicitudComisionServicio extends Tramite
     public function setUsuario($id_usuario)
     {
         $this->usuario = $id_usuario;
+    }
+
+    /**
+     * Set fecha_recibido departamento
+     *
+     * @param datetime $fecha
+     */
+    public function setFechaRecibidoDepartamento($fecha)
+    {
+        $this->fecha_recibido_departamento = $fecha;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return datetime
+     */
+    public function getFechaRecibidoDepartamento()
+    {
+        return $this->fecha_recibido_departamento;
     }
 }

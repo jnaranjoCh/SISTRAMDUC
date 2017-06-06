@@ -152,7 +152,18 @@ class DefaultController extends Controller
 
             $transicion->setEstado($estado);
             $transicion->setFecha(new \DateTime("now"));
+            $transicion->setFechaConsejo(null);
+            $transicion->setFechaEnvDepartamento(null);
+            $transicion->setFechaEnvCatedra(null);
             $transicion->setDoc_info($request->get("Motivo"));
+
+            $solicitudRepo = $em->getRepository(SolicitudComisionServicio::class);
+            $solicitud = $solicitudRepo->findOneBy(["id" => $request->get("Solicitud")]);
+
+            $solicitud->setFechaRecibido(new \DateTime("now"));
+            $solicitud->setFechaRecibidoConsejo(new \DateTime("now"));
+            $solicitud->setFechaRecibidoDepartamento(new \DateTime("now"));
+            $solicitud->setFechaRecibidoCatedra(new \DateTime("now"));
 
             $em->persist($transicion);
             $em->flush();
@@ -208,7 +219,10 @@ class DefaultController extends Controller
             $estado = $estado_repo->findOneBy(["id" => "4"]);
 
             $transicion->setEstado($estado);
-            $transicion->setFecha(new \DateTime("now"));
+            $transicion->setFechaEnvCatedra(new \DateTime("now"));
+            $transicion->setFechaRecibida(new \DateTime("now"));
+            $solicitud->setFechaRecibidaConsejo(new \DateTime("now"));
+            $solicitud->setFechaRecibidaDepartamento(new \DateTime("now"));
 
             $solicitud->setPosibleRespuesta($request->get("respuesta"));
 

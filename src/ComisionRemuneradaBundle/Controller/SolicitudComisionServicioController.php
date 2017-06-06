@@ -115,8 +115,11 @@ class SolicitudComisionServicioController extends Controller
         $transicion->setEstadoDepartamento($estado);
         $transicion->setEstadoCatedra($estado);
         $transicion->setMotivoConsejo("Enviada al Consejo de Departamento");
+        $transicion->setMotivoDepartamento("Enviada a la Catedra");
+        $transicion->setMotivocatedra(" ");
 
-        $transicion->setFecha(new \DateTime("now"));      // Se asigna la fecha del sistema a la solicitud
+        $transicion->setFechaConsejo(new \DateTime("now"));      // Se asigna la fecha del sistema a la solicitud
+        $transicion->setFechaEnvDepartamento(new \DateTime("now"));
 
         $em->persist($solicitudComisionServicio);
 

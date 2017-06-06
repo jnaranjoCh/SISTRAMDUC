@@ -33,7 +33,11 @@
                             </div>
                             <div class="col-xs-5">
                                 <dt>Departamento:</dt>
+                                {% if tramite.getUsuarioId().getDepartamento() %}
                                 <dd>{{ tramite.getUsuarioId().getDepartamento().getDescription() }}</dd>
+                                {% else %}
+                                <dd> </dd>
+                                {% endif %}
                                 <dt>Correo:</dt>
                                 <dd>{{ tramite.getUsuarioId().getCorreo() }}</dd>
                                 <dt>Tlfs:</dt>
