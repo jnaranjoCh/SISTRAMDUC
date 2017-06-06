@@ -1,0 +1,35 @@
+<script>
+  var tableLenguage = new Array();
+  var routeFiles = new Array();
+  var routeRegistroUnico = new Array();
+  
+  /*rutas de los lenguajes del datatable*/
+  tableLenguage['datatable-spanish'] = '{{ asset('assets/js/datatable-spanish.json') }}';
+  
+  /*rutas de archivos externos*/
+  routeFiles['delete-png'] = '{{ asset('assets/images/delete.png') }}';
+
+  /*rutas registro unico*/
+  
+  /*registrar usuario*/
+  routeRegistroUnico['registro_obtener_ajax'] = '{{ path('registro_obtener_ajax') }}';
+  routeRegistroUnico['registro_buscarcedula_ajax'] = '{{ path('registro_buscarcedula_ajax') }}';
+  routeRegistroUnico['registro_registeruser_ajax'] = '{{ path('registro_registeruser_ajax') }}';
+  
+  /*registrar datos*/
+  routeRegistroUnico['registro_obteneremails_ajax'] = '{{ path('registro_obteneremails_ajax') }}';
+  routeRegistroUnico['registro_obtenerlastid_ajax'] = '{{ path('registro_obtenerlastid_ajax') }}';
+  routeRegistroUnico['registro_buscaremail_ajax'] = '{{ path('registro_buscaremail_ajax') }}';
+  routeRegistroUnico['registro_guardar_ajax'] = '{{ path('registro_guardar_ajax') }}';
+  
+  /*consultar datos*/
+  routeRegistroUnico['registro_consultarbuscaremail_ajax'] = '{{ path('registro_consultarbuscaremail_ajax') }}';
+  routeRegistroUnico['registro_consultardocumentshijos_ajax'] = '{{ path('registro_consultardocumentshijos_ajax') }}';
+  routeRegistroUnico['registro_consultarhijos_ajax'] = '{{ path('registro_consultarhijos_ajax') }}';
+  routeRegistroUnico['registro_consultardatospersonales_ajax'] = '{{ path('registro_consultardatospersonales_ajax') }}';
+  routeRegistroUnico['registro_consultarcargos_ajax'] = '{{ path('registro_consultarcargos_ajax') }}';
+  routeRegistroUnico['registro_consultarrevistas_ajax'] = '{{ path('registro_consultarrevistas_ajax') }}';
+  routeRegistroUnico['registro_consultarparticipantes_ajax'] = '{{ path('registro_consultarparticipantes_ajax') }}';
+  routeRegistroUnico['registro_consultarregistros_ajax'] = '{{ path('registro_consultarregistros_ajax') }}';
+  routeRegistroUnico['registro_consultaobteneremails_ajax'] = '{{ path('registro_consultaobteneremails_ajax') }}';
+</script>

@@ -100,6 +100,7 @@ class Concurso
     public function __construct()
     {
        $this->jurado = new ArrayCollection();
+       $this->aspirantes = new ArrayCollection();
     }
     
     /**
@@ -313,6 +314,17 @@ class Concurso
     {
        foreach($jurado as $jurados)
            $this->addJurado($jurados);
+    }
+
+    public function addAspirante($aspirante)
+    {
+       $this->aspirantes[] = $aspirante;
+    }
+
+    public function addAspirantes($aspirante)
+    {
+       foreach($aspirante as $aspirantes)
+           $this->addAspirante($aspirantes);
     }
 }
 

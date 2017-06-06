@@ -27,7 +27,6 @@
 
   <!-- Select -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
-
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
@@ -430,24 +429,7 @@
                   <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
                 </li>
               </ul>
-            </li>  
-
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-circle-o"></i><span>Pruebas</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li data-route="pruebas">
-                  <a href="{{ path('pruebas') }}"><i class="fa fa-circle-o"></i>Registrar Pruebas</a>
-                </li>
-                <li data-route="listarPruebas">
-                  <a href="{{ path('listarPruebas') }}"><i class="fa fa-circle-o"></i>Listado de Pruebas</a>
-                </li>
-              </ul>
-            </li> 
+            </li>   
 
             <li class="treeview">
               <a href="#">
@@ -486,6 +468,7 @@
       <b>Desarrollado por <a href="http://www.facyt.uc.edu.ve/">FACYT</a></b>
     </div>
     <strong>Sistema de Gestión de Trámites Administrativos de la Universidad de Carabobo (SISTRAMDUC)</strong>
+    <input id="url" type="text" class="form-control hidden" value="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}"/>
   </footer>
 
 </div>
@@ -514,7 +497,7 @@
     $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
   }
 </script>
-
+{% include('rutas.html.twig') %}
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('assets/vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- daterangepicker -->

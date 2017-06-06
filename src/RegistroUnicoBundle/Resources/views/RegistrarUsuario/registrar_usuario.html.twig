@@ -83,8 +83,8 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  {% include('RegistroUnicoBundle::configTable.html.twig') %}
-  {% include('RegistroUnicoBundle:RegistrarUsuario:iniRU.html.twig') %}
+  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarUsuario/iniRU.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
-  {% include('RegistroUnicoBundle:RegistrarUsuario:registerUser.html.twig') %}
+  <script src="{{ asset('assets/js/RegistroUnico/RegistrarUsuario/registerUser.js') }}"></script>
 {% endblock %}

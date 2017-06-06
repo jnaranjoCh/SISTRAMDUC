@@ -4,6 +4,10 @@ namespace ConcursosBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
+use ConcursoOposicionBundle\Entity\Recusacion;
+
 /**
  * Aspirante
  *
@@ -50,9 +54,9 @@ class Aspirante
     private $segundoApellido;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefono", type="integer")
+     * @ORM\Column(name="telefono", type="string", length=30)
      */
     private $telefono;
 
@@ -71,9 +75,9 @@ class Aspirante
     private $cedula;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefonoSecundario", type="integer", nullable=true)
+     * @ORM\Column(name="telefonoSecundario", type="string", length=30, nullable=true)
      */
     private $telefonoSecundario;
 
@@ -156,6 +160,33 @@ class Aspirante
     
    
     protected $concursos;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Recusacion", mappedBy="aspirante_id", cascade={"persist", "remove"})
+     */
+    protected $recusa;
+
+
+    public function __construct()
+    {
+        $this->recusa = new ArrayCollection();
+    }
+    
+    public function getRecusa()
+    {
+        return $this->recusa->toArray();
+    }
+
+    public function addRecusa(Recusacion $recusa)
+    {
+        if (!$this->recusa->contains($recusa)) {
+            $this->recusa->add($recusa);
+            $recusa->setAspiranteId($this);
+        }
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -266,7 +297,7 @@ class Aspirante
     /**
      * Set telefono
      *
-     * @param integer $telefono
+     * @param string $telefono
      *
      * @return Aspirante
      */
@@ -280,7 +311,7 @@ class Aspirante
     /**
      * Get telefono
      *
-     * @return int
+     * @return string
      */
     public function getTelefono()
     {
@@ -338,7 +369,7 @@ class Aspirante
     /**
      * Set telefonoSecundario
      *
-     * @param integer $telefonoSecundario
+     * @param string $telefonoSecundario
      *
      * @return Aspirante
      */
@@ -352,7 +383,7 @@ class Aspirante
     /**
      * Get telefonoSecundario
      *
-     * @return int
+     * @return string
      */
     public function getTelefonoSecundario()
     {

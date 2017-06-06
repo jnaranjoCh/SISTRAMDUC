@@ -15,6 +15,150 @@
     <div class="row">
       <!--Success message-->
       <section class="content-body col-md-offset-1 col-md-10">
+
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+          
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="elim" class="modal-title hide">Eliminar Concurso</h4>
+                <h4 id="modif" class="modal-title hide">Modificar Concurso</h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="container">
+                  <label><center>Fecha De Inicio</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+
+                                  <input class="form-control" id='inicio' value="" type="text" placeholder="dd/MM/yyyy" maxlength="10"/>
+
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-calendar"></span>
+                                  </span>
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="container">
+                  <label><center>Nro Vacantes</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+
+                                  <input class="form-control" id='vacantes' value="" type='text' maxlength="3" placeholder="Ejemplo: 123" onkeypress="return justNumbers(event);"/>
+
+                                  <span class="input-group-addon">
+                                      <span class="fa fa-hashtag"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="container">
+                  <label><center>Area De Postulaci&oacute;n</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+                                  <input class="form-control" id='area' value=""  maxlength="99" placeholder="Ejemplo: Literatura"/>
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-font"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+ 
+                <div class="container">
+                  <label><center>Fecha De Recepci&oacute;n De Documentos</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+
+                                  <input class="form-control" id='recepcion' value="" type="text" placeholder="dd/MM/yyyy" maxlength="10"/>
+
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-calendar"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+                <div class="container">
+                  <label><center>Fecha De Presentaci&oacute;n</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+                                  <input class="form-control" id='presentacion' value="" type="text" placeholder="dd/MM/yyyy" maxlength="10"/>
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-calendar"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>  
+
+                <div class="container">
+                  <label><center>Observaci&oacute;n</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+
+                                  <input type='text' class="form-control" id='observacion' value="" placeholder="comente acerca del concurso" maxlength="200"/>
+
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-comment"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>                 
+
+                <div class="container">
+                  <label><center>Responsable De Registro o Modificaci&oacute;n</center></label>
+                  <div class="row">
+                      <div class='col-sm-6'>
+                          <div class="form-group">
+                              <div class='input-group' >
+                                  <input class="form-control" id='usuario' value=""/>
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-font"></span>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button id="eliminarConcurso" type="button" class="btn btn-success">Eliminar</button>
+                <button id="modificarConcurso" type="button" class="btn btn-success">Modificar</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+
         <br/>
         <div class="register-box-body">
 
@@ -25,14 +169,14 @@
 
                    <div class="box-body">
 
-                      <table id="example2" class="table table-bordered table-striped">
+                      <table id="tabla" class="table table-bordered table-striped">
                           <thead>
                           <tr>
                             <th>Fecha Inicio</th>
                             <th>Nro. Vacantes</th>
                             <th>Area Postulaci&oacute;n</th>
                             <th>Fecha Recepci&oacute;n Doc.</th>
-                            <th>Fecha Presentaci&oacute;n</th>                          
+                            <th>Fecha Presentaci&oacute;n</th>                         
                           </tr>
                           </thead>
                           <tbody id="cuerpo">
@@ -44,7 +188,7 @@
                               <th>Nro. Vacantes</th>
                               <th>Area Postulaci&oacute;n</th>
                               <th>Fecha Recepci&oacute;n Doc.</th>
-                              <th>Fecha Presentaci&oacute;n</th>                          
+                              <th>Fecha Presentaci&oacute;n</th>                        
                             </tr>
                           </tfoot>
                       </table>
@@ -60,21 +204,6 @@
 
 {% block custom_javascripts %}
 
-  <script>
-    $(function () {
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-      });
-    });
-  </script>
-
-    <script src="{{ asset('assets/js/concursoOposicion/listarConcursos.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
@@ -82,5 +211,42 @@
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+
+  <script>
+    
+      tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "inicio" },
+              { "data": "vacantes" },
+              { "data": "area" },
+              { "data": "doc" },
+              { "data": "pre" },
+              { "data": "modif" },
+              { "data": "elim" }              
+          ]
+      });
+
+  </script>
+
+  <script>
+
+    $('#inicio').datepicker({
+      autoclose: true
+    });
+
+    $('#recepcion').datepicker({
+      autoclose: true
+    });
+
+    $('#presentacion').datepicker({
+      autoclose: true
+    });
+
+  </script>
+
+  {% include('ConcursoOposicionBundle:Concurso:listadoConcurso.html.twig') %}
 
 {% endblock %}

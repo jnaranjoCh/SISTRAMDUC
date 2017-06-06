@@ -66,6 +66,30 @@ registro_consultarregistros_ajax:
     path:     /consulta/enviar-registros
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeUsuarioAjax }
 
+registro_consultarparticipantes_ajax:
+    path:     /consulta/enviar-participantes
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeParticipantesAjax }
+
+registro_consultarrevistas_ajax:
+    path:     /consulta/enviar-revistas
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeRevistasAjax }
+
+registro_consultardatospersonales_ajax:
+    path:     /consulta/enviar-datos-personales
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarDatosPersonalesAjax }
+
+registro_consultarcargos_ajax:
+    path:     /consulta/enviar-cargos
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarCargosDeUsuarioAjax }
+
+registro_consultarhijos_ajax:
+    path:     /consulta/enviar-hijos
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarDatosPersonalesHijosAjax }
+
+registro_consultardocumentshijos_ajax:
+    path:     /consulta/enviar-hijos-url
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarDatosPersonalesHijosPathAjax }
+    
 registro_consultarbuscaremail_ajax:
     path:     /consulta/buscar-email
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarEmailAjax }
