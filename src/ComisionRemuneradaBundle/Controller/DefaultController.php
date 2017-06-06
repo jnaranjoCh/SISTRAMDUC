@@ -228,7 +228,15 @@ class DefaultController extends Controller
     /*******************************/
 
     /**
-     * @Route("/comision-de-servicio/solicitudes", name="comision_servicio_solicitudes_facultad")
+     * @Route("/comision-servicio/solicitudes-atendidas-facultad", name="comision_servicio_atendidas_facultad")
+     */
+    public function atendidasFacultadAction()
+    {
+        return $this->render('ComisionRemunerada:solicitudcomisionservicio:tramAtendFacultad.html.twig');
+    }
+    
+    /**
+     * @Route("/comision-de-servicio/consejo-de-facultad/solicitudes", name="comision_servicio_solicitudes_facultad")
      */
     public function verSolicitudesFacultadAction()
     {
@@ -237,6 +245,52 @@ class DefaultController extends Controller
         $tramites_comision = $tramites->findAll();
         return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:verSolicitudesFacultad.html.twig',
             array('tramites_comision' => $tramites_comision));
+    }
+
+    /**
+     * @Route("/comision-de-servicio/consejo-de-facultad/ver-solicitud/{id}", name="comision_servicio_ver_solicitud_facultad")
+     */
+    public function verSolicitudFacultadAction(SolicitudComisionServicio $tramite)
+    {
+        $recaudos = $tramite->getRecaudos();
+
+        return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:verSolicitudFacultad.html.twig',
+            array('tramite' => $tramite, 'recaudos' => $recaudos));
+    }
+
+    /**
+     * @Route("/comision-de-servicio/insertar-facultad", name="comision_servicio_insertar_facultad")
+     * @Method("POST")
+     */
+    public function insertarConsejoFacultadAction(Request $request) {
+
+        if($request->isXmlHttpRequest()){
+
+            //Entity Manager
+            $em = $this->getDoctrine()->getManager();
+
+            $transicionRepo = $em->getRepository(Transicion::class);
+            $transicion = $transicionRepo->findOneBy(["tramite" => $request->get("Solicitud")]);
+
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => $request->get("Estatus")]);
+
+            $transicion->setEstadoConsejo($estado);
+            $transicion->setEstado($estado);
+            $transicion->setFechaConsejo(new \DateTime("now"));
+            $transicion->setMotivoConsejo($request->get("Motivo"));
+
+            //Persistimos en el objeto
+            $em->persist($transicion);
+
+            //Insertarmos en la base de datos
+            $em->flush();
+
+            return new JsonResponse("S");
+        }
+        else
+            throw $this->createNotFoundException('Error al solicitar datos de inserción');
+
     }
 
     /********************************/

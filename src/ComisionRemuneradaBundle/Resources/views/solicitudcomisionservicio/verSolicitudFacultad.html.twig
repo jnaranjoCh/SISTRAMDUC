@@ -1,0 +1,197 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <h1>Revisión de Solicitud de Comisión de Servicio</h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
+            <li class="active">Revisar Solicitudes</li>
+            <li class="active">Solicitud {{ tramite.id }}</li>
+        </ol>
+    </div>
+    <section class="content">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Solicitud Nº</h3>
+                <input style="border: 0; background-color: white" type="button" id="numSolicitud" value="{{ tramite.id }}">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <dl style="align-content: center" class="dl-horizontal">
+                    <div class="box-header">
+                        <h3 class="box-title">Datos Personales:</h3>
+                        <div class="box-body">
+                            <div class="col-xs-2">
+                            </div>
+                            <div class="col-xs-5">
+                                <dt>Nombres y Apellidos:</dt>
+                                <dd>{{ tramite.getUsuarioId().getNombreCompleto() }}</dd>
+                                <dt>Cédula de Identidad:</dt>
+                                <dd>{{ tramite.getUsuarioId().getCedula() }}</dd>
+                                <dt>Nacionalidad:</dt>
+                                <dd>{{ tramite.getUsuarioId().getNacionalidad() }}</dd>
+                            </div>
+                            <div class="col-xs-5">
+                                <dt>Departamento:</dt>
+                                <dd>{{ tramite.getUsuarioId().getDepartamento().getDescription() }}</dd>
+                                <dt>Correo:</dt>
+                                <dd>{{ tramite.getUsuarioId().getCorreo() }}</dd>
+                                <dt>Tlfs:</dt>
+                                <dd>{{ tramite.getUsuarioId().getTelefono() }}</dd>
+                            </div>
+                        </div>
+                    </div>
+                </dl>
+                <hr/>
+                <dl class="dl-horizontal">
+                    <div class="box-header">
+                        <h3 class="box-title">Recaudos:</h3>
+                        <div class="box-body">
+                            {% for recaudo in recaudos %}
+                                <dd>
+                                    <a href="{{ asset('uploads/recaudos/' ~ recaudo.getName()) }}">
+                                        <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}</button>
+                                    </a>
+                                </dd>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </dl>
+                <hr/>
+                <dl class="dl-horizontal">
+                    <div class="box-header">
+                        <h3 class="box-title">Respuesta de la Catedra:</h3>
+                        <div class="box-body">
+                            <div class="col-xs-2">
+                            </div>
+                            <div class="col-xs-5">
+                                <dd>{{ tramite.getPosibleRespuesta() }} </dd>
+                            </div>
+                        </div>
+                    </div>
+
+                </dl>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Dar respuesta a la Solicitud:</h3>
+            </div>
+            <div class="box-body">
+
+                <div class="box-body" style="display: block;">
+                    <div class="col-xs-3">
+                    </div>
+                    <div class="col-xs-2">
+                        <h5><b>Estado</b></h5>
+                        <div class="btn-group">
+                            {% if tramite.getTransicion().getEstadoConsejo() == "Pendiente" or tramite.getTransicion().getEstadoConsejo() == "Enviada" %}
+                                <select id="estatus" class="btn dropdown-toggle btn-default">
+                                    <ul class="dropdown-menu" role="menu">
+                                        <option disabled value="1">{{ tramite.getTransicion().getEstadoConsejo() }}</option>
+                                        <option value="3">Aprobado</option>
+                                        <option value="2">Negado</option>
+                                    </ul>
+                                </select>
+                            {% else %}
+                                <div class="btn-group">
+                                    <button disabled type="button" class="btn btn-info">{{ tramite.getTransicion().getEstadoConsejo() }}</button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4">
+                        {% if tramite.getTransicion().getEstadoConsejo() == "Pendiente" or tramite.getTransicion().getEstadoConsejo() == "Enviada" %}
+                            <h5><b>Motivo&nbsp;&nbsp;<span id="spanMotivo" class="label label-danger hide">Vacío</span></b></h5>
+                            <input id="motivo" class="form-control" type="text" placeholder="Escribir...">
+                        {% else %}
+                            <h5><b>Motivo</b></h5>
+                            <input disabled id="motivo" class="form-control" type="text" placeholder="Escribir...">
+                        {% endif %}
+                    </div>
+
+                    <div class="col-xs-3">
+                        <h5>&nbsp;</h5>
+                        {% if tramite.getTransicion().getEstadoConsejo() == "Pendiente" or tramite.getTransicion().getEstadoConsejo() == "Enviada" %}
+                            <div class="btn-group">
+                                <button id="enviarRespuesta" type="button" class="btn btn-info">Enviar</button>
+                            </div>
+                        {% else %}
+                            <div class="btn-group">
+                                <button disabled type="button" class="btn btn-info">Enviar</button>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </section>
+
+    {% block custom_javascripts %}
+        <script>
+            $("#enviarRespuesta").click(function (){
+                toastr.clear();
+                var text = "";
+
+                var motivo = $('#motivo').val();
+                var continua = true;
+                //var entrar = true;
+
+                if (motivo == ""){
+                    continua = false;
+                    $('#spanMotivo').removeClass("hide");
+                    text = "Campo vacío";
+                }
+
+                if(continua){
+                    $.ajax({
+                        method: "POST",
+                        data: {"Estatus": document.getElementById("estatus").value,
+                            "Motivo": document.getElementById("motivo").value,
+                            "Solicitud": document.getElementById("numSolicitud").value},
+                        url:  "{{ path('comision_servicio_insertar_facultad') }}",
+                        dataType: 'json',
+                        success: function(data)
+                        {
+                            if (data == "S"){
+                                //  entrar = true;
+                                $('#spanMotivo').addClass("hide");
+                                text = "Solicitud enviada al Consejo de Departamento";
+
+                                toastr.success(text, "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                                //if (band == 1)
+                                //window.location.replace("https://www.google.co.ve/");
+                                //window.location = '/jubilacion/informe-jubilacion-consejo?Solicitud=' + document.getElementById("numSolicitud").value;
+
+                            }
+                            else{
+                                $('#spanMotivo').addClass("hide");
+                                // entrar = false;
+                                text = "Error al enviar solicitud";
+
+                                toastr.error(text, "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                        }
+
+                    });
+                }
+                else{
+                    toastr.error(text, "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

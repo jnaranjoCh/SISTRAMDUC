@@ -55,9 +55,21 @@ solicitud_guardararchivos_ajax:
     defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarArchivosAjax }
 
 comision_servicio_solicitudes_facultad:
-    path: /comision-de-servicio/solicitudes
+    path: /comision-de-servicio/consejo-de-facultad/solicitudes
     defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudesFacultad}
 
 comision_servicio_solicitudes_aapp:
     path: /comision-de-servicio/solicitudes
     defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudesAAPP}
+
+comision_servicio_insertar_facultad:
+    path: /comision-de-servicio/insertar-facultad
+    defaults: {_controller: ComisionRemuneradaBundle:Default:insertarConsejoFacultad}
+
+comision_servicio_atendidas_facultad:
+    path: /comision-servicio/solicitudes-atendidas-facultad
+    defaults: {_controller: ComisionRemuneradaBundle:Default:atendidasFacultad}
+
+comision_servicio_ver_solicitud_facultad:
+    path: /comision-de-servicio/consejo-de-facultad/ver-solicitud/{id}
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudFacultad}

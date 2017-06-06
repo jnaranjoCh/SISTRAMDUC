@@ -35,8 +35,8 @@
                     <dt>Recaudos</dt>
                     {% for recaudo in recaudos %}
                         <dd>
-                            <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
-                                <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
+                            <a href="{{ asset('uploads/recaudos/' ~ recaudo.getName()) }}">
+                                <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}</button>
                             </a>
                         </dd>
                     {% endfor %}

@@ -79,12 +79,12 @@ class SolicitudComisionServicioController extends Controller
         $solicitudComisionServicio
             ->setFechaRecibido(new \DateTime("now")); // Se asigna la fecha del sistema a la solicitud
 
-        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/oficioSolicitud/';
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/oficioSolicitud_'.$user->getId().'/';
         $fichero_subido = $dir_subida."oficioSolicitud_".$user->getId().".pdf";
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("oficioSolicitud_".$user->getId().".pdf");
+        $newRecaudo->setName("oficioSolicitud_".$user->getId());
         $newRecaudo->setUsuario($user);
         $newRecaudo->setTipoRecaudo($tipo_recaudo1);
         $em->persist($newRecaudo);
@@ -93,12 +93,12 @@ class SolicitudComisionServicioController extends Controller
         if (move_uploaded_file($_FILES['input3']['tmp_name'][0], $dir_subida))
             $band1 = 1;
 
-        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cartaDesignacion/';
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cartaDesignacion_'.$user->getId().'/';
         $fichero_subido = $dir_subida."cartaDesignacion_".$user->getId().".pdf";
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("cartaDesignacion_".$user->getId().".pdf");
+        $newRecaudo->setName("cartaDesignacion_".$user->getId());
         $newRecaudo->setUsuario($user);
         $newRecaudo->setTipoRecaudo($tipo_recaudo2);
         $em->persist($newRecaudo);
@@ -110,6 +110,11 @@ class SolicitudComisionServicioController extends Controller
         $transicion
             ->asignarA($solicitudComisionServicio)// Se asigna una transicion a la solicitud
             ->setEstado($estado);                         // Se cambia el estado de la transición
+
+        $transicion->setEstadoConsejo($estado);
+        $transicion->setEstadoDepartamento($estado);
+        $transicion->setEstadoCatedra($estado);
+        $transicion->setMotivoConsejo("Enviada al Consejo de Departamento");
 
         $transicion->setFecha(new \DateTime("now"));      // Se asigna la fecha del sistema a la solicitud
 

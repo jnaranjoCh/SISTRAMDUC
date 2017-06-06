@@ -41,6 +41,16 @@ class Estado
      * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_consejo")
      */
     protected $transicionesConsejo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_departamento")
+     */
+    protected $transicionesDepartamento;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_catedra")
+     */
+    protected $transicionesCatedra;
     
     public function __construct()
     {

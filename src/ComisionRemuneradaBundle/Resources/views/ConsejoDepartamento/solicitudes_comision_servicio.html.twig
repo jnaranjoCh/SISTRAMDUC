@@ -22,7 +22,6 @@
                                 <th>Nº Solicitud</th>
                                 <th>Solicitante</th>
                                 <th>Fecha Recibido</th>
-                                <th>Fecha Enviada</th>
                                 <th>Estado</th>
                                 <th >Motivo</th>
                             </tr>
@@ -37,13 +36,13 @@
                                     </td>
                                     <td>{{ tramite_comision.getUsuarioId().getNombreCompleto() }}</td>
                                     <td>{{ tramite_comision.getFechaRecibido()|date('d-m-Y') }}</td>
-                                    {% if tramite_comision.getTransicion().getFecha() and tramite_comision.getFechaRecibido() %}
+                                    {#{% if tramite_comision.getTransicion().getFecha() and tramite_comision.getFechaRecibido() %}
                                         {% if tramite_comision.getTransicion().getFecha() == tramite_comision.getFechaRecibido() %}
                                             <td>---</td>
                                         {% else %}
                                             <td>{{ tramite_comision.getTransicion().getFecha()|date('d-m-Y') }}</td>
                                         {% endif %}
-                                    {% endif %}
+                                    {% endif %}#}
 
                                     {% if tramite_comision.getTransicion().getEstado() == "Pendiente" %}
                                         <td><span class="label label-warning">{{ tramite_comision.getTransicion().getEstado() }}</span></td>
@@ -70,29 +69,3 @@
         </div>
     </section>
 {% endblock %}
-
-{#{% block custom_javascripts %}
-    <script>
-        $("#id").click(function (){
-            $.ajax({
-                method:"POST",
-                url: "{{ path('comision_servicio_ver_solicitud') }}",
-                data: {"tramite": document.getElementById("id").value}, //$('#id').val()},
-                dataType: 'json',
-                success: function(data)
-                {
-                    //alert(JSON.stringify(data));
-                    var res = "";
-                    res = res+"<tr><th><h4>Solicitud Nº<b>" + data["id"] + "</b></h4></th>" +
-                            "</tr><tr><th></th><th></th><th><h5><b>Nombres y Apellidos:</b>&nbsp;&nbsp;" +
-                            data["nombreCompleto"] + "</h5><h5><b>Cédula de Identidad:</b>&nbsp;&nbsp;" +
-                            data["cedula"] + "</h5><h5><b>Correo:</b>&nbsp;&nbsp;" +
-                            data["correo"] + "</h5><h5><b>Tlf:</b>&nbsp;&nbsp;" + data["telefono"] +
-                            "</h5><h5><b>Fecha Recibido:</b>&nbsp;&nbsp;" + data["fechaRecibido"] + "</h5></th></tr>";
-
-                    $("#myModal").html(res).modal("show");
-                }
-            });
-        });
-    </script>
-{% endblock %}#}

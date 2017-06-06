@@ -33,8 +33,8 @@
                     <dt>Recaudos</dt>
                     {% for recaudo in recaudos %}
                         <dd>
-                        <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
-                            <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
+                        <a href="{{ asset('uploads/recaudos/' ~ recaudo.getName()) }}">
+                            <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}</button>
                         </a>
                         </dd>
                     {% endfor %}
@@ -42,7 +42,7 @@
             </div>
             <!-- /.box-body -->
         </div>
-        <div class="box box-info">
+        {#<div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">Dar razón</h3>
 
@@ -65,6 +65,7 @@
                             <select disabled id="estatus" class="btn dropdown-toggle btn-default">
                                 <ul class="dropdown-menu" role="menu">
                                     <option value="1">{{ tramite.getTransicion().getEstado() }}</option>
+                                    <option value="4">Enviado</option>
                                     <option value="2">Negado</option>
                                     <option value="3">Aprobado</option>
                                 </ul>
@@ -99,7 +100,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>#}
             <!-- /.box-body -->
         </div>
     </section>
