@@ -171,7 +171,43 @@ class DefaultController extends Controller
      */
     public function estadoSolicitudAction()
     {
-        return $this->render('JubilacionBundle::progresoSolicitudProf.html.twig');
+        $user = $this->getUser();
+
+        $tramite = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT MAX(r.id) FROM JubilacionBundle:TramiteJubilacion r WHERE r.usuario_id = :user ')
+            ->setParameter('user', $user)
+            ->getOneOrNullResult();
+
+        $tramite_actual = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(TramiteJubilacion::class)
+            ->findBy(["id" => $tramite]);
+
+        return $this->render('JubilacionBundle::progresoSolicitudProf.html.twig',
+            array('tramite_actual' => $tramite_actual));
+    }
+
+    /**
+     * @Route("/comision-de-servicio/estado-solicitud", name="estado-solicitud")
+     */
+    public function estado_sol_profAction()
+    {
+        $user = $this->getUser();
+
+        $tramite = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT MAX(r.id) FROM ComisionRemuneradaBundle:SolicitudComisionServicio r WHERE r.usuario_id = :user ')
+            ->setParameter('user', $user)
+            ->getOneOrNullResult();
+
+        $tramite_actual = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(SolicitudComisionServicio::class)
+            ->findBy(["id" => $tramite]);
+
+        return $this->render('ComisionRemuneradaBundle:Profesor:estado_sol_prof.html.twig',
+            array('tramite_actual' => $tramite_actual));
     }
 
     /**

@@ -77,3 +77,9 @@ cargar-informe-consejo:
 cargar-informe-direccion:
     path: /cargar-informe-direccion
     defaults: {_controller: JubilacionBundle::cargarInformeDireccion}
+
+/solicitud/guardar-archivos:
+  path:     /solicitud/guardar-archivos
+  defaults: { _controller: JubilacionBundle:TramiteJubilacion:guardarArchivosAjax }
+  requirements:
+    _method: GET, POST

@@ -9,9 +9,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use TramiteBundle\Entity\TipoTramite;
 use TramiteBundle\Entity\TipoRecaudo;
-use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use TramiteBundle\Entity\Transicion;
 use TramiteBundle\Entity\Estado;
+
+use Doctrine\ORM\Query\Expr\Select;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use TramiteBundle\Entity\Recaudo;
+use AppBundle\Entity\Usuario;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Tramitejubilacion controller.
@@ -41,12 +47,14 @@ class TramiteJubilacionController extends Controller
     /**
      * Creates a new tramiteJubilacion entity.
      *
-     * @Route("/new", name="tramitejubilacion_new")
+     * @Route("/new/{apr}", name="tramitejubilacion_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction($apr = "initial")
     {
-        $tramiteJubilacion = new TramiteJubilacion();
+        return $this->render('JubilacionBundle:TramiteJubilacion:new.html.twig');
+
+        /*$tramiteJubilacion = new TramiteJubilacion();
         $transicion = new Transicion();
         $form = $this->createForm('JubilacionBundle\Form\TramiteJubilacionType', $tramiteJubilacion);
         $form->handleRequest($request);
@@ -56,12 +64,12 @@ class TramiteJubilacionController extends Controller
 
             /* Se obtienen todos los registros de la tabla tipo_tramite y se busca el registro que 
             corresponda a Jubilacion */
-            $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
-            $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 7]);
+           // $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
+            //$tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 7]);
 
-            /* Se obtienen todos los registros de la tabla tipo_recaudo y se extrae los requeridos de 
+            /* Se obtienen todos los registros de la tabla tipo_recaudo y se extraen los requeridos de
             acuerdo al tramite correspondiente*/
-            $tipo_recaudo1_repo = $em->getRepository(TipoRecaudo::class);
+           /* $tipo_recaudo1_repo = $em->getRepository(TipoRecaudo::class);
             $tipo_recaudo1 = $tipo_recaudo1_repo->findOneBy(["id" => 6]);
             $tipo_recaudo2 = $tipo_recaudo1_repo->findOneBy(["id" => 7]);
             $tipo_recaudo3 = $tipo_recaudo1_repo->findOneBy(["id" => 8]);
@@ -69,11 +77,11 @@ class TramiteJubilacionController extends Controller
             $tipo_recaudo5 = $tipo_recaudo1_repo->findOneBy(["id" => 10]);
 
              /* Se obtienen los datos de la tabla estado y se extraen los requeridos (solicitudes enviadas en estatus pendiente) */
-            $estado_repo = $em->getRepository(Estado::class);
+            /*$estado_repo = $em->getRepository(Estado::class);
             $estado = $estado_repo->findOneBy(["id" => 1]);
 
             /* Se le asigna a cada recaudo su tipo*/
-            $i = 1;
+           /* $i = 1;
             foreach ($tramiteJubilacion->getRecaudos() as $actualRecaudo) {
                 if ($i == 1){
                     $actualRecaudo->setTipoRecaudo($tipo_recaudo1);
@@ -97,12 +105,12 @@ class TramiteJubilacionController extends Controller
             }
 
             /* Se asigna el usuario y el tipo de trámite a la tabla tramite*/
-            $tramiteJubilacion
-                ->assignTo($this->getUser())
+           /* $tramiteJubilacion
+                ->assignTo($this->getUser()->getId()->getId())
                 ->setTipoTramite($tipo_tramite);
 
             /* Se asigna la fecha en que se realiza la solicitud al tramite*/
-            $tramiteJubilacion->setfecha_recibido(new \DateTime("now"));
+           /* $tramiteJubilacion->setfecha_recibido(new \DateTime("now"));
 
             $transicion
                 ->asignarA($tramiteJubilacion) // Se asigna una transicion a la solicitud
@@ -115,22 +123,151 @@ class TramiteJubilacionController extends Controller
             $em->persist($tramiteJubilacion);
 
             /* Se asigna el trámite cada recaudo*/
-            foreach ($tramiteJubilacion->getRecaudos() as $actualRecaudo) {
+            /*foreach ($tramiteJubilacion->getRecaudos() as $actualRecaudo) {
                 $actualRecaudo->setTramite($tramiteJubilacion);
             }
 
             /* Guardamos en Base de Datos*/
-            $em->flush();
+            //$em->flush();
 
             /* Luego de enviarse la solucitud se direcciona a la vista de enviado*/
-            return $this->redirectToRoute('jubilacion-estado-solicitud', array('id' => $tramiteJubilacion->getId()));
+           /* return $this->redirectToRoute('jubilacion-estado-solicitud', array('id' => $tramiteJubilacion->getId()));
         }
 
         /* De lo contrario se mantiene en la misma vista*/
-        return $this->render('JubilacionBundle:tramitejubilacion:new.html.twig', array(
+       /* return $this->render('JubilacionBundle:tramitejubilacion:new.html.twig', array(
             'tramiteJubilacion' => $tramiteJubilacion,
             'form' => $form->createView(),
-        ));
+        ));*/
+    }
+
+    /**
+     * @Route("/solicitud/guardar-archivos", name="solicitud_guardararchivos")
+     * @Method({"GET", "POST"})
+     */
+    public function guardarArchivosAjaxAction(Request $request)
+    {
+        //Return new response($_FILES['input3']['name'][0]);
+        $band1=0;
+        $band2=0;
+        $em = $this->getDoctrine()->getManager();
+        $tramiteJubilacion = new TramiteJubilacion();
+        $transicion = new Transicion();
+
+
+        /* Se obtienen todos los registros de la tabla tipo_tramite y se busca el registro que
+            corresponda a Jubilacion */
+        $tipo_tramite_repo = $em->getRepository(TipoTramite::class);
+        $tipo_tramite = $tipo_tramite_repo->findOneBy(["id" => 7]);
+
+        /* Se obtienen todos los registros de la tabla tipo_recaudo y se extraen los requeridos de
+            acuerdo al tramite correspondiente*/
+        $tipo_recaudo_repo = $em->getRepository(TipoRecaudo::class);
+        $tipo_recaudo1 = $tipo_recaudo_repo->findOneBy(["id" => 6]);
+        $tipo_recaudo2 = $tipo_recaudo_repo->findOneBy(["id" => 7]);
+        $tipo_recaudo3 = $tipo_recaudo_repo->findOneBy(["id" => 8]);
+        $tipo_recaudo4 = $tipo_recaudo_repo->findOneBy(["id" => 9]);
+        $tipo_recaudo5 = $tipo_recaudo_repo->findOneBy(["id" => 10]);
+
+        /* Se obtienen los datos de la tabla estado y se extraen los requeridos (solicitudes enviadas en estatus pendiente) */
+        $estado_repo = $em->getRepository(Estado::class);
+        $estado = $estado_repo->findOneBy(["id" => 1]);
+
+
+        $tramiteJubilacion
+            ->assignTo($this->getUser())// Se asigna un usuario a la solicitud
+            ->setTipoTramite($tipo_tramite);  // Se modifica el tipo de tramite
+
+        $tramiteJubilacion
+            ->setfecha_recibido(new \DateTime("now")); // Se asigna la fecha del sistema a la solicitud
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/oficioSolicitud'.$this->getUser()->getId().'/';
+        $fichero_subido = $dir_subida."oficioSolicitud_".$this->getUser()->getId().".pdf";
+
+        $newRecaudo = new Recaudo();
+        $newRecaudo->setPath($dir_subida);
+        $newRecaudo->setName("oficioSolicitud".$this->getUser()->getId().".pdf");
+        $newRecaudo->setUsuario($this->getUser());
+        $newRecaudo->setTipoRecaudo($tipo_recaudo1);
+        $em->persist($newRecaudo);
+
+        $tramiteJubilacion->addRecaudo($newRecaudo);
+        if (move_uploaded_file($_FILES['input1']['tmp_name'][0], $dir_subida))
+            $band1 = 1;
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/constanciaAAPP'.$this->getUser()->getId().'/';
+
+        $newRecaudo = new Recaudo();
+        $newRecaudo->setPath($dir_subida);
+        $newRecaudo->setName("constanciaAAPP".$this->getUser()->getId().".pdf");
+        $newRecaudo->setUsuario($this->getUser());
+        $newRecaudo->setTipoRecaudo($tipo_recaudo2);
+        $em->persist($newRecaudo);
+
+        $tramiteJubilacion->addRecaudo($newRecaudo);
+        if (move_uploaded_file($_FILES['input2']['tmp_name'][0], $dir_subida))
+            $band2 = 1;
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/reciboPago'.$this->getUser()->getId().'/';
+
+        $newRecaudo = new Recaudo();
+        $newRecaudo->setPath($dir_subida);
+        $newRecaudo->setName("reciboPago".$this->getUser()->getId().".pdf");
+        $newRecaudo->setUsuario($this->getUser());
+        $newRecaudo->setTipoRecaudo($tipo_recaudo3);
+        $em->persist($newRecaudo);
+
+        $tramiteJubilacion->addRecaudo($newRecaudo);
+        if (move_uploaded_file($_FILES['input3']['tmp_name'][0], $dir_subida))
+            $band2 = 1;
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/antecedentesServicios'.$this->getUser()->getId().'/';
+
+        $newRecaudo = new Recaudo();
+        $newRecaudo->setPath($dir_subida);
+        $newRecaudo->setName("antecedentesServicios".$this->getUser()->getId().".pdf");
+        $newRecaudo->setUsuario($this->getUser());
+        $newRecaudo->setTipoRecaudo($tipo_recaudo4);
+        $em->persist($newRecaudo);
+
+        $tramiteJubilacion->addRecaudo($newRecaudo);
+        if (move_uploaded_file($_FILES['input4']['tmp_name'][0], $dir_subida))
+            $band2 = 1;
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/constanciaPreparador'.$this->getUser()->getId().'/';
+
+        $newRecaudo = new Recaudo();
+        $newRecaudo->setPath($dir_subida);
+        $newRecaudo->setName("constanciaPreparador".$this->getUser()->getId().".pdf");
+        $newRecaudo->setUsuario($this->getUser());
+        $newRecaudo->setTipoRecaudo($tipo_recaudo5);
+        $em->persist($newRecaudo);
+
+        $tramiteJubilacion->addRecaudo($newRecaudo);
+        if (move_uploaded_file($_FILES['input5']['tmp_name'][0], $dir_subida))
+            $band2 = 1;
+
+        $transicion
+            ->asignarA($tramiteJubilacion)// Se asigna una transicion a la solicitud
+            ->setEstado($estado);                         // Se cambia el estado de la transición
+
+        $transicion->setEstadoConsejo($estado);
+
+        $transicion->setFecha(new \DateTime("now"));      // Se asigna la fecha del sistema a la solicitud
+
+        $em->persist($tramiteJubilacion);
+
+        foreach ($tramiteJubilacion->getRecaudos() as $actualRecaudo) {
+            $actualRecaudo->setTramite($tramiteJubilacion);
+        }
+
+        $em->flush();
+
+        if($band1 == 1 and $band2 == 1) {
+            return new RedirectResponse($this->generateUrl('tramitejubilacion_new',array('apr' => 'success')));
+        }else{
+            return new RedirectResponse($this->generateUrl('tramitejubilacion_new',array('apr' => 'error')));
+        }
     }
 
     /**

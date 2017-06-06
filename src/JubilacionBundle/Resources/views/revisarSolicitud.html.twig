@@ -33,6 +33,8 @@
                                 <dd>{{ tramite.getUsuarioId().getNacionalidad() }}</dd>
                             </div>
                             <div class="col-xs-5">
+                                <dt>Departamento:</dt>
+                                <dd>{{ tramite.getUsuarioId().getDepartamento() }}</dd>
                                 <dt>Correo:</dt>
                                 <dd>{{ tramite.getUsuarioId().getCorreo() }}</dd>
                                 <dt>Tlfs:</dt>
@@ -49,7 +51,7 @@
                             {% for recaudo in recaudos %}
                                 <dd>
                                     <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
-                                        <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}.{{ recaudo.getPath() }}</button>
+                                        <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}</button>
                                     </a>
                                 </dd>
                             {% endfor %}

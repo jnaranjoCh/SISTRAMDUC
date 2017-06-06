@@ -37,10 +37,7 @@ class TramiteJubilacion extends Tramite
 
     public function __construct()
     {
-        $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de Jubilación")
-        ,new recaudo("Constancia para efecto de Jubilación"),new recaudo("Constancia de Antecedentes de servicios del ente de la administración pública donde laboró"),
-            new recaudo("Constancia de cumplimiento de labores como preparador"), new recaudo("Recibo de Pago")
-        ));
+        $this->recaudos = new ArrayCollection();
     }
 
     /**
