@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Proxies\__CG__\TramiteBundle\Entity\Estado;
 use TramiteBundle\Entity\TransicionRepository;
 use TramiteBundle\Entity\TransicionConsejo;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class DefaultController extends Controller
 {
@@ -401,8 +402,49 @@ class DefaultController extends Controller
     /**
      * @Route("/jubilacion/cargar-informe-direccion", name="jubilacion-cargar-informe-direccion")
      */
-    public function cargarInformeDireccionAction()
+    public function cargarInformeDireccionAction(Request $request)
     {
-        return $this->render('JubilacionBundle::cargarInformeDireccion.html.twig');
+        return $this->render('JubilacionBundle::cargarInformeDireccion.html.twig',
+            array('tramite' => $request->get("Tramite")));
     }
+
+    /**
+     * @Route("/jubilacion/ingresar-informe-direccion", name="jubilacion-ingresar-informe-direccion")
+     * @Method("POST")
+     */
+    public function ingresarInformeDirAction()
+    {
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/informeDireccion/InformeDir/';
+
+        if (move_uploaded_file($_FILES['input1']['tmp_name'][0], $dir_subida))
+        {
+            return new RedirectResponse($this->generateUrl('jubilacion-direccion-asuntos-Prof',array('apr' => 'success')));
+        }else{
+            return new RedirectResponse($this->generateUrl('jubilacion-cargar-informe-direccion',array('apr' => 'error')));
+        }
+
+
+    }
+
+    /**
+     * @Route("/jubilacion/ingresar-informe-consejo", name="jubilacion-ingresar-informe-consejo")
+     * @Method("POST")
+     */
+    public function ingresarInformeConsjAction()
+    {
+
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/informeConsejo/InformeConsejo/';
+
+        if (move_uploaded_file($_FILES['input1']['tmp_name'][0], $dir_subida))
+        {
+            return new RedirectResponse($this->generateUrl('jubilacion-consejo-facultad',array('apr' => 'success')));
+        }else{
+            return new RedirectResponse($this->generateUrl('jubilacion-cargar-informe-consejo',array('apr' => 'error')));
+        }
+
+
+    }
+    
+    
 }

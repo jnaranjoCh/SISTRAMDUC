@@ -223,7 +223,7 @@
         </script>
         <script>
             $("#enviar").click(function (){
-                window.location = '/jubilacion/cargar-informe-direccion';
+                window.location = '/jubilacion/cargar-informe-direccion?Tramite' + window.location.href.split("=")[1][0];
             });
         </script>
     {% endblock %}

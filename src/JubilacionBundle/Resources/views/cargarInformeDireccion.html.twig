@@ -31,6 +31,41 @@
                 Para continuar con el proceso y dar cierre a la solicitud atendida cargue el informe generado.
             </div>
         </div>
+        <form name="ingresarInformeDir" id="ingresarInformeDir" action="{{ path('jubilacion-ingresar-informe-direccion') }}" method="post" enctype="multipart/form-data" novalidate>
+            <div class="row">
+                <section class="content-body">
+                    <!--seccion for generate boxes-->
+                    <!--files box-->
+                    <div id="formPersonal" class="col-md-offset-1 col-md-10">
+                        <div class="box box-info">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><b>Adjuntar Documentos:</b></h3>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="informeDireccion" class="form-group has-feedback">
+                                            <label class="control-label">Cargar Informe generado</label>
+                                            <input id="informeDireccion" name="input1[]" accept="application/pdf" type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+                                            <span id="spaninformeDireccion" class="glyphicon form-control-feedback"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                    <!--personal and contact data box-->
+                </section>
+                <div id="save" class="col-md-offset-4 col-md-4">
+                    <div class="form-group has-feedback">
+                        <input type="submit" class="btn btn-primary btn-block btn-success" value="Enviar Solicitud"/>
+                    </div>
+                </div>
+            </div>
+            <!--User data body-->
+        </form>
         <!-- /.row -->
     </section>
     <!-- /.content -->

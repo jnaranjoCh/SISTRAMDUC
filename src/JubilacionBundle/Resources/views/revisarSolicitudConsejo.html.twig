@@ -51,7 +51,7 @@
                         <div class="box-body">
                             {% for recaudo in recaudos %}
                                 <dd>
-                                    <a href="{{ asset('uploads/recaudos/' ~ recaudo) }}">
+                                    <a href="{{ asset('uploads/recaudos/' ~ recaudo.getName()) }}">
                                         <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}</button>
                                     </a>
                                 </dd>

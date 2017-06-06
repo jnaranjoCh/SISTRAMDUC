@@ -83,3 +83,15 @@ cargar-informe-direccion:
   defaults: { _controller: JubilacionBundle:TramiteJubilacion:guardarArchivosAjax }
   requirements:
     _method: GET, POST
+
+ingresar-informe-direccion:
+  path:     /ingresar-informe-direccion
+  defaults: { _controller: JubilacionBundle::ingresarInformeDirAction }
+  requirements:
+    _method: POST
+
+ingresar-informe-consejo:
+  path:     /ingresar-informe-consejo
+  defaults: { _controller: JubilacionBundle::ingresarInformeConsjAction }
+  requirements:
+    _method: POST

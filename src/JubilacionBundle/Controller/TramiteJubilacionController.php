@@ -186,7 +186,7 @@ class TramiteJubilacionController extends Controller
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("oficioSolicitud".$this->getUser()->getId().".pdf");
+        $newRecaudo->setName("oficioSolicitud".$this->getUser()->getId());
         $newRecaudo->setUsuario($this->getUser());
         $newRecaudo->setTipoRecaudo($tipo_recaudo1);
         $em->persist($newRecaudo);
@@ -199,7 +199,7 @@ class TramiteJubilacionController extends Controller
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("constanciaAAPP".$this->getUser()->getId().".pdf");
+        $newRecaudo->setName("constanciaAAPP".$this->getUser()->getId());
         $newRecaudo->setUsuario($this->getUser());
         $newRecaudo->setTipoRecaudo($tipo_recaudo2);
         $em->persist($newRecaudo);
@@ -212,7 +212,7 @@ class TramiteJubilacionController extends Controller
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("reciboPago".$this->getUser()->getId().".pdf");
+        $newRecaudo->setName("reciboPago".$this->getUser()->getId());
         $newRecaudo->setUsuario($this->getUser());
         $newRecaudo->setTipoRecaudo($tipo_recaudo3);
         $em->persist($newRecaudo);
@@ -225,7 +225,7 @@ class TramiteJubilacionController extends Controller
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("antecedentesServicios".$this->getUser()->getId().".pdf");
+        $newRecaudo->setName("antecedentesServicios".$this->getUser()->getId());
         $newRecaudo->setUsuario($this->getUser());
         $newRecaudo->setTipoRecaudo($tipo_recaudo4);
         $em->persist($newRecaudo);
@@ -238,7 +238,7 @@ class TramiteJubilacionController extends Controller
 
         $newRecaudo = new Recaudo();
         $newRecaudo->setPath($dir_subida);
-        $newRecaudo->setName("constanciaPreparador".$this->getUser()->getId().".pdf");
+        $newRecaudo->setName("constanciaPreparador".$this->getUser()->getId());
         $newRecaudo->setUsuario($this->getUser());
         $newRecaudo->setTipoRecaudo($tipo_recaudo5);
         $em->persist($newRecaudo);
