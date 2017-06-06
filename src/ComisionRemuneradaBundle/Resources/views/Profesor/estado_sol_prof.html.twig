@@ -72,7 +72,13 @@
                         </ul>
                     {% endfor %}
                 {% else %}
-                    <h2>Usted no ha realizado una solicitud de Comisión de Servicio.</h2>
+                    <br/>
+                    <div class="col-xs-10">
+                        <div class="alert alert-danger alert-dismissible">
+                            <h4><i class="icon fa fa-ban"></i> Advertencia!</h4>
+                            <h4>Usted no ha realizado una solicitud de Comisión de Servicio.</h4>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>

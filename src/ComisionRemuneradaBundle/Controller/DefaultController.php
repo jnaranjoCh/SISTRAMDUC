@@ -12,8 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Hackzilla\BarcodeBundle\Utility\Barcode;
 use TramiteBundle\Entity\Transicion;
 use TramiteBundle\Entity\Estado;
-use TramiteBundle\Entity\Tramite;
 use Symfony\Component\HttpFoundation\Request;
+use TramiteBundle\Entity\TipoDocumento;
+use TramiteBundle\Entity\Documento;
 
 class DefaultController extends Controller
 {
@@ -291,6 +292,64 @@ class DefaultController extends Controller
         else
             throw $this->createNotFoundException('Error al solicitar datos de inserción');
 
+    }
+
+    /**
+     * @Route("/comision-servicio/informe-consejo-facultad", name="informe-consejo-facultad")
+     * @Method({"GET", "POST"})
+     */
+    public function informeFacultadAction(Request $request)
+    {
+        return $this->render('ComisionRemuneradaBundle:solicitudcomisionservicio:informeComision.html.twig',
+            array('tramite' => $request->get("Solicitud")));
+    }
+
+    /**
+     * @Route("/comision-servicio/llenarPDF", name="facultad-llenarPDF")
+     * @Method({"GET", "POST"})
+     */
+    public function llenarPDFAction(Request $request) {
+
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+            // $tramiteJubilacion = new TramiteJubilacion();
+            $tramiteComision =  $em->getRepository(SolicitudComisionServicio::class);
+            $numTramite = $tramiteComision->findOneBy(["id" => $request->get("Tramite")]); //Probar el request metido entre las comillas. $request->get("Tramite")
+
+
+            $tipo_documento_repo = $em->getRepository(TipoDocumento::class);
+            $tipo_documento = $tipo_documento_repo->findOneBy(["id" => $request->get("TipoDocumento")]);
+
+
+            $documento = new Documento();
+            $documento
+                ->asignarDocA($numTramite);
+            $documento->setTipoDocumento($tipo_documento);
+            $documento->setAsunto($request->get("Asunto"));
+            $documento->setActa($request->get("Acta"));
+            $documento->setFecha(new \DateTime("now"));
+            $documento->setNum($request->get("Numero"));
+            $documento->setContenido($request->get("Contenido"));
+
+
+            //Persistimos en el objeto
+            $em->persist($documento);
+
+            //Insertarmos en la base de datos
+            $em->flush();
+
+            $respuesta[] = "";
+            $respuesta['numDoc'] = $documento->getId();
+            $respuesta['alerta'] = "S";
+
+            return new JsonResponse($respuesta);
+        }
+        else{
+            throw $this->createNotFoundException('Error al solicitar datos de inserción');
+        }
+
+        //return $this->redirectToRoute('jubilacion-informe-jubilacion-pdf');
     }
 
     /********************************/

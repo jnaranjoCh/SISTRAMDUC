@@ -1,5 +1,225 @@
 {% extends '::base.html.twig' %}
 
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <h1>Informe para Efecto de Comisión de Servicio</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-fw fa-child"></i> Comisión de Servicio</a></li>
+            <li class="active">Generar Informe </li>
+        </ol>
+    </div>
+
+    <!-- Main content -->
+    <section class="invoice">
+        <!-- title row -->
+        <div class="row">
+            <div align="center" class="col-xs-12">
+                <h3 class="pager">
+                    <br>
+                    UNIVERSIDAD DE CARABOBO <br>
+                    <div align="center">
+                        <img src="https://raw.githubusercontent.com/CesarManriqueH/SISTRAMDUC/fadac8798b9392556ba6adabf251314883114cab/web/assets/images/UC.png" width="90" height="110" alt="Logo UC" />
+                        <br/>
+                    </div>
+                    CONSEJO UNIVERSITARIO
+                </h3>
+                <br><br><br><br><br>
+            </div>
+
+            <div class="row no-print">
+                <div class="col-xs-5" align="left">
+                    <dl class="dl-horizontal">
+                        <dt>&nbsp;</dt>
+                        <dd>&nbsp;</dd>
+                        <dt>&nbsp;</dt>
+                        <dd>&nbsp;</dd>
+                        <dt><h4><b>Nº&nbsp;&nbsp;<span id="spanNumero" class="label label-danger hide">Vacío</span></b></h4></dt>
+                        <dd><input id="numero" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                    </dl>
+                </div>
+                <div class="col-xs-5" align="right">
+                    <dl class="dl-horizontal">
+                        <dt>Asunto:&nbsp;&nbsp;<span id="spanAsunto" class="label label-danger hide">Vacío</span></dt>
+                        <dd><input id="asunto" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                        <dt>Acta:&nbsp;&nbsp;<span id="spanActa" class="label label-danger hide">Vacío</span></dt>
+                        <dd><input id="acta" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                        <dt>Fecha:&nbsp;&nbsp;<span id="spanFecha" class="label label-danger hide">Vacío</span></dt>
+                        <dd> {{ "now"|date('d-m-Y') }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <!-- info row -->
+        <div class="row no-print">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-10">
+                <br> <br>
+                <div class="box">
+                    <!-- /.box-header -->
+                    <div class="box-body pad">
+                        <form>
+                            <span id="spanContenido" class="label label-danger hide">Vacío</span>
+                            <textarea id="contenido" class="textarea" placeholder="Ingrese texto aquí" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </form>
+                    </div>
+                </div>
+                <div align="center">
+                    <br> <br>
+                    <p>
+                        Atentamente, <br>
+                        Pablo Aure Sánchez <br>
+                        Secretario
+                    </p>
+                </div>
+                <div>
+                    <br> <br>
+                    <p class="-align-left" style="margin-top: 10px;">
+                        c.c. <br>
+                        Consejo de la Facultad Experimental de Ciencias y Tecnología <br>
+                        Dirección de Planificación y Programación Prosupuestaria <br>
+                        Dirección de Auditoría interna <br>
+                        Dirección de Administración y Finanzas Central <br>
+                        Dirección General de Asuntos Profesorales <br>
+                        Dirección de Recursos Humanos <br>
+                        Comisión de Auditoría Académica <br>
+                        Departamento de Nómina <br>
+                        Departamento de Seguro Social <br>
+                        Comisión Electoral Universitaria <br>
+                    </p>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br> <br>
+        <div class="row no-print">
+            <div class="col-xs-12" align="center">
+                <small class="text-muted well well-sm no-shadow">
+                    Dirección de la Secretaría del Consejo Universitario Rectorado.
+                    Universidad de Carabobo, Av. Bolívar Norte.....
+                    Valencia 2005  | Carabobo - Venezuela  | Telf: (0241)625 0416 y Fax 83691634
+                </small>
+            </div>
+        </div>
+        <br> <br>
+
+        <div class="row no-print">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-4">
+                <!--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>-->
+                <!--href="/jubilacion/informe-jubilacion-pdf"-->
+                <a id="llenarPDF" href="#" class="btn bg-maroon">
+                    <i class="fa fa-download"></i>&nbsp;&nbsp;Generar PDF
+                </a>
+            </div>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-4">
+                <button id="enviar" type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
+                    <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar
+                </button>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+    </section>
+    <!-- /.content -->
+
+    {% block custom_javascripts %}
+        <script>
+            $("#llenarPDF").click(function (){
+
+                toastr.clear();
+                var text = "";
+
+                var numero = $('#numero').val();
+                var asunto = $('#asunto').val();
+                var acta = $('#acta').val();
+                var fecha = $('#fecha').val();
+                var contenido = $('#contenido').val();
+                var continua = true;
+
+                if (numero == ""){
+                    continua = false;
+                    $('#spanNumero').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (asunto == ""){
+                    continua = false;
+                    $('#spanAsunto').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (acta == ""){
+                    continua = false;
+                    $('#spanActa').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (fecha == ""){
+                    continua = false;
+                    $('#spanFecha').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (contenido == ""){
+                    continua = false;
+                    $('#spanContenido').removeClass("hide");
+                    text = "Campo vacío";
+                }
+
+                if(continua){
+                    $.ajax({
+                        method: "POST",
+                        data: {"Numero": document.getElementById("numero").value,
+                            "Asunto": document.getElementById("asunto").value,
+                            "Acta": document.getElementById("acta").value,
+                            "Contenido": document.getElementById("contenido").value,
+                            "Tramite": window.location.href.split("=")[1][0],
+                            "TipoDocumento": 2},
+                        url:  "{{ path('facultad-llenarPDF') }}",
+                        dataType: 'json',
+                        success: function(data)
+                        {
+                            if (data["alerta"] == "S"){
+
+                                $('#spanNumero').addClass("hide");
+                                text = "Informe generado con Exito";
+
+                                toastr.success(text, "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+
+
+                                window.open( '/comision-servicio/informe-pdf?Documento=' + data["numDoc"]);
+                                //window.location = '/jubilacion/informe-jubilacion-pdf?Tramite=' + 7;
+                            }
+                            else{
+                                $('#spanNumero').addClass("hide");
+                                text = "Error al enviar respuesta de solicitud";
+
+                                toastr.error(text, "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                        }
+                    });
+                }
+                else{
+                    toastr.error(text, "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                    });
+                }
+            });
+        </script>
+        <script>
+            $("#enviar").click(function (){
+                window.location = '/jubilacion/cargar-informe-consejo';
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
+
+{#{% extends '::base.html.twig' %}
+
 {% block opcionsidebar %}
     <li data-route="jubilacion-informacion">
         <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Revisar Solicitudes</a>
@@ -146,5 +366,5 @@
     </section>
     <!-- /.content -->
 
-{% endblock %}
+{% endblock %}#}
 

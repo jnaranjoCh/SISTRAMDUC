@@ -73,3 +73,13 @@ comision_servicio_atendidas_facultad:
 comision_servicio_ver_solicitud_facultad:
     path: /comision-de-servicio/consejo-de-facultad/ver-solicitud/{id}
     defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudFacultad}
+
+informe-consejo-facultad:
+    path: /comision-servicio/informe-consejo-facultad
+    defaults: {_controller: ComisionRemuneradaBundle:Default:informeFacultad}
+    requirements:
+            _method: GET|POST
+
+facultad-llenarPDF:
+    path: /comision-servicio/llenarPDF
+    defaults: {_controller: ComisionRemuneradaBundle:Default:llenarPDF}
