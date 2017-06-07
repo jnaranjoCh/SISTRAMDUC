@@ -18,7 +18,7 @@ use TramiteBundle\Entity\Tramite;
  *     "tramite" = "Tramite"
  * })
  */
-abstract class TramiteReincorporacion extends Tramite
+class TramiteReincorporacion extends Tramite
 {
     protected $type = "reincorporacion";
 

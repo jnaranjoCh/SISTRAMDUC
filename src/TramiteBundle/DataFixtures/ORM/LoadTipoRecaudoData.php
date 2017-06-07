@@ -73,6 +73,41 @@ class LoadTipoRecaudoData extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($tipo_recibo_pago);
         $manager->flush();
 
+        $tipo_designacion_como_docente = new TipoRecaudo();
+        $tipo_designacion_como_docente->setNombre('Designación como docente');
+
+        $manager->persist($tipo_designacion_como_docente);
+        $manager->flush();
+        
+        $tipo_oficio_ubicacion = new TipoRecaudo();
+        $tipo_oficio_ubicacion->setNombre('Oficio de la ubicación');
+
+        $manager->persist($tipo_oficio_ubicacion);
+        $manager->flush();
+
+        $tipo_ultimo_ascenso = new TipoRecaudo();
+        $tipo_ultimo_ascenso->setNombre('Oficio del último ascenso');
+
+        $manager->persist($tipo_ultimo_ascenso);
+        $manager->flush();
+
+        $tipo_aceptacion_renuncia = new TipoRecaudo();
+        $tipo_aceptacion_renuncia->setNombre('Oficio de la aceptación de la renuncia');
+
+        $manager->persist($tipo_aceptacion_renuncia);
+        $manager->flush();
+
+        $tipo_fondo_titulo = new TipoRecaudo();
+        $tipo_fondo_titulo->setNombre('Fondo negro del título');
+
+        $manager->persist($tipo_fondo_titulo);
+        $manager->flush();
+
+        $tipo_declaracion_jurada_cargos = new TipoRecaudo();
+        $tipo_declaracion_jurada_cargos->setNombre('Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo');
+
+        $manager->persist($tipo_declaracion_jurada_cargos);
+        $manager->flush();
 
     }
 
