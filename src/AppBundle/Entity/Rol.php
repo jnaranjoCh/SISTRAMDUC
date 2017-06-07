@@ -29,7 +29,7 @@ class Rol
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Permiso")
+     * @ORM\ManyToMany(targetEntity="Permiso", fetch="EAGER", cascade={"persist"})
      * @ORM\JoinTable(name="rol_permiso",
      *      joinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="permiso_id", referencedColumnName="id")}
@@ -97,5 +97,15 @@ class Rol
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function getPermisos()
+    {
+        return $this->permisos;
+    }
+
+    public function addPermiso($permiso)
+    {
+        $this->permisos[] = $permiso;
     }
 }

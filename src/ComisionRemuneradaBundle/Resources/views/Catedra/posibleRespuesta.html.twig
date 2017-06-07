@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Solicitudes de Comisión de Servicio
+        </h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
+            <li class="active">Revisar Solicitudes</li>
+            <li class="active">Solicitud {{ tramite.id }}</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Solicitud Nº</h3>
+                <input id="numSolicitud" style="border: 0; background-color: white" type="button" id="numSolicitud" value="{{ tramite.id }}">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <dl class="dl-horizontal">
+                    <dt>Nombres y Apellidos</dt>
+                    <dd>{{ tramite.getUsuarioId().getNombreCompleto() }}</dd>
+                    <dt>Cédula de Identidad</dt>
+                    <dd>{{ tramite.getUsuarioId().getCedula() }}</dd>
+                    <dt>Nacionalidad</dt>
+                    <dd>{{ tramite.getUsuarioId().getNacionalidad() }}</dd>
+                    <dt>Correo</dt>
+                    <dd>{{ tramite.getUsuarioId().getCorreo() }}</dd>
+                    <dt>Departamento</dt>
+                    <dd>{{ tramite.getUsuarioId().getDepartamento().getDescription() }}</dd>
+                </dl>
+                <dl class="dl-horizontal">
+                    <dt>Recaudos</dt>
+                    {% for recaudo in recaudos %}
+                        <dd>
+                            <a href="{{ asset('uploads/recaudos/' ~ recaudo.getName()) }}">
+                                <button type="button" class="btn btn-default btn-block">{{ recaudo.getName() }}</button>
+                            </a>
+                        </dd>
+                    {% endfor %}
+                </dl>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <div class="box box-info">
+            <!-- /.box-header -->
+            <div class="box-header with-border">
+                <h3 class="box-title">Enviar posible respuesta</h3>
+                <!-- /.box-tools -->
+            </div>
+                <div class="col-md-12">
+                    <form>
+                        <textarea id="respuesta" class="textarea" placeholder="Ingrese texto aquí" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        <small>Debe especificcar el motivo</small>
+                    </form>
+                </div>
+            <div class="box-body" style="display: block;">
+                <div class="col-xs-4">
+                    <h5>&nbsp;</h5>
+                    <div class="btn-group">
+                        <button id="enviarRespuesta" type="button" class="btn btn-info">Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </section>
+
+    {% block custom_javascripts %}
+        <script>
+            $("#enviarRespuesta").click(function (){
+
+                toastr.clear();
+                var text = "";
+
+                var motivo = $('#motivo').val();
+                var continua = true;
+
+                if (motivo == ""){
+                    continua = false;
+                    $('#spanMotivo').removeClass("hide");
+                    text = "Campo vacío";
+                }
+
+                if(continua){
+                    $.ajax({
+                        method: "POST",
+                        data: {"solicitud": document.getElementById("numSolicitud").value,
+                            "respuesta": document.getElementById("respuesta").value},
+                        url:  "{{ path('comision-de-servicio-insertar-posible-respuesta') }}",
+                        dataType: 'json',
+                        success: function(data)
+                        {
+                            if (data == "S"){
+
+                                $('#spanMotivo').addClass("hide");
+                                text = "Respuesta de solicitud enviada";
+
+                                toastr.success(text, "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                            else{
+                                $('#spanMotivo').addClass("hide");
+                                text = "Error al enviar respuesta de solicitud";
+
+                                toastr.error(text, "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                        }
+                    });
+                }
+                else{
+                    toastr.error(text, "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

@@ -63,6 +63,10 @@ $ composer require hackzilla/barcode-bundle~2.0
 ```bash
 $ alias rd='sudo service postgresql start;php bin/console doctrine:database:drop --force --env=dev;php bin/console doctrine:database:create --env=dev;php bin/console doctrine:schema:update --force --env=dev;php bin/console doctrine:fixtures:load --no-interaction --env=dev;'
 $ rd
+
+windows
+
+php bin/console doctrine:database:drop --force --env=dev&php bin/console doctrine:database:create --env=dev&php bin/console doctrine:schema:update --force --env=dev&php bin/console doctrine:fixtures:load --no-interaction --env=dev&php bin/console server:run
 ```
 
 ### Credenciales

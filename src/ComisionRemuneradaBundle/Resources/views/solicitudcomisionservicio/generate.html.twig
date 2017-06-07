@@ -1,0 +1,46 @@
+<script type="text/javascript">
+    $('#gemail').on('input',function(e){
+        $("#formPersonal").addClass("hidden");
+        $("#save").addClass("hidden");
+    });
+
+    $('#generate').click(function(){
+        toastr.clear();
+        $.ajax({
+            method: "POST",
+            data: {"Cedula":$('#gemail').val()},
+            url:   "{{ path('solicitud_buscarcedula_ajax') }}",
+            dataType: 'json',
+            beforeSend: function(){
+                $("#myModal2").modal("show");
+            },
+            success: function(data){
+                //alert("Solicitar: " + data["Solicitar"] + "Primera_vez: " + data["Primera_vez"] + "Existe: " + data["Existe"]);
+                if(data["Existe"] == "N"){
+                    toastr.error("El usuario no se encuentra registrado", "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                    });
+                    $("#myModal2").modal("hide");
+                    $("#formPersonal").addClass("hidden");
+                    $("#save").addClass("hidden");
+                }else{
+                    if (data["Solicitar"] == "N"){
+                        toastr.error("El usuario posee una solicitud en proceso o no ha transcurrido un año desde la última solicitud", "Error", {
+                            "timeOut": "0",
+                            "extendedTImeout": "0"
+                        });
+                        $("#myModal2").modal("hide");
+                        $("#formPersonal").addClass("hidden");
+                        $("#save").addClass("hidden");
+                    }else {
+
+                        $("#myModal2").modal("hide");
+                        $("#formPersonal").removeClass("hidden");
+                        $("#save").removeClass("hidden");
+                    }
+                }
+            }
+        });
+    });
+</script>

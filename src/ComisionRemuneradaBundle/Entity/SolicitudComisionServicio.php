@@ -25,11 +25,30 @@ class SolicitudComisionServicio extends Tramite
     
     protected $usuario_id;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $usuario;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha_recibido;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $posible_respuesta;
+
+    public function __construct(\DateTime $fecha = null)
     {
-        $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario")
-        , new recaudo("Copia de la Designación del cargos en la Administración")
-        ));
+        $this->recaudos = new ArrayCollection();
+        $this->fecha_recibido = $fecha;
+    }
+    
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -43,7 +62,7 @@ class SolicitudComisionServicio extends Tramite
     }
 
     public function __toString() {
-        return sprintf($this->getId());
+        return sprintf($this->getId().'('.$this->getFechaRecibido().')');
     }
 
     public function getUsuarioId()
@@ -103,5 +122,44 @@ class SolicitudComisionServicio extends Tramite
     public function getTransicion()
     {
         return $this->transicion;
+    }
+
+    /**
+     * Set fecha_recibido
+     *
+     * @param datetime $fecha
+     */
+    public function setFechaRecibido($fecha)
+    {
+        $this->fecha_recibido = $fecha;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return datetime
+     */
+    public function getFechaRecibido()
+    {
+        return $this->fecha_recibido;
+    }
+
+    public function getPosibleRespuesta()
+    {
+        return $this->posible_respuesta;
+    }
+
+    public function setPosibleRespuesta($posible_respuesta)
+    {
+        $this->posible_respuesta = $posible_respuesta;
+    }
+    
+    public function getUsuario(){
+        return $this->usuario = $this->getUsuarioId();        
+    }
+
+    public function setUsuario($id_usuario)
+    {
+        $this->usuario = $id_usuario;
     }
 }

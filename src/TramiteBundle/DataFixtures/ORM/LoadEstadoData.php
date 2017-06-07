@@ -13,13 +13,6 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $estado_enviado = new Estado();
-        $estado_enviado->setNombre('Enviado');
-        $estado_enviado->setDescripcion('Su solicitud ha sido enviada exitosamente.');
-
-        $manager->persist($estado_enviado);
-        $manager->flush();
-
         $estado_pendiente = new Estado();
         $estado_pendiente->setNombre('Pendiente');
         $estado_pendiente->setDescripcion('Solicitud pendiente por evaluación.');
@@ -37,6 +30,13 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
         $estado_aprobada = new Estado();
         $estado_aprobada->setNombre('Aprobada');
         $estado_aprobada->setDescripcion('Su solicitud ha sido aprobada.');
+
+        $manager->persist($estado_aprobada);
+        $manager->flush();
+
+        $estado_aprobada = new Estado();
+        $estado_aprobada->setNombre('Enviada');
+        $estado_aprobada->setDescripcion('Su solicitud ha sido enviada al Consejo de Facultad.');
 
         $manager->persist($estado_aprobada);
         $manager->flush();

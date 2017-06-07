@@ -12,10 +12,10 @@
 {% block content %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <h4 style="text-align: center"><b>INFORME PARA EFECTO DE JUBILACIÓN</b></h4>
+        <h1>Informe para Efecto de Jubilación</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
-            <li class="active">Consejo de Facultad </li>
+            <li class="active">Direccion de Asuntos Profesorales </li>
             <li class="active">Generar Informe </li>
         </ol>
     </div>
@@ -25,72 +25,55 @@
         <!-- title row -->
         <div class="row">
             <div align="center" class="col-xs-12">
-                <h2 class="page-header">
+                <h3 class="pager">
                     <br>
                     UNIVERSIDAD DE CARABOBO <br>
                     <div align="center">
-                        <img align="center" src="{{ asset('assets/images/UC.png') }}" width="90" height="110" alt="Logo UC"/> <br>
+                        <img src="https://raw.githubusercontent.com/CesarManriqueH/SISTRAMDUC/fadac8798b9392556ba6adabf251314883114cab/web/assets/images/UC.png" width="90" height="110" alt="Logo UC" />
+                        <br/>
                     </div>
-                    CONSEJO UNIVERSITARIO   <br>
-                </h2>
-
-
+                    CONSEJO UNIVERSITARIO
+                </h3>
+                <br><br><br><br><br>
             </div>
 
             <div class="row no-print">
-                <div class="col-xs-11">
-                    <p class="pull-right">
-                        <br>
-                        Asunto: &nbsp; <u>&nbsp;JUBILACIÓN&nbsp;</u> <br>
-                        Acta: &nbsp; <u>&nbsp;206º y 157º&nbsp;</u> <br>
-                        Fecha: &nbsp; <u>&nbsp;06 JUN 2016&nbsp;</u>
-                    </p>
-                    <div class="col-xs-3" align="left">
-                        <h4> Nº </h4>
-                        <form>
-                            <textarea class="textarea" placeholder="Ingrese Nº de acta" style="width: 90%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                        </form>
-                        <br> <br>
-                    </div>
-
+                <div class="col-xs-5" align="left">
+                    <dl class="dl-horizontal">
+                        <dt>&nbsp;</dt>
+                        <dd>&nbsp;</dd>
+                        <dt>&nbsp;</dt>
+                        <dd>&nbsp;</dd>
+                        <dt><h4><b>Nº&nbsp;&nbsp;<span id="spanNumero" class="label label-danger hide">Vacío</span></b></h4></dt>
+                        <dd><input id="numero" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                    </dl>
+                </div>
+                <div class="col-xs-5" align="right">
+                        <dl class="dl-horizontal">
+                            <dt>Asunto:&nbsp;&nbsp;<span id="spanAsunto" class="label label-danger hide">Vacío</span></dt>
+                            <dd><input id="asunto" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                            <dt>Acta:&nbsp;&nbsp;<span id="spanActa" class="label label-danger hide">Vacío</span></dt>
+                            <dd><input id="acta" class="form-control" type="text" placeholder="Ingresar texto"></dd>
+                            <dt>Fecha:&nbsp;&nbsp;<span id="spanFecha" class="label label-danger hide">Vacío</span></dt>
+                            <dd> {{ "now"|date('d-m-Y') }}</dd>
+                        </dl>
                 </div>
             </div>
-
-            <!--<div >
-                <small class="pull-right">
-                    <br>
-                    Asunto: <u>  JUBILACIÓN  </u> <br>
-                    Acta:  <u>  206º y 157º  </u> <br>
-                    Fecha: <u>  06 JUN 2016  </u>
-                </small>
-                <h4> Nº CD 015 534 2016</h4> <br> <br>
-            </div>-->
-            <!-- /.col -->
         </div>
         <!-- info row -->
         <div class="row no-print">
-            <div class="col-xs-12">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-10">
                 <br> <br>
                 <div class="box">
                     <!-- /.box-header -->
                     <div class="box-body pad">
                         <form>
-                            <textarea class="textarea" placeholder="Ingrese texto aquí" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            <span id="spanContenido" class="label label-danger hide">Vacío</span>
+                            <textarea id="contenido" class="textarea" placeholder="Ingrese texto aquí" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                         </form>
                     </div>
                 </div>
-                <!--<div>
-                    <br> <br>
-                    <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                        Hago de su conocimiento que la Comisión Delegada del Consejo Universitario en su
-                        Sesión Nº 534 de fecha de 30 de mayo de 2016, haciendo uso de la atribución que le compete
-                        el Artículo 44 del Reglamento interno respectivo, en atención a la solicitud contenida en el
-                        oficio asignado con el Nº CF 11316 de fecha 20 de abril de 2016 y visto el informe de
-                        asunto legal de la Dirección de Recursos Humanos Nro DRRHH/AL/053 del 05 de mayo de 2016,
-                        acuerdo aprobar el beneficio de su JUBILACIÓN a partir del 01 de junio de 2016.
-                    </p>
-                </div>-->
-
                 <div align="center">
                     <br> <br>
                     <p>
@@ -99,7 +82,6 @@
                         Secretario
                     </p>
                 </div>
-
                 <div>
                     <br> <br>
                     <p class="-align-left" style="margin-top: 10px;">
@@ -119,7 +101,7 @@
                 </div>
             </div>
         </div>
-
+        <br> <br>
         <div class="row no-print">
             <div class="col-xs-12" align="center">
                 <small class="text-muted well well-sm no-shadow">
@@ -131,20 +113,119 @@
         </div>
         <br> <br>
 
-        <!-- this row will not appear when printing -->
         <div class="row no-print">
-            <div class="col-xs-12">
-                <!--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>-->
-                <a href="/jubilacion/informe-jubilacion-pdf" target="_blank" class="btn bg-maroon">
-                    <i class="fa fa-download"></i>&nbsp;&nbsp;Generar PDF
-                </a>
-                <button type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
-                    <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar
-                </button>
-            </div>
+                <div class="col-xs-1"></div>
+                <div class="col-xs-4">
+                    <!--<a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>-->
+                    <!--href="/jubilacion/informe-jubilacion-pdf"-->
+                    <a id="llenarPDF" href="#" class="btn bg-maroon">
+                        <i class="fa fa-download"></i>&nbsp;&nbsp;Generar PDF
+                    </a>
+                </div>
+            <div class="col-xs-2"></div>
+                <div class="col-xs-4">
+                    <button id="enviar" type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
+                        <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;Enviar
+                    </button>
+                </div>
+                <div class="col-xs-1"></div>
         </div>
     </section>
     <!-- /.content -->
 
+    {% block custom_javascripts %}
+        <script>
+            $("#llenarPDF").click(function (){
+
+                toastr.clear();
+                var text = "";
+
+                var numero = $('#numero').val();
+                var asunto = $('#asunto').val();
+                var acta = $('#acta').val();
+                var fecha = $('#fecha').val();
+                var contenido = $('#contenido').val();
+                var continua = true;
+
+                if (numero == ""){
+                    continua = false;
+                    $('#spanNumero').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (asunto == ""){
+                    continua = false;
+                    $('#spanAsunto').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (acta == ""){
+                    continua = false;
+                    $('#spanActa').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (fecha == ""){
+                    continua = false;
+                    $('#spanFecha').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                if (contenido == ""){
+                    continua = false;
+                    $('#spanContenido').removeClass("hide");
+                    text = "Campo vacío";
+                }
+                //alert(window.location.href.split("=")[1][0]);
+                if(continua){
+                    $.ajax({
+                        method: "POST",
+                        data: {"Numero": document.getElementById("numero").value,
+                            "Asunto": document.getElementById("asunto").value,
+                            "Acta": document.getElementById("acta").value,
+                            "Contenido": document.getElementById("contenido").value,
+                            "Tramite": window.location.href.split("=")[1][0],
+                                "TipoDocumento": 1},
+                        url:  "{{ path('jubilacion-llenarPDF') }}",
+                        dataType: 'json',
+                        success: function(data)
+                        {
+                            if (data["alerta"] == "S"){
+
+                                $('#spanNumero').addClass("hide");
+                                text = "Informe generado con Exito";
+
+                                toastr.success(text, "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+
+                                //alert(window.location = data["numDoc"]);
+
+                                window.open( '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"]);
+                               // window.location = '/jubilacion/informe-jubilacion-pdf?Documento=' + data["numDoc"];
+                            }
+                            else{
+                                $('#spanNumero').addClass("hide");
+                                text = "Error al enviar respuesta de solicitud";
+
+                                toastr.error(text, "Error", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                });
+                            }
+                        }
+                    });
+                }
+                else{
+                    toastr.error(text, "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                    });
+                }
+            });
+        </script>
+        <script>
+            $("#enviar").click(function (){
+                window.location = '/jubilacion/cargar-informe-direccion';
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
 

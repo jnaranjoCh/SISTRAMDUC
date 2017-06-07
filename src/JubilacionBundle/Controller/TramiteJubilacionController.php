@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use TramiteBundle\Entity\TipoTramite;
 use TramiteBundle\Entity\TipoRecaudo;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
+use TramiteBundle\Entity\Transicion;
+use TramiteBundle\Entity\Estado;
 
 /**
  * Tramitejubilacion controller.
@@ -44,7 +46,8 @@ class TramiteJubilacionController extends Controller
      */
     public function newAction(Request $request)
     {
-        $tramiteJubilacion = new Tramitejubilacion();
+        $tramiteJubilacion = new TramiteJubilacion();
+        $transicion = new Transicion();
         $form = $this->createForm('JubilacionBundle\Form\TramiteJubilacionType', $tramiteJubilacion);
         $form->handleRequest($request);
 
@@ -64,6 +67,10 @@ class TramiteJubilacionController extends Controller
             $tipo_recaudo3 = $tipo_recaudo1_repo->findOneBy(["id" => 8]);
             $tipo_recaudo4 = $tipo_recaudo1_repo->findOneBy(["id" => 9]);
             $tipo_recaudo5 = $tipo_recaudo1_repo->findOneBy(["id" => 10]);
+
+             /* Se obtienen los datos de la tabla estado y se extraen los requeridos (solicitudes enviadas en estatus pendiente) */
+            $estado_repo = $em->getRepository(Estado::class);
+            $estado = $estado_repo->findOneBy(["id" => 1]);
 
             /* Se le asigna a cada recaudo su tipo*/
             $i = 1;
@@ -93,6 +100,17 @@ class TramiteJubilacionController extends Controller
             $tramiteJubilacion
                 ->assignTo($this->getUser())
                 ->setTipoTramite($tipo_tramite);
+
+            /* Se asigna la fecha en que se realiza la solicitud al tramite*/
+            $tramiteJubilacion->setfecha_recibido(new \DateTime("now"));
+
+            $transicion
+                ->asignarA($tramiteJubilacion) // Se asigna una transicion a la solicitud
+                ->setEstado($estado);                  // Se cambia el estado de la transición
+
+            $transicion->setEstadoConsejo($estado);
+
+            $transicion->setFecha(new \DateTime("now"));
             
             $em->persist($tramiteJubilacion);
 
@@ -105,7 +123,7 @@ class TramiteJubilacionController extends Controller
             $em->flush();
 
             /* Luego de enviarse la solucitud se direcciona a la vista de enviado*/
-            return $this->redirectToRoute('tramitejubilacion_show', array('id' => $tramiteJubilacion->getId()));
+            return $this->redirectToRoute('jubilacion-estado-solicitud', array('id' => $tramiteJubilacion->getId()));
         }
 
         /* De lo contrario se mantiene en la misma vista*/

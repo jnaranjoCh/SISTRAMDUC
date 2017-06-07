@@ -1,0 +1,80 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+        <h1>
+            Estado de la Solicitud Comisión de Servicio
+        </h1>
+        <ol class="breadcrumb">
+            <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
+            <li class="active">Estado Solicitud</li>
+        </ol>
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                {% if tramite_actual %}
+                    {% for actual in tramite_actual %}
+                        <ul class="timeline">
+                            <li class="time-label">
+                                <span class="bg-aqua">
+                                    {{ actual.getFechaRecibido()|date('d-m-Y') }}
+                                </span>
+                            </li>
+                            <li>
+                                <i class="fa fa-send bg-blue"></i>
+
+                                <div class="timeline-item">
+                                    {#<span class="time"><i class="fa fa-clock-o"></i> {{ actual.getFechaRecibido()|date('H:i') }}</span>#}
+                                    <h3 class="timeline-header">Su solicitud ha sido enviada con éxito y se encuentra pendiente por revisión.</h3>
+                                </div>
+                            </li>
+                            {% if actual.getTransicion().getFecha() == actual.getFechaRecibido() %}
+                                <li class="time-label">
+                                    <span class="bg-aqua">
+                                        {{ "now"|date('d-m-Y') }}
+                                    </span>
+                                </li>
+                                <li>
+                                    <i class="fa fa-envelope bg-yellow"></i>
+                                    <div class="timeline-item">
+                                        <h3 class="timeline-header">Su solicitud aún no ha sido evaluada.</h3>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="time-label">
+                                    <span class="bg-purple">
+                                        {{ actual.getTransicion().getFecha()|date('d-m-Y') }}
+                                    </span>
+                                </li>
+                                <li>
+                                    {% if actual.getTransicion().getEstado() == "Aprobada" %}
+                                        <i class="fa fa-envelope bg-green"></i>
+                                        <div class="timeline-item">
+                                            <h3 class="timeline-header"><a href="#">Respuesta</a></h3>
+                                            <div class="timeline-body">
+                                                Estado: {{  actual.getTransicion().getEstado() }}
+                                                Motivo: {{ actual.getTransicion().getDoc_info() }}
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <i class="fa fa-envelope bg-red"></i>
+                                        <div class="timeline-item">
+                                            <h3 class="timeline-header">Su solicitud aún no ha sido evaluada.</h3>
+                                        </div>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                {% else %}
+                    <h2>Usted no ha realizado una solicitud de Comisión de Servicio.</h2>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,46 @@
+<?php
+
+namespace JubilacionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="contenido_informe")
+ * @ORM\Entity(repositoryClass="JubilacionBundle\Repository\ContenidoInformeRepository")
+ */
+class ContenidoInforme
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $asunto;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $acta;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $fecha;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    protected $num;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $contenido;
+}
+

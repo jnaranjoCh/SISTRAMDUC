@@ -438,7 +438,7 @@
                     </tfoot>
                   </table>
                 </div>
-                 <div class="row">
+                <div class="row">
                   <div class="col-md-12">
                       <div class="form-group has-feedback">
                             <button  id="agregarRevistas" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
@@ -514,6 +514,13 @@
                       </tfoot>
                     </table>
                   </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                              <button id="agregarHijos" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                        </div>
+                    </div><!--col-xs-12   col-md-offset-5 -->
+                  </div>
                 </div>
                 <!-- /.box -->
              </div>
@@ -542,8 +549,8 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  {% include('RegistroUnicoBundle:ConsultarDatos:iniCD.html.twig') %}
-  {% include('RegistroUnicoBundle:ConsultarDatos:generate.html.twig') %}
-  {% include('RegistroUnicoBundle:ConsultarDatos:insertDeleteAndUpdateTable.html.twig') %}
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/iniCD.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/generate.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/insertDeleteAndUpdateTable.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showBoxes.js') }}"></script>
 {% endblock %}

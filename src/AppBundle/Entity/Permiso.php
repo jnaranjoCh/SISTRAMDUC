@@ -24,9 +24,14 @@ class Permiso
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=256)
+     * @ORM\Column(type="string", length=256, nullable=true)
      */
     private $description;
+
+    public function __construct(string $nombre = null)
+    {
+        $this->nombre = $nombre;
+    }
 
     /**
      * Get id

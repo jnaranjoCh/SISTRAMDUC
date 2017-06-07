@@ -12,22 +12,19 @@
 {% block content %}
     <!-- Content Header (Page header) -->
     <div class="content-header">
-
+        <h1>Dirección de Asuntos Profesorales</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
             <li class="active">Dirección de Asuntos Profesorales </li>
             <li class="active">Revisar Solicitudes </li>
         </ol>
     </div>
-    <br>
 
     <!-- Main content -->
     <section class="content">
-        <h4 style="text-align: center"><b>DIRECCIÓN DE ASUNTOS PROFESORALES</b></h4>
-        <br>
         <!-- Default box -->
-        <div class="box box-solid box-default">
-            <div class="box-header with-border">
+        <div class="box box-solid box-info">
+            <div class="box-header ">
                 <h3 class="box-title"><b>Solicitudes:</b></h3>
             </div>
 
@@ -35,7 +32,7 @@
                 <div class="row">
                     <div class="col-xs-16">
                         <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover">
+                            <table class="table table-hover" id="solicitudes">
                                 <tr>
                                     <th>Nº Solicitud</th>
                                     <th>Solicitante</th>
@@ -43,284 +40,47 @@
                                     <th>Fecha Enviada</th>
                                     <th>Estatus</th>
                                     <th>Motivo</th>
-                                    <th>Enviar Respuesta</th>
+                                   <!-- <th>Informe</th>
+                                    <th>Informe Consejo</th> -->
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;183
-                                        </button>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal" role="dialog">
-                                            <div class="modal-dialog">
+                                {% for tramiteJubilacion in tramites %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('jubilacion-revisar-solicitud', { 'id': tramiteJubilacion.id }) }}">
+                                                <button type="button" class="btn btn-info" data-toggle="modal">
+                                                    <i class="fa fa-info-circle"></i>&nbsp;&nbsp;{{ tramiteJubilacion.id }}
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td>{{ tramiteJubilacion.getUsuarioId().getNombreCompleto() }}</td>
+                                        <td>{{ tramiteJubilacion.getfecha_recibido()|date('d-m-Y') }}</td>
+                                        {% if tramiteJubilacion.getTransicion().getFecha() and tramiteJubilacion.getfecha_recibido() %}
+                                            {% if tramiteJubilacion.getTransicion().getFecha() == tramiteJubilacion.getfecha_recibido() %}
+                                                <td align="center">-</td>
+                                            {% else %}
+                                                <td>{{ tramiteJubilacion.getTransicion().getFecha()|date('d-m-Y') }}</td>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getTransicion().getEstado() == "Pendiente" %}
+                                            <td><span class="label label-warning">{{ tramiteJubilacion.getTransicion().getEstado() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getTransicion().getEstado() == "Aprobada" %}
+                                            <td><span class="label label-success">{{ tramiteJubilacion.getTransicion().getEstado() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getTransicion().getEstado() == "Negada" %}
+                                            <td><span class="label label-danger">{{ tramiteJubilacion.getTransicion().getEstado() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getTransicion().getEstado() == "Enviada" %}
+                                            <td><span class="label label-info">{{ tramiteJubilacion.getTransicion().getEstado() }}</span></td>
+                                        {% endif %}
 
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <h4 class="modal-title" align="center"><b>Información del Solicitante</b></h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <table>
-                                                            <tr>
-                                                                <th>
-                                                                    <h4>Solicitud Nº<b> 183</b></h4>
-                                                                </th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th></th>
-                                                                <th></th>
-                                                                <th>
-                                                                    <h5><b>Nombres y Apellidos:</b>&nbsp;&nbsp;Carlos Enrique Campos Cobeña</h5>
-                                                                    <h5><b>Cédula de Identidad:</b>&nbsp;&nbsp;20.765.356</h5>
-                                                                    <h5><b>Nacionalidad:</b>&nbsp;&nbsp;Venezolano</h5>
-                                                                    <h5><b>Correo:</b>&nbsp;&nbsp;carloscampos@gmail.com</h5>
-                                                                    <h5><b>Tlf:</b>&nbsp;&nbsp;(0412)-451-2323</h5>
-                                                                </th>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>Carlos Campos</td>
-                                    <td>11-7-2014</td>
-                                    <td>11-7-2014</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning">Pendiente</button>
-                                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Aprobado</a></li>
-                                                <li><a href="#">Aprobado con Obsv.</a></li>
-                                                <li><a href="#">Negado</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="text" placeholder="Escribir...">
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">Enviar</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Profesor</a></li>
-                                                <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">Consejo de Facultad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;183
-                                        </button>
-                                    </td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td>11-7-2014</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning">Pendiente</button>
-                                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Aprobado</a></li>
-                                                <li><a href="#">Aprobado con Obsv.</a></li>
-                                                <li><a href="#">Negado</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="text" placeholder="Escribir...">
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">Enviar</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Profesor</a></li>
-                                                <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">Consejo de Facultad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;183
-                                        </button>
-                                    </td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td>11-7-2014</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning">Pendiente</button>
-                                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Aprobado</a></li>
-                                                <li><a href="#">Aprobado con Obsv.</a></li>
-                                                <li><a href="#">Negado</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="text" placeholder="Escribir...">
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">Enviar</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Profesor</a></li>
-                                                <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">Consejo de Facultad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;345
-                                        </button>
-                                    </td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td>11-7-2014</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-success">Aprobado</button>
-                                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Aprobado</a></li>
-                                                <li><a href="#">Aprobado con Obsv.</a></li>
-                                                <li><a href="#">Negado</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="text" placeholder="Escribir...">
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">Enviar</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Profesor</a></li>
-                                                <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">Consejo de Facultad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;183
-                                        </button>
-                                    </td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td>11-7-2014</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-warning">Pendiente</button>
-                                            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Aprobado</a></li>
-                                                <li><a href="#">Aprobado con Obsv.</a></li>
-                                                <li><a href="#">Negado</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="text" placeholder="Escribir...">
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">Enviar</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Profesor</a></li>
-                                                <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">Consejo de Facultad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <button type="button" class="btn bg-maroon" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;183
-                                        </button>
-                                    </td>
-                                    <td>John Doe</td>
-                                    <td>11-7-2014</td>
-                                    <td>11-7-2014</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-danger">Negado</button>
-                                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Aprobado</a></li>
-                                                <li><a href="#">Aprobado con Obsv.</a></li>
-                                                <li><a href="#">Negado</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="text" placeholder="Escribir...">
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-info">Enviar</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">Profesor</a></li>
-                                                <li ><a href="{{ path('jubilacion-informe-jubilacion') }}">Consejo de Facultad</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        {% if tramiteJubilacion.getTransicion().getDoc_info() %}
+                                            <td>{{ tramiteJubilacion.getTransicion().getDoc_info() }}</td>
+                                        {% else %}
+                                            <td align="center">-</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
                             </table>
                         </div>
                         <!-- /.box-body -->

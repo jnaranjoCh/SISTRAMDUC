@@ -63,7 +63,7 @@ class RegistrarDatosController extends Controller
                 $arr = $arr[count($arr)-1];
                 $arr = explode(".",$arr);
                 $hijo = $em->getRepository('ClausulasContractualesBundle:Hijo')
-                             ->findOneByCedulaHijo($arr[0]);
+                             ->findOneById($arr[0]);
                 $hijo->setPartidaNacimientoUrl($fichero_subido);
                 $recaudo->setPath($fichero_subido);
                 $em->flush();
@@ -470,22 +470,14 @@ class RegistrarDatosController extends Controller
             $i = 0;
             $hijoss = [];
             foreach($hijos as $hijo){
-                 $newRecaudo  = new Recaudo();
-                 $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
-                                    ->findOneByNombre('Partida de Nacimiento');
-                 $newRecaudo->setName("acta_nacimiento_".$hijo['ciHijo'].".pdf");
-                 $newRecaudo->setFechaVencimiento(new \DateTime($hijo['fechaVencimiento']));
-                 $newRecaudo->setUsuario($user);
-                 $newRecaudo->setTipoRecaudo($tipo_recaudo);
-                 $newRecaudo->setTabla("Hijo");
-                 $newRecaudo->setPath("");
-                 $em->persist($newRecaudo);
                  
-                               
                  $newHijo = new Hijo();
                  $newHijo->setCedulaMadre($hijo['ciMadre']);
                  $newHijo->setCedulaPadre($hijo['ciPadre']);
-                 $newHijo->setCedulaHijo($hijo['ciHijo']);
+                 if($hijo['ciHijo'] == "")
+                    $newHijo->setCedulaHijo(null);
+                 else
+                    $newHijo->setCedulaHijo($hijo['ciHijo']);
                  $newHijo->setFechaNacimiento(new \DateTime($hijo['fechaNacimiento']));
                  $newHijo->setPrimerNombre($hijo['primerNombre']);
                  $newHijo->setSegundoNombre($hijo['segundoNombre']);
@@ -494,8 +486,23 @@ class RegistrarDatosController extends Controller
                  $newHijo->setNacionalidad($hijo['nacionalidad']);
                  $newHijo->setPartidaNacimientoUrl('');
                  $hijoss[$i] = $newHijo;
-                 $em = $this->getDoctrine()->getManager();
                  $em->persist($newHijo);
+                 
+                 $newRecaudo  = new Recaudo();
+                 $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                                    ->findOneByNombre('Partida de Nacimiento');
+                 $newRecaudo->setName("acta_nacimiento_"./*$hijo['ciHijo']*/$newHijo->getId().".pdf");
+                 $newRecaudo->setFechaVencimiento(new \DateTime($hijo['fechaVencimiento']));
+                 $newRecaudo->setUsuario($user);
+                 $newRecaudo->setTipoRecaudo($tipo_recaudo);
+                 $newRecaudo->setTabla("Hijo");
+                 $newRecaudo->setPath("");
+                 $em = $this->getDoctrine()->getManager();
+                 $em->persist($newRecaudo);
+                 
+                               
+                
+                 
                  $em->flush();
                  $i++;
             }

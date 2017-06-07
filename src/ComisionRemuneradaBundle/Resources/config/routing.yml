@@ -1,39 +1,75 @@
-comision_remunerada_info:
-    path: /comision_remunerada_info
-    defaults: {_controller: ComisionRemuneradaBundle:Default:comision_remunerada_info}
+comision-servicio-informacion:
+    path: /comision-servicio/informacion
+    defaults: {_controller: ComisionRemuneradaBundle:Default:comisionServicioInfo}
 
-solicitudcomisionservicio:
-    path: /solicitudcomisionservicio_new
+solicitudcomisionservicio_new:
+    path: /solicitudcomisionservicio_new/{apr}
     defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:new}
+    requirements:
+            _method:  POST
+
+validador:
+    path: /validar-usuario
+    defaults: {_controller: ComisionRemuneradaBundle:SolicitudComisionServicio:validador}
 
 comision_servicio_ver_solicitud:
-    path: /comision-de-servicio/solicitud
+    path: /comision-de-servicio/solicitud/{id}
     defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitud}
+
+comision-de-servicio-insertar:
+    path: /comision-de-servicio/insertar
+    defaults: {_controller: ComisionRemuneradaBundle:Default:insertar}
 
 solicitudes-comision-de-servicio:
     path: /comision-de-servicio/solicitudes
     defaults: {_controller: ComisionRemuneradaBundle:Default:solicitudesComisionServicio}
 
 estado_sol_prof:
-    path: /estado-solicitud
+    path: /comision-de-servicio/estado-solicitud
     defaults: {_controller: ComisionRemuneradaBundle:Default:estado_sol_prof}
 
 informe_pdf:
     path: /comision-servicio/informe-pdf
     defaults: {_controller: ComisionRemuneradaBundle:Default:informePDF}
 
+informe:
+    path: /comision-servicio/informe
+    defaults: {_controller: ComisionRemuneradaBundle:Default:informe}
 
-#solicitud_serv_remun:
- #   path: /solicitud_serv_remun
-  #  defaults: {_controller: ComisionRemuneradaBundle:Default:solicitud_serv_remun}
+comision_servicio_solicitudes_catedra:
+    path: /comision-de-servicio/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudes}
 
+comision-de-servicio-insertar-posible-respuesta:
+    path: /comision-de-servicio/insertar-posible-respuesta
+        defaults: {_controller: ComisionRemuneradaBundle:Default:insertarPosibleRespuesta}
 
-#envio_solicitud:
- #   path: /envio_solicitud
-  #  defaults: {_controller: ComisionRemuneradaBundle:AAPP:solicitudes_serv_remun}
+solicitud_buscarcedula_ajax:
+    path:     /solicitud/buscar-cedula
+    defaults: { _controller: ComisionRemuneradaBundle:SolicitudComisionServicio:buscarCedulaAjax }
+    requirements:
+        _method:  POST
 
-#descarga_archivo_ajax:
-    #path:     /solicitud_serv_remun/envio-solicitud
-    #defaults: { _controller: ComisionRemuneradaBundle:Default:descargaArchivo }
-    #requirements:
-        #_method:  POST
+solicitud_guardararchivos_ajax:
+    path:     /solicitud/guardar-archivos-datos
+    defaults: { _controller: ComisionRemuneradaBundle:solicitudcomisionservicio:guardarArchivosAjax }
+
+comision_servicio_solicitudes_facultad:
+    path: /comision-de-servicio/consejo-de-facultad/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudesFacultad}
+
+comision_servicio_solicitudes_aapp:
+    path: /comision-de-servicio/solicitudes
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudesAAPP}
+
+comision_servicio_insertar_facultad:
+    path: /comision-de-servicio/insertar-facultad
+    defaults: {_controller: ComisionRemuneradaBundle:Default:insertarConsejoFacultad}
+
+comision_servicio_atendidas_facultad:
+    path: /comision-servicio/solicitudes-atendidas-facultad
+    defaults: {_controller: ComisionRemuneradaBundle:Default:atendidasFacultad}
+
+comision_servicio_ver_solicitud_facultad:
+    path: /comision-de-servicio/consejo-de-facultad/ver-solicitud/{id}
+    defaults: {_controller: ComisionRemuneradaBundle:Default:verSolicitudFacultad}

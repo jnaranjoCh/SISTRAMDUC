@@ -1,0 +1,128 @@
+{% extends '::base.html.twig' %}
+
+{% block opcionsidebar %}
+    <li data-route="jubilacion-informacion">
+        <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Revisar Solicitudes</a>
+    </li>
+    <li data-route="jubilacion-informacion">
+        <a href="{{ path('jubilacion-informacion') }}"><i class="fa fa-circle-o"></i>Generar Informe</a>
+    </li>>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <h1>Listado de Solicitudes atendidas por Consejo de Facultad</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-fw fa-child"></i> Jubilación</a></li>
+            <li class="active">Consejo de Facultad </li>
+            <li class="active">Revisar Solicitudes </li>
+        </ol>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-solid box-info">
+            <div class="box-header ">
+                <h3 class="box-title"><b>Solicitudes:</b></h3>
+            </div>
+
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-16">
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover" id="solicitudes">
+                                <tr>
+                                    <th>Nº Solicitud</th>
+                                    <th>Solicitante</th>
+                                    <th>Fecha Recibida</th>
+                                    <th>Fecha Enviada</th>
+                                    <th>Estatus</th>
+                                    <th>Motivo</th>
+                                    <!-- <th>Informe DAP</th>
+                                     <th>Informe</th> -->
+                                </tr>
+                                {% for tramiteJubilacion in tramites %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ path('jubilacion-revisar-solicitud-consejo', { 'id': tramiteJubilacion.getTramite().getId() }) }}">
+                                                <button type="button" class="btn btn-info" data-toggle="modal">
+                                                    <i class="fa fa-info-circle"></i>&nbsp;&nbsp;{{ tramiteJubilacion.getTramite().getId() }}
+                                                </button>
+                                            </a>
+                                        </td>
+                                        <td>{{ tramiteJubilacion.getTramite().getUsuarioId().getNombreCompleto() }}</td>
+                                        <td>{{ tramiteJubilacion.getTramite().getfecha_recibido()|date('d-m-Y') }}</td>
+                                        {% if tramiteJubilacion.getFecha() and tramiteJubilacion.getTramite().getfecha_recibido() %}
+                                            {% if tramiteJubilacion.getFecha() == tramiteJubilacion.getTramite().getfecha_recibido() %}
+                                                <td align="center">-</td>
+                                            {% else %}
+                                                <td>{{ tramiteJubilacion.getFecha()|date('d-m-Y') }}</td>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Pendiente" %}
+                                            <td><span class="label label-warning">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Aprobada" %}
+                                            <td><span class="label label-success">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
+                                        {% endif %}
+                                        {% if tramiteJubilacion.getEstadoConsejo() == "Negada" %}
+                                            <td><span class="label label-danger">{{ tramiteJubilacion.getEstadoConsejo() }}</span></td>
+                                        {% endif %}
+
+                                        {% if tramiteJubilacion.getMotivoConsejo() %}
+                                            <td>{{ tramiteJubilacion.getMotivoConsejo() }}</td>
+                                        {% else %}
+                                            <td align="center">-</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- /.box -->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" align="center"><b>Información del Solicitante</b></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table>
+                            <tr>
+                                <th>
+                                    <h4>Solicitud Nº<b> 183</b></h4>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>
+                                    <h5><b>Nombres y Apellidos:</b>&nbsp;&nbsp;Carlos Enrique Campos Cobeña</h5>
+                                    <h5><b>Cédula de Identidad:</b>&nbsp;&nbsp;20.765.356</h5>
+                                    <h5><b>Nacionalidad:</b>&nbsp;&nbsp;Venezolano</h5>
+                                    <h5><b>Correo:</b>&nbsp;&nbsp;carloscampos@gmail.com</h5>
+                                    <h5><b>Tlf:</b>&nbsp;&nbsp;(0412)-451-2323</h5>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+
+{% endblock %}
