@@ -90,6 +90,11 @@ class DefaultController extends Controller
             $this->mostrarVerificarDatos($tramite_reincorporacion);
         }
 
+        return $this->render('ReincorporacionBundle::subir-recaudos.html.twig', array(
+            'tramiteReincorporacion' => $tramite_reincorporacion,
+            'form' => $form->createView()
+        ));
+
         // $designacion_docente = $request->files->get('designacion_docente');
         // $oficio_ubicacion = $request->files->get('oficio_ubicacion');
         // $ultimo_ascenso = $request->files->get('ultimo_ascenso');
@@ -105,10 +110,7 @@ class DefaultController extends Controller
         //         $fichero_subido = $dir_subida.$recaudo->getName();
         // }
 
-        return $this->render('ReincorporacionBundle::subir-recaudos.html.twig', array(
-            'tramiteReincorporacion' => $tramite_reincorporacion,
-            'form' => $form->createView()
-        ));
+        
     }
 
     /**
