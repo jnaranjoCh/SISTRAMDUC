@@ -1,37 +1,88 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/reincorporacion/global.css') }}">    
+{% endblock %}
+
 {% block content %}
+
     <section class="content-header">
-        <h1>
-            Realizar Solicitud de Comisión de Servicio
-        </h1>
+        <h1>Solicitud de Reincorporación al Personal Docente</h1>
         <ol class="breadcrumb">
-            <li><i class="fa fa-fw fa-money"></i> Comisión de Servicio</li>
-            <li class="active">solicitar</li>
+          <li><i class="fa fa fa-suitcase"></i> Reincorporación docente</li>
+          <li class="active">Subida de recaudos</li>
         </ol>
     </section>
 
     <section class="content">
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Recaudos</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            {{ form_start(form) }}
-            <div class="box-body">
-                <div class="form-group">                    
-                    {{ form_widget(form) }}
-                </div>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <button name="submit" class="btn btn-primary">Subir</button>
-            </div>
-            {{ form_end(form) }}
+        <div class="callout callout-info">        
+            <h4><i class="fa fa-info-circle"></i> Debe adjuntar los recaudos exigidos a continuación para continuar con el proceso de <strong>Reincorporación.</strong></h4>
         </div>
-        <!-- /.box -->
+        <div class="box box-success">
+            <div class="box-header">
+                <h4 class="box-title">Subida de recaudos</h4>
+            </div>
+            <div class="box-body">
+              <form action="" id="form_recaudos">            
+             
+              <div class="form-group">
+                  <label for="exampleInputFile">Designación como docente</label>
+                  <input type="file" id="designacion_docente" required name="designacion_docente" accept="application/pdf">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              
+              <br>
+              <div class="form-group">
+                  <label for="exampleInputFile">Oficio de la Ubicación</label>
+                  <input type="file" id="oficio_ubicacion" required name="oficio_ubicacion" accept="application/pdf">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              
+              <br>
+              <div class="form-group">
+                  <label for="exampleInputFile">Oficio del úitimo ascenso</label>
+                  <input type="file" id="ultimo_ascenso" required name="ultimo_ascenso" accept="application/pdf">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+
+              <br>
+              <div class="form-group">
+                  <label for="exampleInputFile">Oficio de la aceptación de la renuncia</label>
+                  <input type="file" id="aceptacion_renuncia" required name="aceptacion_renuncia" accept="application/pdf">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              
+              <br>
+              <div class="form-group">
+                  <label for="exampleInputFile">Fondo negro del título (solo IV o V nivel)</label>
+                  <input type="file" id="titulo" required name="titulo" accept="application/pdf">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+              
+              <br>
+              <div class="form-group">
+                  <label for="exampleInputFile">Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo</label>
+                  <input type="file" id="declaracion_jurada" required name="declaracion_jurada" accept="application/pdf">
+
+                  <p class="help-block">Example block-level help text here.</p>
+              </div>
+             
+              <br><br>
+              <div class="col-md-12 col-sm-12 right-block">                
+                  <a href="{{ path('actualizar-curriculum') }}" class="btn btn-lg btn-default">Volver</a>  
+                  <button type="submit" class="btn btn-lg btn-success">Adjuntar</button>
+              </div>
+              {{ form_end(form) }}
+            {#</form>#}
+          </div>            
+        </div>
     </section>
-    <!-- /.content -->
+    
+
 {% endblock %}
