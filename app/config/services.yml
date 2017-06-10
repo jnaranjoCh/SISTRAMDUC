@@ -7,3 +7,14 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    app.security.authorizer:
+        class: AppBundle\Security\Authorizer
+        arguments: ['@security.token_storage', '@doctrine.orm.entity_manager']
+
+    app.twig.app_extension:
+        public: false
+        class: AppBundle\Security\TwigExtension
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }

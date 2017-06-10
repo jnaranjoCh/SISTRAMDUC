@@ -37,6 +37,21 @@ class Estado
      */
     protected $transiciones;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_consejo")
+     */
+    protected $transicionesConsejo;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_departamento")
+     */
+    protected $transicionesDepartamento;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_catedra")
+     */
+    protected $transicionesCatedra;
+    
     public function __construct()
     {
         $this->transiciones = new ArrayCollection();
@@ -137,6 +152,40 @@ class Estado
     public function __toString()
     {
         return sprintf($this->getNombre());
+    }
+
+    /**
+     * Add transicionConsejo
+     *
+     * @param \TramiteBundle\Entity\TransicionConsejo $transicionConsejo
+     *
+     * @return TransicionConsejo
+     */
+    public function addTransicionConsejo(TransicionConsejo $transicionesConsejo)
+    {
+        $this->transicionesConsejo[] = $transicionesConsejo;
+
+        return $this;
+    }
+
+    /**
+     * Remove transicionConsejo
+     *
+     * @param \TramiteBundle\Entity\TransicionConsejo $transicionConsejo
+     */
+    public function removeTransicionConsejo(Transicion $transicionConsejo)
+    {
+        $this->transicionesConsejo->removeElement($transicionConsejo);
+    }
+
+    /**
+     * Get transicionesConsejo
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTransicionesConsejo()
+    {
+        return $this->transicionesConsejo;
     }
 }
 

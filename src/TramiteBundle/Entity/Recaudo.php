@@ -34,7 +34,7 @@ class Recaudo
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $name;
+    private $name = "";
 
     /**
      * @ORM\Column(type="datetime", nullable=true)

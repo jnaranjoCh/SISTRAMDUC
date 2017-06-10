@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use TramiteBundle\Entity\Transicion;
+use TramiteBundle\Entity\Documento;
 use AppBundle\Entity\Usuario;
+use TramiteBundle\Entity\TransicionConsejo;
 
 /**
  * @ORM\Entity
@@ -27,7 +29,7 @@ class Tramite
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var array
@@ -64,6 +66,12 @@ class Tramite
      */
     protected $usuario_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="tramite_id")
+     */
+    protected $documento_id;
+
+
     public function getId()
     {
         return $this->id;
@@ -95,8 +103,6 @@ class Tramite
 
     /**
      * Set tipo_tramite_id
-     *
-     * @param \TramiteBundle\Entity\TipoTramite $tipoTramite_id
      *
      * @return Tramite
      */
@@ -171,12 +177,23 @@ class Tramite
     
     public function __toString()
     {
-        return sprintf($this->getUsuarioId().' ('.$this->getTransicion().')'.' ('.$this->getRecaudos().')');
+        return sprintf($this->getUsuarioId().'('.$this->getTransicion().')'.' ('.$this->getRecaudos().')'.' ('.$this->getDocumento().')');
     }
     
     public function ownTransicion(Transicion $transicion)
     {
         $this->transicion = $transicion;
+        return $this;
+    }
+
+    public function getDocumento()
+    {
+        return $this->documento_id;
+    }
+
+    public function ownDocumento(Documento $documento)
+    {
+        $this->documento_id = $documento;
         return $this;
     }
 }

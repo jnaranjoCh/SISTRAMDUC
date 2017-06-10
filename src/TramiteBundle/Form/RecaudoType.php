@@ -15,7 +15,7 @@ class RecaudoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', null, array('label' => false));
-        $builder->add('file', null, array('label' => false));
+        $builder->add('file', null, array('label' => false, 'attr' => array('class' => 'form-control')));
     }
     
     /**
