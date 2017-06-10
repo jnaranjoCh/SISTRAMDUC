@@ -119,7 +119,7 @@ class Usuario implements UserInterface
     private $activo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Rol", fetch="EAGER")
+     * @ORM\ManyToMany(targetEntity="Rol")
      * @ORM\JoinTable(name="usuario_rol",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
