@@ -10,4 +10,15 @@ namespace AppBundle\Repository;
  */
 class PermisosRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findPermisoNombresByUserCedula($cedula)
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT p.nombre FROM AppBundle\Entity\Usuario u
+             JOIN u.roles r JOIN r.permisos p
+             WHERE u.cedula = :cedula'
+        );
+        $query->setParameter('cedula', $cedula);
+
+        return $query->getResult();
+    }
 }

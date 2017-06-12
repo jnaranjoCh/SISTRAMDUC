@@ -4,12 +4,13 @@ namespace AppBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use AppBundle\Entity\Permiso;
 
 class Authorizer
 {
     private $tokenStorage;
     private $manager;
-    private $user;
+    private $userPermisosMap;
 
     public function __construct(TokenStorageInterface $tokenStorage, ObjectManager $manager)
     {
@@ -19,26 +20,25 @@ class Authorizer
 
     public function authorize(string $permission)
     {
-        if (is_null($this->user)) {
-            $this->setUser();
+        if (is_null($this->userPermisosMap)) {
+            $this->userPermisosMap = $this->getUserPermisosMap();
         }
 
-        foreach ($this->user->getRolesAsObjects() as $rol) {
-            foreach ($rol->getPermisos() as $permiso) {
-                if ($permiso->getNombre() == $permission) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return isset($this->userPermisosMap[$permission]);
     }
 
-    public function setUser()
+    public function getUserPermisosMap()
     {
         $user = $this->tokenStorage->getToken()->getUser();
-        $repository = $this->manager->getRepository(get_class($user));
+        $repository = $this->manager->getRepository(Permiso::class);
 
-        $this->user = $repository->findOneByCedula($user->getCedula());
+        $permisoNombres = $repository->findPermisoNombresByUserCedula($user->getCedula());
+
+        $userPermisosMap = [];
+        foreach ($permisoNombres as $permiso) {
+            $userPermisosMap[$permiso['nombre']] = true;
+        }
+
+        return $userPermisosMap;
     }
 }

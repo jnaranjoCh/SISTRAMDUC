@@ -29,7 +29,7 @@ class Rol
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Permiso", fetch="EAGER", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Permiso", cascade={"persist"})
      * @ORM\JoinTable(name="rol_permiso",
      *      joinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="permiso_id", referencedColumnName="id")}
