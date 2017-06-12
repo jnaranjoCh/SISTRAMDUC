@@ -659,6 +659,7 @@ class Usuario implements UserInterface
         $registros = new stdClass;
 
         $i = 0;
+        $k = 0;
         $data[] = [];
         $aux[] = [];
 
@@ -670,7 +671,7 @@ class Usuario implements UserInterface
 
         foreach($this->registros->toArray() as $registro){
             $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
-            $aux = $registro->getParticipantes($htmlIdRegistrosAux);
+            $aux = $registro->getParticipantes($htmlIdRegistrosAux,$k);
             for($j = 0; $j < $aux->num; $j++)
             {
                 if($assets == "assets")
@@ -694,10 +695,11 @@ class Usuario implements UserInterface
         $registros = new stdClass;
 
         $i = 0;
+        $k = 0;
         $data[] = [];
         $aux[] = [];
 
-        $htmlIdRegistros = '<select id="IdDelRegistro'.$i.'" class="form-control select2" style="width: 240px;">';
+        $htmlIdRegistros = '<select id="IdDelRegistroRevista'.$i.'" class="form-control select2" style="width: 240px;">';
         foreach($this->registros->toArray() as $registro){
             $htmlIdRegistros = $htmlIdRegistros."<option value='".$registro->getId()."'>".$registro->getId()."</option>";
         }
@@ -705,7 +707,7 @@ class Usuario implements UserInterface
 
         foreach($this->registros->toArray() as $registro){
             $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
-            $aux = $registro->getRevistas($htmlIdRegistrosAux);
+            $aux = $registro->getRevistas($htmlIdRegistrosAux,$k);
             for($j = 0; $j < $aux->num; $j++)
             {
                 if($assets == "assets")

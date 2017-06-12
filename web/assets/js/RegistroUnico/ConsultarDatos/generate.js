@@ -2,6 +2,8 @@ var refreshIntervalId;
 var tableRegistros;
 var tableParticipantes;
 var tableRevista;
+var countFilesPersonal;
+var countFilesHijos;
 
 $('#gemail').on('input',function(e){
     $("#formRegistros").addClass("hidden");
@@ -111,11 +113,13 @@ function initTableConsultar(){
                     $("#ActaNacCargaHijoDatos").fileinput({
                         //language: "es",
                         overwriteInitial: true,
+                        filesCount: paths.length,
                         initialPreview: paths,
                         initialPreviewAsData: true,
                         initialPreviewFileType: 'pdf',
                         initialPreviewConfig: config
                     });
+                    countFilesHijos = paths.length;
                     $("#formHijos").removeClass("hidden");
                     $('#checkboxHijos').prop('checked', true);
                 }else
@@ -202,6 +206,7 @@ function initTableConsultar(){
                         {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 3, showDelete: false}
                     ]
                 });
+                countFilesPersonal = paths.length;
             }
         });
         

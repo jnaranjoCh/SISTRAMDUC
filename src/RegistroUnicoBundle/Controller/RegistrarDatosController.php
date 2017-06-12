@@ -491,7 +491,7 @@ class RegistrarDatosController extends Controller
                  $newRecaudo  = new Recaudo();
                  $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
                                     ->findOneByNombre('Partida de Nacimiento');
-                 $newRecaudo->setName("acta_nacimiento_"./*$hijo['ciHijo']*/$newHijo->getId().".pdf");
+                 $newRecaudo->setName("acta_nacimiento_".$newHijo->getId().".pdf");
                  $newRecaudo->setFechaVencimiento(new \DateTime($hijo['fechaVencimiento']));
                  $newRecaudo->setUsuario($user);
                  $newRecaudo->setTipoRecaudo($tipo_recaudo);
@@ -499,10 +499,6 @@ class RegistrarDatosController extends Controller
                  $newRecaudo->setPath("");
                  $em = $this->getDoctrine()->getManager();
                  $em->persist($newRecaudo);
-                 
-                               
-                
-                 
                  $em->flush();
                  $i++;
             }

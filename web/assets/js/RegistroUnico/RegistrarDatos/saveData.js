@@ -14,7 +14,7 @@ $('#submitData').click(function(){
     var can_register = true;
     var date = new Date();
     var anio;
-    var text = "";
+    var text = "0";
     var indRegistroParticipantes = 0;
     var indParticipantes = 0;
     var indRegistroRevistas = 0;

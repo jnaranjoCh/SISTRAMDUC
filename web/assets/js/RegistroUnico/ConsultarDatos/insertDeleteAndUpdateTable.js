@@ -354,7 +354,7 @@ $('#agregarParticipantes').click(function(){
     var cell = new Object();
     cell.row = "0"; cell.column = "1"; cell.columnVisible = "0";
     var idDelRegistro = tableParticipantes.cell(cell).data();
-
+    idDelRegistro = idDelRegistro.replace(idDelRegistro.split('id="')[1].split('"')[0],"IdDelRegistro"+tableParticipantes.page.info().recordsTotal);  
     tableParticipantes.row.add( {
         "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
         "IdDelRegistro":idDelRegistro,
@@ -369,7 +369,7 @@ $('#agregarRevistas').click(function(){
     var cell = new Object();
     cell.row = "0"; cell.column = "1"; cell.columnVisible = "0";
     var idDelRegistro = tableRevista.cell(cell).data();
-    
+    idDelRegistro = idDelRegistro.replace(idDelRegistro.split('id="')[1].split('"')[0],"IdDelRegistroRevista"+tableRevista.page.info().recordsTotal);
     tableRevista.row.add( {
         "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
         "IdDelRegistro":idDelRegistro,
@@ -435,20 +435,20 @@ $('#agregarCargo').click(function(){
         tableCargo.row.add( {
             "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
             "Cargo":cargos,
-            "FechaDeInicioEnElCargo":"<div class='row'>"+
-                                        "<div class='col-xs-12'>"+
-                                            "<div class='form-group has-feedback'>"+
-                                                "<div class='input-group date'>"+
-                                                    "<input id='datepicker"+tableCargo.page.info().recordsTotal+"' name='FechaInicioCargoDatos"+tableCargo.page.info().recordsTotal+"' type='text' class='form-control'/>"+
-                                                    "<span class='input-group-addon'>"+
-                                                        "<span class='glyphicon glyphicon-calendar'></span>"+
-                                                    "</span>"+
-                                                "</div>"+
-                                            "</div>"+
-                                            "</div>"+
-                                        "</div>"
+            "FechaDeInicioEnElCargo":'<div class="row">'+
+                                        '<div class="col-xs-12">'+
+                                            '<div class="form-group has-feedback">'+
+                                                '<div class="input-group date">'+
+                                                    '<input id="datepicker'+tableCargo.page.info().recordsTotal+'" name="FechaInicioCargoDatos'+tableCargo.page.info().recordsTotal+'" type="text" class="form-control"/>'+
+                                                    '<span class="input-group-addon">'+
+                                                        '<span class="glyphicon glyphicon-calendar"></span>'+
+                                                    '</span>'+
+                                                '</div>'+
+                                            '</div>'+
+                                            '</div>'+
+                                        '</div>'
         }).draw();
-        $('#tableRevista_last').click();
+        $('#tableCargo_last').click();
         $('#datepicker'+aux).datepicker({
             autoclose: true
         });
@@ -488,20 +488,20 @@ $('#tableCargo').on( 'click', 'td', function () {
             tableCargo.row.add( {
                 "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
                 "Cargo":cargos,
-                "FechaDeInicioEnElCargo":"<div class='row'>"+
-                                            "<div class='col-xs-12'>"+
-                                                "<div class='form-group has-feedback'>"+
-                                                    "<div class='input-group date'>"+
-                                                        "<input id='datepicker0' name='FechaInicioCargoDatos0' type='text' class='form-control'/>"+
-                                                        "<span class='input-group-addon'>"+
-                                                            "<span class='glyphicon glyphicon-calendar'></span>"+
-                                                        "</span>"+
-                                                    "</div>"+
-                                                "</div>"+
-                                                "</div>"+
-                                            "</div>"
+                "FechaDeInicioEnElCargo":'<div class="row">'+
+                                            '<div class="col-xs-12">'+
+                                                '<div class="form-group has-feedback">'+
+                                                    '<div class="input-group date">'+
+                                                        '<input id="datepicker0" name="FechaInicioCargoDatos0" type="text" class="form-control"/>'+
+                                                        '<span class="input-group-addon">'+
+                                                            '<span class="glyphicon glyphicon-calendar"></span>'+
+                                                        '</span>'+
+                                                    '</div>'+
+                                                '</div>'+
+                                                '</div>'+
+                                            '</div>'
             }).draw();
-            $('#tableRevista_last').click();
+            $('#tableCargo_last').click();
             $('#datepicker0').datepicker({
                 autoclose: true
             });

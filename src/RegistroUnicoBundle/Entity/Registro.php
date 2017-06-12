@@ -318,16 +318,18 @@ class Registro
         return $this;
     }
     
-     public function getParticipantes($select)
+     public function getParticipantes($select,&$k)
      {
         $participantes = new stdClass;
         $i = 0;
         $data[] = [];
         foreach($this->participantes->toArray() as $participante){
-            $data[$i]['IdDelRegistro'] = $select;
-            $data[$i]['Nombre'] = '<input id="Nombre'.$i.'" value="'.$participante->getNombre().'" type="text" class="form-control" placeholder="Nombre">';
-            $data[$i]['Cedula'] = '<input id="Cedula'.$i.'" value="'.$participante->getCedula().'" type="number" class="form-control" placeholder="Cédula">';
+            $selectAux = str_replace('<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;">','<select id="IdDelRegistro'.$k.'" class="form-control select2" style="width: 240px;">',$select);
+            $data[$i]['IdDelRegistro'] = $selectAux;
+            $data[$i]['Nombre'] = '<input id="Nombre'.$k.'" value="'.$participante->getNombre().'" type="text" class="form-control" placeholder="Nombre">';
+            $data[$i]['Cedula'] = '<input id="Cedula'.$k.'" value="'.$participante->getCedula().'" type="number" class="form-control" placeholder="Cédula">';
             $i++;
+            $k++;
         }
 
         $participantes->data = $data;
@@ -348,16 +350,17 @@ class Registro
          }
      }
      
-     public function getRevistas($select)
+     public function getRevistas($select,&$k)
      {
         $revistas = new stdClass;
         $i = 0;
         $data[] = [];
         foreach($this->revistas->toArray() as $revista){
-            $selectAux = str_replace('<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;">','<select id="IdDelRegistro'.$i.'" class="form-control select2" style="width: 240px;">',$select);
+            $selectAux = str_replace('<select id="IdDelRegistroRevista0" class="form-control select2" style="width: 240px;">','<select id="IdDelRegistroRevista'.$k.'" class="form-control select2" style="width: 240px;">',$select);            
             $data[$i]['IdDelRegistro'] = $selectAux;
-            $data[$i]['Revista'] = '<input id="Revista'.$i.'" value="'.$revista->getDescription().'" type="text" class="form-control" placeholder="Revista">';
+            $data[$i]['Revista'] = '<input id="Revista'.$k.'" value="'.$revista->getDescription().'" type="text" class="form-control" placeholder="Revista">';
             $i++;
+            $k++;
         }
 
         $revistas->data = $data;
