@@ -43,7 +43,6 @@ class RegistrarDatosController extends Controller
     
     public function guardarArchivosAjaxAction(Request $request)
     {
-        //return new Response();
         $em = $this->getDoctrine()->getManager();
         if(isset($_POST['checkboxHijos'])){
             $i = 0;
