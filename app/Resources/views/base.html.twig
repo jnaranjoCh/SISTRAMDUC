@@ -27,7 +27,6 @@
 
   <!-- Select -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
-
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
@@ -139,6 +138,9 @@
           <ul class="treeview-menu">
             <li data-route="registro_usuario_index">
               <a href="{{ path('registro_usuario_index') }}"><i class="fa fa-circle-o"></i>Registro de usuario</a>
+            </li>
+            <li data-route="registro_consultarusuario_index">
+              <a href="{{ path('registro_consultarusuario_index') }}"><i class="fa fa-circle-o"></i>Consultar y editar usuario</a>
             </li>
             <li data-route="registro_datos_index">
               <a href="{{ path('registro_datos_index', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Registro de datos</a>
@@ -284,14 +286,41 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li data-route="comision-servicio-remunerada-info">
-              <a href="{{ path('comision-servicio-remunerada-info') }}"><i class="fa fa-circle-o"></i>Información</a>
-            </li>
-            <li data-route="comision_servicio_solicitar">
-              <a href="{{ path('solicitudcomisionservicio_new') }}"><i class="fa fa-circle-o"></i>Solicitar</a>
-            </li>
-            <li data-route="comision_remunerada_solicitar">
-              <a href="{{ path('estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
+            {% if userHasPermission("comisión de servicio - ver información") %}
+              <li data-route="comision-servicio-informacion">
+                <a href="{{ path('comision-servicio-informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - consultar") %}
+              <li data-route="solicitudcomisionservicio_new" id="solicitarComision">
+                <a href="{{ path('solicitudcomisionservicio_new', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - estado de solicitud") %}
+              <li data-route="estado-solicitud">
+                <a href="{{ path('estado-solicitud') }}"><i class="fa fa-circle-o"></i>Estado Solicitud</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - departamento - ver solicitud") %}
+              <li data-route="comision_servicio_solicitudes">
+                <a href="{{ path('comision_servicio_solicitudes') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesConsejo</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - catedra - ver solicitud") %}
+              <li data-route="comision_servicio_solicitudes_catedra">
+                <a href="{{ path('comision_servicio_solicitudes_catedra') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesCatedra</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - facultad - ver solicitud") %}
+              <li data-route="comision_servicio_solicitudes_facultad">
+                <a href="{{ path('comision_servicio_solicitudes_facultad') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesFacultad</a>
+              </li>
+            {% endif %}
+            {% if userHasPermission("comisión de servicio - ver solicitudes AAPP") %}
+              <li data-route="comision_servicio_solicitudes_aapp">
+                <a href="{{ path('comision_servicio_solicitudes_aapp') }}"><i class="fa fa-circle-o"></i>Ver SolicitudesAAPP</a>
+              </li>
+            {% endif %}
             </li>
           </ul>
         </li>
@@ -417,24 +446,7 @@
                   <a href="{{ path('listaRecusacion') }}"><i class="fa fa-circle-o"></i>Listado de Recusaciones</a>
                 </li>
               </ul>
-            </li>  
-
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-circle-o"></i><span>Pruebas</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li data-route="pruebas">
-                  <a href="{{ path('pruebas') }}"><i class="fa fa-circle-o"></i>Registrar Pruebas</a>
-                </li>
-                <li data-route="listarPruebas">
-                  <a href="{{ path('listarPruebas') }}"><i class="fa fa-circle-o"></i>Listado de Pruebas</a>
-                </li>
-              </ul>
-            </li> 
+            </li>
 
             <li class="treeview">
               <a href="#">
@@ -447,9 +459,12 @@
                 <li data-route="resultados">
                   <a href="{{ path('resultados') }}"><i class="fa fa-circle-o"></i>Registrar Resultados</a>
                 </li>
+                <li data-route="listarResultados">
+                  <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
+                </li>
               </ul>
-            </li>       
-            
+            </li>
+
           </ul>
         </li>
       </ul>
@@ -470,6 +485,7 @@
       <b>Desarrollado por <a href="http://www.facyt.uc.edu.ve/">FACYT</a></b>
     </div>
     <strong>Sistema de Gestión de Trámites Administrativos de la Universidad de Carabobo (SISTRAMDUC)</strong>
+    <input id="url" type="text" class="form-control hidden" value="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}"/>
   </footer>
 
 </div>
@@ -498,7 +514,7 @@
     $ul.parent('li').parent('ul').parent('li.treeview').addClass('active');
   }
 </script>
-
+{% include('rutas.html.twig') %}
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ asset('assets/vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- daterangepicker -->
@@ -536,12 +552,82 @@
     }
   });
 </script>
+{#
+<script>
+  $("#solicitarComision").click(function (){
+    $.ajax({
+      url : {{ path('validar-usuario') }},
+      dataType: 'json',
+      success: function(data){
 
+        if (data == "valido"){
+          $form.submit(function(e) {
+            var data = $form.serialize();
+            $.ajax({
+              url : {{ path('validar-usuario') }},
+              type: $form.attr('method'),
+              success: function(html) {
+
+                $('#comisionremuneradabundle_solicitudcomisionservicio').replaceWith(
+                        $(html).find('#comisionremuneradabundle_solicitudcomisionservicio')
+                );
+                $('#notice').html('#notice');
+                /*$('#notice').replaceWith(
+                 // ... Con la respuesta ajax
+                 $(html).show('#notice')
+                 );*/
+              }
+            });
+          });
+        }
+        else(){
+
+        }
+      }
+    });
+  });
+    toastr.clear();
+    var text = "";
+
+    var motivo = $('#motivo').val();
+    var continua = true;
+
+    if (motivo == ""){
+      continua = false;
+      $('#spanMotivo').removeClass("hide");
+      text = "Campo vacío";
+    }
+  });
+
+  $form.submit(function(e) {
+    //Agregamos los campos del formulario
+    var data = $form.serialize();
+    //Realizamos la petición
+    $.ajax({
+      url : {{ path('solicitudcomisionservicio_new') }},//$form.attr('action'),
+      type: $form.attr('method'),
+      data : data,
+      success: function(html) {
+
+        // Remplazamos la forma actual.
+        $('#comisionremuneradabundle_solicitudcomisionservicio').replaceWith(
+                // ... Con la respuesta ajax
+                $(html).find('#comisionremuneradabundle_solicitudcomisionservicio')
+        );
+        $('#notice').html('#notice');
+        /*$('#notice').replaceWith(
+         // ... Con la respuesta ajax
+         $(html).show('#notice')
+         );*/
+      }
+    });
+    e.preventDefault();
+  });
+</script>#}
+</body>
+</html>
 <!-- Add extra libraries and plugins here -->
 {% block javascripts %}{% endblock %}
 
 <!-- Add your own code here -->
 {% block custom_javascripts %}{% endblock %}
-
-</body>
-</html>
