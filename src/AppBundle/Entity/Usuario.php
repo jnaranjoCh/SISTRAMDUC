@@ -769,6 +769,12 @@ class Usuario implements UserInterface
         return $roles;
     }
 
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
     public function getRolesAsObjects()
     {
         return $this->roles;

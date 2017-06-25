@@ -23,7 +23,7 @@ $("#guardar").click(function(){
         else if($("#checkboxHijos").prop('checked'))
         {
             if(!validarHijos())
-                text = "Error hijos.";        
+                text = "Error datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
             else
                 can_update = true;
         }
@@ -337,7 +337,7 @@ function validarHijos()
     var countFiles;
     var cedulasHijos = [];
     var indCedulasHijos = 0;
-    
+
     if($("#ActaNacCargaHijoDatos").val() == "" && !tieneArchivosHijos)
         countFiles = countFilesHijos;
     else

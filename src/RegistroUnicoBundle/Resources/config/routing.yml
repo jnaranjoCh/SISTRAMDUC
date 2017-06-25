@@ -93,3 +93,31 @@ registro_consultardocumentshijos_ajax:
 registro_consultarbuscaremail_ajax:
     path:     /consulta/buscar-email
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarEmailAjax }
+
+registro_consultarusuario_index:
+    path:     /consulta/usuario
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:consultarUsuario }
+
+registro_buscaremailconsultar_ajax:
+    path:     /consulta/buscar-email-consulta-usuario
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:buscarEmailAjax }
+    requirements:
+        _method:  POST
+registro_consultarusuario_ajax:
+    path:     /consulta/obtener-datos-consulta-usuario
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:obtenerDatosDeUsuarioAjax }
+    requirements:
+        _method:  POST
+registro_consultarroles_ajax:
+    path:     /consulta/obtener-roles
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:obtenerRolesDeUsuarioAjax }
+registro_buscarcedulaconsultar_ajax:
+    path:     /consulta/obtener-cedula
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+registro_actualizarusuario_ajax:
+    path:     /consulta/actualizar-usuario
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:actualizarDatosDeUsuario }
+    requirements:
+        _method:  POST
