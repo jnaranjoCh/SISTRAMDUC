@@ -326,5 +326,10 @@ class Concurso
        foreach($aspirante as $aspirantes)
            $this->addAspirante($aspirantes);
     }
+    
+    public function getAspirantes()
+    {
+    	return $this->aspirantes->toArray();
+    }
 }
 

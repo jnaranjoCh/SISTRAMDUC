@@ -123,7 +123,7 @@ class ListadosOposicionController extends Controller
                 ->setParameter('cadena', 'Oposicion')
                 ->orderBy('p.id', 'DESC')
                 ->getQuery();
-             
+                         
             $jurados = $query->getResult();
 
             if (!$jurados) {
@@ -693,46 +693,6 @@ class ListadosOposicionController extends Controller
              throw $this->createNotFoundException('Error al devolver datos');
     }
 
-     /**
-     * @Route("/concursoOposicion/listadoAspirantesAjax", name="listadoAspirantesAjax")
-     * @Method("POST")
-     */
-    public function listadoAspirantesAjaxAction(Request $request){
-
-        $val[][] = "";
-
-        if($request->isXmlHttpRequest())
-        {
-            $repository = $this->getDoctrine()
-                ->getRepository('ConcursosBundle:Aspirante');
-             
-            $query = $repository->createQueryBuilder('p')
-                ->orderBy('p.id', 'DESC')
-                ->getQuery();
-             
-            $jurados = $query->getResult();
-
-            if (!$jurados) {
-                 return new JsonResponse("N");
-            }else
-            {
-                $val = $this->asignarFilaAspirante($jurados,'id',$val, 0);
-                $val = $this->asignarFilaAspirante($jurados,'nombre1',$val, 1);
-                $val = $this->asignarFilaAspirante($jurados,'nombre2',$val, 2);
-                $val = $this->asignarFilaAspirante($jurados,'apellido1',$val, 3);
-                $val = $this->asignarFilaAspirante($jurados,'apellido2',$val, 4);
-                $val = $this->asignarFilaAspirante($jurados,'telefono',$val, 5);
-                $val = $this->asignarFilaAspirante($jurados,'correo',$val, 6);
-                $val = $this->asignarFilaAspirante($jurados,'cedula',$val, 7);
-                $val = $this->asignarFilaAspirante($jurados,'universidadegresado',$val, 8);
-                $val = $this->asignarFilaAspirante($jurados,'observaciones',$val, 9);
-            }
-            return new JsonResponse($val);
-        }
-        else
-             throw $this->createNotFoundException('Error al devolver datos');
-    }
-
     private function asignarFilaAspirante($object,$entidad,$val, $pos)
     {
         $i = 0;
@@ -933,15 +893,30 @@ class ListadosOposicionController extends Controller
         $val[][] = "";
 
         if($request->isXmlHttpRequest())
-        {
-            $repository = $this->getDoctrine()
-                ->getRepository('ConcursosBundle:Aspirante');
-             
-            $query = $repository->createQueryBuilder('p')
-                ->orderBy('p.id', 'DESC')
-                ->getQuery();
-             
-            $recusacion = $query->getResult();
+        {        
+            if ($request->get("resul") == "si"){
+
+            	$query = $this->getDoctrine()
+            	->getManager()
+            	->createQuery("SELECT u
+                                     FROM ConcursosBundle:Aspirante u, ConcursosBundle:Concurso c
+                                        INNER JOIN  c.aspirantes r
+                                     WHERE c.tipo = 'Oposicion' and c.id = :concurso and r = u.id")
+                                     ->setParameter(':concurso', $request->get("concurso"));
+            	
+            	$recusacion = $query->getResult();
+            	
+            } else {
+            	
+            	$query = $this->getDoctrine()
+            	->getManager()
+            	->createQuery("SELECT u
+                                     FROM ConcursosBundle:Aspirante u, ConcursosBundle:Concurso c
+                                        INNER JOIN  c.aspirantes r
+                                     WHERE c.tipo = 'Oposicion' and r = u.id");
+            	 
+            	$recusacion = $query->getResult();
+            }
 
             if (!$recusacion) {
                  return new JsonResponse("N");

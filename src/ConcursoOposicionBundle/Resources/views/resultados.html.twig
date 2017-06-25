@@ -31,8 +31,104 @@
                           
                         </select> 
                     </div>
+	                <div class="col-xs-2">
+	                  <button id="buscar" type="button" class="btn btn-primary btn-block btn-flat">Buscar</button>
+	                </div>
+	              </div>
+	              
+	              <BR/><BR/>
+		              
+	              <div class="row hide" id="jurado">
+	              
+	              	<div class="box-header">
+		              <h3 class="box-title">Aspirantes</h3>
+		            </div>
+	              
+	              	<div class="box-body">
+	              	 <table id="tabla" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>C&eacute;dula</th>
+                        <th>Tel&eacute;fono</th>
+                        <th>Correo</th>
+                        <th>Profesi&oacute;n</th>                          
+                      </tr>
+                      </thead>
+                      <tbody id="cuerpo">
+
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>C&eacute;dula</th>
+                          <th>Tel&eacute;fono</th>
+                          <th>Correo</th>
+                          <th>Profesi&oacute;n</th>                          
+                        </tr>
+                      </tfoot>
+                  </table>
                   </div>
-                </div>
+                  
+                   <BR/><BR/>
+                  
+                  <div class="hide" id="vista">
+	                  <div class="box box-primary">
+			            <div class="box-header with-border" >
+			              <h3 class="box-title" id="nombre"></h3>
+			            </div>
+			              <div class="box-body">
+				                <div class="content-body col-md-offset-0 col-md-5">
+				                  <label for="exampleInputEmail1">C&eacute;dula Del Aspirante</label>
+				                  <input type="text" class="form-control" id="cedula" readOnly="true">
+				                </div>
+				                <div class="content-body col-md-offset-1 col-md-5">
+				                  <label>Estado</label>
+				                  <input type="text" class="form-control" id="estado" readOnly="true">
+				                </div>
+				              </div>
+				          </div>
+				          
+				          <div class="box-body">
+				                <div class="content-body col-md-offset-0 col-md-5">
+				                  <label>Responsable de Registro</label>
+				                  <input type="text" class="form-control" id="usuario" readOnly="true">
+				                </div>
+				                <div class="content-body col-md-offset-1 col-md-5">
+				                  <label>Valoraci&oacute;n De Credenciales</label>
+				                  <input type="text" class="form-control" id="credenciales">
+				                </div>
+				            </div>
+				            
+				            <div class="box-body">
+				                <div class="content-body col-md-offset-0 col-md-5">
+				                  <label>Aptitud Intelectual</label>
+				                  <input type="text" class="form-control" id="intelectual">
+				                </div>
+				                <div class="content-body col-md-offset-1 col-md-5">
+				                  <label>Perfil Acad&eacute;mico y Psicol&oacute;gico</label>
+				                  <input type="text" class="form-control" id="academico">
+				                </div>
+				            </div>
+				            
+				            <div class="box-body">
+				                <div class="content-body col-md-offset-0 col-md-5">
+				                  <label>Aptitud Pedag&oacute;gica</label>
+				                  <input type="text" class="form-control" id="pedagogica">
+				                </div>
+				                <div class="content-body col-md-offset-1 col-md-5">
+				                  <label>Conocimientos Del Concurso</label>
+				                  <input type="text" class="form-control" id="area">
+				                </div>
+				            </div>
+				        </div>
+		              
+		              	</div>	              
+	                </div>
+                </div>                
+                
             </form>
         </div>
       </section>
@@ -52,6 +148,33 @@
       $(".select2").select2();
 
   });
+  </script>
+  
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+
+  <script>
+    
+      tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "nombre" },
+              { "data": "apellido" },
+              { "data": "cedula" },
+              { "data": "telefono" },
+              { "data": "correo" },
+              { "data": "profesion" },
+              { "data": "modif" }
+          ]
+      });
+
   </script>
 
 {% endblock %}
