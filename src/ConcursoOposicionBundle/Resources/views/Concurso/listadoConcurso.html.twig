@@ -42,7 +42,7 @@
 	                }                                             
 	            }                       	
 	        }
-	        });
+	    });
 	});
 
 	$("#eliminarConcurso").click(function(){
@@ -75,7 +75,31 @@
 
 	                $('#myModal').modal('toggle');
 
-	                location.reload();      //funciona, pero no es la idea
+	                tabla.clear().draw();
+	
+						$.ajax({
+
+							method:"POST",
+							url: "{{ path('listadoConcursosAjax') }}",
+							dataType: 'json',
+					        success: function(data)
+					        {
+				                for (var i = 0; i <= data["vacantes"].length-1; i++) {
+			
+				                    var num = data["id"][i];
+			
+				                    tabla.row.add( {
+				                        "inicio": data["inicio"][i],
+				                        "vacantes": data["vacantes"][i],
+				                        "area": data["area"][i],
+				                        "doc": data["recepcion"][i],
+				                        "pre": data["presentacion"][i],
+				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
+				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+				                    }).draw();                          	                                                          
+					            }                       	
+					        }
+					     });
 
 	               ident = null; 
 	               posicion = null;
@@ -128,47 +152,122 @@
 
 	$("#modificarConcurso").click(function(){
 
-	    $.ajax({
+		toastr.clear();
+        var text = "";
 
-	        method:"POST",
-	        url: "{{ path('modificarConcursoAjax') }}",
-	        dataType: 'json',
-	        data: {"id": ident,
-	        "Inicio":$("#inicio").val(), 
-	        "Vacantes":$("#vacantes").val(), 
-	        "Area":$("#area").val(), 
-	        "fechaDoc":$("#recepcion").val(), 
-	        "fechaPre":$("#presentacion").val(),
-	        "observacion": $("#observacion").val()},
-	        success: function(data)
-	        {
-	            if (data == "N"){
+        var fecha = $('#inicio').val();
+        var continua = true;
 
-	                text = "Usted No Tiene Permiso";
+        $('#fi').removeClass("has-error");
 
-	                toastr.error(text, "Error", {
-	                    "timeOut": "0",
-	                    "extendedTImeout": "0"
-	                 });
+        if (fecha == ""){
 
-	            } else {
+            continua = false;
+            text = "Campo vacío";
+            $('#fi').addClass("has-error");
+        }
 
-	                text = "Concurso Modificado";
+        var cedula = $('#vacantes').val();
 
-	                toastr.success(text, "Exito", {
-	                    "timeOut": "0",
-	                    "extendedTImeout": "0"
-	                 });
+        $('#fa').removeClass("has-error");
 
-	                $('#myModal').modal('toggle');
+        if (cedula == "" || cedula == 0 || cedula == '0'){
 
-	                location.reload();      //funciona, pero no es la idea
+            continua = false;
+            $('#fa').addClass("has-error");
+            text = "Campo vacío";
+        }
 
-	               ident = null; 
-	               posicion = null;
-	            }                                                               
-	        }
-	    });
+        $('#fe').removeClass("has-error");
+
+        if ($('#area').val() == ""){
+
+            continua = false;
+            $('#fe').addClass("has-error");
+            text = "Campo vacío";
+        }
+        
+        if (isNaN($('#vacantes').val())){
+        
+        	continua = false;
+            $('#fa').addClass("has-error");
+            text = "No Es Un Número";
+        }
+        
+        if (continua) {
+                
+        	$.ajax({
+        	
+        	    method:"POST",
+		        url: "{{ path('modificarConcursoAjax') }}",
+		        dataType: 'json',
+		        data: {"id": ident,
+		        "Inicio":$("#inicio").val(), 
+		        "Vacantes":$("#vacantes").val(), 
+		        "Area":$("#area").val(), 
+		        "fechaDoc":$("#recepcion").val(), 
+		        "fechaPre":$("#presentacion").val(),
+		        "observacion": $("#observacion").val()},
+		        success: function(data)
+		        {
+		            if (data == "N"){
+	
+		                text = "Usted No Tiene Permiso";
+	
+		                toastr.error(text, "Error", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+	
+		            } else {
+	
+		                text = "Concurso Modificado";
+	
+		                toastr.success(text, "Exito", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+	
+		                $('#myModal').modal('toggle');
+	
+						tabla.clear().draw();
+	
+						$.ajax({
+
+							method:"POST",
+							url: "{{ path('listadoConcursosAjax') }}",
+							dataType: 'json',
+					        success: function(data)
+					        {
+				                for (var i = 0; i <= data["vacantes"].length-1; i++) {
+			
+				                    var num = data["id"][i];
+			
+				                    tabla.row.add( {
+				                        "inicio": data["inicio"][i],
+				                        "vacantes": data["vacantes"][i],
+				                        "area": data["area"][i],
+				                        "doc": data["recepcion"][i],
+				                        "pre": data["presentacion"][i],
+				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
+				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+				                    }).draw();                          	                                                          
+					            }                       	
+					        }
+					     });
+	
+		               ident = null; 
+		               posicion = null;
+		            }                                                               
+		        }
+		    });
+        } else {
+        
+        	 toastr.error(text, "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+        }
 	});
 
 	function modificar(id, pos){

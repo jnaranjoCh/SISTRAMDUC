@@ -49,6 +49,13 @@
 
 			continua = false;
 			text = "Concurso vacío";
+			$("#lista1").addClass("has-error");
+			$("#lista11").removeClass("hide");
+			
+		} else {
+		
+			$("#lista1").removeClass("has-error");
+			$("#lista11").addClass("hide");
 		}
 
 		for (var i = 1; i < 4; i++) {
@@ -58,13 +65,36 @@
 				if ($("#"+inputs[j]+i).val() == ""){
 
 					$("#span"+inputs[j]+i).removeClass("hide");
+					$("#"+inputs[j]+i+i).addClass("has-error");
 					continua = false;
 					text = "Campo vacío";
 				} 
 				else {
-					$("#span"+inputs[j]+i).addClass("hide");					
+					$("#span"+inputs[j]+i).addClass("hide");
+					$("#"+inputs[j]+i+i).removeClass("has-error");					
 				}				
 			}
+		}
+		
+		if (isNaN($("#cedula1").val())){
+			text = "No Es Un Número";
+			$("#spancedula1").removeClass("hide");
+			$("#cedula11").addClass("has-error");
+			continua = false;
+		}
+		
+		if (isNaN($("#cedula2").val())){
+			text = "No Es Un Número";
+			$("#spancedula2").removeClass("hide");
+			$("#cedula22").addClass("has-error");
+			continua = false;
+		}
+		
+		if (isNaN($("#cedula3").val())){
+			text = "No Es Un Número";
+			$("#spancedula3").removeClass("hide");
+			$("#cedula33").addClass("has-error");
+			continua = false;
 		}
 
 		if (continua){

@@ -35,21 +35,34 @@
 	});
 
 	$('#ingresarCPEC').click(function (){ 
+	
+		var text = "";
 			
 		var continua = true;
 		
 		if (id == "s1"){
+		
+			toastr.clear();
 
-			for (var j = 0; j < inputs.length; j++) {
+			for (var j = 1; j <= inputs.length; j++) {
 			
-				if ($("#"+inputs[j]).val() == ""){
+				if ($("#"+inputs[j-1]).val() == ""){
 
-					$("#span"+inputs[j]).removeClass("hide");
+					$("#span"+inputs[j-1]).removeClass("hide");
 					continua = false;
+					$('#'+inputs[j-1]+"a").addClass("has-error");
+					text = "Campo Vacío";
 				} 
 				else {
-					$("#span"+inputs[j]).addClass("hide");
+					$("#span"+inputs[j-1]).addClass("hide");
+					$('#'+inputs[j-1]+"a").removeClass("has-error");
 				}
+			}
+			
+			if (isNaN($("#cedula").val())){
+				continua = false;
+				$("#cedulaa").addClass("has-error");
+				text = "No Es Un Número";
 			}
 
 			if (continua){
@@ -59,23 +72,39 @@
 				for (var i = 0; i <= 5; i++) c1[i] = $('#'+inputs[i]).val();
 
 				$('#myModal').modal('toggle');
-			}		
+			} else{
+				toastr.error(text, "Error", {
+		            "timeOut": "0",
+		            "extendedTImeout": "0"
+		         });
+			}	
 		}
 
 		continua = true;	
 
 		if (id == "s2"){
+		
+			toastr.clear();
 
-			for (var j = 0; j < inputs.length; j++) {
+			for (var j = 1; j <= inputs.length; j++) {
 			
-				if ($("#"+inputs[j]).val() == ""){
+				if ($("#"+inputs[j-1]).val() == ""){
 
-					$("#span"+inputs[j]).removeClass("hide");
+					$("#span"+inputs[j-1]).removeClass("hide");
 					continua = false;
+					$('#'+inputs[j-1]+"a").addClass("has-error");
+					text = "Campo Vacío";
 				} 
 				else {
-					$("#span"+inputs[j]).addClass("hide");
+					$("#span"+inputs[j-1]).addClass("hide");
+					$('#'+inputs[j-1]+"a").removeClass("has-error");
 				}
+			}
+			
+			if (isNaN($("#cedula").val())){
+				continua = false;
+				$("#cedulaa").addClass("has-error");
+				text = "No Es Un Número";
 			}
 
 			if (continua){
@@ -85,23 +114,39 @@
 				for (var i = 0; i <= 5; i++) c2[i] = $('#'+inputs[i]).val();
 
 				$('#myModal').modal('toggle');
+			} else{
+				toastr.error(text, "Error", {
+		            "timeOut": "0",
+		            "extendedTImeout": "0"
+		         });
 			}
 		}
 
 		continua = true;
 
 		if (id == "s3"){
+		
+			toastr.clear();
 
-			for (var j = 0; j < inputs.length; j++) {
+			for (var j = 1; j <= inputs.length; j++) {
 			
-				if ($("#"+inputs[j]).val() == ""){
+				if ($("#"+inputs[j-1]).val() == ""){
 
-					$("#span"+inputs[j]).removeClass("hide");
+					$("#span"+inputs[j-1]).removeClass("hide");
 					continua = false;
+					$('#'+inputs[j-1]+"a").addClass("has-error");
+					text = "Campo Vacío";
 				} 
 				else {
-					$("#span"+inputs[j]).addClass("hide");
+					$("#span"+inputs[j-1]).addClass("hide");
+					$('#'+inputs[j-1]+"a").removeClass("has-error");
 				}
+			}
+			
+			if (isNaN($("#cedula").val())){
+				continua = false;
+				$("#cedulaa").addClass("has-error");
+				text = "No Es Un Número";
 			}
 
 			if (continua){
@@ -111,23 +156,39 @@
 				for (var i = 0; i <= 5; i++) c3[i] = $('#'+inputs[i]).val();
 
 				$('#myModal').modal('toggle');
+			} else{
+				toastr.error(text, "Error", {
+		            "timeOut": "0",
+		            "extendedTImeout": "0"
+		         });
 			}
 		}
 
 		continua = true;
 
 		if (id == "s4"){
+		
+			toastr.clear();
 
-			for (var j = 0; j < inputs.length; j++) {
+			for (var j = 1; j <= inputs.length; j++) {
 			
-				if ($("#"+inputs[j]).val() == ""){
+				if ($("#"+inputs[j-1]).val() == ""){
 
-					$("#span"+inputs[j]).removeClass("hide");
+					$("#span"+inputs[j-1]).removeClass("hide");
 					continua = false;
+					$('#'+inputs[j-1]+"a").addClass("has-error");
+					text = "Campo Vacío";
 				} 
 				else {
-					$("#span"+inputs[j]).addClass("hide");
+					$("#span"+inputs[j-1]).addClass("hide");
+					$('#'+inputs[j-1]+"a").removeClass("has-error");
 				}
+			}
+			
+			if (isNaN($("#cedula").val())){
+				continua = false;
+				$("#cedulaa").addClass("has-error");
+				text = "No Es Un Número";
 			}
 
 			if (continua){
@@ -137,23 +198,39 @@
 				for (var i = 0; i <= 5; i++) c4[i] = $('#'+inputs[i]).val();
 
 				$('#myModal').modal('toggle');
+			} else{
+				toastr.error(text, "Error", {
+		            "timeOut": "0",
+		            "extendedTImeout": "0"
+		         });
 			}
 		}
 
 		continua = true;
 
 		if (id == "s5"){
+		
+			toastr.clear();
 
-			for (var j = 0; j < inputs.length; j++) {
+			for (var j = 1; j <= inputs.length; j++) {
 			
-				if ($("#"+inputs[j]).val() == ""){
+				if ($("#"+inputs[j-1]).val() == ""){
 
-					$("#span"+inputs[j]).removeClass("hide");
+					$("#span"+inputs[j-1]).removeClass("hide");
 					continua = false;
+					$('#'+inputs[j-1]+"a").addClass("has-error");
+					text = "Campo Vacío";
 				} 
 				else {
-					$("#span"+inputs[j]).addClass("hide");
+					$("#span"+inputs[j-1]).addClass("hide");
+					$('#'+inputs[j-1]+"a").removeClass("has-error");
 				}
+			}
+			
+			if (isNaN($("#cedula").val())){
+				continua = false;
+				$("#cedulaa").addClass("has-error");
+				text = "No Es Un Número";
 			}
 
 			if (continua){
@@ -163,11 +240,21 @@
 				for (var i = 0; i <= 5; i++) c5[i] = $('#'+inputs[i]).val();
 
 				$('#myModal').modal('toggle');
+			} else{
+				toastr.error(text, "Error", {
+		            "timeOut": "0",
+		            "extendedTImeout": "0"
+		         });
 			}
 		}
 	});
 
 	$('#s1').click(function (){ 
+	
+		for (var j = 1; j <= inputs.length; j++) {
+			$("#span"+inputs[j-1]).addClass("hide");
+			$('#'+inputs[j-1]+"a").removeClass("has-error");
+		}
 
 		for (var i = 0; i <= 5; i++) $('#'+inputs[i]).val('');
 
@@ -180,6 +267,11 @@
 	});
 
 	$('#s2').click(function (){ 
+	
+		for (var j = 1; j <= inputs.length; j++) {
+			$("#span"+inputs[j-1]).addClass("hide");
+			$('#'+inputs[j-1]+"a").removeClass("has-error");
+		}
 
 		for (var i = 0; i <= 5; i++) $('#'+inputs[i]).val('');
 
@@ -192,6 +284,11 @@
 	});
 
 	$('#s3').click(function (){ 
+	
+		for (var j = 1; j <= inputs.length; j++) {
+			$("#span"+inputs[j-1]).addClass("hide");
+			$('#'+inputs[j-1]+"a").removeClass("has-error");
+		}
 
 		for (var i = 0; i <= 5; i++) $('#'+inputs[i]).val('');
 
@@ -204,6 +301,11 @@
 	});
 
 	$('#s4').click(function (){ 
+	
+		for (var j = 1; j <= inputs.length; j++) {
+			$("#span"+inputs[j-1]).addClass("hide");
+			$('#'+inputs[j-1]+"a").removeClass("has-error");
+		}
 
 		for (var i = 0; i <= 5; i++) $('#'+inputs[i]).val('');
 
@@ -216,6 +318,11 @@
 	});
 
 	$('#s5').click(function (){ 
+	
+		for (var j = 1; j <= inputs.length; j++) {
+			$("#span"+inputs[j-1]).addClass("hide");
+			$('#'+inputs[j-1]+"a").removeClass("has-error");
+		}
 
 		for (var i = 0; i <= 5; i++) $('#'+inputs[i]).val('');
 

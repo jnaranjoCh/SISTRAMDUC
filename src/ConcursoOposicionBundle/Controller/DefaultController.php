@@ -15,6 +15,7 @@ use ConcursoOposicionBundle\Entity\Recusacion;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ConcursosBundle\Entity\Resultado;
 
 class DefaultController extends Controller
 {
@@ -507,5 +508,71 @@ class DefaultController extends Controller
         $concursoObjeto->addAspirante($jurado);
 
         $em->flush();
+    }
+    
+    /**
+     * @Route("/concursoOposicion/registrarResultadoAjax", name="registrarResultadoAjax")
+     * @Method("POST")
+     */
+    public function registrarResultadoAjaxAction(Request $request){
+    
+    	if($request->isXmlHttpRequest())
+    	{
+    		$encontrado = false;
+    
+    		foreach ($this->getUser()->getRoles() as $rol => $valor) {
+    
+    			if ($valor == "Asuntos Profesorales")
+    				$encontrado = true;
+    		}
+    		    
+    		if ($encontrado){   			
+    			
+    			if ($request->get("id") == 0){
+    				
+    				$resultado = new Resultado();
+    				 
+    				$resultado->setAptitud(intval($request->get("intelectual")));
+    				$resultado->setCedulaAspirante($request->get("cedula"));
+    				$resultado->setIdConcurso(intval($request->get("concurso")));
+    				$resultado->setNota(intval($request->get("credenciales")));
+    				$resultado->setNotaEscrito(intval($request->get("area")));
+    				$resultado->setNotaOral(intval($request->get("pedagogica")));
+    				$resultado->setPsicologica(intval($request->get("academico")));
+    				$resultado->setResponsable($this->getUser()->getId());   				
+    				$suma = $resultado->getNota()+$resultado->getNotaEscrito()+$resultado->getNotaOral()+$resultado->getPsicologica()+$resultado->getAptitud();
+    				
+    				$resultado->setResultado($suma);
+    				
+    				$em = $this->getDoctrine()->getManager();
+    				$em->persist($resultado);
+    				$em->flush();
+    				
+    			} else {
+    				
+    				$em = $this->getDoctrine()->getManager();
+    				
+    				$resultado = $em->getRepository('ConcursosBundle:Resultado')->find($request->get("id"));
+    				
+    				$resultado->setAptitud($request->get("intelectual"));
+    				$resultado->setNota($request->get("credenciales"));
+    				$resultado->setNotaEscrito($request->get("area"));
+    				$resultado->setNotaOral($request->get("pedagogica"));
+    				$resultado->setPsicologica($request->get("academico"));
+    				$resultado->setResponsable($this->getUser()->getId());
+    				$suma = $resultado->getNota()+$resultado->getNotaEscrito()+$resultado->getNotaOral()+$resultado->getPsicologica()+$resultado->getAptitud();
+    				$resultado->setResultado($suma);
+    				
+    				$em->flush();
+    			}
+    			
+    			return new JsonResponse($this->getUser()->getNombreCorto());
+    		}
+    		else{
+    			return new JsonResponse("N");
+    		}
+    	}
+    	else
+    		throw $this->createNotFoundException('Error al insertar datos');
     }
 }

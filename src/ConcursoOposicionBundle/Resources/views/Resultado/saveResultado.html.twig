@@ -1,0 +1,329 @@
+<script type="text/javascript">
+
+	var ident;
+	var resultId = 0;
+	
+	$( window ).load(function (){
+	
+		$.ajax({
+	        method: "POST",
+	        url:  "{{ path('listadoConcursosAjax') }}",
+	        dataType: 'json',
+	        success: function(data)
+	        {
+	        	var opcion = "<option id='sel' selected='selected'>...</option>";
+	 
+	        	for (var i = 0; i < data["id"].length; i++) {
+	        		
+	        		var num = data["id"][i];
+	
+	        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+	        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+	        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+	        		+"</option>";   		
+	        	}
+	
+	        	$("#lista").html(opcion);
+	        }
+	    });	
+	});
+	
+	$('#buscar').click(function(){
+		
+		toastr.clear();
+		var text = "";
+		var continua = true;
+		
+		if ($("#lista").val() == null || 
+			$("#lista").val() == "..." || 
+			$("#lista").val() == "") {
+	
+			continua = false;
+			text = "Concurso vacío";
+		}
+		
+		if (continua){
+			
+			$.ajax({
+	
+				method:"POST",
+				url: "{{ path('listadoAspiranteAjax') }}",
+				data: {"resul": "si", "concurso": $("#lista").val()},
+				dataType: 'json',
+		        success: function(data)
+		        {
+		            if (data == "N"){
+	
+		                text = "No Hay Aspirantes Registrados";
+	
+		                toastr.error(text, "Error", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+	
+		            } else{                   
+	
+		                for (var i = 0; i <= data["id"].length-1; i++) {
+	
+		                    var num = data["cedula"][i];
+		                    
+		                    tabla.row.add( {
+		                        "nombre": data["nombre1"][i]+" "+data["nombre2"][i],
+		                        "apellido": data["apellido1"][i]+" "+data["apellido2"][i],
+		                        "cedula": data["cedula"][i],
+		                        "telefono": data["tlf1"][i],
+		                        "correo": data["correo"][i],
+		                        "profesion": data["titulo"][i],
+		                        "modif": "<span class='glyphicon glyphicon-search' onclick='javascript:notas("+num+")'></span>"
+		                    }).draw();                      
+		                } 
+		                
+		                $('#jurado').removeClass("hide");
+		            }                       	
+		        }
+		    });	
+			
+		} else {
+			toastr.error(text, "Error", {
+	            "timeOut": "0",
+	            "extendedTImeout": "0"
+	         });
+		}
+	});
+	
+	function notas(id) {
+		
+		$('#credenciales').val('');
+		$('#intelectual').val('');
+		$('#academico').val('');
+		$('#pedagogica').val('');
+		$('#area').val('');
+		
+		ident = id;
+		
+		$('#vista').removeClass("hide");
+		
+		$('#cedula').val(ident);
+		
+		$.ajax({
+	        method: "POST",
+	        url:  "{{ path('listadoResultadoAjax') }}",
+	        data: {"cedula": ident, "concurso": $("#lista").val()},
+	        dataType: 'json',
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        		$('#estado').val("No hay Notas Registradas");
+	        		resultId = 0;
+	        	} else {
+	        		
+	        		resultId = data["id"][0];
+	        		
+	        		$('#estado').val("Hay Notas Registradas");	
+	        		$('#credenciales').val(data["nota"][0]);
+	        		$('#intelectual').val(data["aptitud"][0]);
+	        		$('#academico').val(data["psicologica"][0]);
+	        		$('#pedagogica').val(data["notaOral"][0]);
+	        		$('#area').val(data["notaEscrito"][0]);
+	        		
+	        		$.ajax({
+	        	        method: "POST",
+	        	        url:  "{{ path('buscarUsuarioAjax') }}",
+	        	        data: {"id": data["responsable"][0]},
+	        	        dataType: 'json',
+	        	        success: function(data)
+	        	        {
+	        	        	$('#usuario').val(data);
+	        	        }
+	        	    });	
+	        	}
+	        }
+	    });	
+	}
+	
+	$('#guardar').click(function(){
+		
+		if (resultId == 0) notasAuxiliar(resultId);
+		
+		 toastr.clear();
+	     var text = "";
+	     var continua = true;
+	     
+	    if ($('#credenciales').val() == '' && $('#intelectual').val() == '' && $('#academico').val() == '' 
+	    		&& $('#pedagogica').val() == '' && $('#area').val() == ''){
+	    	
+	    	text = "Debe Llenar Al Menos Un Campo";
+			continua = false;
+	    	
+	    } else {
+	    	
+	    	var continua1 = true;
+	    	
+	    	if ($('#credenciales').val() == '') continua1 = false;
+	    
+	    	if (continua1 && ($('#credenciales').val() > 35 || $('#credenciales').val() > '35')){
+	    		
+	    		text = "Credenciales Es Mayor a 35";
+	    		continua = false;
+	    		
+	    	} else {
+	    		
+	    		if ($('#credenciales').val() == '') continua1 = false;
+	    		
+	    		if (continua1 && ($('#credenciales').val() < 0)){
+	    			
+	    			text = "Credenciales Es Menor a 0";
+	    			continua = false;
+	    			
+	    		} else {
+	    			
+	    			if ($('#intelectual').val() == '') continua1 = false;
+	    			
+	    			if (continua1 && ($('#intelectual').val() < 0)){
+	    				
+	    				text = "Aptitud Intelectual Es Menor a 0";
+	    				continua = false;
+	    				
+	    			} else {
+	    				
+	    				if ($('#intelectual').val() == '') continua1 = false;
+	    				
+	    				if (continua1 && ($('#intelectual').val() > 10)){
+	    					
+	    					text = "Aptitud Intelectual Es Mayor a 10";
+	    					continua = false;				
+	    				} else {
+	    					
+	    					if ($('#academico').val() == '') continua1 = false;
+	    					
+	    					if (continua1 && ($('#academico').val() < 0)){
+	    						
+	    						text = "Perfil Académico y Psicológico Es Menor a 0";
+	    						continua = false;
+	    						
+	    					} else {
+	    						
+	    						if ($('#academico').val() == '') continua1 = false;
+	    						
+	    						if (continua1 && ($('#academico').val() > 10)){
+	    							
+	    							text = "Perfil Académico y Psicológico Es Mayor a 10";
+	    							continua = false;				
+	    						} else {
+	    							
+	    							if ($('#pedagogica').val() == '') continua1 = false;
+	    							
+	    							if (continua1 && ($('#pedagogica').val() < 0)){
+	    								
+	    								text = "Aptitud Pedagógica Es Menor a 0";
+	    								continua = false;
+	    								
+	    							} else {
+	    								
+	    								if ($('#pedagogica').val() == '') continua1 = false;
+	    								
+	    								if (continua1 && ($('#pedagogica').val() > 10)){
+	    									
+	    									text = "Aptitud Pedagógica Es Mayor a 10";
+	    									continua = false;
+	    									
+	    								} else {
+	    									
+	    									if ($('#area').val() == '') continua1 = false;
+	    									
+	    									if (continua1 && ($('#area').val() < 0)){
+	    										
+	    										text = "Concurso Es Menor a 0";
+	    										continua = false;
+	    										
+	    									} else {
+	    										
+	    										if ($('#area').val() == '') continua1 = false;
+	    										
+	    										if (continua1 && ($('#area').val() > 35)){
+	    										
+	    											text = "Concurso Es Mayor a 35";
+	    											continua = false;
+	    										}
+	    									}
+	    								}
+	    							}
+	    						}
+	    					}
+	    				}
+	    			}
+	    		}
+	    	}
+	    }
+	    
+	    if (isNaN($('#area').val()) || isNaN($('#pedagogica').val()) || isNaN($('#credenciales').val()) || isNaN($('#intelectual').val()) || isNaN($('#academico').val())) {
+	    	continua = false;
+	    	text = "Introducir Sólo Números";
+	    }
+		
+		if (continua) {
+					
+			$.ajax({
+				
+				method:"POST",
+				url: "{{ path('registrarResultadoAjax') }}",
+				data: {"credenciales": $('#credenciales').val(), 
+					"intelectual": $('#intelectual').val(),
+					"academico": $('#academico').val(),
+					"pedagogica": $('#pedagogica').val(),
+					"area": $('#area').val(),
+					"concurso": $("#lista").val(),
+					"cedula": ident,
+					"id": resultId},
+				dataType: 'json',
+		        success: function(data)
+		        {
+		            if (data == "N"){
+	
+		                text = "Usted No Tiene Permiso";
+	
+		                toastr.error(text, "Error", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+	
+		            } else{ 
+		            	
+		            	$('#usuario').val(data);
+		            	
+		            	toastr.success("Resultados Insertados", "Exito", {
+		        	        "timeOut": "0",
+		        	        "extendedTImeout": "0"
+		        	     });
+		            }                       	
+		        }
+		    });		
+			
+		} else {
+			toastr.error(text, "Error", {
+		        "timeOut": "0",
+		        "extendedTImeout": "0"
+		     });
+		}
+	});
+	
+	function notasAuxiliar(id) {
+			
+		$.ajax({
+	        method: "POST",
+	        url:  "{{ path('listadoResultadoAjax') }}",
+	        data: {"cedula": ident, "concurso": $("#lista").val()},
+	        dataType: 'json',
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        		resultId = 0;
+	        	} else {
+	        		
+	        		resultId = data["id"][0];	
+	        	}
+	        }
+	    });	
+	}
+
+</script>

@@ -31,7 +31,8 @@
 
 	    $.ajax({
 	        method: "POST",
-	        url:  "{{ path('listadoAspirantesAjax') }}",
+	        url:  "{{ path('listadoAspiranteAjax') }}",
+	        data: {"resul": "No"},
 	        dataType: 'json',
 	        success: function(data)
 	        {

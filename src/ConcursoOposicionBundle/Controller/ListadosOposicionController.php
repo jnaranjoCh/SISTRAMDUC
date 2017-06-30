@@ -399,38 +399,38 @@ class ListadosOposicionController extends Controller
 
                 $em = $this->getDoctrine()->getManager();
 
-                $concurso = $em->getRepository('ConcursosBundle:Concurso')->find($request->get("id"));
+                $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
 
-                if ($request->get("Inicio") != null || $request->get("Inicio") != "")
+                if ($request->get("Vacantes") != null || $request->get("Vacantes") != "")
+                	$concurso->setNroVacantes(intval($request->get("Vacantes")));
+                
+                if ($request->get("Area") != null || $request->get("Area") != "")
+                	$concurso->setAreaPostulacion($request->get("Area"));
+                
+                $concurso->setIdUsuario($this->getUser()->getId());
+                
+                $concurso->setObservaciones($request->get("observacion"));
+                               
+                if ($request->get("Inicio") != null)
                 {
                     $fecha = $this->cambiarFormatoFecha($request->get("Inicio"));
                     $concurso->setFechaInicio(date_create($fecha));
                 }               
-
-                if ($request->get("Vacantes") != null || $request->get("Vacantes") != "")
-                    $concurso->setNroVacantes(intval($request->get("Vacantes")));
-
-                if ($request->get("Area") != null || $request->get("Area") != "")
-                    $concurso->setAreaPostulacion($request->get("Area"));
-
-                $concurso->setIdUsuario($this->getUser()->getId());
-
-                $concurso->setObservaciones($request->get("observacion"));
-
-                if ($request->get("fechaDoc") != null || $request->get("fechaDoc") != "")
+               
+                if ($request->get("fechaDoc") != null)
                 {
                     $fecha = $this->cambiarFormatoFecha($request->get("fechaDoc"));
                     $concurso->setFechaRecepDoc(date_create($fecha));
                 }
-                else $concurso->setFechaRecepDoc("");
-                
-                if ($request->get("fechaPre") != null || $request->get("fechaPre") != "")
+                else $concurso->setFechaRecepDoc(null);
+           
+                if ($request->get("fechaPre") != null)
                 {
                     $fecha = $this->cambiarFormatoFecha($request->get("fechaPre"));
                     $concurso->setFechaPresentacion(date_create($fecha));
                 }
-                else $concurso->setFechaPresentacion("");
-
+                else $concurso->setFechaPresentacion(null);
+                
                 $em->flush();
                 
                 return new JsonResponse("S");
@@ -1080,5 +1080,104 @@ class ListadosOposicionController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al devolver datos');
+    }
+    
+    /**
+     * @Route("/concursoOposicion/listadoResultadoAjax", name="listadoResultadoAjax")
+     * @Method("POST")
+     */
+    public function listadoResultadoAjaxAction(Request $request){
+    
+    	$val[][] = "";
+    
+    	if($request->isXmlHttpRequest())
+    	{
+    		    			 
+    		$query = $this->getDoctrine()
+    		->getManager()
+    		->createQuery("SELECT u
+                                     FROM ConcursosBundle:Resultado u
+                                     WHERE u.cedulaAspirante = :cedula and u.idConcurso = :concurso")
+    		->setParameter(':cedula', $request->get("cedula"))
+    		->setParameter(':concurso', $request->get("concurso"));
+    
+    		$recusacion = $query->getResult();
+    
+    		if (!$recusacion) {
+    			return new JsonResponse("N");
+    		}else
+    		{
+    			$val = $this->asignarFilaResult($recusacion,'id',$val, 0);
+    			$val = $this->asignarFilaResult($recusacion,'cedulaAspirante',$val, 1);
+    			$val = $this->asignarFilaResult($recusacion,'idConcurso',$val, 2);
+    			$val = $this->asignarFilaResult($recusacion,'nroPrueba',$val, 3);
+    			$val = $this->asignarFilaResult($recusacion,'nota',$val, 4);
+    			$val = $this->asignarFilaResult($recusacion,'notaEscrito',$val, 5);
+    			$val = $this->asignarFilaResult($recusacion,'aptitud',$val, 6);
+    			$val = $this->asignarFilaResult($recusacion,'psicologica',$val, 7);
+    			$val = $this->asignarFilaResult($recusacion,'responsable',$val, 8);
+    			$val = $this->asignarFilaResult($recusacion,'resultado',$val, 9);
+    			$val = $this->asignarFilaResult($recusacion,'notaOral',$val, 10);
+    
+    			return new JsonResponse($val);
+    		}
+    	}
+    	else
+    		throw $this->createNotFoundException('Error al devolver datos');
+    }
+    
+    private function asignarFilaResult($object,$entidad,$val, $pos)
+    {
+    	$i = 0;
+    	foreach($object as $value)
+    	{
+    		switch ($pos) {
+    			case 1: $val[$entidad][$i] = $value->getCedulaAspirante(); break;
+    			case 2: $val[$entidad][$i] = $value->getIdConcurso(); break;
+    			case 3: $val[$entidad][$i] = $value->getNroPrueba(); break;
+    			case 4: $val[$entidad][$i] = $value->getNota(); break;
+    			case 5: $val[$entidad][$i] = $value->getNotaEscrito(); break;
+    			case 6: $val[$entidad][$i] = $value->getAptitud(); break;
+    			case 7: $val[$entidad][$i] = $value->getPsicologica(); break;
+    			case 8: $val[$entidad][$i] = $value->getResponsable(); break;
+    			case 9: $val[$entidad][$i] = $value->getResultado(); break;
+    			case 10: $val[$entidad][$i] = $value->getNotaOral(); break;
+    
+    			default: $val[$entidad][$i] = $value->getId(); break;
+    		}
+    		$i++;
+    	}
+    	return $val;
+    }
+    
+    /**
+     * @Route("/concursoOposicion/buscarUsuarioAjax", name="buscarUsuarioAjax")
+     * @Method("POST")
+     */
+    public function buscarUsuarioAjaxAction(Request $request){
+    
+    	$val[][] = "";
+    
+    	if($request->isXmlHttpRequest())
+    	{
+    
+    		$query = $this->getDoctrine()
+    		->getManager()
+    		->createQuery("SELECT u 
+                   FROM AppBundle:Usuario u
+                   WHERE u.id = :id")
+                    ->setParameter(':id', $request->get("id"));
+    
+            $recusacion = $query->getResult();
+    
+            if (!$recusacion) {
+               return new JsonResponse("No Data");
+            } else {                                  
+    
+               return new JsonResponse($recusacion[0]->getPrimerNombre()." ".$recusacion[0]->getPrimerApellido());
+            }
+    	}
+    	else
+    		throw $this->createNotFoundException('Error al devolver datos');
     }
 }

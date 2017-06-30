@@ -77,7 +77,7 @@
                   <div class="hide" id="vista">
 	                  <div class="box box-primary">
 			            <div class="box-header with-border" >
-			              <h3 class="box-title" id="nombre"></h3>
+			              <h3 class="box-title" id="nombre">Pruebas</h3>
 			            </div>
 			              <div class="box-body">
 				                <div class="content-body col-md-offset-0 col-md-5">
@@ -89,7 +89,7 @@
 				                  <input type="text" class="form-control" id="estado" readOnly="true">
 				                </div>
 				              </div>
-				          </div>
+				          
 				          
 				          <div class="box-body">
 				                <div class="content-body col-md-offset-0 col-md-5">
@@ -98,30 +98,39 @@
 				                </div>
 				                <div class="content-body col-md-offset-1 col-md-5">
 				                  <label>Valoraci&oacute;n De Credenciales</label>
-				                  <input type="text" class="form-control" id="credenciales">
+				                  <input type="text" class="form-control" id="credenciales" maxlength="2" onkeypress="return justNumbers(event);">
 				                </div>
 				            </div>
 				            
 				            <div class="box-body">
 				                <div class="content-body col-md-offset-0 col-md-5">
 				                  <label>Aptitud Intelectual</label>
-				                  <input type="text" class="form-control" id="intelectual">
+				                  <input type="text" class="form-control" id="intelectual" maxlength="2" onkeypress="return justNumbers(event);">
 				                </div>
 				                <div class="content-body col-md-offset-1 col-md-5">
 				                  <label>Perfil Acad&eacute;mico y Psicol&oacute;gico</label>
-				                  <input type="text" class="form-control" id="academico">
+				                  <input type="text" class="form-control" id="academico" maxlength="2" onkeypress="return justNumbers(event);">
 				                </div>
 				            </div>
 				            
 				            <div class="box-body">
 				                <div class="content-body col-md-offset-0 col-md-5">
 				                  <label>Aptitud Pedag&oacute;gica</label>
-				                  <input type="text" class="form-control" id="pedagogica">
+				                  <input type="text" class="form-control" id="pedagogica" maxlength="2" onkeypress="return justNumbers(event);">
 				                </div>
 				                <div class="content-body col-md-offset-1 col-md-5">
 				                  <label>Conocimientos Del Concurso</label>
-				                  <input type="text" class="form-control" id="area">
+				                  <input type="text" class="form-control" id="area" maxlength="2" onkeypress="return justNumbers(event);">
 				                </div>
+				            </div>				          
+				            
+				            <BR/>
+				            
+				             <div class="box-body">
+				                <div class="content-body col-md-offset-0 col-md-11">
+	                  				<button id="guardar" type="button" class="btn btn-success btn-block btn-flat">Guardar</button>
+				                </div>
+				            </div>
 				            </div>
 				        </div>
 		              
@@ -139,7 +148,6 @@
 
 {% block custom_javascripts %}
 
-  <script src="{{ asset('assets/js/concursoOposicion/saveResultados.js') }}"></script>
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
 
   <script>
@@ -176,5 +184,9 @@
       });
 
   </script>
+  
+  {% include('ConcursoOposicionBundle:Resultado:saveResultado.html.twig') %}
+  
+  <script src="{{ asset('assets/js/concursoOposicion/saveResultados.js') }}"></script>
 
 {% endblock %}
