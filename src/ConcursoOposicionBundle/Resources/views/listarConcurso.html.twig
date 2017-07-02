@@ -195,9 +195,76 @@
                    </div>
 
                 </div>
-        </div>
-      </section>
-    </div>
+  			 </div>      
+  		</section> 
+  </div>
+  
+  
+  <div class="row hide" id="jur">
+      <section class="content-body col-md-offset-1 col-md-10">
+
+        <br/>
+        <div class="register-box-body">
+
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Jurados</h3>
+                  </div>
+
+                   <div class="box-body hide" id="jurTabla">
+
+                      <table id="tabla1" class="table table-bordered table-striped">
+                          <thead>
+                          <tr>
+                            <th>Nombre(s)</th>
+                            <th>Apellido(s)</th>
+                            <th>Area Postulaci&oacute;n</th>
+                            <th>Facultad</th>
+                            <th>Universidad</th>                          
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                              <th>Nombre(s)</th>
+                              <th>Apellido(s)</th>
+                              <th>Area Postulaci&oacute;n</th>
+                              <th>Facultad</th>
+                              <th>Universidad</th>                           
+                            </tr>
+                          </tfoot>
+                      </table>
+                   </div>
+                   
+                   <div class="box-body hide" id="jurMensaje">
+
+                 	  <div class="row">		        
+					  	<div class="container form-group has-feedback has-error">
+						    <div class="row">
+						        <div class='col-sm-8'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene Jurados Registrados" readOnly="true"/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-warning-sign"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
+                   </div>
+
+                </div>
+  			 </div>      
+  		</section> 
+  </div>
+  
+
+       
     <br/><br/>
     
 {% endblock %}
@@ -224,8 +291,22 @@
               { "data": "area" },
               { "data": "doc" },
               { "data": "pre" },
+              { "data": "ver" },
               { "data": "modif" },
               { "data": "elim" }              
+          ]
+      });
+      
+      tabla1 = $('#tabla1').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "nombre" },
+              { "data": "apellido" },
+              { "data": "areainvestigacion" },
+              { "data": "facultad" },
+              { "data": "universidad" }     
           ]
       });
 

@@ -13,6 +13,7 @@
 			method:"POST",
 			url: "{{ path('listadoJuradosAjax') }}",
 			dataType: 'json',
+			data: {"id": "NO"},
 	        success: function(data)
 	        {
 	                if (data == "N"){
@@ -265,6 +266,7 @@
 							method:"POST",
 							url: "{{ path('listadoJuradosAjax') }}",
 							dataType: 'json',
+							data: {"id": "NO"},
 					        success: function(data)
 					        {
 			                    for (var i = 0; i <= data["nombre"].length-1; i++) {

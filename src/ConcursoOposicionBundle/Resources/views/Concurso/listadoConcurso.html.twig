@@ -36,6 +36,7 @@
 	                        "area": data["area"][i],
 	                        "doc": data["recepcion"][i],
 	                        "pre": data["presentacion"][i],
+	                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 	                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
 	                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
 	                    }).draw();                          
@@ -44,6 +45,45 @@
 	        }
 	    });
 	});
+	
+	function ver(id){
+
+		$('#jur').removeClass("hide");	
+		$('#jurMensaje').addClass("hide");
+		$('#jurTabla').addClass("hide"); 
+
+	    ident = id;
+
+	    $.ajax({
+
+	        method:"POST",
+	        url: "{{ path('listadoJuradosAjax') }}",
+	        dataType: 'json',
+	        data: {"id": id},
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        	
+	        		$('#jurMensaje').removeClass("hide");	
+	        	
+	        	} else {
+	        	
+	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
+
+	                        tabla1.row.add( {
+	                            "nombre": data["nombre"][i],
+	                            "apellido": data["apellido"][i],
+	                            "areainvestigacion": data["areainvestigacion"][i],
+	                            "facultad": data["facultad"][i],
+	                            "universidad": data["universidad"][i]
+	                            }).draw();                               
+	                    }
+	        	
+	        		$('#jurTabla').removeClass("hide");   	
+	        	}                                   
+	        }
+	    });
+	}
 
 	$("#eliminarConcurso").click(function(){
 
@@ -321,5 +361,9 @@
 	    }
 	    else return /\d/.test(String.fromCharCode(keynum));
 	}
+	
+	$("#personal").click(function(){
+	    
+	});
 
 </script>
