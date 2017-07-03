@@ -49,8 +49,23 @@
 	function ver(id){
 
 		$('#jur').removeClass("hide");	
+		
 		$('#jurMensaje').addClass("hide");
-		$('#jurTabla').addClass("hide"); 
+		$('#jurTabla').addClass("hide");
+		
+		$('#jurMensaje2').addClass("hide");
+		$('#jurTabla2').addClass("hide"); 
+		
+		$('#jurMensaje3').addClass("hide");
+		$('#jurTabla3').addClass("hide"); 
+		
+		$('#jurMensaje4').addClass("hide");
+		$('#jurTabla4').addClass("hide"); 
+		
+		tabla1.clear().draw();
+		tabla2.clear().draw();
+		tabla3.clear().draw();
+		tabla4.clear().draw();
 
 	    ident = id;
 
@@ -80,6 +95,96 @@
 	                    }
 	        	
 	        		$('#jurTabla').removeClass("hide");   	
+	        	}                                   
+	        }
+	    });
+	    
+	    $.ajax({
+
+	        method:"POST",
+	        url: "{{ path('listadoSuplentesAjax') }}",
+	        dataType: 'json',
+	        data: {"id": id},
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        	
+	        		$('#jurMensaje2').removeClass("hide");	
+	        	
+	        	} else {
+	        	
+	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
+
+	                        tabla2.row.add( {
+	                            "nombre": data["nombre"][i],
+	                            "apellido": data["apellido"][i],
+	                            "areainvestigacion": data["areainvestigacion"][i],
+	                            "facultad": data["facultad"][i],
+	                            "universidad": data["universidad"][i]
+	                            }).draw();                               
+	                    }
+	        	
+	        		$('#jurTabla2').removeClass("hide");   	
+	        	}                                   
+	        }
+	    });
+	    
+	    $.ajax({
+
+	        method:"POST",
+	        url: "{{ path('listadoCPECAjax') }}",
+	        dataType: 'json',
+	        data: {"id": id},
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        	
+	        		$('#jurMensaje3').removeClass("hide");	
+	        	
+	        	} else {
+	        	
+	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
+
+	                        tabla3.row.add( {
+	                            "nombre": data["nombre"][i],
+	                            "apellido": data["apellido"][i],
+	                            "areainvestigacion": data["areainvestigacion"][i],
+	                            "facultad": data["facultad"][i],
+	                            "universidad": data["universidad"][i]
+	                            }).draw();                               
+	                    }
+	        	
+	        		$('#jurTabla3').removeClass("hide");   	
+	        	}                                   
+	        }
+	    });
+	    
+	    $.ajax({
+
+	        method:"POST",
+	        url: "{{ path('listadoSuplenteCPECAjax') }}",
+	        dataType: 'json',
+	        data: {"id": id},
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        	
+	        		$('#jurMensaje4').removeClass("hide");	
+	        	
+	        	} else {
+	        	
+	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
+
+	                        tabla4.row.add( {
+	                            "nombre": data["nombre"][i],
+	                            "apellido": data["apellido"][i],
+	                            "areainvestigacion": data["areainvestigacion"][i],
+	                            "facultad": data["facultad"][i],
+	                            "universidad": data["universidad"][i]
+	                            }).draw();                               
+	                    }
+	        	
+	        		$('#jurTabla4').removeClass("hide");   	
 	        	}                                   
 	        }
 	    });
@@ -361,9 +466,174 @@
 	    }
 	    else return /\d/.test(String.fromCharCode(keynum));
 	}
+		
+	$('#ingresarCPEC').click(function (){
 	
-	$("#personal").click(function(){
-	    
+		toastr.clear();
+		var text = ""; 
+		var continua = true;
+		
+		if ($('#cedula1').val() == "" || $('#cedula1').val() == null){
+			
+			$("#spancedula1").removeClass("hide");
+			continua = false;
+			$('#cedulaa1').addClass("has-error");
+			text = "Campo Vacío";
+		} else {
+			$("#spancedula1").addClass("hide");
+			$('#cedulaa1').removeClass("has-error");
+		}
+		
+		if (isNaN($('#cedula1').val())){
+			
+			$("#spancedula1").removeClass("hide");
+			continua = false;
+			$('#cedulaa1').addClass("has-error");
+			text = "Esto No Es Un Número";
+		} 
+		
+		if ($('#nombre1').val() == "" || $('#nombre1').val() == null){
+			
+			$("#spannombre1").removeClass("hide");
+			continua = false;
+			$('#nombrea1').addClass("has-error");
+			text = "Campo Vacío";
+		} else {
+			$("#spannombre1").addClass("hide");
+			$('#nombrea1').removeClass("has-error");
+		}
+		
+		if ($('#apellido1').val() == "" || $('#apellido1').val() == null){
+			
+			$("#spanapellido1").removeClass("hide");
+			continua = false;
+			$('#apellidoa1').addClass("has-error");
+			text = "Campo Vacío";
+		} else {
+			$("#spanapellido1").addClass("hide");
+			$('#apellidoa1').removeClass("has-error");
+		}
+		
+		if ($('#facultad1').val() == "" || $('#facultad1').val() == null){
+			
+			$("#spanfacultad1").removeClass("hide");
+			continua = false;
+			$('#facultada1').addClass("has-error");
+			text = "Campo Vacío";
+		} else {
+			$("#spanfacultad1").addClass("hide");
+			$('#facultada1').removeClass("has-error");
+		}
+		
+		if ($('#universidad1').val() == "" || $('#universidad1').val() == null){
+			
+			$("#spanuniversidad1").removeClass("hide");
+			continua = false;
+			$('#universidada1').addClass("has-error");
+			text = "Campo Vacío";
+		} else {
+			$("#spanuniversidad1").addClass("hide");
+			$('#universidada1').removeClass("has-error");
+		}
+		
+		if ($('#area1').val() == "" || $('#area1').val() == null){
+			
+			$("#spanarea1").removeClass("hide");
+			continua = false;
+			$('#areaa1').addClass("has-error");
+			text = "Campo Vacío";
+		} else {
+			$("#spanarea1").addClass("hide");
+			$('#areaa1').removeClass("has-error");
+		}
+
+		if(continua){
+	
+			$.ajax({
+	            method: "POST",
+	            data: {"cedula": $('#cedula1').val(),
+			            "nombre":$('#nombre1').val(),
+			            "tipo":"OposicionCpec", 
+			            "apellido":$('#apellido1').val(), 
+						"facultad":$('#facultad1').val(), 
+						"universidad":$('#universidad1').val(), 
+						"area":$('#area1').val(),
+						"concurso": ident},
+	            url:  "{{ path('registroJuradosAjax') }}",
+	            dataType: 'json',
+	            success: function(data)
+	            {
+	                if (data == "S"){
+
+	                	continua = true;					
+
+	                	toastr.clear();
+
+						text = "Evaluador Insertado";
+
+						toastr.success(text, "Exito", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+		                 
+		                  $.ajax({
+
+					        method:"POST",
+					        url: "{{ path('listadoCPECAjax') }}",
+					        dataType: 'json',
+					        data: {"id": ident},
+					        success: function(data)
+					        {
+					        	tabla3.clear().draw();
+					        
+				        		for (var i = 0; i <= data["nombre"].length-1; i++) {
+			
+			                        tabla3.row.add( {
+			                            "nombre": data["nombre"][i],
+			                            "apellido": data["apellido"][i],
+			                            "areainvestigacion": data["areainvestigacion"][i],
+			                            "facultad": data["facultad"][i],
+			                            "universidad": data["universidad"][i]
+			                            }).draw();                               
+				                 }                                  
+					        }
+					    });		                 
+	                } 
+	                else{
+
+	                	toastr.clear();
+
+	                	if (data == "N")		                		
+	                		text = "Usted no tiene permiso";		                	
+	                	else
+		                	text = "Error al Registrar Jurados";			                		                	
+	                	
+	                	toastr.error(text, "Error", {
+				            "timeOut": "0",
+				            "extendedTImeout": "0"
+			         	});
+	                }
+	            }
+	        });	
+	        
+	        $('#myModal1').modal('toggle');	
+		}
+		else{
+			toastr.error(text, "Error", {
+	            "timeOut": "0",
+	            "extendedTImeout": "0"
+	         });
+		}
+	});
+	
+	$('#agregar').click(function (){
+	
+		$('#cedula1').val('');
+        $('#nombre1').val('');
+        $('#apellido1').val(''); 
+		$('#facultad1').val(''); 
+		$('#universidad1').val(''); 
+		$('#area1').val('');
 	});
 
 </script>

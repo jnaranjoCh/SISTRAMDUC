@@ -112,16 +112,6 @@ class ListadosOposicionController extends Controller
     public function listadoJuradosAjaxAction(Request $request){
 
         $val[][] = "";
-       
-        /*$query = $this->getDoctrine()
-         ->getManager()
-         ->createQuery("SELECT u
-         FROM ConcursosBundle:Aspirante u, ConcursosBundle:Concurso c
-         INNER JOIN  c.aspirantes r
-         WHERE c.tipo = 'Oposicion' and c.id = :concurso and r = u.id")
-         ->setParameter(':concurso', $request->get("concurso"));
-          
-         $recusacion = $query->getResult();*/
 
         if($request->isXmlHttpRequest())
         {
@@ -221,15 +211,28 @@ class ListadosOposicionController extends Controller
 
         if($request->isXmlHttpRequest())
         {
-            $repository = $this->getDoctrine()
-                ->getRepository('ConcursosBundle:Jurado');
-             
-            $query = $repository->createQueryBuilder('p')
-                ->where('p.tipo = :cadena')
-                ->setParameter('cadena', 'OposicionSuplentes')
-                ->orderBy('p.id', 'DESC')
-                ->getQuery();
-             
+        	if ($request->get("id") != "NO"){
+        	
+        		$query = $this->getDoctrine()
+        		->getManager()
+        		->createQuery("SELECT u
+				         FROM ConcursosBundle:Jurado u, ConcursosBundle:Concurso c
+				         INNER JOIN  c.jurado r
+				         WHERE c.id = :concurso and r = u.id and u.tipo = 'OposicionSuplentes'")
+        					         ->setParameter(':concurso', $request->get("id"));
+        	
+        	} else {
+        		
+        		$repository = $this->getDoctrine()
+        		->getRepository('ConcursosBundle:Jurado');
+        		 
+        		$query = $repository->createQueryBuilder('p')
+        		->where('p.tipo = :cadena')
+        		->setParameter('cadena', 'OposicionSuplentes')
+        		->orderBy('p.id', 'DESC')
+        		->getQuery();
+        	}
+    
             $jurados = $query->getResult();
 
             if (!$jurados) {
@@ -261,6 +264,18 @@ class ListadosOposicionController extends Controller
 
         if($request->isXmlHttpRequest())
         {
+        	if ($request->get("id") != "NO"){
+        		 
+        		$query = $this->getDoctrine()
+        		->getManager()
+        		->createQuery("SELECT u
+				         FROM ConcursosBundle:Jurado u, ConcursosBundle:Concurso c
+				         INNER JOIN  c.jurado r
+				         WHERE c.id = :concurso and r = u.id and u.tipo = 'OposicionCpec'")
+        					         ->setParameter(':concurso', $request->get("id"));
+        					          
+        	} else {
+        	
             $repository = $this->getDoctrine()
                 ->getRepository('ConcursosBundle:Jurado');
              
@@ -269,7 +284,8 @@ class ListadosOposicionController extends Controller
                 ->setParameter('cadena', 'OposicionCpec')
                 ->orderBy('p.id', 'DESC')
                 ->getQuery();
-             
+        	} 
+                
             $jurados = $query->getResult();
 
             if (!$jurados) {
@@ -301,14 +317,27 @@ class ListadosOposicionController extends Controller
 
         if($request->isXmlHttpRequest())
         {
-            $repository = $this->getDoctrine()
-                ->getRepository('ConcursosBundle:Jurado');
-             
-            $query = $repository->createQueryBuilder('p')
-                ->where('p.tipo = :cadena')
-                ->setParameter('cadena', 'OposicionSuplenteCpec')
-                ->orderBy('p.id', 'DESC')
-                ->getQuery();
+        	if ($request->get("id") != "NO"){
+        		 
+        		$query = $this->getDoctrine()
+        		->getManager()
+        		->createQuery("SELECT u
+				         FROM ConcursosBundle:Jurado u, ConcursosBundle:Concurso c
+				         INNER JOIN  c.jurado r
+				         WHERE c.id = :concurso and r = u.id and u.tipo = 'OposicionSuplenteCpec'")
+        					         ->setParameter(':concurso', $request->get("id"));
+        					         	
+        	} else {
+        		
+        		$repository = $this->getDoctrine()
+        		->getRepository('ConcursosBundle:Jurado');
+        		 
+        		$query = $repository->createQueryBuilder('p')
+        		->where('p.tipo = :cadena')
+        		->setParameter('cadena', 'OposicionSuplenteCpec')
+        		->orderBy('p.id', 'DESC')
+        		->getQuery();
+        	}           
              
             $jurados = $query->getResult();
 

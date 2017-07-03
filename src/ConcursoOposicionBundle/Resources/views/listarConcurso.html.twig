@@ -199,14 +199,25 @@
   		</section> 
   </div>
   
-  
-  <div class="row hide" id="jur">
+   <div class="row hide" id="jur">
       <section class="content-body col-md-offset-1 col-md-10">
 
         <br/>
         <div class="register-box-body">
+  
+		  <div class="nav-tabs-custom">
+		    <ul class="nav nav-tabs pull-right">
+		      <li><a href="#suplente" data-toggle="tab">CPEC Suplentes</a></li>
+		      <li><a href="#cpec" data-toggle="tab">CPEC</a></li>
+		      <li><a href="#sales-chart" data-toggle="tab">Jurados Suplentes</a></li>
+		      <li class="active"><a href="#revenue-chart" data-toggle="tab">Jurados</a></li>	      
+		      <li class="pull-left header"><i class="glyphicon glyphicon-search"></i> Detalles</li>
+		    </ul>
+		    <div class="tab-content no-padding">
+		      <!-- Morris chart - Sales -->
+		      <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
 
-                <div class="box">
+					<div class="box">
                   <div class="box-header">
                     <h3 class="box-title">Jurados</h3>
                   </div>
@@ -259,9 +270,318 @@
                    </div>
 
                 </div>
-  			 </div>      
-  		</section> 
+
+			  </div>
+		      <div class="chart tab-pane" id="sales-chart" style="position: relative;">
+
+					<div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Jurados Suplentes</h3>
+                  </div>
+
+                   <div class="box-body hide" id="jurTabla2">
+
+                      <table id="tabla2" class="table table-bordered table-striped">
+                          <thead>
+                          <tr>
+                            <th>Nombre(s)</th>
+                            <th>Apellido(s)</th>
+                            <th>Area Postulaci&oacute;n</th>
+                            <th>Facultad</th>
+                            <th>Universidad</th>                          
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                              <th>Nombre(s)</th>
+                              <th>Apellido(s)</th>
+                              <th>Area Postulaci&oacute;n</th>
+                              <th>Facultad</th>
+                              <th>Universidad</th>                           
+                            </tr>
+                          </tfoot>
+                      </table>
+                   </div>
+                   
+                   <div class="box-body hide" id="jurMensaje2">
+
+                 	  <div class="row">		        
+					  	<div class="container form-group has-feedback has-error">
+						    <div class="row">
+						        <div class='col-sm-8'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene Jurados Suplentes Registrados" readOnly="true"/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-warning-sign"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
+                   </div>
+
+                </div>
+
+			</div>
+			
+			<div class="chart tab-pane" id="cpec" style="position: relative;">
+
+					<div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">CPEC</h3>
+                  </div>
+
+                   <div class="box-body hide" id="jurTabla3">
+
+                      <table id="tabla3" class="table table-bordered table-striped">
+                          <thead>
+                          <tr>
+                            <th>Nombre(s)</th>
+                            <th>Apellido(s)</th>
+                            <th>Area Postulaci&oacute;n</th>
+                            <th>Facultad</th>
+                            <th>Universidad</th>                          
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                              <th>Nombre(s)</th>
+                              <th>Apellido(s)</th>
+                              <th>Area Postulaci&oacute;n</th>
+                              <th>Facultad</th>
+                              <th>Universidad</th>                           
+                            </tr>
+                          </tfoot>
+                      </table>
+                      
+                      <br/>
+                      
+                      <div class="container">
+	                  <div class="row">
+	                      <div class='col-sm-6'>
+	                          <div class="form-group">
+	                              <div class='input-group' >
+						              <button id="agregar" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal1">+Agregar</button>
+	                              </div>
+	                          </div>
+	                      </div>
+	                  </div>
+	                </div>
+                      
+                   </div>
+                   
+                   <div class="box-body hide" id="jurMensaje3">
+
+                 	  <div class="row">		        
+					  	<div class="container form-group has-feedback has-error">
+						    <div class="row">
+						        <div class='col-sm-8'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene CPEC Registrados" readOnly="true"/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-warning-sign"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>						
+					</div>
+                   </div>
+                </div>
+			  </div>
+			  
+			  
+			  <div class="chart tab-pane" id="suplente" style="position: relative;">
+
+					<div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Suplentes CPEC</h3>
+                  </div>
+
+                   <div class="box-body hide" id="jurTabla4">
+
+                      <table id="tabla4" class="table table-bordered table-striped">
+                          <thead>
+                          <tr>
+                            <th>Nombre(s)</th>
+                            <th>Apellido(s)</th>
+                            <th>Area Postulaci&oacute;n</th>
+                            <th>Facultad</th>
+                            <th>Universidad</th>                          
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                          <tfoot>
+                             <tr>
+                              <th>Nombre(s)</th>
+                              <th>Apellido(s)</th>
+                              <th>Area Postulaci&oacute;n</th>
+                              <th>Facultad</th>
+                              <th>Universidad</th>                           
+                            </tr>
+                          </tfoot>
+                      </table>
+                   </div>
+                   
+                   <div class="box-body hide" id="jurMensaje4">
+
+                 	  <div class="row">		        
+					  	<div class="container form-group has-feedback has-error">
+						    <div class="row">
+						        <div class='col-sm-8'>
+						            <div class="form-group">
+						                <div class='input-group' >
+						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene CPEC Registrados" readOnly="true"/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-warning-sign"></span>
+						                    </span>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
+                   </div>
+
+                </div>
+
+			  </div>
+			
+			
+			
+		    </div>
+		  </div>
+  		</div>      
+  	</section> 
   </div>
+  
+  
+  
+  
+  <div class="modal fade" id="myModal1" role="dialog">
+      <div class="modal-dialog">
+      
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Registro de CPEC</h4>
+          </div>
+          <div class="modal-body">
+          
+          	<div class="container form-group has-feedback" id="cedulaa1">
+	            <label><center>CPEC</center></label>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spancedula1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula" onkeypress="return justNumbers(event);" id='cedula1' value=""/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-address-card-o"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container form-group has-feedback" id="nombrea1">
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre1' value=""/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container form-group has-feedback" id='apellidoa1'>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanapellido1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido1' value=""/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-buysellads"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container form-group has-feedback" id='facultada1'>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanfacultad1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad1' value=""/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container form-group has-feedback" id='universidada1'>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				        	<span id="spanuniversidad1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad1' value=""/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="container form-group has-feedback" id='areaa1'>
+				    <div class="row">
+				        <div class='col-sm-6'>
+				       		<span id="spanarea1" class="label label-danger hide">Vac&iacute;o</span>
+				            <div class="form-group">
+				                <div class='input-group' >
+				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n" id='area1' value=""/>
+				                    <span class="input-group-addon">
+				                        <span class="fa fa-graduation-cap"></span>
+				                    </span>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+            <button id="ingresarCPEC" type="button" class="btn btn-success">Registrar</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
   
 
        
@@ -298,6 +618,45 @@
       });
       
       tabla1 = $('#tabla1').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "nombre" },
+              { "data": "apellido" },
+              { "data": "areainvestigacion" },
+              { "data": "facultad" },
+              { "data": "universidad" }     
+          ]
+      });
+      
+      tabla2 = $('#tabla2').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "nombre" },
+              { "data": "apellido" },
+              { "data": "areainvestigacion" },
+              { "data": "facultad" },
+              { "data": "universidad" }     
+          ]
+      });
+      
+      tabla3 = $('#tabla3').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "nombre" },
+              { "data": "apellido" },
+              { "data": "areainvestigacion" },
+              { "data": "facultad" },
+              { "data": "universidad" }     
+          ]
+      });
+      
+      tabla4 = $('#tabla4').DataTable({
         "language": {
                 "url": "{{ asset('assets/js/datatable-spanish.json') }}"
           },
