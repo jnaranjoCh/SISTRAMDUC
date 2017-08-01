@@ -78,6 +78,12 @@ class Cargo
         return $this->UsuarioFechaCargos->toArray();
     }
 
+    public function setUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargos)
+    {
+        $this->UsuarioFechaCargos->set($this->UsuarioFechaCargos->indexOf($UsuarioFechaCargos),$UsuarioFechaCargos);
+        return $this;
+    }
+    
     public function addUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargo)
     {
         if (!$this->UsuarioFechaCargos->contains($UsuarioFechaCargo)) {

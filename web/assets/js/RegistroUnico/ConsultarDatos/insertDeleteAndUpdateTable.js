@@ -101,11 +101,13 @@ function updateReferencesAdd(table,iid)
                 "Cedula": '<input id="Cedula'+table.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula">',
             }).draw();            
         else if(table.table().node().id == "tableRevista")
+        {
             tableRevista.row.add( {
                 "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
-                "IdDelRegistro":'<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;"><option value="'+iid+'">'+iid+'</option></select>',
+                "IdDelRegistro":'<select id="IdDelRegistroRevista0" class="form-control select2" style="width: 240px;"><option value="'+iid+'">'+iid+'</option></select>',
                 "Revista":'<input id="Revista'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
             }).draw();
+        }
     }
 }
 
@@ -136,7 +138,7 @@ $('#restablecer').click(function(){
     $("#ActaNacCargaHijoDatos").fileinput('refresh');
     $.ajax({
         method: "POST",
-        data: {"email":$('#gemail').val()},
+        data: {"email":$('#mail').val()},
         url:   routeRegistroUnico['registro_consultardocumentshijos_ajax'],
         dataType: 'json',
         success: function(data){
@@ -174,7 +176,7 @@ $('#restablecer').click(function(){
                 "ajax":{
                     "url": routeRegistroUnico['registro_consultarhijos_ajax'],
                     "type": 'POST',
-                    "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                    "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                 },
                 "pagingType": "full_numbers",
                 "bDestroy": true,
@@ -200,7 +202,7 @@ $('#restablecer').click(function(){
     $("#CedulaRifActaCargaDatos").fileinput('refresh');
     $.ajax({
         method: "POST",
-        data: {"email":$('#gemail').val()},
+        data: {"email":$('#mail').val()},
         url:   routeRegistroUnico['registro_consultardatospersonales_ajax'],
         dataType: 'json',
         success: function(data){
@@ -246,7 +248,7 @@ $('#restablecer').click(function(){
                     "ajax":{
                         "url": routeRegistroUnico['registro_consultarcargos_ajax'],
                         "type": 'POST',
-                        "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                        "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                     },
                     "pagingType": "full_numbers",
                     "bDestroy": true,
@@ -266,7 +268,7 @@ $('#restablecer').click(function(){
                             "ajax":{
                                 "url": routeRegistroUnico['registro_consultarregistros_ajax'],
                                 "type": 'POST',
-                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -290,7 +292,7 @@ $('#restablecer').click(function(){
                             "ajax":{
                                 "url": routeRegistroUnico['registro_consultarparticipantes_ajax'],
                                 "type": 'POST',
-                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -310,7 +312,7 @@ $('#restablecer').click(function(){
                             "ajax":{
                                 "url": routeRegistroUnico['registro_consultarrevistas_ajax'],
                                 "type": 'POST',
-                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,

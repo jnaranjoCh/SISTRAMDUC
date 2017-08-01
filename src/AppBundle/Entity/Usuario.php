@@ -193,7 +193,13 @@ class Usuario implements UserInterface
     {
         return $this->UsuarioFechaCargos->toArray();
     }
-
+    
+    public function setUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargos)
+    {
+        $this->UsuarioFechaCargos->set($this->UsuarioFechaCargos->indexOf($UsuarioFechaCargos),$UsuarioFechaCargos);
+        return $this;
+    }
+    
     public function addUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargos)
     {
         if (!$this->UsuarioFechaCargos->contains($UsuarioFechaCargos)) {

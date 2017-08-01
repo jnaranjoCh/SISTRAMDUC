@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
+use RegistroUnicoBundle\Entity\UsuarioFechaCargo;
 use RegistroUnicoBundle\Entity\Estatus;
 use RegistroUnicoBundle\Entity\Nivel;
 use AppBundle\Entity\Usuario;
@@ -424,4 +426,76 @@ class ConsultarDatosController extends Controller
                     ->getRepository($bundle.$entidad)
                     ->findOneByCorreo($email);
     }
+    
+    public function editarDatosDeUsuarioAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $this->updateSectionOne($request->get('personalData'));
+            $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
+            //$this->updateSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
+            //$this->updateSectionFour($request->get('hijoData'),$request->get('personalData')[16]);
+            return new JsonResponse("Datos guardados");
+        }
+        else
+            return new JsonResponse("Error");
+    }
+    
+    private function updateSectionOne($user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $updateUser = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($user[16]);
+        
+        if (!$updateUser) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$user[16]
+            );
+        }
+        
+        list($day, $month, $year) = explode('/', explode(' ', $user[5])[0]);
+        $updateUser->setPrimerNombre($user[0]);
+        $updateUser->setSegundoNombre($user[1]);
+        $updateUser->setPrimerApellido($user[2]);
+        $updateUser->setSegundoApellido($user[3]);
+        $updateUser->setNacionalidad($user[4]);
+        $updateUser->setFechaNacimiento(new \DateTime($year."-".$month."-".$day));
+        $updateUser->setEdad($user[6]);
+        $updateUser->setSexo($user[7]);
+        $updateUser->setRif('J-'.$user[8]);
+        $updateUser->setTelefono($user[9].'-'.$user[10]);
+        $updateUser->setDireccion($user[15]);
+        
+        $em->flush();
+    }
+    
+    private function updateSectionTwo($cargos,$email)
+    {
+        $i = 0;
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        
+        foreach($cargos as $cargo){
+          $car = $this->getDoctrine()
+                      ->getManager()
+                      ->getRepository('RegistroUnicoBundle:Cargo')
+                      ->findOneByDescription($cargo['nombre']);
+          $UsuarioFechaCargo = new UsuarioFechaCargo();
+          list($day, $month, $year) = explode('/', explode(' ', $cargo['fechaInicio'])[0]);
+          $UsuarioFechaCargo->setDate(new \DateTime($year."-".$month."-".$day));
+          $UsuarioFechaCargo->setCargo($car);
+        
+          $user->setUsuarioFechaCargos($UsuarioFechaCargo);
+          $car->setUsuarioFechaCargos($UsuarioFechaCargo);
+        }
+        $em->flush();
+    }
+
 }

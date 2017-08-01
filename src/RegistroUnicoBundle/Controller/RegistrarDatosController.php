@@ -73,7 +73,7 @@ class RegistrarDatosController extends Controller
         }
         
         $user = $em->getRepository('AppBundle:Usuario')
-                      ->findOneByCorreo($_POST['gemail']);
+                      ->findOneByCorreo($_POST['mail']);
         
         
         $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/users/';
@@ -323,7 +323,7 @@ class RegistrarDatosController extends Controller
                       ->findOneByDescription($cargo['nombre']);
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           $UsuarioFechaCargo->setDate(new \DateTime($cargo['fechaInicio']));
-        
+
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
         }
