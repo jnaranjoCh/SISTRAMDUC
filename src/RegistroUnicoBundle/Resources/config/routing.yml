@@ -94,6 +94,12 @@ registro_consultarbuscaremail_ajax:
     path:     /consulta/buscar-email
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarEmailAjax }
 
+registro_editardatos_ajax:
+    path:     /consulta/editar-datos
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:editarDatosDeUsuario }
+    requirements:
+        _method:  POST
+        
 registro_consultarusuario_index:
     path:     /consulta/usuario
     defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:consultarUsuario }
@@ -121,3 +127,4 @@ registro_actualizarusuario_ajax:
     defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:actualizarDatosDeUsuario }
     requirements:
         _method:  POST
+        

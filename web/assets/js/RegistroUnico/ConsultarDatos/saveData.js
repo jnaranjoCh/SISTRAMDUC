@@ -3,13 +3,36 @@ var tieneArchivosHijos = false;
 var referenciasParticipantes = [];
 var indReferenciasParticipantes = 0;
 var referenciasRevistas = [];
+
 var indReferenciasRevistas = 0;
+var indPersonalData = 0;
+var indPersonalData2 = 0;
+var indCargoData = 0;
+var countRegistro = 0;
+var countParticipante = 0;
+var countRevista = 0;
+var countHijo = 0;
+
+var personalData = [];
+var cargoData = [];
+var registrosData = [];
+var participantesData = [];
+var revistasData = [];
+var hijoData = [];
 
 $("#guardar").click(function(){
     var can_update = false;
     var text = "";
 
     toastr.clear();
+    
+    personalData = new Array();
+    cargoData = new Array();
+    registrosData = new Array();
+    participantesData = new Array();
+    revistasData = new Array();
+    hijoData = new Array();
+    
     if(validarDatosPersonales())
     {
         if(!validarCargos())
@@ -25,10 +48,42 @@ $("#guardar").click(function(){
             if(!validarHijos())
                 text = "Error datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
             else
+            {
+                $.ajax({
+                    method: "POST",
+                    data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                    url:  routeRegistroUnico['registro_editardatos_ajax'],
+                    dataType: 'json',
+                    beforeSend: function(){
+                       // $("#myModal2").modal("show");
+                    },
+                    success: function(data){
+                        alert(data);
+                        /*$("#modalLabel").html("Subiendo archivos del usuario...");
+                        document.getElementById("completeForm").submit();*/
+                    }
+                });
                 can_update = true;
+            }
         }
         else
+        {   
+            $.ajax({
+                method: "POST",
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                url:  routeRegistroUnico['registro_editardatos_ajax'],
+                dataType: 'json',
+                beforeSend: function(){
+                    //$("#myModal2").modal("show");
+                },
+                success: function(data){
+                    alert(data);
+                    //$("#modalLabel").html("Subiendo archivos del usuario...");
+                    //document.getElementById("completeForm").submit();
+                }
+            });
             can_update = true;
+        }
     }else
         can_update = true;
 
@@ -48,6 +103,9 @@ function validarDatosPersonales()
     var text = "";
     var countFiles; 
     var anio;
+    
+    indPersonalData = 0;
+    indPersonalData2 = 0;
 
 
     if($("#CedulaRifActaCargaDatos").val() == "" && !tieneArchivosPersonal)
@@ -100,6 +158,8 @@ function validarDatosPersonales()
                 $("#div"+inputsO[i-1]).addClass("has-error");
                 text = "Error dato invalida.";
             }else{
+                personalData[indPersonalData] = $("#"+inputsO[i]).val();
+                indPersonalData++;
                 $("#headerPersonal").css({ 'color': "black" });
                 $("#span"+inputsO[i]).removeClass("glyphicon-remove");
                 $("#div"+inputsO[i]).removeClass("has-error");   
@@ -116,6 +176,8 @@ function validarDatosPersonales()
             text = "Campo mal introducido.";
             
         }else if($("#"+inputsW[i]).val() != ""){
+            personalData[indPersonalData2] = $("#"+inputsW[i]).val();
+            indPersonalData2++;
             $("#headerPersonal").css({ 'color': "black" });
             $("#span"+inputsW[i]).removeClass("glyphicon-remove");
             $("#div"+inputsW[i]).removeClass("has-error");
@@ -127,6 +189,11 @@ function validarDatosPersonales()
         $("#headerPersonal").css({ 'color': "red" });
         text = "Error la edad no coincide con la fecha de nacimiento.";
     }
+    
+    personalData[indPersonalData] = $("#DireccionDatos").val();
+    indPersonalData++;
+    personalData[indPersonalData] = $("#mail").val();
+    indPersonalData++;
 
     if(!valido)
         toastr.error(text, "Error", {
@@ -144,8 +211,12 @@ function validarCargos()
     var valido = true;
     var numColumn = obtenerColumnas(tableCargo);
     var numFilas = obtenerFilas(tableCargo);
+    
+    indCargoData = 0;
+    
     for(var i = 0; i < numFilas; i++)
     {
+        var cargo = new Object();
         for(var j = 1; j < numColumn-1; j++)
         {
             cellsCargos = new Object();
@@ -154,7 +225,21 @@ function validarCargos()
             cellsCargos.columnVisible = "0";
             if($("#"+tableCargo.cell(cellsCargos).data().split('id="')[1].split('"')[0]).val() == "")
                 valido = false;
+            else
+            {
+                switch(j)
+                {
+                    case 1:
+                        cargo.nombre = $("#"+tableCargo.cell(cellsCargos).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                    case 2:
+                        cargo.fechaInicio = $("#"+tableCargo.cell(cellsCargos).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                }
+            }
         }
+        cargoData[indCargoData] = cargo;
+        indCargoData++;
     }
     return valido;
 }
@@ -166,8 +251,11 @@ function validarRegistros()
     var emIns = false;
     var numColumn = obtenerColumnas(tableRegistros);
     var numFilas = obtenerFilas(tableRegistros);
+    countRegistro = 0;
+    
     for(var i = 0; i < numFilas; i++)
     {
+        var registro = new Object();
         for(var j = 2; j < numColumn-1; j++)
         {
             cellsRegistro = new Object();
@@ -200,7 +288,40 @@ function validarRegistros()
 
             if(j != 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
                 valido = false;
+                
+            if(valido == true)
+            {
+                switch(j)
+                {
+                    case 2:
+                        registro.tipoDeReferencia = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        cellsRegistro = new Object();
+                        cellsRegistro.row = i;
+                        cellsRegistro.column = 1;
+                        cellsRegistro.columnVisible = "0";
+                        registro.idRegistro = tableRegistros.cell(cellsRegistro).data();
+                    break;
+                    case 3:
+                        registro.descripcion = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                    case 4:
+                        registro.nivel = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                    case 5:
+                        registro.estatus = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                    case 6:
+                        registro.anio = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                    case 7:
+                        registro.empresaInstitucion = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                }
+                
+            }
         }
+        registrosData[countRegistro] = registro;
+        countRegistro++;
     }
     return valido;
 }
@@ -215,6 +336,8 @@ function validarParticipantes()
     var referenciasParticipantesAux2 = [];
     var indReferenciasParticipantesAux = 0;
     var indReferenciasParticipantesAux2 = 0;
+    
+    countParticipante = 0;
     
     for(var i = 0; i < numFilas; i++)
     {
@@ -248,6 +371,7 @@ function validarParticipantes()
     {
         for(var i = 0; i < numFilas; i++)
         {
+            var participante = new Object();
             for(var j = 2; j < numColumn-1; j++)
             {
                 cellsParticipantes = new Object();
@@ -260,8 +384,25 @@ function validarParticipantes()
                     referenciasRevistas = new Array();
                     indReferenciasRevistas=0;
                     valido = false;
+                }else
+                {
+                    switch (j) {
+                        case 2:
+                            participante.nombre = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+                            cellsParticipantes = new Object();
+                            cellsParticipantes.row = i;
+                            cellsParticipantes.column = j-1;
+                            cellsParticipantes.columnVisible = "0";
+                            participante.idRegistro = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+                            break;
+                        case 3:
+                            participante.cedula = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+                            break;
+                    }
                 }
             }
+            participantesData[countParticipante] = participante;
+            countParticipante++;
         }
     }
     referenciasParticipantes.splice(0,referenciasParticipantes.length);
@@ -281,6 +422,8 @@ function validarRevistas()
     var indReferenciasRevistasAux = 0;
     var indReferenciasRevistasAux2 = 0;
 
+    countRevista = 0;
+    
     for(var i = 0; i < numFilas; i++)
     {
         cellsRevistas = new Object();
@@ -306,6 +449,7 @@ function validarRevistas()
     {
         for(var i = 0; i < numFilas; i++)
         {
+            var revista = new Object();
             for(var j = 2; j < numColumn-1; j++)
             {
                 cellsRevistas = new Object();
@@ -313,9 +457,28 @@ function validarRevistas()
                 cellsRevistas.column = j;
                 cellsRevistas.columnVisible = "0";
                 if($("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val() == "")
+                {
+                    alert("false 2");
                     valido = false;
+                }
+                else
+                {
+                    switch (j) {
+                        case 2:
+                            revista.revista = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
+                            cellsRevistas = new Object();
+                            cellsRevistas.row = i;
+                            cellsRevistas.column = j-1;
+                            cellsRevistas.columnVisible = "0";
+                            revista.idRegistro = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
+                            break;
+                    }
+                }
             }
+            revistasData[countRevista] = revista;
+            countRevista++;
         }
+        
     }
     referenciasRevistas.splice(0,referenciasRevistas.length);
     referenciasRevistas = new Array();
@@ -338,6 +501,8 @@ function validarHijos()
     var cedulasHijos = [];
     var indCedulasHijos = 0;
 
+    countHijo = 0;
+    
     if($("#ActaNacCargaHijoDatos").val() == "" && !tieneArchivosHijos)
         countFiles = countFilesHijos;
     else
@@ -366,6 +531,7 @@ function validarHijos()
         {
             for(var i = 0; i < numFilas; i++)
             {
+                var hijo = new Object();
                 for(var j = 1; j < numColumn-1; j++)
                 {
                     cellsHijos = new Object();
@@ -374,7 +540,46 @@ function validarHijos()
                     cellsHijos.columnVisible = "0";
                     if(j != 3 && $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val() == "")
                         valido = false;
+                        
+                    if(valido)
+                    {
+                        switch (j) {
+                            case 1:
+                                    hijo.ciMadre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 2:
+                                    hijo.ciPadre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 3:
+                                    hijo.ciHijo = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 4:
+                                    hijo.primerNombre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 5:
+                                    hijo.segundoNombre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 6:
+                                    hijo.primerApellido = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 7:
+                                    hijo.segundoApellido = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 8:
+                                    hijo.fechaNacimiento = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 9:
+                                    hijo.fechaVencimiento = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            case 10:
+                                    hijo.nacionalidad = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                break;
+                            
+                        }
+                    }
                 }
+                hijoData[countHijo] = hijo;
+                countHijo++;
             }
         }
     }

@@ -1,4 +1,4 @@
-$('#gemail').on('input',function(e){
+$('#mail').on('input',function(e){
     $("#formPersonal").addClass("hidden");
     $("#formRegistros").addClass("hidden");
     $("#formCargos").addClass("hidden");
@@ -11,7 +11,7 @@ $('#generate').click(function(){
         toastr.clear();
         $.ajax({
             method: "POST",
-            data: {"Email":$('#gemail').val()},
+            data: {"Email":$('#mail').val()},
             url: routeRegistroUnico['registro_buscaremail_ajax'],
             dataType: 'json',
             success: function(data){

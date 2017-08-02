@@ -5,7 +5,7 @@ var tableRevista;
 var countFilesPersonal;
 var countFilesHijos;
 
-$('#gemail').on('input',function(e){
+$('#mail').on('input',function(e){
     $("#formRegistros").addClass("hidden");
     $("#formPersonal").addClass("hidden");
     $("#formCargos").addClass("hidden");
@@ -18,7 +18,7 @@ $('#generate').click(function(){
     
     $.ajax({
         method: "POST",
-        data: {"Email":$('#gemail').val()},
+        data: {"Email":$('#mail').val()},
         url:   routeRegistroUnico['registro_consultarbuscaremail_ajax'],
         dataType: 'json',
         success: function(data){
@@ -86,7 +86,7 @@ function initTableConsultar(){
     {
         $.ajax({
             method: "POST",
-            data: {"email":$('#gemail').val()},
+            data: {"email":$('#mail').val()},
             url:   routeRegistroUnico['registro_consultardocumentshijos_ajax'],
             dataType: 'json',
             success: function(data){
@@ -136,7 +136,7 @@ function initTableConsultar(){
                     "ajax":{
                        "url": routeRegistroUnico['registro_consultarhijos_ajax'],
                        "type": 'POST',
-                       "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                       "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                     },
                     "pagingType": "full_numbers",
                     "bDestroy": true,
@@ -160,7 +160,7 @@ function initTableConsultar(){
                 
         $.ajax({
             method: "POST",
-            data: {"email":$('#gemail').val()},
+            data: {"email":$('#mail').val()},
             url:  routeRegistroUnico['registro_consultardatospersonales_ajax'],
             dataType: 'json',
             success: function(data){
@@ -214,7 +214,7 @@ function initTableConsultar(){
                                 "ajax":{
                                    "url": routeRegistroUnico['registro_consultarcargos_ajax'],
                                    "type": 'POST',
-                                   "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                   "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
@@ -232,7 +232,7 @@ function initTableConsultar(){
                     	    "ajax":{
                                "url": routeRegistroUnico['registro_consultarregistros_ajax'],
                                "type": 'POST',
-                               "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                               "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -255,7 +255,7 @@ function initTableConsultar(){
                         	    "ajax":{
                                    "url": routeRegistroUnico['registro_consultarparticipantes_ajax'],
                                    "type": 'POST',
-                                   "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                   "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
@@ -274,7 +274,7 @@ function initTableConsultar(){
                         	    "ajax":{
                                    "url": routeRegistroUnico['registro_consultarrevistas_ajax'],
                                    "type": 'POST',
-                                   "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                   "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,

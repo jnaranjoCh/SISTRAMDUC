@@ -98,7 +98,7 @@ $('#submitData').click(function(){
         
     personalData[indPersonalData] = $("#DireccionDatos").val();
     indPersonalData++;
-    personalData[indPersonalData] = $("#gemail").val();
+    personalData[indPersonalData] = $("#mail").val();
     indPersonalData++;
     
     if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
