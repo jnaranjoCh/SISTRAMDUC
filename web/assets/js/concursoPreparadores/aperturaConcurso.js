@@ -35,7 +35,7 @@ tabla = $('#tabla').DataTable({
 	                        "asignaturaSolicitante": respuesta["asignatura"][i],
 	                        "nroPlazas": respuesta["plazas"][i],
 	                        "status": '<span class="label label-warning">'+respuesta["estado"][i]+'</span>',
-	                        "acciones": '<span class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detalles"><i class="fa fa-search"></i></span>'+
+	                        "acciones": '<span class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detalles" onclick="javascript:verDetalleSolicitud('+id+')"><i class="fa fa-search"></i></span>'+
 	                        			'<a class="btn btn-xs btn-primary" data-toggle="tooltip" data-original-title="Tooltip on left" href=""><i class="fa fa-cogs"></i></a>'
 	                        //javascript:ver('+id+')
 	                        //"gestionar": ''
@@ -51,3 +51,46 @@ tabla = $('#tabla').DataTable({
 			}
 	    });
 	});
+	
+	function verDetalleSolicitud(id){
+		$('#detallesModalBody').addClass("hide");
+		$("#detallesModalBody").empty();
+		$.ajax({
+			method:"POST",
+			url: "/web/app_dev.php/preparadores/detalle_solicitud_concurso",
+			dataType: 'json',
+			data: {"id": id},
+	        success: function(respuesta){
+				if (respuesta == "FallaConsultaDetalleSolicitud"){
+	                text = "Falla al consultar el detalle de esta solicitud.";
+	                toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
+	            } else{
+	            	var i = 0;
+	            	var contenidoHTML =
+						'<dl class="dl-horizontal">'+
+							'<dt>Asignatura Solicitante</dt>'+
+							'<dd>'+respuesta["AsigSol"][i]+'</dd>'+
+							
+							'<dt>Número de Plazas</dt>'+
+							'<dd>'+respuesta["NroPlz"][i]+'</dd>'+
+							
+							'<dt>Tema Examen Oral</dt>'+
+							'<dd>'+respuesta["ExOral"][i]+'</dd>'+
+							
+							'<dt>Tema Examen Escrito</dt>'+
+							'<dd>'+respuesta["ExEsc"][i]+'</dd>'+
+							
+							'<dt>Jurado</dt>'+
+							'<dd>'+respuesta["Coord"][i]+'</dd>'+
+							'<dd>'+respuesta["Ppal1"][i]+'</dd>'+
+							'<dd>'+respuesta["Ppal2"][i]+'</dd>'+
+							'<dd>'+respuesta["Supl1"][i]+'</dd>'+
+							'<dd>'+respuesta["Supl2"][i]+'</dd>'+
+						'</dl>';
+						
+					$('#detallesModalBody').append(contenidoHTML);
+					$('#detallesModalBody').removeClass("hide");
+	            }
+			}
+	    });
+	}

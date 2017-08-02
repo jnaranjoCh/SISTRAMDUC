@@ -260,70 +260,7 @@ class DefaultController extends Controller
                      ->setParameter('nameRecaudo', 'NroPlz');
                     $recaudo = $query->getResult();
                     $result = $this->asignarFilaRecaudo($recaudo,'plazas',$result, $i);
-                    /*
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'ExOral');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'examenOral',$result, $i);
-                    
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'ExEsc');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'examenEscrito',$result, $i);
-                    
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'Coord');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'coordinador',$result, $i);
-                    
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'Ppal1');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'principal1',$result, $i);
-                    
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'Ppal2');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'principal2',$result, $i);
-                    
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'Supl1');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'suplente1',$result, $i);
-                    
-                    $query = $em->createQuery('SELECT R
-                                               FROM TramiteBundle:Recaudo R
-                                               WHERE R.tramite = :idTramite 
-                                               AND R.name = :nameRecaudo'
-                    )->setParameter('idTramite', $idTramite)
-                     ->setParameter('nameRecaudo', 'Supl2');
-                    $recaudo = $query->getResult();
-                    $result = $this->asignarFilaRecaudo($recaudo,'suplente2',$result, $i);
-                    */
+
                     $query = $em->createQuery('SELECT E
                                                FROM TramiteBundle:Transicion T, TramiteBundle:Estado E
                                                WHERE T.tramite = :idTramite
@@ -368,5 +305,47 @@ class DefaultController extends Controller
             $result[$nameField][$pos] = $value->getNombre();
         }
         return $result;
+    }
+    
+    /**
+     * @Route("/preparadores/detalle_solicitud_concurso", name="detalle_solicitud_concurso_ajax")
+     */
+    public function detalleSolicitudConcursoAjaxAction(Request $request)
+    {
+        $result[][] = "";
+
+        if($request->isXmlHttpRequest()){
+            $em = $this->getDoctrine()->getManager();
+            
+            $idTramite = $request->get("id");
+            
+            $recaudos = array("AsigSol","NroPlz","ExOral","ExEsc","Coord","Ppal1","Ppal2","Supl1","Supl2");
+            
+            $i = 0;
+            $falla = false;
+            foreach ($recaudos as $value) {
+                $query = $em->createQuery('SELECT R
+                                       FROM TramiteBundle:Recaudo R
+                                       WHERE R.tramite = :idTramite 
+                                       AND R.name = :nameRecaudo'
+                )->setParameter('idTramite', $idTramite)
+                 ->setParameter('nameRecaudo', $value);
+                $recaudo = $query->getResult();
+                
+                if($recaudo == null){
+                    $falla = true;
+                }else{
+                    $result = $this->asignarFilaRecaudo($recaudo, $value, $result, $i);
+                }
+            }
+                    
+            if ($falla) {
+                return new JsonResponse("FallaConsultaDetalleSolicitud");
+            }else{
+                return new JsonResponse($result);
+            }
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
     }
 }
