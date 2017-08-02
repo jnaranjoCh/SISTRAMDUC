@@ -35,7 +35,12 @@ class Recaudo
      * @ORM\Column(type="string", length=100)
      */
     private $name = "";
-
+    
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $valor;
+    
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -346,7 +351,6 @@ class Recaudo
      * Set tabla
      *
      * @param string $tabla
-     * @return Recaudo
      */
     public function setTabla($tabla)
     {
@@ -362,5 +366,23 @@ class Recaudo
     public function getTabla()
     {
         return $this->tabla;
+    }
+    
+    /**
+     * Set valor
+     * @param string $valor
+     */
+    public function setValor($valor)
+    {
+        $this->valor = $valor;
+    }
+
+    /**
+     * Get valor
+     * @return string
+     */
+    public function getValor()
+    {
+        return $this->valor;
     }
 }

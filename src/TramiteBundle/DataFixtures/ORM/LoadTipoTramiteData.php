@@ -49,15 +49,15 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $manager->persist($tipo_clausulas);
         $manager->flush();
 
-        $tipo_preparadores = new TipoTramite();
-        $tipo_preparadores->setId(5);
-        $tipo_preparadores->setNombre('Preparadores');
-        $tipo_preparadores->setDescripcion('');
-        $tipo_preparadores->setDuracion('');
+        $tipo_solicitudConcursoPreparadores = new TipoTramite();
+        $tipo_solicitudConcursoPreparadores->setId(5);
+        $tipo_solicitudConcursoPreparadores->setNombre('Solicitud Concurso Preparadores');
+        $tipo_solicitudConcursoPreparadores->setDescripcion('');
+        $tipo_solicitudConcursoPreparadores->setDuracion('');
 
-        $manager->persist($tipo_preparadores);
+        $manager->persist($tipo_solicitudConcursoPreparadores);
         $manager->flush();
-
+        
         $tipo_comision = new TipoTramite();
         $tipo_comision->setId(6);
         $tipo_comision->setNombre('Comision de Servicio');
@@ -83,7 +83,16 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $tipo_concurso->setDuracion('');
 
         $manager->persist($tipo_concurso);
-        $manager->flush();        
+        $manager->flush();
+        
+        $tipo_concursoPreparadores = new TipoTramite();
+        $tipo_concursoPreparadores->setId(9);
+        $tipo_concursoPreparadores->setNombre('Concurso de Preparadores');
+        $tipo_concursoPreparadores->setDescripcion('');
+        $tipo_concursoPreparadores->setDuracion('');
+
+        $manager->persist($tipo_concursoPreparadores);
+        $manager->flush();
     }
 
     public function getOrder()

@@ -70,7 +70,7 @@ class Jurado
     /**
      * @var int
      *
-     * @ORM\Column(name="idUsuarioAsigna", type="integer")
+     * @ORM\Column(name="idUsuarioAsigna", type="integer", nullable=true)
      */
     private $idUsuarioAsigna;
 

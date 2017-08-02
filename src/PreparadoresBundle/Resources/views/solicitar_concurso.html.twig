@@ -53,7 +53,12 @@
                   <label for="AsigSol" class="col-sm-3 control-label">Asignatura Solicitante</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="AsigSol" placeholder="Asignatura Solicitante">
+                    <div class='input-group' >
+                      <input type="text" class="form-control" id="AsigSol" placeholder="Ejemplo: Algoritmo,Redes...">
+                      <span class="input-group-addon">
+                          <span class="fa fa-buysellads"></span>
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -61,24 +66,111 @@
                   <label for="NroPlz" class="col-sm-3 control-label">Número de Plazas</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="NroPlz" placeholder="Número de Plazas">
+                    <div class='input-group' >
+                      <input type="number" class="form-control" id="NroPlz" placeholder="Ejemplo: 123...">
+                      <span class="input-group-addon">
+	                        <span class="fa fa-hashtag"></span>
+	                    </span>
+                    </div>
                   </div>
                 </div>
+                
                 <div id="divTemExOral" class="form-group">
                   <label for="TemExOral" class="col-sm-3 control-label">Tema Examen Oral</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="TemExOral" placeholder="Tema Examen Oral">
+                    <div class='input-group'>
+                      <input type="text" class="form-control" id="TemExOral" placeholder="Ejemplo: Grafos, Capa Física">
+                      <span class="input-group-addon">
+                          <span class="fa fa-buysellads"></span>
+                      </span>
+                    </div>
                   </div>
                 </div>
+                
                 <div id="divTemExEsc" class="form-group">
                   <label for="TemExEsc" class="col-sm-3 control-label">Tema Examen Escrito</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="TemExEsc" placeholder="Tema Examen Escrito">
+                    <div class='input-group'>
+                      <input type="text" class="form-control" id="TemExEsc" placeholder="Ejemplo: Arboles, Capa de Transporte">
+                      <span class="input-group-addon">
+                          <span class="fa fa-buysellads"></span>
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div id="divJurado" class="form-group">
+                
+                <div class="row">
+                  <label for="Jurado" class="col-sm-3 control-label">Jurados:</label>
+                  </br></br>
+                </div>
+                
+                <div id="divJurCoord" class="form-group">
+                  <label for="JurCoord" class="col-sm-3 control-label">Coordinador</label>
+
+                  <div class="col-sm-9">
+                    <div class='input-group'>
+                      <input type="number" class="form-control" id="JurCoord" placeholder="Ingrese el N° de Cedula">
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-credit-card"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div id="divJurPpal1" class="form-group">
+                  <label for="JurPpal1" class="col-sm-3 control-label">Principal 1</label>
+
+                  <div class="col-sm-9">
+                    <div class='input-group'>
+                      <input type="number" class="form-control" id="JurPpal1" placeholder="Ingrese el N° de Cedula">
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-credit-card"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div id="divJurPpal2" class="form-group">
+                  <label for="JurPpal2" class="col-sm-3 control-label">Principal 2</label>
+
+                  <div class="col-sm-9">
+                    <div class='input-group'>
+                      <input type="number" class="form-control" id="JurPpal2" placeholder="Ingrese el N° de Cedula">
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-credit-card"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div id="divJurSupl1" class="form-group">
+                  <label for="JurSupl1" class="col-sm-3 control-label">Suplente 1</label>
+
+                  <div class="col-sm-9">
+                    <div class='input-group'>
+                      <input type="number" class="form-control" id="JurSupl1" placeholder="Ingrese el N° de Cedula">
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-credit-card"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div id="divJurSupl2" class="form-group">
+                  <label for="JurSupl2" class="col-sm-3 control-label">Suplente 2</label>
+
+                  <div class="col-sm-9">
+                    <div class='input-group'>
+                      <input type="number" class="form-control" id="JurSupl2" placeholder="Ingrese el N° de Cedula">
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-credit-card"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!--<div id="divJurado" class="form-group">
                   <label for="Jurado" class="col-sm-3 control-label">Jurado</label>
 
                   <div id="Jurado">
@@ -99,7 +191,7 @@
                       <input type="text" class="form-control" id="JurSupl2" placeholder="Suplente 2">
                     </div>
                   </div>
-                </div>
+                </div>-->
               </div>
               <div class="box-footer">
                 <div class="col-sm-offset-4 col-sm-4">

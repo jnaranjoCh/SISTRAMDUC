@@ -34,11 +34,11 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($estado_aprobada);
         $manager->flush();
 
-        $estado_aprobada = new Estado();
-        $estado_aprobada->setNombre('Enviada');
-        $estado_aprobada->setDescripcion('Su solicitud ha sido enviada al Consejo de Facultad.');
+        $estado_enviada = new Estado();
+        $estado_enviada->setNombre('Enviada');
+        $estado_enviada->setDescripcion('Su solicitud ha sido enviada al Consejo de Facultad.');
 
-        $manager->persist($estado_aprobada);
+        $manager->persist($estado_enviada);
         $manager->flush();
     }
 

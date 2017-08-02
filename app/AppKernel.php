@@ -18,7 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Hackzilla\BarcodeBundle\HackzillaBarcodeBundle(),
+            //new Hackzilla\BarcodeBundle\HackzillaBarcodeBundle(),
 
             new AppBundle\AppBundle(),
             new PlanSeptenalBundle\PlanSeptenalBundle(),

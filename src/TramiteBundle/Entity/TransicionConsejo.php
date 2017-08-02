@@ -5,6 +5,7 @@ namespace TramiteBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use TramiteBundle\Entity\Tramite;
+use TramiteBundle\Entity\Estado;
 
 /**
  * @ORM\Entity

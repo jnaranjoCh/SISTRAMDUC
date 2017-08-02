@@ -61,13 +61,13 @@ class Tramite
     protected  $transicion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite", cascade={"persist"})
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="tramite_id")
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tramite_id")
      */
     protected $documento_id;
 

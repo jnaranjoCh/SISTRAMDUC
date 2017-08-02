@@ -48,7 +48,7 @@ class Transicion
     private $fecha_consejo;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $motivo_consejo = "Motivo";
 
@@ -64,7 +64,7 @@ class Transicion
     private $fecha_env_departamento;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $motivo_departamento = "";
 
@@ -80,7 +80,7 @@ class Transicion
     private $fecha_env_catedra;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",  nullable=true)
      */
     private $motivo_catedra = "m";
 
