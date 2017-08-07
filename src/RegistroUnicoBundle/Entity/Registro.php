@@ -55,19 +55,19 @@ class Registro
     
 
     /**
-     * @ORM\ManyToMany(targetEntity="Participante")
+     * @ORM\ManyToMany(targetEntity="Participante", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="registro_participantes",
-     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="participante_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="participante_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $participantes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Revista")
+     * @ORM\ManyToMany(targetEntity="Revista", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="registro_revistas",
-     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="revista_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="revista_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $revistas;
@@ -304,6 +304,16 @@ class Registro
         return $this->estatus;
     }
     
+    public function getRevistasAsObject()
+    {
+        return $this->revistas;
+    }
+    
+    public function getParticipantesAsObject()
+    {
+        return $this->participantes;
+    }
+
     /**
      * Set estatus
      *
@@ -380,5 +390,16 @@ class Registro
                 $this->addRevista($revista);
          }
      }
+     
+    public function setRevistas($revistas)
+    {
+        $this->revistas = $revistas;
+        return $this;
+    }
     
+    public function setParticipante($participante)
+    {
+        $this->participantes = $participante;
+        return $this;
+    }
 }

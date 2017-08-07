@@ -19,7 +19,22 @@ var registrosData = [];
 var participantesData = [];
 var revistasData = [];
 var hijoData = [];
+var fechasArchivos = [];
 
+
+
+$('input[type="file"]').change(function(){
+    switch(this.name)
+    {
+        case "input2[]":
+                input2bool = true;
+            break;
+        case "input3[]":
+                input3bool = true;
+            break;
+    }
+});
+        
 $("#guardar").click(function(){
     var can_update = false;
     var text = "";
@@ -30,15 +45,18 @@ $("#guardar").click(function(){
     cargoData = new Array();
     registrosData = new Array();
     participantesData = new Array();
+    participantesData.splice(0,participantesData.length);
+    countParticipante=0;
     revistasData = new Array();
     hijoData = new Array();
+    fechasArchivos = new Array();
     
     if(validarDatosPersonales())
     {
         if(!validarCargos())
             text = "Error campos mal introducido o obligatorio en la sección de cargos.";
-        else if(!validarRegistros())
-            text = "Error campos mal introducido o obligatorio en la sección de registros.";
+        else if(!validarNombresRegistros() || !validarRegistros())
+            text = "Error campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
         else if(!validarParticipantes())
             text = "Error campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
         else if(!validarRevistas())
@@ -46,12 +64,15 @@ $("#guardar").click(function(){
         else if($("#checkboxHijos").prop('checked'))
         {
             if(!validarHijos())
-                text = "Error datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
+                text = "Error campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
             else
             {
+                fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
+                fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
+                fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
                 $.ajax({
                     method: "POST",
-                    data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                    data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":input2bool, "input3bool":input3bool},
                     url:  routeRegistroUnico['registro_editardatos_ajax'],
                     dataType: 'json',
                     beforeSend: function(){
@@ -59,8 +80,12 @@ $("#guardar").click(function(){
                     },
                     success: function(data){
                         alert(data);
-                        /*$("#modalLabel").html("Subiendo archivos del usuario...");
-                        document.getElementById("completeForm").submit();*/
+                        if(input2bool)
+                            $("#ActaNacCargaHijoDatos").fileinput("upload");
+                        if(input3bool)
+                            $("#CedulaRifActaCargaDatos").fileinput("upload");
+                        /*$("#modalLabel").html("Subiendo archivos del usuario...");*/
+                        //document.getElementById("completeForm").submit();
                     }
                 });
                 can_update = true;
@@ -68,9 +93,12 @@ $("#guardar").click(function(){
         }
         else
         {   
+            fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
+            fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
+            fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
             $.ajax({
                 method: "POST",
-                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":false, "input3bool":input3bool},
                 url:  routeRegistroUnico['registro_editardatos_ajax'],
                 dataType: 'json',
                 beforeSend: function(){
@@ -78,6 +106,8 @@ $("#guardar").click(function(){
                 },
                 success: function(data){
                     alert(data);
+                    if(input3bool)
+                        $("#CedulaRifActaCargaDatos").fileinput("upload");
                     //$("#modalLabel").html("Subiendo archivos del usuario...");
                     //document.getElementById("completeForm").submit();
                 }
@@ -326,6 +356,32 @@ function validarRegistros()
     return valido;
 }
 
+function validarNombresRegistros()
+{
+    var cellsRegistro;
+    var valido = true;
+    var numColumn = obtenerColumnas(tableRegistros);
+    var numFilas = obtenerFilas(tableRegistros);
+    var arrayRegistro = [];
+    
+    for(var i = 0; i < numFilas; i++)
+    {
+        cellsRegistro = new Object();
+        cellsRegistro.row = i;
+        cellsRegistro.column = 3;
+        cellsRegistro.columnVisible = "0";
+        arrayRegistro[i] = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+    }
+    
+    if(arrayRegistro.length != arrayRegistro.unique().length)
+    {
+        valido = false;
+    }
+
+    return valido;
+}
+
+
 function validarParticipantes()
 {
     var cellsParticipantes;
@@ -388,6 +444,13 @@ function validarParticipantes()
                 {
                     switch (j) {
                         case 2:
+                            if(!(/^[a-zA-Z]*$/).test($("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val()))
+                            {
+                                referenciasRevistas.splice(0,referenciasRevistas.length);
+                                referenciasRevistas = new Array();
+                                indReferenciasRevistas=0;
+                                valido = false;
+                            }
                             participante.nombre = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
                             cellsParticipantes = new Object();
                             cellsParticipantes.row = i;
@@ -458,7 +521,6 @@ function validarRevistas()
                 cellsRevistas.columnVisible = "0";
                 if($("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val() == "")
                 {
-                    alert("false 2");
                     valido = false;
                 }
                 else
@@ -554,15 +616,31 @@ function validarHijos()
                                     hijo.ciHijo = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
                                 break;
                             case 4:
+                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    {
+                                        valido = false;
+                                    }
                                     hijo.primerNombre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
                                 break;
                             case 5:
+                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    {
+                                        valido = false;
+                                    }
                                     hijo.segundoNombre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
                                 break;
                             case 6:
+                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    {
+                                        valido = false;
+                                    }
                                     hijo.primerApellido = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
                                 break;
                             case 7:
+                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    {
+                                        valido = false;
+                                    }
                                     hijo.segundoApellido = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
                                 break;
                             case 8:

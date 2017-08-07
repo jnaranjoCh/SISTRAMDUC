@@ -8,9 +8,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use ClausulasContractualesBundle\Entity\Hijo;
 use RegistroUnicoBundle\Entity\UsuarioFechaCargo;
 use RegistroUnicoBundle\Entity\Estatus;
+use RegistroUnicoBundle\Entity\Revista;
+use RegistroUnicoBundle\Entity\Participante;
+use RegistroUnicoBundle\Entity\Registro;
+use RegistroUnicoBundle\Entity\TipoRegistro;
 use RegistroUnicoBundle\Entity\Nivel;
+use TramiteBundle\Entity\TipoRecaudo;
+use TramiteBundle\Entity\Recaudo;
 use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Rol;
 use \stdClass;
@@ -18,7 +26,7 @@ use \stdClass;
 class ConsultarDatosController extends Controller
 {
     
-    public function consultarRegistroAction()
+    public function consultarRegistroAction($apr = "initial")
     {
         return $this->render('RegistroUnicoBundle:ConsultarDatos:consultar_registro.html.twig');
     }
@@ -27,6 +35,147 @@ class ConsultarDatosController extends Controller
     {
         return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
     }   
+    
+    public function guardarArchivosAction(Request $request, $email, $execute)
+    {
+        $p1 = $p2 = [];
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCorreo($email);
+                   
+        if (!empty($_FILES['input3']['name']) && $execute) {
+          $recauds = $em->createQuery('SELECT r
+                                         FROM TramiteBundle:Recaudo r
+                                            INNER JOIN r.usuario u
+                                         WHERE u.id = :idUsuario 
+                                         AND r.tabla = :tabla')
+                            ->setParameter('idUsuario',$user->getId())
+                            ->setParameter('tabla','Usuario')
+                            ->getResult();
+           move_uploaded_file($_FILES['input3']['tmp_name'][2], $recauds[0]->getPath());
+           move_uploaded_file($_FILES['input3']['tmp_name'][1], $recauds[1]->getPath());
+           move_uploaded_file($_FILES['input3']['tmp_name'][0], $recauds[2]->getPath());
+           $p1[0] = $recauds[0]->getPath();
+           $p1[1] = $recauds[1]->getPath();
+           $p1[2] = $recauds[2]->getPath();
+           $p2[0] = ['caption' => "Cedula<br/>".$user->getPrimerNombre()." ".$user->getPrimerApellido(), 'width' => "120px", 'key' => 1, 'showDelete' => false];
+           $p2[1] = ['caption' => "Acta nacimiento<br/>".$user->getPrimerNombre()." ".$user->getPrimerApellido(), 'width' => "120px", 'key' => 2, 'showDelete' => false];
+           $p2[2] = ['caption' => "Rif<br/>".$user->getPrimerNombre()." ".$user->getPrimerApellido(), 'width' => "120px", 'key' => 3, 'showDelete' => false];
+        }
+        
+        if (!empty($_FILES['input2']['name']) && $execute) {
+              $recauds = $em->createQuery('SELECT r
+                                 FROM TramiteBundle:Recaudo r
+                                    INNER JOIN r.usuario u
+                                 WHERE u.id = :idUsuario 
+                                 AND r.tabla = :tabla')
+                    ->setParameter('idUsuario',$user->getId())
+                    ->setParameter('tabla','Hijo')
+                    ->getResult();
+            $k = count($_FILES['input2']['tmp_name'])-1;
+            $i = 0;
+            foreach($recauds as $recaud)
+            {
+                move_uploaded_file($_FILES['input2']['tmp_name'][$k], $recaud->getPath());
+                $p1[$i] = $recaud->getPath();
+                $i = explode("_",explode(".",$recaud->getName())[0])[count(explode("_",explode(".",$recaud->getName())[0]))-1];
+                $p2[$i] = ['caption' => "Acta de nacimiento<br/>".explode("/",$recaud->getPath())[count(explode("/",$recaud->getPath()))-1], 'width' => '120px', 'key' => $i, 'showDelete' => false];
+                $k--;
+            }
+        }
+        
+        
+        return new JsonResponse(array(
+            'initialPreview' => $p1, 
+            'initialPreviewConfig' => $p2,   
+            'append' => false // whether to append these configurations to initialPreview.
+                             // if set to false it will overwrite initial preview
+                             // if set to true it will append to initial preview
+                             // if this propery not set or passed, it will default to true.
+        ));
+    }
+    
+    
+    private function guardarUrlArchivosUser($email,$fechas)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCorreo($email);
+        
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/users/';
+        $fichero_subido = $dir_subida."cedula_".$user->getCedula().".pdf";
+        
+        $newRecaudo = new Recaudo();
+        $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                            ->findOneByNombre('Cedula');
+        $newRecaudo->setPath($fichero_subido);
+        $newRecaudo->setName("cedula_".$user->getCedula().".pdf");
+        list($day, $month, $year) = explode('/', explode(' ', $fechas[0])[0]);
+        $newRecaudo->setFechaVencimiento(new \DateTime($year."-".$month."-".$day));
+        $newRecaudo->setUsuario($user);
+        $newRecaudo->setTipoRecaudo($tipo_recaudo);
+        $newRecaudo->setTabla("Usuario");
+        $em->persist($newRecaudo);
+            
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/RIF/users/';
+        $fichero_subido = $dir_subida."rif_".$user->getCedula().".pdf";
+        
+        $newRecaudo = new Recaudo();
+        $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                            ->findOneByNombre('RIF');
+        $newRecaudo->setPath($fichero_subido);
+        $newRecaudo->setName("rif_".$user->getCedula().".pdf");
+        list($day, $month, $year) = explode('/', explode(' ', $fechas[1])[0]);
+        $newRecaudo->setFechaVencimiento(new \DateTime($year."-".$month."-".$day));
+        $newRecaudo->setUsuario($user);
+        $newRecaudo->setTipoRecaudo($tipo_recaudo);
+        $newRecaudo->setTabla("Usuario");
+        $em->persist($newRecaudo);
+            
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/acta_nacimiento/users/';
+        $fichero_subido = $dir_subida."acta_nacimiento_".$user->getCedula().".pdf";
+
+        $newRecaudo = new Recaudo();
+        $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                            ->findOneByNombre('Partida de Nacimiento');
+        $newRecaudo->setPath($fichero_subido);
+        $newRecaudo->setName("acta_nacimiento_".$user->getCedula().".pdf");
+        list($day, $month, $year) = explode('/', explode(' ', $fechas[2])[0]);
+        $newRecaudo->setFechaVencimiento(new \DateTime($year."-".$month."-".$day));
+        $newRecaudo->setUsuario($user);
+        $newRecaudo->setTipoRecaudo($tipo_recaudo);
+        $newRecaudo->setTabla("Usuario");
+        $em->persist($newRecaudo);
+        $user->setIsRegister(1);
+        $em->flush();
+        
+    }
+    private function guardarUrlArchivosHijos($email)
+    {
+        $fileHijos = [];
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCorreo($email);
+        $recauds = $em->createQuery('SELECT r
+                                 FROM TramiteBundle:Recaudo r
+                                    INNER JOIN r.usuario u
+                                 WHERE u.id = :idUsuario')
+                    ->setParameter('idUsuario',$user->getId())
+                    ->getResult();
+        $hijs = $user->getHijosAsObjects();
+        $j = count($hijs)-1;
+        $i = 0;
+        foreach($recauds as $recaud)
+        {
+            $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/acta_nacimiento/hijos/';
+            $fichero_subido = $dir_subida.$recaud->getName();
+            $recaud->setPath($fichero_subido);
+            $hijs[$j]->setPartidaNacimientoUrl($fichero_subido);
+            $i++;
+            $j--;
+        }
+        $em->flush();
+    }
     
     public function enviarRegistrosDeUsuarioAjaxAction(Request $request)
     {
@@ -207,20 +356,11 @@ class ConsultarDatosController extends Controller
                       ->setParameter('id',$entity->getId())
                       ->setParameter('tabla','Hijo')
                       ->getResult();
-        /*$data->Files = $files;
-        $hijos = $this->getDoctrine()
-                      ->getManager()
-                      ->createQuery('SELECT h
-                                     FROM ClausulasContractualesBundle:Hijo h')
-                      ->getResult();
-        $data->Hijos = $hijos;*/
-        if(/*!$data->Hijos && !$data->Files*/!$files)
+        if(!$files)
         {
-            /*$data->Hijos = null;
-            $data->Files = null;*/
             $files = null;
         }
-        return new JsonResponse(/*$data*/$files);
+        return new JsonResponse($files);
     }
     
     public function enviarDatosPersonalesHijosAjaxAction(Request $request)
@@ -433,8 +573,9 @@ class ConsultarDatosController extends Controller
         {
             $this->updateSectionOne($request->get('personalData'));
             $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
-            //$this->updateSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
-            //$this->updateSectionFour($request->get('hijoData'),$request->get('personalData')[16]);
+            $this->updateSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
+            $this->updateSectionFour($request->get('hijoData'),$request->get('personalData')[16],(string)$request->get('input2bool'),(string)$request->get('input3bool'));
+            $this->guardarUrlArchivosUser($request->get('personalData')[16],$request->get('fechasArchivos'));
             return new JsonResponse("Datos guardados");
         }
         else
@@ -482,19 +623,339 @@ class ConsultarDatosController extends Controller
             );
         }
         
+        $ufcs = $em->createQuery('SELECT ufc
+                                 FROM RegistroUnicoBundle:UsuarioFechaCargo ufc
+                                    INNER JOIN ufc.usuarios u
+                                 WHERE u.id = :idUsuario')
+                    ->setParameter('idUsuario',$user->getId())
+                    ->getResult();
+        foreach($ufcs as $ufc){
+            $em->remove($ufc);
+        }
+        
         foreach($cargos as $cargo){
-          $car = $this->getDoctrine()
-                      ->getManager()
-                      ->getRepository('RegistroUnicoBundle:Cargo')
-                      ->findOneByDescription($cargo['nombre']);
+          $car = $em->getRepository('RegistroUnicoBundle:Cargo')
+                    ->findOneByDescription($cargo['nombre']);
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           list($day, $month, $year) = explode('/', explode(' ', $cargo['fechaInicio'])[0]);
           $UsuarioFechaCargo->setDate(new \DateTime($year."-".$month."-".$day));
-          $UsuarioFechaCargo->setCargo($car);
         
-          $user->setUsuarioFechaCargos($UsuarioFechaCargo);
-          $car->setUsuarioFechaCargos($UsuarioFechaCargo);
+          $user->addUsuarioFechaCargos($UsuarioFechaCargo);
+          $car->addUsuarioFechaCargos($UsuarioFechaCargo);
         }
+        $em->flush();
+    }
+    
+    private function updateSectionThree($registros,$participantes,$revistas,$email)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        
+        $regis = $user->getRegistrosAsObject();
+        foreach($regis as $regi){
+            $revis = $regi->getRevistasAsObject();
+            $parts = $regi->getParticipantesAsObject();
+            if($revis)
+            {
+                foreach($revis as $revi)
+                {
+                    $em->remove($revi);
+                }
+            }
+            
+            if($parts)
+            {
+                foreach($parts as $part)
+                {
+                    $em->remove($part);
+                }
+            }
+            $em->remove($regi);
+        }
+        $em->flush();
+        $em->clear();
+        $this->registerSectionThree($registros,$participantes,$revistas,$email);
+    }
+    
+    private function registerSectionThree($registros,$participantes,$revistas,$email)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        
+        $i = -1;
+        $j = -1;
+        $valaux = -1;
+        $idsparticipantes = [];
+        $participantess[] = [];
+        if($participantes != null){
+            foreach($participantes as $participante){
+                $newParticipante = new Participante();
+                $newParticipante->setNombre($participante['nombre']);
+                $newParticipante->setCedula($participante['cedula']);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($newParticipante);
+                $em->flush();
+                
+                $id = $this->getDoctrine()
+                           ->getManager()
+                           ->createQuery('SELECT MAX(p.id) AS lastId FROM RegistroUnicoBundle:Participante p')
+                           ->getResult();
+                           
+                if($valaux != $participante['idRegistro'])
+                {
+                    $i++;
+                    $valaux = $participante['idRegistro'];
+                    $idsparticipantes[$i] = $participante['idRegistro'];
+                    $j = -1;            
+                }
+                $j++;
+                $participantess[$i][$j] =  $this->getDoctrine()
+                                                ->getManager()
+                                                ->getRepository('RegistroUnicoBundle:Participante')
+                                                ->findOneById($id[0]['lastId']);
+            }
+        }
+        
+        $i = -1;
+        $j = -1;
+        $valaux = -1;
+        $idsrevistas = [];
+        $revistass[] = [];
+        if($revistas != null){
+            foreach($revistas as $revista){
+                if($revista != null){
+                    $newRevista = new Revista();
+                    $newRevista->setDescription($revista['revista']);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($newRevista);
+                    $em->flush();
+    
+                    $id = $this->getDoctrine()
+                               ->getManager()
+                               ->createQuery('SELECT MAX(r.id) AS lastId FROM RegistroUnicoBundle:Revista r')
+                               ->getResult();
+                    
+                    if($valaux != $revista['idRegistro'])
+                    {
+                        $i++;
+                        $valaux = $revista['idRegistro'];
+                        $idsrevistas[$i] = $revista['idRegistro'];
+                        $j = -1;
+                    }
+                    $j++;
+                    $revistass[$i][$j] =  $this->getDoctrine()
+                                               ->getManager()
+                                               ->getRepository('RegistroUnicoBundle:Revista')
+                                               ->findOneById($id[0]['lastId']);
+                }    
+            }
+        }
+        
+        $pos = -1;
+        $i = 0;
+        $registross = [];
+        foreach($registros as $registro){
+            
+            $newRegistro =  new Registro();
+            $newRegistro->setTipo($this->getDoctrine()
+                                       ->getManager()
+                                       ->getRepository('RegistroUnicoBundle:TipoRegistro')
+                                       ->findOneByDescription($registro['tipoDeReferencia']));
+            $newRegistro->setNivel($this->getDoctrine()
+                                        ->getManager()
+                                        ->getRepository('RegistroUnicoBundle:Nivel')
+                                        ->findOneByDescription($registro['nivel']));
+            $newRegistro->setEstatus($this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('RegistroUnicoBundle:Estatus')
+                                          ->findOneByDescription($registro['estatus']));
+            $newRegistro->setInstitucionEmpresa($registro['empresaInstitucion']);
+            $newRegistro->setDescription($registro['descripcion']);
+            $newRegistro->setAño($registro['anio']);
+            
+            if(in_array($registro['idRegistro'],$idsrevistas)){
+                $pos = array_search($registro['idRegistro'],$idsrevistas);
+                $newRegistro->addRevistas($revistass[$pos]);
+            }else if(in_array($registro['idRegistro'],$idsparticipantes)){
+                $pos = array_search($registro['idRegistro'],$idsparticipantes);
+                $newRegistro->addParticipantes($participantess[$pos]);
+            }
+            
+            $registross[$i] = $newRegistro;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($newRegistro);
+            $em->flush();
+            $i++;
+        }
+        
+        $user->addRegistros($registross);
+        $em->flush();
+    }
+    
+    private function updateSectionFour($hijos,$email,$input2bool,$input3bool)
+    {
+        if($hijos != null){
+            $isHijo = false;
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('AppBundle:Usuario')
+                          ->findOneByCorreo($email);
+        
+            if (!$user) {
+                throw $this->createNotFoundException(
+                    'Usuario no encontrado por el correo '.$email
+                );
+            }
+            $recauds = $em->createQuery('SELECT r
+                                 FROM TramiteBundle:Recaudo r
+                                    INNER JOIN r.usuario u
+                                 WHERE u.id = :idUsuario')
+                    ->setParameter('idUsuario',$user->getId())
+                    ->getResult();
+            $hijs = $user->getHijosAsObjects();
+            $files = [];
+            $files2 = [];
+            $files3 = [];
+            $i =0;
+            if($recauds)
+            {
+                if(strcmp($input3bool,"false")==0 && strcmp($input2bool,"false")==0)
+                {
+                    foreach($recauds as $recaud)
+                    {
+                        if (copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
+                            $isHijo = true;
+                            $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
+                            $i++;
+                        }
+                        unlink($recaud->getPath());
+                        $em->remove($recaud);
+                    }
+                   
+                }else
+                {
+                    foreach($recauds as $recaud)
+                    {
+                        if (strcmp($input3bool,"true")==0 &&  strcmp($recaud->getTabla(),"Hijo")==0 && copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
+                            $isHijo = true;
+                            $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
+                            $i++;
+                        }else if(strcmp($input2bool,"true")==0  &&  strcmp($recaud->getTabla(),"Usuario")==0 && copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
+                            $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
+                            $i++;
+                        }
+                        unlink($recaud->getPath());
+                        $em->remove($recaud);
+                    }
+                }
+            }
+            
+            $i =0;
+            foreach($files as $file)
+            {
+                rename($file, explode("_copy.pdf",$file)[0].".pdf");
+                if(strcmp(explode('/',explode("_copy.pdf",$file)[0].".pdf")[count(explode('/',explode("_copy.pdf",$file)[0].".pdf"))-2],"hijos") == 0){
+                    $files2[$i] = explode("_copy.pdf",$file)[0].".pdf";
+                    $i++;
+                }
+            }
+            if(strcmp($input3bool,"false")==0 && strcmp($input2bool,"false")==0)
+            {
+                $k = 0;
+                foreach($files2 as $file2)
+                {
+                    $files3[$k] = $file2;
+                    $k++;
+                }
+                $k=0;
+                for($j = $i-1; $j >= 0; $j--)
+                {
+                    $files2[$k] = $files3[$j];
+                    $k++;
+                }
+            }
+            
+            if($hijs)
+            {
+                foreach($hijs as $hij)
+                {
+                    $em->remove($hij);
+                }
+            }
+            $em->flush();
+            $em->clear();
+            $this->registerSectionFour($hijos,$email,$files2,$isHijo);
+            $this->guardarUrlArchivosHijos($email);
+        }
+    }
+    
+    private function registerSectionFour($hijos,$email,$files,$isHijo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        
+        $i = 0;
+        $hijoss = [];
+        foreach($hijos as $hijo){
+             
+             $newHijo = new Hijo();
+             $newHijo->setCedulaMadre($hijo['ciMadre']);
+             $newHijo->setCedulaPadre($hijo['ciPadre']);
+             if($hijo['ciHijo'] == "")
+                $newHijo->setCedulaHijo(null);
+             else
+                $newHijo->setCedulaHijo($hijo['ciHijo']);
+             list($day, $month, $year) = explode('/', explode(' ', $hijo['fechaNacimiento'])[0]);
+             $newHijo->setFechaNacimiento(new \DateTime($year."-".$month."-".$day));
+             $newHijo->setPrimerNombre($hijo['primerNombre']);
+             $newHijo->setSegundoNombre($hijo['segundoNombre']);
+             $newHijo->setPrimerApellido($hijo['primerApellido']);
+             $newHijo->setSegundoApellido($hijo['segundoApellido']);
+             $newHijo->setNacionalidad($hijo['nacionalidad']);
+             $newHijo->setPartidaNacimientoUrl('');
+             $hijoss[$i] = $newHijo;
+             $em->persist($newHijo);
+             
+             $newRecaudo  = new Recaudo();
+             $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')
+                                ->findOneByNombre('Partida de Nacimiento');
+             if(!$isHijo){
+                $newRecaudo->setName("acta_nacimiento_".$newHijo->getId().".pdf");
+             }else{
+                $newRecaudo->setName(explode('/',$files[$i])[count(explode('/',$files[$i]))-1]);
+             }
+             list($day, $month, $year) = explode('/', explode(' ', $hijo['fechaVencimiento'])[0]);
+             $newRecaudo->setFechaVencimiento(new \DateTime($year."-".$month."-".$day));
+             $newRecaudo->setUsuario($user);
+             $newRecaudo->setTipoRecaudo($tipo_recaudo);
+             $newRecaudo->setTabla("Hijo");
+             $newRecaudo->setPath("");
+             $em = $this->getDoctrine()->getManager();
+             $em->persist($newRecaudo);
+             $em->flush();
+             $i++;
+        }
+        $user->addHijos($hijoss);
         $em->flush();
     }
 

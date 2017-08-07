@@ -303,6 +303,18 @@ $('#agregarParticipantes').click(function(){
                });
    }
   
+   if(!band && !(/^[a-zA-Z]*$/).test($("#NombreParticipanteRegistro").val()))
+   {
+        $("#spanNombreParticipanteRegistro").addClass("glyphicon-remove");
+        $("#divNombreParticipanteRegistro").addClass("has-error");
+        toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerRegistros").css({ 'color': "red" });
+       band = true;
+   }
+   
    if(!band && $("#IdParticipanteRegistro").val() != -1 && $("#NombreParticipanteRegistro").val() != "" && $("#CedulaParticipanteRegistro").val() != ""){
        tableParticipantes.row.add( {
                 "Id del registro": $("#IdParticipanteRegistro").val(),
@@ -514,6 +526,79 @@ $('#agregarHijo').click(function(){
                     }
                });
     }
+    
+   if(!band && !(/^\d*$/).test($("#CedulaMadreHijoDatos").val()))
+   {
+       $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+       $("#divCedulaMadreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^\d*$/).test($("#CedulaPadreHijoDatos").val()))
+   {
+       $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+       $("#divCedulaPadreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!(/^\d*$/).test($("#CedulaHijoDatos").val()))
+   {
+       $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+       $("#divCedulaHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerNombreHijoDatos").val()))
+   {
+       $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+       $("#divPrimerNombreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoNombreHijoDatos").val()))
+   {
+       $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+       $("#divSegundoNombreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerApellidoHijoDatos").val()))
+   {
+       $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+       $("#divPrimerApellidoHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoApellidoHijoDatos").val()))
+   {
+       $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+       $("#divSegundoApellidoHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }
+       
    
    if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
         if($("#CedulaHijoDatos").val() != "")

@@ -4,6 +4,10 @@ var tableParticipantes;
 var tableRevista;
 var countFilesPersonal;
 var countFilesHijos;
+var input2bool = false;
+var input3bool = false;
+//var globalPatchUser;
+//var globalPatchHijo;
 
 $('#mail').on('input',function(e){
     $("#formRegistros").addClass("hidden");
@@ -114,11 +118,14 @@ function initTableConsultar(){
                         //language: "es",
                         overwriteInitial: true,
                         filesCount: paths.length,
+                        uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
                         initialPreview: paths,
+                        uploadAsync: false,
                         initialPreviewAsData: true,
                         initialPreviewFileType: 'pdf',
                         initialPreviewConfig: config
                     });
+                    //globalPatchHijo = paths;
                     countFilesHijos = paths.length;
                     $("#formHijos").removeClass("hidden");
                     $('#checkboxHijos').prop('checked', true);
@@ -197,7 +204,9 @@ function initTableConsultar(){
                     minFileCount: 1,
                     maxFileCount: 3,
                     overwriteInitial: true,
+                    uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
                     initialPreview: paths,
+                    uploadAsync: false,
                     initialPreviewAsData: true,
                     initialPreviewFileType: 'pdf',
                     initialPreviewConfig: [
@@ -206,6 +215,7 @@ function initTableConsultar(){
                         {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 3, showDelete: false}
                     ]
                 });
+                //globalPatchUser = paths;
                 countFilesPersonal = paths.length;
             }
         });

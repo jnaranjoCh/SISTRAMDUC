@@ -323,7 +323,7 @@ class RegistrarDatosController extends Controller
                       ->findOneByDescription($cargo['nombre']);
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           $UsuarioFechaCargo->setDate(new \DateTime($cargo['fechaInicio']));
-
+        
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
         }
@@ -445,7 +445,6 @@ class RegistrarDatosController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($newRegistro);
             $em->flush();
-      
             $i++;
         }
         

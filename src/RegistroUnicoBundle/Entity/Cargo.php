@@ -78,9 +78,13 @@ class Cargo
         return $this->UsuarioFechaCargos->toArray();
     }
 
-    public function setUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargos)
+    public function setUsuarioFechaCargos($UsuarioFechaCargos)
     {
-        $this->UsuarioFechaCargos->set($this->UsuarioFechaCargos->indexOf($UsuarioFechaCargos),$UsuarioFechaCargos);
+        $this->UsuarioFechaCargos = $UsuarioFechaCargos;
+        foreach($UsuarioFechaCargos as $object)
+        {
+          $object->setCargo($this);
+        }
         return $this;
     }
     

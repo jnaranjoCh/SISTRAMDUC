@@ -55,7 +55,7 @@ registro_obtenerlastid_ajax:
         _method:  POST
 
 registro_consulta_index:
-    path:     /registro/consulta
+    path:     /registro/consulta/{apr}
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:consultarRegistro }
 
 registro_consultaobteneremails_ajax:
@@ -127,4 +127,8 @@ registro_actualizarusuario_ajax:
     defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:actualizarDatosDeUsuario }
     requirements:
         _method:  POST
-        
+registro_guardararchivosconsulta_ajax:
+    path:     /consulta/guardar-archivos-consulta/{email}/{execute}
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:guardarArchivos }
+    requirements:
+        _method:  POST

@@ -119,7 +119,7 @@ class Recaudo
     {
         return $this->file;
     }
-
+    
     public function getAbsolutePath()
     {
         return null === $this->path
@@ -251,7 +251,7 @@ class Recaudo
      */
     public function removeUpload()
     {
-        if ($file = $this->getAbsolutePath()) {
+        if ($file = $this->getAbsolutePath() && file_exists($this->getAbsolutePath())) {
             unlink($file);
         }
     }

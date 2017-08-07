@@ -121,17 +121,17 @@ class Usuario implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="Rol")
      * @ORM\JoinTable(name="usuario_rol",
-     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro")
+     * @ORM\ManyToMany(targetEntity="RegistroUnicoBundle\Entity\Registro", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="usuarios_registros",
-     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $registros;
@@ -152,10 +152,10 @@ class Usuario implements UserInterface
     protected $facultades;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo")
+     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="usuario_hijo",
-     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $hijos;
@@ -166,7 +166,7 @@ class Usuario implements UserInterface
     protected $planes_septenales_individuales;
 
     /**
-     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Recaudo", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Recaudo", mappedBy="usuario", cascade={"remove", "persist"})
      */
     protected $recaudos;
 
@@ -194,9 +194,13 @@ class Usuario implements UserInterface
         return $this->UsuarioFechaCargos->toArray();
     }
     
-    public function setUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargos)
+    public function setUsuarioFechaCargos($UsuarioFechaCargos)
     {
-        $this->UsuarioFechaCargos->set($this->UsuarioFechaCargos->indexOf($UsuarioFechaCargos),$UsuarioFechaCargos);
+        $this->UsuarioFechaCargos = $UsuarioFechaCargos;
+        foreach($UsuarioFechaCargos as $object)
+        {
+          $object->setUsuario($this);
+        }
         return $this;
     }
     
@@ -780,10 +784,21 @@ class Usuario implements UserInterface
         $this->roles = $roles;
         return $this;
     }
+    
+    public function setRegistros($registros)
+    {
+        $this->registros = $registros;
+        return $this;
+    }
 
     public function getRolesAsObjects()
     {
         return $this->roles;
+    }
+    
+    public function getHijosAsObjects()
+    {
+        return $this->hijos;
     }
 
     public function addRol($rol)
@@ -791,6 +806,11 @@ class Usuario implements UserInterface
         $this->roles[] = $rol;
     }
 
+    public function getRegistrosAsObject()
+    {
+        return $this->registros;
+    }
+    
     public function addRoles($roles)
     {
         foreach($roles as $rol)
@@ -868,5 +888,11 @@ class Usuario implements UserInterface
 
     public function __toString() {
         return sprintf($this->getId().' ('.$this->getPrimerNombre().')'.' ('.$this->getPrimerApellido());
+    }
+    
+    public function setHijos($hijos)
+    {
+        $this->hijos = $hijos;
+        return $this;
     }
 }
