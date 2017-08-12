@@ -36,13 +36,34 @@ class ConsultarDatosController extends Controller
         return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
     }   
     
+    private function burbuja($array, $array2)
+    {
+        for($i=1;$i<count($array);$i++)
+        {
+            for($j=0;$j<count($array)-$i;$j++)
+            {
+                if($array[$j]<$array[$j+1])
+                {
+                    $k=$array[$j+1];
+                    $k2=$array2[$j+1];
+                    $array[$j+1]=$array[$j];
+                    $array2[$j+1]=$array2[$j];
+                    $array[$j]=$k;
+                    $array2[$j]=$k2;
+                }
+            }
+        }
+     
+        return $array;
+    }
+    
     public function guardarArchivosAction(Request $request, $email, $execute)
     {
         $p1 = $p2 = [];
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Usuario')
                    ->findOneByCorreo($email);
-                   
+     
         if (!empty($_FILES['input3']['name']) && $execute) {
           $recauds = $em->createQuery('SELECT r
                                          FROM TramiteBundle:Recaudo r
@@ -52,19 +73,67 @@ class ConsultarDatosController extends Controller
                             ->setParameter('idUsuario',$user->getId())
                             ->setParameter('tabla','Usuario')
                             ->getResult();
-           move_uploaded_file($_FILES['input3']['tmp_name'][2], $recauds[0]->getPath());
-           move_uploaded_file($_FILES['input3']['tmp_name'][1], $recauds[1]->getPath());
-           move_uploaded_file($_FILES['input3']['tmp_name'][0], $recauds[2]->getPath());
-           $p1[0] = $recauds[0]->getPath();
-           $p1[1] = $recauds[1]->getPath();
-           $p1[2] = $recauds[2]->getPath();
+           for($i = 0; $i < 3; $i++)
+           {
+               if(strpos($_FILES['input3']['name'][$i],'Cedula.pdf') !== false)
+               {
+                   if(strpos($recauds[0]->getPath(),'cedula') !== false)
+                   {
+                        move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[0]->getPath());
+                        $p1[0] = $recauds[0]->getPath();
+                   }else if(strpos($recauds[1]->getPath(),'cedula') !== false)
+                   {
+                       move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[1]->getPath());
+                       $p1[0] = $recauds[1]->getPath();
+                   }else if(strpos($recauds[2]->getPath(),'cedula') !== false)
+                   {
+                       move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[2]->getPath());
+                       $p1[0] = $recauds[2]->getPath();
+                   }
+                 
+               }
+               else if(strpos($_FILES['input3']['name'][$i],'Rif.pdf') !== false)
+               {
+                   if(strpos($recauds[0]->getPath(),'rif') !== false)
+                   {
+                        move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[0]->getPath());
+                        $p1[1] = $recauds[0]->getPath();
+                   }else if(strpos($recauds[1]->getPath(),'rif') !== false)
+                   {
+                       move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[1]->getPath());
+                       $p1[1] = $recauds[1]->getPath();
+                   }else if(strpos($recauds[2]->getPath(),'rif') !== false)
+                   {
+                       move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[2]->getPath());
+                       $p1[1] = $recauds[2]->getPath();
+                   }
+               }
+               else if(strpos($_FILES['input3']['name'][$i],'Acta_nacimiento.pdf') !== false)
+               {
+                   if(strpos($recauds[0]->getPath(),'acta_nacimiento') !== false)
+                   {
+                        move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[0]->getPath());
+                        $p1[2] = $recauds[0]->getPath();
+                   }else if(strpos($recauds[1]->getPath(),'acta_nacimiento') !== false)
+                   {
+                       move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[1]->getPath());
+                       $p1[2] = $recauds[1]->getPath();
+                   }else if(strpos($recauds[2]->getPath(),'acta_nacimiento') !== false)
+                   {
+                       move_uploaded_file($_FILES['input3']['tmp_name'][$i], $recauds[2]->getPath());
+                       $p1[2] = $recauds[2]->getPath();
+                   }
+               }
+           }
            $p2[0] = ['caption' => "Cedula<br/>".$user->getPrimerNombre()." ".$user->getPrimerApellido(), 'width' => "120px", 'key' => 1, 'showDelete' => false];
            $p2[1] = ['caption' => "Acta nacimiento<br/>".$user->getPrimerNombre()." ".$user->getPrimerApellido(), 'width' => "120px", 'key' => 2, 'showDelete' => false];
            $p2[2] = ['caption' => "Rif<br/>".$user->getPrimerNombre()." ".$user->getPrimerApellido(), 'width' => "120px", 'key' => 3, 'showDelete' => false];
         }
         
         if (!empty($_FILES['input2']['name']) && $execute) {
-              $recauds = $em->createQuery('SELECT r
+            $i = 0;
+            $aux = $aux2 = [];
+            $recauds = $em->createQuery('SELECT r
                                  FROM TramiteBundle:Recaudo r
                                     INNER JOIN r.usuario u
                                  WHERE u.id = :idUsuario 
@@ -73,14 +142,24 @@ class ConsultarDatosController extends Controller
                     ->setParameter('tabla','Hijo')
                     ->getResult();
             $k = count($_FILES['input2']['tmp_name'])-1;
-            $i = 0;
+            for($j = 0; $j <= $k; $j++)
+            {    
+                $aux[$j] = 0;
+            }
+            
+            for($j = 0; $j <= $k; $j++)
+            {
+                $aux[$j] = (int)explode("_",$_FILES['input2']['name'][$j])[2];
+                $aux2[$j] = $_FILES['input2']['tmp_name'][$j];
+            }
+            $this->burbuja($aux,$aux2);
             foreach($recauds as $recaud)
             {
-                move_uploaded_file($_FILES['input2']['tmp_name'][$k], $recaud->getPath());
+                move_uploaded_file($aux2[$i], $recaud->getPath());
                 $p1[$i] = $recaud->getPath();
-                $i = explode("_",explode(".",$recaud->getName())[0])[count(explode("_",explode(".",$recaud->getName())[0]))-1];
-                $p2[$i] = ['caption' => "Acta de nacimiento<br/>".explode("/",$recaud->getPath())[count(explode("/",$recaud->getPath()))-1], 'width' => '120px', 'key' => $i, 'showDelete' => false];
-                $k--;
+                $j = explode("_",explode(".",$recaud->getName())[0])[count(explode("_",explode(".",$recaud->getName())[0]))-1];
+                $p2[$i] = ['caption' => "Acta de nacimiento<br/>".explode("/",$recaud->getPath())[count(explode("/",$recaud->getPath()))-1], 'width' => '120px', 'key' => $j, 'showDelete' => false];
+                $i++;
             }
         }
         

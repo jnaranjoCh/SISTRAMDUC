@@ -3,6 +3,8 @@ var tieneArchivosHijos = false;
 var referenciasParticipantes = [];
 var indReferenciasParticipantes = 0;
 var referenciasRevistas = [];
+var archivosBienEscritos = true;
+var archivosBienEscritosHijos = true;
 
 var indReferenciasRevistas = 0;
 var indPersonalData = 0;
@@ -24,15 +26,55 @@ var fechasArchivos = [];
 
 
 $('input[type="file"]').change(function(){
+    var name;
+    var band = false;
     switch(this.name)
     {
         case "input2[]":
                 input2bool = true;
+                i = 0;
+                while(i < this.files.length && !band)
+                {
+                  name = this.files[i].name;
+                  for (var j=0; j < this.files.length; j++) {
+                      if(name.localeCompare("Acta_nacimiento_"+(j+1)+".pdf") == 0 && !band)
+                      {
+                          band = true;
+                      }
+                  }
+                  if(band)
+                  {
+                    band = false;
+                    archivosBienEscritosHijos = true;
+                  }
+                  else
+                  {
+                     band = true;
+                     archivosBienEscritosHijos = false;
+                  }
+                  i++;
+                }
             break;
         case "input3[]":
                 input3bool = true;
+                for (var i=0; i < this.files.length; i++) {
+                  if(this.files[i].name.localeCompare("Cedula.pdf") == 0)
+                  {
+                    archivosBienEscritos = true;
+                  }else if (this.files[i].name.localeCompare("Rif.pdf") == 0)
+                  {
+                    archivosBienEscritos = true;
+                  }else if(this.files[i].name.localeCompare("Acta_nacimiento.pdf") == 0)
+                  {
+                    archivosBienEscritos = true;
+                  }else
+                  {
+                    archivosBienEscritos = false;
+                  }
+                }
             break;
     }
+    
 });
         
 $("#guardar").click(function(){
@@ -51,72 +93,79 @@ $("#guardar").click(function(){
     hijoData = new Array();
     fechasArchivos = new Array();
     
-    if(validarDatosPersonales())
+    if(archivosBienEscritosHijos)
     {
-        if(!validarCargos())
-            text = "Error campos mal introducido o obligatorio en la sección de cargos.";
-        else if(!validarNombresRegistros() || !validarRegistros())
-            text = "Error campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
-        else if(!validarParticipantes())
-            text = "Error campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
-        else if(!validarRevistas())
-            text = "Error campos mal introducido, obligatorio, registro no asociados o existen revistas repetidas para un registro en la sección de revistas.";        
-        else if($("#checkboxHijos").prop('checked'))
+        if(archivosBienEscritos)
         {
-            if(!validarHijos())
-                text = "Error campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
-            else
+            if(validarDatosPersonales())
             {
-                fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
-                fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
-                fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
-                $.ajax({
-                    method: "POST",
-                    data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":input2bool, "input3bool":input3bool},
-                    url:  routeRegistroUnico['registro_editardatos_ajax'],
-                    dataType: 'json',
-                    beforeSend: function(){
-                       // $("#myModal2").modal("show");
-                    },
-                    success: function(data){
-                        alert(data);
-                        if(input2bool)
-                            $("#ActaNacCargaHijoDatos").fileinput("upload");
-                        if(input3bool)
-                            $("#CedulaRifActaCargaDatos").fileinput("upload");
-                        /*$("#modalLabel").html("Subiendo archivos del usuario...");*/
-                        //document.getElementById("completeForm").submit();
+                if(!validarCargos())
+                    text = "Error campos mal introducido o obligatorio en la sección de cargos.";
+                else if(!validarNombresRegistros() || !validarRegistros())
+                    text = "Error campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
+                else if(!validarParticipantes())
+                    text = "Error campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
+                else if(!validarRevistas())
+                    text = "Error campos mal introducido, obligatorio, registro no asociados o existen revistas repetidas para un registro en la sección de revistas.";        
+                else if($("#checkboxHijos").prop('checked'))
+                {
+                    if(!validarHijos())
+                        text = "Error campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
+                    else
+                    {
+                        fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
+                        fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
+                        fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
+                        $.ajax({
+                            method: "POST",
+                            data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":input2bool, "input3bool":input3bool},
+                            url:  routeRegistroUnico['registro_editardatos_ajax'],
+                            dataType: 'json',
+                            beforeSend: function(){
+                               // $("#myModal2").modal("show");
+                            },
+                            success: function(data){
+                                alert(data);
+                                if(input2bool)
+                                    $("#ActaNacCargaHijoDatos").fileinput("upload");
+                                if(input3bool)
+                                    $("#CedulaRifActaCargaDatos").fileinput("upload");
+                                //$("#modalLabel").html("Subiendo archivos del usuario...");
+                                //document.getElementById("completeForm").submit();
+                            }
+                        });
+                        can_update = true;
                     }
-                });
-                can_update = true;
-            }
-        }
-        else
-        {   
-            fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
-            fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
-            fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
-            $.ajax({
-                method: "POST",
-                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":false, "input3bool":input3bool},
-                url:  routeRegistroUnico['registro_editardatos_ajax'],
-                dataType: 'json',
-                beforeSend: function(){
-                    //$("#myModal2").modal("show");
-                },
-                success: function(data){
-                    alert(data);
-                    if(input3bool)
-                        $("#CedulaRifActaCargaDatos").fileinput("upload");
-                    //$("#modalLabel").html("Subiendo archivos del usuario...");
-                    //document.getElementById("completeForm").submit();
                 }
-            });
-            can_update = true;
-        }
+                else
+                {   
+                    fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
+                    fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
+                    fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
+                    $.ajax({
+                        method: "POST",
+                        data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":false, "input3bool":input3bool},
+                        url:  routeRegistroUnico['registro_editardatos_ajax'],
+                        dataType: 'json',
+                        beforeSend: function(){
+                            //$("#myModal2").modal("show");
+                        },
+                        success: function(data){
+                            alert(data);
+                            if(input3bool)
+                                $("#CedulaRifActaCargaDatos").fileinput("upload");
+                            //$("#modalLabel").html("Subiendo archivos del usuario...");
+                            //document.getElementById("completeForm").submit();
+                        }
+                    });
+                    can_update = true;
+                }
+            }else
+                can_update = true;
+        }else
+            text = "Error los archivos deben de tener los nombre bien especificados (Cedula.pdf,RIF.pdf,Acta_nacimiento.pdf) respectivamente.";        
     }else
-        can_update = true;
-
+        text = "Error los archivos deben de tener los nombre bien especificados (Acta_nacimiento_1.pdf,Acta_nacimiento_2.pdf,Acta_nacimiento_3.pdf,......,Acta_nacimiento_n.pdf) respectivamente.";
     if(!can_update)
         toastr.error(text, "Error", {
                     "timeOut": "0",
