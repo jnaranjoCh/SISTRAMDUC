@@ -36,27 +36,6 @@ class ConsultarDatosController extends Controller
         return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
     }   
     
-    private function burbuja($array, $array2)
-    {
-        for($i=1;$i<count($array);$i++)
-        {
-            for($j=0;$j<count($array)-$i;$j++)
-            {
-                if($array[$j]<$array[$j+1])
-                {
-                    $k=$array[$j+1];
-                    $k2=$array2[$j+1];
-                    $array[$j+1]=$array[$j];
-                    $array2[$j+1]=$array2[$j];
-                    $array[$j]=$k;
-                    $array2[$j]=$k2;
-                }
-            }
-        }
-     
-        return $array;
-    }
-    
     public function guardarArchivosAction(Request $request, $email, $execute)
     {
         $p1 = $p2 = [];
@@ -152,7 +131,7 @@ class ConsultarDatosController extends Controller
                 $aux[$j] = (int)explode("_",$_FILES['input2']['name'][$j])[2];
                 $aux2[$j] = $_FILES['input2']['tmp_name'][$j];
             }
-            $this->burbuja($aux,$aux2);
+            $aux2 = $this->burbuja($aux,$aux2);
             foreach($recauds as $recaud)
             {
                 move_uploaded_file($aux2[$i], $recaud->getPath());
@@ -608,11 +587,17 @@ class ConsultarDatosController extends Controller
         $datas=null;
         $data["Email"]="";
         $data["Estatus"]="";
+        $data["Copiar"]="";
         foreach($object as $value)
         {
             if($value->getIsRegister())
             {
-               $data["Email"] = $value->getCorreo();
+              $data["Copiar"] = '<div class="col-md-2">
+                    <div class="form-group has-feedback">
+                          <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                    </div>
+                  </div>';
+               $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCorreo().'</label>';
                if($value->getActivo())
                    $data["Estatus"]="Activo";
                else
@@ -887,98 +872,96 @@ class ConsultarDatosController extends Controller
     
     private function updateSectionFour($hijos,$email,$input2bool,$input3bool)
     {
-        if($hijos != null){
-            $isHijo = false;
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('AppBundle:Usuario')
-                          ->findOneByCorreo($email);
-        
-            if (!$user) {
-                throw $this->createNotFoundException(
-                    'Usuario no encontrado por el correo '.$email
-                );
-            }
-            $recauds = $em->createQuery('SELECT r
-                                 FROM TramiteBundle:Recaudo r
-                                    INNER JOIN r.usuario u
-                                 WHERE u.id = :idUsuario')
-                    ->setParameter('idUsuario',$user->getId())
-                    ->getResult();
-            $hijs = $user->getHijosAsObjects();
-            $files = [];
-            $files2 = [];
-            $files3 = [];
-            $i =0;
-            if($recauds)
-            {
-                if(strcmp($input3bool,"false")==0 && strcmp($input2bool,"false")==0)
-                {
-                    foreach($recauds as $recaud)
-                    {
-                        if (copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
-                            $isHijo = true;
-                            $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
-                            $i++;
-                        }
-                        unlink($recaud->getPath());
-                        $em->remove($recaud);
-                    }
-                   
-                }else
-                {
-                    foreach($recauds as $recaud)
-                    {
-                        if (strcmp($input3bool,"true")==0 &&  strcmp($recaud->getTabla(),"Hijo")==0 && copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
-                            $isHijo = true;
-                            $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
-                            $i++;
-                        }else if(strcmp($input2bool,"true")==0  &&  strcmp($recaud->getTabla(),"Usuario")==0 && copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
-                            $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
-                            $i++;
-                        }
-                        unlink($recaud->getPath());
-                        $em->remove($recaud);
-                    }
-                }
-            }
-            
-            $i =0;
-            foreach($files as $file)
-            {
-                rename($file, explode("_copy.pdf",$file)[0].".pdf");
-                if(strcmp(explode('/',explode("_copy.pdf",$file)[0].".pdf")[count(explode('/',explode("_copy.pdf",$file)[0].".pdf"))-2],"hijos") == 0){
-                    $files2[$i] = explode("_copy.pdf",$file)[0].".pdf";
-                    $i++;
-                }
-            }
+        $isHijo = false;
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                      ->findOneByCorreo($email);
+    
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'Usuario no encontrado por el correo '.$email
+            );
+        }
+        $recauds = $em->createQuery('SELECT r
+                             FROM TramiteBundle:Recaudo r
+                                INNER JOIN r.usuario u
+                             WHERE u.id = :idUsuario')
+                ->setParameter('idUsuario',$user->getId())
+                ->getResult();
+        $hijs = $user->getHijosAsObjects();
+        $files = [];
+        $files2 = [];
+        $files3 = [];
+        $i =0;
+        if($recauds)
+        {
             if(strcmp($input3bool,"false")==0 && strcmp($input2bool,"false")==0)
             {
-                $k = 0;
-                foreach($files2 as $file2)
+                foreach($recauds as $recaud)
                 {
-                    $files3[$k] = $file2;
-                    $k++;
+                    if (copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
+                        $isHijo = true;
+                        $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
+                        $i++;
+                    }
+                    unlink($recaud->getPath());
+                    $em->remove($recaud);
                 }
-                $k=0;
-                for($j = $i-1; $j >= 0; $j--)
-                {
-                    $files2[$k] = $files3[$j];
-                    $k++;
-                }
-            }
-            
-            if($hijs)
+               
+            }else
             {
-                foreach($hijs as $hij)
+                foreach($recauds as $recaud)
                 {
-                    $em->remove($hij);
+                    if (strcmp($input3bool,"true")==0 &&  strcmp($recaud->getTabla(),"Hijo")==0 && copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
+                        $isHijo = true;
+                        $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
+                        $i++;
+                    }else if(strcmp($input2bool,"true")==0  &&  strcmp($recaud->getTabla(),"Usuario")==0 && copy($recaud->getPath(),explode(".pdf",$recaud->getPath())[0]."_copy.pdf")){
+                        $files[$i] = explode(".pdf",$recaud->getPath())[0]."_copy.pdf";
+                        $i++;
+                    }
+                    unlink($recaud->getPath());
+                    $em->remove($recaud);
                 }
             }
-            $em->flush();
-            $em->clear();
-            $this->registerSectionFour($hijos,$email,$files2,$isHijo);
-            $this->guardarUrlArchivosHijos($email);
         }
+        
+        $i =0;
+        foreach($files as $file)
+        {
+            rename($file, explode("_copy.pdf",$file)[0].".pdf");
+            if(strcmp(explode('/',explode("_copy.pdf",$file)[0].".pdf")[count(explode('/',explode("_copy.pdf",$file)[0].".pdf"))-2],"hijos") == 0){
+                $files2[$i] = explode("_copy.pdf",$file)[0].".pdf";
+                $i++;
+            }
+        }
+        if(strcmp($input3bool,"false")==0 && strcmp($input2bool,"false")==0)
+        {
+            $k = 0;
+            foreach($files2 as $file2)
+            {
+                $files3[$k] = $file2;
+                $k++;
+            }
+            $k=0;
+            for($j = $i-1; $j >= 0; $j--)
+            {
+                $files2[$k] = $files3[$j];
+                $k++;
+            }
+        }
+        
+        if($hijs)
+        {
+            foreach($hijs as $hij)
+            {
+                $em->remove($hij);
+            }
+        }
+        $em->flush();
+        $em->clear();
+        $this->registerSectionFour($hijos,$email,$files2,$isHijo);
+        $this->guardarUrlArchivosHijos($email);
     }
     
     private function registerSectionFour($hijos,$email,$files,$isHijo)
@@ -995,6 +978,8 @@ class ConsultarDatosController extends Controller
         
         $i = 0;
         $hijoss = [];
+        if($hijos == null)
+            $hijos = [];
         foreach($hijos as $hijo){
              
              $newHijo = new Hijo();
@@ -1036,6 +1021,27 @@ class ConsultarDatosController extends Controller
         }
         $user->addHijos($hijoss);
         $em->flush();
+    }
+    
+    private function burbuja($array, $array2)
+    {
+        for($i=1;$i<count($array);$i++)
+        {
+            for($j=0;$j<count($array)-$i;$j++)
+            {
+                if($array[$j]<$array[$j+1])
+                {
+                    $k=$array[$j+1];
+                    $k2=$array2[$j+1];
+                    $array[$j+1]=$array[$j];
+                    $array2[$j+1]=$array2[$j];
+                    $array[$j]=$k;
+                    $array2[$j]=$k2;
+                }
+            }
+        }
+     
+        return $array2;
     }
 
 }

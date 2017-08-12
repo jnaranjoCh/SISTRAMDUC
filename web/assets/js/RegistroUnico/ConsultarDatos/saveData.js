@@ -5,6 +5,8 @@ var indReferenciasParticipantes = 0;
 var referenciasRevistas = [];
 var archivosBienEscritos = true;
 var archivosBienEscritosHijos = true;
+var cargaCompletaHijos = true;
+var cargaCompletaUsuario = true;
 
 var indReferenciasRevistas = 0;
 var indPersonalData = 0;
@@ -76,13 +78,39 @@ $('input[type="file"]').change(function(){
     }
     
 });
-        
+
+$('#ActaNacCargaHijoDatos').on('filebatchuploadcomplete', function(event, files, extra) {
+    cargaCompletaHijos = true;
+    if(cargaCompletaHijos && cargaCompletaUsuario)
+    {
+        $("#myModal2").modal("hide");
+        window.location.href = routeRegistroUnico['registro_consulta_index_success'];
+    }
+});
+
+$('#CedulaRifActaCargaDatos').on('filebatchuploadcomplete', function(event, files, extra) {
+    cargaCompletaUsuario = true;
+    if(cargaCompletaHijos && cargaCompletaUsuario)
+    {
+        $("#myModal2").modal("hide");
+        window.location.href = routeRegistroUnico['registro_consulta_index_success'];
+    }
+});
+
+$('#ActaNacCargaHijoDatos').on('filepreajax', function(event, previewId, index) {
+    cargaCompletaHijos = false;
+});
+
+$('#CedulaRifActaCargaDatos').on('filepreajax', function(event, previewId, index) {
+    cargaCompletaUsuario = false;
+});
+
 $("#guardar").click(function(){
     var can_update = false;
     var text = "";
 
     toastr.clear();
-    
+    $("#modalLabel").html("Actualizando datos...");
     personalData = new Array();
     cargoData = new Array();
     registrosData = new Array();
@@ -122,16 +150,14 @@ $("#guardar").click(function(){
                             url:  routeRegistroUnico['registro_editardatos_ajax'],
                             dataType: 'json',
                             beforeSend: function(){
-                               // $("#myModal2").modal("show");
+                               $("#myModal2").modal("show");
                             },
                             success: function(data){
-                                alert(data);
+                                $("#modalLabel").html("Actualizando archivos del usuario...");
                                 if(input2bool)
                                     $("#ActaNacCargaHijoDatos").fileinput("upload");
                                 if(input3bool)
                                     $("#CedulaRifActaCargaDatos").fileinput("upload");
-                                //$("#modalLabel").html("Subiendo archivos del usuario...");
-                                //document.getElementById("completeForm").submit();
                             }
                         });
                         can_update = true;
@@ -148,14 +174,12 @@ $("#guardar").click(function(){
                         url:  routeRegistroUnico['registro_editardatos_ajax'],
                         dataType: 'json',
                         beforeSend: function(){
-                            //$("#myModal2").modal("show");
+                            $("#myModal2").modal("show");
                         },
                         success: function(data){
-                            alert(data);
+                            $("#modalLabel").html("Actualizando archivos del usuario...");
                             if(input3bool)
                                 $("#CedulaRifActaCargaDatos").fileinput("upload");
-                            //$("#modalLabel").html("Subiendo archivos del usuario...");
-                            //document.getElementById("completeForm").submit();
                         }
                     });
                     can_update = true;
@@ -471,6 +495,7 @@ function validarParticipantes()
         referenciasRevistas = new Array();
         indReferenciasRevistas=0;
         valido = false;
+        alert("holaa");
     }
     else
     {
@@ -489,6 +514,7 @@ function validarParticipantes()
                     referenciasRevistas = new Array();
                     indReferenciasRevistas=0;
                     valido = false;
+                    alert("holaa2");
                 }else
                 {
                     switch (j) {
@@ -499,6 +525,7 @@ function validarParticipantes()
                                 referenciasRevistas = new Array();
                                 indReferenciasRevistas=0;
                                 valido = false;
+                                alert("holaa3");
                             }
                             participante.nombre = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
                             cellsParticipantes = new Object();

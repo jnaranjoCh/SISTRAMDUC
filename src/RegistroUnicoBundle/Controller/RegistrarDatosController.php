@@ -206,9 +206,15 @@ class RegistrarDatosController extends Controller
         $data["Email"]="";
         $data["Estatus"]="";
         $data["Registro Completo"]="";
+        $data["Copiar"]="";
         foreach($object as $value)
         {
-           $data["Email"] = $value->getCorreo();
+           $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCorreo().'</label>';
+           $data["Copiar"] = '<div class="col-md-2">
+                                <div class="form-group has-feedback">
+                                      <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                                </div>
+                              </div>';
            if($value->getActivo())
                $data["Estatus"]="Activo";
            else

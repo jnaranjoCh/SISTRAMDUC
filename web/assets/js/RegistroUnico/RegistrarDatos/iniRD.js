@@ -3,6 +3,7 @@ var miniPersonal = true;
 var miniRegistros = true;
 var miniCargos = true;
 var miniHijos = true;
+var copiar = 0;
 
 $( window ).load(function() {
     
@@ -23,12 +24,13 @@ $( window ).load(function() {
     $("#miniCargos").click();
     $("#miniHijos").click();
 
-    $("#tableUsers").DataTable( {
+    tableUsers = $("#tableUsers").DataTable( {
             "ajax": routeRegistroUnico['registro_obteneremails_ajax'],
             "columns": [
                 { "data": "Email" },
                 { "data": "Estatus" },
-                { "data": "Registro Completo" }
+                { "data": "Registro Completo" },
+                { "data": "Copiar" }
             ],
             "language": {
                 "url": tableLenguage['datatable-spanish']
@@ -65,7 +67,9 @@ $( window ).load(function() {
         dataType: 'json',
         success: function(data){
             if(data[0].lastId != null)
-                idRegistro = data[0].lastId;
+                idRegistro = data[0].lastId+1;
+            else
+                idRegistro = 1;
         }
     });
     $('#IdParticipanteRegistro').html("<option value='-1'>No existen registros</option>");

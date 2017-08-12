@@ -6,8 +6,6 @@ var countFilesPersonal;
 var countFilesHijos;
 var input2bool = false;
 var input3bool = false;
-//var globalPatchUser;
-//var globalPatchHijo;
 
 $('#mail').on('input',function(e){
     $("#formRegistros").addClass("hidden");
@@ -112,10 +110,9 @@ function initTableConsultar(){
                         else
                             paths[i] = data[i]['path'].split("..")[1];
                     }
-                 
-                    $("#ActaNacCargaHijoDatos").fileinput('destroy');;
+                    $("#ActaNacCargaHijoDatos").fileinput('destroy');
                     $("#ActaNacCargaHijoDatos").fileinput({
-                        //language: "es",
+                        language: "es",
                         overwriteInitial: true,
                         filesCount: paths.length,
                         uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
@@ -125,14 +122,18 @@ function initTableConsultar(){
                         initialPreviewFileType: 'pdf',
                         initialPreviewConfig: config
                     });
-                    //globalPatchHijo = paths;
                     countFilesHijos = paths.length;
                     $("#formHijos").removeClass("hidden");
                     $('#checkboxHijos').prop('checked', true);
                 }else
                 {
                     $("#ActaNacCargaHijoDatos").fileinput('destroy');
-                    $("#ActaNacCargaHijoDatos").fileinput('refresh');
+                    $("#ActaNacCargaHijoDatos").fileinput({
+                        language: "es",
+                        overwriteInitial: true,
+                        uploadAsync: false,
+                        uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true // server upload action
+                    });
                     $('#checkboxHijos').prop('checked', false);
                     $("#formHijos").addClass("hidden");
                 }
@@ -200,7 +201,7 @@ function initTableConsultar(){
                     paths[2] = data.Files[1].path.split("..")[1];
                 }
                 $("#CedulaRifActaCargaDatos").fileinput({
-                    //language: "es",
+                    language: "es",
                     minFileCount: 1,
                     maxFileCount: 3,
                     overwriteInitial: true,
@@ -215,7 +216,6 @@ function initTableConsultar(){
                         {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 3, showDelete: false}
                     ]
                 });
-                //globalPatchUser = paths;
                 countFilesPersonal = paths.length;
             }
         });

@@ -1,3 +1,5 @@
+var copiar = 1;
+
 $( window ).load(function() {
     $.ajax({
         method: "POST",
@@ -12,12 +14,13 @@ $( window ).load(function() {
         }
     });
 
-    $("#tableUsers").DataTable( {
+    tableUsers = $("#tableUsers").DataTable( {
             "ajax": routeRegistroUnico['registro_obteneremails_ajax'],
             "columns": [
                 { "data": "Email" },
                 { "data": "Estatus" },
-                { "data": "Registro Completo" }
+                { "data": "Registro Completo" },
+                { "data": "Copiar" }
             ],
             "language": {
                 "url": tableLenguage['datatable-spanish']

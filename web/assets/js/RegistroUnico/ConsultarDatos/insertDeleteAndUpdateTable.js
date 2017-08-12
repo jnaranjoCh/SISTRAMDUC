@@ -155,12 +155,18 @@ $('#restablecer').click(function(){
                     hijo.key = j+1;
                     hijo.showDelete = false;
                     config[i] = hijo;
-                    paths[i] = data[i]['path'].split("..")[1];
+                    if($("#url").val().split('/')[1] == "assets")
+                        paths[i] = data[i]['path'].split("../web")[1];
+                    else
+                        paths[i] = data[i]['path'].split("..")[1];
                 }
                 $("#ActaNacCargaHijoDatos").fileinput({
                     //language: "es",
                     overwriteInitial: true,
+                    filesCount: paths.length,
+                    uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
                     initialPreview: paths,
+                    uploadAsync: false,
                     initialPreviewAsData: true,
                     initialPreviewFileType: 'pdf',
                     initialPreviewConfig: config
@@ -222,22 +228,32 @@ $('#restablecer').click(function(){
             $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
             $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
             
+            if($("#url").val().split('/')[1] == "assets")
+            {
+                paths[0] = data.Files[2].path.split("../web")[1];
+                paths[1] = data.Files[0].path.split("../web")[1];
+                paths[2] = data.Files[1].path.split("../web")[1];
+            }
+            else
+            {
+                paths[0] = data.Files[2].path.split("..")[1];
+                paths[1] = data.Files[0].path.split("..")[1];
+                paths[2] = data.Files[1].path.split("..")[1];
+            }
             $("#CedulaRifActaCargaDatos").fileinput({
                 //language: "es",
                 minFileCount: 1,
                 maxFileCount: 3,
                 overwriteInitial: true,
-                initialPreview: [
-                    data.Files[2].path.split("..")[1],
-                    data.Files[0].path.split("..")[1],
-                    data.Files[1].path.split("..")[1]
-                ],
+                uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
+                initialPreview: paths,
+                uploadAsync: false,
                 initialPreviewAsData: true,
                 initialPreviewFileType: 'pdf',
                 initialPreviewConfig: [
-                    {caption: "Cedula<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 1},
-                    {caption: "Acta nacimiento<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 2},
-                    {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 2}
+                    {caption: "Cedula<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 1, showDelete: false},
+                    {caption: "Acta nacimiento<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 2, showDelete: false},
+                    {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 3, showDelete: false}
                 ]
             });
         }
