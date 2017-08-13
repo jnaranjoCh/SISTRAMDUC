@@ -315,7 +315,26 @@ Array.prototype.unique=function(a){
     return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
 });
 
+function burbuja(array)
+{
+    for(var i=1;i<array.length;i++)
+    {
+        for(var j=0;j<array.length-i;j++)
+        {
+            if(array[j].idRegistro>array[j+1].idRegistro)
+            {
+                k=array[j+1];
+                array[j+1]=array[j];
+                array[j]=k;
+            }
+        }
+    }
+ 
+    return array;
+}
 $("#continue").click(function(){
+    participantesData = burbuja(participantesData);
+    revistasData = burbuja(revistasData);
     $("#myModal3").modal("hide");
     if($('#checkboxHijos').prop('checked')){
         $.ajax({

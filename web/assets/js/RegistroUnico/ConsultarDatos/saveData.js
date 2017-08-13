@@ -141,6 +141,8 @@ $("#guardar").click(function(){
                         text = "Error campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
                     else
                     {
+                        participantesData = burbuja(participantesData);
+                        revistasData = burbuja(revistasData);
                         fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
                         fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
                         fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
@@ -158,6 +160,12 @@ $("#guardar").click(function(){
                                     $("#ActaNacCargaHijoDatos").fileinput("upload");
                                 if(input3bool)
                                     $("#CedulaRifActaCargaDatos").fileinput("upload");
+                                if(!input2bool && !input3bool)
+                                {
+                                    $("#myModal2").modal("hide");
+                                    window.location.href = routeRegistroUnico['registro_consulta_index_success'];
+                                }
+                                
                             }
                         });
                         can_update = true;
@@ -165,6 +173,8 @@ $("#guardar").click(function(){
                 }
                 else
                 {   
+                    participantesData = burbuja(participantesData);
+                    revistasData = burbuja(revistasData);
                     fechasArchivos[0] = $("#FechaVencimientoCedulaDatos").val();
                     fechasArchivos[1] = $("#FechaVencimientoRifDatos").val();
                     fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
@@ -180,6 +190,11 @@ $("#guardar").click(function(){
                             $("#modalLabel").html("Actualizando archivos del usuario...");
                             if(input3bool)
                                 $("#CedulaRifActaCargaDatos").fileinput("upload");
+                            if(!input3bool)
+                            {
+                                $("#myModal2").modal("hide");
+                                window.location.href = routeRegistroUnico['registro_consulta_index_success'];
+                            }
                         }
                     });
                     can_update = true;
@@ -766,3 +781,21 @@ function removeItemFromArr( arr, item )
 Array.prototype.unique=function(a){
     return function(){return this.filter(a)}}(function(a,b,c){return c.indexOf(a,b+1)<0
 });
+
+function burbuja(array)
+{
+    for(var i=1;i<array.length;i++)
+    {
+        for(var j=0;j<array.length-i;j++)
+        {
+            if(array[j].idRegistro>array[j+1].idRegistro)
+            {
+                k=array[j+1];
+                array[j+1]=array[j];
+                array[j]=k;
+            }
+        }
+    }
+ 
+    return array;
+}

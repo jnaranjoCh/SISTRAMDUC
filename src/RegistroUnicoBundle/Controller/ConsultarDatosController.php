@@ -490,7 +490,20 @@ class ConsultarDatosController extends Controller
                                                           </div>
                                                        </div>';
                 }
-                $data[$i]['Nacionalidad'] = '<input id="Nacionalidad'.$i.'" value="'.$hijo['nacionalidad'].'" type="text" class="form-control" placeholder="Nacionalidad">';
+                 
+                if(strcmp($hijo['nacionalidad'],"Venezolano")==0)
+                    $data[$i]['Nacionalidad'] = '<select id="NacionalidadDatos'.$i.'" class="form-control select2" style="width: 200xp;" required>
+                                                    <option value="">Seleccione una opción</option>
+                                                    <option selected="selected" value="Venezolano">Venezolano</option>
+                                                    <option value="Extranjero">Extranjero</option>
+                                                  </select>';
+                else
+                    $data[$i]['Nacionalidad'] = '<select id="NacionalidadDatos'.$i.'" class="form-control select2" style="width: 200xp;" required>
+                                                    <option value="">Seleccione una opción</option>
+                                                    <option value="Venezolano">Venezolano</option>
+                                                    <option selected="selected" value="Extranjero">Extranjero</option>
+                                                  </select>';
+                
                 $i++;
             }
         }else

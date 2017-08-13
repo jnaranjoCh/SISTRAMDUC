@@ -431,7 +431,11 @@ $('#agregarHijos').click(function(){
                                     '</div>'+
                                     '</div>'+
                                 '</div>',
-        "Nacionalidad" :'<input id="Nacionalidad'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Nacionalidad">'
+        "Nacionalidad" : '<select id="NacionalidadDatos'+tableHijos.page.info().recordsTotal+'" class="form-control select2" style="width: 200xp;" required>'+
+                                '<option selected="selected" value="">Seleccione una opción</option>'+
+                                '<option value="Venezolano">Venezolano</option>'+
+                                '<option value="Extranjero">Extranjero</option>'+
+                          '</select>'
     }).draw();
     $('#tableHijos_last').click();
     $('#datepickerHijo1'+aux).datepicker({

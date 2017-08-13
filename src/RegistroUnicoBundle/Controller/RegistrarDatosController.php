@@ -33,7 +33,7 @@ class RegistrarDatosController extends Controller
         {
             $this->registerSectionOne($request->get('personalData'));
             $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
-            $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
+            return new JsonResponse($this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]));
             $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[16]);
             return new JsonResponse("Datos guardados");
         }
