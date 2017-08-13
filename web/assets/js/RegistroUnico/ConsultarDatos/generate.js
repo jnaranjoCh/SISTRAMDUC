@@ -188,11 +188,12 @@ function initTableConsultar(){
                 $("#FechaVencimientoCedulaDatos").val(DateFormat(data.Files[2].fecha_vencimiento.date));
                 $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
                 $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
+                data.Files = burbuja(data.Files);
                 if($("#url").val().split('/')[1] == "assets")
                 {
                     paths[0] = data.Files[2].path.split("../web")[1];
-                    paths[1] = data.Files[0].path.split("../web")[1];
-                    paths[2] = data.Files[1].path.split("../web")[1];
+                    paths[1] = data.Files[0].path.split("../web")[1];    
+                    paths[2] = data.Files[1].path.split("../web")[1];    
                 }
                 else
                 {
@@ -312,4 +313,22 @@ function DateFormat(date)
     hrs = date.replace("-","/").replace("-","/").replace(":00.000000","").split(" ")[1];
     ddmmyy = date.replace("-","/").replace("-","/").replace(":00.000000","").split(" ")[0].split("/");
     return ddmmyy[2]+"/"+ddmmyy[1]+"/"+ddmmyy[0]+" "+hrs;
+}
+
+function burbuja(array)
+{
+    for(var i=1;i<array.length;i++)
+    {
+        for(var j=0;j<array.length-i;j++)
+        {
+            if(array[j]>array[j+1])
+            {
+                k=array[j+1];
+                array[j+1]=array[j];
+                array[j]=k;
+            }
+        }
+    }
+ 
+    return array;
 }

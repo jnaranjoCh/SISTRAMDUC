@@ -26,7 +26,7 @@ class ConsultarUsuarioController extends Controller
             if (!$encontrado) {
                 return new JsonResponse(0);
             }else
-                return new JsonResponse(!$encontrado->getIsRegister());
+                return new JsonResponse(true);
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');

@@ -26,6 +26,11 @@ class Registro
     private $año;
     
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isValidate;
+    
+    /**
      * @ORM\Column(type="string", length=50)
      */
     private $institucionEmpresa;
@@ -290,6 +295,30 @@ class Registro
     public function setNivel(Nivel $nivel)
     {
         $this->nivel = $nivel;
+
+        return $this;
+    }
+    
+    /**
+     * Get validado
+     *
+     * @return isValidate
+     */
+    public function getIsValidate()
+    {
+        return $this->isValidate;
+    }
+
+    /**
+     * Set validado
+     *
+     * @param $validate
+     *
+     * @return Registro
+     */
+    public function setIsValidate($validate)
+    {
+        $this->isValidate = $validate;
 
         return $this;
     }

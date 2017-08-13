@@ -863,6 +863,7 @@ class ConsultarDatosController extends Controller
             $newRegistro->setInstitucionEmpresa($registro['empresaInstitucion']);
             $newRegistro->setDescription($registro['descripcion']);
             $newRegistro->setAño($registro['anio']);
+            $newRegistro->setIsValidate(false);
             
             if(in_array($registro['idRegistro'],$idsrevistas)){
                 $pos = array_search($registro['idRegistro'],$idsrevistas);

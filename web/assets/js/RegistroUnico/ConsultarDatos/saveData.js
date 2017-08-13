@@ -504,13 +504,12 @@ function validarParticipantes()
         referenciasParticipantesAux2[indReferenciasParticipantesAux2] = referenciasParticipantesAux2[indReferenciasParticipantesAux2] + $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
         indReferenciasParticipantesAux2++;
     }
-    if((referenciasParticipantesAux.unique().length != referenciasParticipantes.length) || (referenciasParticipantesAux2.length != referenciasParticipantesAux2.unique().length))
+    if((referenciasParticipantesAux.unique().filter(Boolean).length != referenciasParticipantes.filter(Boolean).length) || (referenciasParticipantesAux2.filter(Boolean).length != referenciasParticipantesAux2.unique().filter(Boolean).length))
     {
         referenciasRevistas.splice(0,referenciasRevistas.length);
         referenciasRevistas = new Array();
         indReferenciasRevistas=0;
         valido = false;
-        alert("holaa");
     }
     else
     {
@@ -529,7 +528,6 @@ function validarParticipantes()
                     referenciasRevistas = new Array();
                     indReferenciasRevistas=0;
                     valido = false;
-                    alert("holaa2");
                 }else
                 {
                     switch (j) {
@@ -540,7 +538,6 @@ function validarParticipantes()
                                 referenciasRevistas = new Array();
                                 indReferenciasRevistas=0;
                                 valido = false;
-                                alert("holaa3");
                             }
                             participante.nombre = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
                             cellsParticipantes = new Object();
@@ -597,7 +594,7 @@ function validarRevistas()
         referenciasRevistasAux2[indReferenciasRevistasAux2] = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
         indReferenciasRevistasAux2++;
     }
-    if((referenciasRevistasAux.unique().length != referenciasRevistas.length) || (referenciasRevistasAux2.length != referenciasRevistasAux2.unique().length))
+    if((referenciasRevistasAux.unique().filter(Boolean).length != referenciasRevistas.filter(Boolean).length) || (referenciasRevistasAux2.filter(Boolean).length != referenciasRevistasAux2.unique().filter(Boolean).length))
         valido = false;
     else
     {

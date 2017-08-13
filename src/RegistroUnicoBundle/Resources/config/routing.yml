@@ -132,3 +132,7 @@ registro_guardararchivosconsulta_ajax:
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:guardarArchivos }
     requirements:
         _method:  POST
+
+registro_validar_index: 
+    path:     /validar/registro
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarRegistros }
