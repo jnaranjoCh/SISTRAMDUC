@@ -13,7 +13,9 @@ $('#generate').click(function(){
         success: function(data){
             if(data){
                $("#load").val("true");
+               cargarRegistros();
                $("#formRegistros").removeClass("hidden");
+               $("#save").removeClass("hidden");
             }else{
                $("#load").val("false");
                toastr.error("El usuario no se encuentra registrado, esta inactivo o no a realizado el registro de datos.", "Error", {
@@ -24,3 +26,29 @@ $('#generate').click(function(){
         }
     });
 });
+
+function cargarRegistros()
+{
+    tableRegistros = $('#tableRegistros').DataTable({
+                	    "ajax":{
+                           "url": routeRegistroUnico['registro_validarconsultarregistros_ajax'],
+                           "type": 'POST',
+                           "data": {"email":$('#mail').val()}
+                        },
+                        "pagingType": "full_numbers",
+                        "bDestroy": true,
+                	    "language": {
+                            	"url": tableLenguage['datatable-spanish']
+                        },
+                        columns: [
+                            { "data": "Id del registro" },
+                            { "data": "Tipo de referencia" },
+                            { "data": "Descripcion" },
+                            { "data": "Nivel" },
+                            { "data": "Estatus" },
+                            { "data": "Año de publicación y/o asistencia" },
+                            { "data": "Empresa y/o institución" },
+                            { "data": "Validado" }
+                        ]
+                    });
+}

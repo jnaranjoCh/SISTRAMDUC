@@ -90,66 +90,56 @@
              </div>
           </div>
           <!--seccion for generate boxes-->
-          <div id="formRegistros" class="col-md-offset-1 col-md-10 hidden">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Responsive Hover Table</h3>
-  
-                <div class="box-tools">
-                  <div class="input-group input-group-sm" style="width: 150px;">
-                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-  
-                    <div class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                    </div>
-                  </div>
+          <!--research,courses and studies box-->
+            <div id="formRegistros" class="col-md-offset-1 col-md-10 hidden">
+               <!-- /.box-header -->
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Registros</h3>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-body">
+                  <div style="overflow-x: scroll; white-space: nowrap;">
+                   <table id="tableRegistros" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                      <th>Validado</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa y/o institución</th>
+                      <th>Validado</th>
+                    </tr>
+                    </tfoot>
+                  </table>
                 </div>
               </div>
-              <!-- /.box-header -->
-              <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                  <tr>
-                    <th>ID</th>
-                    <th>User</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Reason</th>
-                  </tr>
-                  <tr>
-                    <td>183</td>
-                    <td>John Doe</td>
-                    <td>11-7-2014</td>
-                    <td><span class="label label-success">Approved</span></td>
-                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                  </tr>
-                  <tr>
-                    <td>219</td>
-                    <td>Alexander Pierce</td>
-                    <td>11-7-2014</td>
-                    <td><span class="label label-warning">Pending</span></td>
-                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                  </tr>
-                  <tr>
-                    <td>657</td>
-                    <td>Bob Doe</td>
-                    <td>11-7-2014</td>
-                    <td><span class="label label-primary">Approved</span></td>
-                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                  </tr>
-                  <tr>
-                    <td>175</td>
-                    <td>Mike Doe</td>
-                    <td>11-7-2014</td>
-                    <td><span class="label label-danger">Denied</span></td>
-                    <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                  </tr>
-                </table>
-              </div>
-              <!-- /.box-body -->
+              <!-- /.box -->
             </div>
-            <!-- /.box -->
+            <!--research,courses and studies box-->
           </div>
         </section>
+        <div id="save" class="col-md-offset-4 col-md-4 hidden">
+            <div class="form-group has-feedback">
+                  <input id="submitData" type="button" class="btn btn-primary btn-block btn-flat" value="Actualizar datos"/>
+            </div>
+        </div>
       </div>
     </form>
 {% endblock %}
@@ -157,5 +147,7 @@
 {% block custom_javascripts %}
     <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/iniVR.js') }}"></script>
     <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/generate.js') }}"></script>
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/changeValidate.js') }}"></script>
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/saveData.js') }}"></script>
     <script src="{{ asset('assets/js/RegistroUnico/tableUsersCopy.js') }}"></script>
 {% endblock %}

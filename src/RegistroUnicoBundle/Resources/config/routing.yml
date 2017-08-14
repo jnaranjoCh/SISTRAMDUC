@@ -136,3 +136,47 @@ registro_guardararchivosconsulta_ajax:
 registro_validar_index: 
     path:     /validar/registro
     defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarRegistros }
+    
+registro_validarconsultarregistros_ajax:
+    path:     /validar/enviar-registros
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:enviarRegistros }
+    requirements:
+        _method:  POST
+        
+registro_validaractualizarregistros_ajax:
+    path:     /validar/actualizar
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:actualizarRegistros }
+    requirements:
+        _method:  POST
+
+registro_eliminar_index:
+    path:     /eliminar/registro
+    defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:eliminarUsuarioIndex }
+    
+registro_eliminarconsultarusaurios_ajax:
+    path:     /eliminar/enviar-usuarios
+    defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:eliminarEnviarUsuario }
+    requirements:
+        _method:  POST
+        
+registro_eliminarusaurios_ajax:
+    path:     /eliminar/eliminar-usuario
+    defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:eliminarUsuario }
+    requirements:
+        _method:  POST
+        
+registro_activar_index:
+    path:     /activar/registro
+    defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:activarUsuarioIndex }
+    
+registro_activarconsultarusaurios_ajax:
+    path:     /activar/enviar-usuarios
+    defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:activarEnviarUsuario }
+    requirements:
+        _method:  POST
+        
+registro_activarusaurios_ajax:
+    path:     /eliminar/activar-usuario
+    defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:activarUsuario }
+    requirements:
+        _method:  POST

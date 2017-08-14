@@ -664,6 +664,36 @@ class Usuario implements UserInterface
         return $registros;
     }
 
+    public function getRegistrosValidate()
+    {
+        $registros = new stdClass;
+
+        $i = 0;
+        $data[] = [];
+        foreach($this->registros->toArray() as $registro){
+            $data[$i]['Id del registro'] = $registro->getId();
+            $data[$i]['Tipo de referencia'] = $registro->getTipo()->getDescription();
+            $data[$i]['Descripcion'] = $registro->getDescription();
+            $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
+            $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
+            $data[$i]['Año de publicación y/o asistencia'] = $registro->getAño();
+            if($registro->getInstitucionEmpresa() == null)
+                $data[$i]['Empresa y/o institución'] = 'No aplica';
+            else
+                $data[$i]['Empresa y/o institución'] = $registro->getInstitucionEmpresa();
+            if($registro->getIsValidate())
+                $data[$i]['Validado'] = '<div class="row"><div class="col-xs-6"><span id="span'.$i.'" class="label label-success">Validado</span></div> <div class="col-xs-4 col-xs-offset-2"><input type="checkbox" id="checkboxValidarRegistro'.$i.'" name="checkboxValidarRegistro'.$i.'" value="validado" checked/></div></div>';
+            else
+                $data[$i]['Validado'] = '<div class="row"><div class="col-xs-6"><span id="span'.$i.'" class="label label-warning">No validado</span></div> <div class="col-xs-4 col-xs-offset-2"><input type="checkbox" id="checkboxValidarRegistro'.$i.'" name="checkboxValidarRegistro'.$i.'" value="validado"/></div></div>';
+            $i++;
+        }
+
+        $registros->data = $data;
+        $registros->num = $i;
+
+        return $registros;
+    }
+    
 	public function getRegistrosParticipantes($assets)
     {
         $registros = new stdClass;
