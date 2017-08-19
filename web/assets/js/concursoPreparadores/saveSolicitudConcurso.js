@@ -3,7 +3,6 @@ $('#cargarSolicConcurso').click(function (){
 	var inputs = ["AsigSol","NroPlz","TemExOral","TemExEsc","JurCoord","JurPpal1","JurPpal2","JurSupl1","JurSupl2"];
 	var falla = false;
 	var text = ""
-	var concursoInsertado = false;
 	
 	toastr.clear();
 	
@@ -21,19 +20,24 @@ $('#cargarSolicConcurso').click(function (){
 	if (falla){
 		toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
 	} else {
+		//$("#cargando").modal("show");
 		$.ajax({
             method: "POST",
             data: {"AsigSol":$("#AsigSol").val(), "NroPlz":$("#NroPlz").val(), "ExOral":$("#TemExOral").val(), "ExEsc":$("#TemExEsc").val(), 
     			"Coord":$("#JurCoord").val(), "Ppal1":$("#JurPpal1").val(), "Ppal2":$("#JurPpal2").val(), "Supl1":$("#JurSupl1").val(), "Supl2":$("#JurSupl2").val()},
             url: "/web/app_dev.php/preparadores/registrar_solicitud",
             dataType: 'json',
+            beforeSend: function(){
+                $("#cargando").modal("show");
+            },
 	        success: function(respuesta){
         		if (respuesta.estado == "Insertado") {
-        		    concursoInsertado = true;
+        		    $("#cargando").modal("hide");
         		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
     				$('#closeCargaRequisitos').click();
         		}else{
         		    if (respuesta.estado == "NoExisteJurado") {
+        		    	$("#cargando").modal("hide");
         		        for(var i = 0; i < respuesta.jurados.length; i++){
             		        $(respuesta.jurados[i]).addClass("has-error");
                 		    toastr.error(respuesta.mensaje, "Error!", {"timeOut": "0","extendedTImeout": "0"});
@@ -42,28 +46,6 @@ $('#cargarSolicConcurso').click(function (){
         		}
         }});
 	}
-	
-	/*if(concursoInsertado){
-	    $.ajax({
-            method: "POST",
-            data: {"Coord":$("#JurCoord").val(), "Ppal1":$("#JurPpal1").val(), "Ppal2":$("#JurPpal2").val(), "Supl1":$("#JurSupl1").val(), "Supl2":$("#JurSupl2").val()},
-            url: "/web/app_dev.php/preparadores/registrar_solicitud",
-            dataType: 'json',
-	        success: function(respuesta){
-        		if (respuesta.estado == "Insertado") {
-        		    concursoInsertado = true;
-        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-    				$('#closeCargaRequisitos').click();
-        		}else{
-        		    if (respuesta.estado == "NoExisteJurado") {
-        		        for(var i = 0; i < respuesta.jurados.length; i++){
-            		        $(respuesta.jurados[i]).addClass("has-error");
-                		    toastr.error(respuesta.mensaje, "Error!", {"timeOut": "0","extendedTImeout": "0"});
-        		        }
-            		}
-        		}
-        }});
-	}*/
 });
 
 $('#closeCargaRequisitos').click(function (){ 

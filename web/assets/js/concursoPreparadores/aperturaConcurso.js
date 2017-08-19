@@ -53,13 +53,16 @@ tabla = $('#tabla').DataTable({
 	});
 	
 	function verDetalleSolicitud(id){
-		$('#detallesModalBody').addClass("hide");
+		$('#detalles').addClass("hide");
 		$("#detallesModalBody").empty();
 		$.ajax({
 			method:"POST",
 			url: "/web/app_dev.php/preparadores/detalle_solicitud_concurso",
 			dataType: 'json',
 			data: {"id": id},
+			beforeSend: function(){
+                $("#cargando").modal("show");
+            },
 	        success: function(respuesta){
 				if (respuesta == "FallaConsultaDetalleSolicitud"){
 	                text = "Falla al consultar el detalle de esta solicitud.";
@@ -89,7 +92,8 @@ tabla = $('#tabla').DataTable({
 						'</dl>';
 						
 					$('#detallesModalBody').append(contenidoHTML);
-					$('#detallesModalBody').removeClass("hide");
+					$("#cargando").modal("hide");
+					$('#detalles').removeClass("hide");
 	            }
 			}
 	    });

@@ -121,21 +121,34 @@
         
 
         <!-- Modal -->
-        <div class="modal" id="detalles" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal" id="detalles" role="dialog" aria-labelledby="modalDetalles">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title" id="myModalLabel">Detalles</h3>
               </div>
-              <div id="detallesModalBody" class="modal-body">
-                
+              <div id="detallesModalBody" class="modal-body overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal">Aceptar</button>
               </div>
             </div>
           </div>
         </div>
         
-        
+        <!-- Modal Cargando-->
+        <div class="modal fade" id="cargando" role="dialog" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div>
+              <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+              <br/>
+              <!--<label style="position: absolute; top:50%; left:50%; width:200px; margin-left:-100px; height:100px; margin-top:200px; color: white; font: 150% sans-serif;">Guardando datos...</label>-->
+            </div>
+          </div>
+        </div>
       </section>
     </div>
     
