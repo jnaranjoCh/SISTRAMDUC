@@ -4,7 +4,7 @@ $('#submitData').click(function(){
     toastr.clear();
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos","FechaVencimientoCedulaDatos","FechaVencimientoRifDatos","FechaVencimientoActaNacimientoDatos"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
-    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
+    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos"];
     var inputsH = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos","NacionalidadHijoDatos","FechaNacimientoHijoDatos","CedulaMadreHijoDatos","CedulaPadreHijoDatos","ActaNacCargaHijoDatos"];
     var inputsHW = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos"];
     var idRegistrosParticipantes = [];
@@ -123,37 +123,47 @@ $('#submitData').click(function(){
     if(can_register && countRegistro < 1){
             can_register = false;
             for(var i = 0; i < inputsR.length; i++){
-            if(inputsR[i] == "InstitucionDatos"){    
-                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de servicio comunitario" && $("#"+inputsR[i]).val() == ""){    
-                    $("#headerRegistros").css({ 'color': "red" });
-                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).addClass("has-error");
-                    text = "Error campo mal introducido o obligatorio.";
+                if(inputsR[i] == "InstitucionDatos"){    
+                    if($("#TipoDeRegistroDatos").find('option:selected').val() != "Tutoria de pasantias" && $("#"+inputsR[i]).val() == ""){    
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                        text = "Error campo mal introducido o obligatorio.";
+                    }else{
+                        $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).removeClass("has-error");        
+                    }
+                }else if(inputsR[i] == "EmpresaDatos"){   
+                    if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias" && $("#"+inputsR[i]).val() == ""){    
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                        text = "Error campo mal introducido o obligatorio.";
+                    }else{
+                        $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).removeClass("has-error");        
+                    }
+                }else if(inputsR[i] == "TituloObtenidoDatos"){
+                    if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de tesis" && $("#"+inputsR[i]).val() == ""){    
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                        text = "Error campo mal introducido o obligatorio.";
+                    }else{
+                        $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).removeClass("has-error");        
+                    }
                 }else{
-                    $("#span"+inputsR[i]).removeClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).removeClass("has-error");        
+                    if($("#"+inputsR[i]).val() == ""){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                        text = "Error campo mal introducido o obligatorio.";
+                    }else{
+                        $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).removeClass("has-error");        
+                    }
                 }
-            }else if(inputsR[i] == "EmpresaDatos"){   
-                if($("#TipoDeRegistroDatos").find('option:selected').val() == "Tutoria de pasantias" && $("#"+inputsR[i]).val() == ""){    
-                    $("#headerRegistros").css({ 'color': "red" });
-                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).addClass("has-error");
-                    text = "Error campo mal introducido o obligatorio.";
-                }else{
-                    $("#span"+inputsR[i]).removeClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).removeClass("has-error");        
-                }
-            }else{
-                if($("#"+inputsR[i]).val() == ""){
-                    $("#headerRegistros").css({ 'color': "red" });
-                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).addClass("has-error");
-                    text = "Error campo mal introducido o obligatorio.";
-                }else{
-                    $("#span"+inputsR[i]).removeClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).removeClass("has-error");        
-                }
-            }
             }
     }else{
         for(var i = 0; i < inputsR.length; i++){    
@@ -166,7 +176,7 @@ $('#submitData').click(function(){
     tableRegistros.column(1)
                         .data()
                         .each( function ( value1,index1 ) {
-                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis"){
                                 tableRegistros.column(0)
                                                 .data()
                                                 .each( function ( value2,index2 ) {

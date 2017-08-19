@@ -34,7 +34,7 @@ function getData()
         var validar = new Object();
         var cellsRegistros = new Object();
         cellsRegistros.row = i;
-        cellsRegistros.column = 7;
+        cellsRegistros.column = 8;
         cellsRegistros.columnVisible = "0";
         idCheck = tableRegistros.cell(cellsRegistros).data().split('<input type="checkbox" id="')[1].split('"')[0];
         cellsRegistros.column = 0;

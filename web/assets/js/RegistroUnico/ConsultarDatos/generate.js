@@ -258,7 +258,8 @@ function initTableConsultar(){
                                {"data":"Nivel"},
                                {"data":"Estatus"},
                                {"data":"AnoDePublicacionAsistencia"},
-                               {"data":"EmpresaInstitucion"}
+                               {"data":"EmpresaInstitucion"},
+                               {"data":"TituloObtenido"}
                             ]
                         });
         

@@ -652,9 +652,10 @@ class Usuario implements UserInterface
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
             $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
             if($registro->getInstitucionEmpresa() == "")
-                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>';
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">';
             else
                 $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Empresa y/o institución">';
+            $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="'.$registro->getTituloObtenido().'" type="text" class="form-control" placeholder="Titulo Obtenido">';
             $i++;
         }
 
@@ -678,9 +679,10 @@ class Usuario implements UserInterface
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
             $data[$i]['Año de publicación y/o asistencia'] = $registro->getAño();
             if($registro->getInstitucionEmpresa() == null)
-                $data[$i]['Empresa y/o institución'] = 'No aplica';
+                $data[$i]['Empresa y/o institución'] = "";
             else
                 $data[$i]['Empresa y/o institución'] = $registro->getInstitucionEmpresa();
+            $data[$i]['Titulo Obtenido'] = $registro->getTituloObtenido();
             if($registro->getIsValidate())
                 $data[$i]['Validado'] = '<div class="row"><div class="col-xs-6"><span id="span'.$i.'" class="label label-success">Validado</span></div> <div class="col-xs-4 col-xs-offset-2"><input type="checkbox" id="checkboxValidarRegistro'.$i.'" name="checkboxValidarRegistro'.$i.'" value="validado" checked/></div></div>';
             else

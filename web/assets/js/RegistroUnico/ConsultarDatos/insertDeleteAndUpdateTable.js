@@ -35,7 +35,8 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 "Nivel":nivel,
                 "Estatus":estatus,
                 "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
+                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">',
+                "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">'
             }).draw();
             $('#tableRegistros_last').click();
         }
@@ -54,7 +55,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
 
         
         $("#"+id).change(function(e){
-            if(column == 2 && ($("#"+id).val() == "Tutoria de pasantias" || $("#"+id).val() == "Tutoria de servicio comunitario"))
+            if(column == 2 && ($("#"+id).val() == "Tutoria de pasantias" || $("#"+id).val() == "Tutoria de servicio comunitario"  ||  $("#"+id).val() == "Tutoria de tesis"))
             {
                 updateReferencesAdd(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
@@ -65,11 +66,11 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 updateReferencesAdd(tableRevista,iid);
                 updateReferencesDelete(tableParticipantes,iid);
             }
-            else if(column == 2  && ($("#"+id).val() == "Estudio" || $("#"+id).val() == "Asistencia a congresos"))
+            else if(column == 2  && ($("#"+id).val() == "Estudio" || $("#"+id).val() == "Asistencia a Congresos/Seminarios"))
             {
                 updateReferencesDelete(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">').draw();
             }
         });
     }
@@ -299,7 +300,8 @@ $('#restablecer').click(function(){
                                 {"data":"Nivel"},
                                 {"data":"Estatus"},
                                 {"data":"AnoDePublicacionAsistencia"},
-                                {"data":"EmpresaInstitucion"}
+                                {"data":"EmpresaInstitucion"},
+                                {"data":"TituloObtenido"}
                             ]
                         });
                         
@@ -362,7 +364,8 @@ $('#agregarRegistros').click(function(){
         "Nivel":nivel,
         "Estatus":estatus,
         "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
+        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">',
+        "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">'
     }).draw();
     $('#tableRegistros_last').click();
 });

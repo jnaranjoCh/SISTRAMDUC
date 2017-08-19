@@ -11,13 +11,19 @@ $('#TipoDeRegistroDatos').change(function(){
     }
 
     
-    if(selectedOption.val().localeCompare("Tutoria de servicio comunitario") == 0)
+    if(selectedOption.val().localeCompare("Tutoria de pasantias") != 0)
         $("#hiddenInstitucionDatos").removeClass("hidden");
     else{
         $("#hiddenInstitucionDatos").addClass("hidden");
         tableRevista.clear().draw();
         $("#EmpresaDatos").val("");
         $("#InstitucionDatos").val("");
+    }
+    
+    if(selectedOption.val().localeCompare("Tutoria de tesis") == 0)
+        $("#hiddenTituloObtenidoDatos").removeClass("hidden");
+    else{
+        $("#hiddenTituloObtenidoDatos").addClass("hidden");
     }
 });
 

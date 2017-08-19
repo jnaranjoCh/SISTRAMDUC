@@ -863,6 +863,7 @@ class ConsultarDatosController extends Controller
             $newRegistro->setInstitucionEmpresa($registro['empresaInstitucion']);
             $newRegistro->setDescription($registro['descripcion']);
             $newRegistro->setAño($registro['anio']);
+            $newRegistro->setTituloObtenido($registro['tituloObtenido']);
             $newRegistro->setIsValidate(false);
             
             if(in_array($registro['idRegistro'],$idsrevistas)){

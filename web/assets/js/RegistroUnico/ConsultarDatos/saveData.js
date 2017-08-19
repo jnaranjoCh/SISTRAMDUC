@@ -388,7 +388,7 @@ function validarRegistros()
                 cellsRegistro.column = j;
             }
 
-            if(j == 2 && ($("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de pasantias" || $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de servicio comunitario"))
+            if(j == 2 && ($("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de pasantias" || $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de servicio comunitario"  ||  $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de tesis"))
             {
                 cellsRegistro.column = 1;
                 referenciasParticipantes[indReferenciasParticipantes] = tableRegistros.cell(cellsRegistro).data();
@@ -396,15 +396,15 @@ function validarRegistros()
                 cellsRegistro.column = j;
                 emIns = true;
             }
-            else if(j == 2 && ($("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de pasantias" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de servicio comunitario" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != ""))
+            else if(j == 2 && ($("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de pasantias" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de servicio comunitario" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de tesis" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != ""))
                 emIns = false;
             
-            if(emIns && j == 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
+            if(emIns && (j == 7 || j == 8) && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
                 valido = false;
-            else if(!emIns && j == 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "" && valido)
+            else if(!emIns && (j == 7 || j == 8) && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "" && valido)
                 valido = true;
 
-            if(j != 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
+            if((j != 7 || j != 8) && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
                 valido = false;
                 
             if(valido == true)
@@ -433,6 +433,9 @@ function validarRegistros()
                     break;
                     case 7:
                         registro.empresaInstitucion = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                    break;
+                    case 8:
+                        registro.tituloObtenido = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
                     break;
                 }
                 

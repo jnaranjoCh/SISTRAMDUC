@@ -34,7 +34,12 @@ class Registro
      * @ORM\Column(type="string", length=50)
      */
     private $institucionEmpresa;
-
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $tituloObtenido;
+    
     /**
      * @ORM\Column(type="string", length=50)
      */
@@ -134,7 +139,31 @@ class Registro
     {
         return $this->año;
     }
+    
+    /**
+     * Set $tituloObtenido
+     *
+     * @param string $tituloObtenido
+     *
+     * @return Registro
+     */
+    public function setTituloObtenido($tituloObtenido)
+    {
+        $this->tituloObtenido = $tituloObtenido;
 
+        return $this;
+    }
+
+    /**
+     * Get $tituloObtenido
+     *
+     * @return string
+     */
+    public function getTituloObtenido()
+    {
+        return $this->tituloObtenido;
+    }
+    
     /**
      * Set $institucionEmpresa
      *
