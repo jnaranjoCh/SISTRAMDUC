@@ -6,6 +6,7 @@ $('#TipoDeRegistroDatos').change(function(){
     else{
         $("#hiddenEmpresaDatos").addClass("hidden");
         tableRevista.clear().draw();
+        $("#TituloObtenidoDatos").val("");
         $("#EmpresaDatos").val("");
         $("#InstitucionDatos").val("");
     }
@@ -16,6 +17,7 @@ $('#TipoDeRegistroDatos').change(function(){
     else{
         $("#hiddenInstitucionDatos").addClass("hidden");
         tableRevista.clear().draw();
+        $("#TituloObtenidoDatos").val("");
         $("#EmpresaDatos").val("");
         $("#InstitucionDatos").val("");
     }
@@ -24,6 +26,9 @@ $('#TipoDeRegistroDatos').change(function(){
         $("#hiddenTituloObtenidoDatos").removeClass("hidden");
     else{
         $("#hiddenTituloObtenidoDatos").addClass("hidden");
+        $("#TituloObtenidoDatos").val("");
+        $("#EmpresaDatos").val("");
+        $("#InstitucionDatos").val("");
     }
 });
 

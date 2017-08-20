@@ -655,9 +655,13 @@ class Usuario implements UserInterface
                 $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">';
             else
                 $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Empresa y/o institución">';
-            $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="'.$registro->getTituloObtenido().'" type="text" class="form-control" placeholder="Titulo Obtenido">';
+            if($registro->getTituloObtenido() == "")
+                $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>';
+            else
+                $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Titulo Obtenido">';
             $i++;
         }
+
 
         $registros->data = $data;
         $registros->num = $i;
@@ -712,7 +716,7 @@ class Usuario implements UserInterface
         $htmlIdRegistros = $htmlIdRegistros."</select>";
 
         foreach($this->registros->toArray() as $registro){
-            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
+            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."' selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
             $aux = $registro->getParticipantes($htmlIdRegistrosAux,$k);
             for($j = 0; $j < $aux->num; $j++)
             {
@@ -748,7 +752,7 @@ class Usuario implements UserInterface
         $htmlIdRegistros = $htmlIdRegistros."</select>";
 
         foreach($this->registros->toArray() as $registro){
-            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
+            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."' selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
             $aux = $registro->getRevistas($htmlIdRegistrosAux,$k);
             for($j = 0; $j < $aux->num; $j++)
             {
