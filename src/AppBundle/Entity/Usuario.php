@@ -652,9 +652,9 @@ class Usuario implements UserInterface
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
             $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
             if($registro->getInstitucionEmpresaCasaeditorial() == "")
-                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">';
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">';
             else
-                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresaCasaeditorial().'" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">';
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresaCasaeditorial().'" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">';
             if($registro->getTituloObtenido() == "")
                 $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>';
             else

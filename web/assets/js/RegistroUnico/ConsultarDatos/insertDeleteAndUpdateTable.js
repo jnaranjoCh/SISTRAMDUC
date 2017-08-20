@@ -35,7 +35,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 "Nivel":nivel,
                 "Estatus":estatus,
                 "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">',
+                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">',
                 "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
                 "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
                 "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
@@ -62,7 +62,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
             {
                 updateReferencesAdd(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">').draw();
                 cell.column = "8";
                 if(valor == "Tutoria de tesis")
                     tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">').draw();
@@ -88,7 +88,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
             {
                 updateReferencesDelete(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">').draw();
                 cell.column = "8";
                 tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
                 cell.column = "9";
@@ -99,7 +99,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
             {
                 updateReferencesDelete(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">').draw();
                 cell.column = "8";
                 tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
                 cell.column = "9";
@@ -406,7 +406,7 @@ $('#agregarRegistros').click(function(){
         "Nivel":nivel,
         "Estatus":estatus,
         "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">',
+        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">',
         "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
         "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
         "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
