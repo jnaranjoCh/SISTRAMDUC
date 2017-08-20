@@ -369,6 +369,7 @@ function validarRegistros()
     var valido = true;
     var emIns = false;
     var emIns2 = false;
+    var emIns3 = false;
     var numColumn = obtenerColumnas(tableRegistros);
     var numFilas = obtenerFilas(tableRegistros);
     countRegistro = 0;
@@ -391,7 +392,7 @@ function validarRegistros()
                 indReferenciasRevistas++;
                 cellsRegistro.column = j;
             }
-            if(j == 2 && (findValue(tableRegistros, cellsRegistro) == "Tutoria de pasantias" || findValue(tableRegistros, cellsRegistro) == "Tutoria de servicio comunitario"  ||  findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis"))
+            if(j == 2 && (findValue(tableRegistros, cellsRegistro) == "Tutoria de pasantias" || findValue(tableRegistros, cellsRegistro) == "Tutoria de servicio comunitario"  ||  findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis" || findValue(tableRegistros, cellsRegistro) == "Articulo publicado"))
             {
                 cellsRegistro.column = 1;
                 referenciasParticipantes[indReferenciasParticipantes] = tableRegistros.cell(cellsRegistro).data();
@@ -399,7 +400,7 @@ function validarRegistros()
                 cellsRegistro.column = j;
                 emIns = true;
             }
-            else if(j == 2 && (findValue(tableRegistros, cellsRegistro) != "Tutoria de pasantias" && findValue(tableRegistros, cellsRegistro) != "Tutoria de servicio comunitario" && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != ""))
+            else if(j == 2 && (findValue(tableRegistros, cellsRegistro) != "Tutoria de pasantias" && findValue(tableRegistros, cellsRegistro) != "Tutoria de servicio comunitario" && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "Articulo publicado" && findValue(tableRegistros, cellsRegistro) != ""))
                 emIns = false;
     
             if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis")
@@ -408,6 +409,13 @@ function validarRegistros()
             }
             else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "")
                 emIns2 = false;
+                
+            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Asistencia a Congresos/Seminarios")
+            {
+                emIns3 = true;
+            }
+            else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Asistencia a Congresos/Seminarios" && findValue(tableRegistros, cellsRegistro) != "")
+                emIns3 = false;
                 
             if(emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "")
             {
@@ -422,8 +430,15 @@ function validarRegistros()
             }
             else if(!emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "" && valido)
                 valido = true;
+            
+            if(emIns3 && (j == 9 || j == 10) && findValue(tableRegistros, cellsRegistro) == "")
+            {
+                valido = false;
+            }
+            else if(!emIns3 && (j == 9 || j == 10)  && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                valido = true;
 
-            if(j != 7 && j != 8 && findValue(tableRegistros, cellsRegistro) == "")
+            if(j != 7 && j != 8 && j != 9 && j != 10 && findValue(tableRegistros, cellsRegistro) == "")
             {
                 valido = false;
             }
@@ -457,6 +472,12 @@ function validarRegistros()
                     break;
                     case 8:
                         registro.tituloObtenido = findValue(tableRegistros, cellsRegistro);
+                    break;
+                    case 9:
+                        registro.ciudadPais = findValue(tableRegistros, cellsRegistro);
+                    break;
+                    case 10:
+                        registro.congreso = findValue(tableRegistros, cellsRegistro);
                     break;
                 }
                 
@@ -631,7 +652,7 @@ function validarRevistas()
                 cellsRevistas.row = i;
                 cellsRevistas.column = j;
                 cellsRevistas.columnVisible = "0";
-                if(findValue(tableRevista, cellsRevistas) == "")
+                if(findValue(tableRevista, cellsRevistas) == "" && j != 3 && j != 4)
                 {
                     valido = false;
                 }
@@ -645,6 +666,12 @@ function validarRevistas()
                             cellsRevistas.column = j-1;
                             cellsRevistas.columnVisible = "0";
                             revista.idRegistro = findValue(tableRevista, cellsRevistas);
+                            break;
+                         case 3:
+                            revista.volumen = findValue(tableRevista, cellsRevistas);
+                            break;
+                         case 4:
+                            revista.primerayUltimaPagina = findValue(tableRevista, cellsRevistas);
                             break;
                     }
                 }

@@ -35,8 +35,10 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 "Nivel":nivel,
                 "Estatus":estatus,
                 "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">',
-                "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">'
+                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">',
+                "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
+                "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
+                "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
             }).draw();
             $('#tableRegistros_last').click();
         }
@@ -60,28 +62,52 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
             {
                 updateReferencesAdd(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">').draw();
                 cell.column = "8";
                 if(valor == "Tutoria de tesis")
                     tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">').draw();
                 else
                     tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso" readonly>').draw();
             }
             else if(column == 2 && valor == "Articulo publicado")
             {
                 updateReferencesAdd(tableRevista,iid);
-                updateReferencesDelete(tableParticipantes,iid);
+                updateReferencesAdd(tableParticipantes,iid);
                 cell.column = "8";
                 tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso" readonly>').draw();
             }
-            else if(column == 2  && (valor == "Estudio" || valor == "Asistencia a Congresos/Seminarios" || valor == "Sociedad Científica y Profesionales" || valor ==  "Becas"  || valor == "Premios" || valor == "Distinciones"))
+            else if(column == 2  && (valor == "Estudio" || valor == "Sociedad Científica y Profesionales" || valor ==  "Becas"  || valor == "Premios" || valor == "Distinciones"))
             {
                 updateReferencesDelete(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">').draw();
                 cell.column = "8";
                 tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso" readonly>').draw();
+            }if(column == 2  && valor == "Asistencia a Congresos/Seminarios")
+            {
+                updateReferencesDelete(tableParticipantes,iid);
+                updateReferencesDelete(tableRevista,iid);
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">').draw();
+                cell.column = "8";
+                tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso">').draw();
             }
+            $('#tableRegistros_last').click();
         });
     }
 });
@@ -116,7 +142,9 @@ function updateReferencesAdd(table,iid)
             tableRevista.row.add( {
                 "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
                 "IdDelRegistro":"<select id='IdDelRegistroRevista0' class='form-control select2' style='width: 240px;'><option value='"+iid+"' selected='selected'>"+iid+"</option></select>",
-                "Revista":'<input id="Revista'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
+                "Revista":'<input id="Revista'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">',
+                "Volumen":'<input id="Volumen'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Volumen">',
+                "PrimerayUltimaPagina":'<input id="PrimerayUltimaPagina'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primera y última página">'
             }).draw();
         }
     }
@@ -311,7 +339,9 @@ $('#restablecer').click(function(){
                                 {"data":"Estatus"},
                                 {"data":"AnoDePublicacionAsistencia"},
                                 {"data":"EmpresaInstitucion"},
-                                {"data":"TituloObtenido"}
+                                {"data":"TituloObtenido"},
+                                { "data": "CiudadPais"},
+                                { "data": "Congreso"}
                             ]
                         });
                         
@@ -350,7 +380,9 @@ $('#restablecer').click(function(){
                             columns: [
                                 {"data": "Delete"},
                                 { "data": "IdDelRegistro" },
-                                { "data": "Revista" }
+                                { "data": "Revista" },
+                                { "data": "Volumen" },
+                                { "data": "PrimerayUltimaPagina" }
                             ]
                         });
 });
@@ -374,8 +406,10 @@ $('#agregarRegistros').click(function(){
         "Nivel":nivel,
         "Estatus":estatus,
         "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">',
-        "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">'
+        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / institución  y/o Casa editorial">',
+        "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
+        "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
+        "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
     }).draw();
     $('#tableRegistros_last').click();
 });
@@ -404,7 +438,9 @@ $('#agregarRevistas').click(function(){
     tableRevista.row.add( {
         "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
         "IdDelRegistro":idDelRegistro,
-        "Revista":'<input id="Revista'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
+        "Revista":'<input id="Revista'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">',
+        "Volumen":'<input id="Volumen'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Volumen">',
+        "PrimerayUltimaPagina":'<input id="PrimerayUltimaPagina'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primera y última página">'
     }).draw();
     $('#tableRevista_last').click();
 });

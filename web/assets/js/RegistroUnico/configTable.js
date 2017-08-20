@@ -10,7 +10,9 @@ tableRegistros = $('#tableRegistros').DataTable({
         { "data": "Estatus" },
         { "data": "Año de publicación y/o asistencia" },
         { "data": "Empresa y/o institución" },
-        { "data": "Titulo Obtenido" }
+        { "data": "Titulo Obtenido" },
+        { "data": "Ciudad / Pais"},
+        { "data": "Congreso"}
     ]
 });
 
@@ -41,7 +43,9 @@ tableRevista = $('#tableRevista').DataTable({
     },
     columns: [
         { "data": "Id del registro" },
-        { "data": "Revista" }
+        { "data": "Revista" },
+        { "data": "Volumen" },
+        { "data": "PrimerayUltimaPagina" }
     ]
 });
 

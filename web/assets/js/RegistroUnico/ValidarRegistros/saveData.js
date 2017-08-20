@@ -34,7 +34,7 @@ function getData()
         var validar = new Object();
         var cellsRegistros = new Object();
         cellsRegistros.row = i;
-        cellsRegistros.column = 8;
+        cellsRegistros.column = 10;
         cellsRegistros.columnVisible = "0";
         idCheck = findId(tableRegistros, cellsRegistros);
         if(findProp(tableRegistros, cellsRegistros))

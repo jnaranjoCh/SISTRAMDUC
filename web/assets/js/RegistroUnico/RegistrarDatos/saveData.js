@@ -4,7 +4,7 @@ $('#submitData').click(function(){
     toastr.clear();
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos","FechaVencimientoCedulaDatos","FechaVencimientoRifDatos","FechaVencimientoActaNacimientoDatos"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
-    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos"];
+    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos","CiudadPaisDatos","CongresosDatos"];
     var inputsH = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos","NacionalidadHijoDatos","FechaNacimientoHijoDatos","CedulaMadreHijoDatos","CedulaPadreHijoDatos","ActaNacCargaHijoDatos"];
     var inputsHW = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos"];
     var idRegistrosParticipantes = [];
@@ -153,6 +153,16 @@ $('#submitData').click(function(){
                         $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                         $("#div"+inputsR[i]).removeClass("has-error");        
                     }
+                }else if(inputsR[i] == "CiudadPaisDatos"){
+                     if(!(/^[a-zA-Z]*$/).test($("#"+inputsR[i]).val())){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                        text = "Error campo mal introducido.";
+                     }else{
+                        $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).removeClass("has-error");
+                     }
                 }else{
                     if($("#"+inputsR[i]).val() == ""){
                         $("#headerRegistros").css({ 'color': "red" });
@@ -176,7 +186,7 @@ $('#submitData').click(function(){
     tableRegistros.column(1)
                         .data()
                         .each( function ( value1,index1 ) {
-                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis"){
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
                                 tableRegistros.column(0)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
@@ -185,7 +195,8 @@ $('#submitData').click(function(){
                                                         indRegistroParticipantes++;
                                                     }
                                                 });                                   
-                            }else if(value1=="Articulo publicado"){
+                            }
+                            if(value1=="Articulo publicado"){
                                 tableRegistros.column(0)
                                                 .data()
                                                 .each( function ( value2,index2 ) {

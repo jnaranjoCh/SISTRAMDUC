@@ -56,9 +56,9 @@
       <div class="modal-dialog">
         <!-- Modal content-->
         <div>
-          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
           <br/>
-          <label id="modalLabel" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+          <label id="modalLabel" style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
         </div>
       </div>
     </div>
@@ -464,6 +464,24 @@
                       </div>
                       <!-- /.form-group -->
                     </div>
+                    <div id="hiddenCiudadPaisDatos" class="col-md-12 hidden">
+                      <!-- /.form-group -->
+                      <div id="divCiudadPaisDatos" class="form-group has-feedback">
+                        <label>Ciudad / Pais</label>
+                        <input id="CiudadPaisDatos" type="text" class="form-control" placeholder="Ciudad/Pais">
+                        <span id="spanCiudadPaisDatos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
+                    <div id="hiddenCongresosDatos" class="col-md-12 hidden">
+                      <!-- /.form-group -->
+                      <div id="divCongresosDatos" class="form-group has-feedback">
+                        <label>Congresos</label>
+                        <input id="CongresosDatos" type="text" class="form-control" placeholder="Congresos">
+                        <span id="spanCongresosDatos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                      <!-- /.form-group -->
+                    </div>
                     <div id="hiddenEmpresaDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
                       <div id="divEmpresaDatos" class="form-group has-feedback">
@@ -476,8 +494,8 @@
                     <div id="hiddenInstitucionDatos" class="col-md-12 hidden">
                       <!-- /.form-group -->
                       <div id="divInstitucionDatos" class="form-group has-feedback">
-                        <label>Institución</label>
-                        <input id="InstitucionDatos" type="text" class="form-control" placeholder="Institución">
+                        <label>Institución / Casa editorial</label>
+                        <input id="InstitucionDatos" type="text" class="form-control" placeholder="Institución / Casa editorial">
                         <span id="spanInstitucionDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
@@ -509,8 +527,10 @@
                       <th>Nivel</th>
                       <th>Estatus</th>
                       <th>Año de publicación y/o asistencia</th>
-                      <th>Empresa y/o institución</th>
+                      <th>Empresa / institución  y/o Casa editorial</th>
                       <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -523,8 +543,10 @@
                       <th>Nivel</th>
                       <th>Estatus</th>
                       <th>Año de publicación y/o asistencia</th>
-                      <th>Empresa y/o institución</th>
+                      <th>Empresa / institución  y/o Casa editorial</th>
                       <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
                     </tr>
                     </tfoot>
                   </table>
@@ -532,7 +554,7 @@
                 <hr/>
                 <div class="row">
                     <div class="col-md-12">
-                      <h3>Participantes</h3>
+                      <h3>Participantes / Autores</h3>
                     </div>
                     <div class="col-md-4">
                       <!-- /.form-group -->
@@ -591,7 +613,24 @@
                 <div id="revista">
                   <div class="row">
                       <div class="col-md-12">
-                        <h3>Revistas de publicación</h3>
+                        <h3>Revistas de publicación / Libros y monografias</h3>
+                      </div>
+                      <div class="col-md-6">
+                        <!-- /.form-group -->
+                        <div id="divVolumenRevistaRegistro" class="form-group  has-feedback">
+                          <label>Volumen</label>
+                          <input id="volumenRevistaRegistro" type="text" class="form-control" placeholder="Volumen">
+                          <span id="spanVolumenRevistaRegistro" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                      </div>
+                      <!-- /.col -->
+                      <div class="col-md-6">
+                        <div id="divPrimerayUltimaPaginaRevistaRegistro" class="form-group  has-feedback">
+                          <label>Primera y última página</label>
+                          <input id="primerayUltimaPaginaRevistaRegistro" type="text" class="form-control" placeholder="Primera y última página">
+                          <span id="spanPrimerayUltimaPaginaRevistaRegistro" class="glyphicon form-control-feedback"></span>
+                        </div>
                       </div>
                       <div class="col-md-6">
                         <!-- /.form-group -->
@@ -624,6 +663,8 @@
                       <tr>
                         <th>Id del registro</th>
                         <th>Revista</th>
+                        <th>Volumen</th>
+                        <th>Primera y última página</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -632,6 +673,8 @@
                       <tr>
                         <th>Id del registro</th>
                         <th>Revista</th>
+                        <th>Volumen</th>
+                        <th>Primera y última página</th>
                       </tr>
                       </tfoot>
                     </table>

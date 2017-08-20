@@ -33,12 +33,22 @@ class Registro
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $institucionEmpresa;
+    private $institucionEmpresaCasaeditorial;
     
     /**
      * @ORM\Column(type="string", length=50)
      */
     private $tituloObtenido;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $ciudadPais;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $congreso;
     
     /**
      * @ORM\Column(type="string", length=50)
@@ -140,6 +150,54 @@ class Registro
         return $this->año;
     }
     
+     /**
+     * Set $congreso
+     *
+     * @param string $congreso
+     *
+     * @return Registro
+     */
+    public function setCongreso($congreso)
+    {
+        $this->congreso= $congreso;
+
+        return $this;
+    }
+
+    /**
+     * Get $congreso
+     *
+     * @return string
+     */
+    public function getCongreso()
+    {
+        return $this->congreso;
+    }
+    
+    /**
+     * Set $ciudadPais
+     *
+     * @param string $ciudadPais
+     *
+     * @return Registro
+     */
+    public function setCiudadPais($ciudadPais)
+    {
+        $this->ciudadPais= $ciudadPais;
+
+        return $this;
+    }
+
+    /**
+     * Get $ciudadPais
+     *
+     * @return string
+     */
+    public function getCiudadPais()
+    {
+        return $this->ciudadPais;
+    }
+    
     /**
      * Set $tituloObtenido
      *
@@ -165,27 +223,27 @@ class Registro
     }
     
     /**
-     * Set $institucionEmpresa
+     * Set $institucionEmpresaCasaeditorial
      *
-     * @param string $institucionEmpresa
+     * @param string $institucionEmpresaCasaeditorial
      *
      * @return Registro
      */
-    public function setInstitucionEmpresa($institucionEmpresa)
+    public function setInstitucionEmpresaCasaeditorial($institucionEmpresaCasaeditorial)
     {
-        $this->institucionEmpresa = $institucionEmpresa;
+        $this->institucionEmpresaCasaeditorial = $institucionEmpresaCasaeditorial;
 
         return $this;
     }
 
     /**
-     * Get $institucionEmpresa
+     * Get $institucionEmpresaCasaeditorial
      *
      * @return string
      */
-    public function getInstitucionEmpresa()
+    public function getInstitucionEmpresaCasaeditorial()
     {
-        return $this->institucionEmpresa;
+        return $this->institucionEmpresaCasaeditorial;
     }
 
     /**
@@ -427,6 +485,8 @@ class Registro
             $selectAux = str_replace('<select id="IdDelRegistroRevista0" class="form-control select2" style="width: 240px;">','<select id="IdDelRegistroRevista'.$k.'" class="form-control select2" style="width: 240px;">',$select);            
             $data[$i]['IdDelRegistro'] = $selectAux;
             $data[$i]['Revista'] = '<input id="Revista'.$k.'" value="'.$revista->getDescription().'" type="text" class="form-control" placeholder="Revista">';
+            $data[$i]['Volumen'] = '<input id="Volumen'.$k.'" value="'.$revista->getVolumen().'" type="text" class="form-control" placeholder="Volumen">';
+            $data[$i]['PrimerayUltimaPagina'] = '<input id="PrimerayUltimaPagina'.$k.'" value="'.$revista->getPrimeraUltimaPagina().'" type="text" class="form-control" placeholder="Primera y última página">';
             $i++;
             $k++;
         }

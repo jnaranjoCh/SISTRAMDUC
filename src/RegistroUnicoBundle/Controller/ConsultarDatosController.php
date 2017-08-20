@@ -817,6 +817,8 @@ class ConsultarDatosController extends Controller
                 if($revista != null){
                     $newRevista = new Revista();
                     $newRevista->setDescription($revista['revista']);
+                    $newRevista->setVolumen($revista['volumen']);
+                    $newRevista->setPrimeraUltimaPagina($revista['primerayUltimaPagina']);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($newRevista);
                     $em->flush();
@@ -860,16 +862,19 @@ class ConsultarDatosController extends Controller
                                           ->getManager()
                                           ->getRepository('RegistroUnicoBundle:Estatus')
                                           ->findOneByDescription($registro['estatus']));
-            $newRegistro->setInstitucionEmpresa($registro['empresaInstitucion']);
+            $newRegistro->setInstitucionEmpresaCasaeditorial($registro['empresaInstitucion']);
             $newRegistro->setDescription($registro['descripcion']);
             $newRegistro->setAño($registro['anio']);
             $newRegistro->setTituloObtenido($registro['tituloObtenido']);
+            $newRegistro->setCongreso($registro['congreso']);
+            $newRegistro->setCiudadPais($registro['ciudadPais']);
             $newRegistro->setIsValidate(false);
             
             if(in_array($registro['idRegistro'],$idsrevistas)){
                 $pos = array_search($registro['idRegistro'],$idsrevistas);
                 $newRegistro->addRevistas($revistass[$pos]);
-            }else if(in_array($registro['idRegistro'],$idsparticipantes)){
+            }
+            if(in_array($registro['idRegistro'],$idsparticipantes)){
                 $pos = array_search($registro['idRegistro'],$idsparticipantes);
                 $newRegistro->addParticipantes($participantess[$pos]);
             }
