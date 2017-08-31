@@ -2,7 +2,7 @@ $('#cargarSolicConcurso').click(function (){
 	
 	var inputs = ["AsigSol","NroPlz","TemExOral","TemExEsc","JurCoord","JurPpal1","JurPpal2","JurSupl1","JurSupl2"];
 	var falla = false;
-	var text = ""
+	var text = "";
 	
 	toastr.clear();
 	

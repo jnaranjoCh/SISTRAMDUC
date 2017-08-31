@@ -125,10 +125,12 @@ class DefaultController extends Controller
                              ->findOneBy(["nombre" => 'Enviada']);
                 
                 $transicion = new Transicion();
-                $transicion->asignarA($tramiteSolicitudConcurso);
+                // $transicion->asignarA($tramiteSolicitudConcurso);
                 $transicion->setEstado($estado);                  
                 $transicion->setEstadoConsejo($estado);
                 $transicion->setFecha(new \DateTime("now"));
+                
+                $tramiteSolicitudConcurso->addTransicion($transicion);
                 
                 $em->persist($tramiteSolicitudConcurso);
                 
@@ -263,11 +265,11 @@ class DefaultController extends Controller
 
                     $query = $em->createQuery('SELECT E
                                                FROM TramiteBundle:Transicion T, TramiteBundle:Estado E
-                                               WHERE T.tramite = :idTramite
+                                               WHERE T.tramite_id = :idTramite
                                                AND T.estado = E.id
                                                AND T.fecha = (SELECT MAX(T1.fecha)
                                                               FROM TramiteBundle:Transicion T1
-                                                              WHERE T1.tramite = :idTramite)'
+                                                              WHERE T1.tramite_id = :idTramite)'
                     )->setParameter('idTramite', $idTramite);
                     $estado = $query->getResult();
                     $result = $this->asignarFilaEstadoTransicion($estado,'estado',$result, $i);
@@ -343,6 +345,123 @@ class DefaultController extends Controller
                 return new JsonResponse("FallaConsultaDetalleSolicitud");
             }else{
                 return new JsonResponse($result);
+            }
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+    
+    /**
+     * @Route("/preparadores/agregar_recaudo_solicitud", name="agregar_recaudo_solicitud_ajax")
+     */
+    public function agregarRecaudoSolicitudAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            $idTramite = $request->get("idTramite");
+            $nombreRecaudo = $request->get("nombreRecaudo");
+            
+            $em = $this->getDoctrine()->getManager();
+            
+            $tramite = $em->getRepository('TramiteBundle:Tramite')
+                              ->findOneBy(["id" => $idTramite]);
+            
+            $query = $em->createQuery('SELECT R
+                                   FROM TramiteBundle:Recaudo R
+                                   WHERE R.tramite = :idTramite 
+                                   AND R.name = :nameRecaudo'
+            )->setParameter('idTramite', $idTramite)
+             ->setParameter('nameRecaudo', $nombreRecaudo);
+            $recaudo = $query->getResult();
+                         
+            if($recaudo == null){
+                $recaudo = new Recaudo();
+                $recaudo->setPath("");
+                $recaudo->setName($request->get("nombreRecaudo"));
+                $recaudo->setValor($request->get("valorRecaudo"));
+                $recaudo->setTipoRecaudo(null);
+                $recaudo->setUsuario($this->getUser());
+            }else{
+                $recaudo->setValor($request->get("valorRecaudo"));
+                $recaudo->setUsuario($this->getUser());
+            }
+
+            $tramite->addRecaudo($recaudo);
+            
+            $transicion = new Transicion();
+            
+            if($request->get("valorRecaudo")=="Si"){
+                $estado = $em->getRepository('TramiteBundle:Estado')
+                         ->findOneBy(["nombre" => 'En Proceso']);
+                if($request->get("nombreRecaudo")=="AprobarPresupuesto"){
+                    $transicion->setDoc_info("Usuario: aprobó el presupuesto para la solicitud.");
+                }else if($request->get("nombreRecaudo")=="AprobarJurado"){
+                    $transicion->setDoc_info("Usuario: aprobó el jurado de la solicitud.");
+                }
+            }else if($request->get("valorRecaudo")=="No"){
+                if($request->get("nombreRecaudo")=="AprobarPresupuesto"){
+                    $estado = $em->getRepository('TramiteBundle:Estado')
+                         ->findOneBy(["nombre" => 'Negada']);
+                    $transicion->setDoc_info("Usuario: no aprobó el presupuesto para la solicitud.");
+                }else if($request->get("nombreRecaudo")=="AprobarJurado"){
+                    $estado = $em->getRepository('TramiteBundle:Estado')
+                         ->findOneBy(["nombre" => 'En Proceso']);
+                    $transicion->setDoc_info("Usuario: no aprobó el jurado de la solicitud.");
+                }
+            }
+            
+            // $transicion = new Transicion();
+            // $transicion->asignarA($tramite);
+            $transicion->setFecha(new \DateTime("now"));
+            $transicion->setEstado($estado);                  
+            $transicion->setEstadoConsejo($estado);
+            
+            $tramite->addTransicion($transicion);
+            
+            $em->persist($tramite);
+            
+            $em->flush();
+            
+            return new JsonResponse(array(
+                'estado' => 'Insertado',
+                'mensaje' => 'Datos Enviados exitosamente!.'
+            ));
+        }else
+            throw $this->createNotFoundException('Error al solicitar datos');
+    }
+    
+    /**
+     * @Route("/preparadores/validar_recaudo", name="validar_recaudo_ajax")
+     */
+    public function validarRecaudoAjaxAction(Request $request)
+    {
+        $result = "";
+        if($request->isXmlHttpRequest()){
+            $em = $this->getDoctrine()->getManager();
+            
+            $idTramite = $request->get("idTramite");
+            $nombreRecaudo = $request->get("nombreRecaudo");
+            
+            $query = $em->createQuery('SELECT R
+                                   FROM TramiteBundle:Recaudo R
+                                   WHERE R.tramite = :idTramite 
+                                   AND R.name = :nameRecaudo'
+            )->setParameter('idTramite', $idTramite)
+             ->setParameter('nameRecaudo', $nombreRecaudo);
+            $recaudo = $query->getResult();
+            
+            if($recaudo == null){
+                return new JsonResponse(array(
+                    'estado' => 'NoExisteRecaudo',
+                    'valorRecaudo' => $result
+                ));
+            }else{
+                foreach ($recaudo as $value) {
+                    $result = $value->getValor();
+                }
+                return new JsonResponse(array(
+                    'estado' => 'YaExisteRecaudo',
+                    'valorRecaudo' => $result
+                ));
             }
         }
         else

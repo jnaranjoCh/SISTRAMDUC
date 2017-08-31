@@ -40,6 +40,13 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($estado_enviada);
         $manager->flush();
+        
+        $estado_enProceso = new Estado();
+        $estado_enProceso->setNombre('En Proceso');
+        $estado_enProceso->setDescripcion('Su solicitud está en proceso.');
+
+        $manager->persist($estado_enProceso);
+        $manager->flush();
     }
 
     public function getOrder()
