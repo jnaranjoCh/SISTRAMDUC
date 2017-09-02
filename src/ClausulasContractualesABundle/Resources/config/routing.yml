@@ -1,15 +1,23 @@
 clausulas_contractuales_prima_hijos:
     path:     /clausulas-contractuales/prima-hijos
-    defaults: { _controller: ClausulasContractualesABundle:Default:primaHijos}
+    defaults: { _controller: ClausulasContractualesABundle:Solicitud:primaHijos}
     
 clausulas_contractuales_discapacidad:
     path:     /clausulas-contractuales/discapacidad
-    defaults: { _controller: ClausulasContractualesABundle:Default:discapacidad}
+    defaults: { _controller: ClausulasContractualesABundle:Solicitud:discapacidad}
     
 clausulas_contractuales_beca:
     path:     /clausulas-contractuales/beca
-    defaults: { _controller: ClausulasContractualesABundle:Default:beca}
+    defaults: { _controller: ClausulasContractualesABundle:Solicitud:beca}
     
-clausulas_contractuales_consultar:
-    path:     /clausulas-contractuales/consultar
-    defaults: { _controller: ClausulasContractualesABundle:Default:consultar}
+clausulas_contractuales_consultar_beca:
+    path:     /clausulas-contractuales/consultar-beca
+    defaults: { _controller: ClausulasContractualesABundle:Consulta:consultarBeca}
+    
+clausulas_contractuales_consultar_prima_hijos:
+    path:     /clausulas-contractuales/consultar-prima-hijos
+    defaults: { _controller: ClausulasContractualesABundle:Consulta:consultarPrimaHijos}
+    
+clausulas_contractuales_consultar_discapacidad:
+    path:     /clausulas-contractuales/consultar-discapacidad
+    defaults: { _controller: ClausulasContractualesABundle:Consulta:consultarDiscapacidad}

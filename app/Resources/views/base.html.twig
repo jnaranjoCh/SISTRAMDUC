@@ -249,8 +249,23 @@
             </li>
           </ul>
           <ul class="treeview-menu">
-            <li data-route="clausulas_contractuales_consultar">
-              <a href="{{path('clausulas_contractuales_consultar')}}"><i class="fa fa-circle-o"></i><span>Consultar solicitud</span></a>
+            <li data-route="">
+              <a href="#"><i class="fa fa-circle-o"></i><span>Consultar solicitud</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="clausulas_contractuales_consultar_prima_hijos">
+                  <a href="{{path('clausulas_contractuales_consultar_prima_hijos')}}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                </li>
+                <li data-route="clausulas_contractuales_consultar_beca">
+                  <a href="{{path('clausulas_contractuales_consultar_beca')}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
+                </li>
+                <li data-route="clausulas_contractuales_consultar_discapacidad">
+                  <a href="{{path('clausulas_contractuales_consultar_discapacidad')}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
