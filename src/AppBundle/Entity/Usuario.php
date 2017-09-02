@@ -651,12 +651,25 @@ class Usuario implements UserInterface
             $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
             $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
-            if($registro->getInstitucionEmpresa() == "")
-                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>';
+            if($registro->getInstitucionEmpresaCasaeditorial() == "")
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">';
             else
-                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresa().'" type="text" class="form-control" placeholder="Empresa y/o institución">';
+                $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="'.$registro->getInstitucionEmpresaCasaeditorial().'" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">';
+            if($registro->getTituloObtenido() == "")
+                $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>';
+            else
+                $data[$i]['TituloObtenido'] = '<input id="TituloObtenido'.$i.'" value="'.$registro->getTituloObtenido().'" type="text" class="form-control" placeholder="Titulo Obtenido">';
+            if($registro->getCiudadPais() == "")
+                $data[$i]['CiudadPais'] = '<input id="CiudadPais'.$i.'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>';
+            else
+                $data[$i]['CiudadPais'] = '<input id="CiudadPais'.$i.'" value="'.$registro->getCiudadPais().'" type="text" class="form-control" placeholder="Ciudad / Pais">';
+            if($registro->getCongreso() == "")
+                $data[$i]['Congreso'] = '<input id="Congreso'.$i.'" value="" type="text" class="form-control" placeholder="Congreso" readonly>';
+            else
+                $data[$i]['Congreso'] = '<input id="Congreso'.$i.'" value="'.$registro->getCongreso().'" type="text" class="form-control" placeholder="Congreso">';
             $i++;
         }
+
 
         $registros->data = $data;
         $registros->num = $i;
@@ -677,10 +690,13 @@ class Usuario implements UserInterface
             $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
             $data[$i]['Año de publicación y/o asistencia'] = $registro->getAño();
-            if($registro->getInstitucionEmpresa() == null)
-                $data[$i]['Empresa y/o institución'] = 'No aplica';
+            if($registro->getInstitucionEmpresaCasaeditorial() == null)
+                $data[$i]['Empresa y/o institución'] = "";
             else
-                $data[$i]['Empresa y/o institución'] = $registro->getInstitucionEmpresa();
+                $data[$i]['Empresa y/o institución'] = $registro->getInstitucionEmpresaCasaeditorial();
+            $data[$i]['Titulo Obtenido'] = $registro->getTituloObtenido();
+            $data[$i]['CiudadPais'] = $registro->getCiudadPais();
+            $data[$i]['Congreso'] = $registro->getCiudadPais();
             if($registro->getIsValidate())
                 $data[$i]['Validado'] = '<div class="row"><div class="col-xs-6"><span id="span'.$i.'" class="label label-success">Validado</span></div> <div class="col-xs-4 col-xs-offset-2"><input type="checkbox" id="checkboxValidarRegistro'.$i.'" name="checkboxValidarRegistro'.$i.'" value="validado" checked/></div></div>';
             else
@@ -710,7 +726,7 @@ class Usuario implements UserInterface
         $htmlIdRegistros = $htmlIdRegistros."</select>";
 
         foreach($this->registros->toArray() as $registro){
-            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
+            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."' selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
             $aux = $registro->getParticipantes($htmlIdRegistrosAux,$k);
             for($j = 0; $j < $aux->num; $j++)
             {
@@ -746,7 +762,7 @@ class Usuario implements UserInterface
         $htmlIdRegistros = $htmlIdRegistros."</select>";
 
         foreach($this->registros->toArray() as $registro){
-            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."'  selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
+            $htmlIdRegistrosAux = str_replace("<option value='".$registro->getId()."'>".$registro->getId()."</option>","<option value='".$registro->getId()."' selected='selected'>".$registro->getId()."</option>",$htmlIdRegistros);
             $aux = $registro->getRevistas($htmlIdRegistrosAux,$k);
             for($j = 0; $j < $aux->num; $j++)
             {
@@ -756,6 +772,8 @@ class Usuario implements UserInterface
                     $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
                 $data[$i]['IdDelRegistro'] = $aux->data[$j]['IdDelRegistro'];
                 $data[$i]['Revista'] = $aux->data[$j]['Revista'];
+                $data[$i]['Volumen'] = $aux->data[$j]['Volumen'];
+                $data[$i]['PrimerayUltimaPagina'] = $aux->data[$j]['PrimerayUltimaPagina'];
                 $i++;
             }
         }

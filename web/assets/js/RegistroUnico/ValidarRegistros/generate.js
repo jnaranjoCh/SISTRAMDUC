@@ -48,6 +48,9 @@ function cargarRegistros()
                             { "data": "Estatus" },
                             { "data": "Año de publicación y/o asistencia" },
                             { "data": "Empresa y/o institución" },
+                            { "data": "Titulo Obtenido" },
+                            { "data": "CiudadPais"},
+                            { "data": "Congreso"},
                             { "data": "Validado" }
                         ]
                     });

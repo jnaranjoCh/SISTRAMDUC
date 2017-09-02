@@ -34,16 +34,15 @@ function getData()
         var validar = new Object();
         var cellsRegistros = new Object();
         cellsRegistros.row = i;
-        cellsRegistros.column = 7;
+        cellsRegistros.column = 10;
         cellsRegistros.columnVisible = "0";
-        idCheck = tableRegistros.cell(cellsRegistros).data().split('<input type="checkbox" id="')[1].split('"')[0];
-        cellsRegistros.column = 0;
-        
-        validar.idRegistro = tableRegistros.cell(cellsRegistros).data();
-        if($("#"+idCheck).prop('checked'))
+        idCheck = findId(tableRegistros, cellsRegistros);
+        if(findProp(tableRegistros, cellsRegistros))
             validar.validado = true;
         else
             validar.validado = false;
+        cellsRegistros.column = 0;
+        validar.idRegistro = tableRegistros.cell(cellsRegistros).data();
         registros[i] = validar;
     }
     
@@ -53,4 +52,24 @@ function getData()
 function obtenerFilas(table)
 {
     return table.page.info().recordsTotal;
+}
+
+function findId(table, cellTable)
+{
+    var valor;
+    if(table.cell(cellTable).nodes().to$().find('input').val() != null)
+        valor = table.cell(cellTable).nodes().to$().find('input')[0].id;
+    else
+        valor = table.cell(cellTable).nodes().to$().find('select')[0].id;
+    return valor;
+}
+
+function findProp(table, cellTable)
+{
+    var valor;
+    if(table.cell(cellTable).nodes().to$().find('input').val() != null)
+        valor = table.cell(cellTable).nodes().to$().find('input')[0].checked;
+    else
+        valor = table.cell(cellTable).nodes().to$().find('select')[0].checked;
+    return valor;
 }

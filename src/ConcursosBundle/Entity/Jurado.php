@@ -44,7 +44,7 @@ class Jurado
      *
      * @ORM\Column(name="areaInvestigacion", type="string", length=100)
      */
-    private $areaInvestigacion;
+    private $areaInvestigacion = "";
 
     /**
      * @var string
@@ -81,9 +81,6 @@ class Jurado
      */
     private $cedula;
   
-    protected $concurso;
-
-
     /**
      * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Recusacion", mappedBy="jurado_id", cascade={"persist", "remove"})
      */

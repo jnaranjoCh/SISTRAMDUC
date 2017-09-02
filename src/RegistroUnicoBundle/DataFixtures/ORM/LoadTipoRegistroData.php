@@ -13,7 +13,7 @@ class LoadTipoRegistroData extends AbstractFixture implements OrderedFixtureInte
 {
     public function load(ObjectManager $manager)
     {
-        $array = ["Articulo publicado","Tutoria de pasantias","Tutoria de servicio comunitario","Asistencia a congresos","Estudio"];
+        $array = ["Articulo publicado","Proyectos","Tutoria de tesis","Tutoria de pasantias","Tutoria de servicio comunitario","Asistencia a Congresos/Seminarios","Sociedad Científica y Profesionales","Becas","Premios","Distinciones","Estudio"];
         
         foreach($array as $val){
             $tiporegistro = new TipoRegistro();

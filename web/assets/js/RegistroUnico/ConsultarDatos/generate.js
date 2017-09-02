@@ -258,7 +258,10 @@ function initTableConsultar(){
                                {"data":"Nivel"},
                                {"data":"Estatus"},
                                {"data":"AnoDePublicacionAsistencia"},
-                               {"data":"EmpresaInstitucion"}
+                               {"data":"EmpresaInstitucion"},
+                               {"data":"TituloObtenido"},
+                               { "data": "CiudadPais"},
+                               { "data": "Congreso"}
                             ]
                         });
         
@@ -295,7 +298,9 @@ function initTableConsultar(){
                                 columns: [
                                     {"data": "Delete"},
                                     { "data": "IdDelRegistro" },
-                                    { "data": "Revista" }
+                                    { "data": "Revista" },
+                                    { "data": "Volumen" },
+                                    { "data": "PrimerayUltimaPagina" }
                                 ]
                             });
         

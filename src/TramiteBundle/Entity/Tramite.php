@@ -18,7 +18,8 @@ use TramiteBundle\Entity\TransicionConsejo;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"tramite" = "Tramite",
  *                        "comision" = "ComisionRemuneradaBundle\Entity\SolicitudComisionServicio",
- *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion"})
+ *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion",
+ *                        "concurso" = "ConcursosBundle\Entity\Concurso"})
  */
 class Tramite
 {
@@ -59,6 +60,11 @@ class Tramite
      * @ORM\OneToOne(targetEntity="Transicion", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected  $transicion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="tramite_id", cascade={"persist", "remove"})
+     */
+    protected $transiciones;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite", cascade={"persist"})
@@ -70,7 +76,11 @@ class Tramite
      * @ORM\OneToMany(targetEntity="Documento", mappedBy="tramite_id")
      */
     protected $documento_id;
-
+    
+    public function __construct()
+    {
+        $this->transiciones = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -195,5 +205,22 @@ class Tramite
     {
         $this->documento_id = $documento;
         return $this;
+    }
+    
+    public function addTransicion(\TramiteBundle\Entity\Transicion $transicion)
+    {
+        $this->transiciones[] = $transicion;
+        $transicion->setIdTramite($this);
+        return $this;
+    }
+    
+    public function removeTransicion(\TramiteBundle\Entity\Transicion $transicion)
+    {
+        $this->transiciones->removeElement($transicion);
+    }
+    
+    public function getTransiciones()
+    {
+        return $this->transiciones;
     }
 }

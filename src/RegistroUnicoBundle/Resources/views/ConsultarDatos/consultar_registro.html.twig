@@ -15,9 +15,9 @@
       <div class="modal-dialog">
         <!-- Modal content-->
         <div>
-          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
           <br/>
-          <label id="modalLabel" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+          <label id="modalLabel" style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
         </div>
       </div>
     </div>
@@ -63,6 +63,8 @@
     
     <!--Form-->
     <form name="completeForm" id="completeForm" action="" method="post" enctype="multipart/form-data" novalidate>
+      <div id="aux" class="hidden">
+      </div>
       <div class="row">
         <section class="content-body">
           <!--seccion for generate box-->
@@ -363,7 +365,10 @@
                       <th>Nivel</th>
                       <th>Estatus</th>
                       <th>Año de publicación y/o asistencia</th>
-                      <th>Empresa y/o institución</th>
+                      <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
+                      <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -377,7 +382,10 @@
                       <th>Nivel</th>
                       <th>Estatus</th>
                       <th>Año de publicación y/o asistencia</th>
-                      <th>Empresa y/o institución</th>
+                      <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
+                      <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
                     </tr>
                     </tfoot>
                   </table>
@@ -393,7 +401,7 @@
                 <hr/>
                 <div class="row">
                   <div class="col-md-12">
-                    <h3>Participantes</h3>
+                    <h3>Participantes / Autores</h3>
                   </div>
                 </div>
                 <div style="overflow-x: scroll; white-space: nowrap;">
@@ -429,7 +437,7 @@
                 <hr/>
                 <div class="row">
                   <div class="col-md-12">
-                    <h3>Revistas de publicación</h3>
+                    <h3>Revistas de publicación / Libros y monografias</h3>
                   </div>
                 </div>
                 <div style="overflow-x: scroll; white-space: nowrap;">
@@ -439,6 +447,8 @@
                       <th></th>
                       <th>Id del registro</th>
                       <th>Revista</th>
+                      <th>Volumen</th>
+                      <th>Primera y última página</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -448,6 +458,8 @@
                       <th></th>
                       <th>Id del registro</th>
                       <th>Revista</th>
+                      <th>Volumen</th>
+                      <th>Primera y última página</th>
                     </tr>
                     </tfoot>
                   </table>

@@ -35,6 +35,12 @@ class Transicion
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id")
      */
     protected $tramite;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Tramite", inversedBy="transiciones")
+     * @ORM\JoinColumn(name="tramite_transicion_id", referencedColumnName="id")
+     */
+    protected $tramite_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Estado", inversedBy="transiciones")
@@ -403,5 +409,17 @@ class Transicion
     public function getEstadoCatedra()
     {
         return $this->estado_catedra;
+    }
+    
+    public function setIdTramite(\TramiteBundle\Entity\Tramite $tramite_id = null)
+    {
+        $this->tramite_id = $tramite_id;
+
+        return $this;
+    }
+
+    public function getIdTramite()
+    {
+        return $this->tramite_id;
     }
 }
