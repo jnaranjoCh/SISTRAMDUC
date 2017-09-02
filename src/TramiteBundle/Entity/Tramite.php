@@ -18,7 +18,8 @@ use TramiteBundle\Entity\TransicionConsejo;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"tramite" = "Tramite",
  *                        "comision" = "ComisionRemuneradaBundle\Entity\SolicitudComisionServicio",
- *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion"})
+ *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion",
+ *                        "concurso" = "ConcursosBundle\Entity\Concurso"})
  */
 class Tramite
 {

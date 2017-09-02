@@ -7,8 +7,10 @@
     </h1>
     <ol class="breadcrumb">
       <li><i class="fa fa fa-users"></i> Preparadores</li>
-      <li> Concurso</li>
-      <li class="active">Gestionar</li>
+      <li data-route="concurso_index">
+        <a href="{{ path('concurso_index') }}">Concurso</a>
+      </li>
+      <li class="active"> Gestionar</li>
     </ol>
   </section>
   
@@ -17,36 +19,13 @@
   <div class="row">
     <section class="content-body">
       <div class="col-md-offset-1 col-md-10">
-        <div id="solicitudSeleccionada"  class="box box-info">
+        <div class="box box-info">
           <div class="box-header with-border text-center">
             <h3 class="box-title"><b>Datos del Concurso</b></h3>
           </div>
           <div class="box-body">
-            <div class="col-md-offset-3 col-md-6">
-              <dl class="dl-horizontal">
-                <dt>Asignatura</dt>
-                <dd>Materia...</dd>
-                
-                <dt>Número de Aspirantes</dt>
-                <dd>Nro...</dd>
-                
-                <dt>Tema Examen Oral</dt>
-                <dd>Tema...</dd>
-                
-                <dt>Tema Examen Escrito</dt>
-                <dd>Tema...</dd>
-                
-                <dt>Jurado</dt>
-                <dd>Coordinador...</dd>
-                <dd>Principal 1...</dd>
-                <dd>Principal 2...</dd>
-                <dd>Suplente 1...</dd>
-                <dd>Suplente 2...</dd>
-                
-                <dt>Fechas Importantes</dt>
-                <dd>Fecha...</dd>
-                
-              </dl>
+            <div class="col-md-offset-2 col-md-8">
+              <div id="detallesSolicitudSeleccionada" class="col-md-offset-1 col-md-10"></div>
             </div>
           </div>
           <div class="box-footer">
@@ -100,21 +79,64 @@
         </div>
       </div>
       
-      <div class="col-md-offset-1 col-md-10">
-        <div id="concursoDesierto"  class="box box-info collapse off">
+      <div id="divConcursoDesierto" class="col-md-offset-1 col-md-10">
+        <div class="box box-info collapsed-box">
           <div class="box-header with-border">
             <h3 class="box-title"><b>Declarar Concurso Desierto</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeConcursoDesierto" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
           </div>
-          <form role="form">
+          <form id="concursoDesierto" role="form">
               <div class="box-body">
-                <div class="form-group">
-                  <label>Causal de Concurso Desierto</label>
-                  <textarea class="form-control" rows="3" placeholder="Ingrese aquí el causal del concurso desierto" style="resize:none"></textarea>
+                <div id="divCausalDesierto" class="form-group">
+                  <label for="causalDesierto">Causal de Concurso Desierto</label>
+                  <textarea id="causalDesierto" class="form-control" rows="3" placeholder="Ingrese aquí el causal del concurso desierto" style="resize:none"></textarea>
                 </div>
               </div>
               <div class="box-footer">
                 <div class="col-sm-offset-4 col-sm-4">
-                  <button type="submit" class="btn btn-info btn-block">Cargar Causal</button>
+                  <button id="cargarConcursoDesierto" type="button" class="btn btn-info btn-block">Cargar Causal</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div id="divFechaEvaluacion" class="col-md-offset-1 col-md-10 ">
+        <div class="box box-info collapsed-box">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Registrar Fecha de Evaluacion</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeFechaEvaluacion" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+                      
+          <form id="fechaEvaluacion" role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div id="divFecha" class="form-group has-feedback">
+                          <div class="col-xs-4">
+                            <label for="fecha">Fecha:</label>
+                          </div>
+                        <div class="col-xs-4">
+                          <div class="input-group date" id="dateTime1">
+                              <input id="fecha" type="text" class="form-control" />
+                              <span class="input-group-addon">
+                                  <span class="glyphicon glyphicon-calendar"></span>
+                              </span>
+                          </div>
+                        </div>
+                          <div class="col-xs-2">
+                            <button id="enviarFechaEvaluacion" type="button" class="btn btn-info btn-block">Enviar</button>
+                          </div>
+                      </div>
+                  </div>
                 </div>
               </div>
             </form>
@@ -407,11 +429,11 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script>
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    });
-  </script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoPreparadores/gestionarConcurso.js') }}"></script>
+
 {% endblock %}
 

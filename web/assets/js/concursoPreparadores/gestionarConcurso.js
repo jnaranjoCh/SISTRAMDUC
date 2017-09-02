@@ -3,72 +3,172 @@ var id = getParameterByName('id');
 $(window).load( function(){
     toastr.clear();
     var text = "";
-    $("#dateTime2").datetimepicker();
+    $("#dateTime1").datetimepicker();
     $.ajax({
 		method:"POST",
-		url: "/web/app_dev.php/preparadores/detalle_solicitud_concurso",
+		url: "/web/app_dev.php/preparadores/detalle_concurso",
 		dataType: 'json',
 		data: {"id": id},
         success: function(respuesta){
-			if (respuesta == "FallaConsultaDetalleSolicitud"){
-                text = "Falla al consultar el detalle de esta solicitud.";
+			if (respuesta == "FallaConsultaDetalleConcurso"){
+                text = "Falla al consultar el detalle de este concurso.";
                 toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
             } else{
             	var i = 0;
-            	var contenidoHTML =
-					'<dl class="dl-horizontal">'+
-						'<dt>Asignatura Solicitante</dt>'+
-						'<dd>'+respuesta["AsigSol"][i]+'</dd>'+
+            	contenidoHTML =
+					'<dl class="col-md-offset-2 dl-horizontal">'+
+						'<dt>Asignatura</dt>'+
+						'<dd>'+respuesta["asignatura"][i]+'</dd>'+
 						
-						'<dt>Número de Plazas</dt>'+
-						'<dd>'+respuesta["NroPlz"][i]+'</dd>'+
+						'<dt>Número de Vacantes</dt>'+
+						'<dd>'+respuesta["vacantes"][i]+'</dd>'+
+						
+						'<dt>Número de Aspirantes</dt>'+
+						'<dd>'+respuesta["aspirantes"][i]+'</dd>'+
 						
 						'<dt>Tema Examen Oral</dt>'+
-						'<dd>'+respuesta["ExOral"][i]+'</dd>'+
+						'<dd>'+respuesta["exOral"][i]+'</dd>'+
 						
 						'<dt>Tema Examen Escrito</dt>'+
-						'<dd>'+respuesta["ExEsc"][i]+'</dd>'+
+						'<dd>'+respuesta["exEscrito"][i]+'</dd>'+
+					'</dl>'+ 
+						'<div class="text-center">'+
+							'<u><b>Jurados</b></u>'+
+						'</div>'+
+					'<dl class="col-md-offset-2 dl-horizontal">'+
+						'<dt>Coordinador</dt>'+
+						'<dd>'+respuesta["Coordinador"][i]+'</dd>'+
+						'<dt>Principales</dt>';
 						
-						'<dt>Jurado</dt>'+
-						'<dd>'+respuesta["Coord"][i]+'</dd>'+
-						'<dd>'+respuesta["Ppal1"][i]+'</dd>'+
-						'<dd>'+respuesta["Ppal2"][i]+'</dd>'+
-						'<dd>'+respuesta["Supl1"][i]+'</dd>'+
-						'<dd>'+respuesta["Supl2"][i]+'</dd>'+
-					'</dl>';
-					
-				document.getElementById("juradoCoord").value = respuesta["Coord"][i]
-				document.getElementById("juradoPpal1").value = respuesta["Ppal1"][i];
-				document.getElementById("juradoPpal2").value = respuesta["Ppal2"][i];
-				document.getElementById("juradoSpl1").value = respuesta["Supl1"][i];
-				document.getElementById("juradoSpl2").value = respuesta["Supl2"][i];
+				if(respuesta["Principal"].length > 1){
+					for (var p = respuesta["Principal"].length-1; p >=0; p--) {
+						contenidoHTML = contenidoHTML+
+							'<dd>'+respuesta["Principal"][p]+'</dd>';
+					}
+				}else{
+					contenidoHTML = contenidoHTML+
+						'<dd>'+respuesta["Principal"][i]+'</dd>'+
+						'<dd>'+respuesta["Principal"][i]+'</dd>';
+				}
+				
+				contenidoHTML = contenidoHTML+ '<dt>Suplentes</dt>';
+				
+				if(respuesta["Suplente"].length > 1){
+					for (var s = respuesta["Suplente"].length-1; s >=0; s--) {
+						contenidoHTML = contenidoHTML+
+							'<dd>'+respuesta["Suplente"][s]+'</dd>';
+					}
+				}else{
+					contenidoHTML = contenidoHTML+
+						'<dd>'+respuesta["Suplente"][i]+'</dd>'+
+						'<dd>'+respuesta["Suplente"][i]+'</dd>';
+				}
+				var stringify = '['+JSON.stringify(respuesta["fechaRecepDoc"][i])+']';
+				var parse = JSON.parse(stringify);
+				var date = parse[i].date;
+				var withOutTime = date.split(" ");
+				var insteadMonthDay = withOutTime[0].split("-");
+				var fechaRecepDoc = insteadMonthDay[1] + "/"+ insteadMonthDay[2] + "/"+ insteadMonthDay[0];
+				
+				
+				contenidoHTML = contenidoHTML+
+					'</dl>'+
+						'<div class="text-center">'+
+							'<u><b>Fechas Importantes</b></u>'+
+						'</div>'+
+					'<dl class="col-md-offset-2 dl-horizontal">';
+				
+				contenidoHTML = contenidoHTML+
+						'<dt>Recepción de Doc.</dt>'+
+						'<dd>'+fechaRecepDoc+'</dd>'
+					+'</dl>';
 					
 				$('#detallesSolicitudSeleccionada').append(contenidoHTML);
             }
 		}
     });
     
-    var recaudos = ["AprobarPresupuesto","AprobarJurado","Veredicto","FechaRecepDoc","CambioJurado"];
-	$.ajax({
-        method: "POST",
-        data: {"idTramite":id, "nombresRecaudos":recaudos},
-        url: "/web/app_dev.php/preparadores/validar_accion_solicitud",
-        dataType: 'json',
-        beforeSend: function(){
-            $("#cargandoAcciones").modal("show");
-        },
-        success: function(respuesta){
-        	$("#cargandoAcciones").modal("hide");
-        	if (respuesta != "") {
-    		    $(respuesta).removeClass("hide");
-    		}else{
-    			text = "No hay acciones permitidas para esta solicitud.";
-        		toastr.warning(text, "Alerta!", {"timeOut": "0","extendedTImeout": "0"});
-    		}
-    }});
+ //   var recaudos = ["AprobarPresupuesto","AprobarJurado","Veredicto","FechaRecepDoc","CambioJurado"];
+	// $.ajax({
+ //       method: "POST",
+ //       data: {"idTramite":id, "nombresRecaudos":recaudos},
+ //       url: "/web/app_dev.php/preparadores/validar_accion_solicitud",
+ //       dataType: 'json',
+ //       beforeSend: function(){
+ //           $("#cargandoAcciones").modal("show");
+ //       },
+ //       success: function(respuesta){
+ //       	$("#cargandoAcciones").modal("hide");
+ //       	if (respuesta != "") {
+ //   		    $(respuesta).removeClass("hide");
+ //   		}else{
+ //   			text = "No hay acciones permitidas para esta solicitud.";
+ //       		toastr.warning(text, "Alerta!", {"timeOut": "0","extendedTImeout": "0"});
+ //   		}
+ //   }});
 });
 
-$('#enviarAprobarPresupuesto').click(function (){ 
+$('#cargarConcursoDesierto').click(function (){ 
+	var text = "";
+	toastr.clear();
+	$('#datepicker').datetimepicker();
+	
+	if($("#causalDesierto").val() == ""){
+		$("#divCausalDesierto").addClass("has-error");
+		text = "Debe ingresar la causa para Concurso Desierto.";
+    	toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
+	}else{
+		$("#divCausalDesierto").removeClass("has-error");
+		$.ajax({
+            method: "POST",
+            data: {"idTramite":id, "nombreRecaudo":"CausalDesierto", "valorRecaudo":$("#causalDesierto").val()},
+            url: "/web/app_dev.php/preparadores/agregar_recaudo_concurso",
+            dataType: 'json',
+            beforeSend: function(){
+                $("#cargando").modal("show");
+            },
+	        success: function(respuesta){
+        		if (respuesta.estado == "Insertado") {
+        		    $("#cargando").modal("hide");
+        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+    				$('#divConcursoDesierto').addClass("hide");
+        		}
+        }});
+	}
+});
+
+$('#enviarFechaEvaluacion').click(function (){ 
+	var falla = false;
+	var text = "";
+	
+	toastr.clear();
+
+	if($("#fecha").val() == ""){
+		$("#divFecha").addClass("has-error");
+        falla = true;
+        text = "Dato inválido o faltante.";
+        toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
+    }else{
+    	$("#divFecha").removeClass("has-error");
+		$.ajax({
+            method: "POST",
+            data: {"idTramite":id, "nombreRecaudo":"FechaEvaluacion", "valorRecaudo":$("#fecha").val()},
+            url: "/web/app_dev.php/preparadores/agregar_recaudo_concurso",
+            dataType: 'json',
+            beforeSend: function(){
+                $("#cargando").modal("show");
+            },
+	        success: function(respuesta){
+        		if (respuesta.estado == "Insertado") {
+        		    $("#cargando").modal("hide");
+        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+    				$('#divFechaEvaluacion').addClass("hide");
+        		}
+        }});
+    }
+});
+
+$('#cargarConcursesierto').click(function (){ 
 	
 	var falla = false;
 	var text = "";
@@ -237,47 +337,6 @@ $('#cargarVeredicto').click(function (){
 	        		}
 	        }});
     	}
-    }
-});
-
-$('#enviarFechaRecepDoc').click(function (){ 
-	var falla = false;
-	var text = "";
-	
-	toastr.clear();
-
-	if($("#fecha").val() == ""){
-        falla = true;
-        text = "Dato inválido o faltante.";
-        toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
-    }else{
-		$.ajax({
-            method: "POST",
-            data: {"idTramite":id, "nombreRecaudo":"FechaRecepDoc", "valorRecaudo":$("#fecha").val()},
-            url: "/web/app_dev.php/preparadores/agregar_recaudo_solicitud",
-            dataType: 'json',
-            beforeSend: function(){
-                $("#cargando").modal("show");
-            },
-	        success: function(respuesta){
-        		if (respuesta.estado == "Insertado") {
-        			$.ajax({
-			            method: "POST",
-			            data: {"idTramite":id},
-			            url: "/web/app_dev.php/preparadores/registrar_concurso",
-			            dataType: 'json',
-			            beforeSend: function(){
-			                $("#cargando").modal("show");
-			            },
-				        success: function(respuesta){
-			        		if (respuesta.estado == "Insertado") {
-			        		    $("#cargando").modal("hide");
-			        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-			    				$('#divFechaRecepDoc').addClass("hide");
-			        		}
-			        }});
-        		}
-        }});
     }
 });
 
