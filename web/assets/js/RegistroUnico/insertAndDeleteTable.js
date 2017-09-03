@@ -25,7 +25,7 @@ $('#agregarRegistro').click(function(){
               .each( function ( value,index ) {
                     if(value == $("#DescripcionDatos").val()){ 
                         band = true;
-                        toastr.error("Error el registro ya se encuentra en la tabla.", "Error", {
+                        toastr.error("El registro ya se encuentra en la tabla.", "Error", {
                             "timeOut": "0",
                             "extendedTImeout": "0"
                          });

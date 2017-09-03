@@ -805,6 +805,11 @@ class Usuario implements UserInterface
        return $hijos;
     }
 
+    public function getHijosObject()
+    {
+       return $this->hijos;
+    }
+    
     public function addHijo($hijo)
     {
        $this->hijos[] = $hijo;
