@@ -98,7 +98,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $tipo_clausulasPrimaHijos->setId(10);
         $tipo_clausulasPrimaHijos->setNombre('Solicitud de prima por hijos');
         $tipo_clausulasPrimaHijos->setDescripcion('');
-        $tipo_clausulasPrimaHijos->setDuracion('');
+        $tipo_clausulasPrimaHijos->setDuracion('12');
 
         $manager->persist($tipo_clausulasPrimaHijos);
         $manager->flush();
@@ -116,7 +116,7 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
         $tipo_clausulasDiscapacidadHijos->setId(13);
         $tipo_clausulasDiscapacidadHijos->setNombre('Solicitud de prima para hijos con discapacidad');
         $tipo_clausulasDiscapacidadHijos->setDescripcion('');
-        $tipo_clausulasDiscapacidadHijos->setDuracion('');
+        $tipo_clausulasDiscapacidadHijos->setDuracion('12');
 
         $manager->persist($tipo_clausulasDiscapacidadHijos);
         $manager->flush();

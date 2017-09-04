@@ -237,7 +237,7 @@
               </a>
               <ul class="treeview-menu">
                 <li data-route="clausulas_contractuales_prima_hijos">
-                  <a href="{{ path('clausulas_contractuales_prima_hijos') }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                  <a href="{{ path('clausulas_contractuales_prima_hijos', { 'email': app.user.getCorreo(), 'state': 'initial' }) }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
                 </li>
                 <li data-route="clausulas_contractuales_beca">
                   <a href="{{path('clausulas_contractuales_beca', { 'email': app.user.getCorreo(), 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
