@@ -201,15 +201,16 @@ class SolicitudController extends Controller
             if(move_uploaded_file($_FILES['input2']['tmp_name'][0], $dir_subida_carta_expensas)) {
                 if(move_uploaded_file($_FILES['input3']['tmp_name'][0], $dir_subida_cedula_identidad)) {
                     if(move_uploaded_file($_FILES['input4']['tmp_name'][0], $dir_subida_cedula_identidad)) {
-                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'success')));
+                        return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'success')));
+                    }else{
+                        return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
+                    }
+                }else{
+                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
+                }
             }else{
                 return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
             }
-        }else{
-            return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
-        }
-        }else{
-            return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
         }
     }
     

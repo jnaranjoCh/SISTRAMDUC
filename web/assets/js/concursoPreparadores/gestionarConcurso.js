@@ -1,5 +1,27 @@
 var id = getParameterByName('id');
 
+aspirantes = $('#aspirantes').DataTable({
+"language": {
+        "url": "/web/assets/js/datatable-spanish.json"
+  },
+  columns: [
+  	{ "data": "id" },
+	{ "data": "nombreCompleto" },
+	{ "data": "correo" },
+	{ "data": "telefono" },
+	{ "data": "acciones" }
+  ]
+});
+
+$('#aspirantes tbody').on( 'click', 'tr', function () {
+    if ( $(this).hasClass('bg-info') ) {
+        $(this).removeClass('bg-info');
+    }else {
+        aspirantes.$('tr.bg-info').removeClass('bg-info');
+        $(this).addClass('bg-info');
+    }
+} );
+
 $(window).load( function(){
     toastr.clear();
     var text = "";
