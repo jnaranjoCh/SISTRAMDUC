@@ -11,7 +11,7 @@ $("#registrarUsuario").click(function (){
             $("#span"+inputs[i]).removeClass(glyphicons[i]);
             $("#span"+inputs[i]).addClass("glyphicon-remove");
             $("#div"+inputs[i]).addClass("has-error");
-            text = "Error campo mal introducido o obligatorio.";
+            text = "Campo mal introducido u obligatorio.";
         }else{
             $("#span"+inputs[i]).addClass(glyphicons[i]);
             $("#span"+inputs[i]).removeClass("glyphicon-remove");
@@ -24,7 +24,7 @@ $("#registrarUsuario").click(function (){
         $("#spanEmailUser").removeClass("glyphicon-envelope");
         $("#spanEmailUser").addClass("glyphicon-remove");
         $("#divEmailUser").addClass("has-error");
-        text = "Error correo mal introducido.";
+        text = "Correo mal introducido.";
     }else{
         $("#spanEmailUser").addClass("glyphicon-envelope");
         $("#spanEmailUser").removeClass("glyphicon-remove");
@@ -56,7 +56,7 @@ $("#registrarUsuario").click(function (){
             can_register = false;
             $("#spanRolUser").addClass("glyphicon-remove");
             $("#divRolUser").addClass("has-error");
-            text = "Error no se han seleccionado roles para este usuario.";
+            text = "No se han seleccionado roles para este usuario.";
     }
     else{
         $("#spanRolUser").removeClass("glyphicon-remove");
@@ -72,7 +72,7 @@ $("#registrarUsuario").click(function (){
                 },
                 success: function(data){
                         if(data == "S")
-                        toastr.error("La cedula o el email ya se encuentran registrados.", "Error", {
+                        toastr.error("La cédula o el correo ya se encuentran registrados.", "Error", {
                             "timeOut": "0",
                             "extendedTImeout": "0"
                         });
@@ -99,7 +99,7 @@ $("#registrarUsuario").click(function (){
                                             $("#RetryPasswordUser").val("");
                                             $("#CedulaUser").val("");
                                             $("#EmailUser").val("");
-                                            toastr.success("Usuario registrado exitosamente!.", "Exito!", {
+                                            toastr.success("Usuario registrado exitosamente!.", "Éxito!", {
                                             "timeOut": "0",
                                             "extendedTImeout": "0"
                                             });

@@ -22,7 +22,7 @@ $('#generate').click(function(){
                     $("#divCheckbox").removeClass("hidden");
                     $("#save").removeClass("hidden");
                 }else{
-                    toastr.error("El usuario no se encuentra registrado, esta inactivo o ya realizo el registro.", "Error", {
+                    toastr.error("El usuario no se encuentra registrado, está inactivo o ya realizó el registro.", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                                 });

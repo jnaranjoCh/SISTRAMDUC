@@ -4,7 +4,7 @@ $('#submitData').click(function(){
     toastr.clear();
     var inputsO = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos","NacionalidadDatos","FechaNacimientoDatos","EdadDatos","SexoDatos","RifDatos", "NumeroDatos", "NumeroDatosII","CedulaRifActaCargaDatos","FechaVencimientoCedulaDatos","FechaVencimientoRifDatos","FechaVencimientoActaNacimientoDatos"];
     var inputsW = ["PrimerNombreDatos","SegundoNombreDatos","PrimerApellidoDatos","SegundoApellidoDatos"];
-    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos"];
+    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos","CiudadPaisDatos","CongresosDatos"];
     var inputsH = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos","NacionalidadHijoDatos","FechaNacimientoHijoDatos","CedulaMadreHijoDatos","CedulaPadreHijoDatos","ActaNacCargaHijoDatos"];
     var inputsHW = ["PrimerNombreHijoDatos","SegundoNombreHijoDatos","PrimerApellidoHijoDatos","SegundoApellidoHijoDatos"];
     var idRegistrosParticipantes = [];
@@ -36,7 +36,7 @@ $('#submitData').click(function(){
                 $("#div"+inputsO[i-1]).addClass("has-error");
             }
             $("#headerPersonal").css({ 'color': "red" });
-            text = "Error campo mal introducido o obligatorio.";
+            text = "Campo mal introducido u obligatorio.";
         }else{
             if(inputsO[i] == "FechaNacimientoDatos")
                 anio = parseInt($("#"+inputsO[i]).val()[6]+$("#"+inputsO[i]).val()[7]+$("#"+inputsO[i]).val()[8]+$("#"+inputsO[i]).val()[9]); 
@@ -45,7 +45,7 @@ $('#submitData').click(function(){
                 can_register = false;
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error son solo tres archivos en el orden especificado (Cedula,RIF,Acta de nacimiento).";
+                text = "Son sólo tres archivos en el orden especificado (Cédula, RIF, Acta de nacimiento).";
             }
             
             if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18)){
@@ -53,19 +53,19 @@ $('#submitData').click(function(){
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else if(inputsO[i] == "NumeroDatos" &&  (parseInt($("#"+inputsO[i]).val()) > 999 || parseInt($("#"+inputsO[i]).val()) < 100)){
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else if(inputsO[i] == "NumeroDatosII" &&   (parseInt($("#"+inputsO[i]).val()) > 9999999 || parseInt($("#"+inputsO[i]).val()) < 1000000)){
                 can_register = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i-1]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i-1]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else{
                 personalData[indPersonalData] = $("#"+inputsO[i]).val();
                 indPersonalData++;
@@ -104,7 +104,7 @@ $('#submitData').click(function(){
     if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         can_register = false;
         $("#headerPersonal").css({ 'color': "red" });
-        text = "Error la edad no coincide con la fecha de nacimiento.";
+        text = "La edad no coincide con la fecha de nacimiento.";
     }
 
     if(can_register && countCargo < 1){
@@ -113,7 +113,7 @@ $('#submitData').click(function(){
             $("#divCargosDatos").addClass("has-error");
             $("#divFechaInicioCargoDatos").addClass("has-error");
             $("#headerCargos").css({ 'color': "red" });
-            text = "Error debe seleccionar los cargos.";
+            text = "Debe seleccionar los cargos.";
     }else{
         $("#spanCargosDatos").removeClass("glyphicon-remove");
         $("#divCargosDatos").removeClass("has-error");
@@ -128,7 +128,7 @@ $('#submitData').click(function(){
                         $("#headerRegistros").css({ 'color': "red" });
                         $("#span"+inputsR[i]).addClass("glyphicon-remove");
                         $("#div"+inputsR[i]).addClass("has-error");
-                        text = "Error campo mal introducido o obligatorio.";
+                        text = "Campo mal introducido u obligatorio.";
                     }else{
                         $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                         $("#div"+inputsR[i]).removeClass("has-error");        
@@ -138,7 +138,7 @@ $('#submitData').click(function(){
                         $("#headerRegistros").css({ 'color': "red" });
                         $("#span"+inputsR[i]).addClass("glyphicon-remove");
                         $("#div"+inputsR[i]).addClass("has-error");
-                        text = "Error campo mal introducido o obligatorio.";
+                        text = "Campo mal introducido u obligatorio.";
                     }else{
                         $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                         $("#div"+inputsR[i]).removeClass("has-error");        
@@ -148,17 +148,27 @@ $('#submitData').click(function(){
                         $("#headerRegistros").css({ 'color': "red" });
                         $("#span"+inputsR[i]).addClass("glyphicon-remove");
                         $("#div"+inputsR[i]).addClass("has-error");
-                        text = "Error campo mal introducido o obligatorio.";
+                        text = "Campo mal introducido u obligatorio.";
                     }else{
                         $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                         $("#div"+inputsR[i]).removeClass("has-error");        
                     }
+                }else if(inputsR[i] == "CiudadPaisDatos"){
+                     if(!(/^[a-zA-Z]*$/).test($("#"+inputsR[i]).val())){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                        text = "Campo mal introducido.";
+                     }else{
+                        $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).removeClass("has-error");
+                     }
                 }else{
                     if($("#"+inputsR[i]).val() == ""){
                         $("#headerRegistros").css({ 'color': "red" });
                         $("#span"+inputsR[i]).addClass("glyphicon-remove");
                         $("#div"+inputsR[i]).addClass("has-error");
-                        text = "Error campo mal introducido o obligatorio.";
+                        text = "Campo mal introducido u obligatorio.";
                     }else{
                         $("#span"+inputsR[i]).removeClass("glyphicon-remove");
                         $("#div"+inputsR[i]).removeClass("has-error");        
@@ -176,7 +186,7 @@ $('#submitData').click(function(){
     tableRegistros.column(1)
                         .data()
                         .each( function ( value1,index1 ) {
-                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis"){
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
                                 tableRegistros.column(0)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
@@ -185,7 +195,8 @@ $('#submitData').click(function(){
                                                         indRegistroParticipantes++;
                                                     }
                                                 });                                   
-                            }else if(value1=="Articulo publicado"){
+                            }
+                            if(value1=="Articulo publicado"){
                                 tableRegistros.column(0)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
@@ -215,7 +226,7 @@ $('#submitData').click(function(){
             $("#divCedulaParticipanteRegistro").addClass("has-error");
             $("#spanIdParticipanteRegistro").addClass("glyphicon-remove");
             $("#divIdParticipanteRegistro").addClass("has-error");
-            text = "Error existen tipos de registros sin participantes asociados.";
+            text = "Existen tipos de registros sin participantes asociados.";
         }else{
             $("#headerRegistros").css({ 'color': "black" });
             $("#spanNombreParticipanteRegistro").removeClass("glyphicon-remove");
@@ -243,7 +254,7 @@ $('#submitData').click(function(){
             $("#divDescrpcionRevistaRegistro").addClass("has-error");
             $("#spanIdRevistaRegistro").addClass("glyphicon-remove");
             $("#divIdRevistaRegistro").addClass("has-error");
-            text = "Error existen tipos de registros sin revistas asociados.";
+            text = "Existen tipos de registros sin revistas asociados.";
         }else{
             $("#headerRegistros").css({ 'color': "black" });
             $("#spanDescrpcionRevistaRegistro").removeClass("glyphicon-remove");
@@ -279,10 +290,10 @@ $('#submitData').click(function(){
                     $("#divFechaNacimientoHijoDatos").addClass("has-error");
                     $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
                     $("#divActaNacCargaHijoDatos").addClass("has-error");
-                    text = "Error no ha ingresado ningun hijo.";
+                    text = "No ha ingresado ningún hijo.";
                 }else if(countHijo != $("#ActaNacCargaHijoDatos").fileinput("getFilesCount")){
                     can_register = false;
-                    text = "Error la cantidad de actas de nacimiento no es la misma que la de hijos ingresados.";
+                    text = "La cantidad de actas de nacimiento no es la misma que la de hijos ingresados.";
                 }
             }else{
             $("#headerHijos").css({ 'color': "black" });

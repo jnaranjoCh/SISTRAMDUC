@@ -12,7 +12,7 @@ $("#continue").click(function(){
                 dataType: 'json',
                 success: function(data){
                   $("#myModal").modal("hide");
-                  toastr.success("Usuario desactivado exitosamente!", "Exito!", {
+                  toastr.success("Usuario desactivado exitosamente!", "Éxito!", {
                         "timeOut": "0",
                         "extendedTImeout": "0"
                         });
@@ -27,7 +27,7 @@ $("#continue").click(function(){
                 dataType: 'json',
                 success: function(data){
                   $("#myModal").modal("hide");
-                  toastr.success("Usuario activado exitosamente!", "Exito!", {
+                  toastr.success("Usuario activado exitosamente!", "Éxito!", {
                         "timeOut": "0",
                         "extendedTImeout": "0"
                         });
@@ -37,7 +37,7 @@ $("#continue").click(function(){
         }
     }else
     {
-       toastr.error("Error debe seleccionar un usuario", "Error", {
+       toastr.error("Debe seleccionar un usuario.", "Error", {
                     "timeOut": "0",
                     "extendedTImeout": "0"
                     });

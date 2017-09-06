@@ -28,7 +28,7 @@ $('#generate').click(function(){
                $("#load").val("true");
             }else{
                $("#load").val("false");
-               toastr.error("El usuario no se encuentra registrado, esta inactivo o no a realizado el registro de datos.", "Error", {
+               toastr.error("El usuario no se encuentra registrado, está inactivo o no ha realizado el registro de datos.", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                              });
@@ -259,7 +259,9 @@ function initTableConsultar(){
                                {"data":"Estatus"},
                                {"data":"AnoDePublicacionAsistencia"},
                                {"data":"EmpresaInstitucion"},
-                               {"data":"TituloObtenido"}
+                               {"data":"TituloObtenido"},
+                               { "data": "CiudadPais"},
+                               { "data": "Congreso"}
                             ]
                         });
         
@@ -296,7 +298,9 @@ function initTableConsultar(){
                                 columns: [
                                     {"data": "Delete"},
                                     { "data": "IdDelRegistro" },
-                                    { "data": "Revista" }
+                                    { "data": "Revista" },
+                                    { "data": "Volumen" },
+                                    { "data": "PrimerayUltimaPagina" }
                                 ]
                             });
         

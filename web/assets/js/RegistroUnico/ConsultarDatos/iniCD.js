@@ -18,12 +18,12 @@ $( window ).load(function() {
 
     var status = window.location.href.split("/");
     if(status[status.length-1] == "success")
-        toastr.success("Datos actualizados exitosamente!.", "Exito!", {
+        toastr.success("Datos actualizados exitosamente!.", "Éxito!", {
             "timeOut": "0",
             "extendedTImeout": "0"
             });
     else if(status[status.length-1] == "error")
-        toastr.error("Error hubo problemas al subir los archivos!", "Error", {
+        toastr.error("Hubo problemas al subir los archivos!", "Error", {
             "timeOut": "0",
             "extendedTImeout": "0"
             });

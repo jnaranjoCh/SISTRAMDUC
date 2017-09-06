@@ -6,22 +6,36 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\Tramite;
+use AppBundle\Entity\Usuario;
+use TramiteBundle\Entity\Transicion;
+
 /**
  * Concurso
- *
  * @ORM\Table(name="concurso")
  * @ORM\Entity(repositoryClass="ConcursosBundle\Repository\ConcursoRepository")
  */
-class Concurso
+class Concurso extends Tramite
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+    protected $type = "concurso";
+
+    protected $recaudos;
+    
+    protected $transiciones;
+    
+    protected $tipo_tramite_id;
+    
+    protected $usuario_id;
+    
+    // /**
+    //  * @var int
+    //  *
+    //  * @ORM\Column(name="id", type="integer")
+    //  * @ORM\Id
+    //  * @ORM\GeneratedValue(strategy="AUTO")
+    //  */
+    // private $id;
 
     /**
      * @var \DateTime
@@ -80,7 +94,21 @@ class Concurso
     private $tipo;
     
     /**
-     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Aspirante")
+     * @var string
+     *
+     * @ORM\Column(name="temaExEscrito", type="string", nullable=true)
+     */
+    private $temaExEscrito;
+    
+      /**
+     * @var string
+     *
+     * @ORM\Column(name="temaExOral", type="string", nullable=true)
+     */
+    private $temaExOral;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="Aspirante", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="concurso_aspirante",
      *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")}
@@ -89,7 +117,7 @@ class Concurso
     protected $aspirantes;
     
     /**
-     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Jurado")
+     * @ORM\ManyToMany(targetEntity="Jurado", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="concurso_jurado",
      *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="jurado_id", referencedColumnName="id")}
@@ -103,15 +131,15 @@ class Concurso
        $this->aspirantes = new ArrayCollection();
     }
     
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    // /**
+    //  * Get id
+    //  *
+    //  * @return int
+    //  */
+    // public function getId()
+    // {
+    //     return $this->id;
+    // }
 
     /**
      * Set fechaInicio
@@ -307,13 +335,28 @@ class Concurso
 
     public function addJurado($jurados)
     {
-       $this->jurado[] = $jurados;
+        $existentes = $this->getJurados();
+        $existe=false;
+        $i=0;
+        foreach($existentes as $value){
+            if($value == $jurados){
+               $existe=true;
+               break;
+            }
+            $i=$i+1;
+        }
+        if(!$existe){$this->jurado[] = $jurados;}
     }
 
     public function addJurados($jurado)
     {
        foreach($jurado as $jurados)
            $this->addJurado($jurados);
+    }
+    
+    public function getJurados()
+    {
+    	return $this->jurado->toArray();
     }
 
     public function addAspirante($aspirante)
@@ -330,6 +373,54 @@ class Concurso
     public function getAspirantes()
     {
     	return $this->aspirantes->toArray();
+    }
+    
+    /**
+     * Set temaExEscrito
+     *
+     * @param string $temaExEscrito
+     *
+     * @return Concurso
+     */
+    public function setTemaExEscrito($temaExEscrito)
+    {
+        $this->temaExEscrito = $temaExEscrito;
+
+        return $this;
+    }
+
+    /**
+     * Get temaExEscrito
+     *
+     * @return string
+     */
+    public function getTemaExEscrito()
+    {
+        return $this->temaExEscrito;
+    }
+    
+    /**
+     * Set temaExOral
+     *
+     * @param string $temaExOral
+     *
+     * @return Concurso
+     */
+    public function setTemaExOral($temaExOral)
+    {
+        $this->temaExOral = $temaExOral;
+
+        return $this;
+    }
+
+    /**
+     * Get temaExOral
+     *
+     * @return string
+     */
+    public function getTemaExOral()
+    {
+        return $this->temaExOral;
     }
 }
 

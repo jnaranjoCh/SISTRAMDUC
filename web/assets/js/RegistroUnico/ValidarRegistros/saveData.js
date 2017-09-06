@@ -10,12 +10,12 @@ $('#submitData').click(function(){
         },
         success: function(data){
             if(!data.localeCompare("Actualizado"))
-                toastr.success("Datos actualizados exitosamente!.", "Exito!", {
+                toastr.success("Datos actualizados exitosamente!.", "Éxito!", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                                });
             else
-                toastr.error("Error al actualizar los registros", "Error", {
+                toastr.error("Falló la actualización de los registros", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                              });
@@ -34,7 +34,7 @@ function getData()
         var validar = new Object();
         var cellsRegistros = new Object();
         cellsRegistros.row = i;
-        cellsRegistros.column = 8;
+        cellsRegistros.column = 10;
         cellsRegistros.columnVisible = "0";
         idCheck = findId(tableRegistros, cellsRegistros);
         if(findProp(tableRegistros, cellsRegistros))

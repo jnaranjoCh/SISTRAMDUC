@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use TramiteBundle\Entity\Tramite;
 use TramiteBundle\Entity\TipoRecaudo;
+use TramiteBundle\Entity\Duracion;
 use AppBundle\Entity\Usuario;
 
 /**
@@ -30,6 +31,11 @@ class Recaudo
      * @ORM\Column(type="string", length=255)
      */
     private $path;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    private $duracion_administrador;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -84,7 +90,11 @@ class Recaudo
      */
     protected $usuario;
     
-    
+    /**
+     * @ORM\ManyToOne(targetEntity="Duracion", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="duracion_id", referencedColumnName="id")
+     */
+    protected $duracion;
 
     function __construct($name = null, \DateTime $fecha_vencimiento = null){
         $this->name = $name;
@@ -384,5 +394,47 @@ class Recaudo
     public function getValor()
     {
         return $this->valor;
+    }
+
+    /**
+     * Get duracion
+     *
+     * @return string
+     */
+     public function getDuracion()
+     {
+         return $this->duracion;
+     }
+     
+     /**
+      * Set duracion
+      *
+      * @param Duracion $duracion
+      *
+      * @return Recaudo
+      */
+     public function setDuracion(Duracion $duracion)
+     {
+         $this->duracion = $duracion;
+ 
+         return $this;
+     }
+
+      /**
+     * Set duracion_administrador
+     * @param integer $duracion_administrador
+     */
+    public function setDuracionAdministrador($duracion_administrador)
+    {
+        $this->duracion_administrador = $duracion_administrador;
+    }
+
+    /**
+     * Get duracion_administrador
+     * @return integer
+     */
+    public function getDuracionAdministrador()
+    {
+        return $this->duracion_administrador;
     }
 }
