@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use TramiteBundle\Entity\Tramite;
 use TramiteBundle\Entity\Recaudo;
 use TramiteBundle\Entity\Transicion;
 use ConcursosBundle\Entity\Concurso;
+use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
 use AppBundle\Entity\Usuario;
 
@@ -731,6 +733,19 @@ class DefaultController extends Controller
         return $result;
     }
     
+    private function asignarFilaAspirante($object, $nameField, $result, $pos)
+    {
+        foreach($object as $value){
+            switch ($case) {
+                case 0: $result[$nameField][$pos] = $value->getId(); break;
+                case 1: $result[$nameField][$pos] = $value->getPrimerNombre().$value->getPrimerApellido(); break;
+                case 2: $result[$nameField][$pos] = $value->getCorreo(); break;
+                case 3: $result[$nameField][$pos] = $value->getTelefono(); break;
+            }
+        }
+        return $result;
+    }
+    
     /**
      * @Route("/preparadores/detalle_concurso", name="detalle_concurso_ajax")
      */
@@ -763,9 +778,15 @@ class DefaultController extends Controller
                 $aspirantes = $value->getAspirantes();
                 $a=0;
                 foreach ($aspirantes as $aspirante) {
+                    $result = $this->asignarFilaAspirante($aspirante, 'idAspirante', $result, 0);
+                    $result = $this->asignarFilaAspirante($aspirante, 'nombreCompleto', $result, 1);
+                    $result = $this->asignarFilaAspirante($aspirante, 'correo', $result, 2);
+                    $result = $this->asignarFilaAspirante($aspirante, 'telefono', $result, 3);
                     $a=$a+1;
                 }
-                $result['aspirantes'][$i] = $a;
+                if($a == 0){
+                    $result['idAspirante'][$i] = $a;
+                }
                 
                 $jurados = $value->getJurados();
                 
@@ -962,5 +983,61 @@ class DefaultController extends Controller
             }
         }else
             throw $this->createNotFoundException('Error al solicitar datos');
+    }
+    
+    /**
+     * @Route("/preparadores/guardar_archivos_aspirante", name="guardar_archivos_aspirante_ajax")
+     */
+    public function guardarArchivosAspiranteAjaxAction(Request $request){
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $concurso = $em->getRepository('ConcursosBundle:Concurso')
+                              ->findOneBy(["id" => $request->get('IdConcurso')]);
+                              
+        $newAspirante = new Aspirante();
+        
+        $identificadorAspirante= $request->get('PrimerNombre')."_".$request->get('PrimerApellido')."_".$request->get('Cedula')."_".$newAspirante->getId();
+        
+        $newAspirante->setPrimerNombre($request->get('PrimerNombre'));
+        $newAspirante->setSegundoNombre($request->get('SegundoNombre'));
+        $newAspirante->setPrimerApellido($request->get('PrimerApellido'));
+        $newAspirante->setSegundoApellido($request->get('SegundoApellido'));
+        $telefono=$request->get('TelefonoArea').$request->get('TelefonoNumero');
+        $newAspirante->setTelefono($telefono);
+        $newAspirante->setCorreo($request->get('Correo'));
+        $newAspirante->setCedula($request->get('Cedula'));
+        
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/comunicacionEscrita/';
+        $dir_subida = $dir_subida."comunicacion_escrita_".$identificadorAspirante.".pdf";
+        
+        $newAspirante->setComunicacionEscritaUrl($dir_subida);
+        
+        if(move_uploaded_file($_FILES['input']['tmp_name'][0], $dir_subida)) {
+            $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/cartaConducta/';
+            $dir_subida = $dir_subida."carta_conducta_".$identificadorAspirante.".pdf";
+            
+            $newAspirante->setCartaConductaUrl($dir_subida);
+            // return new RedirectResponse($this->generateUrl('clausulas_contractuales_beca',array('email' => $request->get('email'), 'state' => 'success')));
+            if(move_uploaded_file($_FILES['input']['tmp_name'][1], $dir_subida)) {
+                $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/reporteNota/';
+                $dir_subida = $dir_subida."reporte_nota_".$identificadorAspirante.".pdf";
+                
+                $newAspirante->setReporteNotaUrl($dir_subida);
+                // return new RedirectResponse($this->generateUrl('clausulas_contractuales_beca',array('email' => $request->get('email'), 'state' => 'success')));
+                if(move_uploaded_file($_FILES['input']['tmp_name'][2], $dir_subida)) {
+                    $concurso->addAspirante($newAspirante);
+                    $em->persist($concurso);
+                    $em->flush();
+                    return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'success')));
+                }else{
+                    return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'error')));
+                }
+            }else{
+                return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'error')));
+            }
+        }else{
+            return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'error')));
+        }
     }
 }

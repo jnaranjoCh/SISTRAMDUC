@@ -108,7 +108,7 @@ class Concurso extends Tramite
     private $temaExOral;
     
     /**
-     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Aspirante")
+     * @ORM\ManyToMany(targetEntity="Aspirante", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="concurso_aspirante",
      *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")}

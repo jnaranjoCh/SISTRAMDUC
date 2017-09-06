@@ -165,13 +165,17 @@
                   </button>
                 </div>
               </div>
-              <form id="cambiarJurado" role="form">
+              <form name="newAspiranteForm" id="newAspiranteForm" action="{{ path('guardar_archivos_aspirante_ajax') }}" method="post" enctype="multipart/form-data" novalidate>
+              {#<form id="cambiarJurado" role="form">#}
+                <div class="hide">
+                  <input id="IdConcurso" name="IdConcurso" type="text">
+                </div>
                 <div class="box-body">
                   <div class="row">
                     <div class="col-md-5">
                       <div id="divCedula" class="form-group has-feedback">
                         <label for="Cedula">Cedula</label>
-                        <input id="Cedula" type="email" class="form-control" placeholder="Ingrese el N° de Cedula">
+                        <input id="Cedula" name="Cedula" type="email" class="form-control" placeholder="Ingrese el N° de Cedula">
                         <span id="spanEmailUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
                       </div>
                     </div>
@@ -181,7 +185,7 @@
                     <div class="col-md-5">
                       <div id="divCorreo" class="form-group has-feedback">
                         <label for="Correo">Email</label>
-                        <input id="Correo" type="email" class="form-control" placeholder="Email">
+                        <input id="Correo" name="Correo" type="email" class="form-control" placeholder="Email">
                         <span id="spanEmailUser" class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
                     </div>
@@ -190,11 +194,11 @@
                     <div class="col-md-5">
                       <div id="divPrimerNombre" class="form-group">
                         <label for="PrimerNombre">Primer nombre</label>
-                        <input id="PrimerNombre" type="text" class="form-control" placeholder="Primer nombre" required>
+                        <input id="PrimerNombre" name="PrimerNombre" type="text" class="form-control" placeholder="Primer nombre" required>
                       </div>
                       <div id="divSegundoNombre" class="form-group">
                         <label for="SegundoNombre">Segundo nombre</label>
-                        <input id="SegundoNombre" type="text" class="form-control" placeholder="Segundo nombre" required>
+                        <input id="SegundoNombre" name="SegundoNombre" type="text" class="form-control" placeholder="Segundo nombre" required>
                       </div>
                     </div>
                     <div class="col-md-1">
@@ -203,11 +207,11 @@
                     <div class="col-md-5">
                       <div id="divPrimerApellido" class="form-group">
                         <label for="PrimerApellido">Primer apellido</label>
-                        <input id="PrimerApellido" type="text" class="form-control" placeholder="Primer apellido" required>
+                        <input id="PrimerApellido" name="PrimerApellido" type="text" class="form-control" placeholder="Primer apellido" required>
                       </div>
                       <div id="divSegundoApellido" class="form-group">
                         <label for="SegundoApellido">Segundo apellido</label>
-                        <input id="SegundoApellido" type="text" class="form-control" placeholder="Segundo apellido" required>
+                        <input id="SegundoApellido" name="SegundoApellido" type="text" class="form-control" placeholder="Segundo apellido" required>
                       </div>
                     </div>
                   </div>
@@ -217,11 +221,11 @@
                         <label for="Telefono">Teléfono</label>
                         <div id="Telefono" class="row">
                             <div class="col-xs-4">
-                              <input id="TelefonoArea" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999" required>
+                              <input id="TelefonoArea" name="TelefonoArea" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999" required>
                             </div>
                             <strong><label class="col-xs-1">—</label></strong>
                             <div class="col-xs-7">
-                              <input id="TelefonoNumero" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999" required>
+                              <input id="TelefonoNumero" name="TelefonoNumero" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999" required>
                             </div>
                         </div>
                       </div>
@@ -234,11 +238,11 @@
                         <label for="TelefonoSecundario">Teléfono Secundario</label>
                         <div id="TelefonoSecundario" class="row">
                             <div class="col-xs-4">
-                              <input id="TelefonoSecundarioArea" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
+                              <input id="TelefonoSecundarioArea" name="TelefonoSecundarioArea" type="number" class="form-control" placeholder="Cod. Area" min="100" max="999">
                             </div>
                             <strong><label class="col-xs-1">—</label></strong>
                             <div class="col-xs-7">
-                              <input id="TelefonoSecundarioNumero" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
+                              <input id="TelefonoSecundarioNumero" name="TelefonoSecundarioNumero" type="number" class="form-control" placeholder="Nro. de telefono" min="1000000" max="9999999">
                             </div>
                         </div>
                       </div>
@@ -248,7 +252,7 @@
                     <div class="col-md-5">
                       <div id="divPromedio" class="form-group">
                         <label for="Promedio">Promedio Acádemico</label>
-                        <input id="Promedio" type="number" class="form-control" placeholder="Promedio" min="10" max="20" required>
+                        <input id="Promedio" name="Promedio" type="number" class="form-control" placeholder="Promedio" min="10" max="20" required>
                       </div>
                     </div>
                     <div class="col-md-1">
@@ -266,10 +270,10 @@
                         </div>
                         <div class="row">
                           <div class="col-xs-6">
-                            <input id="Nota1" type="number" class="form-control" placeholder="Nota 1" min="5" max="20">
+                            <input id="Nota1" name="Nota1" type="number" class="form-control" placeholder="Nota 1" min="5" max="20">
                           </div>
                           <div class="col-xs-6">
-                            <input id="Nota2" type="number" class="form-control" placeholder="Nota 2" min="5" max="20">
+                            <input id="Nota2" name="Nota2" type="number" class="form-control" placeholder="Nota 2" min="5" max="20">
                           </div>
                         </div>
                       </div>
@@ -277,59 +281,65 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12">
-                      <div id="divActaNacCargaHijoDatos" class="form-group has-feedback">
-                        <label class="control-label">Seleccione las actas de nacimiento</label>
-                        <input id="ActaNacCargaHijoDatos" name="input2[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="false" data-show-caption="true">
-                        <span id="spanActaNacCargaHijoDatos" class="glyphicon form-control-feedback"></span>
+                      <div id="divEscritaConductaReporteCargaDatos" class="form-group has-feedback">
+                        <label class="control-label">Seleccione la comunicación escrita, carta de conducta y reporte de notas</label>
+                        <input id="EscritaConductaReporteCargaDatos" name="input[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="true" data-show-caption="true">
+                        <span id="spanEscritaConductaReporteCargaDatos" class="glyphicon form-control-feedback"></span>
                       </div>
+                      {#<div id="divActaNacCargaHijoDatos" class="form-group has-feedback">#}
+                      {#  <label class="control-label">Seleccione las actas de nacimiento</label>#}
+                      {#  <input id="ActaNacCargaHijoDatos" name="input2[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="true" data-show-caption="true">#}
+                      {#  <span id="spanActaNacCargaHijoDatos" class="glyphicon form-control-feedback"></span>#}
+                      {#</div>#}
                     </div>
                   </div>
                 </div>
                 <div class="box-footer">
                   <div class="col-sm-offset-4 col-sm-4">
-                    <button id="siguienteCambiarJurado" type="button" class="btn btn-info btn-block">Siguiente</button>
+                    <button id="guardarAspirante" type="button" class="btn btn-success btn-block">Guardar  <i class="fa fa-save"></i></button>
+                    {#<button id="siguienteCambiarJurado" type="button" class="btn btn-info btn-block">Siguiente</button>#}
                   </div>
                 </div>
               </form>
-              <form role="form" class="form-horizontal">
-                  <div class="box-body">
-                    <div class="form-group">
-                      <div class="input-group col-sm-offset-2 col-sm-8">
+              {#<form role="form" class="form-horizontal">#}
+              {#    <div class="box-body">#}
+              {#      <div class="form-group">#}
+              {#        <div class="input-group col-sm-offset-2 col-sm-8">#}
                         {#<label>Comunicacion Escrita</label>#}
-                        <input type="text" name="attachment" placeholder="Comunicacion Escrita" class="form-control">
-                        <span class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group col-sm-offset-2 col-sm-8">
+              {#          <input type="text" name="attachment" placeholder="Comunicacion Escrita" class="form-control">#}
+              {#          <span class="input-group-btn">#}
+              {#            <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>#}
+              {#          </span>#}
+              {#        </div>#}
+              {#      </div>#}
+              {#      <div class="form-group">#}
+              {#        <div class="input-group col-sm-offset-2 col-sm-8">#}
                         {#<label>Comunicacion Escrita</label>#}
-                        <input type="text" name="attachment" placeholder="Reporte de Notas" class="form-control">
-                        <span class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group col-sm-offset-2 col-sm-8">
+              {#          <input type="text" name="attachment" placeholder="Reporte de Notas" class="form-control">#}
+              {#          <span class="input-group-btn">#}
+              {#            <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>#}
+              {#          </span>#}
+              {#        </div>#}
+              {#      </div>#}
+              {#      <div class="form-group">#}
+              {#        <div class="input-group col-sm-offset-2 col-sm-8">#}
                         {#<label>Comunicacion Escrita</label>#}
-                        <input type="text" name="attachment" placeholder="Carta de Buena Conducta" class="form-control">
-                        <span class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="box-footer">
-                    <div class="col-sm-offset-2 col-sm-3">
-                      <button type="submit" href="#incumpleRequisitos" data-toggle="collapse" class="btn btn-danger btn-block">No Cumple</button>
-                    </div>
-                    <div class="col-sm-offset-2 col-sm-3">
-                      <button type="submit" class="btn btn-success btn-block">Cumple</button>
-                    </div>
-                  </div>
-                </form>
+              {#          <input type="text" name="attachment" placeholder="Carta de Buena Conducta" class="form-control">#}
+              {#          <span class="input-group-btn">#}
+              {#            <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>#}
+              {#          </span>#}
+              {#        </div>#}
+              {#      </div>#}
+              {#    </div>#}
+              {#    <div class="box-footer">#}
+              {#      <div class="col-sm-offset-2 col-sm-3">#}
+              {#        <button type="submit" href="#incumpleRequisitos" data-toggle="collapse" class="btn btn-danger btn-block">No Cumple</button>#}
+              {#      </div>#}
+              {#      <div class="col-sm-offset-2 col-sm-3">#}
+              {#        <button type="submit" class="btn btn-success btn-block">Cumple</button>#}
+              {#      </div>#}
+              {#    </div>#}
+              {#  </form>#}
             </div>
             {#<br/><br/>#}
             <table id="aspirantes" class="table table-bordered table-responsive">

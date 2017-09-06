@@ -24,8 +24,24 @@ $('#aspirantes tbody').on( 'click', 'tr', function () {
 
 $(window).load( function(){
     toastr.clear();
+    var status = getParameterByName('state');
+    if(status == "success")
+        toastr.success("Datos registrados exitosamente!.", "Éxito!", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+            });
+    else if(status == "error")
+        toastr.error("Hubo problemas al subir los archivos!", "Error", {
+            "timeOut": "0",
+            "extendedTImeout": "0"
+            });
     var text = "";
     $("#dateTime1").datetimepicker();
+    $("#EscritaConductaReporteCargaDatos").fileinput({
+        language: "es"
+    });
+    document.getElementById("IdConcurso").value = id;
+    alert("15! ==> " + id);
     $.ajax({
 		method:"POST",
 		url: "/web/app_dev.php/preparadores/detalle_concurso",
@@ -36,6 +52,7 @@ $(window).load( function(){
                 text = "Falla al consultar el detalle de este concurso.";
                 toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
             } else{
+            	alert("trajo data");
             	var i = 0;
             	contenidoHTML =
 					'<dl class="col-md-offset-2 dl-horizontal">'+
@@ -45,9 +62,22 @@ $(window).load( function(){
 						'<dt>Número de Vacantes</dt>'+
 						'<dd>'+respuesta["vacantes"][i]+'</dd>'+
 						
-						'<dt>Número de Aspirantes</dt>'+
-						'<dd>'+respuesta["aspirantes"][i]+'</dd>'+
+						'<dt>Número de Aspirantes</dt>';
 						
+				if(respuesta["idAspirante"].length == 1){
+					alert("trajo aspirante 1");
+					if(respuesta["idAspirante"][i] == 0){
+						alert("trajo aspirante vacio");
+						contenidoHTML = contenidoHTML+
+						'<dd>'+respuesta["idAspirante"][i]+'</dd>';
+					}else{
+						alert("trajo aspirante real");
+						contenidoHTML = contenidoHTML+
+						'<dd>'+respuesta["idAspirante"].length+'</dd>';
+					}
+				}
+				
+				contenidoHTML = contenidoHTML+
 						'<dt>Tema Examen Oral</dt>'+
 						'<dd>'+respuesta["exOral"][i]+'</dd>'+
 						
@@ -106,6 +136,18 @@ $(window).load( function(){
 					+'</dl>';
 					
 				$('#detallesSolicitudSeleccionada').append(contenidoHTML);
+				
+				// for (var i = 0; i <= respuesta["idAspirante"].length-1; i++) {
+    //                 var idAspirante = respuesta["idAspirante"][i];
+    //                 aspirantes.row.add( {
+    //                 	"id": respuesta["idAspirante"][i],
+    //                     "nombreCompleto": respuesta["nombreCompleto"][i],
+    //                     "correo": respuesta["correo"][i],
+    //                     "telefono": respuesta["telefono"][i],
+    //                     "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="#"><i class="fa fa-search"></i></button>'+
+    //                     			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Gestionar" onclick="#"><i class="fa fa-cogs"></i></button>'
+    //                 }).draw();                          
+    //             }
             }
 		}
     });
@@ -188,6 +230,11 @@ $('#enviarFechaEvaluacion').click(function (){
         		}
         }});
     }
+});
+
+$("#guardarAspirante").click(function (){
+    $("#cargando").modal("show");
+    document.getElementById("newAspiranteForm").submit();
 });
 
 $('#cargarConcursesierto').click(function (){ 
