@@ -6,330 +6,421 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\Tramite;
+use AppBundle\Entity\Usuario;
+use TramiteBundle\Entity\Transicion;
+
 /**
  * Concurso
- *
  * @ORM\Table(name="concurso")
  * @ORM\Entity(repositoryClass="ConcursosBundle\Repository\ConcursoRepository")
  */
-class Concurso
+class Concurso extends Tramite
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+	protected $type = "concurso";
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fechaInicio", type="datetime", nullable=true)
-     */
-    private $fechaInicio;
+	protected $recaudos;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nroVacantes", type="integer")
-     */
-    private $nroVacantes;
+	protected $transiciones;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="areaPostulacion", type="string", length=100)
-     */
-    private $areaPostulacion;
+	protected $tipo_tramite_id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="idUsuario", type="integer")
-     */
-    private $idUsuario;
+	protected $usuario_id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fechaRecepDoc", type="datetime", nullable=true)
-     */
-    private $fechaRecepDoc;
+	// /**
+	//  * @var int
+	//  *
+	//  * @ORM\Column(name="id", type="integer")
+	//  * @ORM\Id
+	//  * @ORM\GeneratedValue(strategy="AUTO")
+	//  */
+	// private $id;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fechaPresentacion", type="datetime", nullable=true)
-     */
-    private $fechaPresentacion;
+	/**
+	 * @var \DateTime
+	*
+	* @ORM\Column(name="fechaInicio", type="datetime", nullable=true)
+	*/
+	private $fechaInicio;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
-     */
-    private $observaciones;
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="nroVacantes", type="integer")
+	 */
+	private $nroVacantes;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tipo", type="string", length=100)
-     */
-    private $tipo;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Aspirante")
-     * @ORM\JoinTable(name="concurso_aspirante",
-     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $aspirantes;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Jurado")
-     * @ORM\JoinTable(name="concurso_jurado",
-     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="jurado_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $jurado;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="areaPostulacion", type="string", length=100)
+	 */
+	private $areaPostulacion;
 
-    public function __construct()
-    {
-       $this->jurado = new ArrayCollection();
-       $this->aspirantes = new ArrayCollection();
-    }
-    
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="idUsuario", type="integer")
+	 */
+	private $idUsuario;
 
-    /**
-     * Set fechaInicio
-     *
-     * @param \DateTime $fechaInicio
-     *
-     * @return Concurso
-     */
-    public function setFechaInicio($fechaInicio)
-    {
-        $this->fechaInicio = $fechaInicio;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="fechaRecepDoc", type="datetime", nullable=true)
+	 */
+	private $fechaRecepDoc;
 
-        return $this;
-    }
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="fechaPresentacion", type="datetime", nullable=true)
+	 */
+	private $fechaPresentacion;
 
-    /**
-     * Get fechaInicio
-     *
-     * @return \DateTime
-     */
-    public function getFechaInicio()
-    {
-        return $this->fechaInicio;
-    }
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="observaciones", type="string", length=255, nullable=true)
+	 */
+	private $observaciones;
 
-    /**
-     * Set nroVacantes
-     *
-     * @param integer $nroVacantes
-     *
-     * @return Concurso
-     */
-    public function setNroVacantes($nroVacantes)
-    {
-        $this->nroVacantes = $nroVacantes;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="tipo", type="string", length=100)
+	 */
+	private $tipo;
 
-        return $this;
-    }
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="temaExEscrito", type="string", nullable=true)
+	 */
+	private $temaExEscrito;
 
-    /**
-     * Get nroVacantes
-     *
-     * @return int
-     */
-    public function getNroVacantes()
-    {
-        return $this->nroVacantes;
-    }
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="temaExOral", type="string", nullable=true)
+	 */
+	private $temaExOral;
 
-    /**
-     * Set areaPostulacion
-     *
-     * @param string $areaPostulacion
-     *
-     * @return Concurso
-     */
-    public function setAreaPostulacion($areaPostulacion)
-    {
-        $this->areaPostulacion = $areaPostulacion;
+	/**
+	 * @ORM\ManyToMany(targetEntity="Aspirante", cascade={"persist", "remove"})
+	 * @ORM\JoinTable(name="concurso_aspirante",
+	 *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")}
+	 *      )
+	 */
+	protected $aspirantes;
 
-        return $this;
-    }
+	/**
+	 * @ORM\ManyToMany(targetEntity="Jurado", cascade={"persist", "remove"})
+	 * @ORM\JoinTable(name="concurso_jurado",
+	 *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
+	 *      inverseJoinColumns={@ORM\JoinColumn(name="jurado_id", referencedColumnName="id")}
+	 *      )
+	 */
+	protected $jurado;
 
-    /**
-     * Get areaPostulacion
-     *
-     * @return string
-     */
-    public function getAreaPostulacion()
-    {
-        return $this->areaPostulacion;
-    }
+	public function __construct()
+	{
+		$this->jurado = new ArrayCollection();
+		$this->aspirantes = new ArrayCollection();
+	}
 
-    /**
-     * Set idUsuario
-     *
-     * @param integer $idUsuario
-     *
-     * @return Concurso
-     */
-    public function setIdUsuario($idUsuario)
-    {
-        $this->idUsuario = $idUsuario;
+	// /**
+	//  * Get id
+	//  *
+	//  * @return int
+	//  */
+	// public function getId()
+	// {
+	//     return $this->id;
+		// }
 
-        return $this;
-    }
+		/**
+		 * Set fechaInicio
+		 *
+		 * @param \DateTime $fechaInicio
+		 *
+		 * @return Concurso
+		 */
+		public function setFechaInicio($fechaInicio)
+		{
+			$this->fechaInicio = $fechaInicio;
 
-    /**
-     * Get idUsuario
-     *
-     * @return int
-     */
-    public function getIdUsuario()
-    {
-        return $this->idUsuario;
-    }
+			return $this;
+		}
 
-    /**
-     * Set fechaRecepDoc
-     *
-     * @param \DateTime $fechaRecepDoc
-     *
-     * @return Concurso
-     */
-    public function setFechaRecepDoc($fechaRecepDoc)
-    {
-        $this->fechaRecepDoc = $fechaRecepDoc;
+		/**
+		 * Get fechaInicio
+		 *
+		 * @return \DateTime
+		 */
+		public function getFechaInicio()
+		{
+			return $this->fechaInicio;
+		}
 
-        return $this;
-    }
+		/**
+		 * Set nroVacantes
+		 *
+		 * @param integer $nroVacantes
+		 *
+		 * @return Concurso
+		 */
+		public function setNroVacantes($nroVacantes)
+		{
+			$this->nroVacantes = $nroVacantes;
 
-    /**
-     * Get fechaRecepDoc
-     *
-     * @return \DateTime
-     */
-    public function getFechaRecepDoc()
-    {
-        return $this->fechaRecepDoc;
-    }
+			return $this;
+		}
 
-    /**
-     * Set fechaPresentacion
-     *
-     * @param \DateTime $fechaPresentacion
-     *
-     * @return Concurso
-     */
-    public function setFechaPresentacion($fechaPresentacion)
-    {
-        $this->fechaPresentacion = $fechaPresentacion;
+		/**
+		 * Get nroVacantes
+		 *
+		 * @return int
+		 */
+		public function getNroVacantes()
+		{
+			return $this->nroVacantes;
+		}
 
-        return $this;
-    }
+		/**
+		 * Set areaPostulacion
+		 *
+		 * @param string $areaPostulacion
+		 *
+		 * @return Concurso
+		 */
+		public function setAreaPostulacion($areaPostulacion)
+		{
+			$this->areaPostulacion = $areaPostulacion;
 
-    /**
-     * Get fechaPresentacion
-     *
-     * @return \DateTime
-     */
-    public function getFechaPresentacion()
-    {
-        return $this->fechaPresentacion;
-    }
+			return $this;
+		}
 
-    /**
-     * Set observaciones
-     *
-     * @param string $observaciones
-     *
-     * @return Concurso
-     */
-    public function setObservaciones($observaciones)
-    {
-        $this->observaciones = $observaciones;
+		/**
+		 * Get areaPostulacion
+		 *
+		 * @return string
+		 */
+		public function getAreaPostulacion()
+		{
+			return $this->areaPostulacion;
+		}
 
-        return $this;
-    }
+		/**
+		 * Set idUsuario
+		 *
+		 * @param integer $idUsuario
+		 *
+		 * @return Concurso
+		 */
+		public function setIdUsuario($idUsuario)
+		{
+			$this->idUsuario = $idUsuario;
 
-    /**
-     * Get observaciones
-     *
-     * @return string
-     */
-    public function getObservaciones()
-    {
-        return $this->observaciones;
-    }
+			return $this;
+		}
 
-    /**
-     * Set tipo
-     *
-     * @param string $tipo
-     *
-     * @return Concurso
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
+		/**
+		 * Get idUsuario
+		 *
+		 * @return int
+		 */
+		public function getIdUsuario()
+		{
+			return $this->idUsuario;
+		}
 
-        return $this;
-    }
+		/**
+		 * Set fechaRecepDoc
+		 *
+		 * @param \DateTime $fechaRecepDoc
+		 *
+		 * @return Concurso
+		 */
+		public function setFechaRecepDoc($fechaRecepDoc)
+		{
+			$this->fechaRecepDoc = $fechaRecepDoc;
 
-    /**
-     * Get tipo
-     *
-     * @return string
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
+			return $this;
+		}
 
-    public function addJurado($jurados)
-    {
-       $this->jurado[] = $jurados;
-    }
+		/**
+		 * Get fechaRecepDoc
+		 *
+		 * @return \DateTime
+		 */
+		public function getFechaRecepDoc()
+		{
+			return $this->fechaRecepDoc;
+		}
 
-    public function addJurados($jurado)
-    {
-       foreach($jurado as $jurados)
-           $this->addJurado($jurados);
-    }
+		/**
+		 * Set fechaPresentacion
+		 *
+		 * @param \DateTime $fechaPresentacion
+		 *
+		 * @return Concurso
+		 */
+		public function setFechaPresentacion($fechaPresentacion)
+		{
+			$this->fechaPresentacion = $fechaPresentacion;
 
-    public function addAspirante($aspirante)
-    {
-       $this->aspirantes[] = $aspirante;
-    }
+			return $this;
+		}
 
-    public function addAspirantes($aspirante)
-    {
-       foreach($aspirante as $aspirantes)
-           $this->addAspirante($aspirantes);
-    }
-    
-    public function getAspirantes()
-    {
-    	return $this->aspirantes->toArray();
-    }
-}
+		/**
+		 * Get fechaPresentacion
+		 *
+		 * @return \DateTime
+		 */
+		public function getFechaPresentacion()
+		{
+			return $this->fechaPresentacion;
+		}
+
+		/**
+		 * Set observaciones
+		 *
+		 * @param string $observaciones
+		 *
+		 * @return Concurso
+		 */
+		public function setObservaciones($observaciones)
+		{
+			$this->observaciones = $observaciones;
+
+			return $this;
+		}
+
+		/**
+		 * Get observaciones
+		 *
+		 * @return string
+		 */
+		public function getObservaciones()
+		{
+			return $this->observaciones;
+		}
+
+		/**
+		 * Set tipo
+		 *
+		 * @param string $tipo
+		 *
+		 * @return Concurso
+		 */
+		public function setTipo($tipo)
+		{
+			$this->tipo = $tipo;
+
+			return $this;
+		}
+
+		/**
+		 * Get tipo
+		 *
+		 * @return string
+		 */
+		public function getTipo()
+		{
+			return $this->tipo;
+		}
+
+		public function addJurado($jurados)
+		{
+			$existentes = $this->getJurados();
+			$existe=false;
+			$i=0;
+			foreach($existentes as $value){
+				if($value == $jurados){
+					$existe=true;
+					break;
+				}
+				$i=$i+1;
+			}
+			if(!$existe){$this->jurado[] = $jurados;}
+		}
+
+		public function addJurados($jurado)
+		{
+			foreach($jurado as $jurados)
+				$this->addJurado($jurados);
+		}
+
+		public function getJurados()
+		{
+			return $this->jurado->toArray();
+		}
+
+		public function addAspirante($aspirante)
+		{
+			$this->aspirantes[] = $aspirante;
+		}
+
+		public function addAspirantes($aspirante)
+		{
+			foreach($aspirante as $aspirantes)
+				$this->addAspirante($aspirantes);
+		}
+
+		public function getAspirantes()
+		{
+			return $this->aspirantes->toArray();
+		}
+
+		/**
+		 * Set temaExEscrito
+		 *
+		 * @param string $temaExEscrito
+		 *
+		 * @return Concurso
+		 */
+		public function setTemaExEscrito($temaExEscrito)
+		{
+			$this->temaExEscrito = $temaExEscrito;
+
+			return $this;
+		}
+
+		/**
+		 * Get temaExEscrito
+		 *
+		 * @return string
+		 */
+		public function getTemaExEscrito()
+		{
+			return $this->temaExEscrito;
+		}
+
+		/**
+		 * Set temaExOral
+		 *
+		 * @param string $temaExOral
+		 *
+		 * @return Concurso
+		 */
+		public function setTemaExOral($temaExOral)
+		{
+			$this->temaExOral = $temaExOral;
+
+			return $this;
+		}
+
+		/**
+		 * Get temaExOral
+		 *
+		 * @return string
+		 */
+		public function getTemaExOral()
+		{
+			return $this->temaExOral;
+		}
+	}
 
