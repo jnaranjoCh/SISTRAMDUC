@@ -38,7 +38,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body ">
-              <table id="tabla" class="table table-hover table-bordered table-striped">
+              <table id="tabla" class="table table-hover table-bordered table-striped table-responsive">
                 <thead>
                   <tr>
                     <th>Nro</th>
@@ -60,58 +60,6 @@
                     <th id="accionesFoot" class="hide">Acciones</th>
                   </tr>
                 </tfoot>
-                <!--<tr>
-                  <td>1</td>
-                  <td>Algoritmo</td>
-                  <td><span class="label label-success">Aprobada</span></td>
-                  <td>
-                    <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detalles">
-                      Ver Detalles <i class="fa fa-eye"></i>
-                    </button>
-                    <a  class="btn btn-xs btn-primary" href="">
-                      Gestionar <i class="fa fa-cogs"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Sistemas Operativos</td>
-                  <td><span class="label label-warning">En Proceso</span></td>
-                  <td>
-                    <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detalles">
-                      Ver Detalles <i class="fa fa-eye"></i>
-                    </button>
-                    <a  class="btn btn-xs btn-primary" href="">
-                      Gestionar <i class="fa fa-cogs"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Elementos Discretos</td>
-                  <td><span class="label label-primary">Approved</span></td>
-                  <td>
-                    <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detalles">
-                      Ver Detalles <i class="fa fa-eye"></i>
-                    </button>
-                    <a  class="btn btn-xs btn-primary" href="">
-                      Gestionar <i class="fa fa-cogs"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Diseño Digital</td>
-                  <td><span class="label label-danger">Negada</span></td>
-                  <td>
-                    <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#detalles">
-                      Ver Detalles <i class="fa fa-eye"></i>
-                    </button>
-                    <a  class="btn btn-xs btn-primary" href="">
-                      Gestionar <i class="fa fa-cogs"></i>
-                    </a>
-                  </td>
-                </tr>-->
               </table>
             </div>
             <!-- /.box-body -->
@@ -120,22 +68,35 @@
         </div>
         
 
-        <!-- Modal -->
-        <div class="modal" id="detalles" role="dialog" aria-labelledby="myModalLabel">
+        <!-- Modal Detalles-->
+        <div class="modal" id="detalles" role="dialog" aria-labelledby="modalDetalles">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title" id="myModalLabel">Detalles</h3>
               </div>
-              <div id="detallesModalBody" class="modal-body">
-                
+              <div id="detallesModalBody" class="modal-body overlay">
+                <i class="fa fa-refresh fa-spin"></i>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-dismiss="modal">Aceptar</button>
               </div>
             </div>
           </div>
         </div>
         
-        
+        <!-- Modal Cargando-->
+        <div class="modal fade" id="cargando" role="dialog" data-keyboard="false" data-backdrop="static">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div>
+              <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+              <br/>
+              <!--<label style="position: absolute; top:50%; left:50%; width:200px; margin-left:-100px; height:100px; margin-top:200px; color: white; font: 150% sans-serif;">Guardando datos...</label>-->
+            </div>
+          </div>
+        </div>
       </section>
     </div>
     

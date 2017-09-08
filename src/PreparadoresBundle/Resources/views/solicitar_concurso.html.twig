@@ -5,7 +5,9 @@
     <h1>Solicitar Concurso</h1>
     <ol class="breadcrumb">
       <li><i class="fa fa fa-users"></i> Preparadores</li>
-      <li> Apertura De Concurso</li>
+      <li data-route="apertura_concurso_index">
+        <a href="{{ path('apertura_concurso_index') }}">Apertura De Concurso</a>
+      </li>
       <li class="active"> Solicitar</li>
     </ol>
   </section>
@@ -170,28 +172,6 @@
                     </div>
                   </div>
                 </div>
-                <!--<div id="divJurado" class="form-group">
-                  <label for="Jurado" class="col-sm-3 control-label">Jurado</label>
-
-                  <div id="Jurado">
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" id="JurCoord" placeholder="Coordinador">
-                    </div>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" id="JurPpal1" placeholder="Principal 1">
-                    </div>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" id="JurPpal2" placeholder="Principal 2">
-                    </div>
-                    </br></br>
-                    <div class="col-sm-offset-3 col-sm-3">
-                      <input type="text" class="form-control" id="JurSupl1" placeholder="Suplente 1">
-                    </div>
-                    <div class="col-sm-3">
-                      <input type="text" class="form-control" id="JurSupl2" placeholder="Suplente 2">
-                    </div>
-                  </div>
-                </div>-->
               </div>
               <div class="box-footer">
                 <div class="col-sm-offset-4 col-sm-4">
@@ -202,6 +182,19 @@
           </div>
         </div>
       </div>
+      
+      <!-- Modal Cargando-->
+      <div class="modal fade" id="cargando" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div>
+            <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+            <br/>
+            <label style="position: absolute; top:50%; left:50%; width:200px; margin-left:-100px; height:100px; margin-top:200px; color: white; font: 150% sans-serif;">Guardando datos...</label>
+          </div>
+        </div>
+      </div>
+      
     </section>
   </div>
 {% endblock %}

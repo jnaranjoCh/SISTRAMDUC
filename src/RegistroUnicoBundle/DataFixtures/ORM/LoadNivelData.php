@@ -13,7 +13,7 @@ class LoadNivelData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $array = ["Curso","PreGrado","PostGrado","Doctorado"];
+        $array = ["Curso","PreGrado","PostGrado","Doctorado","Otros"];
         
         foreach($array as $val){
             $nivel = new Nivel();

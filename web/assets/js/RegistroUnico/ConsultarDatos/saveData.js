@@ -128,17 +128,17 @@ $("#guardar").click(function(){
             if(validarDatosPersonales())
             {
                 if(!validarCargos())
-                    text = "Error campos mal introducido o obligatorio en la sección de cargos.";
+                    text = "Campos mal introducido u obligatorio en la sección de cargos.";
                 else if(!validarNombresRegistros() || !validarRegistros())
-                    text = "Error campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
+                    text = "Campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
                 else if(!validarParticipantes())
-                    text = "Error campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
+                    text = "Campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
                 else if(!validarRevistas())
-                    text = "Error campos mal introducido, obligatorio, registro no asociados o existen revistas repetidas para un registro en la sección de revistas.";        
+                    text = "Campos mal introducido, obligatorio, registro no asociados o existen revistas repetidas para un registro en la sección de revistas.";        
                 else if($("#checkboxHijos").prop('checked'))
                 {
                     if(!validarHijos())
-                        text = "Error campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
+                        text = "Campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
                     else
                     {
                         participantesData = burbuja(participantesData);
@@ -202,9 +202,9 @@ $("#guardar").click(function(){
             }else
                 can_update = true;
         }else
-            text = "Error los archivos deben de tener los nombre bien especificados (Cedula.pdf,RIF.pdf,Acta_nacimiento.pdf) respectivamente.";        
+            text = "Los archivos deben de tener los nombre bien especificados (Cedula.pdf,RIF.pdf,Acta_nacimiento.pdf) respectivamente.";        
     }else
-        text = "Error los archivos deben de tener los nombre bien especificados (Acta_nacimiento_1.pdf,Acta_nacimiento_2.pdf,Acta_nacimiento_3.pdf,......,Acta_nacimiento_n.pdf) respectivamente.";
+        text = "Los archivos deben de tener los nombre bien especificados (Acta_nacimiento_1.pdf,Acta_nacimiento_2.pdf,Acta_nacimiento_3.pdf,......,Acta_nacimiento_n.pdf) respectivamente.";
     if(!can_update)
         toastr.error(text, "Error", {
                     "timeOut": "0",
@@ -245,7 +245,7 @@ function validarDatosPersonales()
                 $("#div"+inputsO[i-1]).addClass("has-error");
             }
             $("#headerPersonal").css({ 'color': "red" });
-            text = "Error campo mal introducido o obligatorio.";
+            text = "Campo mal introducido u obligatorio.";
         }else{
             if(inputsO[i] == "FechaNacimientoDatos")
                 anio = parseInt($("#"+inputsO[i]).val()[6]+$("#"+inputsO[i]).val()[7]+$("#"+inputsO[i]).val()[8]+$("#"+inputsO[i]).val()[9]); 
@@ -254,7 +254,7 @@ function validarDatosPersonales()
                 valido = false;
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error son solo tres archivos en el orden especificado (Cedula,RIF,Acta de nacimiento).";
+                text = "Son sólo tres archivos en el orden especificado (Cédula, RIF, Acta de nacimiento).";
             }
             
             if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18)){
@@ -262,19 +262,19 @@ function validarDatosPersonales()
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else if(inputsO[i] == "NumeroDatos" &&  (parseInt($("#"+inputsO[i]).val()) > 999 || parseInt($("#"+inputsO[i]).val()) < 100)){
                 valido = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else if(inputsO[i] == "NumeroDatosII" &&   (parseInt($("#"+inputsO[i]).val()) > 9999999 || parseInt($("#"+inputsO[i]).val()) < 1000000)){
                 valido = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i-1]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i-1]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else{
                 personalData[indPersonalData] = $("#"+inputsO[i]).val();
                 indPersonalData++;
@@ -305,7 +305,7 @@ function validarDatosPersonales()
     if(valido && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         valido = false;
         $("#headerPersonal").css({ 'color': "red" });
-        text = "Error la edad no coincide con la fecha de nacimiento.";
+        text = "La edad no coincide con la fecha de nacimiento.";
     }
     
     personalData[indPersonalData] = $("#DireccionDatos").val();
@@ -341,17 +341,18 @@ function validarCargos()
             cellsCargos.row = i;
             cellsCargos.column = j;
             cellsCargos.columnVisible = "0";
-            if($("#"+tableCargo.cell(cellsCargos).data().split('id="')[1].split('"')[0]).val() == "")
+            
+            if(findValue(tableCargo, cellsCargos) == "")
                 valido = false;
             else
             {
                 switch(j)
                 {
                     case 1:
-                        cargo.nombre = $("#"+tableCargo.cell(cellsCargos).data().split('id="')[1].split('"')[0]).val();
+                        cargo.nombre = findValue(tableCargo, cellsCargos);
                     break;
                     case 2:
-                        cargo.fechaInicio = $("#"+tableCargo.cell(cellsCargos).data().split('id="')[1].split('"')[0]).val();
+                        cargo.fechaInicio = findValue(tableCargo, cellsCargos);
                     break;
                 }
             }
@@ -367,6 +368,8 @@ function validarRegistros()
     var cellsRegistro;
     var valido = true;
     var emIns = false;
+    var emIns2 = false;
+    var emIns3 = false;
     var numColumn = obtenerColumnas(tableRegistros);
     var numFilas = obtenerFilas(tableRegistros);
     countRegistro = 0;
@@ -376,19 +379,20 @@ function validarRegistros()
         var registro = new Object();
         for(var j = 2; j < numColumn-1; j++)
         {
+            
             cellsRegistro = new Object();
             cellsRegistro.row = i;
             cellsRegistro.column = j;
             cellsRegistro.columnVisible = "0";
-            if(j == 2 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Articulo publicado")
+            
+            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Articulo publicado")
             {
                 cellsRegistro.column = 1;
                 referenciasRevistas[indReferenciasRevistas] = tableRegistros.cell(cellsRegistro).data();
                 indReferenciasRevistas++;
                 cellsRegistro.column = j;
             }
-
-            if(j == 2 && ($("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de pasantias" || $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "Tutoria de servicio comunitario"))
+            if(j == 2 && (findValue(tableRegistros, cellsRegistro) == "Tutoria de pasantias" || findValue(tableRegistros, cellsRegistro) == "Tutoria de servicio comunitario"  ||  findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis" || findValue(tableRegistros, cellsRegistro) == "Articulo publicado"))
             {
                 cellsRegistro.column = 1;
                 referenciasParticipantes[indReferenciasParticipantes] = tableRegistros.cell(cellsRegistro).data();
@@ -396,23 +400,55 @@ function validarRegistros()
                 cellsRegistro.column = j;
                 emIns = true;
             }
-            else if(j == 2 && ($("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de pasantias" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != "Tutoria de servicio comunitario" && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() != ""))
+            else if(j == 2 && (findValue(tableRegistros, cellsRegistro) != "Tutoria de pasantias" && findValue(tableRegistros, cellsRegistro) != "Tutoria de servicio comunitario" && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "Articulo publicado" && findValue(tableRegistros, cellsRegistro) != ""))
                 emIns = false;
-            
-            if(emIns && j == 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
+    
+            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis")
+            {
+                emIns2 = true;
+            }
+            else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "")
+                emIns2 = false;
+                
+            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Asistencia a Congresos/Seminarios")
+            {
+                emIns3 = true;
+            }
+            else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Asistencia a Congresos/Seminarios" && findValue(tableRegistros, cellsRegistro) != "")
+                emIns3 = false;
+                
+            if(emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "")
+            {
                 valido = false;
-            else if(!emIns && j == 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "" && valido)
+            }
+            else if(!emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                valido = true;
+                
+            if(emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "")
+            {
+                valido = false;
+            }
+            else if(!emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                valido = true;
+            
+            if(emIns3 && (j == 9 || j == 10) && findValue(tableRegistros, cellsRegistro) == "")
+            {
+                valido = false;
+            }
+            else if(!emIns3 && (j == 9 || j == 10)  && findValue(tableRegistros, cellsRegistro) == "" && valido)
                 valido = true;
 
-            if(j != 7 && $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val() == "")
+            if(j != 7 && j != 8 && j != 9 && j != 10 && findValue(tableRegistros, cellsRegistro) == "")
+            {
                 valido = false;
+            }
                 
             if(valido == true)
             {
                 switch(j)
                 {
                     case 2:
-                        registro.tipoDeReferencia = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        registro.tipoDeReferencia = findValue(tableRegistros, cellsRegistro);
                         cellsRegistro = new Object();
                         cellsRegistro.row = i;
                         cellsRegistro.column = 1;
@@ -420,19 +456,28 @@ function validarRegistros()
                         registro.idRegistro = tableRegistros.cell(cellsRegistro).data();
                     break;
                     case 3:
-                        registro.descripcion = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        registro.descripcion = findValue(tableRegistros, cellsRegistro);
                     break;
                     case 4:
-                        registro.nivel = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        registro.nivel = findValue(tableRegistros, cellsRegistro);
                     break;
                     case 5:
-                        registro.estatus = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        registro.estatus = findValue(tableRegistros, cellsRegistro);
                     break;
                     case 6:
-                        registro.anio = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        registro.anio = findValue(tableRegistros, cellsRegistro);
                     break;
                     case 7:
-                        registro.empresaInstitucion = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+                        registro.empresaInstitucion = findValue(tableRegistros, cellsRegistro);
+                    break;
+                    case 8:
+                        registro.tituloObtenido = findValue(tableRegistros, cellsRegistro);
+                    break;
+                    case 9:
+                        registro.ciudadPais = findValue(tableRegistros, cellsRegistro);
+                    break;
+                    case 10:
+                        registro.congreso = findValue(tableRegistros, cellsRegistro);
                     break;
                 }
                 
@@ -452,13 +497,13 @@ function validarNombresRegistros()
     var numFilas = obtenerFilas(tableRegistros);
     var arrayRegistro = [];
     
-    for(var i = 0; i < numFilas; i++)
+    cellsRegistro = new Object();
+    for(var i = 0; i<numFilas; i++)
     {
-        cellsRegistro = new Object();
         cellsRegistro.row = i;
         cellsRegistro.column = 3;
         cellsRegistro.columnVisible = "0";
-        arrayRegistro[i] = $("#"+tableRegistros.cell(cellsRegistro).data().split('id="')[1].split('"')[0]).val();
+        arrayRegistro[i] = findValue( tableRegistros, cellsRegistro);
     }
     
     if(arrayRegistro.length != arrayRegistro.unique().length)
@@ -489,7 +534,7 @@ function validarParticipantes()
         cellsParticipantes.row = i;
         cellsParticipantes.column = 1;
         cellsParticipantes.columnVisible = "0";
-        referenciasParticipantesAux[indReferenciasParticipantesAux] = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+        referenciasParticipantesAux[indReferenciasParticipantesAux] = findValue(tableParticipantes, cellsParticipantes);
         indReferenciasParticipantesAux++;
     }
 
@@ -499,9 +544,9 @@ function validarParticipantes()
         cellsParticipantes.row = i;
         cellsParticipantes.column = 1;
         cellsParticipantes.columnVisible = "0";
-        referenciasParticipantesAux2[indReferenciasParticipantesAux2] = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+        referenciasParticipantesAux2[indReferenciasParticipantesAux2] = findValue(tableParticipantes, cellsParticipantes);
         cellsParticipantes.column = 3;
-        referenciasParticipantesAux2[indReferenciasParticipantesAux2] = referenciasParticipantesAux2[indReferenciasParticipantesAux2] + $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+        referenciasParticipantesAux2[indReferenciasParticipantesAux2] = referenciasParticipantesAux2[indReferenciasParticipantesAux2] + findValue(tableParticipantes, cellsParticipantes);
         indReferenciasParticipantesAux2++;
     }
     if((referenciasParticipantesAux.unique().filter(Boolean).length != referenciasParticipantes.filter(Boolean).length) || (referenciasParticipantesAux2.filter(Boolean).length != referenciasParticipantesAux2.unique().filter(Boolean).length))
@@ -522,7 +567,7 @@ function validarParticipantes()
                 cellsParticipantes.row = i;
                 cellsParticipantes.column = j;
                 cellsParticipantes.columnVisible = "0";
-                if($("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val() == "")
+                if(findValue(tableParticipantes, cellsParticipantes) == "")
                 {
                     referenciasRevistas.splice(0,referenciasRevistas.length);
                     referenciasRevistas = new Array();
@@ -532,22 +577,22 @@ function validarParticipantes()
                 {
                     switch (j) {
                         case 2:
-                            if(!(/^[a-zA-Z]*$/).test($("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val()))
+                            if(!(/^[a-zA-Z]*$/).test(findValue(tableParticipantes, cellsParticipantes)))
                             {
                                 referenciasRevistas.splice(0,referenciasRevistas.length);
                                 referenciasRevistas = new Array();
                                 indReferenciasRevistas=0;
                                 valido = false;
                             }
-                            participante.nombre = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+                            participante.nombre = findValue(tableParticipantes, cellsParticipantes);
                             cellsParticipantes = new Object();
                             cellsParticipantes.row = i;
                             cellsParticipantes.column = j-1;
                             cellsParticipantes.columnVisible = "0";
-                            participante.idRegistro = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+                            participante.idRegistro = findValue(tableParticipantes, cellsParticipantes);
                             break;
                         case 3:
-                            participante.cedula = $("#"+tableParticipantes.cell(cellsParticipantes).data().split('id="')[1].split('"')[0]).val();
+                            participante.cedula = findValue(tableParticipantes, cellsParticipantes);
                             break;
                     }
                 }
@@ -581,7 +626,7 @@ function validarRevistas()
         cellsRevistas.row = i;
         cellsRevistas.column = 1;
         cellsRevistas.columnVisible = "0";
-        referenciasRevistasAux[indReferenciasRevistasAux] = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
+        referenciasRevistasAux[indReferenciasRevistasAux] = findValue(tableRevista, cellsRevistas);
         indReferenciasRevistasAux++;
     }
 
@@ -591,7 +636,7 @@ function validarRevistas()
         cellsRevistas.row = i;
         cellsRevistas.column = 2;
         cellsRevistas.columnVisible = "0";
-        referenciasRevistasAux2[indReferenciasRevistasAux2] = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
+        referenciasRevistasAux2[indReferenciasRevistasAux2] = findValue(tableRevista, cellsRevistas);
         indReferenciasRevistasAux2++;
     }
     if((referenciasRevistasAux.unique().filter(Boolean).length != referenciasRevistas.filter(Boolean).length) || (referenciasRevistasAux2.filter(Boolean).length != referenciasRevistasAux2.unique().filter(Boolean).length))
@@ -607,7 +652,7 @@ function validarRevistas()
                 cellsRevistas.row = i;
                 cellsRevistas.column = j;
                 cellsRevistas.columnVisible = "0";
-                if($("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val() == "")
+                if(findValue(tableRevista, cellsRevistas) == "" && j != 3 && j != 4)
                 {
                     valido = false;
                 }
@@ -615,12 +660,18 @@ function validarRevistas()
                 {
                     switch (j) {
                         case 2:
-                            revista.revista = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
+                            revista.revista = findValue(tableRevista, cellsRevistas);
                             cellsRevistas = new Object();
                             cellsRevistas.row = i;
                             cellsRevistas.column = j-1;
                             cellsRevistas.columnVisible = "0";
-                            revista.idRegistro = $("#"+tableRevista.cell(cellsRevistas).data().split('id="')[1].split('"')[0]).val();
+                            revista.idRegistro = findValue(tableRevista, cellsRevistas);
+                            break;
+                         case 3:
+                            revista.volumen = findValue(tableRevista, cellsRevistas);
+                            break;
+                         case 4:
+                            revista.primerayUltimaPagina = findValue(tableRevista, cellsRevistas);
                             break;
                     }
                 }
@@ -671,7 +722,7 @@ function validarHijos()
             cellsHijos.row = i;
             cellsHijos.column = 3;
             cellsHijos.columnVisible = "0";
-            cedulasHijos[indCedulasHijos] = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+            cedulasHijos[indCedulasHijos] = findValue(tableHijos, cellsHijos);
             indCedulasHijos++;
         }
 
@@ -688,57 +739,57 @@ function validarHijos()
                     cellsHijos.row = i;
                     cellsHijos.column = j;
                     cellsHijos.columnVisible = "0";
-                    if(j != 3 && $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val() == "")
+                    if(j != 3 && findValue(tableHijos, cellsHijos) == "")
                         valido = false;
                         
                     if(valido)
                     {
                         switch (j) {
                             case 1:
-                                    hijo.ciMadre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.ciMadre = findValue(tableHijos, cellsHijos);
                                 break;
                             case 2:
-                                    hijo.ciPadre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.ciPadre = findValue(tableHijos, cellsHijos);
                                 break;
                             case 3:
-                                    hijo.ciHijo = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.ciHijo = findValue(tableHijos, cellsHijos);
                                 break;
                             case 4:
-                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
                                     {
                                         valido = false;
                                     }
-                                    hijo.primerNombre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.primerNombre = findValue(tableHijos, cellsHijos);
                                 break;
                             case 5:
-                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
                                     {
                                         valido = false;
                                     }
-                                    hijo.segundoNombre = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.segundoNombre = findValue(tableHijos, cellsHijos);
                                 break;
                             case 6:
-                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
                                     {
                                         valido = false;
                                     }
-                                    hijo.primerApellido = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.primerApellido = findValue(tableHijos, cellsHijos);
                                 break;
                             case 7:
-                                    if(!(/^[a-zA-Z]*$/).test($("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val()))
+                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
                                     {
                                         valido = false;
                                     }
-                                    hijo.segundoApellido = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.segundoApellido = findValue(tableHijos, cellsHijos);
                                 break;
                             case 8:
-                                    hijo.fechaNacimiento = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.fechaNacimiento = findValue(tableHijos, cellsHijos);
                                 break;
                             case 9:
-                                    hijo.fechaVencimiento = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.fechaVencimiento = findValue(tableHijos, cellsHijos);
                                 break;
                             case 10:
-                                    hijo.nacionalidad = $("#"+tableHijos.cell(cellsHijos).data().split('id="')[1].split('"')[0]).val();
+                                    hijo.nacionalidad = findValue(tableHijos, cellsHijos);
                                 break;
                             
                         }
@@ -795,4 +846,14 @@ function burbuja(array)
     }
  
     return array;
+}
+
+function findValue(table, cellTable)
+{
+    var valor;
+    if(table.cell(cellTable).nodes().to$().find('input').val() != null)
+        valor = table.cell(cellTable).nodes().to$().find('input').val();
+    else
+        valor = table.cell(cellTable).nodes().to$().find('select').val();
+    return valor;
 }

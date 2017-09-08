@@ -93,6 +93,33 @@ class LoadTipoTramiteData extends AbstractFixture implements OrderedFixtureInter
 
         $manager->persist($tipo_concursoPreparadores);
         $manager->flush();
+        
+        $tipo_clausulasPrimaHijos = new TipoTramite();
+        $tipo_clausulasPrimaHijos->setId(10);
+        $tipo_clausulasPrimaHijos->setNombre('Solicitud de prima por hijos');
+        $tipo_clausulasPrimaHijos->setDescripcion('');
+        $tipo_clausulasPrimaHijos->setDuracion('12');
+
+        $manager->persist($tipo_clausulasPrimaHijos);
+        $manager->flush();
+        
+        $tipo_clausulasBeca = new TipoTramite();
+        $tipo_clausulasBeca->setId(11);
+        $tipo_clausulasBeca->setNombre('Solicitud de beca para hijos');
+        $tipo_clausulasBeca->setDescripcion('');
+        $tipo_clausulasBeca->setDuracion('');
+
+        $manager->persist($tipo_clausulasBeca);
+        $manager->flush();
+        
+        $tipo_clausulasDiscapacidadHijos = new TipoTramite();
+        $tipo_clausulasDiscapacidadHijos->setId(13);
+        $tipo_clausulasDiscapacidadHijos->setNombre('Solicitud de prima para hijos con discapacidad');
+        $tipo_clausulasDiscapacidadHijos->setDescripcion('');
+        $tipo_clausulasDiscapacidadHijos->setDuracion('12');
+
+        $manager->persist($tipo_clausulasDiscapacidadHijos);
+        $manager->flush();
     }
 
     public function getOrder()

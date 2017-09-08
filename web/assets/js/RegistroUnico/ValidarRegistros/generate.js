@@ -18,7 +18,7 @@ $('#generate').click(function(){
                $("#save").removeClass("hidden");
             }else{
                $("#load").val("false");
-               toastr.error("El usuario no se encuentra registrado, esta inactivo o no a realizado el registro de datos.", "Error", {
+               toastr.error("El usuario no se encuentra registrado, está inactivo o no ha realizado el registro de datos.", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                              });
@@ -48,6 +48,9 @@ function cargarRegistros()
                             { "data": "Estatus" },
                             { "data": "Año de publicación y/o asistencia" },
                             { "data": "Empresa y/o institución" },
+                            { "data": "Titulo Obtenido" },
+                            { "data": "CiudadPais"},
+                            { "data": "Congreso"},
                             { "data": "Validado" }
                         ]
                     });

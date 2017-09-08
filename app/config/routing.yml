@@ -1,3 +1,7 @@
+descarga_horaria:
+    resource: "@DescargaHorariaBundle/Resources/config/routing.yml"
+    prefix:   /
+
 jubilacion_tramite_jubilacion:
     resource: "@JubilacionBundle/Controller/TramiteJubilacionController.php"
     type:     annotation
