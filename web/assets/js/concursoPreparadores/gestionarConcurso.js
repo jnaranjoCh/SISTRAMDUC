@@ -52,7 +52,7 @@ $(window).load( function(){
                 text = "Falla al consultar el detalle de este concurso.";
                 toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
             } else{
-            	alert("trajo data");
+            	alert("trajo data" + respuesta["idAspirante"].length);
             	var i = 0;
             	contenidoHTML =
 					'<dl class="col-md-offset-2 dl-horizontal">'+
@@ -64,17 +64,14 @@ $(window).load( function(){
 						
 						'<dt>Número de Aspirantes</dt>';
 						
-				if(respuesta["idAspirante"].length == 1){
-					alert("trajo aspirante 1");
-					if(respuesta["idAspirante"][i] == 0){
-						alert("trajo aspirante vacio");
-						contenidoHTML = contenidoHTML+
+				if(respuesta["idAspirante"].length == 1 && respuesta["idAspirante"][i] == 0){
+					contenidoHTML = contenidoHTML+
 						'<dd>'+respuesta["idAspirante"][i]+'</dd>';
-					}else{
-						alert("trajo aspirante real");
-						contenidoHTML = contenidoHTML+
+				}else{
+					$('#accionesHead').removeClass("hide");   
+					$('#accionesFoot').removeClass("hide");   
+					contenidoHTML = contenidoHTML+
 						'<dd>'+respuesta["idAspirante"].length+'</dd>';
-					}
 				}
 				
 				contenidoHTML = contenidoHTML+
@@ -137,17 +134,17 @@ $(window).load( function(){
 					
 				$('#detallesSolicitudSeleccionada').append(contenidoHTML);
 				
-				// for (var i = 0; i <= respuesta["idAspirante"].length-1; i++) {
-    //                 var idAspirante = respuesta["idAspirante"][i];
-    //                 aspirantes.row.add( {
-    //                 	"id": respuesta["idAspirante"][i],
-    //                     "nombreCompleto": respuesta["nombreCompleto"][i],
-    //                     "correo": respuesta["correo"][i],
-    //                     "telefono": respuesta["telefono"][i],
-    //                     "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="#"><i class="fa fa-search"></i></button>'+
-    //                     			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Gestionar" onclick="#"><i class="fa fa-cogs"></i></button>'
-    //                 }).draw();                          
-    //             }
+				for (var i = 0; i <= respuesta["idAspirante"].length-1; i++) {
+                    var idAspirante = respuesta["idAspirante"][i];
+                    aspirantes.row.add( {
+                    	"id": respuesta["idAspirante"][i],
+                        "nombreCompleto": respuesta["nombreCompleto"][i],
+                        "correo": respuesta["correo"][i],
+                        "telefono": respuesta["telefono"][i],
+                        "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="#"><i class="fa fa-search"></i></button>'+
+                        			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Gestionar" onclick="#"><i class="fa fa-cogs"></i></button>'
+                    }).draw();                          
+                }
             }
 		}
     });
@@ -170,6 +167,11 @@ $(window).load( function(){
  //       		toastr.warning(text, "Alerta!", {"timeOut": "0","extendedTImeout": "0"});
  //   		}
  //   }});
+});
+
+$('#closeAspirantes').click(function (){ 
+	var tabla = document.getElementById('aspirantes');
+	alert("filas de la tabla ==>> "+tabla.rows.length);
 });
 
 $('#cargarConcursoDesierto').click(function (){ 

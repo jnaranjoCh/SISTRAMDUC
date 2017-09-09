@@ -733,15 +733,13 @@ class DefaultController extends Controller
         return $result;
     }
     
-    private function asignarFilaAspirante($object, $nameField, $result, $pos)
+    private function asignarFilaAspirante($object, $nameField, $result, $case, $pos)
     {
-        foreach($object as $value){
-            switch ($case) {
-                case 0: $result[$nameField][$pos] = $value->getId(); break;
-                case 1: $result[$nameField][$pos] = $value->getPrimerNombre().$value->getPrimerApellido(); break;
-                case 2: $result[$nameField][$pos] = $value->getCorreo(); break;
-                case 3: $result[$nameField][$pos] = $value->getTelefono(); break;
-            }
+        switch ($case) {
+            case 0: $result[$nameField][$pos] = $object->getId(); break;
+            case 1: $result[$nameField][$pos] = $object->getPrimerNombre().' '.$object->getPrimerApellido(); break;
+            case 2: $result[$nameField][$pos] = $object->getCorreo(); break;
+            case 3: $result[$nameField][$pos] = $object->getTelefono(); break;
         }
         return $result;
     }
@@ -778,10 +776,10 @@ class DefaultController extends Controller
                 $aspirantes = $value->getAspirantes();
                 $a=0;
                 foreach ($aspirantes as $aspirante) {
-                    $result = $this->asignarFilaAspirante($aspirante, 'idAspirante', $result, 0);
-                    $result = $this->asignarFilaAspirante($aspirante, 'nombreCompleto', $result, 1);
-                    $result = $this->asignarFilaAspirante($aspirante, 'correo', $result, 2);
-                    $result = $this->asignarFilaAspirante($aspirante, 'telefono', $result, 3);
+                    $result = $this->asignarFilaAspirante($aspirante, 'idAspirante', $result, 0, $a);
+                    $result = $this->asignarFilaAspirante($aspirante, 'nombreCompleto', $result, 1, $a);
+                    $result = $this->asignarFilaAspirante($aspirante, 'correo', $result, 2, $a);
+                    $result = $this->asignarFilaAspirante($aspirante, 'telefono', $result, 3, $a);
                     $a=$a+1;
                 }
                 if($a == 0){
