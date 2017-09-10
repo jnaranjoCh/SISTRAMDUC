@@ -20,6 +20,7 @@ class LoadNivelData extends AbstractFixture implements OrderedFixtureInterface
             $nivel->setDescription($val);
             $manager->persist($nivel);
             $manager->flush();
+            $this->addReference($val.'-nivel', $nivel);
         }
     }
 

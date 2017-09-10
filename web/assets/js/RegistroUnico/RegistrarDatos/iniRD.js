@@ -7,6 +7,14 @@ var copiar = 0;
 
 $( window ).load(function() {
     
+    
+    $("#DescripcionLabel").html("Descripción");
+    $("#AnoPublicacionLabel").html("Año");
+    $("#CiudadPaisLabel").html("Ciudad / Pais");
+    $("#CongresosLabel").html("Congresos");
+    $("#EmpresaLabel").html("Empresa");
+    $("#InstitucionLabel").html("Institución / Casa editorial / Financiamiento");
+    $("#TituloObtenidoLabel").html("Titulo Obtenido");
     var status = window.location.href.split("/");
     if(status[status.length-1] == "success")
         toastr.success("Datos registrados exitosamente!.", "Exito!", {

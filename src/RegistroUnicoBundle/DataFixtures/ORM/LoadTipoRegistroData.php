@@ -20,6 +20,7 @@ class LoadTipoRegistroData extends AbstractFixture implements OrderedFixtureInte
             $tiporegistro->setDescription($val);
             $manager->persist($tiporegistro);
             $manager->flush();
+            $this->addReference($val.'-tipoRegistro', $tiporegistro);
         }
     }
 

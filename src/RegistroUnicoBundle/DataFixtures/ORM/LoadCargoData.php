@@ -20,6 +20,7 @@ class LoadCargoData extends AbstractFixture implements OrderedFixtureInterface
             $cargo->setDescription($val);
             $manager->persist($cargo);
             $manager->flush();
+            $this->addReference($val.'-cargo', $cargo);
         }
     }
 

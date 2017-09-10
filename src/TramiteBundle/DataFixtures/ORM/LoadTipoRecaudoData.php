@@ -18,19 +18,22 @@ class LoadTipoRecaudoData extends AbstractFixture implements OrderedFixtureInter
 
         $manager->persist($tipo_cedula);
         $manager->flush();
+        $this->addReference('Cedula-tipoRecaudo', $tipo_cedula);
 
         $tipo_rif = new TipoRecaudo();
         $tipo_rif->setNombre('RIF');
-
+        
         $manager->persist($tipo_rif);
         $manager->flush();
-
+        $this->addReference('RIF-tipoRecaudo', $tipo_rif);
+        
         $tipo_partida = new TipoRecaudo();
         $tipo_partida->setNombre('Partida de Nacimiento');
 
         $manager->persist($tipo_partida);
         $manager->flush();
-
+        $this->addReference('Partida de Nacimiento-tipoRecaudo', $tipo_partida);
+        
         $tipo_oficio_comision = new TipoRecaudo();
         $tipo_oficio_comision->setNombre('Oficio de Solicitud de la Comisión de Servicio por parte del Beneficiario');
 
