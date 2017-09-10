@@ -13,7 +13,6 @@ use RegistroUnicoBundle\Entity\Departamento;
 use RegistroUnicoBundle\Entity\Cargo;
 use TramiteBundle\Entity\Tramite;
 use DescargaHorariaBundle\Entity\NombramientoCargoAdmUniv;
-use DescargaHorariaBundle\Entity\PlanAcademicoIntegral;
 use \stdClass;
 
 /**
@@ -192,12 +191,7 @@ class Usuario implements UserInterface
      */
     protected $nombramiento_cargo;
     
-    /**
-     * @ORM\OneToMany(targetEntity="DescargaHorariaBundle\Entity\PlanAcademicoIntegral", mappedBy="usuario_id", cascade={"persist"})
-     */
-    protected $planAcad;
-    
-    
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -206,7 +200,6 @@ class Usuario implements UserInterface
         $this->tramite = new ArrayCollection();
         $this->hijos = new ArrayCollection();
         $this->nombramiento_cargo = new ArrayCollection();
-        $this->planAcad = new ArrayCollection();
     }
 
     public function getUsuarioFechaCargos()
@@ -972,11 +965,6 @@ class Usuario implements UserInterface
     public function getNombramientoCargo()
     {
        return $this->nombramiento_cargo;
-    }
-    
-     public function getPlanAcad()
-    {
-       return $this->planAcad;
     }
     
 }

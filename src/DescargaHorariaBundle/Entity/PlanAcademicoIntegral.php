@@ -30,12 +30,6 @@ class PlanAcademicoIntegral
     private $horas;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="planAcad")
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     */
-    protected $usuario_id;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="TipoComponente", inversedBy="plan_tipo_comp")
      * @ORM\JoinColumn(name="tipo_componente_id", referencedColumnName="id")
      */
