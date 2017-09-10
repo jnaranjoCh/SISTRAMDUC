@@ -128,17 +128,17 @@ $("#guardar").click(function(){
             if(validarDatosPersonales())
             {
                 if(!validarCargos())
-                    text = "Error campos mal introducido o obligatorio en la sección de cargos.";
+                    text = "Campos mal introducido u obligatorio en la sección de cargos.";
                 else if(!validarNombresRegistros() || !validarRegistros())
-                    text = "Error campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
+                    text = "Campos mal introducido, obligatorio en la sección de registros o existen registros repetidos.";
                 else if(!validarParticipantes())
-                    text = "Error campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
+                    text = "Campos mal introducido, obligatorio, registro no asociados o existen participantes repetidos para un registro en la sección de participantes.";
                 else if(!validarRevistas())
-                    text = "Error campos mal introducido, obligatorio, registro no asociados o existen revistas repetidas para un registro en la sección de revistas.";        
+                    text = "Campos mal introducido, obligatorio, registro no asociados o existen revistas repetidas para un registro en la sección de revistas.";        
                 else if($("#checkboxHijos").prop('checked'))
                 {
                     if(!validarHijos())
-                        text = "Error campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
+                        text = "Campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
                     else
                     {
                         participantesData = burbuja(participantesData);
@@ -202,9 +202,9 @@ $("#guardar").click(function(){
             }else
                 can_update = true;
         }else
-            text = "Error los archivos deben de tener los nombre bien especificados (Cedula.pdf,RIF.pdf,Acta_nacimiento.pdf) respectivamente.";        
+            text = "Los archivos deben de tener los nombre bien especificados (Cedula.pdf,RIF.pdf,Acta_nacimiento.pdf) respectivamente.";        
     }else
-        text = "Error los archivos deben de tener los nombre bien especificados (Acta_nacimiento_1.pdf,Acta_nacimiento_2.pdf,Acta_nacimiento_3.pdf,......,Acta_nacimiento_n.pdf) respectivamente.";
+        text = "Los archivos deben de tener los nombre bien especificados (Acta_nacimiento_1.pdf,Acta_nacimiento_2.pdf,Acta_nacimiento_3.pdf,......,Acta_nacimiento_n.pdf) respectivamente.";
     if(!can_update)
         toastr.error(text, "Error", {
                     "timeOut": "0",
@@ -245,7 +245,7 @@ function validarDatosPersonales()
                 $("#div"+inputsO[i-1]).addClass("has-error");
             }
             $("#headerPersonal").css({ 'color': "red" });
-            text = "Error campo mal introducido o obligatorio.";
+            text = "Campo mal introducido u obligatorio.";
         }else{
             if(inputsO[i] == "FechaNacimientoDatos")
                 anio = parseInt($("#"+inputsO[i]).val()[6]+$("#"+inputsO[i]).val()[7]+$("#"+inputsO[i]).val()[8]+$("#"+inputsO[i]).val()[9]); 
@@ -254,7 +254,7 @@ function validarDatosPersonales()
                 valido = false;
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error son solo tres archivos en el orden especificado (Cedula,RIF,Acta de nacimiento).";
+                text = "Son sólo tres archivos en el orden especificado (Cédula, RIF, Acta de nacimiento).";
             }
             
             if(inputsO[i] == "EdadDatos" && (parseInt($("#"+inputsO[i]).val()) > 80 || parseInt($("#"+inputsO[i]).val()) < 18)){
@@ -262,19 +262,19 @@ function validarDatosPersonales()
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else if(inputsO[i] == "NumeroDatos" &&  (parseInt($("#"+inputsO[i]).val()) > 999 || parseInt($("#"+inputsO[i]).val()) < 100)){
                 valido = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else if(inputsO[i] == "NumeroDatosII" &&   (parseInt($("#"+inputsO[i]).val()) > 9999999 || parseInt($("#"+inputsO[i]).val()) < 1000000)){
                 valido = false;
                 $("#headerPersonal").css({ 'color': "red" });
                 $("#span"+inputsO[i-1]).addClass("glyphicon-remove");
                 $("#div"+inputsO[i-1]).addClass("has-error");
-                text = "Error dato invalida.";
+                text = "Dato inválido.";
             }else{
                 personalData[indPersonalData] = $("#"+inputsO[i]).val();
                 indPersonalData++;
@@ -305,7 +305,7 @@ function validarDatosPersonales()
     if(valido && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         valido = false;
         $("#headerPersonal").css({ 'color': "red" });
-        text = "Error la edad no coincide con la fecha de nacimiento.";
+        text = "La edad no coincide con la fecha de nacimiento.";
     }
     
     personalData[indPersonalData] = $("#DireccionDatos").val();

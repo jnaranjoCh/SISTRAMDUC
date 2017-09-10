@@ -84,14 +84,16 @@
 	        	} else {
 	        	
 	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
+	        		
+	        			var num = data["id"][i];
 
-	                        tabla1.row.add( {
-	                            "nombre": data["nombre"][i],
-	                            "apellido": data["apellido"][i],
-	                            "areainvestigacion": data["areainvestigacion"][i],
-	                            "facultad": data["facultad"][i],
-	                            "universidad": data["universidad"][i]
-	                            }).draw();                               
+                        tabla1.row.add( {
+                            "nombre": data["nombre"][i],
+                            "apellido": data["apellido"][i],
+                            "areainvestigacion": data["areainvestigacion"][i],
+                            "facultad": data["facultad"][i],
+                            "universidad": data["universidad"][i]
+                            }).draw();                               
 	                    }
 	        	
 	        		$('#jurTabla').removeClass("hide");   	
@@ -252,7 +254,7 @@
 	        }
 	    });
 	});
-
+	
 	function eliminar(id, pos){
 
 	    ident = id;

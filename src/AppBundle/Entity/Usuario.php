@@ -179,7 +179,23 @@ class Usuario implements UserInterface
      * @ORM\OneToMany(targetEntity="TramiteBundle\Entity\Tramite", mappedBy="usuario_id", cascade={"persist"})
      */
     protected $tramite;
-
+    
+    /**
+     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion", mappedBy="usuario_id", cascade={"persist", "remove"})
+     */
+    protected  $dedicacion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="DescargaHorariaBundle\Entity\NombramientoCargoAdmUniv", mappedBy="usuario_id", cascade={"persist"})
+     */
+    protected $nombramiento_cargo;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="DescargaHorariaBundle\Entity\PlanAcademicoIntegral", mappedBy="usuario_id", cascade={"persist"})
+     */
+    protected $planAcad;
+    
+    
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -187,6 +203,8 @@ class Usuario implements UserInterface
         $this->planes_septenales_individuales = new ArrayCollection();
         $this->tramite = new ArrayCollection();
         $this->hijos = new ArrayCollection();
+        $this->nombramiento_cargo = new ArrayCollection();
+        $this->planAcad = new ArrayCollection();
     }
 
     public function getUsuarioFechaCargos()
@@ -805,6 +823,11 @@ class Usuario implements UserInterface
        return $hijos;
     }
 
+    public function getHijosObject()
+    {
+       return $this->hijos;
+    }
+    
     public function addHijo($hijo)
     {
        $this->hijos[] = $hijo;
@@ -943,4 +966,15 @@ class Usuario implements UserInterface
         $this->hijos = $hijos;
         return $this;
     }
+   
+    public function getNombramientoCargo()
+    {
+       return $this->nombramiento_cargo;
+    }
+    
+     public function getPlanAcad()
+    {
+       return $this->planAcad;
+    }
+    
 }

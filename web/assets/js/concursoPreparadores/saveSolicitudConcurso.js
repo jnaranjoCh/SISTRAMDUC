@@ -20,7 +20,6 @@ $('#cargarSolicConcurso').click(function (){
 	if (falla){
 		toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
 	} else {
-		//$("#cargando").modal("show");
 		$.ajax({
             method: "POST",
             data: {"AsigSol":$("#AsigSol").val(), "NroPlz":$("#NroPlz").val(), "ExOral":$("#TemExOral").val(), "ExEsc":$("#TemExEsc").val(), 

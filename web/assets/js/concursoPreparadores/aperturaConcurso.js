@@ -8,7 +8,6 @@ tabla = $('#tabla').DataTable({
 	{ "data": "nroPlazas" },
 	{ "data": "status" },
 	{ "data": "acciones" }
-	//{ "data": "gestionar" }   
   ]
 });
 	
@@ -30,34 +29,28 @@ $(window).load( function(){
             } else{
                 for (var i = 0; i <= respuesta["id"].length-1; i++) {
                     var id = respuesta["id"][i];
-                    var label="";
+                    var classSpan="";
                     var classGestionar="";
                     if(respuesta["estado"][i]=="Enviada"){
-                    	label= "label-primary";
+                    	classSpan= "label-primary";
                     }else if(respuesta["estado"][i]=="En Proceso"){
-						label= "label-warning";
-                    }else if(respuesta["estado"][i]=="Negada"){
-						label= "label-danger";
-						classGestionar= "hide";
+						classSpan= "label-warning";
                     }else if(respuesta["estado"][i]=="Aprobada"){
-						label= "label-success";
+						classSpan= "label-success";
+                    }else if(respuesta["estado"][i]=="Negada"){
+						classSpan= "label-danger";
+						classGestionar= "hide";
+                    }else if(respuesta["estado"][i]=="Finalizada"){
+                    	classSpan= "label-success";
 						classGestionar= "hide";
                     }
                     tabla.row.add( {
                     	"nro": respuesta["id"][i],
                         "asignaturaSolicitante": respuesta["asignatura"][i],
                         "nroPlazas": respuesta["plazas"][i],
-						"status": '<span class="label '+label+'">'+respuesta["estado"][i]+'</span>',
+						"status": '<span class="label '+classSpan+'">'+respuesta["estado"][i]+'</span>',
                         "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="javascript:verDetalleSolicitud('+id+')"><i class="fa fa-search"></i></button>'+
                         			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary '+classGestionar+'" title="Gestionar" onclick="javascript:gestionarSolicitud('+id+')"><i class="fa fa-cogs"></i></button>'
-                        			//'<span class="btn btn-xs btn-primary"data-toggle="modal" data-target="#detalles" onclick=""><i class="fa fa-cogs"><a data-toggle="tooltip" data-placement="top" title="Holis!"></a></i></span'
-                        			//'<span class="btn btn-xs btn-primary" data-toggle="modal" data-original-title="soy yo ps" data-target="" onclick=""><i class="fa fa-search"></i></span>'+
-                        			//'<a class="btn btn-xs btn-primary" data-toggle="tooltip" data-original-title="Gestionar" href="{{ path(\'solicitar\') }}"><i class="fa fa-cogs"></i></a>'
-                        //javascript:ver('+id+')
-                        //"gestionar": ''
-                        //javascript:modificar('+num+','+i+')
-                        //data-toggle="modal" data-target="#myModal"
-                        //,"elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
                     }).draw();                          
                 }
 				$('#accionesHead').removeClass("hide");   

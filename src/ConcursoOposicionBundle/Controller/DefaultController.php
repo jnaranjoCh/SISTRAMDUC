@@ -574,5 +574,5 @@ class DefaultController extends Controller
     	}
     	else
     		throw $this->createNotFoundException('Error al insertar datos');
-    }
+    }   
 }

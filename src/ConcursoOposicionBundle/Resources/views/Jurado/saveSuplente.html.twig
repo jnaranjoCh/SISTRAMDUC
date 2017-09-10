@@ -18,19 +18,29 @@
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	opcion = "<option id='sel' selected='selected'>...</option>";
-	 
-	        	for (var i = 0; i < data["id"].length; i++) {
+	        	if (data == "N"){
 	        		
-	        		var num = data["id"][i];
-
-	        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
-	        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
-	        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
-	        		+"</option>";   		
+	        		toastr.error("No Hay Concursos Registrados", "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			         });
+	        		
+	        	} else {
+	        
+		        	opcion = "<option id='sel' selected='selected'>...</option>";
+		 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+		        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+		        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#lista").html(opcion);
 	        	}
-
-	        	$("#lista").html(opcion);
 	        }
 	    });	
 	});
@@ -42,143 +52,167 @@
 
 		var inputs = ["cedula", "nombre", "apellido", "facultad", "universidad", "area"];
 		var continua = true;
-
-		if ($("#lista").val() == null || 
-			$("#lista").val() == "..." || 
-			$("#lista").val() == "") {
-
-			continua = false;
-			text = "Concurso vacío";
-			$("#lista1").addClass("has-error");
-			$("#lista11").removeClass("hide");
-		} else {
-		
-			$("#lista1").removeClass("has-error");
-			$("#lista11").addClass("hide");
-		}
-
-		for (var i = 1; i < 4; i++) {
 			
-			for (var j = 0; j < inputs.length; j++) {
-				
-				if ($("#"+inputs[j]+i).val() == ""){
+		$.ajax({
 
-					$("#span"+inputs[j]+i).removeClass("hide");
-					$("#"+inputs[j]+i+i).addClass("has-error");
+	        method:"POST",
+	        url: "{{ path('listadoSuplentesAjax') }}",
+	        dataType: 'json',
+	        data: {"id": $("#lista").val()},
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        		
+	        		if ($("#lista").val() == null || 
+					$("#lista").val() == "..." || 
+					$("#lista").val() == "") {
+		
 					continua = false;
-					text = "Campo vacío";
-				} 
-				else {
-					$("#span"+inputs[j]+i).addClass("hide");
-					$("#"+inputs[j]+i+i).removeClass("has-error");
+					text = "Concurso vacío";
+					$("#lista1").addClass("has-error");
+					$("#lista11").removeClass("hide");
+				} else {
+				
+					$("#lista1").removeClass("has-error");
+					$("#lista11").addClass("hide");
 				}
-			}
-		}
 		
-		if (isNaN($("#cedula1").val())){
-			text = "No Es Un Número";
-			$("#spancedula1").removeClass("hide");
-			$("#cedula11").addClass("has-error");
-			continua = false;
-		}
-		
-		if (isNaN($("#cedula2").val())){
-			text = "No Es Un Número";
-			$("#spancedula2").removeClass("hide");
-			$("#cedula22").addClass("has-error");
-			continua = false;
-		}
-		
-		if (isNaN($("#cedula3").val())){
-			text = "No Es Un Número";
-			$("#spancedula3").removeClass("hide");
-			$("#cedula33").addClass("has-error");
-			continua = false;
-		}
-
-		if (continua){
-
-			if ($("#cedula1").val() != $("#cedula2").val() &&
-				$("#cedula1").val() != $("#cedula3").val() &&
-				$("#cedula2").val() != $("#cedula3").val()){
-
-				/*json*/
-
-				for (var i = 1; i <= 3; i++) {
-
-					$.ajax({
-			            method: "POST",
-			            data: {"cedula":$("#cedula"+i).val(), 
-			            "nombre":$("#nombre"+i).val(),
-			            "tipo":"OposicionSuplentes", 
-			            "apellido":$("#apellido"+i).val(), 
-			            "facultad":$("#facultad"+i).val(), 
-			            "universidad":$("#universidad"+i).val(), 
-			            "area":$("#area"+i).val(),
-			        	"concurso": $("#lista").val()},
-			            url:  "{{ path('registroJuradosAjax') }}",
-			            dataType: 'json',
-			            success: function(data)
-			            {
-			                if (data == "S"){
-
-								document.getElementById('juradosSave').reset();
-
-								for (var k = 1; k <= 3; k++) {
+				for (var i = 1; i < 4; i++) {
 					
-									$('#spancedula'+k).addClass("hide");
-									$('#spannombre'+k).addClass("hide");
-									$('#spanapellido'+k).addClass("hide");
-									$('#spanfacultad'+k).addClass("hide");
-									$('#spanuniversidad'+k).addClass("hide");
-									$('#spanarea'+k).addClass("hide");
-								}
-
-								toastr.clear();
-
-								text = "Suplentes Insertados";
-
-								toastr.success(text, "Exito", {
-				                    "timeOut": "0",
-				                    "extendedTImeout": "0"
-				                 });
-			                } 
-			                else{
-
-			                	toastr.clear();
-
-			                	if (data == "N")		                		
-			                		text = "Usted no tiene permiso";		                	
-			                	else
-				                	text = "Error al Registrar Jurados";			                		                	
-			                	
-			                	toastr.error(text, "Error", {
-						            "timeOut": "0",
-						            "extendedTImeout": "0"
-					         	});
-			                }
-			            }
-			        });			
+					for (var j = 0; j < inputs.length; j++) {
+						
+						if ($("#"+inputs[j]+i).val() == ""){
+		
+							$("#span"+inputs[j]+i).removeClass("hide");
+							$("#"+inputs[j]+i+i).addClass("has-error");
+							continua = false;
+							text = "Campo vacío";
+						} 
+						else {
+							$("#span"+inputs[j]+i).addClass("hide");
+							$("#"+inputs[j]+i+i).removeClass("has-error");
+						}
+					}
 				}
+				
+				if (isNaN($("#cedula1").val())){
+					text = "No Es Un Número";
+					$("#spancedula1").removeClass("hide");
+					$("#cedula11").addClass("has-error");
+					continua = false;
+				}
+				
+				if (isNaN($("#cedula2").val())){
+					text = "No Es Un Número";
+					$("#spancedula2").removeClass("hide");
+					$("#cedula22").addClass("has-error");
+					continua = false;
+				}
+				
+				if (isNaN($("#cedula3").val())){
+					text = "No Es Un Número";
+					$("#spancedula3").removeClass("hide");
+					$("#cedula33").addClass("has-error");
+					continua = false;
+				}
+		
+				if (continua){
+		
+					if ($("#cedula1").val() != $("#cedula2").val() &&
+						$("#cedula1").val() != $("#cedula3").val() &&
+						$("#cedula2").val() != $("#cedula3").val()){
+		
+						/*json*/
+		
+						for (var i = 1; i <= 3; i++) {
+		
+							$.ajax({
+					            method: "POST",
+					            data: {"cedula":$("#cedula"+i).val(), 
+					            "nombre":$("#nombre"+i).val(),
+					            "tipo":"OposicionSuplentes", 
+					            "apellido":$("#apellido"+i).val(), 
+					            "facultad":$("#facultad"+i).val(), 
+					            "universidad":$("#universidad"+i).val(), 
+					            "area":$("#area"+i).val(),
+					        	"concurso": $("#lista").val()},
+					            url:  "{{ path('registroJuradosAjax') }}",
+					            dataType: 'json',
+					            success: function(data)
+					            {
+					                if (data == "S"){
+		
+										document.getElementById('juradosSave').reset();
+		
+										for (var k = 1; k <= 3; k++) {
+							
+											$('#spancedula'+k).addClass("hide");
+											$('#spannombre'+k).addClass("hide");
+											$('#spanapellido'+k).addClass("hide");
+											$('#spanfacultad'+k).addClass("hide");
+											$('#spanuniversidad'+k).addClass("hide");
+											$('#spanarea'+k).addClass("hide");
+										}
+		
+										toastr.clear();
+		
+										text = "Suplentes Insertados";
+		
+										toastr.success(text, "Exito", {
+						                    "timeOut": "0",
+						                    "extendedTImeout": "0"
+						                 });
+					                } 
+					                else{
+		
+					                	toastr.clear();
+		
+					                	if (data == "N")		                		
+					                		text = "Usted no tiene permiso";		                	
+					                	else
+						                	text = "Error al Registrar Jurados";			                		                	
+					                	
+					                	toastr.error(text, "Error", {
+								            "timeOut": "0",
+								            "extendedTImeout": "0"
+							         	});
+					                }
+					            }
+					        });			
+						}
+		
+						/*function del json*/
+		
+					} // fin si cedulas
+					else{
+						toastr.error("Hay Cédulas Repetidas", "Error", {
+				            "timeOut": "0",
+				            "extendedTImeout": "0"
+			         	});
+					}
+		
+				} // fin si continua
+				else {
+		
+					toastr.error(text, "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			         });
+				}
+	        	
+	        	} else {
+	        	
+	        		toastr.clear();
 
-				/*function del json*/
+					text = "Este Concurso Ya Tiene "+(data["nombre"].length)+" Suplentes";
 
-			} // fin si cedulas
-			else{
-				toastr.error("Hay Cédulas Repetidas", "Error", {
-		            "timeOut": "0",
-		            "extendedTImeout": "0"
-	         	});
-			}
-
-		} // fin si continua
-		else {
-
-			toastr.error(text, "Error", {
-	            "timeOut": "0",
-	            "extendedTImeout": "0"
-	         });
-		}
+					toastr.error(text, "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });	
+	        	}                                   
+	        }
+	    });		
 	});
 
 	$("#personal").click(function(){

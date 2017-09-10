@@ -1,0 +1,3 @@
+descarga_horaria_homepage:
+    path:     /descarga_horaria
+    defaults: { _controller: DescargaHorariaBundle:Default:index }

@@ -75,8 +75,42 @@ class LoadTipoRecaudoData extends AbstractFixture implements OrderedFixtureInter
 
         $manager->persist($tipo_recibo_pago);
         $manager->flush();
+        
+        $tipo_constancia_estudio = new TipoRecaudo();
+        $tipo_constancia_estudio->setNombre('Constancia de estudio o de inscripción');
 
+        $manager->persist($tipo_constancia_estudio);
+        $manager->flush();
 
+        $tipo_carta_solteria = new TipoRecaudo();
+        $tipo_carta_solteria->setNombre('Carta de soltería');
+
+        $manager->persist($tipo_carta_solteria);
+        $manager->flush();
+        
+        $tipo_carta_expensas = new TipoRecaudo();
+        $tipo_carta_expensas->setNombre('Carta de expensas');
+
+        $manager->persist($tipo_carta_expensas);
+        $manager->flush();
+        
+        $tipo_certificado_conapdis = new TipoRecaudo();
+        $tipo_certificado_conapdis->setNombre('Certificado de personas con discapacidad CONAPDIS');
+
+        $manager->persist($tipo_certificado_conapdis);
+        $manager->flush();
+        
+        $tipo_calificacion_conapdis = new TipoRecaudo();
+        $tipo_calificacion_conapdis->setNombre('Calificación de personas con discapacidad CONAPDIS');
+
+        $manager->persist($tipo_calificacion_conapdis);
+        $manager->flush();
+        
+        $tipo_informe_medico = new TipoRecaudo();
+        $tipo_informe_medico->setNombre('Informe médico');
+
+        $manager->persist($tipo_informe_medico);
+        $manager->flush();
     }
 
     public function getOrder()

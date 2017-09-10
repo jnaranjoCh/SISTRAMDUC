@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new ConcursosBundle\ConcursosBundle(),
             new TramiteBundle\TramiteBundle(),
             new ConcursoOposicionBundle\ConcursoOposicionBundle(),
+            new DescargaHorariaBundle\DescargaHorariaBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

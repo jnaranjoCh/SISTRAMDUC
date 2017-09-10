@@ -508,6 +508,7 @@ class RegistrarDatosController extends Controller
                  $newRecaudo->setTipoRecaudo($tipo_recaudo);
                  $newRecaudo->setTabla("Hijo");
                  $newRecaudo->setPath("");
+                 $newRecaudo->setDuracionAdministrador(null);
                  $em = $this->getDoctrine()->getManager();
                  $em->persist($newRecaudo);
                  $em->flush();

@@ -10,12 +10,12 @@ $('#submitData').click(function(){
         },
         success: function(data){
             if(!data.localeCompare("Actualizado"))
-                toastr.success("Datos actualizados exitosamente!.", "Exito!", {
+                toastr.success("Datos actualizados exitosamente!.", "Éxito!", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                                });
             else
-                toastr.error("Error al actualizar los registros", "Error", {
+                toastr.error("Falló la actualización de los registros", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                              });

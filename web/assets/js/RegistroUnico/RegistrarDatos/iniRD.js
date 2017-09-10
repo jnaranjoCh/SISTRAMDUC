@@ -17,12 +17,12 @@ $( window ).load(function() {
     $("#TituloObtenidoLabel").html("Titulo Obtenido");
     var status = window.location.href.split("/");
     if(status[status.length-1] == "success")
-        toastr.success("Datos registrados exitosamente!.", "Exito!", {
+        toastr.success("Datos registrados exitosamente!.", "Éxito!", {
             "timeOut": "0",
             "extendedTImeout": "0"
             });
     else if(status[status.length-1] == "error")
-        toastr.error("Error hubo problemas al subir los archivos!", "Error", {
+        toastr.error("Hubo problemas al subir los archivos!", "Error", {
             "timeOut": "0",
             "extendedTImeout": "0"
             });

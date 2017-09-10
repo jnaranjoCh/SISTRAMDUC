@@ -20,7 +20,7 @@ $( window ).load(function() {
                   var users = '<input type="text" class="form-control" style="width: 100%;" value="No hay usuarios activos" readonly/>';
               }
               $(".modal-body").html(users);
-              $("#title-modal").html("Seleccione el usuario a desactivar");
+              $("#title-modal").html("Seleccione el usuario que desee desactivar");
             }
         });
     
@@ -44,7 +44,7 @@ $( window ).load(function() {
                  var users = '<input type="text" class="form-control" style="width: 100%;" value="No hay usuarios desactivados" readonly/>';
               }
               $(".modal-body").html(users);
-              $("#title-modal").html("Seleccione el usuario a activar");
+              $("#title-modal").html("Seleccione el usuario que desee activar");
             }
         });
     }
