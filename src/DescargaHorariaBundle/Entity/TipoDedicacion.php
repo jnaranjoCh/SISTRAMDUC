@@ -30,10 +30,9 @@ class TipoDedicacion
 
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="dedicacion")
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\UsuarioDedicacion", mappedBy="tipo_dedicacion_id", cascade={"persist", "remove"})
      */
-    protected $usuario_id;
+    protected  $usuario_tipo_dedicacion;
     
     /**
      * Get id

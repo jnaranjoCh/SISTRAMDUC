@@ -12,6 +12,8 @@ use PlanSeptenalBundle\Entity\PlanSeptenalIndividual;
 use RegistroUnicoBundle\Entity\Departamento;
 use RegistroUnicoBundle\Entity\Cargo;
 use TramiteBundle\Entity\Tramite;
+use DescargaHorariaBundle\Entity\NombramientoCargoAdmUniv;
+use DescargaHorariaBundle\Entity\PlanAcademicoIntegral;
 use \stdClass;
 
 /**
@@ -181,7 +183,7 @@ class Usuario implements UserInterface
     protected $tramite;
     
     /**
-     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion", mappedBy="usuario_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\UsuarioDedicacion", mappedBy="usuario_id", cascade={"persist", "remove"})
      */
     protected  $dedicacion;
     

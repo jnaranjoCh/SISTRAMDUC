@@ -45,22 +45,21 @@ class NombramientoCargoAdmUniv
     /**
      * @var string
      *
-     * @ORM\Column(name="isActive", type="string", length=2, options={"fixed" = true})
+     * @ORM\Column(name="isActive", type="boolean")
      */
     private $isActive;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="nombramiento_cargo")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     */
+    protected $usuario_id;
     
     /**
      * @ORM\ManyToOne(targetEntity="CargoDesignacion", inversedBy="cargo_nomb")
      * @ORM\JoinColumn(name="cargo_designacion_id", referencedColumnName="id")
      */
     protected $cargo_designacion_id;
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="nombramiento_cargo")
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-     */
-    protected $usuario_id;
 
     /**
      * Get id
@@ -147,7 +146,7 @@ class NombramientoCargoAdmUniv
     /**
      * Set isActive
      *
-     * @param string $isActive
+     * @param boolean $isActive 
      *
      * @return NombramientoCargoAdmUniv
      */
@@ -161,7 +160,7 @@ class NombramientoCargoAdmUniv
     /**
      * Get isActive
      *
-     * @return string
+     * @return boolean
      */
     public function getIsActive()
     {

@@ -3,6 +3,8 @@
 namespace DescargaHorariaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use DescargaHorariaBundle\Entity\NombramientoCargoAdmUniv;
 
 /**
  * CargoDesignacion

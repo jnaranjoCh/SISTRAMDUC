@@ -3,6 +3,8 @@
 namespace DescargaHorariaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use DescargaHorariaBundle\Entity\PlanAcademicoIntegral;
 
 /**
  * TipoComponente
@@ -28,7 +30,7 @@ class TipoComponente
      */
     private $name;
 
-  
+
     /**
      * @ORM\OneToMany(targetEntity="PlanAcademicoIntegral", mappedBy="tipo_componente_id")
      */
@@ -74,6 +76,11 @@ class TipoComponente
         return $this->name;
     }
 
+    /**
+     * Get plan_tipo_comp
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
     public function getPlanTipoComp()
     {
        return $this->plan_tipo_comp;
