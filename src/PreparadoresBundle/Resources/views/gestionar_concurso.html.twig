@@ -24,96 +24,10 @@
             <h3 class="box-title"><b>Datos del Concurso</b></h3>
           </div>
           <div class="box-body">
-            <div class="col-md-offset-2 col-md-8">
-              <div id="detallesSolicitudSeleccionada" class="col-md-offset-1 col-md-10"></div>
+            <div class="col-md-offset-4 col-md-4 col-sm-offset-4 col-sm-4">
+              <div id="detalleConcursoSeleccionado"></div>
             </div>
           </div>
-          <div class="box-footer">
-            <div class="col-md-offset-5"> 
-              <div class="btn-group">
-                <button type="button" class="btn btn-info">Acciones</button>
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                  <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li>
-                    <a href="#concursoDesierto" data-toggle="collapse">
-                      <b>Declarar Concurso Desierto</b>
-                    </a>
-                  </li>                  
-                  <li>
-                    <a href="#registroAspirante" data-toggle="collapse">
-                      <b>Registrar Aspirantes</b>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#evaluarRequisitosAspirante" data-toggle="collapse">
-                      <b>Evaluar Requisitos de los Aspirantes</b>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#registrarFecha" data-toggle="collapse">
-                      <b>Registrar Fecha de Evaluacion</b>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#registrarCalificacionAspirantes" data-toggle="collapse">
-                      <b>Registrar Calificacion de la Evaluacion</b>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#exposicionMotivos" data-toggle="collapse">
-                      <b>Registrar Exposicion de Motivos</b>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#proposicionNombramiento" data-toggle="collapse">
-                      <b>Registrar Proposicion del Nombramiento</b>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> 
-        </div>
-      </div>
-      
-      <div id="divFechaEvaluacion" class="col-md-offset-1 col-md-10 ">
-        <div class="box box-info collapsed-box">
-          <div class="box-header with-border">
-            <h3 class="box-title"><b>Registrar Fecha de Evaluacion</b></h3>
-            <div class="box-tools pull-right">
-              <button id="closeFechaEvaluacion" type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-plus"></i>
-              </button>
-            </div>
-          </div>
-                      
-          <form id="fechaEvaluacion" role="form">
-              <div class="box-body">
-                <div class="form-group">
-                  <div class="row">
-                    <div id="divFecha" class="form-group has-feedback">
-                          <div class="col-xs-4">
-                            <label for="fecha">Fecha:</label>
-                          </div>
-                        <div class="col-xs-4">
-                          <div class="input-group date" id="dateTime1">
-                              <input id="fecha" type="text" class="form-control" />
-                              <span class="input-group-addon">
-                                  <span class="glyphicon glyphicon-calendar"></span>
-                              </span>
-                          </div>
-                        </div>
-                          <div class="col-xs-2">
-                            <button id="enviarFechaEvaluacion" type="button" class="btn btn-info btn-block">Enviar</button>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-            </form>
         </div>
       </div>
       
@@ -149,7 +63,7 @@
             <h3 class="box-title"><b>Aspirantes</b></h3>
             <div class="box-tools pull-right">
               <button id="closeAspirantes" type="button" class="btn btn-box-tool" data-widget="collapse">
-                <i class="fa fa-plus"></i>
+                <i id="iconCloseAspirantes" class="fa fa-plus"></i>
               </button>
             </div>
           </div>
@@ -165,7 +79,7 @@
                   </button>
                 </div>
               </div>
-              <form name="newAspiranteForm" id="newAspiranteForm" action="{{ path('guardar_archivos_aspirante_ajax') }}" method="post" enctype="multipart/form-data" novalidate>
+              <form name="newAspiranteForm" id="newAspiranteForm" action="{{ path('registrar_aspirante_ajax') }}" method="post" enctype="multipart/form-data" novalidate>
               {#<form id="cambiarJurado" role="form">#}
                 <div class="hide">
                   <input id="IdConcurso" name="IdConcurso" type="text">
@@ -174,7 +88,7 @@
                   <div class="row">
                     <div class="col-md-5">
                       <div id="divCedula" class="form-group has-feedback">
-                        <label for="Cedula">Cedula</label>
+                        <label for="Cedula">Cédula</label>
                         <input id="Cedula" name="Cedula" type="email" class="form-control" placeholder="Ingrese el N° de Cedula">
                         <span id="spanEmailUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
                       </div>
@@ -184,7 +98,7 @@
                     </div>
                     <div class="col-md-5">
                       <div id="divCorreo" class="form-group has-feedback">
-                        <label for="Correo">Email</label>
+                        <label for="Correo">Correo Electrónico</label>
                         <input id="Correo" name="Correo" type="email" class="form-control" placeholder="Email">
                         <span id="spanEmailUser" class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
@@ -251,7 +165,7 @@
                   <div class="row">
                     <div class="col-md-5">
                       <div id="divPromedio" class="form-group">
-                        <label for="Promedio">Promedio Acádemico</label>
+                        <label for="Promedio">Promedio Académico</label>
                         <input id="Promedio" name="Promedio" type="number" class="form-control" placeholder="Promedio" min="10" max="20" required>
                       </div>
                     </div>
@@ -259,22 +173,15 @@
                       <span></span>
                     </div>
                     <div class="col-md-5">
-                      <div class="form-group">
-                        <div class="row">
-                        <div class="col-xs-6">
+                      <div class="row">
+                        <div id="divNota1" class="form-group col-xs-6">
                           <label for="Nota1">Nota Intento 1</label>
+                          <input id="Nota1" name="Nota1" type="number" class="form-control" placeholder="Nota 1" min="5" max="20" required>
                         </div>
-                        <div class="col-xs-6">
+                        
+                        <div id="divNota2" class="form-group col-xs-6">
                           <label for="Nota2">Nota Intento 2</label>
-                        </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-xs-6">
-                            <input id="Nota1" name="Nota1" type="number" class="form-control" placeholder="Nota 1" min="5" max="20">
-                          </div>
-                          <div class="col-xs-6">
-                            <input id="Nota2" name="Nota2" type="number" class="form-control" placeholder="Nota 2" min="5" max="20">
-                          </div>
+                          <input id="Nota2" name="Nota2" type="number" class="form-control" placeholder="Nota 2" min="5" max="20" required>
                         </div>
                       </div>
                     </div>
@@ -284,71 +191,26 @@
                       <div id="divEscritaConductaReporteCargaDatos" class="form-group has-feedback">
                         <label class="control-label">Seleccione la comunicación escrita, carta de conducta y reporte de notas</label>
                         <input id="EscritaConductaReporteCargaDatos" name="input[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="true" data-show-caption="true">
-                        <span id="spanEscritaConductaReporteCargaDatos" class="glyphicon form-control-feedback"></span>
+                        {#<span id="spanEscritaConductaReporteCargaDatos" class="glyphicon form-control-feedback"></span>#}
                       </div>
-                      {#<div id="divActaNacCargaHijoDatos" class="form-group has-feedback">#}
-                      {#  <label class="control-label">Seleccione las actas de nacimiento</label>#}
-                      {#  <input id="ActaNacCargaHijoDatos" name="input2[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="true" data-show-caption="true">#}
-                      {#  <span id="spanActaNacCargaHijoDatos" class="glyphicon form-control-feedback"></span>#}
-                      {#</div>#}
                     </div>
                   </div>
                 </div>
                 <div class="box-footer">
                   <div class="col-sm-offset-4 col-sm-4">
                     <button id="guardarAspirante" type="button" class="btn btn-success btn-block">Guardar  <i class="fa fa-save"></i></button>
-                    {#<button id="siguienteCambiarJurado" type="button" class="btn btn-info btn-block">Siguiente</button>#}
                   </div>
                 </div>
               </form>
-              {#<form role="form" class="form-horizontal">#}
-              {#    <div class="box-body">#}
-              {#      <div class="form-group">#}
-              {#        <div class="input-group col-sm-offset-2 col-sm-8">#}
-                        {#<label>Comunicacion Escrita</label>#}
-              {#          <input type="text" name="attachment" placeholder="Comunicacion Escrita" class="form-control">#}
-              {#          <span class="input-group-btn">#}
-              {#            <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>#}
-              {#          </span>#}
-              {#        </div>#}
-              {#      </div>#}
-              {#      <div class="form-group">#}
-              {#        <div class="input-group col-sm-offset-2 col-sm-8">#}
-                        {#<label>Comunicacion Escrita</label>#}
-              {#          <input type="text" name="attachment" placeholder="Reporte de Notas" class="form-control">#}
-              {#          <span class="input-group-btn">#}
-              {#            <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>#}
-              {#          </span>#}
-              {#        </div>#}
-              {#      </div>#}
-              {#      <div class="form-group">#}
-              {#        <div class="input-group col-sm-offset-2 col-sm-8">#}
-                        {#<label>Comunicacion Escrita</label>#}
-              {#          <input type="text" name="attachment" placeholder="Carta de Buena Conducta" class="form-control">#}
-              {#          <span class="input-group-btn">#}
-              {#            <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>#}
-              {#          </span>#}
-              {#        </div>#}
-              {#      </div>#}
-              {#    </div>#}
-              {#    <div class="box-footer">#}
-              {#      <div class="col-sm-offset-2 col-sm-3">#}
-              {#        <button type="submit" href="#incumpleRequisitos" data-toggle="collapse" class="btn btn-danger btn-block">No Cumple</button>#}
-              {#      </div>#}
-              {#      <div class="col-sm-offset-2 col-sm-3">#}
-              {#        <button type="submit" class="btn btn-success btn-block">Cumple</button>#}
-              {#      </div>#}
-              {#    </div>#}
-              {#  </form>#}
             </div>
             {#<br/><br/>#}
-            <table id="aspirantes" class="table table-bordered table-responsive">
+            <table id="aspirantes" class="table table-hover table-bordered table-responsive">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Cédula</th>
                   <th>Nombre Completo</th>
-                  <th>Correo</th>
-                  <th>Telefono</th>
+                  <th>Correo Electrónico</th>
+                  <th>Teléfono</th>
                   <th id="accionesHead" class="hide">Acciones</th>
                 </tr>
               </thead>
@@ -357,10 +219,10 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th>ID</th>
+                  <th>Cédula</th>
                   <th>Nombre Completo</th>
-                  <th>Correo</th>
-                  <th>Telefono</th>
+                  <th>Correo Electrónico</th>
+                  <th>Teléfono</th>
                   <th id="accionesFoot" class="hide">Acciones</th>
                 </tr>
               </tfoot>
@@ -369,289 +231,105 @@
         </div>
       </div>
       
-      
-      
-      <div class="col-md-offset-1 col-md-10">
-        <div id="evaluarRequisitosAspirante"  class="box box-info collapse off">
+      <div id="divFechaEvaluacion" class="col-md-offset-1 col-md-10 ">
+        <div class="box box-info collapsed-box">
           <div class="box-header with-border">
-            <h3 class="box-title"><b>Evaluar Requisitos Aspirantes</b></h3>
+            <h3 class="box-title"><b>Registrar Fecha de Evaluacion</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeFechaEvaluacion" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
           </div>
-          <form role="form" class="form-horizontal">
+                      
+          <form id="fechaEvaluacion" role="form">
               <div class="box-body">
-                <div class="form-group">
-                  <div class="input-group col-sm-offset-2 col-sm-8">
-                    {#<label>Comunicacion Escrita</label>#}
-                    <input type="text" name="attachment" placeholder="Comunicacion Escrita" class="form-control">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group col-sm-offset-2 col-sm-8">
-                    {#<label>Comunicacion Escrita</label>#}
-                    <input type="text" name="attachment" placeholder="Reporte de Notas" class="form-control">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group col-sm-offset-2 col-sm-8">
-                    {#<label>Comunicacion Escrita</label>#}
-                    <input type="text" name="attachment" placeholder="Carta de Buena Conducta" class="form-control">
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer">
-                <div class="col-sm-offset-2 col-sm-3">
-                  <button type="submit" href="#incumpleRequisitos" data-toggle="collapse" class="btn btn-danger btn-block">No Cumple</button>
-                </div>
-                <div class="col-sm-offset-2 col-sm-3">
-                  <button type="submit" class="btn btn-success btn-block">Cumple</button>
-                </div>
-              </div>
-            </form>
-        </div>
-        
-        <div id="incumpleRequisitos"  class="box  no-border box-info collapse off">
-          {#<div class="box-header with-border">#}
-          {#  <h3 class="box-title"><b>incumpleRequisitos</b></h3>#}
-          {#</div>#}
-          <form role="form">
-              <div class="box-body">
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-xs-4">
-                      <label>¿Solicitará Exoneración?</label>
+                <div class="col-sm-offset-4 col-sm-4">
+                  <div  id="divFecha" class="form-group has-feedback">
+                    <label for="fecha">Fecha:</label>
+                    <div class="input-group date" id="dateTime1">
+                        <input id="fecha" type="text" class="form-control"/>
+                        <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
-                    <div class="col-xs-2">
-                      <div class="radio">
-                        <label> 
-                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
-                            SI 
-                        </label> 
-                      </div>
-                    </div>
-                    <div class="col-xs-2">
-                      <div class="radio">
-                        <label>
-                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
-                            NO 
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-xs-2">
-                      <button type="submit" class=" btn btn-info btn-block">Enviar</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-        </div>
-      </div>
-        
-      <div class="col-md-offset-1 col-md-10">
-        <div id="registrarFecha"  class="box box-info collapse off">
-          <div class="box-header with-border">
-            <h3 class="box-title">
-              <b>Registrar Fecha de Evaluacion</b>
-            </h3>
-          </div>
-          <form role="form">
-              <div class="box-body">
-                <div class="form-group">
-                  <div class="row">
-                    <div class="form-group">
-                      <div class="col-xs-4">
-                        <label>Date:</label>
-                      </div>
-                      <div class="col-xs-4">
-                        <div class="input-group date">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" class="form-control pull-right" id="datepicker">
-                        </div>
-                      </div>
-                      <div class="col-xs-2">
-                        <button type="submit" class=" btn btn-info btn-block">Enviar</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-        </div>
-      </div>
-      
-      <div class="col-md-offset-1 col-md-10">
-        <div id="registrarCalificacionAspirantes"class="box box-info collapse off">
-          <div class="box-header with-border">
-              <h3 class="box-title">
-                <i class="fa fa-upload"></i>
-                <b>Registrar Calificacion de los Aspirantes</b>
-              </h3>
-          </div>
-          <div id="collapseOne" class="box-body">
-            <form class="form-horizontal">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="asigSol" class="col-sm-3 control-label">Nota Examen Escrito</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="asigSol" placeholder="Asignatura Solicitante">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="nroPlz" class="col-sm-3 control-label">Nota Examen Oral</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="nroPlz" placeholder="Número de Plazas">
                   </div>
                 </div>
               </div>
               <div class="box-footer">
                 <div class="col-sm-offset-4 col-sm-4">
-                  <button type="submit" class=" btn btn-info btn-block">Registrar Calificacion</button>
+                  <button id="enviarFechaEvaluacion" type="button" class="btn btn-info btn-block">Enviar</button>
                 </div>
               </div>
             </form>
-          </div>
         </div>
       </div>
       
-      <div class="col-md-offset-1 col-md-10">
-        <div id="exposicionMotivos"  class="box box-info collapse off">
+      <div id="divProposicionNombramiento" class="col-md-offset-1 col-md-10">
+        <div  class="box box-info collapsed-box">
           <div class="box-header with-border">
-            <h3 class="box-title"><b>Exposicion de Motivos</b></h3>
+            <h3 class="box-title"><b>Registrar Proposición del Nombramiento</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeProposicionNombramiento" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
           </div>
-          <form role="form">
+          <form id="proposicionNombramiento" role="form">
               <div class="box-body">
                 <div class="form-group">
-                  <label>Exposicion de Motivos</label>
-                  <textarea class="form-control" rows="3" placeholder="Ingrese aquí Exposicion de Motivos" style="resize:none"></textarea>
+                  <label>Proposición del Nombramiento</label>
+                  <textarea id="obsProposicionNombramiento" class="form-control" rows="3" placeholder="Ingrese aquí las observaciones sobre la Proposición del Nombramiento" style="resize:none"></textarea>
                 </div>
               </div>
               <div class="box-footer">
                 <div class="col-sm-offset-4 col-sm-4">
-                  <button type="submit" class="btn btn-info btn-block">Cargar</button>
+                  <button id="cargarProposicionNombramiento" type="button" class="btn btn-info btn-block">Cargar Proposición de Nombramiento</button>
                 </div>
               </div>
             </form>
         </div>
       </div>
       
-      <div class="col-md-offset-1 col-md-10">
-        <div id="aprobarJurado"  class="box box-info collapse off">
-          <div class="box-header with-border">
-            <h3 class="box-title"><b>Aprobar Jurado</b></h3>
+      <!-- Modal Detalles-->
+      <div class="modal" id="detalles" role="dialog" aria-labelledby="modalDetalles">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h3 class="modal-title" id="myModalLabel">Detalles del Aspirante</h3>
+            </div>
+            <div id="detallesModalBody" class="modal-body overlay">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline" data-dismiss="modal">Aceptar</button>
+            </div>
           </div>
-          <form role="form">
-              <div class="box-body">
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-xs-4">
-                      <label>¿Aprueba el Jurado de la Solicitud?</label>
-                    </div>
-                    <div class="col-xs-2">
-                      <div class="radio">
-                        <label> 
-                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"> 
-                            SI 
-                        </label> 
-                      </div>
-                    </div>
-                    <div class="col-xs-2">
-                      <div class="radio">
-                        <label>
-                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2"> 
-                            NO 
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-xs-2">
-                      <button type="submit" href="#cambiarJurado" data-toggle="collapse" class=" btn btn-info btn-block">Siguiente</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
         </div>
       </div>
       
-      <div class="col-md-offset-1 col-md-10">
-        <div id="cambiarJurado"  class="box box-info collapse off">
-          <div class="box-header with-border">
-            <h3 class="box-title"><b>Cambiar Jurado</b></h3>
+      <!-- Modal Guardando Datos-->
+      <div class="modal fade" id="guardandoDatos" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div>
+            <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+            <br/>
+            <label style="position: absolute; top:50%; left:50%; width:200px; margin-left:-100px; height:100px; margin-top:200px; color: white; font: 150% sans-serif;">Guardando datos...</label>
           </div>
-          <form role="form">
-            <div class="box-body">
-              <div class="col-md-5">
-                <h3 class="text-center"><b>Propuesto</b></h3>
-                <div class="form-group">
-                  <label for="juradoCoord">Jurado Coordinador</label>
-                  <input id="juradoCoord" type="text" class="form-control" placeholder="Jurado Coordinador">
-                </div>
-                <div class="form-group">
-                  <label for="juradoPpal1">Jurado Principal 1</label>
-                  <input id="juradoPpal1" type="text" class="form-control" placeholder="Jurado Principal 1">
-                </div>
-                <div class="form-group">
-                  <label for="juradoPpal2">Jurado Principal 2</label>
-                  <input id="juradoPpal2" type="text" class="form-control" placeholder="Jurado Principal 2">
-                </div>
-                <div class="form-group">
-                  <label for="juradoSpl1">Jurado Suplente 1</label>
-                  <input id="juradoSpl1" type="text" class="form-control" placeholder="Jurado Suplente 1">
-                </div>
-                <div class="form-group">
-                  <label for="juradoSpl2">Jurado Suplente 2</label>
-                  <input id="juradoSpl2" type="text" class="form-control" placeholder="Jurado Suplente 2">
-                </div>
-              </div>
-              
-              <div class="col-md-5">
-                <h3 class="text-center text-navy"><b>Nuevo</b></h3>
-                
-                <div class="form-group">
-                  <label for="juradoCoord">Jurado Coordinador</label>
-                  <input id="juradoCoord" type="text" class="form-control" placeholder="Jurado Coordinador">
-                </div>
-                <div class="form-group">
-                  <label for="juradoPpal1">Jurado Principal 1</label>
-                  <input id="juradoPpal1" type="text" class="form-control" placeholder="Jurado Principal 1">
-                </div>
-                <div class="form-group">
-                  <label for="juradoPpal2">Jurado Principal 2</label>
-                  <input id="juradoPpal2" type="text" class="form-control" placeholder="Jurado Principal 2">
-                </div>
-                <div class="form-group">
-                  <label for="juradoSpl1">Jurado Suplente 1</label>
-                  <input id="juradoSpl1" type="text" class="form-control" placeholder="Jurado Suplente 1">
-                </div>
-                <div class="form-group">
-                  <label for="juradoSpl2">Jurado Suplente 2</label>
-                  <input id="juradoSpl2" type="text" class="form-control" placeholder="Jurado Suplente 2">
-                </div>
-              </div>
-            </div>
-            <div class="box-footer">
-              <div class="col-sm-offset-4 col-sm-4">
-                <button type="submit" href="#veredicto" data-toggle="collapse" class="btn btn-info btn-block">Cambiar Jurado</button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
       
-      
-      
-      
-      
+      <!-- Modal Cargando-->
+      <div class="modal fade" id="cargando" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div>
+            <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 {% endblock %}

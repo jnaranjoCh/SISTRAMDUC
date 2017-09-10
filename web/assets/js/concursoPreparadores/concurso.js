@@ -84,9 +84,17 @@ function verDetalleConcurso(id){
 						'<dt>Número de Vacantes</dt>'+
 						'<dd>'+respuesta["vacantes"][i]+'</dd>'+
 						
-						'<dt>Número de Aspirantes</dt>'+
-						'<dd>'+respuesta["aspirantes"][i]+'</dd>'+
+						'<dt>Número de Aspirantes</dt>';
 						
+				if(respuesta["idAspirante"].length == 1 && respuesta["idAspirante"][i] == 0){
+					contenidoHTML = contenidoHTML+
+						'<dd>'+respuesta["idAspirante"][i]+'</dd>';
+				}else{
+					contenidoHTML = contenidoHTML+
+						'<dd>'+respuesta["idAspirante"].length+'</dd>';
+				}
+				
+				contenidoHTML = contenidoHTML+
 						'<dt>Tema Examen Oral</dt>'+
 						'<dd>'+respuesta["exOral"][i]+'</dd>'+
 						

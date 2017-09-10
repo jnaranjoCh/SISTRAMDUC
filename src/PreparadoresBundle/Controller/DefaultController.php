@@ -13,6 +13,7 @@ use TramiteBundle\Entity\Transicion;
 use ConcursosBundle\Entity\Concurso;
 use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
+use ConcursosBundle\Entity\Resultado;
 use AppBundle\Entity\Usuario;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -53,6 +54,14 @@ class DefaultController extends Controller
     public function concursoAction()
     {
         return $this->render('PreparadoresBundle::concurso.html.twig');
+    }
+    
+    /**
+     * @Route("/preparadores/concurso/aspirante/gestionar", name="gestionar_aspirante")
+     */
+    public function gestionarAspiranteAction()
+    {
+        return $this->render('PreparadoresBundle::gestionar_aspirante.html.twig');
     }
     
     /**
@@ -737,9 +746,17 @@ class DefaultController extends Controller
     {
         switch ($case) {
             case 0: $result[$nameField][$pos] = $object->getId(); break;
-            case 1: $result[$nameField][$pos] = $object->getPrimerNombre().' '.$object->getPrimerApellido(); break;
-            case 2: $result[$nameField][$pos] = $object->getCorreo(); break;
-            case 3: $result[$nameField][$pos] = $object->getTelefono(); break;
+            case 1: $result[$nameField][$pos] = $object->getCedula(); break;
+            case 2: $result[$nameField][$pos] = $object->getNombreCompleto(); break;
+            case 3: $result[$nameField][$pos] = $object->getCorreo(); break;
+            case 4: $result[$nameField][$pos] = $object->getTelefono(); break;
+            case 5: $result[$nameField][$pos] = $object->getTelefonoSecundario(); break;
+            case 6: $result[$nameField][$pos] = $object->getPromedioAcademico(); break;
+            case 7: $result[$nameField][$pos] = $object->getNotaIntento1(); break;
+            case 8: $result[$nameField][$pos] = $object->getNotaIntento2(); break;
+            case 9: $result[$nameField][$pos] = $object->getComunicacionEscritaUrl(); break;
+            case 10: $result[$nameField][$pos] = $object->getCartaConductaUrl(); break;
+            case 11: $result[$nameField][$pos] = $object->getReporteNotaUrl(); break;
         }
         return $result;
     }
@@ -764,45 +781,50 @@ class DefaultController extends Controller
             
             $concurso = $query->getResult();
             
-            $i = 0;
-            
-            $result = $this->asignarFilaConcurso($concurso,'asignatura',$result, 0, $i);
-            $result = $this->asignarFilaConcurso($concurso,'vacantes',$result, 1, $i);
-            $result = $this->asignarFilaConcurso($concurso,'exOral',$result, 2, $i);
-            $result = $this->asignarFilaConcurso($concurso,'exEscrito',$result, 3, $i);
-            $result = $this->asignarFilaConcurso($concurso,'fechaRecepDoc',$result, 4, $i);
-            
-            foreach ($concurso as $value) {
-                $aspirantes = $value->getAspirantes();
-                $a=0;
-                foreach ($aspirantes as $aspirante) {
-                    $result = $this->asignarFilaAspirante($aspirante, 'idAspirante', $result, 0, $a);
-                    $result = $this->asignarFilaAspirante($aspirante, 'nombreCompleto', $result, 1, $a);
-                    $result = $this->asignarFilaAspirante($aspirante, 'correo', $result, 2, $a);
-                    $result = $this->asignarFilaAspirante($aspirante, 'telefono', $result, 3, $a);
-                    $a=$a+1;
-                }
-                if($a == 0){
-                    $result['idAspirante'][$i] = $a;
-                }
+            if($concurso == null){
+                $falla=true;
+            }else{
+                $i = 0;
                 
-                $jurados = $value->getJurados();
+                $result = $this->asignarFilaConcurso($concurso,'asignatura',$result, 0, $i);
+                $result = $this->asignarFilaConcurso($concurso,'vacantes',$result, 1, $i);
+                $result = $this->asignarFilaConcurso($concurso,'exOral',$result, 2, $i);
+                $result = $this->asignarFilaConcurso($concurso,'exEscrito',$result, 3, $i);
+                $result = $this->asignarFilaConcurso($concurso,'fechaRecepDoc',$result, 4, $i);
                 
-                 $s = 0;
-                 $p = 0;
-                 $j = 0;
-                foreach ($jurados as $jurado) {
-                    if($jurado->getTipo()=="Coordinador"){
-                        $result = $this->asignarFilaJurado($jurado, $jurado->getTipo(), $result, $i);
-                    }elseif($jurado->getTipo()=="Principal"){
-                        $result = $this->asignarFilaJurado($jurado, $jurado->getTipo(), $result, $p);
-                        $p=$p+1;
-                    }elseif($jurado->getTipo()=="Suplente"){
-                        $result = $this->asignarFilaJurado($jurado, $jurado->getTipo(), $result, $s);
-                        $s=$s+1;
+                foreach ($concurso as $value) {
+                    $aspirantes = $value->getAspirantes();
+                    $a=0;
+                    foreach ($aspirantes as $aspirante) {
+                        $result = $this->asignarFilaAspirante($aspirante, 'idAspirante', $result, 0, $a);
+                        $result = $this->asignarFilaAspirante($aspirante, 'cedula', $result, 1, $a);
+                        $result = $this->asignarFilaAspirante($aspirante, 'nombreCompleto', $result, 2, $a);
+                        $result = $this->asignarFilaAspirante($aspirante, 'correo', $result, 3, $a);
+                        $result = $this->asignarFilaAspirante($aspirante, 'telefono', $result, 4, $a);
+                        $a=$a+1;
                     }
-                    $j=$j+1;
-                }
+                    if($a == 0){
+                        $result['idAspirante'][$i] = $a;
+                    }
+                    
+                    $jurados = $value->getJurados();
+                    
+                     $s = 0;
+                     $p = 0;
+                     $j = 0;
+                    foreach ($jurados as $jurado) {
+                        if($jurado->getTipo()=="Coordinador"){
+                            $result = $this->asignarFilaJurado($jurado, $jurado->getTipo(), $result, $i);
+                        }elseif($jurado->getTipo()=="Principal"){
+                            $result = $this->asignarFilaJurado($jurado, $jurado->getTipo(), $result, $p);
+                            $p=$p+1;
+                        }elseif($jurado->getTipo()=="Suplente"){
+                            $result = $this->asignarFilaJurado($jurado, $jurado->getTipo(), $result, $s);
+                            $s=$s+1;
+                        }
+                        $j=$j+1;
+                    }
+                }               
             }
             if ($falla) {
                 return new JsonResponse("FallaConsultaDetalleConcurso");
@@ -984,10 +1006,10 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/preparadores/guardar_archivos_aspirante", name="guardar_archivos_aspirante_ajax")
+     * @Route("/preparadores/registrar_aspirante", name="registrar_aspirante_ajax")
      */
-    public function guardarArchivosAspiranteAjaxAction(Request $request){
-        
+    public function registrarAspiranteAjaxAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         
         $concurso = $em->getRepository('ConcursosBundle:Concurso')
@@ -997,14 +1019,23 @@ class DefaultController extends Controller
         
         $identificadorAspirante= $request->get('PrimerNombre')."_".$request->get('PrimerApellido')."_".$request->get('Cedula')."_".$newAspirante->getId();
         
+        $newAspirante->setCedula($request->get('Cedula'));
+        $newAspirante->setCorreo($request->get('Correo'));
         $newAspirante->setPrimerNombre($request->get('PrimerNombre'));
         $newAspirante->setSegundoNombre($request->get('SegundoNombre'));
         $newAspirante->setPrimerApellido($request->get('PrimerApellido'));
         $newAspirante->setSegundoApellido($request->get('SegundoApellido'));
         $telefono=$request->get('TelefonoArea').$request->get('TelefonoNumero');
         $newAspirante->setTelefono($telefono);
-        $newAspirante->setCorreo($request->get('Correo'));
-        $newAspirante->setCedula($request->get('Cedula'));
+        $newAspirante->setPromedioAcademico($request->get('Promedio'));
+        $newAspirante->setNotaIntento1($request->get('Nota1'));
+        if($request->get('TelefonoSecundarioArea') != "" && $request->get('TelefonoSecundarioNumero') != ""){
+            $telefonoSecundario=$request->get('TelefonoSecundarioArea').$request->get('TelefonoSecundarioNumero');
+            $newAspirante->setTelefonoSecundario($telefonoSecundario);
+        }
+        if($request->get('Nota2') != ""){
+            $newAspirante->setNotaIntento2($request->get('Nota2'));
+        }
         
         $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/comunicacionEscrita/';
         $dir_subida = $dir_subida."comunicacion_escrita_".$identificadorAspirante.".pdf";
@@ -1016,13 +1047,13 @@ class DefaultController extends Controller
             $dir_subida = $dir_subida."carta_conducta_".$identificadorAspirante.".pdf";
             
             $newAspirante->setCartaConductaUrl($dir_subida);
-            // return new RedirectResponse($this->generateUrl('clausulas_contractuales_beca',array('email' => $request->get('email'), 'state' => 'success')));
+            
             if(move_uploaded_file($_FILES['input']['tmp_name'][1], $dir_subida)) {
                 $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/reporteNota/';
                 $dir_subida = $dir_subida."reporte_nota_".$identificadorAspirante.".pdf";
                 
                 $newAspirante->setReporteNotaUrl($dir_subida);
-                // return new RedirectResponse($this->generateUrl('clausulas_contractuales_beca',array('email' => $request->get('email'), 'state' => 'success')));
+                
                 if(move_uploaded_file($_FILES['input']['tmp_name'][2], $dir_subida)) {
                     $concurso->addAspirante($newAspirante);
                     $em->persist($concurso);
@@ -1038,4 +1069,241 @@ class DefaultController extends Controller
             return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'error')));
         }
     }
+    
+    /**
+     * @Route("/preparadores/detalle_aspirante", name="detalle_aspirante_ajax")
+     */
+    public function detalleAspiranteAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            $result[][] = "";
+            $falla = false;
+            
+            $em = $this->getDoctrine()->getManager();
+            
+            $idAspirante = $request->get("id");
+            
+            $query = $em->createQuery('SELECT A
+                                       FROM ConcursosBundle:Aspirante A
+                                       WHERE A.id = :idAspirante'
+            )->setParameter('idAspirante', $idAspirante);
+            
+            $aspirante = $query->getResult();
+            
+            if($aspirante == null){
+                $falla = true;
+            }else{
+                $a=0;
+                
+                foreach ($aspirante as $value) {
+                    $result = $this->asignarFilaAspirante($value, 'idAspirante', $result, 0, $a);
+                    $result = $this->asignarFilaAspirante($value, 'cedula', $result, 1, $a);
+                    $result = $this->asignarFilaAspirante($value, 'nombreCompleto', $result, 2, $a);
+                    $result = $this->asignarFilaAspirante($value, 'correo', $result, 3, $a);
+                    $result = $this->asignarFilaAspirante($value, 'telefono', $result, 4, $a);
+                    $result = $this->asignarFilaAspirante($value, 'telefonoSecundario', $result, 5, $a);
+                    $result = $this->asignarFilaAspirante($value, 'promedioAcademico', $result, 6, $a);
+                    $result = $this->asignarFilaAspirante($value, 'notaIntento1', $result, 7, $a);
+                    $result = $this->asignarFilaAspirante($value, 'notaIntento2', $result, 8, $a);
+                    $result = $this->asignarFilaAspirante($value, 'comunicacionEscritaUrl', $result, 9, $a);
+                    $result = $this->asignarFilaAspirante($value, 'cartaConductaUrl', $result, 10, $a);
+                    $result = $this->asignarFilaAspirante($value, 'reporteNotaUrl', $result, 11, $a);
+                    $a=$a+1;
+                }
+            }
+            if ($falla) {
+                return new JsonResponse("FallaConsultaDetalleAspirante");
+            }else{
+                return new JsonResponse($result);
+            }
+        }else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+    
+        /**
+     * @Route("/preparadores/agregar_datos_aspirante", name="agregar_datos_aspirante_ajax")
+     */
+    public function agregarDatosAspiranteAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            $falla = false;
+            $idsJurados = array();
+            $divJurados = array("Coord","Ppal1","Ppal2","Supl1","Supl2");
+            
+            $idConcurso = $request->get("idTramite");
+            $idAspirante = $request->get("idAspirante");
+            $nombreDato = $request->get("nombreDato");
+            $valorDato = $request->get("valorDato");
+            
+            $em = $this->getDoctrine()->getManager();
+            
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')
+                              ->findOneBy(["id" => $idConcurso]);
+                              
+            $aspirante = $em->getRepository('ConcursosBundle:Aspirante')
+                              ->findOneBy(["id" => $idTramite]);
+                              
+            $query = $em->createQuery('SELECT R
+                                   FROM TramiteBundle:Recaudo R
+                                   WHERE R.tramite = :idConcurso 
+                                   AND R.name = :nombreDato'
+            )->setParameter('idConcurso', $idConcurso)
+             ->setParameter('nombreDato', $nombreDato);
+            $queryRecaudo = $query->getResult();
+
+            if($queryRecaudo == null){
+                if($nombreDato != "MotivosExoneracion" && $nombreDato != "Notas"){
+                    $recaudo = new Recaudo();
+                    $recaudo->setPath("");
+                    $recaudo->setName($nombreDato);
+                    $recaudo->setValor(1);
+                    $recaudo->setTipoRecaudo(null);
+                    $recaudo->setUsuario($this->getUser());
+                }elseif($nombreDato == "Notas"){
+                    $resultado = new Resultado();
+                    $i = 0;
+                    foreach ($valorDato as $nota) {
+                        switch ($case) {
+                            case 0: $aspirante->set = $object->getId(); break;
+                            case 1: $result[$nameField][$pos] = $object->getCedula(); break;
+                        }
+                        
+                        
+                        $query = $em->createQuery('SELECT R
+                                              FROM TramiteBundle:Recaudo R
+                                              WHERE R.tramite = :idTramite 
+                                              AND R.name = :nameRecaudo'
+                        )->setParameter('idTramite', $idTramite)
+                         ->setParameter('nameRecaudo', $divJurados[$i]);
+                        $queryResult = $query->getResult();
+                        
+                        foreach ($queryResult as $queryResultAux) {
+                            $queryResultAux->setValor($racaudoAux);
+                            $queryResultAux->setUsuario($this->getUser());
+                        }
+                        $i=$i+1;
+                    }
+                    
+                    
+                }
+                
+            }else{
+                foreach ($queryRecaudo as $recaudo) {
+                    $recaudo->setValor($valorDato);
+                    $recaudo->setUsuario($this->getUser());
+                }
+            }
+            
+            
+            
+            if (!$falla){
+                // if($request->get("nombreRecaudo") == "CambioJurado"){
+                    
+                //     $recaudos = $request->get("valorRecaudo");
+                //     /*RECORRO LOS JURADOS PARA ACTUALIZARLOS*/
+                //     $i = 0;
+                //     foreach ($recaudos as $racaudoAux) {
+                //         $query = $em->createQuery('SELECT R
+                //                               FROM TramiteBundle:Recaudo R
+                //                               WHERE R.tramite = :idTramite 
+                //                               AND R.name = :nameRecaudo'
+                //         )->setParameter('idTramite', $idTramite)
+                //          ->setParameter('nameRecaudo', $divJurados[$i]);
+                //         $queryResult = $query->getResult();
+                        
+                //         foreach ($queryResult as $queryResultAux) {
+                //             $queryResultAux->setValor($racaudoAux);
+                //             $queryResultAux->setUsuario($this->getUser());
+                //         }
+                //         $i=$i+1;
+                //     }
+                // }
+
+                $tramite->addRecaudo($recaudo);
+                
+                // if($request->get("nombreRecaudo")!="ObservacionVeredicto"){
+                    $entityEstado = $em->getRepository('TramiteBundle:Estado');
+                    
+                    $aprobada = $entityEstado->findOneBy(["nombre" => 'Aprobada']);
+                    $enProceso = $entityEstado->findOneBy(["nombre" => 'En Proceso']);
+                    $negada = $entityEstado->findOneBy(["nombre" => 'Negada']);
+                    $finalizada = $entityEstado->findOneBy(["nombre" => 'Finalizada']);
+                    
+                    $transicion = new Transicion();
+                    
+                    if($request->get("nombreRecaudo")=="CausalDesierto"){
+                        $estado = $finalizada;
+                        $transicion->setDoc_info("Declarado Concurso Desierto.");
+                    }else if($request->get("nombreRecaudo")=="FechaEvaluacion"){
+                        $estado = $enProceso;
+                        $transicion->setDoc_info("Se registro la fecha de Presentacion.");
+                        $concurso->setFechaPresentacion(new \DateTime($recaudo->getValor()));
+                    }
+                    
+                    // if($request->get("valorRecaudo")=="Si"){
+                    //     if($request->get("nombreRecaudo")=="Veredicto"){
+                    //         $estado = $aprobada;
+                    //         $transicion->setDoc_info("Aprobaron la solicitud.");
+                    //     }else{
+                    //         $estado = $enProceso;
+                    //         if($request->get("nombreRecaudo")=="AprobarPresupuesto"){
+                    //             $transicion->setDoc_info("Aprobaron el presupuesto para la solicitud.");
+                    //         }else if($request->get("nombreRecaudo")=="AprobarJurado"){
+                    //             $transicion->setDoc_info("Aprobaron el jurado de la solicitud.");
+                    //         }
+                    //     }
+                    // }else if($request->get("valorRecaudo")=="No"){
+                    //     if($request->get("nombreRecaudo")=="AprobarPresupuesto" || $request->get("nombreRecaudo")=="Veredicto"){
+                    //         $estado = $negada;
+                    //         if($request->get("nombreRecaudo")=="AprobarPresupuesto"){
+                    //             $transicion->setDoc_info("No aprobaron el presupuesto para la solicitud.");
+                    //         }else{
+                    //             $transicion->setDoc_info("No aprobaron la solicitud.");
+                    //         }
+                    //     }else if($request->get("nombreRecaudo")=="AprobarJurado"){
+                    //         $estado = $enProceso;
+                    //         $transicion->setDoc_info("No aprobaron el jurado de la solicitud.");
+                    //     }
+                    // }else if($request->get("nombreRecaudo")=="CambioJurado"){
+                    //     $estado = $enProceso;
+                    //     $transicion->setDoc_info("Se cambió el jurado de la solicitud.");
+                    // }else if($request->get("nombreRecaudo")=="FechaRecepDoc"){
+                    //     $estado = $finalizada;
+                    //     $transicion->setDoc_info("Ha finalizado el proceso de la solicitud.");
+                    // }
+                    
+                    $transicion->setFecha(new \DateTime("now"));
+                    $transicion->setEstado($estado);                  
+                    $transicion->setEstadoConsejo($estado);
+                    
+                    $tramite->addTransicion($transicion);
+                
+                // }
+                
+                $em->persist($tramite);
+                
+                $em->flush();
+                
+                // if($request->get("nombreRecaudo")=="CambioJurado"){
+                //     return new JsonResponse(array(
+                //         'estado' => 'Insertado',
+                //         'mensaje' => 'Nuevo Jurado guardado exitosamente!.'
+                //     ));
+                // }else{
+                    return new JsonResponse(array(
+                        'estado' => 'Insertado',
+                        'mensaje' => 'Datos Enviados exitosamente!.'
+                    ));
+                // }
+            }else{
+               return new JsonResponse(array(
+                    'estado' => 'NoExisteJurado',
+                    'mensaje' => 'Jurado no está registrado en el Sistema.',
+                    'jurados' => $idsJurados
+                ));
+            }
+        }else
+            throw $this->createNotFoundException('Error al solicitar datos');
+    }
+
 }
