@@ -45,13 +45,6 @@ class CargoDesignacion
     private $created;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated", type="datetime")
-     */
-    private $updated;
-
-    /**
      * @ORM\OneToMany(targetEntity="NombramientoCargoAdmUniv", mappedBy="cargo_designacion_id")
      */
     protected $cargo_nomb;
@@ -145,29 +138,6 @@ class CargoDesignacion
         return $this->created;
     }
 
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     *
-     * @return CargoDesignacion
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
     
     public function getCargoNomb()
     {
