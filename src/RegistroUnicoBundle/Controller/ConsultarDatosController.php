@@ -588,7 +588,14 @@ class ConsultarDatosController extends Controller
             if (!$encontrado) {
                 return new JsonResponse(0);
             }else
-                return new JsonResponse($encontrado->getActivo());
+            {
+                if($encontrado->getActivo() && $encontrado->getIsRegister())
+                {
+                    return new JsonResponse(1);    
+                }else
+                    return new JsonResponse(0);
+            }
+                
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');
