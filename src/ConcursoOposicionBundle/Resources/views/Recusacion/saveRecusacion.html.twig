@@ -9,6 +9,7 @@
 	        method: "POST",
 	        url:  "{{ path('listadoJuradosAjax') }}",
 	        dataType: 'json',
+	        data: {"id": "NO"},
 	        success: function(data)
 	        {
 	        	if (data != "N"){

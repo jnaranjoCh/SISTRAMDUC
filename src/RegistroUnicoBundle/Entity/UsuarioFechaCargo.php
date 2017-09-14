@@ -28,6 +28,11 @@ class UsuarioFechaCargo
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+    
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isValidate;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="UsuarioFechaCargos")
@@ -51,6 +56,29 @@ class UsuarioFechaCargo
         return $this->id;
     }
 
+    /**
+     * Set isValidate
+     *
+     * @param \boolean $isValidate
+     *
+     * @return UsuarioFechaCargo
+     */
+    public function setIsValidate($isValidate)
+    {
+        $this->isValidate = $isValidate;
+
+        return $this;
+    }
+
+    /**
+     * Get isValidate
+     *
+     * @return  UsuarioFechaCargo
+     */
+    public function getIsValidate()
+    {
+        return $this->isValidate;
+    }
     /**
      * Set date
      *
