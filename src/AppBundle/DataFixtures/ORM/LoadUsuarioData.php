@@ -59,6 +59,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
                       
         $UsuarioFechaCargo = new UsuarioFechaCargo();
         $UsuarioFechaCargo->setDate(new \DateTime('19-09-2016'));
+        $UsuarioFechaCargo->setIsValidate(true);
         
         $car = $this->getReference('Administrativo-cargo');
         $tony->addUsuarioFechaCargos($UsuarioFechaCargo);

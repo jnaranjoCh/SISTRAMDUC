@@ -329,6 +329,7 @@ class RegistrarDatosController extends Controller
                       ->findOneByDescription($cargo['nombre']);
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           $UsuarioFechaCargo->setDate(new \DateTime($cargo['fechaInicio']));
+          $UsuarioFechaCargo->setIsValidate(true);
         
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
