@@ -3,7 +3,7 @@ clausulas_contractuales_prima_hijos:
     defaults: { _controller: ClausulasContractualesABundle:Solicitud:primaHijos}
     
 clausulas_contractuales_discapacidad:
-    path:     /clausulas-contractuales/discapacidad
+    path:     /clausulas-contractuales/discapacidad/{email}/{state}
     defaults: { _controller: ClausulasContractualesABundle:Solicitud:discapacidad}
     
 clausulas_contractuales_beca:
@@ -31,5 +31,11 @@ clausulas_contractuales_guardarArchivosBecaAjaxAction:
 clausulas_contractuales_guardarArchivosPrimaAjaxAction:
     path:     /clausulas-contractuales/guardarArchivosPrima
     defaults: { _controller: ClausulasContractualesABundle:Solicitud:guardarArchivosPrimaAjax}
+    requirements:
+        _method:  POST
+
+clausulas_contractuales_guardarArchivosDiscapacidadAjaxAction:
+    path:     /clausulas-contractuales/guardarArchivosDiscapacidad
+    defaults: { _controller: ClausulasContractualesABundle:Solicitud:guardarArchivosDiscapacidadAjax}
     requirements:
         _method:  POST

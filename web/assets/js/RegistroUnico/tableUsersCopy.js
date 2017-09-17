@@ -14,4 +14,9 @@ $('#tableUsers tbody').on( 'click', 'td', function () {
         $('#gemail').val(email);
         $('#myModal2').modal("hide");
     }
+
+    if(copiar == 0){
+        $('#mail').val(email);
+        $('#registrosBusqueda').modal("hide");
+    }
 });

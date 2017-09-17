@@ -72,6 +72,11 @@ class Recaudo
     private $temp;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isValidate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Tramite", inversedBy="recaudos")
      * @ORM\JoinColumn(name="tramite_id", referencedColumnName="id", onDelete="CASCADE")
      *
@@ -437,4 +442,26 @@ class Recaudo
     {
         return $this->duracion_administrador;
     }
+
+    /**
+     * Set isValidate
+     *
+     * @param string $isValidate
+     * @return Recaudo
+     */
+     public function setIsValidate($isValidate)
+     {
+         $this->isValidate = $isValidate;
+         return $this;
+     }
+ 
+     /**
+      * Get isValidate
+      *
+      * @return boolean
+      */
+     public function getIsValidate()
+     {
+         return $this->isValidate;
+     }
 }
