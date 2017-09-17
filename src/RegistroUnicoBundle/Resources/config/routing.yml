@@ -62,6 +62,10 @@ registro_consultaobteneremails_ajax:
     path:     /consulta/enviar-emails
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarEmailsAjax }
 
+registro_consultaobtenercedulas_ajax:
+    path:     /consulta/enviar-cedulas
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarCedulasAjax }
+
 registro_consultarregistros_ajax:
     path:     /consulta/enviar-registros
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeUsuarioAjax }

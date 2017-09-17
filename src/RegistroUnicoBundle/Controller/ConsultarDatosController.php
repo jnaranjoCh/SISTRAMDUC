@@ -35,6 +35,11 @@ class ConsultarDatosController extends Controller
     {
         return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
     }   
+
+    public function enviarCedulasAjaxAction(Request $request)
+    {
+        return new JsonResponse($this->getCedulas($this->getAll("AppBundle:","Usuario")));
+    }   
     
     public function guardarArchivosAction(Request $request, $email, $execute)
     {
@@ -618,6 +623,40 @@ class ConsultarDatosController extends Controller
                     </div>
                   </div>';
                $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCorreo().'</label>';
+               if($value->getActivo())
+                   $data["Estatus"]="Activo";
+               else
+                   $data["Estatus"]="Inactivo";
+               $datas[$i] = $data;
+               $i++;
+            }
+        }
+        
+        return array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $datas
+        );
+    }
+
+    private function getCedulas($object)
+    {
+        $i = 0;
+        $datas=null;
+        $data["Email"]="";
+        $data["Estatus"]="";
+        $data["Copiar"]="";
+        foreach($object as $value)
+        {
+            if($value->getIsRegister())
+            {
+              $data["Copiar"] = '<div class="col-md-2">
+                    <div class="form-group has-feedback">
+                          <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                    </div>
+                  </div>';
+               $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCedula().'</label>';
                if($value->getActivo())
                    $data["Estatus"]="Activo";
                else
