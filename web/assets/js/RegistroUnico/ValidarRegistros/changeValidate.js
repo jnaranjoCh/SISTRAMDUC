@@ -4,17 +4,37 @@ $('#tableRegistros').on( 'click', 'td', function () {
     if(tableRegistros.cell( this ).index().column == 10){
         var id = tableRegistros.cell(cell).data().split('<span id="')[1].split('"')[0];
         var idCheck = tableRegistros.cell(cell).data().split('<input type="checkbox" id="')[1].split('"')[0];
-        if($('#'+id).attr('class').localeCompare('label label-warning') == 0 && $("#"+idCheck).prop('checked'))
+        if($('#'+id).attr('class').includes('label-warning') && $("#"+idCheck).prop('checked'))
         {
-            $('#'+id).removeClass('label label-warning');
-            $('#'+id).addClass('label label-success');
-            $('#'+id).text("Validado");
+            $('#myModalValidate').modal("show");
+            $('#validar').click(function(){
+                $('#'+id).removeClass('label label-warning');
+                $('#'+id).addClass('label label-success');
+                $('#'+id).text("Validado");
+                $('#myModalValidate').modal("hide");
+            });
+
+            $('#continuar').click(function(){
+                $('#'+id).removeClass('label label-warning');
+                $('#'+id).addClass('label label-success');
+                $('#'+id).text("Validado");
+                $('#myModalValidate').modal("hide");
+            });
+
+            $('#cerrar').click(function(){
+                $('#'+id).removeClass('label label-success');
+                $('#'+id).addClass('label label-warning');
+                $('#'+id).text("No validado");
+                $("#"+idCheck).prop('checked',false);
+                $('#myModalValidate').modal("hide");
+            });
         }
-        else if($('#'+id).attr('class').localeCompare('label label-success') == 0 &&  !$("#"+idCheck).prop('checked'))
+        else if($('#'+id).attr('class').includes('label-success') &&  !$("#"+idCheck).prop('checked'))
         {
             $('#'+id).removeClass('label label-success');
             $('#'+id).addClass('label label-warning');
             $('#'+id).text("No validado");
+            $('#myModalValidate').modal("hide");
         }
     }   
 });
