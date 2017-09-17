@@ -184,3 +184,10 @@ registro_activarusaurios_ajax:
     defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:activarUsuario }
     requirements:
         _method:  POST
+
+registro_consultarbuscarcedula_ajax:
+    path:     /consultar/buscar-cedula
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+

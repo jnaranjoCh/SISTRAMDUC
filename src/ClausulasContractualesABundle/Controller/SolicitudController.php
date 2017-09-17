@@ -11,6 +11,10 @@ use TramiteBundle\Entity\Recaudo;
 
 class SolicitudController extends Controller
 {
+    public function discapacidadIndexAction($state = "initial"){
+        return $this->render('ClausulasContractualesABundle:Solicitud:discapacidad.html.twig');
+    }
+
     public function primaHijosAction($email, $state)
     {
         $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($email);
@@ -89,15 +93,17 @@ class SolicitudController extends Controller
         }
     }
     
-    public function discapacidadAction($email, $state){
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($email);
+    public function discapacidadAction(Request $request){
+        $value[][] = "";
+        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('Cedula'));
         $hijos = $user->getHijosObject();
-        return $this->render('ClausulasContractualesABundle:Solicitud:discapacidad.html.twig', array('hijos' => $hijos));
+        $value = $this->bdToArrayDescription($hijos, $value);
+        return new JsonResponse($value);
     }
 
     public function guardarArchivosDiscapacidadAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($request->get('email'));
+        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('mail'));
 
         $dir_subida_carta_solteria = $this->container->getParameter('kernel.root_dir').'/../web/uploads/constancias/hijo/solteria/';
         $dir_subida_carta_solteria = $dir_subida_carta_solteria."carta_solteria_".$request->get('selectedHijo').".pdf";
@@ -259,6 +265,17 @@ class SolicitudController extends Controller
         }
     }
 
-    
+    private function bdToArrayDescription($object,$val)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           $val['nombre'][$i] = $value->getPrimerNombre();
+           $val['apellido'][$i] = $value->getPrimerApellido();
+           $val['id'][$i] = $value->getId();
+           $i++;
+        }
+        return $val;
+    }
 
 }

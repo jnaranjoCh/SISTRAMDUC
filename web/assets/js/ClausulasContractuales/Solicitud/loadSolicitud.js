@@ -15,7 +15,7 @@ $( window ).load(function() {
         }
 
     tableUsers = $("#tableUsers").DataTable( {
-        "ajax": routeRegistroUnico['registro_consultaobteneremails_ajax'],
+        "ajax": routeRegistroUnico['registro_consultaobtenercedulas_ajax'],
         "columns": [
             { "data": "Email" },
             { "data": "Estatus" },
@@ -26,4 +26,7 @@ $( window ).load(function() {
         },
         "bDestroy": true
     });
+
+    $("#miniPersonal").click(); 
 });
+

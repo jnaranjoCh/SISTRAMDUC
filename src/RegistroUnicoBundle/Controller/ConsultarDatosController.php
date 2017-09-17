@@ -649,7 +649,7 @@ class ConsultarDatosController extends Controller
         $data["Copiar"]="";
         foreach($object as $value)
         {
-            if($value->getIsRegister())
+            if($value->getIsRegister() && $value->getHijos() != null)
             {
               $data["Copiar"] = '<div class="col-md-2">
                     <div class="form-group has-feedback">
@@ -1108,6 +1108,36 @@ class ConsultarDatosController extends Controller
         }
      
         return $array2;
+    }
+
+    public function buscarCedulaAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = $this->getOneCedula("AppBundle:","Usuario",$request->get("Email"));
+
+            if (!$encontrado) {
+                return new JsonResponse(0);
+            }else
+            {
+                if($encontrado->getActivo() && $encontrado->getIsRegister())
+                {
+                    return new JsonResponse(1);    
+                }else
+                    return new JsonResponse(0);
+            }
+                
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');
+    }
+
+    private function getOneCedula($bundle,$entidad,$cedula)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByCedula($cedula);
     }
 
 }

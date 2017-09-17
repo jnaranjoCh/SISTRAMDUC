@@ -62,55 +62,60 @@
     </div>
     
     <div class="row">
-        <section class="content-body col-md-offset-2 col-md-8">
-
-          <!--sección de búsqueda-->
-          <div class="col-md-offset-1 col-md-10">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                  <div class="row">
-                    <div class="col-md-offset-1 col-md-5">
-                      <div class="form-group has-feedback">
-                            <input id="mail" name="mail" type="email" class="form-control" placeholder="Email del usuario">
-                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                      </div>
-                    </div>
-                    <div class="col-md-2">
-                      <div class="form-group has-feedback">
-                            <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
-                      </div>
-                    </div>
-                    <div class="col-md-2">
-                      <div class="form-group has-feedback">
-                            <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#registrosBusqueda">Ver usuarios</button>
-                      </div>
-                    </div>
-                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
-                  </div>
-                </div>
-             </div>
-          </div>
-          <!--fin de sección de búsqueda-->
-
+        <section class="content-body">
           <br/>
           <form id="discapacidadForm" action="{{ path('clausulas_contractuales_guardarArchivosDiscapacidadAjaxAction') }}" method="post" enctype="multipart/form-data">
-            <input name="email" type="text" value="{{ app.user.getCorreo() }}" class="hidden"/>
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Seleccione un hijo para filtrar la información</label>
-                    <select id="selectedHijo" name="selectedHijo" class="form-control select2" style="width: 100%;">
-                      <option selected="selected" value="" disabled>Seleccione</option>
-                      {% for hijo in hijos %}
-                        <option value="{{ hijo.getPrimerNombre() }}_{{ hijo.getPrimerApellido() }}_{{ hijo.getId() }}">{{ hijo.getPrimerNombre() }} {{ hijo.getPrimerApellido() }}</option>
-                      {% endfor %}
-                    </select>
+            <!--sección de búsqueda-->
+            <div class="col-md-offset-1 col-md-10">
+              <div class="box box-info">
+                  <div class="box-header with-border">
+                    <div class="row">
+                      <div class="col-md-offset-1 col-md-5">
+                        <div class="form-group has-feedback">
+                              <input id="mail" name="mail" type="email" class="form-control" placeholder="Buscar cédula">
+                              <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Buscar</button>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#registrosBusqueda">Ver usuarios</button>
+                        </div>
+                      </div>
+                      <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <!--fin de sección de búsqueda-->
+
+            <div class="col-md-offset-1 col-md-10">
+              <div class="box box-info" >
+                
+                <div class="box-header with-border">
+                  <h3 class="box-title">Hijos</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="miniPersonal" class="btn btn-box-tool hidden" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                      <div class="form-group">
+                        <label>Seleccione un hijo para filtrar la información</label>
+                        <select id="selectedHijo" name="selectedHijo" class="form-control select2" style="width: 100%;">
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            
             <div id="recaudos" class="col-md-12 hidden">
               <div class="box box-info collapsed-box">
                 <div class="box-header with-border">
