@@ -140,6 +140,10 @@ registro_guardararchivosconsulta_ajax:
 registro_validar_index: 
     path:     /validar/registro
     defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarRegistros }
+
+registro_validar_iframe_index: 
+    path:     /validar/registro-iframe
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:mostrarIframe }
     
 registro_validarconsultarregistros_ajax:
     path:     /validar/enviar-registros
@@ -191,3 +195,8 @@ registro_consultarbuscarcedula_ajax:
     requirements:
         _method:  POST
 
+registro_validaractualizararchivos_ajax:
+    path:     /validar/actualizar-archivos
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarArchivos }
+    requirements:
+        _method:  POST
