@@ -3,6 +3,9 @@ $( window ).load(function() {
     $("html, body").animate({scrollTop:"0px"});
     $('html, body').css('overflow-y', 'hidden');
     $('html, body').css('overflow-x', 'hidden');
+    $('.main-footer').addClass("hidden");
+    $('.main-header').addClass("hidden");
+    $('#myModalValidate > .close').addClass("hidden");
 });
 
 
@@ -19,3 +22,6 @@ $('#cerrar').click(function(){
     parent.closeIFrame();
 });
 
+$("#myModalValidate").on("hidden.bs.modal", function () {
+    parent.closeIFrame();
+});

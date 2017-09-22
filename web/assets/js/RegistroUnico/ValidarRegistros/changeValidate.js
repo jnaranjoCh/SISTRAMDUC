@@ -1,5 +1,7 @@
 var idGlobal;
 var idCheckGlobal;
+var width;
+var heigth;
 
 $('#tableRegistros').on( 'click', 'td', function () {
     var cell = new Object();
@@ -12,6 +14,12 @@ $('#tableRegistros').on( 'click', 'td', function () {
             idGlobal = id;
             idCheckGlobal = idCheck;
             detener = false;
+            width  = widthModal();
+            heigth = heightModal();
+            $('#guardarArchivoIframe').width(widthModal());
+            $('#guardarArchivoIframe').height(heightModal());
+            $('#oscurecer').modal('show'); 
+            //$("#guardarArchivoIframe").contents().find("#myModalValidate").modal("show");;
             $('html, body').css('overflow-y', 'hidden');
             $('html, body').css('overflow-x', 'hidden');
             $('#guardarArchivoIframe').removeClass("hidden");
@@ -35,6 +43,7 @@ function closeIFrame(){
     $('#guardarArchivoIframe').addClass("hidden");
     $('html, body').css('overflow-y', 'auto');
     $('html, body').css('overflow-x', 'auto');
+    $('#oscurecer').modal('hide');
 }
 
 function continuarIFrame(){
@@ -44,6 +53,7 @@ function continuarIFrame(){
     $('#guardarArchivoIframe').addClass("hidden");
     $('html, body').css('overflow-y', 'auto');
     $('html, body').css('overflow-x', 'auto');
+    $('#oscurecer').modal('hide');
 }
 
 function validarIFrame(){
@@ -53,9 +63,20 @@ function validarIFrame(){
     $('#guardarArchivoIframe').addClass("hidden");
     $('html, body').css('overflow-y', 'auto');
     $('html, body').css('overflow-x', 'auto');
+    $('#oscurecer').modal('hide'); 
 }
 
 function subir()
 {
     $("html, body").animate({scrollTop:"0px"});
+}
+
+function widthModal()
+{
+    return $("#myModalValidateAux").width()-705;
+}
+
+function heightModal()
+{
+    return $("#myModalValidateAux").height()-420;
 }
