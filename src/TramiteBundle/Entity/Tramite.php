@@ -30,7 +30,7 @@ class Tramite
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var array
@@ -49,6 +49,11 @@ class Tramite
      * @ORM\Column(type="string", length=50)
      */
     private $observacion = "hola";
+
+     /**
+     * @ORM\OneToMany(targetEntity="Monto", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+     protected $montos;
 
     /**
      * @ORM\ManyToOne(targetEntity="TipoTramite", inversedBy="tramites")
@@ -80,6 +85,7 @@ class Tramite
     public function __construct()
     {
         $this->transiciones = new ArrayCollection();
+        $this->montos = new ArrayCollection();
     }
 
     public function getId()
@@ -223,4 +229,28 @@ class Tramite
     {
         return $this->transiciones;
     }
+
+    /**
+     * Get montos
+     *
+     * @return Monto
+     */
+     public function getMontos()
+     {
+         return $this->montos;
+     }
+     
+     /**
+      * Set montos
+      *
+      * @param Monto $montos
+      *
+      */
+     public function setMontos(Monto $montos)
+     {
+         $this->montos = $montos; 
+         return $this;
+     }
+
+
 }

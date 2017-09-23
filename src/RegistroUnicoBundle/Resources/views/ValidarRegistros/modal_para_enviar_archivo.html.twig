@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <form name="completeForm" id="completeForm" action="{{ path('registro_validaractualizararchivos_ajax') }}" method="post" enctype="multipart/form-data" novalidate>
+    <!-- Modal -->
+    <div class="modal fade" id="myModalValidate" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Validar Registro</h4>
+          </div>
+          <div class="modal-body">
+            <label>Adjunte el archivo para validar el registro</label>
+            <input id="registro" name="input3[]" accept="application/pdf"  type="file" class="file" data-show-upload="false" data-show-caption="true">
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-1">
+                  <button id="validar" type="button" class="btn btn-default">Validar</button>
+              </div>
+              <div class="col-xs-6 col-md-3 col-md-offset-3">
+                  <button id="continuar" type="button" class="btn btn-default">Validar sin documento</button>
+              </div>
+              <div class="col-xs-5">
+                  <button id="cerrar" type="button" class="btn btn-default">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </form>
+{% endblock %}
+
+{% block custom_javascripts %}
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/mostrarModal.js') }}"></script>
+{% endblock %}

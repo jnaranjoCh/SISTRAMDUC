@@ -27,6 +27,10 @@ class ValidarRegistrosController extends Controller
         return $this->render('RegistroUnicoBundle:ValidarRegistros:validar_registros.html.twig');
     }
     
+    public function mostrarIframeAction()
+    {
+        return $this->render('RegistroUnicoBundle:ValidarRegistros:modal_para_enviar_archivo.html.twig');
+    }
     public function enviarRegistrosAction(Request $request)
     {
         if($request->isXmlHttpRequest())
@@ -70,5 +74,10 @@ class ValidarRegistrosController extends Controller
             $em->flush();
         }
         
+    }
+    
+    public function validarArchivosAction(Request $request)
+    {
+        return $this->render('RegistroUnicoBundle:ValidarRegistros:modal_para_enviar_archivo.html.twig');
     }
 }

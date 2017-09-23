@@ -35,6 +35,11 @@ class ConsultarDatosController extends Controller
     {
         return new JsonResponse($this->getEmails($this->getAll("AppBundle:","Usuario")));
     }   
+
+    public function enviarCedulasAjaxAction(Request $request)
+    {
+        return new JsonResponse($this->getCedulas($this->getAll("AppBundle:","Usuario")));
+    }   
     
     public function guardarArchivosAction(Request $request, $email, $execute)
     {
@@ -635,6 +640,40 @@ class ConsultarDatosController extends Controller
         );
     }
 
+    private function getCedulas($object)
+    {
+        $i = 0;
+        $datas=null;
+        $data["Email"]="";
+        $data["Estatus"]="";
+        $data["Copiar"]="";
+        foreach($object as $value)
+        {
+            if($value->getIsRegister() && $value->getHijos() != null)
+            {
+              $data["Copiar"] = '<div class="col-md-2">
+                    <div class="form-group has-feedback">
+                          <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                    </div>
+                  </div>';
+               $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCedula().'</label>';
+               if($value->getActivo())
+                   $data["Estatus"]="Activo";
+               else
+                   $data["Estatus"]="Inactivo";
+               $datas[$i] = $data;
+               $i++;
+            }
+        }
+        
+        return array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $datas
+        );
+    }
+
     private function getAll($bundle,$entidad)
     {
         return $this->getDoctrine()
@@ -1069,6 +1108,36 @@ class ConsultarDatosController extends Controller
         }
      
         return $array2;
+    }
+
+    public function buscarCedulaAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $encontrado = $this->getOneCedula("AppBundle:","Usuario",$request->get("Email"));
+
+            if (!$encontrado) {
+                return new JsonResponse(0);
+            }else
+            {
+                if($encontrado->getActivo() && $encontrado->getIsRegister())
+                {
+                    return new JsonResponse(1);    
+                }else
+                    return new JsonResponse(0);
+            }
+                
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');
+    }
+
+    private function getOneCedula($bundle,$entidad,$cedula)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByCedula($cedula);
     }
 
 }

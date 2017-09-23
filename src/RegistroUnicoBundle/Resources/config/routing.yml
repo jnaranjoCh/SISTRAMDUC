@@ -62,6 +62,10 @@ registro_consultaobteneremails_ajax:
     path:     /consulta/enviar-emails
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarEmailsAjax }
 
+registro_consultaobtenercedulas_ajax:
+    path:     /consulta/enviar-cedulas
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarCedulasAjax }
+
 registro_consultarregistros_ajax:
     path:     /consulta/enviar-registros
     defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:enviarRegistrosDeUsuarioAjax }
@@ -136,6 +140,10 @@ registro_guardararchivosconsulta_ajax:
 registro_validar_index: 
     path:     /validar/registro
     defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarRegistros }
+
+registro_validar_iframe_index: 
+    path:     /validar/registro-iframe
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:mostrarIframe }
     
 registro_validarconsultarregistros_ajax:
     path:     /validar/enviar-registros
@@ -178,5 +186,17 @@ registro_activarconsultarusaurios_ajax:
 registro_activarusaurios_ajax:
     path:     /eliminar/activar-usuario
     defaults: { _controller: RegistroUnicoBundle:EliminarUsuario:activarUsuario }
+    requirements:
+        _method:  POST
+
+registro_consultarbuscarcedula_ajax:
+    path:     /consultar/buscar-cedula
+    defaults: { _controller: RegistroUnicoBundle:ConsultarDatos:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+
+registro_validaractualizararchivos_ajax:
+    path:     /validar/actualizar-archivos
+    defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarArchivos }
     requirements:
         _method:  POST
