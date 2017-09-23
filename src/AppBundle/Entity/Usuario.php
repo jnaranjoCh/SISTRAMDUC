@@ -182,9 +182,10 @@ class Usuario implements UserInterface
     protected $tramite;
     
     /**
-     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\UsuarioDedicacion", mappedBy="usuario_id", cascade={"persist", "remove"})
-     */
-    protected  $dedicacion;
+     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion")
+     * @ORM\JoinColumn(name="tipo_dedicacion_id", referencedColumnName="id")
+     */ 
+    protected $tipo_dedicacion_id;
     
     /**
      * @ORM\OneToMany(targetEntity="DescargaHorariaBundle\Entity\NombramientoCargoAdmUniv", mappedBy="usuario_id", cascade={"persist"})

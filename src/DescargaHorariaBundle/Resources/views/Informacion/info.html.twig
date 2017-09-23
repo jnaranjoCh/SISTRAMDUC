@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% block opcionsidebar %}
+        <li data-route="descarga_horaria_informacion">
+            <a href="{{ path('descarga_horaria_informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+        </li>
+        <li data-route="jubilacion-solicitud">
+            <a href="{{ path('jubilacion-solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+        </li>>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <h4 style="text-align: center"><b>INFORMACIÓN</b></h4>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-fw fa-clock-o"></i> Descarga Horaria </a></li>
+            <li class="active">Información </li>
+        </ol>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="callout callout-info">
+            <h4>Solicitud de Descarga Horaria</h4>
+            <p align="center"><b>Artículo 247 del Estatuto del Personal Docente y de Investigación de la
+                    Universidad de Carabobo (EPIDIUC). <br> Ley de Universidades. </b>
+            </p>
+
+            <p align="justify"><b>&nbsp;&nbsp;Se entiende por descarga horaria al procedimiento mediante el cual los miembros del personal Docente y de Investigación de Dedicación Exclusiva 
+                        que en razón de ocupar cargos en la Administración Universitaria de elección, de designación o gremiales, deban dedicar a la Universidad un número de horas 
+                        semanales a las aquí estipuladas, por lo que el Consejo Universitario, les definirá el número de horas correspondientes al componente Docente, el cual no 
+                        podrá ser en ningún caso menor de seis (6) horas semanales, sin menoscabo de lo establecido en el Acta Convenio correspondiente. El Rector, los Vicerrectores, 
+                        el Secretario, el Decano (a), o los Directores de Escuelas de las distintas facultades, tendrán su carga horaria dentro de lo establecido en la Ley de Universidades.
+                        </b></p>
+        </div>
+        
+        <!-- Default box -->
+        <div class="box box-solid box-default">
+            
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>Requisitos Exigidos</b></h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            
+            <div class="box-body">
+                <p align="justify">Designación o Ratificación del cargo en la Administración Universitaria 
+                        de elección, de designación o gremial. </p>
+            </div>
+
+        </div>
+        <!-- /.box -->
+        <!-- Default box -->
+        <div class="box box-solid box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>Recaudos Exigidos</b></h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            
+            <div class="box-body">
+                <p align="justify">A continuación se listan los recaudos que deben ser anexados a la solicitud:</p>
+            </div>
+            <div class="box-footer">
+                
+                <p align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Oficio de Solicitud de la Descarga Horaria.</p>
+                <p align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Copia de la Designación o Ratificación del 
+                        cargo en la  Administración Universitaria de elección, de designación o gremial.</p>
+                <p align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Copia de la Cédula de Identidad.</p>
+                <p align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Copia del RIF.</p>
+                
+            </div>
+            <!-- /.box-footer-->
+        </div>
+        <div class="box-body">
+            <div class="pull-right">
+                <a href="{{ path('tramitejubilacion_new') }}">
+                    <button type="button" class="btn btn-block btn-success">Realizar Solicitud</button>
+                </a>
+            </div>
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+    <!-- /.content-wrapper -->
+{% endblock %}

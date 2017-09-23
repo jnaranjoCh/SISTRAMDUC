@@ -30,6 +30,20 @@ class UsuarioFechaCargo
     private $date;
     
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_fin_cargo", type="datetime", nullable=true)
+     */
+    private $fechaFinCargo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_renuncia", type="datetime", nullable=true)
+     */
+    private $fechaRenuncia;
+    
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isValidate;
@@ -55,30 +69,7 @@ class UsuarioFechaCargo
     {
         return $this->id;
     }
-
-    /**
-     * Set isValidate
-     *
-     * @param \boolean $isValidate
-     *
-     * @return UsuarioFechaCargo
-     */
-    public function setIsValidate($isValidate)
-    {
-        $this->isValidate = $isValidate;
-
-        return $this;
-    }
-
-    /**
-     * Get isValidate
-     *
-     * @return  UsuarioFechaCargo
-     */
-    public function getIsValidate()
-    {
-        return $this->isValidate;
-    }
+    
     /**
      * Set date
      *
@@ -101,6 +92,79 @@ class UsuarioFechaCargo
     public function getDate()
     {
         return $this->date;
+    }
+
+     /**
+     * Set fechaFinNombramiento
+     *
+     * @param \DateTime $fechaFinNombramiento
+     *
+     * @return UsuarioFechaCargo
+     */
+    public function setFechaFinCargo($fechaFinCargo)
+    {
+        $this->fechaFinCargo = $fechaFinCargo;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinNombramiento
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinCargo()
+    {
+        return $this->fechaFinCargo;
+    }
+
+    /**
+     * Set fechaRenuncia
+     *
+     * @param \DateTime $fechaRenuncia
+     *
+     * @return UsuarioFechaCargo
+     */
+    public function setFechaRenuncia($fechaRenuncia)
+    {
+        $this->fechaRenuncia = $fechaRenuncia;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaRenuncia
+     *
+     * @return \DateTime
+     */
+    public function getFechaRenuncia()
+    {
+        return $this->fechaRenuncia;
+    }
+
+    
+    /**
+     * Set isValidate
+     *
+     * @param \boolean $isValidate
+     *
+     * @return UsuarioFechaCargo
+     */
+    public function setIsValidate($isValidate)
+    {
+        $this->isValidate = $isValidate;
+
+        return $this;
+    }
+
+    /**
+     * Get isValidate
+     *
+     * @return  UsuarioFechaCargo
+     */
+    public function getIsValidate()
+    {
+        return $this->isValidate;
     }
     
     public function getUsuario()
