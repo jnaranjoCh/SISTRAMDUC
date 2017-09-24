@@ -13,6 +13,7 @@
 			method:"POST",
 			url: "{{ path('listadoSuplenteCPECAjax') }}",
 			dataType: 'json',
+			data: {"id": "NO"},
 	        success: function(data)
 	        {
 	                if (data == "N"){
@@ -41,7 +42,7 @@
 	                    }                                           
 	                }        	
 	        }
-	        });
+	    });
 	});
 
 
@@ -75,7 +76,32 @@
 
 	                $('#myModal').modal('toggle');
 
-	                location.reload();      //funciona, pero no es la idea
+	                tabla.clear().draw();
+
+	                $.ajax({
+
+						method:"POST",
+						url: "{{ path('listadoSuplenteCPECAjax') }}",
+						dataType: 'json',
+						data: {"id": "NO"},
+				        success: function(data)
+				        {
+		                    for (var i = 0; i <= data["nombre"].length-1; i++) {
+	
+		                        var num = data["id"][i];
+	
+		                        tabla.row.add( {
+		                                "nombre": data["nombre"][i],
+		                                "apellido": data["apellido"][i],
+		                                "areainvestigacion": data["areainvestigacion"][i],
+		                                "facultad": data["facultad"][i],
+		                                "universidad": data["universidad"][i],
+		                                "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+		                                //,"elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+		                        }).draw();                               
+		                    }      	
+				        }
+				    });
 
 	               ident = null; 
 	               posicion = null;
@@ -127,48 +153,150 @@
 	}
 
 	$("#modificarConcurso").click(function(){
+	
+		toastr.clear();
+		var continua = true;
+		
+		if ($("#apellido").val() == "" || $("#apellido").val() == null){
 
-	    $.ajax({
+			$("#apellido1").addClass("has-error");
+			continua = false;
+			text = "Campo vacío";
+		} 
+		else {
+			$("#apellido1").removeClass("has-error");					
+		}
+		
+		if ($("#nombre").val() == "" || $("#nombre").val() == null){
 
-	        method:"POST",
-	        url: "{{ path('modificarJuradoAjax') }}",
-	        dataType: 'json',
-	        data: {"id": ident,
-	                "cedula":$("#cedula").val(), 
-	                "nombre":$("#nombre").val(),
-	                "apellido":$("#apellido").val(), 
-	                "facultad":$("#facultad").val(), 
-	                "universidad":$("#universidad").val(), 
-	                "area":$("#areainvestigacion").val()},
-	        success: function(data)
-	        {
-	            if (data == "N"){
+			$("#nombre1").addClass("has-error");
+			continua = false;
+			text = "Campo vacío";
+		} 
+		else {
+			$("#nombre1").removeClass("has-error");					
+		}	
+		
+		if ($("#cedula").val() == "" || $("#cedula").val() == null){
 
-	                text = "Usted No Tiene Permiso";
+			$("#cedula1").addClass("has-error");
+			continua = false;
+			text = "Campo vacío";
+		} 
+		else {
+			$("#cedula1").removeClass("has-error");					
+		}
+		
+		if ($("#areainvestigacion").val() == "" || $("#areainvestigacion").val() == null){
 
-	                toastr.error(text, "Error", {
+			$("#areainvestigacion1").addClass("has-error");
+			continua = false;
+			text = "Campo vacío";
+		} 
+		else {
+			$("#areainvestigacion1").removeClass("has-error");					
+		}
+		
+		if ($("#facultad").val() == "" || $("#facultad").val() == null){
+
+			$("#facultad1").addClass("has-error");
+			continua = false;
+			text = "Campo vacío";
+		} 
+		else {
+			$("#facultad1").removeClass("has-error");					
+		}
+		
+		if ($("#universidad").val() == "" || $("#universidad").val() == null){
+
+			$("#universidad1").addClass("has-error");
+			continua = false;
+			text = "Campo vacío";
+		} 
+		else {
+			$("#universidad1").removeClass("has-error");					
+		}			
+		
+		if (isNaN($("#cedula").val())){
+			text = "No Es Un Número";
+			$("#cedula1").addClass("has-error");
+			continua = false;
+		}		
+		
+		if (continua){
+
+		    $.ajax({
+	
+		        method:"POST",
+		        url: "{{ path('modificarJuradoAjax') }}",
+		        dataType: 'json',
+		        data: {"id": ident,
+		                "cedula":$("#cedula").val(), 
+		                "nombre":$("#nombre").val(),
+		                "apellido":$("#apellido").val(), 
+		                "facultad":$("#facultad").val(), 
+		                "universidad":$("#universidad").val(), 
+		                "area":$("#areainvestigacion").val()},
+		        success: function(data)
+		        {
+		            if (data == "N"){
+	
+		                text = "Usted No Tiene Permiso";
+	
+		                toastr.error(text, "Error", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+	
+		            } else {
+	
+		                text = "Suplente Modificado";
+	
+		                toastr.success(text, "Exito", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
+	
+		                $('#myModal').modal('toggle');
+		                
+		                tabla.clear().draw();
+	
+		                $.ajax({
+	
+							method:"POST",
+							url: "{{ path('listadoSuplenteCPECAjax') }}",
+							dataType: 'json',
+							data: {"id": "NO"},
+					        success: function(data)
+					        {
+			                    for (var i = 0; i <= data["nombre"].length-1; i++) {
+		
+			                        var num = data["id"][i];
+		
+			                        tabla.row.add( {
+			                                "nombre": data["nombre"][i],
+			                                "apellido": data["apellido"][i],
+			                                "areainvestigacion": data["areainvestigacion"][i],
+			                                "facultad": data["facultad"][i],
+			                                "universidad": data["universidad"][i],
+			                                "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+			                                //,"elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+			                        }).draw();                               
+			                    }      	
+					        }
+					    });
+	
+		               ident = null; 
+		               posicion = null;
+		            }                                                               
+		        }
+		    });
+	    }  else {
+	    	toastr.error(text, "Error", {
 	                    "timeOut": "0",
 	                    "extendedTImeout": "0"
-	                 });
-
-	            } else {
-
-	                text = "Suplente Modificado";
-
-	                toastr.success(text, "Exito", {
-	                    "timeOut": "0",
-	                    "extendedTImeout": "0"
-	                 });
-
-	                $('#myModal').modal('toggle');
-
-	                location.reload();      //funciona, pero no es la idea
-
-	               ident = null; 
-	               posicion = null;
-	            }                                                               
-	        }
-	    });
+	                 }); 
+	    }
 	});
 
 	function modificar(id, pos){

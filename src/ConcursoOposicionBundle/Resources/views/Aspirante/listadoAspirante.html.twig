@@ -12,6 +12,7 @@
 
 			method:"POST",
 			url: "{{ path('listadoAspiranteAjax') }}",
+			data: {"resul": "no"},
 			dataType: 'json',
 	        success: function(data)
 	        {

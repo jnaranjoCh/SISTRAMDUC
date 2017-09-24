@@ -36,6 +36,13 @@
             $('#fe').addClass("has-error");
             text = "Campo vacío";
         }
+        
+        if (isNaN($('#cedula').val())){
+        
+        	continua = false;
+            $('#fa').addClass("has-error");
+            text = "No Es Un Número";
+        }
 
         if (continua){
 

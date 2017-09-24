@@ -1,24 +1,9 @@
-$( window ).load(function (){
+function justNumbers(e){
 
-	$.ajax({
-        method: "POST",
-        url:  "/concursoOposicion/listadoConcursosAjax",
-        dataType: 'json',
-        success: function(data)
-        {
-        	var opcion = "<option id='sel' selected='selected'>...</option>";
- 
-        	for (var i = 0; i < data["id"].length; i++) {
-        		
-        		var num = data["id"][i];
+	var keynum = window.event ? window.event.keyCode : e.which;
 
-        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
-        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
-        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
-        		+"</option>";   		
-        	}
-
-        	$("#lista").html(opcion);
-        }
-    });	
-});
+	if (keynum == 8 || keynum == 46){
+		return true;
+	}
+	else return /\d/.test(String.fromCharCode(keynum));
+}

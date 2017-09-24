@@ -2,47 +2,48 @@ $('#cargarSolicConcurso').click(function (){
 	
 	var inputs = ["AsigSol","NroPlz","TemExOral","TemExEsc","JurCoord","JurPpal1","JurPpal2","JurSupl1","JurSupl2"];
 	var falla = false;
-	var text = ""
+	var text = "";
 	
 	toastr.clear();
 	
 	for(var i = 0; i < inputs.length; i++){
         if($("#"+inputs[i]).val() == ""){
             falla = true;
-            if(i>3){
-            	$("#divJurado").addClass("has-error");	
-            }else{
-        		$("#div"+inputs[i]).addClass("has-error");
-            }
-            text = "Error campo mal introducido o obligatorio.";
+    		$("#div"+inputs[i]).addClass("has-error");
+            text = "Dato inválido o faltante.";
         }else{
-        	 if(i>3){
-            	$("#divJurado").removeClass("has-error");	
-            }else{
-        		$("#div"+inputs[i]).removeClass("has-error");
-            }
+    		$("#div"+inputs[i]).removeClass("has-error");
         }
     }
     
+    
 	if (falla){
-		toastr.error(text, "Error", {"timeOut": "0","extendedTImeout": "0"});
-	}else { 
-	    
-		/*$.ajax({
+		toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
+	} else {
+		$.ajax({
             method: "POST",
-            data: {"Asignatura":$("#AsigSol").val(), "Plazas":$("#NroPlz").val(), "ExOral":$("#TemExOral").val(), "ExEsc":$("#TemExEsc").val(), 
-    			"Coord":$("#JurCoord").val(), "Ppal1":$("#JurPpal1").val(), "Ppal2":$("#JurPpal2").val(), "Supl2":$("#JurSupl2").val()},
-            url:  "/web/app_dev.php/preparadores/registrar_solicitud",
+            data: {"AsigSol":$("#AsigSol").val(), "NroPlz":$("#NroPlz").val(), "ExOral":$("#TemExOral").val(), "ExEsc":$("#TemExEsc").val(), 
+    			"Coord":$("#JurCoord").val(), "Ppal1":$("#JurPpal1").val(), "Ppal2":$("#JurPpal2").val(), "Supl1":$("#JurSupl1").val(), "Supl2":$("#JurSupl2").val()},
+            url: "/web/app_dev.php/preparadores/registrar_solicitud",
             dataType: 'json',
-            success: function(data){
-                if(data == "insertado"){*/
-                    toastr.success("Solicitud registrada exitosamente!.", "Éxito!", {
-					"timeOut": "0","extendedTImeout": "0"});
-                    $('#closeCargaRequisitos').click();
-                /* }
-            }
-        });*/
-		
+            beforeSend: function(){
+                $("#cargando").modal("show");
+            },
+	        success: function(respuesta){
+        		if (respuesta.estado == "Insertado") {
+        		    $("#cargando").modal("hide");
+        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+    				$('#closeCargaRequisitos').click();
+        		}else{
+        		    if (respuesta.estado == "NoExisteJurado") {
+        		    	$("#cargando").modal("hide");
+        		        for(var i = 0; i < respuesta.jurados.length; i++){
+            		        $(respuesta.jurados[i]).addClass("has-error");
+                		    toastr.error(respuesta.mensaje, "Error!", {"timeOut": "0","extendedTImeout": "0"});
+        		        }
+            		}
+        		}
+        }});
 	}
 });
 
@@ -51,11 +52,7 @@ $('#closeCargaRequisitos').click(function (){
 	var inputs = ["AsigSol","NroPlz","TemExOral","TemExEsc","JurCoord","JurPpal1","JurPpal2","JurSupl1","JurSupl2"];
 	
 	for(var i = 0; i < inputs.length; i++){
-		if(i>3){
-        	$("#divJurado").removeClass("has-error");	
-        }else{
-    		$("#div"+inputs[i]).removeClass("has-error");
-        }
+		$("#div"+inputs[i]).removeClass("has-error");
     }
 });
 

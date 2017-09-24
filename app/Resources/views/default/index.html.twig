@@ -11,7 +11,32 @@
         <li><a href="/"><i class="fa fa-home"></i> Inicio</a></li>
       </ol>
     </section>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 id="title-modal" class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+             <div class="row">
+              <div class="col-xs-1">
+                  <button id="continue" type="button" class="btn btn-default">Continuar</button>
+              </div>
+              <div class="col-xs-11">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
@@ -79,4 +104,9 @@
       </div>
     </section>
     <!-- /.content -->
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/RegistroUnico/EliminarUsuario/iniEU.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/EliminarUsuario/deleteData.js') }}"></script>
 {% endblock %}

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="html">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,8 +42,7 @@
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
+  <header style="z-index:99;" class="main-header">
     <!-- Logo -->
     <a href="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -108,7 +107,7 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+  <aside style="z-index:1;"  class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section id="sidebar" class="sidebar" data-current-route="{{ app.request.get('_route') }}">
       <!-- search form -->
@@ -144,8 +143,20 @@
             <li data-route="registro_datos_index">
               <a href="{{ path('registro_datos_index', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Registro de datos</a>
             </li>
+            <li data-route="registro_consultarusuario_index">
+              <a href="{{ path('registro_consultarusuario_index') }}"><i class="fa fa-circle-o"></i>Consultar y editar usuario</a>
+            </li>
             <li data-route="registro_consulta_index">
-              <a href="{{ path('registro_consulta_index') }}"><i class="fa fa-circle-o"></i>Consultar y editar datos</a>
+              <a href="{{ path('registro_consulta_index', { 'apr': 'initial' }) }}"><i class="fa fa-circle-o"></i>Consultar y editar datos</a>
+            </li>
+            <li data-route="registro_validar_index">
+              <a href="{{ path('registro_validar_index') }}"><i class="fa fa-circle-o"></i>Validar Registros</a>
+            </li>
+            <li data-route="registro_eliminar_index">
+              <a href="{{ path('registro_eliminar_index') }}"><i class="fa fa-circle-o"></i>Desactivar usuario</a>
+            </li>
+            <li data-route="registro_activar_index">
+              <a href="{{ path('registro_activar_index') }}"><i class="fa fa-circle-o"></i>Activar usuario</a>
             </li>
           </ul>
         </li>
@@ -227,20 +238,35 @@
               </a>
               <ul class="treeview-menu">
                 <li data-route="clausulas_contractuales_prima_hijos">
-                  <a href="{{ path('clausulas_contractuales_prima_hijos') }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                  <a href="{{ path('clausulas_contractuales_prima_hijos', { 'email': app.user.getCorreo(), 'state': 'initial' }) }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
                 </li>
                 <li data-route="clausulas_contractuales_beca">
-                  <a href="{{path('clausulas_contractuales_beca')}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
+                  <a href="{{path('clausulas_contractuales_beca', { 'email': app.user.getCorreo(), 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
                 </li>
-                <li data-route="clausulas_contractuales_discapacidad">
-                  <a href="{{path('clausulas_contractuales_discapacidad')}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
+                <li data-route="clausulas_contractuales_discapacidadIndex">
+                  <a href="{{path('clausulas_contractuales_discapacidadIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
                 </li>
               </ul>
             </li>
           </ul>
           <ul class="treeview-menu">
-            <li data-route="clausulas_contractuales_consultar">
-              <a href="{{path('clausulas_contractuales_consultar')}}"><i class="fa fa-circle-o"></i><span>Consultar solicitud</span></a>
+            <li data-route="">
+              <a href="#"><i class="fa fa-circle-o"></i><span>Consultar solicitud</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="clausulas_contractuales_consultar_prima_hijos">
+                  <a href="{{path('clausulas_contractuales_consultar_prima_hijos')}}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                </li>
+                <li data-route="clausulas_contractuales_consultar_beca">
+                  <a href="{{path('clausulas_contractuales_consultar_beca')}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
+                </li>
+                <li data-route="clausulas_contractuales_consultar_discapacidad">
+                  <a href="{{path('clausulas_contractuales_consultar_discapacidad')}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
@@ -458,14 +484,31 @@
                 <li data-route="resultados">
                   <a href="{{ path('resultados') }}"><i class="fa fa-circle-o"></i>Registrar Resultados</a>
                 </li>
-                <li data-route="listarResultados">
-                  <a href="{{ path('listarResultados') }}"><i class="fa fa-circle-o"></i>Listado de Resultados</a>
-                </li>
               </ul>
             </li>
 
           </ul>
         </li>
+        
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-fw fa-clock-o"></i><span>Descarga Horaria</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li data-route="descarga_horaria_informacion">
+              <a href="{{ path('descarga_horaria_informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
+            </li>
+
+            <li data-route="descarga_horaria_cargos_adm_univ">
+              <a href="{{ path('descarga_horaria_cargos_adm_univ') }}"><i class="fa fa-circle-o"></i>Cargos</a>
+            </li>
+            
+          </ul>
+        </li>
+        
       </ul>
     </section>
     <!-- /.sidebar -->

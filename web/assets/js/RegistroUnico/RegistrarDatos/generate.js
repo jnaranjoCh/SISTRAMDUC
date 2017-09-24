@@ -1,4 +1,4 @@
-$('#gemail').on('input',function(e){
+$('#mail').on('input',function(e){
     $("#formPersonal").addClass("hidden");
     $("#formRegistros").addClass("hidden");
     $("#formCargos").addClass("hidden");
@@ -11,7 +11,7 @@ $('#generate').click(function(){
         toastr.clear();
         $.ajax({
             method: "POST",
-            data: {"Email":$('#gemail').val()},
+            data: {"Email":$('#mail').val()},
             url: routeRegistroUnico['registro_buscaremail_ajax'],
             dataType: 'json',
             success: function(data){
@@ -22,7 +22,7 @@ $('#generate').click(function(){
                     $("#divCheckbox").removeClass("hidden");
                     $("#save").removeClass("hidden");
                 }else{
-                    toastr.error("El usuario no se encuentra registrado, esta inactivo o ya realizo el registro.", "Error", {
+                    toastr.error("El usuario no se encuentra registrado, está inactivo o ya realizó el registro.", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                                 });

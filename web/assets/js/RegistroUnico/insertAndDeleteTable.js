@@ -12,7 +12,7 @@ var hijoData = [];
 var cargoData = [];
 
 $('#agregarRegistro').click(function(){
-    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos"];
+    var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos","CiudadPaisDatos","CongresosDatos"];
     toastr.clear();
     var band = false,bandConcatRevist = true,bandConcatPart = true;
     var participantesId="<option value='-1'>No existen registros</option>";
@@ -25,7 +25,7 @@ $('#agregarRegistro').click(function(){
               .each( function ( value,index ) {
                     if(value == $("#DescripcionDatos").val()){ 
                         band = true;
-                        toastr.error("Error el registro ya se encuentra en la tabla.", "Error", {
+                        toastr.error("El registro ya se encuentra en la tabla.", "Error", {
                             "timeOut": "0",
                             "extendedTImeout": "0"
                          });
@@ -33,180 +33,279 @@ $('#agregarRegistro').click(function(){
                });
    }
    
-   if(($('#tableRegistros td').length)==0 && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
-        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias"){
-            tableRegistros.row.add( {
-                "Id del registro": idRegistro,
-                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-                "Descripcion": $("#DescripcionDatos").val(),
-                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-                "Estatus": $("#EstatusDatos").find('option:selected').val(),
-                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-                "Empresa y/o institución": ""
-            } ).draw();
-            registro.idRegistro = idRegistro;
-            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
-            registro.descripcion = $("#DescripcionDatos").val();
-            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
-            registro.estatus = $("#EstatusDatos").find('option:selected').val();
-            registro.anio = $("#AnoPublicacionDatos").val();
-            registro.empresaInstitucion = "";
-            registrosData[countRegistro] = registro;
-            countRegistro++;
-            idRegistro++;
-        }else if($("#EmpresaDatos").val()!=""){
-            tableRegistros.row.add( {
-                "Id del registro": idRegistro,
-                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-                "Descripcion": $("#DescripcionDatos").val(),
-                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-                "Estatus": $("#EstatusDatos").find('option:selected').val(),
-                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-                "Empresa y/o institución": $("#EmpresaDatos").val()
-            } ).draw();
-            registro.idRegistro = idRegistro;
-            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
-            registro.descripcion = $("#DescripcionDatos").val();
-            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
-            registro.estatus = $("#EstatusDatos").find('option:selected').val();
-            registro.anio = $("#AnoPublicacionDatos").val();
-            registro.empresaInstitucion = $("#EmpresaDatos").val();
-            registrosData[countRegistro] = registro;
-            countRegistro++;
-            idRegistro++;
-        }else if($("#InstitucionDatos").val()!=""){
-            tableRegistros.row.add( {
-                "Id del registro": idRegistro,
-                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-                "Descripcion": $("#DescripcionDatos").val(),
-                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-                "Estatus": $("#EstatusDatos").find('option:selected').val(),
-                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-                "Empresa y/o institución": $("#InstitucionDatos").val()
-            } ).draw();
-            registro.idRegistro = idRegistro;
-            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
-            registro.descripcion = $("#DescripcionDatos").val();
-            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
-            registro.estatus = $("#EstatusDatos").find('option:selected').val();
-            registro.anio = $("#AnoPublicacionDatos").val();
-            registro.empresaInstitucion = $("#InstitucionDatos").val();
-            registrosData[countRegistro] = registro;
-            countRegistro++;
-            idRegistro++;
-        }
-        
-        for(var i = 0; i < inputsR.length; i++){
-            $("#headerRegistros").css({ 'color': "black" });
-            $("#span"+inputsR[i]).removeClass("glyphicon-remove");
-            $("#div"+inputsR[i]).removeClass("has-error");
-        }
-   }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
-        if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias"){
-            tableRegistros.row.add({
-                "Id del registro": idRegistro,
-                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-                "Descripcion": $("#DescripcionDatos").val(),
-                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-                "Estatus": $("#EstatusDatos").find('option:selected').val(),
-                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-                "Empresa y/o institución": ""
-            }).draw();
-            registro.idRegistro = idRegistro;
-            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
-            registro.descripcion = $("#DescripcionDatos").val();
-            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
-            registro.estatus = $("#EstatusDatos").find('option:selected').val();
-            registro.anio = $("#AnoPublicacionDatos").val();
-            registro.empresaInstitucion = "";
-            registrosData[countRegistro] = registro;
-            countRegistro++;
-            idRegistro++;
-        }else if($("#EmpresaDatos").val()!=""){
-            tableRegistros.row.add( {
-                "Id del registro": idRegistro,
-                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-                "Descripcion": $("#DescripcionDatos").val(),
-                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-                "Estatus": $("#EstatusDatos").find('option:selected').val(),
-                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-                "Empresa y/o institución": $("#EmpresaDatos").val()
-            } ).draw();
-            registro.idRegistro = idRegistro;
-            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
-            registro.descripcion = $("#DescripcionDatos").val();
-            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
-            registro.estatus = $("#EstatusDatos").find('option:selected').val();
-            registro.anio = $("#AnoPublicacionDatos").val();
-            registro.empresaInstitucion = $("#EmpresaDatos").val();
-            registrosData[countRegistro] = registro;
-            countRegistro++;
-            idRegistro++;
-        }else if($("#InstitucionDatos").val()!=""){
-            tableRegistros.row.add( {
-                "Id del registro": idRegistro,
-                "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
-                "Descripcion": $("#DescripcionDatos").val(),
-                "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
-                "Estatus": $("#EstatusDatos").find('option:selected').val(),
-                "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
-                "Empresa y/o institución": $("#InstitucionDatos").val()
-            } ).draw();
-            registro.idRegistro = idRegistro;
-            registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
-            registro.descripcion = $("#DescripcionDatos").val();
-            registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
-            registro.estatus = $("#EstatusDatos").find('option:selected').val();
-            registro.anio = $("#AnoPublicacionDatos").val();
-            registro.empresaInstitucion = $("#InstitucionDatos").val();
-            registrosData[countRegistro] = registro;
-            countRegistro++;
-            idRegistro++;
-        }
-        
-        for(var i = 0; i < inputsR.length; i++){
-            $("#headerRegistros").css({ 'color': "black" });
-            $("#span"+inputsR[i]).removeClass("glyphicon-remove");
-            $("#div"+inputsR[i]).removeClass("has-error");
-        }
-   }else if(!band){
-        toastr.error("Error faltan datos.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-        
-        if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de servicio comunitario"){
-            for(var i = 0; i < inputsR.length; i++){
-                if(inputsR[i] != "EmpresaDatos"){
-                    $("#headerRegistros").css({ 'color': "red" });
-                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).addClass("has-error");
-                }
+   if((($("#TipoDeRegistroDatos").find('option:selected').val()=="Asistencia a Congresos/Seminarios" &&  ($("#CongresosDatos").val()=="" || $("#CiudadPaisDatos").val()==""))) || ($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de pasantias" && $("#EmpresaDatos").val()=="") || ($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de tesis" && ($("#TituloObtenidoDatos").val()=="" || $("#InstitucionDatos").val()=="" )))
+   {
+        $("#headerRegistros").css({ 'color': "red" });
+        if($("#TipoDeRegistroDatos").find('option:selected').val()=="Asistencia a Congresos/Seminarios"){
+            if($("#CongresosDatos").val()=="" && $("#CiudadPaisDatos").val()=="")
+            {
+                $("#spanCongresosDatos").addClass("glyphicon-remove");
+                $("#divCongresosDatos").addClass("has-error");
+                $("#spanCiudadPaisDatos").addClass("glyphicon-remove");
+                $("#divCiudadPaisDatos").addClass("has-error");
+            }else if($("#CongresosDatos").val()==""){
+                $("#spanCongresosDatos").addClass("glyphicon-remove");
+                $("#divCongresosDatos").addClass("has-error");
+                $("#spanCiudadPaisDatos").removeClass("glyphicon-remove");
+                $("#divCiudadPaisDatos").removeClass("has-error");
+            }else if($("#CiudadPaisDatos").val()=="")
+            {
+                $("#spanCiudadPaisDatos").addClass("glyphicon-remove");
+                $("#divCiudadPaisDatos").addClass("has-error");
+                $("#spanCongresosDatos").removeClass("glyphicon-remove");
+                $("#divCongresosDatos").removeClass("has-error");
             }
-        }else if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de pasantias"){
-            for(var i = 0; i < inputsR.length; i++){
-                if(inputsR[i] != "InstitucionDatos"){
-                    $("#headerRegistros").css({ 'color': "red" });
-                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).addClass("has-error");
-                }
+        }else if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de pasantias")
+        {
+            if($("#EmpresaDatos").val()==""){
+                $("#spanEmpresaDatos").addClass("glyphicon-remove");
+                $("#divEmpresaDatos").addClass("has-error");
             }
-        }else{
-            for(var i = 0; i < inputsR.length; i++){
-                if(inputsR[i] != "InstitucionDatos" && inputsR[i] != "EmpresaDatos"){
-                    $("#headerRegistros").css({ 'color': "red" });
-                    $("#span"+inputsR[i]).addClass("glyphicon-remove");
-                    $("#div"+inputsR[i]).addClass("has-error");
-                }
+        }else if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de tesis")
+        {
+            if($("#TituloObtenidoDatos").val()=="" && $("#InstitucionDatos").val()=="")
+            {
+                $("#spanTituloObtenidoDatos").addClass("glyphicon-remove");
+                $("#divTituloObtenidoDatos").addClass("has-error");
+                $("#spanInstitucionDatos").addClass("glyphicon-remove");
+                $("#divInstitucionDatos").addClass("has-error");
+            }else if($("#InstitucionDatos").val()==""){
+                $("#spanInstitucionDatos").addClass("glyphicon-remove");
+                $("#divInstitucionDatos").addClass("has-error");
+                $("#spanTituloObtenidoDatos").removeClass("glyphicon-remove");
+                $("#divTituloObtenidoDatos").removeClass("has-error");
+            }else if($("#TituloObtenidoDatos").val()=="")
+            {
+                $("#spanTituloObtenidoDatos").addClass("glyphicon-remove");
+                $("#divTituloObtenidoDatos").addClass("has-error");
+                $("#spanInstitucionDatos").removeClass("glyphicon-remove");
+                $("#divInstitucionDatos").removeClass("has-error");
             }
         }
-        
+         toastr.error("Error faltan datos.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+   }
+   else{
+       if(($('#tableRegistros td').length)==0 && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
+            if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de tesis"){
+                tableRegistros.row.add( {
+                    "Id del registro": idRegistro,
+                    "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                    "Descripcion": $("#DescripcionDatos").val(),
+                    "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                    "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                    "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                    "Empresa y/o institución": "",
+                    "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
+                    "Ciudad / Pais":$("#CiudadPaisDatos").val(),
+                    "Congreso":$("#CongresosDatos").val()
+                } ).draw();
+                registro.idRegistro = idRegistro;
+                registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+                registro.descripcion = $("#DescripcionDatos").val();
+                registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+                registro.estatus = $("#EstatusDatos").find('option:selected').val();
+                registro.anio = $("#AnoPublicacionDatos").val();
+                registro.empresaInstitucion = "";
+                registro.tituloObtenido = $("#TituloObtenidoDatos").val();
+                registro.ciudadPais = $("#CiudadPaisDatos").val();
+                registro.congreso = $("#CongresosDatos").val();
+                registrosData[countRegistro] = registro;
+                countRegistro++;
+                idRegistro++;
+            }else if($("#EmpresaDatos").val()!=""){
+                tableRegistros.row.add( {
+                    "Id del registro": idRegistro,
+                    "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                    "Descripcion": $("#DescripcionDatos").val(),
+                    "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                    "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                    "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                    "Empresa y/o institución": $("#EmpresaDatos").val(),
+                    "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
+                    "Ciudad / Pais":$("#CiudadPaisDatos").val(),
+                    "Congreso":$("#CongresosDatos").val()
+                } ).draw();
+                registro.idRegistro = idRegistro;
+                registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+                registro.descripcion = $("#DescripcionDatos").val();
+                registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+                registro.estatus = $("#EstatusDatos").find('option:selected').val();
+                registro.anio = $("#AnoPublicacionDatos").val();
+                registro.empresaInstitucion = $("#EmpresaDatos").val();
+                registro.tituloObtenido = $("#TituloObtenidoDatos").val();
+                registro.ciudadPais = $("#CiudadPaisDatos").val();
+                registro.congreso = $("#CongresosDatos").val();
+                registrosData[countRegistro] = registro;
+                countRegistro++;
+                idRegistro++;
+            }else if($("#InstitucionDatos").val()!=""){
+                tableRegistros.row.add( {
+                    "Id del registro": idRegistro,
+                    "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                    "Descripcion": $("#DescripcionDatos").val(),
+                    "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                    "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                    "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                    "Empresa y/o institución": $("#InstitucionDatos").val(),
+                    "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
+                    "Ciudad / Pais":$("#CiudadPaisDatos").val(),
+                    "Congreso":$("#CongresosDatos").val()
+                } ).draw();
+                registro.idRegistro = idRegistro;
+                registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+                registro.descripcion = $("#DescripcionDatos").val();
+                registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+                registro.estatus = $("#EstatusDatos").find('option:selected').val();
+                registro.anio = $("#AnoPublicacionDatos").val();
+                registro.empresaInstitucion = $("#InstitucionDatos").val();
+                registro.tituloObtenido = $("#TituloObtenidoDatos").val();
+                registro.ciudadPais = $("#CiudadPaisDatos").val();
+                registro.congreso = $("#CongresosDatos").val();
+                registrosData[countRegistro] = registro;
+                countRegistro++;
+                idRegistro++;
+            }
+            
+            for(var i = 0; i < inputsR.length; i++){
+                $("#headerRegistros").css({ 'color': "black" });
+                $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                $("#div"+inputsR[i]).removeClass("has-error");
+            }
+       }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
+            if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de tesis"){
+                tableRegistros.row.add({
+                    "Id del registro": idRegistro,
+                    "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                    "Descripcion": $("#DescripcionDatos").val(),
+                    "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                    "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                    "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                    "Empresa y/o institución": "",
+                    "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
+                    "Ciudad / Pais":$("#CiudadPaisDatos").val(),
+                    "Congreso":$("#CongresosDatos").val()
+                }).draw();
+                registro.idRegistro = idRegistro;
+                registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+                registro.descripcion = $("#DescripcionDatos").val();
+                registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+                registro.estatus = $("#EstatusDatos").find('option:selected').val();
+                registro.anio = $("#AnoPublicacionDatos").val();
+                registro.empresaInstitucion = "";
+                registro.tituloObtenido = $("#TituloObtenidoDatos").val();
+                registro.ciudadPais = $("#CiudadPaisDatos").val();
+                registro.congreso = $("#CongresosDatos").val();
+                registrosData[countRegistro] = registro;
+                countRegistro++;
+                idRegistro++;
+            }else if($("#EmpresaDatos").val()!=""){
+                tableRegistros.row.add( {
+                    "Id del registro": idRegistro,
+                    "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                    "Descripcion": $("#DescripcionDatos").val(),
+                    "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                    "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                    "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                    "Empresa y/o institución": $("#EmpresaDatos").val(),
+                    "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
+                    "Ciudad / Pais":$("#CiudadPaisDatos").val(),
+                    "Congreso":$("#CongresosDatos").val()
+                } ).draw();
+                registro.idRegistro = idRegistro;
+                registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+                registro.descripcion = $("#DescripcionDatos").val();
+                registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+                registro.estatus = $("#EstatusDatos").find('option:selected').val();
+                registro.anio = $("#AnoPublicacionDatos").val();
+                registro.empresaInstitucion = $("#EmpresaDatos").val();
+                registro.tituloObtenido = $("#TituloObtenidoDatos").val();
+                registro.ciudadPais = $("#CiudadPaisDatos").val();
+                registro.congreso = $("#CongresosDatos").val();
+                registrosData[countRegistro] = registro;
+                countRegistro++;
+                idRegistro++;
+            }else if($("#InstitucionDatos").val()!=""){
+                tableRegistros.row.add( {
+                    "Id del registro": idRegistro,
+                    "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
+                    "Descripcion": $("#DescripcionDatos").val(),
+                    "Nivel": $("#NivelDeEstudioDatos").find('option:selected').val(),
+                    "Estatus": $("#EstatusDatos").find('option:selected').val(),
+                    "Año de publicación y/o asistencia": $("#AnoPublicacionDatos").val(),
+                    "Empresa y/o institución": $("#InstitucionDatos").val(),
+                    "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
+                    "Ciudad / Pais":$("#CiudadPaisDatos").val(),
+                    "Congreso":$("#CongresosDatos").val()
+                } ).draw();
+                registro.idRegistro = idRegistro;
+                registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
+                registro.descripcion = $("#DescripcionDatos").val();
+                registro.nivel = $("#NivelDeEstudioDatos").find('option:selected').val();
+                registro.estatus = $("#EstatusDatos").find('option:selected').val();
+                registro.anio = $("#AnoPublicacionDatos").val();
+                registro.empresaInstitucion = $("#InstitucionDatos").val();
+                registro.tituloObtenido = $("#TituloObtenidoDatos").val();
+                registro.ciudadPais = $("#CiudadPaisDatos").val();
+                registro.congreso = $("#CongresosDatos").val();
+                registrosData[countRegistro] = registro;
+                countRegistro++;
+                idRegistro++;
+            }
+            
+            for(var i = 0; i < inputsR.length; i++){
+                $("#headerRegistros").css({ 'color': "black" });
+                $("#span"+inputsR[i]).removeClass("glyphicon-remove");
+                $("#div"+inputsR[i]).removeClass("has-error");
+            }
+       }else if(!band){
+            toastr.error("Error faltan datos.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+            
+            if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de servicio comunitario"){
+                for(var i = 0; i < inputsR.length; i++){
+                    if(inputsR[i] != "EmpresaDatos"){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                    }
+                }
+            }else if($("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario"){
+                for(var i = 0; i < inputsR.length; i++){
+                    if(inputsR[i] != "InstitucionDatos"){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                    }
+                }
+            }else if($("#TipoDeRegistroDatos").find('option:selected').val()=="Tutoria de tesis"){
+                for(var i = 0; i < inputsR.length; i++){
+                    if(inputsR[i] != "TituloObtenidoDatos"){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                    }
+                }
+            }else{
+                for(var i = 0; i < inputsR.length; i++){
+                    if(inputsR[i] != "InstitucionDatos" && inputsR[i] != "EmpresaDatos"){
+                        $("#headerRegistros").css({ 'color': "red" });
+                        $("#span"+inputsR[i]).addClass("glyphicon-remove");
+                        $("#div"+inputsR[i]).addClass("has-error");
+                    }
+                }
+            }
+       }
    }
    
    tableRegistros.column(1)
                  .data()
                  .each( function ( value1,index1 ) {
-                        if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
+                        if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
                            if(bandConcatPart){
                                 participantesId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatPart = false;
@@ -218,7 +317,8 @@ $('#agregarRegistro').click(function(){
                                                 if(index1 == index2)
                                                     participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
                                           });     
-                        }else if(value1=="Articulo publicado"){
+                        }
+                        if(value1=="Articulo publicado"){
                             if(bandConcatRevist){
                                 revistasId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatRevist = false;
@@ -250,7 +350,7 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
        tableRegistros.column(1)
                      .data()
                      .each( function ( value1,index1 ) {
-                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario"){
+                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
                                if(bandConcatPart){
                                     participantesId="<option value='-1'>Seleccione una opción</option>";
                                     bandConcatPart = false;
@@ -261,7 +361,8 @@ $('#tableRegistros').on( 'click', 'tbody tr', function () {
                                                     if(index1 == index2)
                                                         participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
                                               });                         
-                            }else if(value1=="Articulo publicado"){
+                            }
+                            if(value1=="Articulo publicado"){
                                 if(bandConcatRevist){
                                     revistasId="<option value='-1'>Seleccione una opción</option>";
                                     bandConcatRevist = false;
@@ -303,6 +404,18 @@ $('#agregarParticipantes').click(function(){
                });
    }
   
+   if(!band && !(/^[a-zA-Z]*$/).test($("#NombreParticipanteRegistro").val()))
+   {
+        $("#spanNombreParticipanteRegistro").addClass("glyphicon-remove");
+        $("#divNombreParticipanteRegistro").addClass("has-error");
+        toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerRegistros").css({ 'color': "red" });
+       band = true;
+   }
+   
    if(!band && $("#IdParticipanteRegistro").val() != -1 && $("#NombreParticipanteRegistro").val() != "" && $("#CedulaParticipanteRegistro").val() != ""){
        tableParticipantes.row.add( {
                 "Id del registro": $("#IdParticipanteRegistro").val(),
@@ -465,10 +578,14 @@ $('#agregarRevista').click(function(){
    if(!band && $("#idRevistaRegistro").val() != -1 && $("#descrpcionRevistaRegistro").val() != ""){
        tableRevista.row.add( {
                 "Id del registro": $("#idRevistaRegistro").val(),
-                "Revista": $("#descrpcionRevistaRegistro").val()
+                "Revista": $("#descrpcionRevistaRegistro").val(),
+                "Volumen": $("#volumenRevistaRegistro").val(),
+                "PrimerayUltimaPagina": $("#primerayUltimaPaginaRevistaRegistro").val()
         } ).draw();
         revista.idRegistro = $("#idRevistaRegistro").val();
         revista.revista = $("#descrpcionRevistaRegistro").val();
+        revista.volumen = $("#volumenRevistaRegistro").val();
+        revista.primerayUltimaPagina = $("#primerayUltimaPaginaRevistaRegistro").val();
         revistasData[countRevista] = revista;
         countRevista++;
         $("#headerRegistros").css({ 'color': "black" });
@@ -476,6 +593,10 @@ $('#agregarRevista').click(function(){
         $("#divIdRevistaRegistro").removeClass("has-error");
         $("#spanDescrpcionRevistaRegistro").removeClass("glyphicon-remove");
         $("#divDescrpcionRevistaRegistro").removeClass("has-error");
+        $("#spanVolumenRevistaRegistro").removeClass("glyphicon-remove");
+        $("#divVolumenRevistaRegistro").removeClass("has-error");
+        $("#spanPrimerayUltimaPaginaRevistaRegistro").removeClass("glyphicon-remove");
+        $("#divPrimerayUltimaPaginaRevistaRegistro").removeClass("has-error");
    }else if(!band){
        toastr.error("Error faltan datos.", "Error", {
                 "timeOut": "0",
@@ -487,6 +608,10 @@ $('#agregarRevista').click(function(){
         $("#divIdRevistaRegistro").addClass("has-error");
         $("#spanDescrpcionRevistaRegistro").addClass("glyphicon-remove");
         $("#divDescrpcionRevistaRegistro").addClass("has-error");
+        $("#spanVolumenRevistaRegistro").addClass("glyphicon-remove");
+        $("#divVolumenRevistaRegistro").addClass("has-error");
+        $("#spanPrimerayUltimaPaginaRevistaRegistro").addClass("glyphicon-remove");
+        $("#divPrimerayUltimaPaginaRevistaRegistro").addClass("has-error");
    }
 });
 
@@ -514,6 +639,79 @@ $('#agregarHijo').click(function(){
                     }
                });
     }
+    
+   if(!band && !(/^\d*$/).test($("#CedulaMadreHijoDatos").val()))
+   {
+       $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+       $("#divCedulaMadreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^\d*$/).test($("#CedulaPadreHijoDatos").val()))
+   {
+       $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+       $("#divCedulaPadreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!(/^\d*$/).test($("#CedulaHijoDatos").val()))
+   {
+       $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+       $("#divCedulaHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerNombreHijoDatos").val()))
+   {
+       $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+       $("#divPrimerNombreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoNombreHijoDatos").val()))
+   {
+       $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+       $("#divSegundoNombreHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerApellidoHijoDatos").val()))
+   {
+       $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+       $("#divPrimerApellidoHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoApellidoHijoDatos").val()))
+   {
+       $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+       $("#divSegundoApellidoHijoDatos").addClass("has-error");
+       toastr.error("Error campo mal introducido.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+       $("#headerHijos").css({ 'color': "red" });
+       band = true;
+   }
+       
    
    if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
         if($("#CedulaHijoDatos").val() != "")

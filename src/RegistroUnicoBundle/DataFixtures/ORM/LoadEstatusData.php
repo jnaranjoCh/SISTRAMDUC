@@ -20,6 +20,7 @@ class LoadEstatusData extends AbstractFixture implements OrderedFixtureInterface
             $estatus->setDescription($val);
             $manager->persist($estatus);
             $manager->flush();
+            $this->addReference($val.'-estatus', $estatus);
         }
     }
 

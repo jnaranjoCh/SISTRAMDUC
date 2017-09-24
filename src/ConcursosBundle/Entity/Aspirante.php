@@ -124,23 +124,23 @@ class Aspirante
     private $reporteNotaUrl;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="promedioAcademico", type="integer", nullable=true)
+     * @ORM\Column(name="promedioAcademico", type="float", nullable=true)
      */
     private $promedioAcademico;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="notaIntento1", type="integer", nullable=true)
+     * @ORM\Column(name="notaIntento1", type="float", nullable=true)
      */
     private $notaIntento1;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="notaIntento2", type="integer", nullable=true)
+     * @ORM\Column(name="notaIntento2", type="float", nullable=true)
      */
     private $notaIntento2;
 
@@ -293,7 +293,24 @@ class Aspirante
     {
         return $this->segundoApellido;
     }
+    
+    public function getNombreCompleto()
+    {
+        return $this->joinNames([$this->primerNombre, $this->segundoNombre, $this->primerApellido, $this->segundoApellido]);
+    }
 
+    private function joinNames(array $names)
+    {
+        $joined_names = "";
+        foreach ($names as $name) {
+            if (! empty($name)) {
+                $joined_names .= (empty($joined_names) ? "" : " ") . $name;
+            }
+        }
+
+        return $joined_names;
+    }
+    
     /**
      * Set telefono
      *
@@ -537,7 +554,7 @@ class Aspirante
     /**
      * Set promedioAcademico
      *
-     * @param integer $promedioAcademico
+     * @param float $promedioAcademico
      *
      * @return Aspirante
      */
@@ -551,7 +568,7 @@ class Aspirante
     /**
      * Get promedioAcademico
      *
-     * @return int
+     * @return float
      */
     public function getPromedioAcademico()
     {
@@ -561,7 +578,7 @@ class Aspirante
     /**
      * Set notaIntento1
      *
-     * @param integer $notaIntento1
+     * @param float $notaIntento1
      *
      * @return Aspirante
      */
@@ -575,7 +592,7 @@ class Aspirante
     /**
      * Get notaIntento1
      *
-     * @return int
+     * @return float
      */
     public function getNotaIntento1()
     {
@@ -585,7 +602,7 @@ class Aspirante
     /**
      * Set notaIntento2
      *
-     * @param integer $notaIntento2
+     * @param float $notaIntento2
      *
      * @return Aspirante
      */
@@ -599,7 +616,7 @@ class Aspirante
     /**
      * Get notaIntento2
      *
-     * @return int
+     * @return float
      */
     public function getNotaIntento2()
     {

@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>Consultar y editar datos de usuario</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-fa fa-address-card-o"></i>Registro único</li>
+        <li class="active">Consultar y editar datos de usuario</li>
+      </ol>
+    </section>
+    
+    <br/>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
+          <br/>
+          <label style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;">Guardando datos...</label>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                  <th>Registro Completo</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                 <th>Registro Completo</th>
+                 <th></th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--seccion for generate form-->
+    <div class="col-md-offset-1 col-md-10">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                        <div class="form-group has-feedback">
+                            <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Email del usuario">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                            <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                            <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal2">Ver usuarios</button>
+                        </div>
+                    </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--seccion for generate form-->
+    <div id="formUsuario" class="row hidden">
+      <!--Success message-->
+      <section class="content-body col-md-offset-2 col-md-8">
+        <br/>
+        <div class="register-box-body">
+            <form>
+              <input id="id" type="number" class="form-control hidden">
+              <img src="{{asset('assets/images/usuario.jpeg')}}" class="user-image col-sm-offset-5 col-xs-offset-3" alt="User Image">
+              <div id="divEmailUser" class="form-group has-feedback">
+                <label>Email</label>
+                <input id="EmailUser" type="email" class="form-control" placeholder="Email">
+                <span id="spanEmailUser" class="glyphicon glyphicon-envelope form-control-feedback"></span>
+              </div>
+              <div id="divCedulaUser" class="form-group has-feedback">
+                <label>Cedula</label>
+                <input id="CedulaUser" type="number" class="form-control" placeholder="Cedula">
+                <span id="spanCedulaUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
+              </div>
+              <div id="divPasswordUser" class="form-group has-feedback">
+                <label>Contraseña</label>
+                <input id="PasswordUser" type="password" class="form-control" placeholder="Contraseña">
+                <span id="spanPasswordUser"class="glyphicon glyphicon-lock form-control-feedback"></span>
+              </div>
+              <div id="divRetryPasswordUser" class="form-group has-feedback">
+                <label>Repita la contraseña</label>
+                <input id="RetryPasswordUser" type="password" class="form-control" placeholder="Repetir contraseña">
+                <span id="spanRetryPasswordUser" class="glyphicon glyphicon-log-in form-control-feedback"></span>
+              </div>
+              <div id="divRolUser" class="form-group has-feedback">
+                  <label>Tipo de rol</label>
+                  <select id="rolUser" class="form-control select2" style="width: 100%;">
+                  </select>
+                  <span id="spanRolUser" class="glyphicon form-control-feedback"></span>
+              </div>
+              <hr/>
+              <table id="tableRol" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Rol</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>Rol</th>
+                </tr>
+                </tfoot>
+              </table>
+              <hr/>
+              <div class="row">
+                <div class="col-xs-12">
+                  <button id="actualizarUsuario" type="button" class="btn btn-primary btn-block btn-flat">Registrar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarUsuario/iniCU.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/insertAndDeleteTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarUsuario/generate.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarUsuario/actualizarUsuario.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/tableUsersCopy.js') }}"></script>
+{% endblock %}

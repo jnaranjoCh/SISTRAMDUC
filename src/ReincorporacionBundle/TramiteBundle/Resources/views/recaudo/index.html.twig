@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Recaudos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Path</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recaudo in recaudos %}
+            <tr>
+                <td><a href="{{ path('recaudo_show', { 'id': recaudo.id }) }}">{{ recaudo.id }}</a></td>
+                <td>{{ recaudo.path }}</td>
+                <td>{{ recaudo.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('recaudo_show', { 'id': recaudo.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('recaudo_edit', { 'id': recaudo.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('recaudo_new') }}">Create a new recaudo</a>
+        </li>
+    </ul>
+{% endblock %}

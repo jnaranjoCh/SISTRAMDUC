@@ -10,6 +10,18 @@
     </section>
     <br/>
     <!-- Modal -->
+    
+    <div class="modal fade" id="myModal2" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
+          <br/>
+          <label id="modalLabel" style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
 
@@ -26,6 +38,7 @@
                 <tr>
                   <th>Email</th>
                   <th>Estatus</th>
+                  <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -34,6 +47,7 @@
                 <tr>
                  <th>Email</th>
                  <th>Estatus</th>
+                 <th></th>
                 </tr>
                 </tfoot>
               </table>
@@ -48,7 +62,9 @@
     </div>
     
     <!--Form-->
-    <form name="Form" id="Form" action="" method="post" enctype="multipart/form-data" novalidate>
+    <form name="completeForm" id="completeForm" action="" method="post" enctype="multipart/form-data" novalidate>
+      <div id="aux" class="hidden">
+      </div>
       <div class="row">
         <section class="content-body">
           <!--seccion for generate box-->
@@ -58,7 +74,7 @@
                   <div class="row">
                     <div class="col-md-offset-1 col-md-5">
                       <div class="form-group has-feedback">
-                            <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Email del usuario">
+                            <input id="mail" name="mail" type="email" class="form-control" placeholder="Email del usuario">
                             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                       </div>
                     </div>
@@ -311,7 +327,7 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="form-group has-feedback">
-                            <button  id="agregarCargo" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                            <button  id="agregarCargo" type="button" class="btn btn-success btn-block btn-flat">Agregar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
                       </div>
                   </div><!--col-xs-12   col-md-offset-5 -->
                 </div>
@@ -349,7 +365,10 @@
                       <th>Nivel</th>
                       <th>Estatus</th>
                       <th>Año de publicación y/o asistencia</th>
-                      <th>Empresa y/o institución</th>
+                      <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
+                      <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -363,7 +382,10 @@
                       <th>Nivel</th>
                       <th>Estatus</th>
                       <th>Año de publicación y/o asistencia</th>
-                      <th>Empresa y/o institución</th>
+                      <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
+                      <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
                     </tr>
                     </tfoot>
                   </table>
@@ -371,7 +393,7 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="form-group has-feedback">
-                            <button  id="agregarRegistros" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                            <button  id="agregarRegistros" type="button" class="btn btn-success btn-block btn-flat">Agregar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
                       </div>
                   </div><!--col-xs-12   col-md-offset-5 -->
                 </div>
@@ -379,7 +401,7 @@
                 <hr/>
                 <div class="row">
                   <div class="col-md-12">
-                    <h3>Participantes</h3>
+                    <h3>Participantes / Autores</h3>
                   </div>
                 </div>
                 <div style="overflow-x: scroll; white-space: nowrap;">
@@ -407,7 +429,7 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="form-group has-feedback">
-                            <button  id="agregarParticipantes" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                            <button  id="agregarParticipantes" type="button" class="btn btn-success btn-block btn-flat">Agregar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
                       </div>
                   </div><!--col-xs-12   col-md-offset-5 -->
                 </div>
@@ -415,7 +437,7 @@
                 <hr/>
                 <div class="row">
                   <div class="col-md-12">
-                    <h3>Revistas de publicación</h3>
+                    <h3>Revistas de publicación / Libros y monografias</h3>
                   </div>
                 </div>
                 <div style="overflow-x: scroll; white-space: nowrap;">
@@ -425,6 +447,8 @@
                       <th></th>
                       <th>Id del registro</th>
                       <th>Revista</th>
+                      <th>Volumen</th>
+                      <th>Primera y última página</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -434,6 +458,8 @@
                       <th></th>
                       <th>Id del registro</th>
                       <th>Revista</th>
+                      <th>Volumen</th>
+                      <th>Primera y última página</th>
                     </tr>
                     </tfoot>
                   </table>
@@ -441,7 +467,7 @@
                 <div class="row">
                   <div class="col-md-12">
                       <div class="form-group has-feedback">
-                            <button  id="agregarRevistas" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                            <button  id="agregarRevistas" type="button" class="btn btn-success btn-block btn-flat">Agregar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
                       </div>
                   </div><!--col-xs-12   col-md-offset-5 -->
                 </div>
@@ -517,7 +543,7 @@
                   <div class="row">
                     <div class="col-md-12">
                         <div class="form-group has-feedback">
-                              <button id="agregarHijos" type="button" class="btn btn-success btn-block btn-flat">Agrega&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
+                              <button id="agregarHijos" type="button" class="btn btn-success btn-block btn-flat">Agregar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-square"></i></button>
                         </div>
                     </div><!--col-xs-12   col-md-offset-5 -->
                   </div>
@@ -552,5 +578,7 @@
   <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/iniCD.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/generate.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/insertDeleteAndUpdateTable.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/ConsultarDatos/saveData.js') }}"></script>
   <script src="{{ asset('assets/js/RegistroUnico/RegistrarDatos/showBoxes.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/tableUsersCopy.js') }}"></script>
 {% endblock %}

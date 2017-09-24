@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>Beca para hijos de los trabajadores universitarios</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-handshake-o"></i>Cláusulas Contractuales</li>
+        <li>Realizar solicitud</li>
+        <li class="active">Beca Estudiantil</li>
+      </ol>
+    </section>
+    </br>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
+          <br/>
+          <label id="modalLabel" style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+        <section class="content-body col-md-offset-2 col-md-8">
+            <br/>
+            <form id="becaForm" action="{{ path('clausulas_contractuales_guardarArchivosBecaAjaxAction') }}" method="post" enctype="multipart/form-data" novalidate>
+              <input name="email" type="text" value="{{ app.user.getCorreo() }}" class="hidden"/>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Seleccione un hijo para filtrar la información</label>
+                      <select id="selectedHijo" name="selectedHijo" class="form-control select2" style="width: 100%;">
+                        <option selected="selected" value="" disabled>Seleccione</option>
+                        {% for hijo in hijos %}
+                          <option value="{{ hijo.getPrimerNombre() }}_{{ hijo.getPrimerApellido() }}_{{ hijo.getId() }}">{{ hijo.getPrimerNombre() }} {{ hijo.getPrimerApellido() }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div id="recaudos" class="col-md-12 hidden">
+                <div class="box box-info collapsed-box">
+                  <div class="box-header with-border">
+                    <div class="box-tools pull-right">
+                      <!--<button type="button" id="minRecaudo" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+                    </div>
+                    <h3><i class="fa fa fa-list-alt"></i> Recaudos</h3>
+                    </br>
+                    <p>A continuación adjunte los recaudos especificados.</p>
+                    </br>
+                    <div class="row">    
+                      <div class="col-md-12">
+                        <div id="duracion" class="form-group has-feedback">
+                          <label class="control-label">Tipo de período académico</label>
+                          <select id="selectedDuracion" name="selectedDuracion" class="form-control select2" style="width: 100%;">
+                            <option selected="selected" value="" disabled>Seleccione</option>
+                            {% for tipo in tipos %}
+                              <option value="{{ tipo.getValor() }}">{{ tipo.getDescripcion() }}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="duracionInput" class="row hidden">    
+                      <div class="col-md-12">
+                        <div class="form-group has-feedback">
+                          <label class="control-label">Tiempo de duración de período académico</label>
+                          </br>
+                          <input id="valorOtro" name="valorOtro" type="number" min="1" max="24"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">    
+                      <div class="col-md-12">
+                        <div id="constanciaInsc" class="form-group has-feedback">
+                          <label class="control-label">Constancia de inscripción o de estudio</label>
+                          <input id="cargarConstanciaInsc" name="input[]" accept="application/pdf"  type="file" class="file" data-show-upload="false" data-show-caption="true">
+                          <span id="spanConstanciaInsc" class="glyphicon form-control-feedback"></span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-offset-4 col-xs-4">
+                          <button id="guardarBeca" type="button" class="btn btn-primary btn-block btn-flat">Aceptar</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </section>
+    </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/loadSolicitud.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/visible.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/guardarDatos.js') }}"></script>
+{% endblock %}

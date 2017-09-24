@@ -4,12 +4,14 @@
 	var personal = true;
 	var contactos = true;
 	var miniaca = true;
+	var documentos = true;
 
 	$( window ).load(function (){
 
 		$("#personal").click();
 		$("#contactos").click();
 		$("#miniaca").click();
+		$("#documentos").click();
 
 		$.ajax({
 	        method: "POST",
@@ -17,19 +19,28 @@
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	opcion = "<option id='sel' selected='selected'>...</option>";
-	 
-	        	for (var i = 0; i < data["id"].length; i++) {
+	        	if (data != "N"){
 	        		
-	        		var num = data["id"][i];
-
-	        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
-	        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
-	        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
-	        		+"</option>";   		
+	        		opcion = "<option id='sel' selected='selected'>...</option>";
+	 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+		        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+		        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#lista").html(opcion);
+	        	} else {
+	        		
+	        		toastr.error("No Hay Concursos Registrados", "Error", {
+		                    "timeOut": "0",
+		                    "extendedTImeout": "0"
+		                 });
 	        	}
-
-	        	$("#lista").html(opcion);
 	        }
 	    });	
 	});
@@ -61,6 +72,30 @@
 			continua = false;
 			text = "Concurso vacío";
 		}
+		
+		/*
+
+		if ($("#titulo").fileinput("getFilesCount") != 1){
+			text = "Documento De Titulo Vacío";
+			continua = false;
+		}
+
+		if ($("#notas").fileinput("getFilesCount") != 1){
+			text = "Notas Certificadas Vacío";
+			continua = false;
+		}
+
+		if ($("#doccv").fileinput("getFilesCount") != 1){
+			text = "Curriculum Vacío";
+			continua = false;
+		}
+
+		if ($("#deposito").fileinput("getFilesCount") != 1){
+			text = "Deposito Vacío";
+			continua = false;
+		}
+		
+		*/
 
 		if (continua){
 
@@ -144,9 +179,13 @@
 	    if(contactos)
 	        $("#contactos").click();
 
-	    personal = true;
-		contactos = true;
-		miniaca = true;
+	    if(documentos)
+	        $("#documentos").click();
+
+	    personal = false;
+		contactos = false;
+		miniaca = false;
+		documentos = false;
 
 		toastr.clear();
 	});
@@ -157,6 +196,8 @@
 	            $("#contactos").click();
 	        if(miniaca)
 	            $("#miniaca").click();
+	        if(documentos)
+	        	$("#documentos").click();
 	        personal = true;
 	    }else
 	        personal = false;
@@ -168,6 +209,8 @@
 	            $("#personal").click();
 	        if(miniaca)
 	            $("#miniaca").click();
+	        if(documentos)
+	        	$("#documentos").click();
 	        contactos = true;
 	    }else
 	        contactos = false;
@@ -177,11 +220,26 @@
 	    if(!miniaca){
 	        if(contactos)
 	            $("#contactos").click();
-	        if(miniaca)
-	            $("#miniaca").click();
+	        if(personal)
+	            $("#personal").click();
+	        if(documentos)
+	        	$("#documentos").click();
 	        miniaca = true;
 	    }else
 	        miniaca = false;
+	});
+
+	$("#documentos").click(function(){
+	    if(!documentos){
+	        if(contactos)
+	            $("#contactos").click();
+	        if(miniaca)
+	            $("#miniaca").click();
+	        if(personal)
+	        	$("#personal").click();
+	        documentos = true;
+	    }else
+	        documentos = false;
 	});
 
 </script>

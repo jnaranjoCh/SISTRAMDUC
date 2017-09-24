@@ -19,9 +19,16 @@ class Cargo
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=150)
      */
     private $description;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
 
     /**
      * @ORM\OneToMany(targetEntity="UsuarioFechaCargo", mappedBy="cargos", cascade={"persist", "remove"})
@@ -67,6 +74,30 @@ class Cargo
         return $this->description;
     }
     
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Cargo
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    
 
     public function __toString()
     {
@@ -78,6 +109,16 @@ class Cargo
         return $this->UsuarioFechaCargos->toArray();
     }
 
+    public function setUsuarioFechaCargos($UsuarioFechaCargos)
+    {
+        $this->UsuarioFechaCargos = $UsuarioFechaCargos;
+        foreach($UsuarioFechaCargos as $object)
+        {
+          $object->setCargo($this);
+        }
+        return $this;
+    }
+    
     public function addUsuarioFechaCargos(UsuarioFechaCargo $UsuarioFechaCargo)
     {
         if (!$this->UsuarioFechaCargos->contains($UsuarioFechaCargo)) {

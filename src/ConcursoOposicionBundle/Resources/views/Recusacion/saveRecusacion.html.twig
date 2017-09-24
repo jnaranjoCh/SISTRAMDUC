@@ -9,45 +9,62 @@
 	        method: "POST",
 	        url:  "{{ path('listadoJuradosAjax') }}",
 	        dataType: 'json',
+	        data: {"id": "NO"},
 	        success: function(data)
 	        {
-	        	opcion = "<option id='jur' selected='selected'>...</option>";
-	 
-	        	for (var i = 0; i < data["id"].length; i++) {
-	        		
-	        		var num = data["id"][i];
-
-	        		opcion = opcion+"<option value="+num+">"+data["nombre"][i]+
-	        		" "+data["apellido"][i]
-	        		+"   -   <b>Area:</b> "+data["areainvestigacion"][i]
-	        		+"   -   <b>Facultad:</b> "+data["facultad"][i]
-	        		+"   -   <b>Universidad:</b> "+data["universidad"][i]
-	        		+"</option>";   		
+	        	if (data != "N"){
+	        
+		        	opcion = "<option id='jur' selected='selected'>...</option>";
+		 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion = opcion+"<option value="+num+">"+data["nombre"][i]+
+		        		" "+data["apellido"][i]
+		        		+"   -   <b>Area:</b> "+data["areainvestigacion"][i]
+		        		+"   -   <b>Facultad:</b> "+data["facultad"][i]
+		        		+"   -   <b>Universidad:</b> "+data["universidad"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#juradoLista").html(opcion);
+	        	} else {
+	        		toastr.error("No Hay Jurados Registrados", "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
 	        	}
-
-	        	$("#juradoLista").html(opcion);
 	        }
 	    });	
 
 	    $.ajax({
 	        method: "POST",
-	        url:  "{{ path('listadoAspirantesAjax') }}",
+	        url:  "{{ path('listadoAspiranteAjax') }}",
+	        data: {"resul": "No"},
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	opcion1 = "<option id='asp' selected='selected'>...</option>";
+	        	if (data != "N"){
+	        		opcion1 = "<option id='asp' selected='selected'>...</option>";
 	 
-	        	for (var i = 0; i < data["id"].length; i++) {
-	        		
-	        		var num = data["id"][i];
-
-	        		opcion1 = opcion+"<option value="+num+">"+data["nombre1"][i]
-	        		+" "+data["nombre2"][i]+" "+data["apellido1"][i]+" "+data["apellido2"][i]
-	        		+"   -   <b>Cedula:</b> "+data["cedula"][i]
-	        		+"</option>";   		
-	        	}
-
-	        	$("#aspiranteLista").html(opcion1);
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion1 = opcion1+"<option value="+num+">"+data["nombre1"][i]
+		        		+" "+data["nombre2"][i]+" "+data["apellido1"][i]+" "+data["apellido2"][i]
+		        		+"   -   <b>Cedula:</b> "+data["cedula"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#aspiranteLista").html(opcion1);      	
+	        	} else {
+	        		toastr.error("No Hay Aspirantes Registrados", "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
+	        	}       	
 	        }
 	    });	
 	});

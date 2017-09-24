@@ -62,6 +62,27 @@ class Resultado
      * @ORM\Column(name="notaEscrito", type="integer", nullable=true)
      */
     private $notaEscrito;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="aptitud", type="integer", nullable=true)
+     */
+    private $aptitud;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="psicologica", type="integer", nullable=true)
+     */
+    private $psicologica;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="responsable", type="integer", nullable=true)
+     */
+    private $responsable;
 
     /**
      * @var string
@@ -126,6 +147,30 @@ class Resultado
     public function getIdConcurso()
     {
         return $this->idConcurso;
+    }
+    
+    /**
+     * Set responsable
+     *
+     * @param integer $responsable
+     *
+     * @return Resultado
+     */
+    public function setResponsable($responsable)
+    {
+    	$this->responsable = $responsable;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get responsable
+     *
+     * @return int
+     */
+    public function getResponsable()
+    {
+    	return $this->responsable;
     }
 
     /**
@@ -198,6 +243,54 @@ class Resultado
     public function getNotaOral()
     {
         return $this->notaOral;
+    }
+    
+    /**
+     * Set aptitud
+     *
+     * @param integer $aptitud
+     *
+     * @return Resultado
+     */
+    public function setAptitud($aptitud)
+    {
+    	$this->aptitud = $aptitud;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get aptitud
+     *
+     * @return int
+     */
+    public function getAptitud()
+    {
+    	return $this->aptitud;
+    }
+    
+    /**
+     * Set psicologica
+     *
+     * @param integer $psicologica
+     *
+     * @return Resultado
+     */
+    public function setPsicologica($psicologica)
+    {
+    	$this->psicologica = $psicologica;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get psicologica
+     *
+     * @return int
+     */
+    public function getPsicologica()
+    {
+    	return $this->psicologica;
     }
 
     /**

@@ -2,7 +2,8 @@
   var tableLenguage = new Array();
   var routeFiles = new Array();
   var routeRegistroUnico = new Array();
-  
+  var routeClausulasContractuales = new Array();
+
   /*rutas de los lenguajes del datatable*/
   tableLenguage['datatable-spanish'] = '{{ asset('assets/js/datatable-spanish.json') }}';
   
@@ -16,6 +17,13 @@
   routeRegistroUnico['registro_buscarcedula_ajax'] = '{{ path('registro_buscarcedula_ajax') }}';
   routeRegistroUnico['registro_registeruser_ajax'] = '{{ path('registro_registeruser_ajax') }}';
   
+  /*consultar usuario*/
+  routeRegistroUnico['registro_buscaremailconsultar_ajax'] = '{{ path('registro_buscaremailconsultar_ajax') }}';
+  routeRegistroUnico['registro_consultarusuario_ajax'] = '{{ path('registro_consultarusuario_ajax') }}';
+  routeRegistroUnico['registro_consultarroles_ajax'] = '{{ path('registro_consultarroles_ajax') }}';
+  routeRegistroUnico['registro_buscarcedulaconsultar_ajax'] = '{{ path('registro_buscarcedulaconsultar_ajax') }}';
+  routeRegistroUnico['registro_actualizarusuario_ajax'] = '{{ path('registro_actualizarusuario_ajax') }}'
+ 
   /*registrar datos*/
   routeRegistroUnico['registro_obteneremails_ajax'] = '{{ path('registro_obteneremails_ajax') }}';
   routeRegistroUnico['registro_obtenerlastid_ajax'] = '{{ path('registro_obtenerlastid_ajax') }}';
@@ -32,4 +40,23 @@
   routeRegistroUnico['registro_consultarparticipantes_ajax'] = '{{ path('registro_consultarparticipantes_ajax') }}';
   routeRegistroUnico['registro_consultarregistros_ajax'] = '{{ path('registro_consultarregistros_ajax') }}';
   routeRegistroUnico['registro_consultaobteneremails_ajax'] = '{{ path('registro_consultaobteneremails_ajax') }}';
+  routeRegistroUnico['registro_editardatos_ajax'] =  '{{ path('registro_editardatos_ajax') }}';
+  routeRegistroUnico['registro_guardararchivosconsulta_ajax'] =  '{{ path('registro_guardararchivosconsulta_ajax', { 'email': ' ', 'execute': ' '}) }}';
+  routeRegistroUnico['registro_consulta_index_success'] =  '{{ path('registro_consulta_index', { 'apr': 'success' }) }}';
+  routeRegistroUnico['registro_consultaobtenercedulas_ajax'] =  '{{ path('registro_consultaobtenercedulas_ajax') }}';
+  routeRegistroUnico['registro_consultarbuscarcedula_ajax'] =  '{{ path('registro_consultarbuscarcedula_ajax') }}';
+  /*Validar registros*/
+  routeRegistroUnico['registro_validar_index'] = '{{ path('registro_validar_index') }}';
+  routeRegistroUnico['registro_validarconsultarregistros_ajax'] = '{{ path('registro_validarconsultarregistros_ajax') }}';
+  routeRegistroUnico['registro_validaractualizarregistros_ajax'] = '{{ path('registro_validaractualizarregistros_ajax') }}';
+  
+  /*Eliminar Registros*/
+  routeRegistroUnico['registro_eliminarconsultarusaurios_ajax'] = '{{ path('registro_eliminarconsultarusaurios_ajax') }}';
+  routeRegistroUnico['registro_eliminarusaurios_ajax'] = '{{ path('registro_eliminarusaurios_ajax') }}';
+  routeRegistroUnico['registro_activarconsultarusaurios_ajax'] = '{{ path('registro_activarconsultarusaurios_ajax') }}';
+  routeRegistroUnico['registro_activarusaurios_ajax'] = '{{ path('registro_activarusaurios_ajax') }}';
+
+  /*Clausulas Contractuales*/
+
+  routeClausulasContractuales['clausulas_contractuales_discapacidad'] = '{{ path('clausulas_contractuales_discapacidad') }}';
 </script>
