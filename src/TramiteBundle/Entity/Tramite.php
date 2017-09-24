@@ -18,7 +18,8 @@ use TramiteBundle\Entity\TransicionConsejo;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap({"tramite" = "Tramite",
  *                        "comision" = "ComisionRemuneradaBundle\Entity\SolicitudComisionServicio",
- *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion"})
+ *                        "jubilacion" = "JubilacionBundle\Entity\TramiteJubilacion",
+ *                        "concurso" = "ConcursosBundle\Entity\Concurso"})
  */
 class Tramite
 {
@@ -29,7 +30,7 @@ class Tramite
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var array
@@ -49,6 +50,11 @@ class Tramite
      */
     private $observacion = "hola";
 
+     /**
+     * @ORM\OneToMany(targetEntity="Monto", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+     protected $montos;
+
     /**
      * @ORM\ManyToOne(targetEntity="TipoTramite", inversedBy="tramites")
      * @ORM\JoinColumn(name="tipo_tramite_id", referencedColumnName="id")
@@ -59,18 +65,28 @@ class Tramite
      * @ORM\OneToOne(targetEntity="Transicion", mappedBy="tramite", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected  $transicion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Transicion", mappedBy="tramite_id", cascade={"persist", "remove"})
+     */
+    protected $transiciones;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="tramite", cascade={"persist"})
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     protected $usuario_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Documento", inversedBy="tramite_id")
+     * @ORM\OneToMany(targetEntity="Documento", mappedBy="tramite_id")
      */
     protected $documento_id;
-
+    
+    public function __construct()
+    {
+        $this->transiciones = new ArrayCollection();
+        $this->montos = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -196,4 +212,45 @@ class Tramite
         $this->documento_id = $documento;
         return $this;
     }
+    
+    public function addTransicion(\TramiteBundle\Entity\Transicion $transicion)
+    {
+        $this->transiciones[] = $transicion;
+        $transicion->setIdTramite($this);
+        return $this;
+    }
+    
+    public function removeTransicion(\TramiteBundle\Entity\Transicion $transicion)
+    {
+        $this->transiciones->removeElement($transicion);
+    }
+    
+    public function getTransiciones()
+    {
+        return $this->transiciones;
+    }
+
+    /**
+     * Get montos
+     *
+     * @return Monto
+     */
+     public function getMontos()
+     {
+         return $this->montos;
+     }
+     
+     /**
+      * Set montos
+      *
+      * @param Monto $montos
+      *
+      */
+     public function setMontos(Monto $montos)
+     {
+         $this->montos = $montos; 
+         return $this;
+     }
+
+
 }

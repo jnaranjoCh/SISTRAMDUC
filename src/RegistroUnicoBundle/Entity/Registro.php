@@ -26,10 +26,30 @@ class Registro
     private $año;
     
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isValidate;
+    
+    /**
      * @ORM\Column(type="string", length=50)
      */
-    private $institucionEmpresa;
-
+    private $institucionEmpresaCasaeditorial;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $tituloObtenido;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $ciudadPais;
+    
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $congreso;
+    
     /**
      * @ORM\Column(type="string", length=50)
      */
@@ -55,19 +75,19 @@ class Registro
     
 
     /**
-     * @ORM\ManyToMany(targetEntity="Participante")
+     * @ORM\ManyToMany(targetEntity="Participante", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="registro_participantes",
-     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="participante_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="participante_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $participantes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Revista")
+     * @ORM\ManyToMany(targetEntity="Revista", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="registro_revistas",
-     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="revista_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="registro_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="revista_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      */
     protected $revistas;
@@ -129,29 +149,101 @@ class Registro
     {
         return $this->año;
     }
-
-    /**
-     * Set $institucionEmpresa
+    
+     /**
+     * Set $congreso
      *
-     * @param string $institucionEmpresa
+     * @param string $congreso
      *
      * @return Registro
      */
-    public function setInstitucionEmpresa($institucionEmpresa)
+    public function setCongreso($congreso)
     {
-        $this->institucionEmpresa = $institucionEmpresa;
+        $this->congreso= $congreso;
 
         return $this;
     }
 
     /**
-     * Get $institucionEmpresa
+     * Get $congreso
      *
      * @return string
      */
-    public function getInstitucionEmpresa()
+    public function getCongreso()
     {
-        return $this->institucionEmpresa;
+        return $this->congreso;
+    }
+    
+    /**
+     * Set $ciudadPais
+     *
+     * @param string $ciudadPais
+     *
+     * @return Registro
+     */
+    public function setCiudadPais($ciudadPais)
+    {
+        $this->ciudadPais= $ciudadPais;
+
+        return $this;
+    }
+
+    /**
+     * Get $ciudadPais
+     *
+     * @return string
+     */
+    public function getCiudadPais()
+    {
+        return $this->ciudadPais;
+    }
+    
+    /**
+     * Set $tituloObtenido
+     *
+     * @param string $tituloObtenido
+     *
+     * @return Registro
+     */
+    public function setTituloObtenido($tituloObtenido)
+    {
+        $this->tituloObtenido = $tituloObtenido;
+
+        return $this;
+    }
+
+    /**
+     * Get $tituloObtenido
+     *
+     * @return string
+     */
+    public function getTituloObtenido()
+    {
+        return $this->tituloObtenido;
+    }
+    
+    /**
+     * Set $institucionEmpresaCasaeditorial
+     *
+     * @param string $institucionEmpresaCasaeditorial
+     *
+     * @return Registro
+     */
+    public function setInstitucionEmpresaCasaeditorial($institucionEmpresaCasaeditorial)
+    {
+        $this->institucionEmpresaCasaeditorial = $institucionEmpresaCasaeditorial;
+
+        return $this;
+    }
+
+    /**
+     * Get $institucionEmpresaCasaeditorial
+     *
+     * @return string
+     */
+    public function getInstitucionEmpresaCasaeditorial()
+    {
+        return $this->institucionEmpresaCasaeditorial;
     }
 
     /**
@@ -295,6 +387,30 @@ class Registro
     }
     
     /**
+     * Get validado
+     *
+     * @return isValidate
+     */
+    public function getIsValidate()
+    {
+        return $this->isValidate;
+    }
+
+    /**
+     * Set validado
+     *
+     * @param $validate
+     *
+     * @return Registro
+     */
+    public function setIsValidate($validate)
+    {
+        $this->isValidate = $validate;
+
+        return $this;
+    }
+    
+    /**
      * Get estatus
      *
      * @return integer
@@ -304,6 +420,16 @@ class Registro
         return $this->estatus;
     }
     
+    public function getRevistasAsObject()
+    {
+        return $this->revistas;
+    }
+    
+    public function getParticipantesAsObject()
+    {
+        return $this->participantes;
+    }
+
     /**
      * Set estatus
      *
@@ -359,6 +485,8 @@ class Registro
             $selectAux = str_replace('<select id="IdDelRegistroRevista0" class="form-control select2" style="width: 240px;">','<select id="IdDelRegistroRevista'.$k.'" class="form-control select2" style="width: 240px;">',$select);            
             $data[$i]['IdDelRegistro'] = $selectAux;
             $data[$i]['Revista'] = '<input id="Revista'.$k.'" value="'.$revista->getDescription().'" type="text" class="form-control" placeholder="Revista">';
+            $data[$i]['Volumen'] = '<input id="Volumen'.$k.'" value="'.$revista->getVolumen().'" type="text" class="form-control" placeholder="Volumen">';
+            $data[$i]['PrimerayUltimaPagina'] = '<input id="PrimerayUltimaPagina'.$k.'" value="'.$revista->getPrimeraUltimaPagina().'" type="text" class="form-control" placeholder="Primera y última página">';
             $i++;
             $k++;
         }
@@ -380,5 +508,16 @@ class Registro
                 $this->addRevista($revista);
          }
      }
+     
+    public function setRevistas($revistas)
+    {
+        $this->revistas = $revistas;
+        return $this;
+    }
     
+    public function setParticipante($participante)
+    {
+        $this->participantes = $participante;
+        return $this;
+    }
 }

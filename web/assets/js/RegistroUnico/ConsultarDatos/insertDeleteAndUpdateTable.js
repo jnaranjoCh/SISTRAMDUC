@@ -35,7 +35,10 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 "Nivel":nivel,
                 "Estatus":estatus,
                 "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
+                "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">',
+                "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
+                "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
+                "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
             }).draw();
             $('#tableRegistros_last').click();
         }
@@ -54,23 +57,57 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
 
         
         $("#"+id).change(function(e){
-            if(column == 2 && ($("#"+id).val() == "Tutoria de pasantias" || $("#"+id).val() == "Tutoria de servicio comunitario"))
+            var valor = $("#"+id).val();
+            if(column == 2 && (valor == "Tutoria de pasantias" || valor == "Tutoria de servicio comunitario"  ||  valor == "Tutoria de tesis"))
             {
                 updateReferencesAdd(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución">').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">').draw();
+                cell.column = "8";
+                if(valor == "Tutoria de tesis")
+                    tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">').draw();
+                else
+                    tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso" readonly>').draw();
             }
-            else if(column == 2 && $("#"+id).val() == "Articulo publicado")
+            else if(column == 2 && valor == "Articulo publicado")
             {
                 updateReferencesAdd(tableRevista,iid);
-                updateReferencesDelete(tableParticipantes,iid);
+                updateReferencesAdd(tableParticipantes,iid);
+                cell.column = "8";
+                tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso" readonly>').draw();
             }
-            else if(column == 2  && ($("#"+id).val() == "Estudio" || $("#"+id).val() == "Asistencia a congresos"))
+            else if(column == 2  && (valor == "Estudio" || valor == "Sociedad Científica y Profesionales" || valor ==  "Becas"  || valor == "Premios" || valor == "Distinciones"))
             {
                 updateReferencesDelete(tableParticipantes,iid);
                 updateReferencesDelete(tableRevista,iid);
-                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>').draw();
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">').draw();
+                cell.column = "8";
+                tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais" readonly>').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso" readonly>').draw();
+            }if(column == 2  && valor == "Asistencia a Congresos/Seminarios")
+            {
+                updateReferencesDelete(tableParticipantes,iid);
+                updateReferencesDelete(tableRevista,iid);
+                tableRegistros.cell(cell).data('<input id="EmpresaInstitucion'+row+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">').draw();
+                cell.column = "8";
+                tableRegistros.cell(cell).data('<input id="TituloObtenido'+row+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido" readonly>').draw();
+                cell.column = "9";
+                tableRegistros.cell(cell).data('<input id="CiudadPais'+row+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">').draw();
+                cell.column = "10";
+                tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso">').draw();
             }
+            $('#tableRegistros_last').click();
         });
     }
 });
@@ -85,7 +122,7 @@ function updateReferencesAdd(table,iid)
             cellPar.row = i;
             cellPar.column = "1";
             cellPar.columnVisible = "0";
-            if(table.cell(cellPar).data().indexOf(iid+"</option>") == -1)
+            if(!table.cell(cellPar).data().includes("value='"+iid+"' selected='selected'") && !table.cell(cellPar).data().includes("value='"+iid+"'"))
             {
                 table.cell(cellPar).data(table.cell(cellPar).data().replace("</select>","<option value='"+iid+"'>"+iid+"</option></select>"));
             }
@@ -96,16 +133,20 @@ function updateReferencesAdd(table,iid)
         if(table.table().node().id == "tableParticipantes")
             table.row.add( {
                 "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
-                "IdDelRegistro":'<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;"><option value="'+iid+'">'+iid+'</option></select>',
+                "IdDelRegistro":"<select id='IdDelRegistro0' class='form-control select2' style='width: 240px;'><option value='"+iid+"' selected='selected'>"+iid+"</option></select>",
                 "Nombre":'<input id="Nombre'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Nombre">',
                 "Cedula": '<input id="Cedula'+table.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula">',
             }).draw();            
         else if(table.table().node().id == "tableRevista")
+        {
             tableRevista.row.add( {
                 "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
-                "IdDelRegistro":'<select id="IdDelRegistro0" class="form-control select2" style="width: 240px;"><option value="'+iid+'">'+iid+'</option></select>',
-                "Revista":'<input id="Revista'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
+                "IdDelRegistro":"<select id='IdDelRegistroRevista0' class='form-control select2' style='width: 240px;'><option value='"+iid+"' selected='selected'>"+iid+"</option></select>",
+                "Revista":'<input id="Revista'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">',
+                "Volumen":'<input id="Volumen'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Volumen">',
+                "PrimerayUltimaPagina":'<input id="PrimerayUltimaPagina'+table.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primera y última página">'
             }).draw();
+        }
     }
 }
 
@@ -119,12 +160,12 @@ function updateReferencesDelete(table,iid)
             cellPar.row = i;
             cellPar.column = "1";
             cellPar.columnVisible = "0";
-            if(table.cell(cellPar).data().indexOf(iid+"</option>") != -1)
+            if(table.cell(cellPar).data().includes("value='"+iid+"'") || table.cell(cellPar).data().includes("value='"+iid+"' selected='selected'"))
             {
                 if((table.cell(cellPar).data().split("</option>").length-1) > 1)
                 {
                     table.cell(cellPar).data(table.cell(cellPar).data().replace("<option value='"+iid+"'>"+iid+"</option>",""));
-                    table.cell(cellPar).data(table.cell(cellPar).data().replace("<option value='"+iid+"'  selected='selected'>"+iid+"</option>",""));
+                    table.cell(cellPar).data(table.cell(cellPar).data().replace("<option value='"+iid+"' selected='selected'>"+iid+"</option>",""));
                 }else
                     table.clear().draw();
             }
@@ -136,7 +177,7 @@ $('#restablecer').click(function(){
     $("#ActaNacCargaHijoDatos").fileinput('refresh');
     $.ajax({
         method: "POST",
-        data: {"email":$('#gemail').val()},
+        data: {"email":$('#mail').val()},
         url:   routeRegistroUnico['registro_consultardocumentshijos_ajax'],
         dataType: 'json',
         success: function(data){
@@ -153,12 +194,18 @@ $('#restablecer').click(function(){
                     hijo.key = j+1;
                     hijo.showDelete = false;
                     config[i] = hijo;
-                    paths[i] = data[i]['path'].split("..")[1];
+                    if($("#url").val().split('/')[1] == "assets")
+                        paths[i] = data[i]['path'].split("../web")[1];
+                    else
+                        paths[i] = data[i]['path'].split("..")[1];
                 }
                 $("#ActaNacCargaHijoDatos").fileinput({
                     //language: "es",
                     overwriteInitial: true,
+                    filesCount: paths.length,
+                    uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
                     initialPreview: paths,
+                    uploadAsync: false,
                     initialPreviewAsData: true,
                     initialPreviewFileType: 'pdf',
                     initialPreviewConfig: config
@@ -174,7 +221,7 @@ $('#restablecer').click(function(){
                 "ajax":{
                     "url": routeRegistroUnico['registro_consultarhijos_ajax'],
                     "type": 'POST',
-                    "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                    "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                 },
                 "pagingType": "full_numbers",
                 "bDestroy": true,
@@ -200,7 +247,7 @@ $('#restablecer').click(function(){
     $("#CedulaRifActaCargaDatos").fileinput('refresh');
     $.ajax({
         method: "POST",
-        data: {"email":$('#gemail').val()},
+        data: {"email":$('#mail').val()},
         url:   routeRegistroUnico['registro_consultardatospersonales_ajax'],
         dataType: 'json',
         success: function(data){
@@ -219,23 +266,33 @@ $('#restablecer').click(function(){
             $("#FechaVencimientoCedulaDatos").val(DateFormat(data.Files[2].fecha_vencimiento.date));
             $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
             $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
-            
+            data.Files = burbuja(data.Files);
+            if($("#url").val().split('/')[1] == "assets")
+            {
+                paths[0] = data.Files[2].path.split("../web")[1];
+                paths[1] = data.Files[0].path.split("../web")[1];    
+                paths[2] = data.Files[1].path.split("../web")[1];    
+            }
+            else
+            {
+                paths[0] = data.Files[2].path.split("..")[1];
+                paths[1] = data.Files[0].path.split("..")[1];
+                paths[2] = data.Files[1].path.split("..")[1];
+            }
             $("#CedulaRifActaCargaDatos").fileinput({
                 //language: "es",
                 minFileCount: 1,
                 maxFileCount: 3,
                 overwriteInitial: true,
-                initialPreview: [
-                    data.Files[2].path.split("..")[1],
-                    data.Files[0].path.split("..")[1],
-                    data.Files[1].path.split("..")[1]
-                ],
+                uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
+                initialPreview: paths,
+                uploadAsync: false,
                 initialPreviewAsData: true,
                 initialPreviewFileType: 'pdf',
                 initialPreviewConfig: [
-                    {caption: "Cedula<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 1},
-                    {caption: "Acta nacimiento<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 2},
-                    {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 2}
+                    {caption: "Cedula<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 1, showDelete: false},
+                    {caption: "Acta nacimiento<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 2, showDelete: false},
+                    {caption: "Rif<br/>"+data.PrimerNombre+" "+data.PrimerApellido, width: "120px", key: 3, showDelete: false}
                 ]
             });
         }
@@ -246,7 +303,7 @@ $('#restablecer').click(function(){
                     "ajax":{
                         "url": routeRegistroUnico['registro_consultarcargos_ajax'],
                         "type": 'POST',
-                        "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                        "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                     },
                     "pagingType": "full_numbers",
                     "bDestroy": true,
@@ -266,7 +323,7 @@ $('#restablecer').click(function(){
                             "ajax":{
                                 "url": routeRegistroUnico['registro_consultarregistros_ajax'],
                                 "type": 'POST',
-                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -281,7 +338,10 @@ $('#restablecer').click(function(){
                                 {"data":"Nivel"},
                                 {"data":"Estatus"},
                                 {"data":"AnoDePublicacionAsistencia"},
-                                {"data":"EmpresaInstitucion"}
+                                {"data":"EmpresaInstitucion"},
+                                {"data":"TituloObtenido"},
+                                { "data": "CiudadPais"},
+                                { "data": "Congreso"}
                             ]
                         });
                         
@@ -290,7 +350,7 @@ $('#restablecer').click(function(){
                             "ajax":{
                                 "url": routeRegistroUnico['registro_consultarparticipantes_ajax'],
                                 "type": 'POST',
-                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -310,7 +370,7 @@ $('#restablecer').click(function(){
                             "ajax":{
                                 "url": routeRegistroUnico['registro_consultarrevistas_ajax'],
                                 "type": 'POST',
-                                "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -320,7 +380,9 @@ $('#restablecer').click(function(){
                             columns: [
                                 {"data": "Delete"},
                                 { "data": "IdDelRegistro" },
-                                { "data": "Revista" }
+                                { "data": "Revista" },
+                                { "data": "Volumen" },
+                                { "data": "PrimerayUltimaPagina" }
                             ]
                         });
 });
@@ -344,7 +406,10 @@ $('#agregarRegistros').click(function(){
         "Nivel":nivel,
         "Estatus":estatus,
         "AnoDePublicacionAsistencia": '<input id="AnoDePublicacionAsistencia'+tableRegistros.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">',
-        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa y/o institución" readonly>'
+        "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">',
+        "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
+        "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
+        "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
     }).draw();
     $('#tableRegistros_last').click();
 });
@@ -373,7 +438,9 @@ $('#agregarRevistas').click(function(){
     tableRevista.row.add( {
         "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
         "IdDelRegistro":idDelRegistro,
-        "Revista":'<input id="Revista'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">'
+        "Revista":'<input id="Revista'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Revista">',
+        "Volumen":'<input id="Volumen'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Volumen">',
+        "PrimerayUltimaPagina":'<input id="PrimerayUltimaPagina'+tableRevista.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primera y última página">'
     }).draw();
     $('#tableRevista_last').click();
 });
@@ -413,7 +480,11 @@ $('#agregarHijos').click(function(){
                                     '</div>'+
                                     '</div>'+
                                 '</div>',
-        "Nacionalidad" :'<input id="Nacionalidad'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Nacionalidad">'
+        "Nacionalidad" : '<select id="NacionalidadDatos'+tableHijos.page.info().recordsTotal+'" class="form-control select2" style="width: 200xp;" required>'+
+                                '<option selected="selected" value="">Seleccione una opción</option>'+
+                                '<option value="Venezolano">Venezolano</option>'+
+                                '<option value="Extranjero">Extranjero</option>'+
+                          '</select>'
     }).draw();
     $('#tableHijos_last').click();
     $('#datepickerHijo1'+aux).datepicker({
@@ -508,3 +579,21 @@ $('#tableCargo').on( 'click', 'td', function () {
         }
     }
 });
+
+function burbuja(array)
+{
+    for(var i=1;i<array.length;i++)
+    {
+        for(var j=0;j<array.length-i;j++)
+        {
+            if(array[j]>array[j+1])
+            {
+                k=array[j+1];
+                array[j+1]=array[j];
+                array[j]=k;
+            }
+        }
+    }
+ 
+    return array;
+}

@@ -73,7 +73,7 @@ class RegistrarDatosController extends Controller
         }
         
         $user = $em->getRepository('AppBundle:Usuario')
-                      ->findOneByCorreo($_POST['gemail']);
+                      ->findOneByCorreo($_POST['mail']);
         
         
         $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/users/';
@@ -206,9 +206,15 @@ class RegistrarDatosController extends Controller
         $data["Email"]="";
         $data["Estatus"]="";
         $data["Registro Completo"]="";
+        $data["Copiar"]="";
         foreach($object as $value)
         {
-           $data["Email"] = $value->getCorreo();
+           $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCorreo().'</label>';
+           $data["Copiar"] = '<div class="col-md-2">
+                                <div class="form-group has-feedback">
+                                      <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                                </div>
+                              </div>';
            if($value->getActivo())
                $data["Estatus"]="Activo";
            else
@@ -323,6 +329,7 @@ class RegistrarDatosController extends Controller
                       ->findOneByDescription($cargo['nombre']);
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           $UsuarioFechaCargo->setDate(new \DateTime($cargo['fechaInicio']));
+          $UsuarioFechaCargo->setIsValidate(true);
         
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
@@ -386,6 +393,8 @@ class RegistrarDatosController extends Controller
                 if($revista != null){
                     $newRevista = new Revista();
                     $newRevista->setDescription($revista['revista']);
+                    $newRevista->setVolumen($revista['volumen']);
+                    $newRevista->setPrimeraUltimaPagina($revista['primerayUltimaPagina']);
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($newRevista);
                     $em->flush();
@@ -429,14 +438,19 @@ class RegistrarDatosController extends Controller
                                           ->getManager()
                                           ->getRepository('RegistroUnicoBundle:Estatus')
                                           ->findOneByDescription($registro['estatus']));
-            $newRegistro->setInstitucionEmpresa($registro['empresaInstitucion']);
+            $newRegistro->setInstitucionEmpresaCasaeditorial($registro['empresaInstitucion']);
             $newRegistro->setDescription($registro['descripcion']);
             $newRegistro->setAño($registro['anio']);
+            $newRegistro->setTituloObtenido($registro['tituloObtenido']);
+            $newRegistro->setCongreso($registro['congreso']);
+            $newRegistro->setCiudadPais($registro['ciudadPais']);
+            $newRegistro->setIsValidate(false);
             
             if(in_array($registro['idRegistro'],$idsrevistas)){
                 $pos = array_search($registro['idRegistro'],$idsrevistas);
                 $newRegistro->addRevistas($revistass[$pos]);
-            }else if(in_array($registro['idRegistro'],$idsparticipantes)){
+            }
+            if(in_array($registro['idRegistro'],$idsparticipantes)){
                 $pos = array_search($registro['idRegistro'],$idsparticipantes);
                 $newRegistro->addParticipantes($participantess[$pos]);
             }
@@ -445,7 +459,6 @@ class RegistrarDatosController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($newRegistro);
             $em->flush();
-      
             $i++;
         }
         
@@ -496,6 +509,7 @@ class RegistrarDatosController extends Controller
                  $newRecaudo->setTipoRecaudo($tipo_recaudo);
                  $newRecaudo->setTabla("Hijo");
                  $newRecaudo->setPath("");
+                 $newRecaudo->setDuracionAdministrador(null);
                  $em = $this->getDoctrine()->getManager();
                  $em->persist($newRecaudo);
                  $em->flush();

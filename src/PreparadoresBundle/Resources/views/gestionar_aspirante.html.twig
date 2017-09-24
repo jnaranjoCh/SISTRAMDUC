@@ -1,0 +1,303 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  <section class="content-header">
+    <h1>
+      Gestionar Aspirante
+    </h1>
+    <ol class="breadcrumb">
+      <li><i class="fa fa fa-users"></i> Preparadores</li>
+      <li data-route="concurso_index">
+        <a href="{{ path('concurso_index') }}">Concurso</a>
+      </li>
+      <li data-route="gestionar_concurso">
+        <a href="{{ path('gestionar_concurso') }}">Gestión Concurso</a>
+      </li>
+      <li class="active"> Gestión Aspirante</li>
+    </ol>
+  </section>
+  
+  <br/>
+  
+  <div class="row">
+    <section class="content-body">
+      <div class="col-md-offset-1 col-md-10">
+        <div class="box box-info">
+          <div class="box-header with-border text-center">
+            <h3 class="box-title"><b>Datos del Aspirante</b></h3>
+          </div>
+          <div class="box-body">
+            <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6">
+              <div id="detalleAspiranteSeleccionado"></div>
+              
+              <div id="archivosAspiranteSeleccionado" class="hide">
+                <label for="ComunicacionEscrita" class="control-label">Comunicación Escrita</label>
+                <div class="input-group">
+                  <input id="captionComunicacionEscrita" type="text" class="form-control" readonly>
+                      <span class="input-group-btn">
+                        <button id="ComunicacionEscritaView" type="button" class="btn btn-flat btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-flat btn-primary">
+                          <a id="ComunicacionEscritaDownload" style="color:white;"><i class="fa fa-download"></i></a>
+                        </button>
+                      </span>
+                </div>
+                
+                <label for="CartaConducta" class="control-label">Carta de Conducta</label>
+                <div class="input-group">
+                  <input id="captionCartaConducta" type="text" class="form-control" readonly>
+                      <span class="input-group-btn">
+                        <button id="CartaConductaView" type="button" class="btn btn-flat btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-flat btn-primary">
+                          <a id="CartaConducta" style="color:white;"><i class="fa fa-download"></i></a>
+                        </button>
+                      </span>
+                </div>
+                
+                <label for="ReporteNota" class="control-label">Reporte de Nota</label>
+                <div class="input-group">
+                  <input id="captionReporteNota" type="text" class="form-control" readonly>
+                      <span class="input-group-btn">
+                        <button id="ReporteNotaView" type="button" class="btn btn-flat btn-primary">
+                          <i class="fa fa-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-flat btn-primary">
+                          <a id="ReporteNota" style="color:white;"><i class="fa fa-download"></i></a>
+                        </button>
+                      </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="divEvaluarRequisitosAspirante" class="col-md-offset-1 col-md-10">
+        <div class="box box-info collapsed-box">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Evaluar Requisitos</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeEvaluarRequisitosAspirante" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <form id="evaluarRequisitosAspirante" role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Cumple con los Requisitos Exigidos para Concursar?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsRequisitos" value="Si"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsRequisitos" value="No"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button id="enviarEvaluarRequisitosAspirante" type="button" class="btn btn-info btn-block">Enviar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div id="divExoneracionAspirante" class="col-md-offset-1 col-md-10">
+        <div class="box box-info collapsed-box">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Exoneración</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeExoneracionAspirante" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <form id="exoneracionAspirante" role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Solicitará Exoneración?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsExoneracion" value="Si"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsExoneracion" value="No"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button id="enviarExoneracionAspirante" type="button" class="btn btn-info btn-block">Enviar</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+      
+      <div id="divMotivosExoneracion" class="col-md-offset-1 col-md-10">
+        <div  class="box box-info collapsed-box">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Registrar Exposición de Motivos sobre la Exoneración</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeMotivosExoneracion" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <form id="motivosExoneracion" role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      <label>¿Aprueba la Exoneración?</label>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label> 
+                          <input type="radio" name="optionsMotivosExoneracion" value="Si"> 
+                            SI 
+                        </label> 
+                      </div>
+                    </div>
+                    <div class="col-xs-2">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="optionsMotivosExoneracion" value="No"> 
+                            NO 
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Exposición de Motivos</label>
+                  <textarea id="expMotivosExoneracion" class="form-control" rows="3" placeholder="Ingrese aquí la exposición de motivos sobre la solicitud de exoneración" style="resize:none"></textarea>
+                </div>
+              </div>
+              <div class="box-footer">
+                <div class="col-sm-offset-4 col-sm-4">
+                  <button id="cargarMotivosExoneracion" type="button" class="btn btn-info btn-block">Cargar Exposición de Motivos</button>
+                </div>
+              </div>
+            </form>
+        </div>
+      </div>
+        
+      <div id="divCalificacion" class="col-md-offset-1 col-md-10">
+        <div class="box box-info collapsed-box">
+          <div class="box-header with-border">
+            <h3 class="box-title"><b>Registrar Calificación</b></h3>
+            <div class="box-tools pull-right">
+              <button id="closeCalificacion" type="button" class="btn btn-box-tool" data-widget="collapse">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <form id="calificacion" role="form" class="form-horizontal">
+            <div class="box-body">
+                <div class="col-md-5">
+                  <div id="divNotaExEscrito" class="form-group">
+                    <label for="NotaExEscrito">Nota Examen Escrito</label>
+                    <input id="NotaExEscrito" name="NotaExEscrito" type="number" class="form-control" placeholder="Nota Examen Escrito">
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <span></span>
+                </div>
+                <div class="col-md-5">
+                  <div id="divNotaExOral" class="form-group">
+                    <label for="NotaExOral">Nota Examen Oral</label>
+                    <input id="NotaExOral" name="NotaExOral" type="number" class="form-control" placeholder="Nota Examen Oral">
+                  </div>
+                </div>
+            </div>
+            <div class="box-footer">
+              <div class="col-sm-offset-4 col-sm-4">
+                <button id="registrarCalificacion" type="button" class=" btn btn-info btn-block">Registrar Calificación</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Modal Guardando Datos-->
+      <div class="modal fade" id="viewer" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-header">
+          <button type="button" class="btn pull-right" data-dismiss="modal" >
+            <i class="fa fa-remove"></i>
+          </button>
+        </div>
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div>
+            <iframe id="iframeViewer" frameborder="0" style="position: absolute; top:50%; left:50%; width:800px; margin-left:-400px; height:600px;">
+            </iframe>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Guardando Datos-->
+      <div class="modal fade" id="guardandoDatos" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div>
+            <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+            <br/>
+            <label style="position: absolute; top:50%; left:50%; width:200px; margin-left:-100px; height:100px; margin-top:200px; color: white; font: 150% sans-serif;">Guardando datos...</label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Cargando-->
+      <div class="modal fade" id="cargando" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div>
+            <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:100px; margin-left:-50px; height:100px; margin-top:250px;"/>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoPreparadores/gestionarAspirante.js') }}"></script>
+
+{% endblock %}
+

@@ -276,7 +276,7 @@ class DefaultController extends Controller
                     $em->persist($jurado);
                     $em->flush();
 
-                    $this->ConcursoJurado(intval($request->get("concurso")));
+                    $this->ConcursoJurado(intval($request->get("concurso")), $request->get("cedula"), $request->get("tipo"));
                 } else {  
 
                     try{
@@ -310,26 +310,23 @@ class DefaultController extends Controller
         $em->flush();                
     }
 
-    private function ConcursoJurado($concurso){
+    private function ConcursoJurado($concurso, $cedula, $tipo){
 
         $em = $this->getDoctrine()->getManager();
 
-        $idJurado = $this->getDoctrine()
-                        ->getManager()
-                        ->createQuery('SELECT MAX(j.id) AS lastId FROM ConcursosBundle:Jurado j')
-                        ->getResult();
-
-        $id = $idJurado[0]['lastId'];
-
-        $jurado = $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository('ConcursosBundle:Jurado')
-                    ->findOneById($id);
-
+        $query = $em->createQuery(
+        		'SELECT p
+                       FROM ConcursosBundle:Jurado p
+                      WHERE p.cedula = :cedula and p.tipo = :tipo'
+        		)->setParameter('cedula', $cedula)
+        		->setParameter('tipo', $tipo);
+        		 
+        $jurado = $query->getResult();
+        
         $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
                             ->findOneById(intval($concurso));
 
-        $concursoObjeto->addJurado($jurado);
+        $concursoObjeto->addJurado($jurado[0]);
 
         $em->flush();
     }
@@ -449,7 +446,7 @@ class DefaultController extends Controller
                     $em->persist($aspirante);
                     $em->flush();
 
-                    $this->ConcursoAspirante(intval($request->get("concurso")));
+                    $this->ConcursoAspirante(intval($request->get("concurso")), $request->get("cedula"));
 
                     return new JsonResponse("S");
 
@@ -486,26 +483,22 @@ class DefaultController extends Controller
         $em->flush();                
     }
 
-    private function ConcursoAspirante($concurso){
+    private function ConcursoAspirante($concurso, $cedula){
 
         $em = $this->getDoctrine()->getManager();
 
-        $idJurado = $this->getDoctrine()
-                        ->getManager()
-                        ->createQuery('SELECT MAX(j.id) AS lastId FROM ConcursosBundle:Aspirante j')
-                        ->getResult();
-
-        $id = $idJurado[0]['lastId'];
-
-        $jurado = $this->getDoctrine()
-                    ->getManager()
-                    ->getRepository('ConcursosBundle:Aspirante')
-                    ->findOneById($id);
+        $query = $em->createQuery(
+        		'SELECT p
+                       FROM ConcursosBundle:Aspirante p
+                      WHERE p.cedula = :cedula'
+        		)->setParameter('cedula', $cedula);
+        		 
+        $jurado = $query->getResult();
 
         $concursoObjeto = $em->getRepository('ConcursosBundle:Concurso')
                             ->findOneById(intval($concurso));
 
-        $concursoObjeto->addAspirante($jurado);
+        $concursoObjeto->addAspirante($jurado[0]);
 
         $em->flush();
     }
@@ -574,5 +567,5 @@ class DefaultController extends Controller
     	}
     	else
     		throw $this->createNotFoundException('Error al insertar datos');
-    }
+    }   
 }

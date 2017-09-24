@@ -1,0 +1,4 @@
+services:
+#    descarga_horaria.example:
+#        class: DescargaHorariaBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

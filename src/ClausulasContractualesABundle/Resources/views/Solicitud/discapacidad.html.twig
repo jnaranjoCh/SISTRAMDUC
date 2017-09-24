@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>Hijos con discapacidad grave o severa</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-handshake-o"></i>Cláusulas Contractuales</li>
+        <li>Realizar solicitud</li>
+        <li class="active">Hijos con discapacidad</li>
+      </ol>
+    </section>
+    </br>
+
+    <div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
+          <br/>
+          <label id="modalLabel" style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de búsqueda-->   
+    <div class="modal fade" id="registrosBusqueda" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                 <th></th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+        <section class="content-body">
+          <br/>
+          <form id="discapacidadForm" action="{{ path('clausulas_contractuales_guardarArchivosDiscapacidadAjaxAction') }}" method="post" enctype="multipart/form-data">
+            <!--sección de búsqueda-->
+            <div class="col-md-offset-1 col-md-10">
+              <div class="box box-info">
+                  <div class="box-header with-border">
+                    <div class="row">
+                      <div class="col-md-offset-1 col-md-5">
+                        <div class="form-group has-feedback">
+                              <input id="mail" name="mail" type="email" class="form-control" placeholder="Buscar cédula">
+                              <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Buscar</button>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group has-feedback">
+                              <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#registrosBusqueda">Ver usuarios</button>
+                        </div>
+                      </div>
+                      <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <!--fin de sección de búsqueda-->
+
+            <div class="col-md-offset-1 col-md-10">
+              <div class="box box-info" >
+                
+                <div class="box-header with-border">
+                  <h3 class="box-title">Hijos</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="miniPersonal" class="btn btn-box-tool hidden" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+
+                <div class="box-body">
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                      <div class="form-group">
+                        <label>Seleccione un hijo para filtrar la información</label>
+                        <select id="selectedHijo" name="selectedHijo" class="form-control select2" style="width: 100%;">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="recaudos" class="col-md-12 hidden">
+              <div class="box box-info collapsed-box">
+                <div class="box-header with-border">
+                  <h3><i class="fa fa fa-list-alt"></i> Recaudos</h3>
+                  </br>
+                  <p>A continuación adjunte los recaudos especificados.</p>
+                  </br>
+              
+                  <div class="row">    
+                    <div class="col-md-12">
+                      <div id="documentos" class="form-group has-feedback">
+                        <label class="control-label">Calificación y certificado de personas con discapacidad CONAPDIS, Informe médico, Cédula de identidad, Carta de soltería, Carta de expensas</label>
+                        <input id="cargarDocumentos" name="inputDiscapacidad[]" accept="application/pdf" multiple type="file" class="file" data-show-upload="false" data-show-caption="true">
+                        <span id="spanDocumentos" class="glyphicon form-control-feedback"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-offset-4 col-xs-4">
+                        <button id="guardarDiscapacidad" type="button" class="btn btn-primary btn-block btn-flat">Aceptar</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </section>
+    </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/loadSolicitud.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/visible.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/guardarDatos.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/buscar.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/tableUsersCopy.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
+{% endblock %}

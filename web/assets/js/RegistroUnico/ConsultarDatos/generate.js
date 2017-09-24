@@ -4,8 +4,10 @@ var tableParticipantes;
 var tableRevista;
 var countFilesPersonal;
 var countFilesHijos;
+var input2bool = false;
+var input3bool = false;
 
-$('#gemail').on('input',function(e){
+$('#mail').on('input',function(e){
     $("#formRegistros").addClass("hidden");
     $("#formPersonal").addClass("hidden");
     $("#formCargos").addClass("hidden");
@@ -18,7 +20,7 @@ $('#generate').click(function(){
     
     $.ajax({
         method: "POST",
-        data: {"Email":$('#gemail').val()},
+        data: {"Email":$('#mail').val()},
         url:   routeRegistroUnico['registro_consultarbuscaremail_ajax'],
         dataType: 'json',
         success: function(data){
@@ -26,7 +28,7 @@ $('#generate').click(function(){
                $("#load").val("true");
             }else{
                $("#load").val("false");
-               toastr.error("El usuario no se encuentra registrado, esta inactivo o no a realizado el registro de datos.", "Error", {
+               toastr.error("El usuario no se encuentra registrado, está inactivo o no ha realizado el registro de datos.", "Error", {
                                 "timeOut": "0",
                                 "extendedTImeout": "0"
                              });
@@ -86,7 +88,7 @@ function initTableConsultar(){
     {
         $.ajax({
             method: "POST",
-            data: {"email":$('#gemail').val()},
+            data: {"email":$('#mail').val()},
             url:   routeRegistroUnico['registro_consultardocumentshijos_ajax'],
             dataType: 'json',
             success: function(data){
@@ -108,13 +110,14 @@ function initTableConsultar(){
                         else
                             paths[i] = data[i]['path'].split("..")[1];
                     }
-                 
-                    $("#ActaNacCargaHijoDatos").fileinput('destroy');;
+                    $("#ActaNacCargaHijoDatos").fileinput('destroy');
                     $("#ActaNacCargaHijoDatos").fileinput({
-                        //language: "es",
+                        language: "es",
                         overwriteInitial: true,
                         filesCount: paths.length,
+                        uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
                         initialPreview: paths,
+                        uploadAsync: false,
                         initialPreviewAsData: true,
                         initialPreviewFileType: 'pdf',
                         initialPreviewConfig: config
@@ -125,7 +128,12 @@ function initTableConsultar(){
                 }else
                 {
                     $("#ActaNacCargaHijoDatos").fileinput('destroy');
-                    $("#ActaNacCargaHijoDatos").fileinput('refresh');
+                    $("#ActaNacCargaHijoDatos").fileinput({
+                        language: "es",
+                        overwriteInitial: true,
+                        uploadAsync: false,
+                        uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true // server upload action
+                    });
                     $('#checkboxHijos').prop('checked', false);
                     $("#formHijos").addClass("hidden");
                 }
@@ -136,7 +144,7 @@ function initTableConsultar(){
                     "ajax":{
                        "url": routeRegistroUnico['registro_consultarhijos_ajax'],
                        "type": 'POST',
-                       "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                       "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                     },
                     "pagingType": "full_numbers",
                     "bDestroy": true,
@@ -160,7 +168,7 @@ function initTableConsultar(){
                 
         $.ajax({
             method: "POST",
-            data: {"email":$('#gemail').val()},
+            data: {"email":$('#mail').val()},
             url:  routeRegistroUnico['registro_consultardatospersonales_ajax'],
             dataType: 'json',
             success: function(data){
@@ -180,11 +188,12 @@ function initTableConsultar(){
                 $("#FechaVencimientoCedulaDatos").val(DateFormat(data.Files[2].fecha_vencimiento.date));
                 $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
                 $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
+                data.Files = burbuja(data.Files);
                 if($("#url").val().split('/')[1] == "assets")
                 {
                     paths[0] = data.Files[2].path.split("../web")[1];
-                    paths[1] = data.Files[0].path.split("../web")[1];
-                    paths[2] = data.Files[1].path.split("../web")[1];
+                    paths[1] = data.Files[0].path.split("../web")[1];    
+                    paths[2] = data.Files[1].path.split("../web")[1];    
                 }
                 else
                 {
@@ -193,11 +202,13 @@ function initTableConsultar(){
                     paths[2] = data.Files[1].path.split("..")[1];
                 }
                 $("#CedulaRifActaCargaDatos").fileinput({
-                    //language: "es",
+                    language: "es",
                     minFileCount: 1,
                     maxFileCount: 3,
                     overwriteInitial: true,
+                    uploadUrl: routeRegistroUnico['registro_guardararchivosconsulta_ajax'].split('/%20/%20')[0]+"/"+$('#mail').val()+"/"+true, // server upload action
                     initialPreview: paths,
+                    uploadAsync: false,
                     initialPreviewAsData: true,
                     initialPreviewFileType: 'pdf',
                     initialPreviewConfig: [
@@ -214,7 +225,7 @@ function initTableConsultar(){
                                 "ajax":{
                                    "url": routeRegistroUnico['registro_consultarcargos_ajax'],
                                    "type": 'POST',
-                                   "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                   "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
@@ -232,7 +243,7 @@ function initTableConsultar(){
                     	    "ajax":{
                                "url": routeRegistroUnico['registro_consultarregistros_ajax'],
                                "type": 'POST',
-                               "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                               "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                             },
                             "pagingType": "full_numbers",
                             "bDestroy": true,
@@ -247,7 +258,10 @@ function initTableConsultar(){
                                {"data":"Nivel"},
                                {"data":"Estatus"},
                                {"data":"AnoDePublicacionAsistencia"},
-                               {"data":"EmpresaInstitucion"}
+                               {"data":"EmpresaInstitucion"},
+                               {"data":"TituloObtenido"},
+                               { "data": "CiudadPais"},
+                               { "data": "Congreso"}
                             ]
                         });
         
@@ -255,7 +269,7 @@ function initTableConsultar(){
                         	    "ajax":{
                                    "url": routeRegistroUnico['registro_consultarparticipantes_ajax'],
                                    "type": 'POST',
-                                   "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                   "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
@@ -274,7 +288,7 @@ function initTableConsultar(){
                         	    "ajax":{
                                    "url": routeRegistroUnico['registro_consultarrevistas_ajax'],
                                    "type": 'POST',
-                                   "data": {"email":$('#gemail').val(), "assets":$("#url").val().split('/')[1]}
+                                   "data": {"email":$('#mail').val(), "assets":$("#url").val().split('/')[1]}
                                 },
                                 "pagingType": "full_numbers",
                                 "bDestroy": true,
@@ -284,7 +298,9 @@ function initTableConsultar(){
                                 columns: [
                                     {"data": "Delete"},
                                     { "data": "IdDelRegistro" },
-                                    { "data": "Revista" }
+                                    { "data": "Revista" },
+                                    { "data": "Volumen" },
+                                    { "data": "PrimerayUltimaPagina" }
                                 ]
                             });
         
@@ -302,4 +318,22 @@ function DateFormat(date)
     hrs = date.replace("-","/").replace("-","/").replace(":00.000000","").split(" ")[1];
     ddmmyy = date.replace("-","/").replace("-","/").replace(":00.000000","").split(" ")[0].split("/");
     return ddmmyy[2]+"/"+ddmmyy[1]+"/"+ddmmyy[0]+" "+hrs;
+}
+
+function burbuja(array)
+{
+    for(var i=1;i<array.length;i++)
+    {
+        for(var j=0;j<array.length-i;j++)
+        {
+            if(array[j]>array[j+1])
+            {
+                k=array[j+1];
+                array[j+1]=array[j];
+                array[j]=k;
+            }
+        }
+    }
+ 
+    return array;
 }

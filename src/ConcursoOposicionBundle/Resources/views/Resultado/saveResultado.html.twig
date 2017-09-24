@@ -11,19 +11,27 @@
 	        dataType: 'json',
 	        success: function(data)
 	        {
-	        	var opcion = "<option id='sel' selected='selected'>...</option>";
+	 			if (data != "N"){
 	 
-	        	for (var i = 0; i < data["id"].length; i++) {
-	        		
-	        		var num = data["id"][i];
-	
-	        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
-	        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
-	        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
-	        		+"</option>";   		
+		        	var opcion = "<option id='sel' selected='selected'>...</option>";
+		 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+		
+		        		opcion = opcion+"<option value="+num+"><b>Area:</b> "+data["area"][i]+
+		        		"   -   <b>Vacantes:</b> "+data["vacantes"][i]
+		        		+"   -   <b>Fecha Inicio:</b> "+data["inicio"][i]
+		        		+"</option>";   		
+		        	}
+		
+		        	$("#lista").html(opcion);
+	        	} else {
+	        		toastr.error("No Hay Concursos Registrados", "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
 	        	}
-	
-	        	$("#lista").html(opcion);
 	        }
 	    });	
 	});

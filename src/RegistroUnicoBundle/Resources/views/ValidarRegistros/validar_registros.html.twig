@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+    <a name="arriba"></a>
+    <a href="#abajo"></a>
+     <section class="content-header">
+      <h1>Validar Registros</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-fa fa-address-card-o"></i>Registro único</li>
+        <li class="active">Validar Registros</li>
+      </ol>
+    </section>
+    <br/>
+    <div class="modal fade" id="oscurecer" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="row">
+          <div class="col-md-12">
+             <iframe  id="guardarArchivoIframe" class="hidden" style="z-index:115; position:absolute; overflow:hidden;" scrolling="no" src={{ path('registro_validar_iframe_index') }} frameborder="0" height="1000%" width="100%"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myModal2" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:350px; margin-left:-200px; height:350px; margin-top:20%;"/>
+          <br/>
+          <label id="modalLabel" style="position: absolute; top:50%; left:60%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;"></label>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myModalValidateAux" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Validar Registro</h4>
+          </div>
+          <div class="modal-body">
+            <label>Adjunte el archivo para validar el registro</label>
+            <input id="registro" name="input3[]" accept="application/pdf"  type="file" class="file" data-show-upload="false" data-show-caption="true">
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-1">
+                  <button id="validar" type="button" class="btn btn-default">Validar</button>
+              </div>
+              <div class="col-xs-6 col-md-3 col-md-offset-3">
+                  <button id="continuar" type="button" class="btn btn-default">Validar sin documento</button>
+              </div>
+              <div class="col-xs-5">
+                  <button id="cerrar" type="button" class="btn btn-default">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+               <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Estatus</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Email</th>
+                 <th>Estatus</th>
+                 <th></th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!--Form-->
+    <form name="completeForm" id="completeForm" action="" method="post" enctype="multipart/form-data" novalidate>
+      <div id="aux" class="hidden">
+      </div>
+      <div class="row">
+        <section class="content-body">
+          <!--seccion for generate box-->
+          <div class="col-md-offset-1 col-md-10">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                  <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                      <div class="form-group has-feedback">
+                            <input id="mail" name="mail" type="email" class="form-control" placeholder="Email del usuario">
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Generar</button>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                            <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal">Ver usuarios</button>
+                      </div>
+                    </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
+                  </div>
+                </div>
+             </div>
+          </div>
+          <!--seccion for generate boxes-->
+          <!--research,courses and studies box-->
+            <div id="formRegistros" class="col-md-offset-1 col-md-10 hidden">
+               <!-- /.box-header -->
+              <div class="box box-success">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Registros</h3>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-body">
+                  <div style="overflow-x: scroll; white-space: nowrap;">
+                   <table id="tableRegistros" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa / institución  y/o Casa editorial</th>
+                      <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
+                      <th>Validado</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Id del registro</th>
+                      <th>Tipo de referencia</th>
+                      <th>Descripción</th>
+                      <th>Nivel</th>
+                      <th>Estatus</th>
+                      <th>Año de publicación y/o asistencia</th>
+                      <th>Empresa / institución  y/o Casa editorial</th>
+                      <th>Titulo Obtenido</th>
+                      <th>Ciudad / Pais</th>
+                      <th>Congreso</th>
+                      <th>Validado</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+              <!-- /.box -->
+            </div>
+            <!--research,courses and studies box-->
+          </div>
+        </section>
+        <div id="save" class="col-md-offset-4 col-md-4 hidden">
+            <div class="form-group has-feedback">
+                  <input id="submitData" type="button" class="btn btn-primary btn-block btn-flat" value="Actualizar datos"/>
+            </div>
+        </div>
+      </div>
+    </form>
+    <a id="arriba" href="#arriba"></a>
+    <a name="abajo"></a>
+{% endblock %}
+
+{% block custom_javascripts %}
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/iniVR.js') }}"></script>
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/generate.js') }}"></script>
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/changeValidate.js') }}"></script>
+    <script src="{{ asset('assets/js/RegistroUnico/ValidarRegistros/saveData.js') }}"></script>
+    <script src="{{ asset('assets/js/RegistroUnico/tableUsersCopy.js') }}"></script>
+{% endblock %}

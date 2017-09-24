@@ -3,17 +3,26 @@ var miniPersonal = true;
 var miniRegistros = true;
 var miniCargos = true;
 var miniHijos = true;
+var copiar = 0;
 
 $( window ).load(function() {
     
+    
+    $("#DescripcionLabel").html("Descripción");
+    $("#AnoPublicacionLabel").html("Año");
+    $("#CiudadPaisLabel").html("Ciudad / Pais");
+    $("#CongresosLabel").html("Congresos");
+    $("#EmpresaLabel").html("Empresa");
+    $("#InstitucionLabel").html("Institución / Casa editorial / Financiamiento");
+    $("#TituloObtenidoLabel").html("Titulo Obtenido");
     var status = window.location.href.split("/");
     if(status[status.length-1] == "success")
-        toastr.success("Datos registrados exitosamente!.", "Exito!", {
+        toastr.success("Datos registrados exitosamente!.", "Éxito!", {
             "timeOut": "0",
             "extendedTImeout": "0"
             });
     else if(status[status.length-1] == "error")
-        toastr.error("Error hubo problemas al subir los archivos!", "Error", {
+        toastr.error("Hubo problemas al subir los archivos!", "Error", {
             "timeOut": "0",
             "extendedTImeout": "0"
             });
@@ -23,12 +32,13 @@ $( window ).load(function() {
     $("#miniCargos").click();
     $("#miniHijos").click();
 
-    $("#tableUsers").DataTable( {
+    tableUsers = $("#tableUsers").DataTable( {
             "ajax": routeRegistroUnico['registro_obteneremails_ajax'],
             "columns": [
                 { "data": "Email" },
                 { "data": "Estatus" },
-                { "data": "Registro Completo" }
+                { "data": "Registro Completo" },
+                { "data": "Copiar" }
             ],
             "language": {
                 "url": tableLenguage['datatable-spanish']
@@ -65,7 +75,9 @@ $( window ).load(function() {
         dataType: 'json',
         success: function(data){
             if(data[0].lastId != null)
-                idRegistro = data[0].lastId;
+                idRegistro = data[0].lastId+1;
+            else
+                idRegistro = 1;
         }
     });
     $('#IdParticipanteRegistro').html("<option value='-1'>No existen registros</option>");

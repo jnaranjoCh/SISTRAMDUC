@@ -1,0 +1,17 @@
+descarga_horaria_homepage:
+    path:     /descarga_horaria
+    defaults: { _controller: DescargaHorariaBundle:Default:index }
+
+descarga_horaria_informacion:
+    path:     /descarga_horaria/info
+    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:info }
+    
+descarga_horaria_cargos_adm_univ:
+    path:     /descarga_horaria/cargos
+    defaults: { _controller: DescargaHorariaBundle:Cargos:consultarCargos }
+
+
+registro_usuario_index: 
+    path:     /registro/usuario
+    defaults: { _controller: RegistroUnicoBundle:RegistrarUsuario:registrarUsuario }
+    

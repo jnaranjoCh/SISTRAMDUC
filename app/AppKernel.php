@@ -18,7 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Hackzilla\BarcodeBundle\HackzillaBarcodeBundle(),
+            //new Hackzilla\BarcodeBundle\HackzillaBarcodeBundle(),
 
             new AppBundle\AppBundle(),
             new PlanSeptenalBundle\PlanSeptenalBundle(),
@@ -33,6 +33,7 @@ class AppKernel extends Kernel
             new ConcursosBundle\ConcursosBundle(),
             new TramiteBundle\TramiteBundle(),
             new ConcursoOposicionBundle\ConcursoOposicionBundle(),
+            new DescargaHorariaBundle\DescargaHorariaBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
