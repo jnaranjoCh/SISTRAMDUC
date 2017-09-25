@@ -19,6 +19,14 @@ use ConcursosBundle\Entity\Resultado;
 
 class DefaultController extends Controller
 {
+	/**
+	 * @Route("/concursoOposicion/requisicionRRHH", name="requisicionRRHH")
+	 */
+	public function requisicionRRHHAction()
+	{
+		return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
+	}
+	
     /**
      * @Route("/concursoOposicion/apertura_concurso_oposicion_index", name="apertura_concurso_oposicion_index")
      */

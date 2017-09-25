@@ -1,0 +1,332 @@
+{% extends 'base.html.twig' %}
+
+{% block content %} 
+
+	<div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+          <br/>
+          <label style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;">Guardando datos...</label>
+        </div>
+      </div>
+    </div>
+
+    <section class="content-header">
+      <h1>
+        Requisición RR.HH.
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Concurso Oposici&oacute;n</li>
+        <li class="active"> Requisición RR.HH. </li>
+      </ol>
+    </section>
+ 
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+        <br/>
+        <div class="register-box-body">
+            <form id="requisicionRRHH">
+		          
+		          <div class="box-body">
+	              <div class="box-group" id="accordion">
+
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                    
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+	                        Datos De La Solicitud
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseOne" class="panel-collapse collapse in">
+	                    <div class="box-body">
+	                    
+	                    	<div class="row">
+		             	
+		             		<div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                	<label> Condición De Ingreso Como Ordinario </label>
+				                	
+				                	<select id="ordinario" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Instructor</option>
+					                  <option>Auxiliar Docente</option>
+					                  <option>Auxiliar De Investigación</option>
+					                  <option>Categoría Superior a Instructor</option>
+					                  <option>Reincorporación</option>
+					                  <option>Traslado</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group">
+				                  
+									<label> Tiempo de Dedicación </label>
+				                	
+				                	<select id="dedicacion" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Dedicación Exclusiva</option>
+					                  <option>Tiempo Convencional</option>
+					                  <option>Medio Tiempo</option>
+					                  <option>Tiempo Completo</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+		                
+		                </div>
+		                
+		                <div class="row">
+		             	
+		             		<div class="col-md-6">
+		             		
+		             		<div class="form-group">
+		             		
+		             			<label> Lapso Desde </label>
+		             			
+		             			<div class="form-group">
+		             			<input id="fechaDesde" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask/>
+		             			</div>
+		             			
+		             		</div>
+		             		
+		             		</div>
+		             		
+		             		<div class="col-md-6">
+		             		
+		             		<div class="form-group">
+		             		
+		             			<label> Lapso Hasta </label>
+		             			
+		             			<div class="form-group">
+		             			<input id="fechaHasta" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask/>
+		             			</div>
+		             			
+		             		</div>
+		             		
+		             		</div>
+		             		
+		             	</div>
+		             			             	
+		             	<div class="row">
+		             	
+		             		<div class="col-md-6">
+		             		
+		             		<div class="form-group">
+		             		
+		             			<label> Tiempo de Dedicación </label>
+				                	
+			                	<select id="horas" class="form-control select2" style="width: 100%;">
+				                  <option selected="selected">...</option>
+				                  <option>1</option>
+				                  <option>2</option>
+				                  <option>3</option>
+				                  <option>4</option>
+				                  <option>5</option>
+				                  <option>6</option>
+				                  <option>7</option>
+				                  <option>18</option>
+				                  <option>35</option>
+				                  <option>38</option>
+				                </select>
+		             		
+		             		</div>
+		             		
+		             		</div>
+		             		
+		             	</div>
+	                    	
+	                    
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+	                        Ubicación Administrativa / Geográfica
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseTwo" class="panel-collapse collapse">
+	                    <div class="box-body">
+	                    
+	                    <div class="row">
+		             	
+				            <div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                	<label> Sede o Núcleo </label>
+				                	
+				                	<select id="sede" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Aragua/Morita</option>
+					                  <option>Carabobo</option>
+					                  <option>Cojedes</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                	<label> Ciudad </label>
+				                	
+				                	<select id="ciudad" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Maracay</option>
+					                  <option>Valencia</option>
+					                  <option>San Carlos</option>
+					                  <option>Pto. Cabello</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+	                    
+	                    	<div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                <label> Facultad </label>
+				                				                	
+				                	<select id="facultad" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Facultad de Ciencias Jurídicas y Políticas</option>
+					                  <option>Facultad de Ciencias de la Salud</option>
+					                  <option>Facultad de Ingeniería</option>
+					                  <option>Facultad de Ciencias Económicas y Sociales</option>
+					                  <option>Facultad de Ciencias de la Educación</option>
+					                  <option>Facultad de Odontología</option>
+					                  <option>Facultad Experimental de Ciencias y Tecnología</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                	<label> Escuela / Departamento / Instituto </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="50" id='departamento'/>
+							  
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                	<label> Unidad Académica / Centro de Investigación </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="50" id='investigacion'/>
+							  
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group">
+				                
+				                	<label> Cátedra o Equivalente </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="50" id='catedra'/>
+							  
+				                </div>
+				                
+				            </div>
+	                    
+	                    </div>
+	                  </div>
+	                </div>           
+	                	                
+	              </div>
+	                
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+	                        Motivo de la Solicitud
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseThree" class="panel-collapse collapse">
+	                    <div class="box-body">
+	                    
+	                    	                   
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+	                        Justficación de la Solicitud
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseFour" class="panel-collapse collapse">
+	                    <div class="box-body">
+	                    
+	                    	<textarea id="justificacion" class="form-control" rows="3" placeholder="Enter ..." maxlength="499"></textarea>
+	                    	                    	                   
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	            </div>
+
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  {% include('ConcursoOposicionBundle:Concurso:saveConcurso.html.twig') %}
+  
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+         
+   <script>
+	  $(function () {
+	
+	    	$(".select2").select2();	
+			$("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+			$("[data-mask]").inputmask();
+		});
+  </script>
+
+{% endblock %}
