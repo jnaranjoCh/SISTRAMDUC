@@ -10,6 +10,7 @@ use TramiteBundle\Entity\Recaudo;
 use TramiteBundle\Entity\Tramite;
 use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\Transicion;
+use ConcursoOposicionBundle\Entity\Curso;
 
 /**
  * Concurso
@@ -250,6 +251,11 @@ class Concurso extends Tramite
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
     private $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Curso", mappedBy="concurso", cascade={"remove", "persist"})
+     */
+    protected $curso;
     
     /**
      * @var int
@@ -262,6 +268,7 @@ class Concurso extends Tramite
     {
        $this->jurado = new ArrayCollection();
        $this->aspirantes = new ArrayCollection();
+       $this->curso = new ArrayCollection();
     }
     
     // /**
