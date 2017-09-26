@@ -128,133 +128,133 @@ class Concurso extends Tramite
     /**
      * @var string
      *
-     * @ORM\Column(name="condicion", type="string", length=50)
+     * @ORM\Column(name="condicion", type="string", length=50, nullable=true)
      */
     private $condicion;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="tiempo_dedicacion", type="string", length=50)
+     * @ORM\Column(name="tiempo_dedicacion", type="string", length=50, nullable=true)
      */
     private $tiempo_dedicacion;
     
     /**
      * @var int
      *
-     * @ORM\Column(name="nro_horas", type="integer")
+     * @ORM\Column(name="nro_horas", type="integer", nullable=true)
      */
     private $nro_horas;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="facultad", type="string", length=100)
+     * @ORM\Column(name="facultad", type="string", length=100, nullable=true)
      */
     private $facultad;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="sede", type="string", length=50)
+     * @ORM\Column(name="sede", type="string", length=50, nullable=true)
      */
     private $sede;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="ciudad", type="string", length=50)
+     * @ORM\Column(name="ciudad", type="string", length=50, nullable=true)
      */
     private $ciudad;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="escuela", type="string", length=50)
+     * @ORM\Column(name="escuela", type="string", length=50, nullable=true)
      */
     private $escuela;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="departamento", type="string", length=200)
+     * @ORM\Column(name="departamento", type="string", length=200, nullable=true)
      */
     private $departamento;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="motivo", type="string", length=150)
+     * @ORM\Column(name="motivo", type="string", length=150, nullable=true)
      */
     private $motivo;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="desc_motivo", type="string", length=150)
+     * @ORM\Column(name="desc_motivo", type="string", length=150, nullable=true)
      */
     private $desc_motivo;
         
     /**
      * @var string
      *
-     * @ORM\Column(name="justificacion", type="string", length=500)
+     * @ORM\Column(name="justificacion", type="string", length=500, nullable=true)
      */
     private $justificacion;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="grado_academico", type="string", length=100)
+     * @ORM\Column(name="grado_academico", type="string", length=100, nullable=true)
      */
     private $grado_academico;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="profesion", type="string", length=150)
+     * @ORM\Column(name="profesion", type="string", length=150, nullable=true)
      */
     private $profesion;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="experiencia", type="string", length=5)
+     * @ORM\Column(name="experiencia", type="string", length=5, nullable=true)
      */
     private $experiencia;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="area_conocimiento", type="string", length=150)
+     * @ORM\Column(name="area_conocimiento", type="string", length=150, nullable=true)
      */
     private $area_conocimiento;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="area_investigacion", type="string", length=150)
+     * @ORM\Column(name="area_investigacion", type="string", length=150, nullable=true)
      */
     private $area_investigacion;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="area_extension", type="string", length=150)
+     * @ORM\Column(name="area_extension", type="string", length=150, nullable=true)
      */
     private $area_extension;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=100)
+     * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
     private $status;
     
     /**
      * @var int
      *
-     * @ORM\Column(name="idUsuarioAct", type="integer")
+     * @ORM\Column(name="idUsuarioAct", type="integer", nullable=true)
      */
     private $idUsuarioAct;
 

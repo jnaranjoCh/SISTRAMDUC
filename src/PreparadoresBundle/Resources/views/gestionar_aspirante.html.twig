@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/concursoPreparadores/previewPdf.css') }}">
+{% endblock %}
+
 {% block content %}
   <section class="content-header">
     <h1>
@@ -251,21 +255,23 @@
         </div>
       </div>
       
-      <!-- Modal Guardando Datos-->
-      <div class="modal fade" id="viewer" role="dialog" data-keyboard="false" data-backdrop="static">
-        <div class="modal-header">
-          <button type="button" class="btn pull-right" data-dismiss="modal" >
-            <i class="fa fa-remove"></i>
-          </button>
-        </div>
+      <!-- Modal -->
+      <div class="modal fade" id="viewer" role="dialog" aria-labelledby="viewerLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <!-- Modal content-->
-          <div>
-            <iframe id="iframeViewer" frameborder="0" style="position: absolute; top:50%; left:50%; width:800px; margin-left:-400px; height:600px;">
-            </iframe>
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-remove"></i></button>
+              <h4 class="modal-title" id="viewerLabel"><i class="fa fa-file-pdf-o" style="color:red;"></i> Vista Previa</h4>
+            </div>
+      
+            <div class="modal-body">
+              <i class="fa fa-refresh fa-spin"></i>
+              <iframe id="iframeViewer" class="iframe" seamless="" height="100%" width="100%" allowfullscreen></iframe>
+            </div>
+      
           </div>
         </div>
-      </div>
+      </div> 
       
       <!-- Modal Guardando Datos-->
       <div class="modal fade" id="guardandoDatos" role="dialog" data-keyboard="false" data-backdrop="static">

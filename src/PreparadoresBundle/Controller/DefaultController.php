@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use TramiteBundle\Entity\Tramite;
 use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\Documento;
 use TramiteBundle\Entity\Transicion;
 use ConcursosBundle\Entity\Concurso;
 use ConcursosBundle\Entity\Aspirante;
@@ -852,8 +853,8 @@ class DefaultController extends Controller
             $concurso = $em->getRepository('ConcursosBundle:Concurso')
                               ->findOneBy(["id" => $idTramite]);
                               
-            $tramite = $em->getRepository('TramiteBundle:Tramite')
-                              ->findOneBy(["id" => $idTramite]);
+            //$tramite = $em->getRepository('TramiteBundle:Tramite')
+            //                  ->findOneBy(["id" => $idTramite]);
             
             $query = $em->createQuery('SELECT R
                                    FROM TramiteBundle:Recaudo R
@@ -867,25 +868,7 @@ class DefaultController extends Controller
                 $recaudo = new Recaudo();
                 $recaudo->setPath("");
                 $recaudo->setName($request->get("nombreRecaudo"));
-                // if($request->get("nombreRecaudo") == "CambioJurado"){
-                //     $recaudo->setValor("Si");
-                //     $jurados = $request->get("valorRecaudo");
-                    
-                //     $i = 0;
-                //     $j = 0;
-                //     foreach ($jurados as $jurado) {
-                //         $result = $this->validarJurado($jurado, $divJurados[$i]);
-                //         if( $result == "JuradoNoExisteEnSistema"){
-                //             $falla=true;
-                //             $idsJurados[$j] = "#divNewJur".$divJurados[$i];
-                //             $j=$j+1;
-                //         }
-                //         $i=$i+1;
-                //     }
-                    
-                // }else{
-                    $recaudo->setValor($request->get("valorRecaudo"));
-                // }
+                $recaudo->setValor($request->get("valorRecaudo"));
                 $recaudo->setTipoRecaudo(null);
                 $recaudo->setUsuario($this->getUser());
             }else{
@@ -896,109 +879,42 @@ class DefaultController extends Controller
             }
             
             if (!$falla){
-                // if($request->get("nombreRecaudo") == "CambioJurado"){
-                    
-                //     $recaudos = $request->get("valorRecaudo");
-                //     /*RECORRO LOS JURADOS PARA ACTUALIZARLOS*/
-                //     $i = 0;
-                //     foreach ($recaudos as $racaudoAux) {
-                //         $query = $em->createQuery('SELECT R
-                //                               FROM TramiteBundle:Recaudo R
-                //                               WHERE R.tramite = :idTramite 
-                //                               AND R.name = :nameRecaudo'
-                //         )->setParameter('idTramite', $idTramite)
-                //          ->setParameter('nameRecaudo', $divJurados[$i]);
-                //         $queryResult = $query->getResult();
-                        
-                //         foreach ($queryResult as $queryResultAux) {
-                //             $queryResultAux->setValor($racaudoAux);
-                //             $queryResultAux->setUsuario($this->getUser());
-                //         }
-                //         $i=$i+1;
-                //     }
-                // }
-
-                $tramite->addRecaudo($recaudo);
+                $concurso->addRecaudo($recaudo);
                 
-                // if($request->get("nombreRecaudo")!="ObservacionVeredicto"){
-                    $entityEstado = $em->getRepository('TramiteBundle:Estado');
-                    
-                    $aprobada = $entityEstado->findOneBy(["nombre" => 'Aprobada']);
-                    $enProceso = $entityEstado->findOneBy(["nombre" => 'En Proceso']);
-                    $negada = $entityEstado->findOneBy(["nombre" => 'Negada']);
-                    $finalizada = $entityEstado->findOneBy(["nombre" => 'Finalizada']);
-                    
-                    $transicion = new Transicion();
-                    
-                    if($request->get("nombreRecaudo")=="CausalDesierto"){
-                        $estado = $finalizada;
-                        $transicion->setDoc_info("Declarado Concurso Desierto.");
-                    }else if($request->get("nombreRecaudo")=="FechaEvaluacion"){
-                        $estado = $enProceso;
-                        $transicion->setDoc_info("Se registro la fecha de Presentacion.");
-                        $concurso->setFechaPresentacion(new \DateTime($recaudo->getValor()));
-                    }
-                    
-                    // if($request->get("valorRecaudo")=="Si"){
-                    //     if($request->get("nombreRecaudo")=="Veredicto"){
-                    //         $estado = $aprobada;
-                    //         $transicion->setDoc_info("Aprobaron la solicitud.");
-                    //     }else{
-                    //         $estado = $enProceso;
-                    //         if($request->get("nombreRecaudo")=="AprobarPresupuesto"){
-                    //             $transicion->setDoc_info("Aprobaron el presupuesto para la solicitud.");
-                    //         }else if($request->get("nombreRecaudo")=="AprobarJurado"){
-                    //             $transicion->setDoc_info("Aprobaron el jurado de la solicitud.");
-                    //         }
-                    //     }
-                    // }else if($request->get("valorRecaudo")=="No"){
-                    //     if($request->get("nombreRecaudo")=="AprobarPresupuesto" || $request->get("nombreRecaudo")=="Veredicto"){
-                    //         $estado = $negada;
-                    //         if($request->get("nombreRecaudo")=="AprobarPresupuesto"){
-                    //             $transicion->setDoc_info("No aprobaron el presupuesto para la solicitud.");
-                    //         }else{
-                    //             $transicion->setDoc_info("No aprobaron la solicitud.");
-                    //         }
-                    //     }else if($request->get("nombreRecaudo")=="AprobarJurado"){
-                    //         $estado = $enProceso;
-                    //         $transicion->setDoc_info("No aprobaron el jurado de la solicitud.");
-                    //     }
-                    // }else if($request->get("nombreRecaudo")=="CambioJurado"){
-                    //     $estado = $enProceso;
-                    //     $transicion->setDoc_info("Se cambió el jurado de la solicitud.");
-                    // }else if($request->get("nombreRecaudo")=="FechaRecepDoc"){
-                    //     $estado = $finalizada;
-                    //     $transicion->setDoc_info("Ha finalizado el proceso de la solicitud.");
-                    // }
-                    
-                    $transicion->setFecha(new \DateTime("now"));
-                    $transicion->setEstado($estado);                  
-                    $transicion->setEstadoConsejo($estado);
-                    
-                    $tramite->addTransicion($transicion);
+                $entityEstado = $em->getRepository('TramiteBundle:Estado');
                 
-                // }
+                $aprobada = $entityEstado->findOneBy(["nombre" => 'Aprobada']);
+                $enProceso = $entityEstado->findOneBy(["nombre" => 'En Proceso']);
+                $negada = $entityEstado->findOneBy(["nombre" => 'Negada']);
+                $finalizada = $entityEstado->findOneBy(["nombre" => 'Finalizada']);
                 
-                $em->persist($tramite);
+                $transicion = new Transicion();
+                
+                if($request->get("nombreRecaudo")=="CausalDesierto"){
+                    $estado = $finalizada;
+                    $transicion->setDoc_info("Declarado Concurso Desierto.");
+                }else if($request->get("nombreRecaudo")=="FechaEvaluacion"){
+                    $estado = $enProceso;
+                    $transicion->setDoc_info("Se registro la fecha de Presentacion.");
+                    $concurso->setFechaPresentacion(new \DateTime($recaudo->getValor()));
+                }else if($request->get("nombreRecaudo")=="Nombramiento"){
+                    $estado = $finalizada;
+                    $transicion->setDoc_info("Se registro la Proposicion de Nombramiento.");
+                }
+                
+                $transicion->setFecha(new \DateTime("now"));
+                $transicion->setEstado($estado);                  
+                $transicion->setEstadoConsejo($estado);
+                
+                $concurso->addTransicion($transicion);
+                
+                $em->persist($concurso);
                 
                 $em->flush();
                 
-                // if($request->get("nombreRecaudo")=="CambioJurado"){
-                //     return new JsonResponse(array(
-                //         'estado' => 'Insertado',
-                //         'mensaje' => 'Nuevo Jurado guardado exitosamente!.'
-                //     ));
-                // }else{
-                    return new JsonResponse(array(
-                        'estado' => 'Insertado',
-                        'mensaje' => 'Datos Enviados exitosamente!.'
-                    ));
-                // }
-            }else{
-               return new JsonResponse(array(
-                    'estado' => 'NoExisteJurado',
-                    'mensaje' => 'Jurado no está registrado en el Sistema.',
-                    'jurados' => $idsJurados
+                return new JsonResponse(array(
+                    'estado' => 'Insertado',
+                    'mensaje' => 'Datos Enviados exitosamente!.'
                 ));
             }
         }else
@@ -1016,8 +932,6 @@ class DefaultController extends Controller
                               ->findOneBy(["id" => $request->get('IdConcurso')]);
                               
         $newAspirante = new Aspirante();
-        
-        $identificadorAspirante= $request->get('PrimerNombre')."_".$request->get('PrimerApellido')."_".$request->get('Cedula')."_".$newAspirante->getId();
         
         $newAspirante->setCedula($request->get('Cedula'));
         $newAspirante->setCorreo($request->get('Correo'));
@@ -1037,27 +951,30 @@ class DefaultController extends Controller
             $newAspirante->setNotaIntento2($request->get('Nota2'));
         }
         
+        $identificadorAspirante= $request->get('PrimerNombre')."_".$request->get('PrimerApellido')."_".$request->get('Cedula');
+        
         $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/comunicacionEscrita/';
         $dir_subida = $dir_subida."comunicacion_escrita_".$identificadorAspirante.".pdf";
-        
         $newAspirante->setComunicacionEscritaUrl($dir_subida);
         
         if(move_uploaded_file($_FILES['input']['tmp_name'][0], $dir_subida)) {
+            
             $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/cartaConducta/';
             $dir_subida = $dir_subida."carta_conducta_".$identificadorAspirante.".pdf";
-            
             $newAspirante->setCartaConductaUrl($dir_subida);
             
-            if(move_uploaded_file($_FILES['input']['tmp_name'][1], $dir_subida)) {
+            if(move_uploaded_file($_FILES['input1']['tmp_name'][0], $dir_subida)) {
+                
                 $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/aspirantes/reporteNota/';
                 $dir_subida = $dir_subida."reporte_nota_".$identificadorAspirante.".pdf";
-                
                 $newAspirante->setReporteNotaUrl($dir_subida);
                 
-                if(move_uploaded_file($_FILES['input']['tmp_name'][2], $dir_subida)) {
+                if(move_uploaded_file($_FILES['input2']['tmp_name'][0], $dir_subida)) {
+                    
                     $concurso->addAspirante($newAspirante);
                     $em->persist($concurso);
                     $em->flush();
+                    
                     return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'success')));
                 }else{
                     return new RedirectResponse($this->generateUrl('gestionar_concurso',array('id' => $request->get('IdConcurso'), 'state' => 'error')));
@@ -1120,7 +1037,7 @@ class DefaultController extends Controller
              throw $this->createNotFoundException('Error al devolver datos');
     }
     
-        /**
+    /**
      * @Route("/preparadores/agregar_datos_aspirante", name="agregar_datos_aspirante_ajax")
      */
     public function agregarDatosAspiranteAjaxAction(Request $request)
@@ -1305,5 +1222,32 @@ class DefaultController extends Controller
         }else
             throw $this->createNotFoundException('Error al solicitar datos');
     }
-
+    
+        /**
+     * @Route("/preparadores/generar_pdf", name="generar_pdf_ajax")
+     */
+    public function generarPDFAjaxAction(Request $request)
+    {
+        $variables= 'Hola mundo';        
+        $html = $this->renderView('PreparadoresBundle::reporte-pdf.html.twig', array(
+            'variables' => $variables
+        ));
+        
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $this->renderView('PreparadoresBundle::reporte-pdf.html.twig',array(
+                    'variables' => $variables
+                )),
+            $this->container->getParameter('kernel.root_dir').'/../web/uploads/prueba.pdf'
+        );
+        
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="prueba.pdf"'
+            )
+        );
+    }
+    
 }

@@ -109,7 +109,7 @@ $('#ComunicacionEscritaView').click(function (){
 });
 
 $('#CartaConductaView').click(function (){
-	$("#iframeViewer").attr('src',cartaConductaUrl);
+	$("#iframeViewer").  attr('src',cartaConductaUrl);
 	$("#viewer").modal("show");
 });
 
@@ -215,21 +215,32 @@ $('#cargarMotivosExoneracion').click(function (){
     		text = "Debe escribir la exposición de motivos sobre la exoneración.";
         	toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
     	}else{
-    		$.ajax({
-	            method: "POST",
-	            data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"MotivosExoneracion", "valorDato":optionSelected+"AprobóExoneracion-"+$("#expMotivosExoneracion").val()},
-	            url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
-	            dataType: 'json',
-	            beforeSend: function(){
-	                $("#cargando").modal("show");
-	            },
-		        success: function(respuesta){
-	        		if (respuesta.estado == "Insertado") {
-	        		    $("#cargando").modal("hide");
-	        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-	    				$('#divMotivosExoneracion').addClass("hide");
-	        		}
-	        }});
+    	    alert("HOlis!!!");
+    	    $.ajax({
+                method: "POST",
+                url: "/web/app_dev.php/preparadores/generar_pdf",
+                dataType: 'json',
+                beforeSend: function(){
+                    $("#cargando").modal("show");
+                },
+    	        success: function(respuesta){
+        		    $("#cargando").modal("hide");
+            }});
+    // 		$.ajax({
+	   //         method: "POST",
+	   //         data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"MotivosExoneracion", "valorDato":optionSelected+"AprobóExoneracion-"+$("#expMotivosExoneracion").val()},
+	   //         url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
+	   //         dataType: 'json',
+	   //         beforeSend: function(){
+	   //             $("#cargando").modal("show");
+	   //         },
+		  //      success: function(respuesta){
+	   //     		if (respuesta.estado == "Insertado") {
+	   //     		    $("#cargando").modal("hide");
+	   //     		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+	   // 				$('#divMotivosExoneracion').addClass("hide");
+	   //     		}
+	   //     }});
     	}
     }
 });
@@ -255,7 +266,7 @@ $('#registrarCalificacion').click(function (){
 	if (falla){
 		toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
 	} else {
-		var datos = [$("#NotaExEscrito").val(),$("#NotaExOral").val()];
+        var datos = [$("#NotaExEscrito").val(),$("#NotaExOral").val()];
 		$.ajax({
             method: "POST",
             data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"Notas", "valorDato":datos},
