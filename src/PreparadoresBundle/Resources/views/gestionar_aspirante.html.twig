@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" href="{{ asset('assets/css/concursoPreparadores/previewPdf.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/concursoPreparadores/previewPdf6.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -43,7 +43,7 @@
                           <i class="fa fa-search"></i>
                         </button>
                         <button type="button" class="btn btn-flat btn-primary">
-                          <a id="ComunicacionEscritaDownload" style="color:white;"><i class="fa fa-download"></i></a>
+                          <a id="ComunicacionEscritaDownload" download style="color:white;"><i class="fa fa-download"></i></a>
                         </button>
                       </span>
                 </div>
@@ -56,7 +56,7 @@
                           <i class="fa fa-search"></i>
                         </button>
                         <button type="button" class="btn btn-flat btn-primary">
-                          <a id="CartaConducta" style="color:white;"><i class="fa fa-download"></i></a>
+                          <a id="CartaConductaDownload" download style="color:white;"><i class="fa fa-download"></i></a>
                         </button>
                       </span>
                 </div>
@@ -69,7 +69,7 @@
                           <i class="fa fa-search"></i>
                         </button>
                         <button type="button" class="btn btn-flat btn-primary">
-                          <a id="ReporteNota" style="color:white;"><i class="fa fa-download"></i></a>
+                          <a id="ReporteNotaDownload" download style="color:white;"><i class="fa fa-download"></i></a>
                         </button>
                       </span>
                 </div>
@@ -265,7 +265,6 @@
             </div>
       
             <div class="modal-body">
-              <i class="fa fa-refresh fa-spin"></i>
               <iframe id="iframeViewer" class="iframe" seamless="" height="100%" width="100%" allowfullscreen></iframe>
             </div>
       
@@ -303,7 +302,7 @@
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
-  <script src="{{ asset('assets/js/concursoPreparadores/gestionarAspirante.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoPreparadores/gestionarAspirante6.js') }}"></script>
 
 {% endblock %}
 

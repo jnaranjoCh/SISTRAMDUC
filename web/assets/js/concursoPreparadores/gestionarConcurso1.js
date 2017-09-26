@@ -47,7 +47,6 @@ $(window).load( function(){
         initialPreviewAsData: true,
         initialPreviewFileType: 'pdf'
     });
-    alert("paso comunicacionEscrita");
     $("#CartaConducta").fileinput({
         language: "es",
         maxFileCount: 1,
@@ -56,7 +55,6 @@ $(window).load( function(){
         initialPreviewAsData: true,
         initialPreviewFileType: 'pdf'
     });
-    alert("paso cartaConducta");
     $("#ReporteNota").fileinput({
         language: "es",
         maxFileCount: 1,
@@ -65,7 +63,6 @@ $(window).load( function(){
         initialPreviewAsData: true,
         initialPreviewFileType: 'pdf'
     });
-    alert("paso reporteNotass");
     document.getElementById("IdConcurso").value = id;
     $.ajax({
 		method:"POST",

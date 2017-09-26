@@ -1223,7 +1223,7 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Error al solicitar datos');
     }
     
-        /**
+    /**
      * @Route("/preparadores/generar_pdf", name="generar_pdf_ajax")
      */
     public function generarPDFAjaxAction(Request $request)

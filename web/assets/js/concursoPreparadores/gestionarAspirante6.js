@@ -67,15 +67,12 @@ $(window).load( function(){
                 
                 document.getElementById("captionComunicacionEscrita").value = comunicacionEscritaNameFile;
                 $("#ComunicacionEscritaDownload").attr('href',comunicacionEscritaUrl);
-                $("#ComunicacionEscritaDownload").attr('target',"_blank");
                 
                 document.getElementById("captionCartaConducta").value = cartaConductaNameFile;
-                $("#CartaConducta").attr('href',cartaConductaUrl);
-                $("#CartaConducta").attr('target',"_blank");
+                $("#CartaConductaDownload").attr('href',cartaConductaUrl);
                 
                 document.getElementById("captionReporteNota").value = reporteNotaNameFile;
-                $("#ReporteNota").attr('href',reporteNotaUrl);
-                $("#ReporteNota").attr('target',"_blank");
+                $("#ReporteNotaDownload").attr('href',reporteNotaUrl);
                 
 				$("#archivosAspiranteSeleccionado").removeClass("hide");
 				$("#cargando").modal("hide");

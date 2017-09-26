@@ -248,7 +248,7 @@ class Concurso extends Tramite
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=100, nullable=true)
+     * @ORM\Column(name="status", type="string", length=255, nullable=true)
      */
     private $status;
 
@@ -263,6 +263,13 @@ class Concurso extends Tramite
      * @ORM\Column(name="idUsuarioAct", type="integer", nullable=true)
      */
     private $idUsuarioAct;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string", length=100, nullable=true)
+     */
+    private $nombre;
 
     public function __construct()
     {
@@ -1019,5 +1026,29 @@ class Concurso extends Tramite
     public function getIdUsuarioAct()
     {
     	return $this->idUsuarioAct;
-    }    
+    }  
+    
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Concurso
+     */
+    public function setNombre($nombre)
+    {
+    	$this->nombre = $nombre;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+    	return $this->nombre;
+    }
 }
