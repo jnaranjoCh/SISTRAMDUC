@@ -20,7 +20,7 @@ class TramiteReincorporacion extends Tramite
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -36,21 +36,21 @@ class TramiteReincorporacion extends Tramite
      *
      * @ORM\Column(name="tipo_tramite", type="string", length=255)
      */
-    private $tipoTramite;
+    protected $tipoTramite;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_reincorporacion", type="date")
      */
-    private $fechaReincorporacion;
+    protected $fechaReincorporacion;
 
     /**
      * @var string
      *
      * @ORM\Column(name="usuario", type="string", length=255)
      */
-    private $usuario;
+    protected $usuario;
 
     public function __construct()
     {
