@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use ConcursoOposicionBundle\Entity\Recusacion;
 use TramiteBundle\Entity\Recaudo;
-use Tramitebundle\Entity\Estado;
+use TramiteBundle\Entity\Estado;
 
 /**
  * Aspirante
@@ -176,7 +176,7 @@ class Aspirante
     protected $recaudos;
     
     /**
-     * @ORM\OneToOne(targetEntity="Tramitebundle\Entity\Estado", inversedBy="aspirante")
+     * @ORM\OneToOne(targetEntity="TramiteBundle\Entity\Estado", inversedBy="aspirante")
      * @ORM\JoinColumn(name="estado_id", referencedColumnName="id")
      */
     protected $estado;
