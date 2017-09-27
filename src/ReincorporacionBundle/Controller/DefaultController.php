@@ -93,15 +93,12 @@ class DefaultController extends Controller
      * Retorna todos los ids de los registros del usuario a los que puede asignarse un participante
      * (Todos menos Becas, Premios, Distinciones)
      *
-     * @param $usuario_id
      * @return array
      */
-    public function getRegistrosAsignablesAParticipantes($usuario_id) {
+    public function getRegistrosAsignablesAParticipantes() {
         $em = $this->getDoctrine()->getRepository('RegistroUnicoBundle:Registro');
         $q = $em->createQueryBuilder('reg')
             ->where('reg.tipo_registro not in (8,9,10)')
-            ->where('reg.usuarios = :usuario_id')
-            ->setParameter('reg.usuario', $usuario_id)
             ->getQuery();
         $data = $q->getResult();
 
@@ -109,26 +106,17 @@ class DefaultController extends Controller
         foreach ($data as $d) {
             $reg_ids[] = $d->getTipoRegitroId();
         }
-
-        echo '<pre>';
-        print_r($reg_ids);
-        echo '</pre>';
-
-        return $reg_ids;
     }
 
     /**
      * Retorna los ids de los registros del usuario referentes a las publicaciones
      *
-     * @param $usuario_id
      * @return array
      */
-    public function getRegistrosPublicaciones($usuario_id) {
+    public function getRegistrosPublicaciones() {
         $em = $this->getDoctrine()->getRepository('RegistroUnicoBundle:Registro');
         $q = $em->createQueryBuilder('reg')
             ->where('reg.tipo_registro not in (6,7,8,9,10)')
-            ->where('reg.usuario = :usuario_id')
-            ->setParameter('reg.usuario', $usuario_id)
             ->getQuery();
         $data = $q->getResult();
 
@@ -137,11 +125,43 @@ class DefaultController extends Controller
             $reg_ids[] = $d->getTipoRegitroId();
         }
 
+        return $reg_ids;
+    }
+
+    /**
+     * Retorna todos los cargos ejercidos por el usuario
+     *
+     * @return array
+     */
+    public function getRegistrosUsuario() {
+        $em = $this->getDoctrine()->getRepository('RegistroUnicoBundle:Registro');
+        $q = $em->createQueryBuilder('reg')
+            ->getQuery();
+        $data = $q->getResult();
+
+        $registros = [];
+        foreach ($data as $d) {
+            $reg['id'] = $d->getId();
+            $reg['tipo_registro_id'] = $d->getTipo()->getId();
+            $reg['tipo_registro'] = $d->getTipo()->getDescription();
+            $reg['nivel_id'] = $d->getNivel()->getId();
+            $reg['nivel'] = $d->getNivel()->getDescription();
+            $reg['estatus_id'] = $d->getEstatusId();
+            $reg['anio'] = $d->getAño();
+            $reg['es_valido'] = $d->getIsValidate();
+            $reg['locacion'] = $d->getInstitucionEmpresaCasaeditorial();
+            $reg['titulo_obtenido'] = $d->getTituloObtenido();
+            $reg['ciudad_pais'] = $d->getCiudadPais();
+            $reg['congreso'] = $d->getCongreso();
+            $reg['descripcion'] = $d->getDescription();
+
+            $registros[] = $reg;
+        }
+
         echo '<pre>';
-        print_r($reg_ids);
+        print_r($registros);
         echo '</pre>';
 
-        return $reg_ids;
     }
 
     //---------------------------
@@ -178,8 +198,9 @@ class DefaultController extends Controller
         $estatuses = $this->getAllEstatuses();
         $niveles = $this->getAllNivelesEstudio();
         $tipos_registro = $this->getAllTiposRegistro();
-        $reg_ids_partic = $this->getRegistrosAsignablesAParticipantes(1);
-        $reg_ids_public = $this->getRegistrosPublicaciones(1);
+        $reg_ids_partic = $this->getRegistrosAsignablesAParticipantes();
+        $reg_ids_public = $this->getRegistrosPublicaciones();
+        $registros = $this->getRegistrosUsuario();
 
         return $this->render('ReincorporacionBundle::nueva-entrada-curriculumt.html.twig',
             array(
@@ -188,7 +209,8 @@ class DefaultController extends Controller
                 'niveles' => $niveles,
                 'tipos_registro' => $tipos_registro,
                 'reg_ids_partic' => $reg_ids_partic,
-                'reg_ids_public' => $reg_ids_public
+                'reg_ids_public' => $reg_ids_public,
+                'registros' => $registros
             )
         );
     }
