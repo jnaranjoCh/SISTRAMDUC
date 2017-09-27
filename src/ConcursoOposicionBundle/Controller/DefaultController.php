@@ -27,14 +27,6 @@ class DefaultController extends Controller
 	{
 		return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
 	}
-	
-    /**
-     * @Route("/concursoOposicion/apertura_concurso_oposicion_index", name="apertura_concurso_oposicion_index")
-     */
-    public function aperturaDeConcursoAction()
-    {
-        return $this->render('ConcursoOposicionBundle::apertura_concurso.html.twig');
-    }
 
     /**
      * @Route("/concursoOposicion/jurado", name="jurado")
@@ -253,28 +245,6 @@ class DefaultController extends Controller
                 $em->persist($concurso);
                 $em->flush();
 
-/*
-                $id = $this->getDoctrine()
-                       ->getManager()
-                       ->createQuery('SELECT MAX(r.id) AS lastId FROM ConcursosBundle:Concurso r')
-                       ->getResult();
-
-                $concurso =  $this->getDoctrine()
-                            ->getManager()
-                            ->getRepository('ConcursosBundle:Concurso')
-                            ->findOneById($id[0]['lastId']);
-
-
-                for ($i=0; $i < intval($request->get("tamano")); $i++) { 
-                    
-                    $curso = new Curso();
-                    $curso->setNombre($cursos[$i]);
-                    $curso->setTiempo($tiempos[$i]);
-                    $concurso->addCurso($curso);
-                }
-
-                $em->flush();
-*/
                 return new JsonResponse("S");
 
             } else {
