@@ -274,8 +274,8 @@
                     <!-- /.col -->
                     <div class="col-md-4">
                         <div id="divCedulaParticipanteRegistro" class="form-group has-feedback">
-                            <label>Cedula</label>
-                            <input id="CedulaParticipanteRegistro" type="number" class="form-control" placeholder="cedula" min="1">
+                            <label>Cédula</label>
+                            <input id="CedulaParticipanteRegistro" type="number" class="form-control" placeholder="Cédula" min="1">
                             <span id="spanCedulaParticipanteRegistro" class="glyphicon form-control-feedback"></span>
                         </div>
                     </div>
@@ -284,6 +284,10 @@
                         <div id="divIdParticipanteRegistro" class="form-group has-feedback">
                             <label>Id del registro</label>
                             <select id="IdParticipanteRegistro" class="form-control select2" style="width: 100%;">
+                                <option value="">Seleccione</option>
+                                {% for reg in reg_ids_partic %}
+                                    <option value="{{ reg }}">{{ reg }}</option>
+                                {% endfor %}
                             </select>
                             <span id="spanIdParticipanteRegistro" class="glyphicon form-control-feedback"></span>
                         </div>

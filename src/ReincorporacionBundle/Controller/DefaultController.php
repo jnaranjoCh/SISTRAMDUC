@@ -90,22 +90,55 @@ class DefaultController extends Controller
     }
 
     /**
-     * Retorna todos ids de los registros del usuario a los que puede asignarse un participante
+     * Retorna todos los ids de los registros del usuario a los que puede asignarse un participante
      * (Todos menos Becas, Premios, Distinciones)
      *
+     * @param $usuario_id
      * @return array
      */
-    public function getRegistrosAsignablesAParticipantes() {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('RegistroUnicoBundle:Registro');
-        $q = $em->createQuery(    'select reg from RegistroUnicoBundle:Registro reg
-             where reg.tipo_registro_id in (1,2,3,4,5,6,7,11)'
-        );
-        $reg_ids = $q->getResult();
+    public function getRegistrosAsignablesAParticipantes($usuario_id) {
+        $em = $this->getDoctrine()->getRepository('RegistroUnicoBundle:Registro');
+        $q = $em->createQueryBuilder('reg')
+            ->where('reg.tipo_registro not in (8,9,10)')
+            ->where('reg.usuarios = :usuario_id')
+            ->setParameter('reg.usuario', $usuario_id)
+            ->getQuery();
+        $data = $q->getResult();
+
+        $reg_ids = [];
+        foreach ($data as $d) {
+            $reg_ids[] = $d->getTipoRegitroId();
+        }
 
         echo '<pre>';
         print_r($reg_ids);
+        echo '</pre>';
 
+        return $reg_ids;
+    }
+
+    /**
+     * Retorna los ids de los registros del usuario referentes a las publicaciones
+     *
+     * @param $usuario_id
+     * @return array
+     */
+    public function getRegistrosPublicaciones($usuario_id) {
+        $em = $this->getDoctrine()->getRepository('RegistroUnicoBundle:Registro');
+        $q = $em->createQueryBuilder('reg')
+            ->where('reg.tipo_registro not in (6,7,8,9,10)')
+            ->where('reg.usuario = :usuario_id')
+            ->setParameter('reg.usuario', $usuario_id)
+            ->getQuery();
+        $data = $q->getResult();
+
+        $reg_ids = [];
+        foreach ($data as $d) {
+            $reg_ids[] = $d->getTipoRegitroId();
+        }
+
+        echo '<pre>';
+        print_r($reg_ids);
         echo '</pre>';
 
         return $reg_ids;
@@ -145,7 +178,8 @@ class DefaultController extends Controller
         $estatuses = $this->getAllEstatuses();
         $niveles = $this->getAllNivelesEstudio();
         $tipos_registro = $this->getAllTiposRegistro();
-        $reg_ids_partic = $this->getRegistrosAsignablesAParticipantes();
+        $reg_ids_partic = $this->getRegistrosAsignablesAParticipantes(1);
+        $reg_ids_public = $this->getRegistrosPublicaciones(1);
 
         return $this->render('ReincorporacionBundle::nueva-entrada-curriculumt.html.twig',
             array(
@@ -153,7 +187,8 @@ class DefaultController extends Controller
                 'estatuses' => $estatuses,
                 'niveles' => $niveles,
                 'tipos_registro' => $tipos_registro,
-                'reg_ids_partic' => $reg_ids_partic
+                'reg_ids_partic' => $reg_ids_partic,
+                'reg_ids_public' => $reg_ids_public
             )
         );
     }
