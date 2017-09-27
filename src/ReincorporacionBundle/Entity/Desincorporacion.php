@@ -24,7 +24,7 @@ class Desincorporacion
     /**
      * @var string
      *
-     * @ORM\Column(name="usuario", type="string", length=255)
+     * @ORM\Column(name="usuario", type="integer")
      */
     private $usuario;
 
@@ -33,7 +33,7 @@ class Desincorporacion
      *
      * @ORM\Column(name="fecha_desincorporacion", type="datetime")
      */
-    private $fechaDesincorporacion;
+    private $fecha_desincorporacion;
 
     /**
      * Get id
@@ -48,7 +48,7 @@ class Desincorporacion
     /**
      * Set usuario
      *
-     * @param string $usuario
+     * @param integer $usuario
      *
      * @return Desincorporacion
      */
@@ -62,7 +62,7 @@ class Desincorporacion
     /**
      * Get usuario
      *
-     * @return string
+     * @return integer
      */
     public function getUsuario()
     {
@@ -70,15 +70,15 @@ class Desincorporacion
     }
 
     /**
-     * Set fechaDesincorporacion
+     * Set fecha_desincorporacion
      *
-     * @param string $fechaDesincorporacion
+     * @param string $fecha_desincorporacion
      *
      * @return Desincorporacion
      */
-    public function setFechaDesincorporacion($fechaDesincorporacion)
+    public function setFechaDesincorporacion($fecha_desincorporacion)
     {
-        $this->fechaDesincorporacion = $fechaDesincorporacion;
+        $this->fecha_desincorporacion = $fecha_desincorporacion;
 
         return $this;
     }

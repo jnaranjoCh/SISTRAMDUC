@@ -3,7 +3,7 @@
 namespace ReincorporacionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use TramiteBundle\Entity\Tramite;
+use TramiteBundle\Entity\Tramite as Tramite;
 
 /**
  * TramiteReincorporacion
@@ -11,7 +11,7 @@ use TramiteBundle\Entity\Tramite;
  * @ORM\Table(name="tramite_reincorporacion")
  * @ORM\Entity(repositoryClass="ReincorporacionBundle\Repository\TramiteReincorporacionRepository")
  */
-class TramiteReincorporacion extends Tramite
+class TramiteReincorporacion
 {
     /**
      * @var int
@@ -20,43 +20,44 @@ class TramiteReincorporacion extends Tramite
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
+
+    private $type;
+
+    private $recaudos;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="tramite", type="integer")
      */
-    protected $type;
-
-    protected $recaudos;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tipo_tramite", type="string", length=255)
-     */
-    protected $tipoTramite;
+    private $tramite;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_reincorporacion", type="date")
      */
-    protected $fechaReincorporacion;
+    private $fecha_reincorporacion;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="usuario", type="string", length=255)
+     * @ORM\Column(name="usuario", type="integer")
      */
-    protected $usuario;
+    private $usuario;
 
     public function __construct()
     {
-        $this->recaudos = new ArrayCollection(array(new recaudo("Oficio de Solicitud de Jubilación")
-        ,new recaudo("Constancia para efecto de Jubilación"),new recaudo("Constancia de Antecedentes de servicios del ente de la administración pública donde laboró"),
-            new recaudo("Constancia de cumplimiento de labores como preparador"), new recaudo("Recibo de Pago")
+        $this->type = "reincorporacion";
+        $this->recaudos = new ArrayCollection(
+            array(
+                new recaudo("Designación como docente"),
+                new recaudo("Oficio de la Ubicación"),
+                new recaudo("Oficio del úitimo ascenso"),
+                new recaudo("Oficio de la aceptación de la renuncia"),
+                new recaudo("Fondo negro del título (solo IV o V nivel)"),
+                new recaudo("Declaración jurada de cargos ejercidos durante el período fuera de la Universidad de Carabobo")
         ));
     }
 
@@ -68,30 +69,6 @@ class TramiteReincorporacion extends Tramite
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return TramiteReincorporacion
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -109,15 +86,15 @@ class TramiteReincorporacion extends Tramite
     }
 
     /**
-     * Set tipoTramite
+     * Set tramite
      *
-     * @param string $tipoTramite
+     * @param integer $tramite
      *
      * @return TramiteReincorporacion
      */
-    public function setTipoTramite($tipoTramite)
+    public function setTipoTramite($tramite)
     {
-        $this->tipoTramite = $tipoTramite;
+        $this->tramite = $tramite;
 
         return $this;
     }
@@ -125,41 +102,41 @@ class TramiteReincorporacion extends Tramite
     /**
      * Get tipoTramite
      *
-     * @return string
+     * @return integer
      */
     public function getTipoTramite()
     {
-        return $this->tipoTramite;
+        return $this->tramite;
     }
 
     /**
-     * Set fechaReincorporacion
+     * Set fecha_reincorporacion
      *
-     * @param \DateTime $fechaReincorporacion
+     * @param \DateTime $fecha_reincorporacion
      *
      * @return TramiteReincorporacion
      */
-    public function setFechaReincorporacion($fechaReincorporacion)
+    public function setFechaReincorporacion($fecha_reincorporacion)
     {
-        $this->fechaReincorporacion = $fechaReincorporacion;
+        $this->fecha_reincorporacion = $fecha_reincorporacion;
 
         return $this;
     }
 
     /**
-     * Get fechaReincorporacion
+     * Get fecha_reincorporacion
      *
      * @return \DateTime
      */
     public function getFechaReincorporacion()
     {
-        return $this->fechaReincorporacion;
+        return $this->fecha_reincorporacion;
     }
 
     /**
      * Set usuario
      *
-     * @param string $usuario
+     * @param integer $usuario
      *
      * @return TramiteReincorporacion
      */
@@ -173,7 +150,7 @@ class TramiteReincorporacion extends Tramite
     /**
      * Get usuario
      *
-     * @return string
+     * @return integer
      */
     public function getUsuario()
     {

@@ -1,0 +1,394 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/reincorporacion/global.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <!--+carg box-->
+    <div id="formCargos" class="col-md-offset-1 col-md-10">
+        <!-- /.box-info -->
+        <div id="headerCargos" class="box-footer">
+            <strong>Sección para ingresar el registro académico</strong>
+        </div>
+        <!-- /.box-header -->
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+                <div class="box-tools pull-right">
+                    <button type="button" id="miniCargos" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- /.form-group -->
+                        <div id="divCargosDatos" class="form-group has-feedback">
+                            <label>Cargos</label>
+                            <select id="cargosDatos" class="form-control select2" style="width: 100%;">
+                                <option value="">Seleccione</option>
+                                {% for cargo in cargos %}
+                                    <option value="{{ loop.index }}">{{ cargo }}</option>
+                                {% endfor %}
+                            </select>
+                            <span id="spanCargosDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div class="col-md-4">
+                        <div id="divFechaInicioCargoDatos" class="form-group has-feedback">
+                            <label>Fecha de inicio en el cargo</label>
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input id="FechaInicioCargoDatos" name="FechaInicioCargoDatos" type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div class="col-md-4">
+                        <div id="divFechaInicioCargoDatos" class="form-group has-feedback">
+                            <label>Fecha de finalización del cargo</label>
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input id="FechaFinCargoDatos" name="FechaFinCargoDatos" type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group has-feedback">
+                            <button id="agregarCargoDatos" type="button" class="btn btn-primary btn-block btn-flat">Agregar cargo</button>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                    <table id="tableCargo" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Cargo</th>
+                            <th>Fecha de inicio en el cargo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Cargo</th>
+                            <th>Fecha de inicio en el cargo</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!--research,courses and studies box-->
+    </div>
+    <!--+carg box-->
+
+
+    <!--research,courses and studies box-->
+    <div id="formRegistros" class="col-md-offset-1 col-md-10">
+        <!-- /.box-info -->
+        <div id="headerRegistros" class="box-footer">
+            <strong>Sección para ingresar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
+        </div>
+        <!-- /.box-header -->
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title"></h3>
+                <div class="box-tools pull-right">
+                    <button type="button" id="miniRegistros" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- /.form-group -->
+                        <div id="divEstatusDatos" class="form-group has-feedback">
+                            <label>Estatus</label>
+                            <select id="EstatusDatos" class="form-control select2" style="width: 100%;">
+                                <option value="">Seleccione</option>
+                                {% for estatus in estatuses %}
+                                    <option value="{{ loop.index }}">{{ estatus }}</option>
+                                {% endfor %}
+                            </select>
+                            <span id="spanEstatusDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div id="divNivelDeEstudioDatos" class="form-group has-feedback">
+                            <label>Nivel de estudio</label>
+                            <select id="NivelDeEstudioDatos" class="form-control select2" style="width: 100%;">
+                                <option value="">Seleccione</option>
+                                {% for nivel in niveles %}
+                                    <option value="{{ loop.index }}">{{ nivel }}</option>
+                                {% endfor %}
+                            </select>
+                            <span id="spanNivelDeEstudioDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div id="divTipoDeRegistroDatos" class="form-group has-feedback">
+                            <label>Tipo de registro</label>
+                            <select id="TipoDeRegistroDatos" class="form-control select2" style="width: 100%;">
+                                <option value="">Seleccione</option>
+                                {% for tipo in tipos_registro %}
+                                    <option value="{{ loop.index }}">{{ tipo }}</option>
+                                {% endfor %}
+                            </select>
+                            <span id="spanTipoDeRegistroDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div id="divDescripcionDatos" class="form-group has-feedback">
+                            <label id="DescripcionLabel"></label>
+                            <input id="DescripcionDatos" type="text" class="form-control" placeholder="Nombre">
+                            <span id="spanDescripcionDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-6">
+                        <div id="divAnoPublicacionDatos" class="form-group has-feedback">
+                            <label id="AnoPublicacionLabel"></label>
+                            <input id="AnoPublicacionDatos" type="number" class="form-control" placeholder="Año" min="1">
+                            <span id="spanAnoPublicacionDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div id="hiddenCiudadPaisDatos" class="col-md-12 hidden">
+                        <!-- /.form-group -->
+                        <div id="divCiudadPaisDatos" class="form-group has-feedback">
+                            <label id="CiudadPaisLabel"></label>
+                            <input id="CiudadPaisDatos" type="text" class="form-control" placeholder="Ciudad/Pais">
+                            <span id="spanCiudadPaisDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div id="hiddenCongresosDatos" class="col-md-12 hidden">
+                        <!-- /.form-group -->
+                        <div id="divCongresosDatos" class="form-group has-feedback">
+                            <label id="CongresosLabel"></label>
+                            <input id="CongresosDatos" type="text" class="form-control" placeholder="Congresos">
+                            <span id="spanCongresosDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div id="hiddenEmpresaDatos" class="col-md-12 hidden">
+                        <!-- /.form-group -->
+                        <div id="divEmpresaDatos" class="form-group has-feedback">
+                            <label id="EmpresaLabel"></label>
+                            <input id="EmpresaDatos" type="text" class="form-control" placeholder="Empresa">
+                            <span id="spanEmpresaDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div id="hiddenInstitucionDatos" class="col-md-12 hidden">
+                        <!-- /.form-group -->
+                        <div id="divInstitucionDatos" class="form-group has-feedback">
+                            <label id="InstitucionLabel"></label>
+                            <input id="InstitucionDatos" type="text" class="form-control" placeholder="Institución / Casa editorial / Financiamiento">
+                            <span id="spanInstitucionDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <div id="hiddenTituloObtenidoDatos" class="col-md-12 hidden">
+                        <!-- /.form-group -->
+                        <div id="divTituloObtenidoDatos" class="form-group has-feedback">
+                            <label id="TituloObtenidoLabel"></label>
+                            <input id="TituloObtenidoDatos" type="text" class="form-control" placeholder="Titulo Obtenido">
+                            <span id="spanTituloObtenidoDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group has-feedback">
+                            <button id="agregarRegistro" type="button" class="btn btn-primary btn-block btn-flat">Agregar registro</button>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                    <table id="tableRegistros" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id del registro</th>
+                            <th>Tipo de referencia</th>
+                            <th>Descripción</th>
+                            <th>Nivel</th>
+                            <th>Estatus</th>
+                            <th>Año de publicación y/o asistencia</th>
+                            <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
+                            <th>Titulo Obtenido</th>
+                            <th>Ciudad / Pais</th>
+                            <th>Congreso</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Id del registro</th>
+                            <th>Tipo de referencia</th>
+                            <th>Descripción</th>
+                            <th>Nivel</th>
+                            <th>Estatus</th>
+                            <th>Año de publicación y/o asistencia</th>
+                            <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
+                            <th>Titulo Obtenido</th>
+                            <th>Ciudad / Pais</th>
+                            <th>Congreso</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Participantes / Autores</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- /.form-group -->
+                        <div id="divNombreParticipanteRegistro" class="form-group has-feedback">
+                            <label>Nombre completo</label>
+                            <input id="NombreParticipanteRegistro" type="text" class="form-control" placeholder="Nombre del participantes">
+                            <span id="spanNombreParticipanteRegistro" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-4">
+                        <div id="divCedulaParticipanteRegistro" class="form-group has-feedback">
+                            <label>Cedula</label>
+                            <input id="CedulaParticipanteRegistro" type="number" class="form-control" placeholder="cedula" min="1">
+                            <span id="spanCedulaParticipanteRegistro" class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-4">
+                        <div id="divIdParticipanteRegistro" class="form-group has-feedback">
+                            <label>Id del registro</label>
+                            <select id="IdParticipanteRegistro" class="form-control select2" style="width: 100%;">
+                            </select>
+                            <span id="spanIdParticipanteRegistro" class="glyphicon form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="form-group has-feedback">
+                            <button id="agregarParticipantes" type="button" class="btn btn-primary btn-block btn-flat">Agregar participante</button>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                    <table id="tableParticipantes" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id del registro</th>
+                            <th>Nombre</th>
+                            <th>Cedula</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Id del registro</th>
+                            <th>Nombre</th>
+                            <th>Cedula</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <hr/>
+                <div id="revista">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>Revistas de publicación / Libros y monografias</h3>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- /.form-group -->
+                            <div id="divVolumenRevistaRegistro" class="form-group  has-feedback">
+                                <label>Volumen</label>
+                                <input id="volumenRevistaRegistro" type="text" class="form-control" placeholder="Volumen">
+                                <span id="spanVolumenRevistaRegistro" class="glyphicon form-control-feedback"></span>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-6">
+                            <div id="divPrimerayUltimaPaginaRevistaRegistro" class="form-group  has-feedback">
+                                <label>Primera y última página</label>
+                                <input id="primerayUltimaPaginaRevistaRegistro" type="text" class="form-control" placeholder="Primera y última página">
+                                <span id="spanPrimerayUltimaPaginaRevistaRegistro" class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <!-- /.form-group -->
+                            <div id="divDescrpcionRevistaRegistro" class="form-group  has-feedback">
+                                <label>Nombre de la revista</label>
+                                <input id="descrpcionRevistaRegistro" type="text" class="form-control" placeholder="Nombre de la revista">
+                                <span id="spanDescrpcionRevistaRegistro" class="glyphicon form-control-feedback"></span>
+                            </div>
+                            <!-- /.form-group -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-6">
+                            <div id="divIdRevistaRegistro" class="form-group  has-feedback">
+                                <label>Id del registro</label>
+                                <select id="idRevistaRegistro" class="form-control select2" style="width: 100%;">
+                                </select>
+                                <span id="spanIdRevistaRegistro" class="glyphicon form-control-feedback"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="form-group has-feedback">
+                                <button id="agregarRevista" type="button" class="btn btn-primary btn-block btn-flat">Agregar revista</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div style="overflow-x: scroll; white-space: nowrap;">
+                        <table id="tableRevista" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Id del registro</th>
+                                <th>Revista</th>
+                                <th>Volumen</th>
+                                <th>Primera y última página</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Id del registro</th>
+                                <th>Revista</th>
+                                <th>Volumen</th>
+                                <th>Primera y última página</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+        <!--research,courses and studies box-->
+    </div>
+{% endblock %}
