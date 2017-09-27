@@ -1,72 +1,286 @@
 <script type="text/javascript">
     
+    var curso = new Array();
+    var tiempo = new Array();
+
     $('#registrarConcurso').click(function (){ 
     
         toastr.clear();
         var text = "";
 
-        var fecha = $('#fechaConcurso').val();
         var continua = true;
 
-        $('#fi').removeClass("has-error");
+        $('#div_ordinario').removeClass("has-error");
 
-        if (fecha == ""){
+        if ($('#ordinario').val() == "..."){
 
             continua = false;
             text = "Campo vacío";
-            $('#fi').addClass("has-error");
+            $('#div_ordinario').addClass("has-error");
         }
 
-        var cedula = $('#cedula').val();
+        $('#div_dedicacion').removeClass("has-error");
 
-        $('#fa').removeClass("has-error");
-
-        if (cedula == "" || cedula == 0 || cedula == '0'){
+        if ($('#dedicacion').val() == "..."){
 
             continua = false;
-            $('#fa').addClass("has-error");
             text = "Campo vacío";
+            $('#div_dedicacion').addClass("has-error");
         }
 
-        $('#fe').removeClass("has-error");
+        $('#div_horas').removeClass("has-error");
 
-        if ($('#area').val() == ""){
+        if ($('#horas').val() == "..."){
 
             continua = false;
-            $('#fe').addClass("has-error");
             text = "Campo vacío";
+            $('#div_horas').addClass("has-error");
         }
-        
-        if (isNaN($('#cedula').val())){
-        
-        	continua = false;
-            $('#fa').addClass("has-error");
-            text = "No Es Un Número";
+
+        $('#div_sede').removeClass("has-error");
+
+        if ($('#sede').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_sede').addClass("has-error");
         }
+
+        $('#div_ciudad').removeClass("has-error");
+
+        if ($('#ciudad').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_ciudad').addClass("has-error");
+        }
+
+        $('#div_facultad').removeClass("has-error");
+
+        if ($('#facultad').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_facultad').addClass("has-error");
+        }
+
+        $('#div_departamento').removeClass("has-error");
+
+        if ($('#departamento').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_departamento').addClass("has-error");
+        }
+
+        $('#div_justificacion').removeClass("has-error");
+
+        if ($('#justificacion').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_justificacion').addClass("has-error");
+        }
+
+        $('#div_cargo').removeClass("has-error");
+
+        if ($('#cargo').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_cargo').addClass("has-error");
+
+        } else {
+
+            if (!esNumero($('#cargo').val())) {
+
+                continua = false;
+                text = "No Es Un Número";
+                $('#div_cargo').addClass("has-error");
+            }
+        }
+
+        $('#div_motivo').removeClass("has-error");
+
+        if ($('#motivo').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_motivo').addClass("has-error");
+        } else {
+
+            if($('#motivo').val() == "Creación de Programas Académicos"){
+
+                $('#div_descripcion1').removeClass("has-error");
+
+                if ($('#descripcion1').val() == "..."){
+
+                    continua = false;
+                    text = "Campo vacío";
+                    $('#div_descripcion1').addClass("has-error");
+                
+                } else {
+
+                    $('#div_descripcion4').removeClass("has-error");
+
+                    if ($('#descripcion4').val() == ""){
+
+                        continua = false;
+                        text = "Campo vacío";
+                        $('#div_descripcion4').addClass("has-error");
+                    
+                    } 
+                }
+            }
+
+            if($('#motivo').val() == "Desincorporación Temporal"){
+
+                $('#div_descripcion2').removeClass("has-error");
+
+                if ($('#descripcion2').val() == "..."){
+
+                    continua = false;
+                    text = "Campo vacío";
+                    $('#div_descripcion2').addClass("has-error");
+                } 
+            }
+
+            if($('#motivo').val() == "Desincorporación Defínitiva"){
+
+                $('#div_descripcion3').removeClass("has-error");
+
+                if ($('#descripcion3').val() == "..."){
+
+                    continua = false;
+                    text = "Campo vacío";
+                    $('#div_descripcion3').addClass("has-error");
+                } 
+            }
+        }
+
+        $('#div_grado').removeClass("has-error");
+
+        if ($('#grado').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_grado').addClass("has-error");
+        }
+
+        $('#div_profesion').removeClass("has-error");
+
+        if ($('#profesion').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_profesion').addClass("has-error");
+        }
+
+        $('#div_experiencia').removeClass("has-error");
+
+        if ($('#experiencia').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_experiencia').addClass("has-error");
+        }
+
+        $('#div_conocimiento').removeClass("has-error");
+
+        if ($('#conocimiento').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_conocimiento').addClass("has-error");
+        }
+
+        $('#div_tiempo').removeClass("has-error");
+        $('#div_curso').removeClass("has-error");
 
         if (continua){
 
-            /*json*/
+            var descripcion_motivo;
+
+            if ($('#motivo').val() == "Incremento de Matrícula Estudiantil" || $('#motivo').val() == "Reducción del Componente Docente") {
+
+                descripcion_motivo = null;
+
+            } else {
+
+                if ($('#motivo').val() == "Creación de Programas Académicos" && $('#descripcion1').val() == "Otros")
+                
+                    descripcion_motivo = $('#descripcion4').val();
+
+                else {
+
+                    if ($('#motivo').val() == "Creación de Programas Académicos")
+                        descripcion_motivo = $('#descripcion1').val();
+
+                    else {
+                        if ($('#motivo').val() == "Desincorporación Temporal")
+                            descripcion_motivo = $('#descripcion2').val();
+
+                        else {
+
+                            if ($('#motivo').val() == "Desincorporación Defínitiva")
+                                descripcion_motivo = $('#descripcion3').val();
+                            else 
+                                descripcion_motivo = null;
+                        }
+                    }
+                }
+            }
 
             $.ajax({
                 method: "POST",
-                data: {"Inicio":$("#fechaConcurso").val(), 
-                "Vacantes":$("#cedula").val(), 
-                "Area":$("#area").val(), 
-                "fechaDoc":$("#fechaDoc").val(), 
-                "fechaPre":$("#fechaPre").val(),
-                "observacion": $("#observacion").val(), 
-                "tipo":"Oposicion"},
+                data: {
+                "ordinario": $('#ordinario').val(), 
+                "dedicacion": $('#dedicacion').val(),
+                "horas" : $('#horas').val(),
+                "sede" : $('#sede').val(),
+                "ciudad" : $('#ciudad').val(),
+                "facultad" : $('#facultad').val(),
+                "departamento" : $('#departamento').val(),
+                "unidad" : $('#unidad').val(),
+                "catedra" : $('#catedra').val(),
+                "motivo" : $('#motivo').val(),
+                "cargo" : $('#cargo').val(),
+                "motivo_descripcion" : descripcion_motivo, 
+                "justificacion" : $('#justificacion').val(),
+                "grado" : $('#grado').val(),
+                "profesion" : $('#profesion').val(),
+                "experiencia" : $('#experiencia').val(),
+                "conocimiento" : $('#conocimiento').val(),
+                "investigacion" : $('#investigacion').val(),
+                "extension" : $('#extension').val()
+                },
                 url:  "{{ path('registroConcursoAjax') }}",
                 dataType: 'json',
                 success: function(data)
                 {
                     if (data == "S"){
 
-                        document.getElementById('aperturaConcurso').reset();                     
+                        $('#ordinario').val("..."); 
+                        $('#dedicacion').val("...");
+                        $('#horas').val("...");
+                        $('#sede').val("...");
+                        $('#ciudad').val("...");
+                        $('#facultad').val("...");
+                        $('#motivo').val("...");
+                        $('#grado').val("...");
+                        $('#experiencia').val("...");
+
+
+
+                        //aqui pasar los cursos
+
+
+
+
+                        document.getElementById('requisicionRRHH').reset();                     
                         text = "Concurso Insertado";
 
-                        toastr.success(text, "Exito", {
+                        toastr.success("Concurso Insertado", "Exito", {
                                     "timeOut": "0",
                                     "extendedTImeout": "0"
                                  });            
@@ -87,14 +301,8 @@
                             "extendedTImeout": "0"
                          });                    
                     }
-
-                    $('#fe').removeClass("has-error");
-                    $('#fa').removeClass("has-error");
-                    $('#fi').removeClass("has-error");
                 }
-            }); 
-            
-            /*fin del json*/        
+            });         
         }
         else {
              toastr.error(text, "Error", {
@@ -103,5 +311,91 @@
              });
         }
     });
+
+    function activar(obj){
+
+        $('#div_descripcion11').addClass('hide');
+        $('#div_descripcion22').addClass('hide');
+        $('#div_descripcion33').addClass('hide');
+        $('#div_descripcion44').addClass('hide');
+
+        if (obj.value == "Creación de Programas Académicos"){
+            $('#div_descripcion11').removeClass('hide');
+        }
+
+        if (obj.value == "Desincorporación Temporal")
+            $('#div_descripcion22').removeClass('hide');
+
+        if (obj.value == "Desincorporación Defínitiva")
+            $('#div_descripcion33').removeClass('hide');
+    }
+
+    function activar2(obj){
+
+        if ($('#descripcion1').val() == "Otros")
+            $('#div_descripcion44').removeClass('hide');
+    }
+
+    $('#agregarCurso').click(function (){ 
+
+        var continua = true;
+
+        $('#div_curso').removeClass("has-error");
+
+        if ($('#curso').val() == ""){
+
+            continua = false;
+            $('#div_curso').addClass("has-error");
+        }
+
+        $('#div_tiempo').removeClass("has-error");
+
+        if ($('#tiempo').val() == ""){
+
+            continua = false;
+            $('#div_tiempo').addClass("has-error");
+
+        } else {
+
+            if (!esNumero($('#tiempo').val())) {
+
+                continua = false;
+                $('#div_tiempo').addClass("has-error");
+                toastr.error("No Es Un Número", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+            }
+        }
+
+        if (continua) {
+
+            curso[curso.length] = $('#curso').val();
+            tiempo[tiempo.length] = $('#tiempo').val();
+
+            tabla.row.add( {
+                    "curso": $('#curso').val(),
+                    "tiempo": $('#tiempo').val()
+            }).draw(); 
+
+            $('#curso').val("");
+            $('#tiempo').val("");
+        }
+    });
+
+    function esNumero(obj){
+
+        var es = true;
+
+        for (var i=0; i < obj.length; i++){
+
+            if (obj[i] != '1' && obj[i] != '2' && obj[i] != '3' && obj[i] != '4' && obj[i] != '5' && obj[i] != '6' && obj[i] != '7' && obj[i] != '8' && obj[i] != '9' && obj[i] != '0' && obj[i] != 1 && obj[i] != 2 && obj[i] != 3 && obj[i] != 4 && obj[i] != 5 && obj[i] != 6 && obj[i] != 7 && obj[i] != 8 && obj[i] != 9 && obj[i] != 0){
+
+                es = false;
+            }
+        }
+
+        return es;
+    }
 
 </script>

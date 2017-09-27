@@ -199,32 +199,30 @@ class DefaultController extends Controller
 
                 $concurso = new Concurso();
 
-                $fecha = $this->cambiarFormatoFecha($request->get("Inicio"));
-
-                $concurso->setFechaInicio(date_create($fecha));
-
-                $concurso->setNroVacantes(intval($request->get("Vacantes")));
-
+                $concurso->setFechaInicio(date_create());
+                $concurso->setNroVacantes(intval($request->get("cargo")));
                 $concurso->setIdUsuario($this->getUser()->getId());
-        
-                if ($request->get("fechaDoc") != null || $request->get("fechaDoc") != "")
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaDoc"));
-                    $concurso->setFechaRecepDoc(date_create($fecha));
-                }
+                $concurso->setTipo("Oposicion");
+                $concurso->setCondicion($request->get("ordinario"));
+                $concurso->setTiempoDedicacion($request->get("dedicacion"));
+                $concurso->setNroHoras($request->get("horas"));
+                $concurso->setSede($request->get("sede"));
+                $concurso->setCiudad($request->get("ciudad"));
+                $concurso->setFacultad($request->get("facultad"));
+                $concurso->setDepartamento($request->get("departamento"));
+                $concurso->setAreaPostulacion($request->get("unidad"));
+                $concurso->setEscuela($request->get("catedra"));
+                $concurso->setMotivo($request->get("motivo"));
+                $concurso->setDescMotivo($request->get("motivo_descripcion"));
+                $concurso->setJustificacion($request->get("justificacion"));
+                $concurso->setGradoAcademico($request->get("grado"));
+                $concurso->setProfesion($request->get("profesion"));
+                $concurso->setExperiencia($request->get("experiencia"));
+                $concurso->setAreaConocimiento($request->get("conocimiento"));
+                $concurso->setAreaInvestigacion($request->get("investigacion"));
+                $concurso->setAreaExtension($request->get("extension"));
+                $concurso->setStatus("Esperando Por Presupuesto");
                 
-                if ($request->get("fechaPre") != null || $request->get("fechaPre") != "")
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaPre"));
-                    $concurso->setFechaPresentacion(date_create($fecha));
-                }
-                
-                $concurso->setObservaciones($request->get("observacion"));
-
-                $concurso->setTipo($request->get("tipo"));
-
-                $concurso->setAreaPostulacion($request->get("Area"));
-
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($concurso);
                 $em->flush();
