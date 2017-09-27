@@ -4,6 +4,8 @@ namespace ConcursoOposicionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use ConcursosBundle\Entity\Concurso;
+
 /**
  * Curso
  *
@@ -97,6 +99,30 @@ class Curso
     public function getTiempo()
     {
         return $this->tiempo;
+    }
+
+    /**
+     * Set concurso
+     *
+     * @param integer $concurso
+     *
+     * @return Curso
+     */
+    public function setConcurso(Concurso $concurso = null)
+    {
+        $this->concurso = $concurso;
+
+        return $this;
+    }
+
+    /**
+     * Get concurso
+     *
+     * @return int
+     */
+    public function getConcurso()
+    {
+        return $this->concurso;
     }
 }
 

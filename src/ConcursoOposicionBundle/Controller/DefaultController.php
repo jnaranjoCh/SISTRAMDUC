@@ -12,6 +12,7 @@ use ConcursosBundle\Entity\Concurso;
 use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
 use ConcursoOposicionBundle\Entity\Recusacion;
+use ConcursoOposicionBundle\Entity\Curso;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -191,7 +192,7 @@ class DefaultController extends Controller
 
             foreach ($this->getUser()->getRoles() as $rol => $valor) {
                 
-                if ($valor == "Asuntos Profesorales")
+                if ($valor == "Asuntos Profesorales" || $valor == "Jefe de Departamento o equivalente" || $valor == "Jefe de Cátedra o equivalente")
                     $encontrado = true;
             }
 
@@ -210,23 +211,70 @@ class DefaultController extends Controller
                 $concurso->setCiudad($request->get("ciudad"));
                 $concurso->setFacultad($request->get("facultad"));
                 $concurso->setDepartamento($request->get("departamento"));
-                $concurso->setAreaPostulacion($request->get("unidad"));
-                $concurso->setEscuela($request->get("catedra"));
+
+                if ($request->get("unidad") != '')
+                    $concurso->setAreaPostulacion($request->get("unidad"));
+                else $concurso->setAreaPostulacion("");
+
+                if ($request->get("catedra") != '')
+                    $concurso->setEscuela($request->get("catedra"));
+
                 $concurso->setMotivo($request->get("motivo"));
-                $concurso->setDescMotivo($request->get("motivo_descripcion"));
+
+                if ($request->get("motivo_descripcion") != '')
+                    $concurso->setDescMotivo($request->get("motivo_descripcion"));
+                
                 $concurso->setJustificacion($request->get("justificacion"));
                 $concurso->setGradoAcademico($request->get("grado"));
                 $concurso->setProfesion($request->get("profesion"));
                 $concurso->setExperiencia($request->get("experiencia"));
                 $concurso->setAreaConocimiento($request->get("conocimiento"));
-                $concurso->setAreaInvestigacion($request->get("investigacion"));
-                $concurso->setAreaExtension($request->get("extension"));
+
+                if ($request->get("investigacion") != '')
+                    $concurso->setAreaInvestigacion($request->get("investigacion"));
+
+                if ($request->get("extension") != '')
+                    $concurso->setAreaExtension($request->get("extension"));
+
                 $concurso->setStatus("Esperando Por Presupuesto");
-                
+
+                $cursos = explode("|", $request->get("cadenaCurso"));
+                $tiempos = explode("|", $request->get("cadenaTiempo"));
+                 
+                for ($i=0; $i < intval($request->get("tamano")); $i++) { 
+                    
+                    $curso = new Curso();
+                    $curso->setNombre($cursos[$i]);
+                    $curso->setTiempo($tiempos[$i]);
+                    $concurso->addCurso($curso);
+                }  
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($concurso);
                 $em->flush();
 
+/*
+                $id = $this->getDoctrine()
+                       ->getManager()
+                       ->createQuery('SELECT MAX(r.id) AS lastId FROM ConcursosBundle:Concurso r')
+                       ->getResult();
+
+                $concurso =  $this->getDoctrine()
+                            ->getManager()
+                            ->getRepository('ConcursosBundle:Concurso')
+                            ->findOneById($id[0]['lastId']);
+
+
+                for ($i=0; $i < intval($request->get("tamano")); $i++) { 
+                    
+                    $curso = new Curso();
+                    $curso->setNombre($cursos[$i]);
+                    $curso->setTiempo($tiempos[$i]);
+                    $concurso->addCurso($curso);
+                }
+
+                $em->flush();
+*/
                 return new JsonResponse("S");
 
             } else {

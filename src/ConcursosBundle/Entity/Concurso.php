@@ -1051,4 +1051,20 @@ class Concurso extends Tramite
     {
     	return $this->nombre;
     }
+
+    public function addCurso(Curso $curso)
+    {
+        if (!$this->curso->contains($curso)) {
+
+            $this->curso->add($curso);
+            $curso->setConcurso($this);
+        }
+
+        return $this;
+    }
+
+    public function getCurso()
+    {
+        return $this->curso;
+    }
 }

@@ -121,15 +121,18 @@
                 
                 } else {
 
-                    $('#div_descripcion4').removeClass("has-error");
+                    if ($('#descripcion1').val() == "Otros") {
 
-                    if ($('#descripcion4').val() == ""){
+                        $('#div_descripcion4').removeClass("has-error");
 
-                        continua = false;
-                        text = "Campo vacío";
-                        $('#div_descripcion4').addClass("has-error");
-                    
-                    } 
+                        if ($('#descripcion4').val() == ""){
+
+                            continua = false;
+                            text = "Campo vacío";
+                            $('#div_descripcion4').addClass("has-error");
+                        
+                        } 
+                    }
                 }
             }
 
@@ -231,6 +234,17 @@
                 }
             }
 
+            var cadenaCurso = "", cadenaTiempo = "";
+
+            if (curso.length > 0) {             
+
+                for (var i=0; i < curso.length; i++) {
+
+                    cadenaCurso += curso[i] + "|";
+                    cadenaTiempo += tiempo[i] + "|";
+                }
+            }
+
             $.ajax({
                 method: "POST",
                 data: {
@@ -252,7 +266,10 @@
                 "experiencia" : $('#experiencia').val(),
                 "conocimiento" : $('#conocimiento').val(),
                 "investigacion" : $('#investigacion').val(),
-                "extension" : $('#extension').val()
+                "extension" : $('#extension').val(),
+                "cadenaCurso" : cadenaCurso,
+                "cadenaTiempo" : cadenaTiempo,
+                "tamano" : curso.length
                 },
                 url:  "{{ path('registroConcursoAjax') }}",
                 dataType: 'json',
@@ -260,24 +277,20 @@
                 {
                     if (data == "S"){
 
-                        $('#ordinario').val("..."); 
-                        $('#dedicacion').val("...");
-                        $('#horas').val("...");
-                        $('#sede').val("...");
-                        $('#ciudad').val("...");
-                        $('#facultad').val("...");
-                        $('#motivo').val("...");
-                        $('#grado').val("...");
-                        $('#experiencia').val("...");
+                        $('#ordinario').val(""); 
+                        $('#dedicacion').val("");
+                        $('#horas').val("");
+                        $('#sede').val("");
+                        $('#ciudad').val("");
+                        $('#facultad').val("");
+                        $('#motivo').val("");
+                        $('#grado').val("");
+                        $('#experiencia').val("");
 
+                        tabla.clear().draw();
 
+                        document.getElementById('requisicionRRHH').reset();
 
-                        //aqui pasar los cursos
-
-
-
-
-                        document.getElementById('requisicionRRHH').reset();                     
                         text = "Concurso Insertado";
 
                         toastr.success("Concurso Insertado", "Exito", {
@@ -302,7 +315,7 @@
                          });                    
                     }
                 }
-            });         
+            });        
         }
         else {
              toastr.error(text, "Error", {
