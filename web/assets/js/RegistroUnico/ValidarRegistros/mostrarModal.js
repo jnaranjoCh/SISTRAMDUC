@@ -5,11 +5,17 @@ $( window ).load(function() {
     $('html, body').css('overflow-x', 'hidden');
     $('.main-footer').addClass("hidden");
     $('.main-header').addClass("hidden");
-    $('#myModalValidate > .close').addClass("hidden");
+    $('.main-sidebar').addClass("hidden");
+    $('#sidebar').addClass("hidden");
+    $('#sidebar-mini-aux').removeClass("hold-transition skin-blue sidebar-mini");
+    $('#wraper-aux').removeClass("wrapper");
+    $('#content-wrapper-aux').removeClass("content-wrapper");
+    
 });
 
-
 $('#validar').click(function(){
+   $('#EmailDelRegistro').val(parent.getEmail());
+   $('#idDelRegistro').val(parent.getId());
    document.getElementById("completeForm").submit();
    parent.validarIFrame();
 });
@@ -25,3 +31,5 @@ $('#cerrar').click(function(){
 $("#myModalValidate").on("hidden.bs.modal", function () {
     parent.closeIFrame();
 });
+
+

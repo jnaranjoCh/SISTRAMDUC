@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+{% endblock %}
+
 {% block content %}
     <form name="completeForm" id="completeForm" action="{{ path('registro_validaractualizararchivos_ajax') }}" method="post" enctype="multipart/form-data" novalidate>
     <!-- Modal -->
@@ -14,6 +17,8 @@
           <div class="modal-body">
             <label>Adjunte el archivo para validar el registro</label>
             <input id="registro" name="input3[]" accept="application/pdf"  type="file" class="file" data-show-upload="false" data-show-caption="true">
+            <input id="idDelRegistro" name="idDelRegistro" type="text" class="hidden"/>
+            <input id="EmailDelRegistro" name="EmailDelRegistro" type="text" class="hidden"/>
           </div>
           <div class="modal-footer">
             <div class="row">

@@ -78,6 +78,21 @@ class ValidarRegistrosController extends Controller
     
     public function validarArchivosAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        
+        $registro = $em->getRepository('RegistroUnicoBundle:Registro')
+                       ->findOneById($_POST['idDelRegistro']);
+     
+        $user = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCorreo($_POST['EmailDelRegistro']);
+                   
+        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/registros/';
+        $fichero_subido = $dir_subida.$registro->getDescription().'_'.$user->getCedula().".pdf";
+        
+        if(move_uploaded_file($_FILES['input3']['tmp_name'][0], $fichero_subido)) {
+            $registro->setUrl($fichero_subido);
+            $em->flush();
+        }       
         return $this->render('RegistroUnicoBundle:ValidarRegistros:modal_para_enviar_archivo.html.twig');
     }
 }

@@ -30,6 +30,9 @@ class UsuarioFechaCargo
     private $date;
     
     /**
+<<<<<<< HEAD
+     * @ORM\Column(type="boolean", nullable=true)
+=======
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_fin_cargo", type="datetime", nullable=true)
@@ -45,6 +48,7 @@ class UsuarioFechaCargo
     
     /**
      * @ORM\Column(type="boolean")
+>>>>>>> 41f63c35c7301f9a356abdbda0d7c43c2b706f76
      */
     private $isValidate;
 

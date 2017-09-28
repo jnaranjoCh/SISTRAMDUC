@@ -445,6 +445,7 @@ class RegistrarDatosController extends Controller
             $newRegistro->setCongreso($registro['congreso']);
             $newRegistro->setCiudadPais($registro['ciudadPais']);
             $newRegistro->setIsValidate(false);
+            $newRegistro->setUrl('');
             
             if(in_array($registro['idRegistro'],$idsrevistas)){
                 $pos = array_search($registro['idRegistro'],$idsrevistas);

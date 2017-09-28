@@ -12,7 +12,8 @@ tableRegistros = $('#tableRegistros').DataTable({
         { "data": "Empresa y/o institución" },
         { "data": "Titulo Obtenido" },
         { "data": "Ciudad / Pais"},
-        { "data": "Congreso"}
+        { "data": "Congreso"},
+        { "data": "Archivo"}
     ]
 });
 
