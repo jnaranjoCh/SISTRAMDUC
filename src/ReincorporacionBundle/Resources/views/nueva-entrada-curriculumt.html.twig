@@ -8,7 +8,7 @@
 
 {% block content %}
     <!--+carg box-->
-    <div id="formCargos" class="col-md-offset-1 col-md-10">
+    <div id="formCargos" class="col-md-12">
         <!-- /.box-info -->
         <div id="headerCargos" class="box-footer">
             <strong>Sección para ingresar el registro académico</strong>
@@ -77,14 +77,20 @@
                             <th>Fecha de inicio en el cargo</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        {% for cargo in registros_cargos %}
+                            <tr style="font-weight: lighter;">
+                                <th>{{ cargo.descripcion }}</th>
+                                <th>{{ cargo.fecha }}</th>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th colspan="2">No hay registros que mostrar.</th>
+                            </tr>
+                        {% endfor %}
+                        </tfoot>
                         <tbody>
                         </tbody>
-                        <tfoot>
-                        <tr>
-                            <th>Cargo</th>
-                            <th>Fecha de inicio en el cargo</th>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -96,7 +102,7 @@
 
 
     <!--research,courses and studies box-->
-    <div id="formRegistros" class="col-md-offset-1 col-md-10">
+    <div id="formRegistros" class="col-md-12">
         <!-- /.box-info -->
         <div id="headerRegistros" class="box-footer">
             <strong>Sección para ingresar investigaciones, articulos, asistencias a congresos, estudios y cursos realizados.</strong>
@@ -170,7 +176,7 @@
                         </div>
                         <!-- /.form-group -->
                     </div>
-                    <div id="hiddenCiudadPaisDatos" class="col-md-12 hidden">
+                    <div id="hiddenCiudadPaisDatos" class="col-md-12">
                         <!-- /.form-group -->
                         <div id="divCiudadPaisDatos" class="form-group has-feedback">
                             <label id="CiudadPaisLabel"></label>
@@ -179,7 +185,7 @@
                         </div>
                         <!-- /.form-group -->
                     </div>
-                    <div id="hiddenCongresosDatos" class="col-md-12 hidden">
+                    <div id="hiddenCongresosDatos" class="col-md-12">
                         <!-- /.form-group -->
                         <div id="divCongresosDatos" class="form-group has-feedback">
                             <label id="CongresosLabel"></label>
@@ -188,7 +194,7 @@
                         </div>
                         <!-- /.form-group -->
                     </div>
-                    <div id="hiddenEmpresaDatos" class="col-md-12 hidden">
+                    <div id="hiddenEmpresaDatos" class="col-md-12">
                         <!-- /.form-group -->
                         <div id="divEmpresaDatos" class="form-group has-feedback">
                             <label id="EmpresaLabel"></label>
@@ -197,7 +203,7 @@
                         </div>
                         <!-- /.form-group -->
                     </div>
-                    <div id="hiddenInstitucionDatos" class="col-md-12 hidden">
+                    <div id="hiddenInstitucionDatos" class="col-md-12">
                         <!-- /.form-group -->
                         <div id="divInstitucionDatos" class="form-group has-feedback">
                             <label id="InstitucionLabel"></label>
@@ -206,7 +212,7 @@
                         </div>
                         <!-- /.form-group -->
                     </div>
-                    <div id="hiddenTituloObtenidoDatos" class="col-md-12 hidden">
+                    <div id="hiddenTituloObtenidoDatos" class="col-md-12">
                         <!-- /.form-group -->
                         <div id="divTituloObtenidoDatos" class="form-group has-feedback">
                             <label id="TituloObtenidoLabel"></label>
@@ -242,18 +248,24 @@
                         <tbody>
                         </tbody>
                         <tfoot>
-                        <tr>
-                            <th>Id del registro</th>
-                            <th>Tipo de referencia</th>
-                            <th>Descripción</th>
-                            <th>Nivel</th>
-                            <th>Estatus</th>
-                            <th>Año de publicación y/o asistencia</th>
-                            <th>Empresa / Institución / Financiamiento y/o Casa editorial</th>
-                            <th>Titulo Obtenido</th>
-                            <th>Ciudad / Pais</th>
-                            <th>Congreso</th>
-                        </tr>
+                        {% for pub in registros_publicaciones %}
+                            <tr>
+                                <th>{{ loop.index }}</th>
+                                <th>{{ revista.tipo_registro }}</th>
+                                <th>{{ revista.descripcion }}</th>
+                                <th>{{ revista.nivel }}</th>
+                                <th>{{ revista.estatus }}</th>
+                                <th>{{ revista.anio }}</th>
+                                <th>{{ revista.locacion }}</th>
+                                <th>{{ revista.titulo_obtenido }}</th>
+                                <th>{{ revista.ciudad_pais }}</th>
+                                <th>{{ revista.congreso }}</th>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <th colspan="10">No hay registros que mostrar.</th>
+                            </tr>
+                        {% endfor %}
                         </tfoot>
                     </table>
                 </div>

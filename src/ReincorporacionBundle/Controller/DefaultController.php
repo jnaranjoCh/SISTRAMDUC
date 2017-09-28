@@ -2,6 +2,7 @@
 
 namespace ReincorporacionBundle\Controller;
 
+use RegistroUnicoBundle\RegistroUnicoBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -133,33 +134,80 @@ class DefaultController extends Controller
      *
      * @return array
      */
-    public function getRegistrosUsuario() {
-        $em = $this->getDoctrine()->getRepository('RegistroUnicoBundle:Registro');
-        $q = $em->createQueryBuilder('reg')
-            ->getQuery();
-        $data = $q->getResult();
+    public function getRegistrosTipoCargosUsuario() {
+        $data = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT c.description, ufc.date
+                             FROM AppBundle:Usuario u
+                                INNER JOIN u.UsuarioFechaCargos ufc
+                                INNER JOIN ufc.cargos c')
+            ->getResult();
 
-        $registros = [];
-        foreach ($data as $d) {
-            $reg['id'] = $d->getId();
-            $reg['tipo_registro_id'] = $d->getTipo()->getId();
-            $reg['tipo_registro'] = $d->getTipo()->getDescription();
+        $registros_cargos = [];
+        foreach ($data as $key=>$d) {
+            $reg['descripcion'] = $d['description'];
+
+            $date = $d['date'];
+            $reg['fecha'] = $date->format('d-m-Y');
+
+            $registros_cargos[] = $reg;
+        }
+
+        return $registros_cargos;
+    }
+
+    /**
+     * Retorna todos los registros de tipo publicaciones
+     * @return array
+     */
+    public function getRegistrosPublicacionesUsuario() {
+        $data = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT u,r,rr
+                             FROM AppBundle:Usuario u
+                                INNER JOIN u.registros r
+                                INNER JOIN r.revistas rr')
+            ->getResult();
+
+        $registros_publicaciones = [];
+        foreach ($data as $key=>$d) {
+            $reg['descripcion'] = $d->getDescription();
             $reg['nivel_id'] = $d->getNivel()->getId();
             $reg['nivel'] = $d->getNivel()->getDescription();
             $reg['estatus_id'] = $d->getEstatusId();
+            $reg['tipo_registro'] = $d->getTipoRegistro->getDescription();
             $reg['anio'] = $d->getAño();
-            $reg['es_valido'] = $d->getIsValidate();
+            $reg['es_valido'] = $d->getIsValidate()? "Válido": "No válido";
             $reg['locacion'] = $d->getInstitucionEmpresaCasaeditorial();
             $reg['titulo_obtenido'] = $d->getTituloObtenido();
             $reg['ciudad_pais'] = $d->getCiudadPais();
             $reg['congreso'] = $d->getCongreso();
-            $reg['descripcion'] = $d->getDescription();
 
-            $registros[] = $reg;
+            $reg['estatus'] = $this->getDoctrine()
+                ->getRepository(RegistroUnicoBundle::Estatus)
+                ->find($reg['estatus_id'])->getDescription();
+
+
+            $registros_publicaciones[] = $reg;
         }
 
+        return $registros_publicaciones;
+    }
+
+    /**
+     * Retorna todos los participantes asociados a los registros
+     */
+    public function getParticipantesRegistros() {
+        $data = $this->getDoctrine()
+            ->getManager()
+            ->createQuery('SELECT u,r,p
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN u.registros r
+                                        INNER JOIN r.participantes p')
+            ->getResult();
+
         echo '<pre>';
-        print_r($registros);
+        print_r($data);
         echo '</pre>';
 
     }
@@ -200,7 +248,9 @@ class DefaultController extends Controller
         $tipos_registro = $this->getAllTiposRegistro();
         $reg_ids_partic = $this->getRegistrosAsignablesAParticipantes();
         $reg_ids_public = $this->getRegistrosPublicaciones();
-        $registros = $this->getRegistrosUsuario();
+        $registros_cargos = $this->getRegistrosTipoCargosUsuario();
+        $registros_publicaciones = $this->getRegistrosPublicacionesUsuario();
+        $registros_participantes = $this->getParticipantesRegistros();
 
         return $this->render('ReincorporacionBundle::nueva-entrada-curriculumt.html.twig',
             array(
@@ -210,7 +260,8 @@ class DefaultController extends Controller
                 'tipos_registro' => $tipos_registro,
                 'reg_ids_partic' => $reg_ids_partic,
                 'reg_ids_public' => $reg_ids_public,
-                'registros' => $registros
+                'registros_cargos' => $registros_cargos,
+                'registros_publicaciones' => $registros_publicaciones
             )
         );
     }
