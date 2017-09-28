@@ -77,6 +77,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $newRegistro->setCongreso('');
         $newRegistro->setCiudadPais('');
         $newRegistro->setIsValidate(false);
+        $newRegistro->setUrl('');
         $manager->persist($newRegistro);
         $manager->flush();
         $this->addReference('tony-registro', $newRegistro);

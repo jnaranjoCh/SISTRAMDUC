@@ -163,6 +163,7 @@ $("#guardar").click(function(){
                                 if(!input2bool && !input3bool)
                                 {
                                     $("#myModal2").modal("hide");
+                                    alert(data);
                                     window.location.href = routeRegistroUnico['registro_consulta_index_success'];
                                 }
                                 
@@ -379,69 +380,71 @@ function validarRegistros()
         var registro = new Object();
         for(var j = 2; j < numColumn-1; j++)
         {
-            
             cellsRegistro = new Object();
             cellsRegistro.row = i;
             cellsRegistro.column = j;
             cellsRegistro.columnVisible = "0";
-            
-            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Articulo publicado")
-            {
-                cellsRegistro.column = 1;
-                referenciasRevistas[indReferenciasRevistas] = tableRegistros.cell(cellsRegistro).data();
-                indReferenciasRevistas++;
-                cellsRegistro.column = j;
-            }
-            if(j == 2 && (findValue(tableRegistros, cellsRegistro) == "Tutoria de pasantias" || findValue(tableRegistros, cellsRegistro) == "Tutoria de servicio comunitario"  ||  findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis" || findValue(tableRegistros, cellsRegistro) == "Articulo publicado"))
-            {
-                cellsRegistro.column = 1;
-                referenciasParticipantes[indReferenciasParticipantes] = tableRegistros.cell(cellsRegistro).data();
-                indReferenciasParticipantes++;
-                cellsRegistro.column = j;
-                emIns = true;
-            }
-            else if(j == 2 && (findValue(tableRegistros, cellsRegistro) != "Tutoria de pasantias" && findValue(tableRegistros, cellsRegistro) != "Tutoria de servicio comunitario" && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "Articulo publicado" && findValue(tableRegistros, cellsRegistro) != ""))
-                emIns = false;
+            if(j != 11)
+            {       
+                if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Articulo publicado")
+                {
+                    cellsRegistro.column = 1;
+                    referenciasRevistas[indReferenciasRevistas] = tableRegistros.cell(cellsRegistro).data();
+                    indReferenciasRevistas++;
+                    cellsRegistro.column = j;
+                }
+                if(j == 2 && (findValue(tableRegistros, cellsRegistro) == "Tutoria de pasantias" || findValue(tableRegistros, cellsRegistro) == "Tutoria de servicio comunitario"  ||  findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis" || findValue(tableRegistros, cellsRegistro) == "Articulo publicado"))
+                {
+                    cellsRegistro.column = 1;
+                    referenciasParticipantes[indReferenciasParticipantes] = tableRegistros.cell(cellsRegistro).data();
+                    indReferenciasParticipantes++;
+                    cellsRegistro.column = j;
+                    emIns = true;
+                }
+                else if(j == 2 && (findValue(tableRegistros, cellsRegistro) != "Tutoria de pasantias" && findValue(tableRegistros, cellsRegistro) != "Tutoria de servicio comunitario" && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "Articulo publicado" && findValue(tableRegistros, cellsRegistro) != ""))
+                    emIns = false;
+        
+                if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis")
+                {
+                    emIns2 = true;
+                }
+                else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "")
+                    emIns2 = false;
+                    
+                if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Asistencia a Congresos/Seminarios")
+                {
+                    emIns3 = true;
+                }
+                else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Asistencia a Congresos/Seminarios" && findValue(tableRegistros, cellsRegistro) != "")
+                    emIns3 = false;
+                    
+                if(emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "")
+                {
+                    valido = false;
+                }
+                else if(!emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                    valido = true;
+                    
+                if(emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "")
+                {
+                    valido = false;
+                }
+                else if(!emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                    valido = true;
+                
+                if(emIns3 && (j == 9 || j == 10) && findValue(tableRegistros, cellsRegistro) == "")
+                {
+                    valido = false;
+                }
+                else if(!emIns3 && (j == 9 || j == 10)  && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                    valido = true;
     
-            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Tutoria de tesis")
-            {
-                emIns2 = true;
-            }
-            else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Tutoria de tesis" && findValue(tableRegistros, cellsRegistro) != "")
-                emIns2 = false;
-                
-            if(j == 2 && findValue(tableRegistros, cellsRegistro) == "Asistencia a Congresos/Seminarios")
-            {
-                emIns3 = true;
-            }
-            else if(j == 2 && findValue(tableRegistros, cellsRegistro) != "Asistencia a Congresos/Seminarios" && findValue(tableRegistros, cellsRegistro) != "")
-                emIns3 = false;
-                
-            if(emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "")
-            {
-                valido = false;
-            }
-            else if(!emIns && j == 7 && findValue(tableRegistros, cellsRegistro) == "" && valido)
+                if(j != 7 && j != 8 && j != 9 && j != 10 && findValue(tableRegistros, cellsRegistro) == "")
+                {
+                    valido = false;
+                }
+            }else
                 valido = true;
-                
-            if(emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "")
-            {
-                valido = false;
-            }
-            else if(!emIns2 && j == 8 && findValue(tableRegistros, cellsRegistro) == "" && valido)
-                valido = true;
-            
-            if(emIns3 && (j == 9 || j == 10) && findValue(tableRegistros, cellsRegistro) == "")
-            {
-                valido = false;
-            }
-            else if(!emIns3 && (j == 9 || j == 10)  && findValue(tableRegistros, cellsRegistro) == "" && valido)
-                valido = true;
-
-            if(j != 7 && j != 8 && j != 9 && j != 10 && findValue(tableRegistros, cellsRegistro) == "")
-            {
-                valido = false;
-            }
                 
             if(valido == true)
             {
@@ -478,6 +481,9 @@ function validarRegistros()
                     break;
                     case 10:
                         registro.congreso = findValue(tableRegistros, cellsRegistro);
+                    break;
+                    case 11:
+                        registro.url = findValue(tableRegistros, cellsRegistro);
                     break;
                 }
                 
@@ -851,9 +857,13 @@ function burbuja(array)
 function findValue(table, cellTable)
 {
     var valor;
-    if(table.cell(cellTable).nodes().to$().find('input').val() != null)
+    if(table.cell(cellTable).nodes().to$().find('a').length > 0 && table.cell(cellTable).nodes().to$().find('a')[0].href.includes("#"))
+        valor = "";
+    else if(table.cell(cellTable).nodes().to$().find('a').length > 0)
+        valor = table.cell(cellTable).nodes().to$().find('a')[0].href.split('/')[table.cell(cellTable).nodes().to$().find('a')[0].href.split('/').length-1];
+    else if(table.cell(cellTable).nodes().to$().find('input').val() != null)
         valor = table.cell(cellTable).nodes().to$().find('input').val();
     else
-        valor = table.cell(cellTable).nodes().to$().find('select').val();
+        valor = table.cell(cellTable).nodes().to$().find('select').val();    
     return valor;
 }

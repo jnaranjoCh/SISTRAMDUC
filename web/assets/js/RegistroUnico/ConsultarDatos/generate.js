@@ -251,8 +251,8 @@ function initTableConsultar(){
                                 	"url": tableLenguage['datatable-spanish']
                             },
                             columns: [
-                               {"data": "Delete"},
-                               {"data": "Id"},
+                               {"data":"Delete"},
+                               {"data":"Id"},
                                {"data":"TipoDeReferencia"},
                                {"data":"Descripcion"},
                                {"data":"Nivel"},
@@ -260,8 +260,9 @@ function initTableConsultar(){
                                {"data":"AnoDePublicacionAsistencia"},
                                {"data":"EmpresaInstitucion"},
                                {"data":"TituloObtenido"},
-                               { "data": "CiudadPais"},
-                               { "data": "Congreso"}
+                               {"data":"CiudadPais"},
+                               {"data":"Congreso"},
+                               {"data":"Archivo"}
                             ]
                         });
         

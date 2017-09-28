@@ -2,9 +2,11 @@ var idGlobal;
 var idCheckGlobal;
 var width;
 var heigth;
+var claveGlobal;
 
 $('#tableRegistros').on( 'click', 'td', function () {
     var cell = new Object();
+    var cell2 = new Object();
     cell.row = tableRegistros.cell( this ).index().row; cell.column = "10"; cell.columnVisible = "0";
     if(tableRegistros.cell( this ).index().column == 10){
         var id = tableRegistros.cell(cell).data().split('<span id="')[1].split('"')[0];
@@ -16,10 +18,11 @@ $('#tableRegistros').on( 'click', 'td', function () {
             detener = false;
             width  = widthModal();
             heigth = heightModal();
+            cell2.row = tableRegistros.cell( this ).index().row; cell2.column = "0"; cell2.columnVisible = "0";
+            claveGlobal = tableRegistros.cell(cell2).data();
             $('#guardarArchivoIframe').width(widthModal());
             $('#guardarArchivoIframe').height(heightModal());
             $('#oscurecer').modal('show'); 
-            //$("#guardarArchivoIframe").contents().find("#myModalValidate").modal("show");;
             $('html, body').css('overflow-y', 'hidden');
             $('html, body').css('overflow-x', 'hidden');
             $('#guardarArchivoIframe').removeClass("hidden");
@@ -79,4 +82,15 @@ function widthModal()
 function heightModal()
 {
     return $("#myModalValidateAux").height()-420;
+}
+
+function getId()
+{
+    return claveGlobal;
+}
+
+
+function getEmail()
+{
+    return $('#mail').val();
 }

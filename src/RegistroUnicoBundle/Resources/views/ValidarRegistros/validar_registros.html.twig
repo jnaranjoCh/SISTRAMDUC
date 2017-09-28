@@ -19,7 +19,7 @@
         <!-- Modal content-->
         <div class="row">
           <div class="col-md-12">
-             <iframe  id="guardarArchivoIframe" class="hidden" style="z-index:115; position:absolute; overflow:hidden;" scrolling="no" src={{ path('registro_validar_iframe_index') }} frameborder="0" height="1000%" width="100%"></iframe>
+             <iframe  id="guardarArchivoIframe" class="hidden" style="z-index:115; position:absolute; overflow:hidden;" scrolling="no" src={{ path('registro_validar_iframe_index') }} frameborder="0" height="1000%" width="100%" onload="resizeFrame(this)" ></iframe>
           </div>
         </div>
       </div>
