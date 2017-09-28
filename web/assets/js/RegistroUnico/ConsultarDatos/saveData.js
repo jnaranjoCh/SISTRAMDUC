@@ -163,7 +163,6 @@ $("#guardar").click(function(){
                                 if(!input2bool && !input3bool)
                                 {
                                     $("#myModal2").modal("hide");
-                                    alert(data);
                                     window.location.href = routeRegistroUnico['registro_consulta_index_success'];
                                 }
                                 

@@ -759,7 +759,7 @@ class ConsultarDatosController extends Controller
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           list($day, $month, $year) = explode('/', explode(' ', $cargo['fechaInicio'])[0]);
           $UsuarioFechaCargo->setDate(new \DateTime($year."-".$month."-".$day));
-          
+          $UsuarioFechaCargo->setIsValidate(true);
         
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
