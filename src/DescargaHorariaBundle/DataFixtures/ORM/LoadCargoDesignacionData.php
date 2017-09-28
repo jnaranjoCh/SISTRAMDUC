@@ -13,7 +13,8 @@ class LoadCargoDesignacionData extends AbstractFixture implements OrderedFixture
 {
     public function load(ObjectManager $manager)
     {
-        $array = ["Comisionado(a) de la Rector(a) Núcleo Aragua",
+        $array = ["Docente","Administrativo",
+                    "Comisionado(a) de la Rector(a) Núcleo Aragua",
                     "Consultor(a) Jurídico(a) (CJUC)",
                     "Director(a) de Recursos Humanos Central (DCRRHH)",
                     "Director(a) de Mantenimiento, Ambiente e Infraestructura Central (DCMAI)",

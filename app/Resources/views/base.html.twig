@@ -374,22 +374,28 @@
             </span>
           </a>
           <ul class="treeview-menu">
+          
+          	<li data-route="requisicionRRHH">
+              <a href="{{ path('requisicionRRHH') }}"><i class="fa fa-circle-o"></i>Requisición RR.HH.</a>
+            </li>
+            
+            
+            
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-circle-o"></i><span>Concurso</span>
+                <i class="fa fa-circle-o"></i><span>Concursos</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li data-route="apertura_concurso_oposicion_index">
-                  <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
-                </li>
                 <li data-route="tablaBasicaConcurso">
-                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado</a>
                 </li>
               </ul>
             </li>
+
+            <!--
 
             <li class="treeview">
               <a href="#">
@@ -484,6 +490,8 @@
                 </li>
               </ul>
             </li>
+            
+            -->
 
           </ul>
         </li>
@@ -495,7 +503,16 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-        
+          <ul class="treeview-menu">
+            <li data-route="descarga_horaria_informacion">
+              <a href="{{ path('descarga_horaria_informacion') }}"><i class="fa fa-circle-o"></i>Información</a>
+            </li>
+
+            <li data-route="descarga_horaria_cargos_adm_univ">
+              <a href="{{ path('descarga_horaria_cargos_adm_univ') }}"><i class="fa fa-circle-o"></i>Cargos</a>
+            </li>
+            
+          </ul>
         </li>
         
       </ul>

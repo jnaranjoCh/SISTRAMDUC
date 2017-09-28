@@ -30,11 +30,6 @@ class TipoDedicacion
 
 
     /**
-     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\UsuarioDedicacion", mappedBy="tipo_dedicacion_id", cascade={"persist", "remove"})
-     */
-    protected  $usuario_tipo_dedicacion;
-    
-    /**
      * Get id
      *
      * @return int

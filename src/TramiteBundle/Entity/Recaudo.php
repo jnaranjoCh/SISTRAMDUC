@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use TramiteBundle\Entity\Tramite;
 use TramiteBundle\Entity\TipoRecaudo;
 use TramiteBundle\Entity\Duracion;
+use ConcursosBundle\Entity\Aspirante;
 use AppBundle\Entity\Usuario;
 
 /**
@@ -100,6 +101,13 @@ class Recaudo
      * @ORM\JoinColumn(name="duracion_id", referencedColumnName="id")
      */
     protected $duracion;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="\ConcursosBundle\Entity\Aspirante", inversedBy="recaudos")
+     * @ORM\JoinColumn(name="aspirante_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     */
+    protected $aspirante;
 
     function __construct($name = null, \DateTime $fecha_vencimiento = null){
         $this->name = $name;
@@ -464,4 +472,25 @@ class Recaudo
      {
          return $this->isValidate;
      }
+     
+     /**
+     * Set aspirante
+     *
+     * @return recaudo
+     */
+    public function setAspirante(\ConcrusosBundle\Entity\Aspirante $aspirante = null)
+    {
+        $this->aspirante = $aspirante;
+        return $this;
+    }
+
+    /**
+     * Get aspirante
+     *
+     * @return \ConcursosBundle\Entity\Aspirante
+     */
+    public function getAspirante()
+    {
+        return $this->aspirante;
+    }
 }
