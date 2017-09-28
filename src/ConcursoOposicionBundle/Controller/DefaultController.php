@@ -13,6 +13,7 @@ use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
 use ConcursoOposicionBundle\Entity\Recusacion;
 use ConcursoOposicionBundle\Entity\Curso;
+use ConcursoOposicionBundle\Entity\Responsable;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -181,11 +182,14 @@ class DefaultController extends Controller
         if($request->isXmlHttpRequest()){
 
             $encontrado = false;
+            $rol = "";
 
             foreach ($this->getUser()->getRoles() as $rol => $valor) {
                 
-                if ($valor == "Asuntos Profesorales" || $valor == "Jefe de Departamento o equivalente" || $valor == "Jefe de Cátedra o equivalente")
+                if ($valor == "Asuntos Profesorales" || $valor == "Jefe de Departamento o equivalente" || $valor == "Jefe de Cátedra o equivalente"){
                     $encontrado = true;
+                    $rol = $valor;
+                }
             }
 
             if ($encontrado){
@@ -240,6 +244,16 @@ class DefaultController extends Controller
                     $curso->setTiempo($tiempos[$i]);
                     $concurso->addCurso($curso);
                 }  
+
+                $responsable = new Responsable();
+                $responsable->setCargoR($rol);
+                $responsable->setNyAR($this->getUser()->getNombreCorto());
+                $responsable->setCedulaR($this->getUser()->getCedula());
+                $responsable->setControl($request->get("control"));
+                $responsable->setFirmaR("no se que se coloca");
+                $responsable->setFechaR(date_create());
+
+                $concurso->addResponsable($responsable);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($concurso);

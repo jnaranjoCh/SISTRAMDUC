@@ -816,9 +816,7 @@ class Concurso extends Tramite
     {
     	return $this->desc_motivo;
     }
-    
-    /////////////////
-    
+        
     /**
      * Set justificacion
      *
@@ -1080,7 +1078,7 @@ class Concurso extends Tramite
         if (!$this->responsable->contains($responsable)) {
 
             $this->responsable->add($responsable);
-            $responsable->setResponsable($this);
+            $responsable->setConcurso($this);
         }
 
         return $this;

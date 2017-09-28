@@ -82,6 +82,15 @@
             $('#div_justificacion').addClass("has-error");
         }
 
+        $('#div_control').removeClass("has-error");
+
+        if ($('#control').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_control').addClass("has-error");
+        }
+
         $('#div_cargo').removeClass("has-error");
 
         if ($('#cargo').val() == ""){
@@ -269,7 +278,8 @@
                 "extension" : $('#extension').val(),
                 "cadenaCurso" : cadenaCurso,
                 "cadenaTiempo" : cadenaTiempo,
-                "tamano" : curso.length
+                "tamano" : curso.length,
+                "control" : $('#control').val()
                 },
                 url:  "{{ path('registroConcursoAjax') }}",
                 dataType: 'json',

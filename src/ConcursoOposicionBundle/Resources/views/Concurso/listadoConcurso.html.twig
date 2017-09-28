@@ -26,20 +26,20 @@
 
 	            } else{                   
 
-	                for (var i = 0; i <= data["vacantes"].length-1; i++) {
+	                for (var i = 0; i <= data["id"].length-1; i++) {
 
 	                    var num = data["id"][i];
 
 	                    tabla.row.add( {
-	                        "inicio": data["inicio"][i],
-	                        "vacantes": data["vacantes"][i],
-	                        "area": data["area"][i],
-	                        "doc": data["recepcion"][i],
-	                        "pre": data["presentacion"][i],
-	                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+	                        "inicio": data["fechaInicio"][i],
+	                        "vacantes": data["nroVacantes"][i],
+	                        "condicion": data["condicion"][i],
+	                        "facultad": data["facultad"][i],
+	                        "status": data["status"][i],
+	                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 	                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
 	                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-	                    }).draw();                          
+	                    }).draw();                         
 	                }                                             
 	            }                       	
 	        }
@@ -237,21 +237,21 @@
 							dataType: 'json',
 					        success: function(data)
 					        {
-				                for (var i = 0; i <= data["vacantes"].length-1; i++) {
+				                for (var i = 0; i <= data["id"].length-1; i++) {
 
 				                    var num = data["id"][i];
 
 				                    tabla.row.add( {
-				                        "inicio": data["inicio"][i],
-				                        "vacantes": data["vacantes"][i],
-				                        "area": data["area"][i],
-				                        "doc": data["recepcion"][i],
-				                        "pre": data["presentacion"][i],
-				                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+				                        "inicio": data["fechaInicio"][i],
+				                        "vacantes": data["nroVacantes"][i],
+				                        "condicion": data["condicion"][i],
+				                        "facultad": data["facultad"][i],
+				                        "status": data["status"][i],
+				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
 				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-				                    }).draw();                          
-				                }                       	
+				                    }).draw();                         
+				                }                        	
 					        }
 					     });
 
@@ -393,20 +393,21 @@
 							dataType: 'json',
 					        success: function(data)
 					        {
-				                for (var i = 0; i <= data["vacantes"].length-1; i++) {
-			
+				                for (var i = 0; i <= data["id"].length-1; i++) {
+
 				                    var num = data["id"][i];
-			
+
 				                    tabla.row.add( {
-				                        "inicio": data["inicio"][i],
-				                        "vacantes": data["vacantes"][i],
-				                        "area": data["area"][i],
-				                        "doc": data["recepcion"][i],
-				                        "pre": data["presentacion"][i],
+				                        "inicio": data["fechaInicio"][i],
+				                        "vacantes": data["nroVacantes"][i],
+				                        "condicion": data["condicion"][i],
+				                        "facultad": data["facultad"][i],
+				                        "status": data["status"][i],
+				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
 				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-				                    }).draw();                          	                                                          
-					            }                       	
+				                    }).draw();                         
+				                }                       	
 					        }
 					     });
 	
