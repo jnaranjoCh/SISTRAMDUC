@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use ComisionRemuneradaBundle\Entity\SolicitudComisionServicio;
 use TramiteBundle\Entity\Transicion;
 use TramiteBundle\Entity\Documento;
+use ConcursosBundle\Entity\Aspirante;
 use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\TransicionConsejo;
 

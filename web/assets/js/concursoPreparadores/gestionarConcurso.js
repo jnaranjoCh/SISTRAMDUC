@@ -39,8 +39,29 @@ $(window).load( function(){
             });
     var text = "";
     $("#dateTime1").datetimepicker();
-    $("#EscritaConductaReporteCargaDatos").fileinput({
-        language: "es"
+    $("#ComunicacionEscrita").fileinput({
+        language: "es",
+        maxFileCount: 1,
+        overwriteInitial: true,
+        uploadAsync: false,
+        initialPreviewAsData: true,
+        initialPreviewFileType: 'pdf'
+    });
+    $("#CartaConducta").fileinput({
+        language: "es",
+        maxFileCount: 1,
+        overwriteInitial: true,
+        uploadAsync: false,
+        initialPreviewAsData: true,
+        initialPreviewFileType: 'pdf'
+    });
+    $("#ReporteNota").fileinput({
+        language: "es",
+        maxFileCount: 1,
+        overwriteInitial: true,
+        uploadAsync: false,
+        initialPreviewAsData: true,
+        initialPreviewFileType: 'pdf'
     });
     document.getElementById("IdConcurso").value = id;
     $.ajax({
@@ -234,6 +255,7 @@ $('#enviarFechaEvaluacion').click(function (){
 
 $("#guardarAspirante").click(function (){
 	var inputs = ["Cedula","Correo","PrimerNombre","SegundoNombre","PrimerApellido","SegundoApellido","Promedio","Nota1","Nota2"];
+	var inputsFiles = ["ComunicacionEscrita","CartaConducta","ReporteNota"];
 	var falla = false;
 	var text = "";
 	
@@ -249,21 +271,23 @@ $("#guardarAspirante").click(function (){
         }
     }
     
+    for(var i = 0; i < inputsFiles.length; i++){
+        if($("#"+inputsFiles[i]).fileinput("getFilesCount") < 1){
+    		$("#div"+inputsFiles[i]).addClass("has-error");
+    		if(!falla){
+	    		falla = true;
+	    		text = "Debe seleccionar un archivo.";
+    		}
+        }else{
+    		$("#div"+inputsFiles[i]).removeClass("has-error");
+        }
+    }
+    
     if (falla){
 		toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
 	} else {
-		if($("#EscritaConductaReporteCargaDatos").fileinput("getFilesCount") > 3 || $("#EscritaConductaReporteCargaDatos").fileinput("getFilesCount") < 3){
-	        falla = true;
-	        // $("#spanEscritaConductaReporteCargaDatos").addClass("glyphicon-remove");
-	        $("#divEscritaConductaReporteCargaDatos").addClass("has-error");
-	        text = "Son sólo tres archivos en el orden especificado (Comunicación Escrita, Carta de Conducta y Reporte de Notas).";
-	    }
-	    if (falla){
-			toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
-		} else {
-		    $("#guardandoDatos").modal("show");
-		    document.getElementById("newAspiranteForm").submit();
-		}
+	    $("#guardandoDatos").modal("show");
+	    document.getElementById("newAspiranteForm").submit();
 	}
 });
 

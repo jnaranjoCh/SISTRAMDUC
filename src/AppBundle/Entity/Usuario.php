@@ -681,6 +681,11 @@ class Usuario implements UserInterface
                 $data[$i]['Congreso'] = '<input id="Congreso'.$i.'" value="" type="text" class="form-control" placeholder="Congreso" readonly>';
             else
                 $data[$i]['Congreso'] = '<input id="Congreso'.$i.'" value="'.$registro->getCongreso().'" type="text" class="form-control" placeholder="Congreso">';
+            if($registro->getUrl() == "")
+                $data[$i]['Archivo'] = '<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="Archivo'.$i.'" href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>';
+            else
+                $data[$i]['Archivo'] = '<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="Archivo'.$i.'" href="'.$registro->getUrl().'" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:blue;"></i></a></div>';;
+            
             $i++;
         }
 

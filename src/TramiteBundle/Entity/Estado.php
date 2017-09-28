@@ -4,6 +4,7 @@ namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use ConcursosBundle\Entity\Aspirante;
 
 /**
  * Estado
@@ -51,6 +52,12 @@ class Estado
      * @ORM\OneToMany(targetEntity="Transicion", mappedBy="estado_catedra")
      */
     protected $transicionesCatedra;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="ConcursosBundle\Entity\Aspirante", inversedBy="estado")
+     * @ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")
+     */
+    protected $aspirante;
     
     public function __construct()
     {
@@ -186,6 +193,19 @@ class Estado
     public function getTransicionesConsejo()
     {
         return $this->transicionesConsejo;
+    }
+    
+    public function setAspirante(ConcursosBundle\Entity\Aspirante $aspirante)
+    {
+        $this->aspirante = $aspirante;
+        $aspirante->setEstado($this);
+
+        return $this;
+    }
+    
+     public function getAspirante()
+    {
+        return $this->aspirante;
     }
 }
 
