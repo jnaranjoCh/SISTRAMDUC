@@ -176,7 +176,7 @@ class Aspirante
     protected $recaudos;
     
     /**
-     * @ORM\OneToOne(targetEntity="TramiteBundle\Entity\Estado", inversedBy="aspirante")
+     * @ORM\ManyToOne(targetEntity="TramiteBundle\Entity\Estado", inversedBy="aspirantes")
      * @ORM\JoinColumn(name="estado_id", referencedColumnName="id")
      */
     protected $estado;
@@ -725,7 +725,7 @@ class Aspirante
         return $this->estado;
     }
     
-    public function setEstado(Tramitebundle\Entity\Estado $estado)
+    public function setEstado(\TramiteBundle\Entity\Estado $estado)
     {
         $this->estado = $estado;
         return $this;

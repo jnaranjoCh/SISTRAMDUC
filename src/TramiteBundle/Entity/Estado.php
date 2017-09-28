@@ -54,14 +54,14 @@ class Estado
     protected $transicionesCatedra;
     
     /**
-     * @ORM\OneToOne(targetEntity="ConcursosBundle\Entity\Aspirante", inversedBy="estado")
-     * @ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="ConcursosBundle\Entity\Aspirante", mappedBy="estado")
      */
-    protected $aspirante;
+    protected $aspirantes;
     
     public function __construct()
     {
         $this->transiciones = new ArrayCollection();
+        $this->aspirantes = new ArrayCollection();
     }
 
     /**
@@ -195,17 +195,33 @@ class Estado
         return $this->transicionesConsejo;
     }
     
-    public function setAspirante(ConcursosBundle\Entity\Aspirante $aspirante)
+    /**
+     * Add aspirante
+     * @param \ConcursosBundle\Entity\Aspirante $aspirante
+     * @return aspirante
+     */
+    public function addAspirante(\ConcursosBundle\Entity\Aspirante $aspirante)
     {
-        $this->aspirante = $aspirante;
-        $aspirante->setEstado($this);
-
+        $this->aspirantes[] = $aspirante;
         return $this;
     }
-    
-     public function getAspirante()
+
+    /**
+     * Remove aspirante
+     * @param \ConcursosBundle\Entity\Aspirante $aspirante
+     */
+    public function removeAspirante(\ConcursosBundle\Entity\Aspirante $aspirante)
     {
-        return $this->aspirante;
+        $this->aspirantes->removeElement($aspirante);
+    }
+
+    /**
+     * Get aspirante
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAspirante()
+    {
+        return $this->aspirantes;
     }
 }
 

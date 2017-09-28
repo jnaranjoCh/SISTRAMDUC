@@ -111,8 +111,8 @@ class Concurso extends Tramite
     /**
      * @ORM\ManyToMany(targetEntity="Aspirante", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="concurso_aspirante",
-     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="concurso_id", referencedColumnName="id", onDelete="cascade")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="aspirante_id", referencedColumnName="id", onDelete="cascade")}
      *      )
      */
     protected $aspirantes;

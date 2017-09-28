@@ -61,6 +61,34 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
 
         $manager->persist($estado_reproceso);
         $manager->flush();
+        
+        $estado_rechazado = new Estado();
+        $estado_rechazado->setNombre('Rechazado');
+        $estado_rechazado->setDescripcion('Aspirante ha sido rechazado.');
+
+        $manager->persist($estado_rechazado);
+        $manager->flush();
+
+        $estado_aprobado = new Estado();
+        $estado_aprobado->setNombre('Aprobado');
+        $estado_aprobado->setDescripcion('Aspirante ha sido aprobado.');
+
+        $manager->persist($estado_aprobado);
+        $manager->flush();
+        
+        $estado_registrado = new Estado();
+        $estado_registrado->setNombre('Registrado');
+        $estado_registrado->setDescripcion('Aspirante ha sido registrado.');
+
+        $manager->persist($estado_registrado);
+        $manager->flush();
+        
+        $estado_calificado = new Estado();
+        $estado_calificado->setNombre('Calificado');
+        $estado_calificado->setDescripcion('Aspirante ha sido calificado.');
+
+        $manager->persist($estado_calificado);
+        $manager->flush();
     }
 
     public function getOrder()
