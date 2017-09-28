@@ -1119,7 +1119,6 @@ class DefaultController extends Controller
     public function agregarDatosAspiranteAjaxAction(Request $request)
     {
         if($request->isXmlHttpRequest()){
-            $falla = false;
             
             $idConcurso = $request->get("idConcurso");
             $idAspirante = $request->get("idAspirante");
@@ -1141,42 +1140,21 @@ class DefaultController extends Controller
             )->setParameter('idConcurso', $idConcurso)
              ->setParameter('nombreDato', $nombreDato);
             $queryRecaudo = $query->getResult();
-
-            if($queryRecaudo == null){
-                /*if($nombreDato != "MotivosExoneracion" && $nombreDato != "Notas"){
-                    $recaudo = new Recaudo();
-                    $recaudo->setPath("");
-                    $recaudo->setName($nombreDato);
-                    $recaudo->setValor(1);
-                    $recaudo->setTipoRecaudo(null);
-                    $recaudo->setUsuario($this->getUser());
-                }elseif($nombreDato == "Notas"){
-                    $resultado = new Resultado();
-                    $i = 0;
-                    foreach ($valorDato as $nota) {
-                        switch ($case) {
-                            case 0: $aspirante->set = $object->getId(); break;
-                            case 1: $result[$nameField][$pos] = $object->getCedula(); break;
-                        }
-                        
-                        
-                        $query = $em->createQuery('SELECT R
-                                              FROM TramiteBundle:Recaudo R
-                                              WHERE R.tramite = :idTramite 
-                                              AND R.name = :nameRecaudo'
-                        )->setParameter('idTramite', $idTramite)
-                         ->setParameter('nameRecaudo', $divJurados[$i]);
-                        $queryResult = $query->getResult();
-                        
-                        foreach ($queryResult as $queryResultAux) {
-                            $queryResultAux->setValor($racaudoAux);
-                            $queryResultAux->setUsuario($this->getUser());
-                        }
-                        $i=$i+1;
+            
+            if($nombreDato == "Notas"){
+                $n = 0;
+                foreach ($valorDato as $nota) {
+                    if($n == 0){
+                        $notaExEscrito = $nota;
+                    }elseif ($n == 1) {
+                        $notaExOral = $nota;
                     }
-                    
-                    
-                }*/
+                    $n = $n+1;
+                }
+                $valorDato = $notaExEscrito.'-'.$notaExOral;
+            }
+            
+            if($queryRecaudo == null){
                 $recaudo = new Recaudo();
                 $recaudo->setPath("");
                 $recaudo->setName($nombreDato);
@@ -1190,77 +1168,96 @@ class DefaultController extends Controller
                 }
             }
             
+            $aspirante->addRecaudo($recaudo);
             
+            $entityEstado = $em->getRepository('TramiteBundle:Estado');
+            $registrado = $entityEstado->findOneBy(["nombre" => 'Registrado']);
+            $pendiente = $entityEstado->findOneBy(["nombre" => 'Pendiente']);
+            $aprobado = $entityEstado->findOneBy(["nombre" => 'Aprobado']);
+            $rechazado = $entityEstado->findOneBy(["nombre" => 'Rechazado']);
+            $calificado = $entityEstado->findOneBy(["nombre" => 'Calificado']);
+                
+            if($nombreDato == "CumpleRequisitos"){
+                if($valorDato == "Si"){
+                    $aspirante->setEstado($aprobado);
+                }else{
+                    $aspirante->setEstado($pendiente);
+                }
+            }else if($nombreDato == "Exoneracion"){
+                if($valorDato == "Si"){
+                    $aspirante->setEstado($pendiente);
+                }else{
+                    $aspirante->setEstado($rechazado);
+                }
+            }else if($nombreDato == "ExpMotivosExoneracion"){
+                 if($valorDato == "Si"){
+                    $aspirante->setEstado($aprobado);
+                }else{
+                    $aspirante->setEstado($rechazado);
+                }
+            }else if($nombreDato == "Notas"){
+                $resultado = new Resultado();
+                $resultado->setCedulaAspirante($aspirante->getCedula());
+                $resultado->setIdConcurso($idConcurso);
+                $resultado->setNota(15);
+                $resultado->setNotaOral($notaExOral);
+                $resultado->setNotaEscrito($notaExEscrito);
+                $resultado->setResultado("califica a nombramiento");
+                $em->persist($resultado);
+                
+                $aspirante->setEstado($calificado);
+            } 
             
-            if (!$falla){
-                $aspirante->addRecaudo($recaudo);
-                
-                $entityEstado = $em->getRepository('TramiteBundle:Estado');
-                $registrado = $entityEstado->findOneBy(["nombre" => 'Registrado']);
-                $pendiente = $entityEstado->findOneBy(["nombre" => 'Pendiente']);
-                $aprobado = $entityEstado->findOneBy(["nombre" => 'Aprobado']);
-                $rechazado = $entityEstado->findOneBy(["nombre" => 'Rechazado']);
-                $calificado = $entityEstado->findOneBy(["nombre" => 'Calificado']);
-                    
-                if($nombreDato == "CumpleRequisitos"){
-                    if($valorDato == "Si"){
-                        $aspirante->setEstado($aprobado);
-                    }else{
-                        $aspirante->setEstado($pendiente);
-                    }
-                }else if($nombreDato == "Exoneracion"){
-                    if($valorDato == "Si"){
-                        $aspirante->setEstado($pendiente);
-                    }else{
-                        $aspirante->setEstado($rechazado);
-                    }
-                }else if($nombreDato == "ExpMotivosExoneracion"){
-                     if($valorDato == "Si"){
-                        $aspirante->setEstado($aprobado);
-                    }else{
-                        $aspirante->setEstado($rechazado);
-                    }
-                }else if($nombreDato == "Notas"){
-                    $notaExEscrito = $valorDato[0];
-                    $notaExOral = $valorDato[1];
-                    $resultado = new Resultado();
-                    $resultado->setCedulaAspirante($aspirante->getCedula());
-                    $resultado->setIdConcurso($idConcurso);
-                    $resultado->setNota(15);
-                    $resultado->setNotaOral($notaExOral);
-                    $resultado->setNotaEscrito($notaExEscrito);
-                    $resultado->setResultado("califica a nombramiento");
-                    
-                    $aspirante->setEstado($calificado);
-                } 
-                
-                    
-                    
-                
-                // }
-                
-                $em->persist($aspirante);
-                
-                $em->flush();
-                
-                // if($request->get("nombreRecaudo")=="CambioJurado"){
-                //     return new JsonResponse(array(
-                //         'estado' => 'Insertado',
-                //         'mensaje' => 'Nuevo Jurado guardado exitosamente!.'
-                //     ));
-                // }else{
-                    return new JsonResponse(array(
-                        'estado' => 'Insertado',
-                        'mensaje' => 'Datos Enviados exitosamente!.'
-                    ));
-                // }
-            }else{
+            $em->persist($aspirante);
+            
+            $em->flush();
+            
+            return new JsonResponse(array(
+                'estado' => 'Insertado',
+                'mensaje' => 'Datos Enviados exitosamente!.'
+            ));
+        }else
+            throw $this->createNotFoundException('Error al solicitar datos');
+    }
+    
+    /**
+     * @Route("/preparadores/aspirante/validar_calificacion_aspirante", name="validar_calificacion_aspirante_ajax")
+     */
+    public function validarCalificacionAspiranteAjaxAction(Request $request)
+    {
+        if($request->isXmlHttpRequest()){
+            
+            $idConcurso = $request->get("idConcurso");
+            
+            $em = $this->getDoctrine()->getManager();
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')
+                              ->findOneBy(["id" => $idConcurso]);
+            
+            $query = $em->createQuery('SELECT COUNT(A)
+                                       FROM ConcursosBundle:Concurso C, TramiteBundle:Estado E
+                                       JOIN C.aspirante_id A
+                                       WHERE C.id = :idConcurso
+                                       AND C.estado = E.id
+                                       AND E.nombre != :nameEstado'
+            )->setParameter('idConcurso', $idConcurso)
+             ->setParameter('nameEstado', 'Rechazado');
+           
+            $cantAspirantes = $query->getResult();
+            
+            if($cantAspirantes != null){
                return new JsonResponse(array(
-                    'estado' => 'NoExisteJurado',
-                    'mensaje' => 'Jurado no está registrado en el Sistema.',
-                    'jurados' => $idsJurados
-                ));
+                    'estado' => 'Insertado',
+                    'mensaje' => 'Holis'
+                )); 
             }
+            //$em->persist($aspirante);
+            
+            //$em->flush();
+            
+            return new JsonResponse(array(
+                'estado' => 'Falla',
+                'mensaje' => 'Chais'
+            ));
         }else
             throw $this->createNotFoundException('Error al solicitar datos');
     }

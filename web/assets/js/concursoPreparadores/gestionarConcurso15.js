@@ -182,7 +182,7 @@ $(window).load( function(){
                     }else if(respuesta["estado"][i]=="Rechazado"){
 						classSpan= "label-danger";
 						classGestionar= "hide";
-                    }else if(respuesta["estado"][i]=="Completado"){
+                    }else if(respuesta["estado"][i]=="Calificado"){
 						classSpan= "label-success";
 						classGestionar= "hide";
                     }

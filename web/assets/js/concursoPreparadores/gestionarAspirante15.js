@@ -212,7 +212,6 @@ $('#cargarMotivosExoneracion').click(function (){
     		text = "Debe escribir la exposición de motivos sobre la exoneración.";
         	toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
     	}else{
-    	    alert("HOlis!!!");
     	    /*$.ajax({
                 method: "POST",
                 url: "/web/app_dev.php/preparadores/generar_pdf",
@@ -226,7 +225,7 @@ $('#cargarMotivosExoneracion').click(function (){
             
      		$.ajax({
 	            method: "POST",
-	            data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"ExpMotivosExoneracion", "valorDato":optionSelected},
+	            data: {"idConcurso":idConcurso, "idAspirante":id, "nombreDato":"ExpMotivosExoneracion", "valorDato":optionSelected},
 	            url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
 	            dataType: 'json',
 	            beforeSend: function(){
@@ -267,7 +266,7 @@ $('#registrarCalificacion').click(function (){
         var datos = [$("#NotaExEscrito").val(),$("#NotaExOral").val()];
 		$.ajax({
             method: "POST",
-            data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"Notas", "valorDato":datos},
+            data: {"idConcurso":idConcurso, "idAspirante":id, "nombreDato":"Notas", "valorDato":datos},
             url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
             dataType: 'json',
             beforeSend: function(){
@@ -275,9 +274,18 @@ $('#registrarCalificacion').click(function (){
             },
 	        success: function(respuesta){
         		if (respuesta.estado == "Insertado") {
-        		    $("#cargando").modal("hide");
-        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-    				$('#divCalificacion').addClass("hide");
+        		    $.ajax({
+                        method: "POST",
+                        data: {"idConcurso":idConcurso},
+                        url: "/web/app_dev.php/preparadores/aspirante/validar_calificacion_aspirante",
+                        dataType: 'json',
+            	        success: function(respuesta){
+                    		if (respuesta.estado == "Insertado") {
+                    		    $("#cargando").modal("hide");
+                    		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+                				$('#divCalificacion').addClass("hide");
+                    		}
+                    }});
         		}
         }});
     }
