@@ -38,12 +38,14 @@
         <div class="box box-info collapsed-box">
           <div class="box-header with-border">
               <h3 class="box-title">
-                <i class="fa fa-upload"></i>
-                <b>Cargar Requisitos</b>
+                <i id="iconNew" class="fa fa-upload hide"></i>
+                <i id="iconUpdate" class="fa fa-edit hide"></i>
+                <b id="titleNew" class="hide">Cargar Requisitos</b>
+                <b id="titleUpdate" class="hide">Actualizar Requisitos</b>
               </h3>
               <div class="box-tools pull-right">
                 <button id="closeCargaRequisitos" type="button" class="btn btn-box-tool" data-widget="collapse">
-                  <i class="fa fa-plus"></i>
+                  <i id="iconCloseCargaRequisitos" class="fa fa-plus"></i>
                 </button>
             </div>
           </div>
@@ -200,6 +202,6 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-  <script src="{{ asset('assets/js/concursoPreparadores/saveSolicitudConcurso.js') }}"></script>
+  <script src="{{ asset('assets/js/concursoPreparadores/solicitudAperturaConcurso.js') }}"></script>
 {% endblock %}
 

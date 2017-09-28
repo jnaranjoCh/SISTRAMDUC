@@ -478,7 +478,7 @@ class Recaudo
      *
      * @return recaudo
      */
-    public function setAspirante(\ConcrusosBundle\Entity\Aspirante $aspirante = null)
+    public function setAspirante(\ConcursosBundle\Entity\Aspirante $aspirante = null)
     {
         $this->aspirante = $aspirante;
         return $this;

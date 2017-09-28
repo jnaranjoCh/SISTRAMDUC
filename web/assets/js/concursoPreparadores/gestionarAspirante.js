@@ -137,7 +137,7 @@ $('#enviarEvaluarRequisitosAspirante').click(function (){
     }else{
 		$.ajax({
             method: "POST",
-            data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"CumpleRequisitos", "valorDato":optionSelected+"CumpleRequisitos"},
+            data: {"idConcurso":idConcurso, "idAspirante":id, "nombreDato":"CumpleRequisitos", "valorDato":optionSelected},
             url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
             dataType: 'json',
             beforeSend: function(){
@@ -175,7 +175,7 @@ $('#enviarExoneracionAspirante').click(function (){
     }else{
 		$.ajax({
             method: "POST",
-            data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"Exoneracion", "valorDato":optionSelected+"SolicitaExoneracion"},
+            data: {"idConcurso":idConcurso, "idAspirante":id, "nombreDato":"Exoneracion", "valorDato":optionSelected},
             url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
             dataType: 'json',
             beforeSend: function(){
@@ -212,8 +212,7 @@ $('#cargarMotivosExoneracion').click(function (){
     		text = "Debe escribir la exposición de motivos sobre la exoneración.";
         	toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
     	}else{
-    	    alert("HOlis!!!");
-    	    $.ajax({
+    	    /*$.ajax({
                 method: "POST",
                 url: "/web/app_dev.php/preparadores/generar_pdf",
                 dataType: 'json',
@@ -222,22 +221,23 @@ $('#cargarMotivosExoneracion').click(function (){
                 },
     	        success: function(respuesta){
         		    $("#cargando").modal("hide");
-            }});
-    // 		$.ajax({
-	   //         method: "POST",
-	   //         data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"MotivosExoneracion", "valorDato":optionSelected+"AprobóExoneracion-"+$("#expMotivosExoneracion").val()},
-	   //         url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
-	   //         dataType: 'json',
-	   //         beforeSend: function(){
-	   //             $("#cargando").modal("show");
-	   //         },
-		  //      success: function(respuesta){
-	   //     		if (respuesta.estado == "Insertado") {
-	   //     		    $("#cargando").modal("hide");
-	   //     		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-	   // 				$('#divMotivosExoneracion').addClass("hide");
-	   //     		}
-	   //     }});
+            }});*/
+            
+     		$.ajax({
+	            method: "POST",
+	            data: {"idConcurso":idConcurso, "idAspirante":id, "nombreDato":"ExpMotivosExoneracion", "valorDato":optionSelected},
+	            url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
+	            dataType: 'json',
+	            beforeSend: function(){
+	                $("#cargando").modal("show");
+	            },
+		        success: function(respuesta){
+	        		if (respuesta.estado == "Insertado") {
+	        		    $("#cargando").modal("hide");
+	        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+	    				$('#divMotivosExoneracion').addClass("hide");
+	        		}
+	        }});
     	}
     }
 });
@@ -266,7 +266,7 @@ $('#registrarCalificacion').click(function (){
         var datos = [$("#NotaExEscrito").val(),$("#NotaExOral").val()];
 		$.ajax({
             method: "POST",
-            data: {"idTramite":idConcurso, "idAspirante":id, "nombreDato":"Notas", "valorDato":datos},
+            data: {"idConcurso":idConcurso, "idAspirante":id, "nombreDato":"Notas", "valorDato":datos},
             url: "/web/app_dev.php/preparadores/agregar_datos_aspirante",
             dataType: 'json',
             beforeSend: function(){
@@ -274,21 +274,32 @@ $('#registrarCalificacion').click(function (){
             },
 	        success: function(respuesta){
         		if (respuesta.estado == "Insertado") {
-        		    $("#cargando").modal("hide");
-        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-    				$('#divCalificacion').addClass("hide");
+        		    $.ajax({
+                        method: "POST",
+                        data: {"idConcurso":idConcurso},
+                        url: "/web/app_dev.php/preparadores/aspirante/validar_calificacion_aspirante",
+                        dataType: 'json',
+            	        success: function(respuesta){
+                    		if (respuesta.estado == "Insertado") {
+                    		    $("#cargando").modal("hide");
+                    		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+                				$('#divCalificacion').addClass("hide");
+                    		}
+                    }});
         		}
         }});
     }
 });
 
-/**
- * @param String name
- * @return String
- */
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+function getParameterByName(variable) {
+    // Estoy asumiendo que query es window.location.search.substring(1);
+    var query = window.location.search.substring(1);
+    var vars = query.split("?");
+    for (var i=0; i < vars.length; i++) {
+        var pair = vars[i].split("="); 
+        if (pair[0] == variable) {
+            return pair[1];
+        }
+    }
+    return "";
 }

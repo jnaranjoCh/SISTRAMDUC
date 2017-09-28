@@ -4,7 +4,7 @@ tabla = $('#tabla').DataTable({
   },
   columns: [
   	{ "data": "nro" },
-	{ "data": "asignatura" },
+	{ "data": "nombre" },
 	{ "data": "status" },
 	{ "data": "acciones" }
   ]
@@ -45,7 +45,7 @@ $(window).load( function(){
                     }
                     tabla.row.add( {
                     	"nro": respuesta["id"][i],
-                        "asignatura": respuesta["asignatura"][i],
+                        "nombre": respuesta["nombre"][i],
 						"status": '<span class="label '+classSpan+'">'+respuesta["estado"][i]+'</span>',
                         "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="javascript:verDetalleConcurso('+id+')"><i class="fa fa-search"></i></button>'+
                         			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary '+classGestionar+'" title="Gestionar" onclick="javascript:gestionarConcurso('+id+')"><i class="fa fa-cogs"></i></button>'
@@ -137,7 +137,7 @@ function verDetalleConcurso(id){
 				var date = parse[i].date;
 				var withOutTime = date.split(" ");
 				var insteadMonthDay = withOutTime[0].split("-");
-				var fechaRecepDoc = insteadMonthDay[1] + "/"+ insteadMonthDay[2] + "/"+ insteadMonthDay[0];
+				var fechaRecepDoc = insteadMonthDay[2] + "/"+ insteadMonthDay[1] + "/"+  insteadMonthDay[0];
 				
 				
 				contenidoHTML = contenidoHTML+
@@ -149,8 +149,23 @@ function verDetalleConcurso(id){
 				
 				contenidoHTML = contenidoHTML+
 						'<dt>Recepción de Doc.</dt>'+
-						'<dd>'+fechaRecepDoc+'</dd>'
-					+'</dl>';
+						'<dd>'+fechaRecepDoc+'</dd>';
+					
+				if (respuesta["fechaPresentacion"][i] != null) {
+					var stringify = '['+JSON.stringify(respuesta["fechaPresentacion"][i])+']';
+					var parse = JSON.parse(stringify);
+					var date = parse[i].date;
+					var withOutTime = date.split(" ");
+					var insteadMonthDay = withOutTime[0].split("-");
+					var fechaPresentacion = insteadMonthDay[2] + "/"+ insteadMonthDay[1] + "/"+ insteadMonthDay[0];
+					
+					contenidoHTML = contenidoHTML+
+						'<dt>Presentación:</dt>'+
+						'<dd>'+fechaPresentacion+'</dd>';
+				}
+				
+				contenidoHTML = contenidoHTML+
+					'</dl>';
 				
 				$('#detallesModalBody').append(contenidoHTML);
 				$("#cargando").modal("hide");

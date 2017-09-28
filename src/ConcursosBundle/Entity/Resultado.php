@@ -106,6 +106,7 @@ class Resultado
      *
      * @param string $cedulaAspirante
      *
+     * 
      * @return Resultado
      */
     public function setCedulaAspirante($cedulaAspirante)
