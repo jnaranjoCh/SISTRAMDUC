@@ -38,8 +38,8 @@
        folder instead of downloading all of them to reduce the load. -->
   {% block stylesheets %}{% endblock %}
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<body id="sidebar-mini-aux" class="hold-transition skin-blue sidebar-mini">
+<div id="wraper-aux" class="wrapper">
   <header style="z-index:99;" class="main-header">
     <!-- Logo -->
     <a href="/" class="logo">
@@ -379,24 +379,23 @@
               <a href="{{ path('requisicionRRHH') }}"><i class="fa fa-circle-o"></i>Requisición RR.HH.</a>
             </li>
             
-            <!--
+            
             
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-circle-o"></i><span>Concurso</span>
+                <i class="fa fa-circle-o"></i><span>Concursos</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li data-route="apertura_concurso_oposicion_index">
-                  <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
-                </li>
                 <li data-route="tablaBasicaConcurso">
-                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado</a>
                 </li>
               </ul>
             </li>
+
+            <!--
 
             <li class="treeview">
               <a href="#">
@@ -522,7 +521,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div id="content-wrapper-aux" class="content-wrapper">
     <div class="container-fluid">
       {% block content %}{% endblock %}
     </div>

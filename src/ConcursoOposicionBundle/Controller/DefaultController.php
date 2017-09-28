@@ -12,6 +12,7 @@ use ConcursosBundle\Entity\Concurso;
 use ConcursosBundle\Entity\Aspirante;
 use ConcursosBundle\Entity\Jurado;
 use ConcursoOposicionBundle\Entity\Recusacion;
+use ConcursoOposicionBundle\Entity\Curso;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,14 +27,6 @@ class DefaultController extends Controller
 	{
 		return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
 	}
-	
-    /**
-     * @Route("/concursoOposicion/apertura_concurso_oposicion_index", name="apertura_concurso_oposicion_index")
-     */
-    public function aperturaDeConcursoAction()
-    {
-        return $this->render('ConcursoOposicionBundle::apertura_concurso.html.twig');
-    }
 
     /**
      * @Route("/concursoOposicion/jurado", name="jurado")
@@ -191,7 +184,7 @@ class DefaultController extends Controller
 
             foreach ($this->getUser()->getRoles() as $rol => $valor) {
                 
-                if ($valor == "Asuntos Profesorales")
+                if ($valor == "Asuntos Profesorales" || $valor == "Jefe de Departamento o equivalente" || $valor == "Jefe de Cátedra o equivalente")
                     $encontrado = true;
             }
 
@@ -199,31 +192,54 @@ class DefaultController extends Controller
 
                 $concurso = new Concurso();
 
-                $fecha = $this->cambiarFormatoFecha($request->get("Inicio"));
-
-                $concurso->setFechaInicio(date_create($fecha));
-
-                $concurso->setNroVacantes(intval($request->get("Vacantes")));
-
+                $concurso->setFechaInicio(date_create());
+                $concurso->setNroVacantes(intval($request->get("cargo")));
                 $concurso->setIdUsuario($this->getUser()->getId());
-        
-                if ($request->get("fechaDoc") != null || $request->get("fechaDoc") != "")
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaDoc"));
-                    $concurso->setFechaRecepDoc(date_create($fecha));
-                }
-                
-                if ($request->get("fechaPre") != null || $request->get("fechaPre") != "")
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaPre"));
-                    $concurso->setFechaPresentacion(date_create($fecha));
-                }
-                
-                $concurso->setObservaciones($request->get("observacion"));
+                $concurso->setTipo("Oposicion");
+                $concurso->setCondicion($request->get("ordinario"));
+                $concurso->setTiempoDedicacion($request->get("dedicacion"));
+                $concurso->setNroHoras($request->get("horas"));
+                $concurso->setSede($request->get("sede"));
+                $concurso->setCiudad($request->get("ciudad"));
+                $concurso->setFacultad($request->get("facultad"));
+                $concurso->setDepartamento($request->get("departamento"));
 
-                $concurso->setTipo($request->get("tipo"));
+                if ($request->get("unidad") != '')
+                    $concurso->setAreaPostulacion($request->get("unidad"));
+                else $concurso->setAreaPostulacion("");
 
-                $concurso->setAreaPostulacion($request->get("Area"));
+                if ($request->get("catedra") != '')
+                    $concurso->setEscuela($request->get("catedra"));
+
+                $concurso->setMotivo($request->get("motivo"));
+
+                if ($request->get("motivo_descripcion") != '')
+                    $concurso->setDescMotivo($request->get("motivo_descripcion"));
+                
+                $concurso->setJustificacion($request->get("justificacion"));
+                $concurso->setGradoAcademico($request->get("grado"));
+                $concurso->setProfesion($request->get("profesion"));
+                $concurso->setExperiencia($request->get("experiencia"));
+                $concurso->setAreaConocimiento($request->get("conocimiento"));
+
+                if ($request->get("investigacion") != '')
+                    $concurso->setAreaInvestigacion($request->get("investigacion"));
+
+                if ($request->get("extension") != '')
+                    $concurso->setAreaExtension($request->get("extension"));
+
+                $concurso->setStatus("Esperando Por Presupuesto");
+
+                $cursos = explode("|", $request->get("cadenaCurso"));
+                $tiempos = explode("|", $request->get("cadenaTiempo"));
+                 
+                for ($i=0; $i < intval($request->get("tamano")); $i++) { 
+                    
+                    $curso = new Curso();
+                    $curso->setNombre($cursos[$i]);
+                    $curso->setTiempo($tiempos[$i]);
+                    $concurso->addCurso($curso);
+                }  
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($concurso);

@@ -51,7 +51,7 @@
 		             	
 		             		<div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_ordinario">
 				                
 				                	<label> Condición De Ingreso Como Ordinario </label>
 				                	
@@ -61,8 +61,6 @@
 					                  <option>Auxiliar Docente</option>
 					                  <option>Auxiliar De Investigación</option>
 					                  <option>Categoría Superior a Instructor</option>
-					                  <option>Reincorporación</option>
-					                  <option>Traslado</option>
 					                </select>
 
 				                </div>
@@ -71,7 +69,7 @@
 				            
 				            <div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_dedicacion">
 				                  
 									<label> Tiempo de Dedicación </label>
 				                	
@@ -88,46 +86,14 @@
 				            </div>
 		                
 		                </div>
-		                
-		                <div class="row">
-		             	
-		             		<div class="col-md-6">
-		             		
-		             		<div class="form-group">
-		             		
-		             			<label> Lapso Desde </label>
-		             			
-		             			<div class="form-group">
-		             			<input id="fechaDesde" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask/>
-		             			</div>
-		             			
-		             		</div>
-		             		
-		             		</div>
-		             		
-		             		<div class="col-md-6">
-		             		
-		             		<div class="form-group">
-		             		
-		             			<label> Lapso Hasta </label>
-		             			
-		             			<div class="form-group">
-		             			<input id="fechaHasta" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask/>
-		             			</div>
-		             			
-		             		</div>
-		             		
-		             		</div>
-		             		
-		             	</div>
-		             			             	
+		           		             			             	
 		             	<div class="row">
 		             	
 		             		<div class="col-md-6">
 		             		
-		             		<div class="form-group">
+		             		<div class="form-group has-feedback" id="div_horas">
 		             		
-		             			<label> Tiempo de Dedicación </label>
+		             			<label> Nro de Horas </label>
 				                	
 			                	<select id="horas" class="form-control select2" style="width: 100%;">
 				                  <option selected="selected">...</option>
@@ -169,7 +135,7 @@
 		             	
 				            <div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_sede">
 				                
 				                	<label> Sede o Núcleo </label>
 				                	
@@ -186,7 +152,7 @@
 				            
 				            <div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_ciudad">
 				                
 				                	<label> Ciudad </label>
 				                	
@@ -204,7 +170,7 @@
 	                    
 	                    	<div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_facultad">
 				                
 				                <label> Facultad </label>
 				                				                	
@@ -225,7 +191,7 @@
 				            
 				            <div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_departamento">
 				                
 				                	<label> Escuela / Departamento / Instituto </label>
 				                				                	
@@ -237,11 +203,11 @@
 				            
 				            <div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_investigacion">
 				                
 				                	<label> Unidad Académica / Centro de Investigación </label>
 				                				                	
-				                	<input type="text" class="form-control" maxlength="50" id='investigacion'/>
+				                	<input type="text" class="form-control" maxlength="50" id='unidad'/>
 							  
 				                </div>
 				                
@@ -249,7 +215,7 @@
 				            
 				            <div class="col-md-6">
 		            
-				                <div class="form-group">
+				                <div class="form-group has-feedback" id="div_catedra">
 				                
 				                	<label> Cátedra o Equivalente </label>
 				                				                	
@@ -277,7 +243,117 @@
 	                  <div id="collapseThree" class="panel-collapse collapse">
 	                    <div class="box-body">
 	                    
-	                    	                   
+	                    	<div class="row">
+
+	                    		<div class="col-md-6">
+		            
+					                <div class="form-group has-feedback" id="div_motivo">
+					                
+					                <label> Motivo </label>
+					                				                	
+					                	<select id="motivo" class="form-control select2" style="width: 100%;" onChange="activar(this);">
+						                  <option selected="selected">...</option>
+						                  <option>Incremento de Matrícula Estudiantil</option>
+						                  <option>Reducción del Componente Docente</option>
+						                  <option>Creación de Programas Académicos</option>
+						                  <option>Desincorporación Temporal</option>
+						                  <option>Desincorporación Defínitiva</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6">
+		            
+					                <div class="form-group has-feedback" id="div_cargo">
+					                
+					                	<label> Nro Cargos </label>
+					                				                	
+					                	<input type="text" class="form-control" maxlength="3" id='cargo'/>
+								  
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion11">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion1">
+					                
+					                <label> Descripción </label>
+					                				                	
+					                	<select id="descripcion1" class="form-control select2" style="width: 100%;" onChange="activar2(this);">
+						                  <option selected="selected">...</option>
+						                  <option>Asignaturas</option>
+						                  <option>Carreras/Menciones</option>
+						                  <option>Otros</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion22">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion2">
+					                
+					                <label> Descripción </label>
+					                				                	
+					                	<select id="descripcion2" class="form-control select2" style="width: 100%;">
+						                  <option selected="selected">...</option>
+						                  <option>Año Sabático</option>
+						                  <option>Beca</option>
+						                  <option>Plan Conjunto</option>
+						                  <option>Comisión de Servicio</option>
+						                  <option>Concurso en Trámite</option>
+						                  <option>Misión de Intercambio</option>
+						                  <option>Representación Popular</option>
+						                  <option>Enfermedad o Reposos</option>
+						                  <option>Subsistemas de Educación</option>
+						                  <option>Licencia Remunerada</option>
+						                  <option>Licencia no Remunerada</option>
+						                  <option>Programas de Formación Especiales</option>
+						                  <option>Para Ejercer Cargo en la Administración Pública</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion33">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion3">
+					                
+					                <label> Descripción </label>
+					                				                	
+					                	<select id="descripcion3" class="form-control select2" style="width: 100%;">
+						                  <option selected="selected">...</option>
+						                  <option>Destitución</option>
+						                  <option>Fallecimiento</option>
+						                  <option>Discapacidad Absoluta y Permanente</option>
+						                  <option>Jubilación</option>
+						                  <option>Renuncia</option>
+						                  <option>Traslado</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion44">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion4">
+					                
+					                	<label> Especifique </label>
+					                				                	
+					                	<input type="text" class="form-control" maxlength="100" id='descripcion4'/>
+								  
+					                </div>
+					                
+					            </div>
+
+	                    	</div>
+
 	                    </div>
 	                  </div>
 	                </div>
@@ -293,14 +369,213 @@
 	                  
 	                  <div id="collapseFour" class="panel-collapse collapse">
 	                    <div class="box-body">
-	                    
-	                    	<textarea id="justificacion" class="form-control" rows="3" placeholder="Enter ..." maxlength="499"></textarea>
-	                    	                    	                   
+
+		                    <div class="form-group has-feedback" id="div_justificacion">
+		                    	
+		                    	<textarea id="justificacion" class="form-control" rows="3" placeholder="Justifique ..." maxlength="499"></textarea>
+		                    </div>                    	                   
+	                    </div>
+	                  </div>
+	                </div>
+
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+	                        Perfil del Candidato Requerido Para el Cargo
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseFive" class="panel-collapse collapse">
+	                    <div class="box-body">
+
+	                    	<!-- acordion interno -->
+
+	                    	<div class="panel box box-success">
+			                  <div class="box-header with-border">
+			                    <h4 class="box-title">
+			                        Educación Formal
+			                    </h4>
+			                  </div>
+			                  
+			                  <div id="collapseSix">
+			                    <div class="box-body">
+
+			                    	<div class="col-md-6">
+		             		
+					             		<div class="form-group has-feedback" id="div_grado">
+					             		
+					             			<label> Grado Académico </label>
+							                	
+						                	<select id="grado" class="form-control select2" style="width: 100%;">
+							                  <option selected="selected">...</option>
+							                  <option>Bachiller</option>
+							                  <option>T.S.U</option>
+							                  <option>Licenciatura o Equivalente</option>
+							                  <option>Especialidad</option>
+							                  <option>Magíster</option>
+							                  <option>Doctor / PHD</option>
+							                </select>
+					             		
+					             		</div>
+					             		
+					             	</div>
+
+					             	<div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_profesion">
+						                
+						                	<label> Profesión </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="100" id='profesion'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-6">
+		             		
+					             		<div class="form-group has-feedback" id="div_experiencia">
+					             		
+					             			<label> Requiere Experiencia </label>
+							                	
+						                	<select id="experiencia" class="form-control select2" style="width: 100%;">
+							                  <option selected="selected">...</option>
+							                  <option>Sí</option>
+							                  <option>No</option>
+							                </select>
+					             		
+					             		</div>
+					             		
+					             	</div>
+
+					             	<div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_conocimiento">
+						                
+						                	<label> Área de Conocimiento </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="150" id='conocimiento'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_investigacion">
+						                
+						                	<label> Área de Investigación </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="150" id='investigacion'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_extension">
+						                
+						                	<label> Área de Extensión </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="150" id='extension'/>
+									  
+						                </div>
+						                
+						            </div>
+
+
+				                                    	                   
+			                    </div>
+			                  </div>
+			                </div>
+
+			                <div class="panel box box-success">
+			                  <div class="box-header with-border">
+			                    <h4 class="box-title">
+			                        Educación no Formal
+			                    </h4>
+			                  </div>
+			                  
+			                  <div id="collapseSeven">
+			                    <div class="box-body">
+
+			                    	<div class="col-md-5">
+		            
+						                <div class="form-group has-feedback" id="div_curso">
+						                
+						                	<label> Nombre del Curso </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="50" id='curso'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-5">
+		            
+						                <div class="form-group has-feedback" id="div_tiempo">
+						                
+						                	<label> Tiempo </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="3" id='tiempo'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-2">
+
+						            	<label> <br/> </label>
+		            
+						                <div class="form-group has-feedback" id="div_tiempo">
+						                						                				                	
+						                	<button id="agregarCurso" type="button" class="btn btn-success btn-block btn-flat">+</button>
+		               					 									  
+						                </div>
+						                
+						            </div>
+
+						            <br/><br/><br/>
+
+						            <div class="col-md-12">
+
+						            <table id="tabla" class="table table-bordered table-hover">
+			                          <thead>
+			                          <tr>
+			                            <th>Curso</th>
+			                            <th>Tiempo</th>                      
+			                          </tr>
+			                          </thead>
+			                          <tbody>
+
+			                          </tbody>
+			                      	</table>
+
+			                      	</div>
+
+
+			                    </div>
+	                  		   </div>
+	                  		</div>
+
+			                <!-- acordion interno -->
+		                                    	                   
 	                    </div>
 	                  </div>
 	                </div>
 	                
 	            </div>
+
+	            <br/><br/>
+
+	              <div class="row">
+		                <div class="col-xs-12">
+		                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar Concurso</button>
+		                </div>
+	              </div>
 
             </form>
         </div>
@@ -314,6 +589,8 @@
 
   {% include('ConcursoOposicionBundle:Concurso:saveConcurso.html.twig') %}
   
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
    <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
    <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
    <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
@@ -327,6 +604,17 @@
 			$("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
 			$("[data-mask]").inputmask();
 		});
+
+		tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "curso" },
+              { "data": "tiempo" }             
+          ]
+      });
+
   </script>
 
 {% endblock %}

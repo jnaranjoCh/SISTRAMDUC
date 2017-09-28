@@ -194,6 +194,12 @@
 
 	$("#eliminarConcurso").click(function(){
 
+		tabla1.clear().draw();
+		tabla2.clear().draw();
+		tabla3.clear().draw();
+		tabla4.clear().draw();
+		toastr.clear();
+
 	    $.ajax({
 
 	        method:"POST",
@@ -232,19 +238,20 @@
 					        success: function(data)
 					        {
 				                for (var i = 0; i <= data["vacantes"].length-1; i++) {
-			
+
 				                    var num = data["id"][i];
-			
+
 				                    tabla.row.add( {
 				                        "inicio": data["inicio"][i],
 				                        "vacantes": data["vacantes"][i],
 				                        "area": data["area"][i],
 				                        "doc": data["recepcion"][i],
 				                        "pre": data["presentacion"][i],
+				                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
 				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-				                    }).draw();                          	                                                          
-					            }                       	
+				                    }).draw();                          
+				                }                       	
 					        }
 					     });
 

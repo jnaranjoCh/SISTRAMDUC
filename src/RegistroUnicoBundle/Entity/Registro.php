@@ -108,6 +108,11 @@ class Registro
      */
     private $estatusId;
 
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $url;
+
 
     public function __construct()
     {
@@ -518,6 +523,30 @@ class Registro
     public function setParticipante($participante)
     {
         $this->participantes = $participante;
+        return $this;
+    }
+    
+    /**
+     * Get validado
+     *
+     * @return isValidate
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set validado
+     *
+     * @param $validate
+     *
+     * @return Registro
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
         return $this;
     }
 }

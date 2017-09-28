@@ -11,6 +11,7 @@ use TramiteBundle\Entity\Tramite;
 use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\Transicion;
 use ConcursoOposicionBundle\Entity\Curso;
+use ConcursoOposicionBundle\Entity\Responsable;
 
 /**
  * Concurso
@@ -256,6 +257,11 @@ class Concurso extends Tramite
      * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Curso", mappedBy="concurso", cascade={"remove", "persist"})
      */
     protected $curso;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Responsable", mappedBy="concurso", cascade={"remove", "persist"})
+     */
+    protected $responsable;
     
     /**
      * @var int
@@ -276,6 +282,7 @@ class Concurso extends Tramite
        $this->jurado = new ArrayCollection();
        $this->aspirantes = new ArrayCollection();
        $this->curso = new ArrayCollection();
+       $this->responsable = new ArrayCollection();
     }
     
     // /**
@@ -1050,5 +1057,37 @@ class Concurso extends Tramite
     public function getNombre()
     {
     	return $this->nombre;
+    }
+
+    public function addCurso(Curso $curso)
+    {
+        if (!$this->curso->contains($curso)) {
+
+            $this->curso->add($curso);
+            $curso->setConcurso($this);
+        }
+
+        return $this;
+    }
+
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+    public function addResponsable(Responsable $responsable)
+    {
+        if (!$this->responsable->contains($responsable)) {
+
+            $this->responsable->add($responsable);
+            $responsable->setResponsable($this);
+        }
+
+        return $this;
+    }
+
+    public function getResponsable()
+    {
+        return $this->responsable;
     }
 }
