@@ -42,38 +42,9 @@ oficio_solicitud_buscarcedula_ajax:
     requirements:
         _method:  POST
 
-
 registro_buscaremailconsultar_ajax:
     path:     /consulta/buscar-email-consulta-usuario
     defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:buscarEmailAjax }
     requirements:
         _method:  POST
     
-registro_obtener_ajax:
-    path:     /registro/obtener-datos
-    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
-    requirements:
-        _method:  POST
-        
-
-
-    
-informe_pdf:
-    path: /comision-servicio/informe-pdf
-    defaults: {_controller: ComisionRemuneradaBundle:Default:informePDF}
-    
-informe:
-    path: /comision-servicio/informe
-    defaults: {_controller: ComisionRemuneradaBundle:Default:informe}
-    
-/jubilacion/informe-jubilacion:
-    path: /jubilacion/informe-jubilacion
-    defaults: {_controller: JubilacionBundle::informeJubilacion}
-    requirements:
-        _method: POST|GET
-
-/jubilacion/informe-jubilacion-pdf:
-    path: /jubilacion/informe-jubilacion-pdf
-    defaults: {_controller: JubilacionBundle::informeJubilacionPDF}
-    requirements:
-        _method: GET
