@@ -2,6 +2,7 @@
 
 	var ident;
 	var posicion;
+	var status;
 
 	$( window ).load( function(){
 
@@ -37,7 +38,7 @@
 	                        "facultad": data["facultad"][i],
 	                        "status": data["status"][i],
 	                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
-	                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
+	                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
 	                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
 	                    }).draw();                         
 	                }                                             
@@ -46,151 +47,6 @@
 	    });
 	});
 	
-	function ver(id){
-
-		$('#jur').removeClass("hide");	
-		
-		$('#jurMensaje').addClass("hide");
-		$('#jurTabla').addClass("hide");
-		
-		$('#jurMensaje2').addClass("hide");
-		$('#jurTabla2').addClass("hide"); 
-		
-		$('#jurMensaje3').addClass("hide");
-		$('#jurTabla3').addClass("hide"); 
-		
-		$('#jurMensaje4').addClass("hide");
-		$('#jurTabla4').addClass("hide"); 
-		
-		tabla1.clear().draw();
-		tabla2.clear().draw();
-		tabla3.clear().draw();
-		tabla4.clear().draw();
-
-	    ident = id;
-
-	    $.ajax({
-
-	        method:"POST",
-	        url: "{{ path('listadoJuradosAjax') }}",
-	        dataType: 'json',
-	        data: {"id": id},
-	        success: function(data)
-	        {
-	        	if (data == "N"){
-	        	
-	        		$('#jurMensaje').removeClass("hide");	
-	        	
-	        	} else {
-	        	
-	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
-	        		
-	        			var num = data["id"][i];
-
-                        tabla1.row.add( {
-                            "nombre": data["nombre"][i],
-                            "apellido": data["apellido"][i],
-                            "areainvestigacion": data["areainvestigacion"][i],
-                            "facultad": data["facultad"][i],
-                            "universidad": data["universidad"][i]
-                            }).draw();                               
-	                    }
-	        	
-	        		$('#jurTabla').removeClass("hide");   	
-	        	}                                   
-	        }
-	    });
-	    
-	    $.ajax({
-
-	        method:"POST",
-	        url: "{{ path('listadoSuplentesAjax') }}",
-	        dataType: 'json',
-	        data: {"id": id},
-	        success: function(data)
-	        {
-	        	if (data == "N"){
-	        	
-	        		$('#jurMensaje2').removeClass("hide");	
-	        	
-	        	} else {
-	        	
-	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
-
-	                        tabla2.row.add( {
-	                            "nombre": data["nombre"][i],
-	                            "apellido": data["apellido"][i],
-	                            "areainvestigacion": data["areainvestigacion"][i],
-	                            "facultad": data["facultad"][i],
-	                            "universidad": data["universidad"][i]
-	                            }).draw();                               
-	                    }
-	        	
-	        		$('#jurTabla2').removeClass("hide");   	
-	        	}                                   
-	        }
-	    });
-	    
-	    $.ajax({
-
-	        method:"POST",
-	        url: "{{ path('listadoCPECAjax') }}",
-	        dataType: 'json',
-	        data: {"id": id},
-	        success: function(data)
-	        {
-	        	if (data == "N"){
-	        	
-	        		$('#jurMensaje3').removeClass("hide");	
-	        	
-	        	} else {
-	        	
-	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
-
-	                        tabla3.row.add( {
-	                            "nombre": data["nombre"][i],
-	                            "apellido": data["apellido"][i],
-	                            "areainvestigacion": data["areainvestigacion"][i],
-	                            "facultad": data["facultad"][i],
-	                            "universidad": data["universidad"][i]
-	                            }).draw();                               
-	                    }
-	        	
-	        		$('#jurTabla3').removeClass("hide");   	
-	        	}                                   
-	        }
-	    });
-	    
-	    $.ajax({
-
-	        method:"POST",
-	        url: "{{ path('listadoSuplenteCPECAjax') }}",
-	        dataType: 'json',
-	        data: {"id": id},
-	        success: function(data)
-	        {
-	        	if (data == "N"){
-	        	
-	        		$('#jurMensaje4').removeClass("hide");	
-	        	
-	        	} else {
-	        	
-	        		for (var i = 0; i <= data["nombre"].length-1; i++) {
-
-	                        tabla4.row.add( {
-	                            "nombre": data["nombre"][i],
-	                            "apellido": data["apellido"][i],
-	                            "areainvestigacion": data["areainvestigacion"][i],
-	                            "facultad": data["facultad"][i],
-	                            "universidad": data["universidad"][i]
-	                            }).draw();                               
-	                    }
-	        	
-	        		$('#jurTabla4').removeClass("hide");   	
-	        	}                                   
-	        }
-	    });
-	}
 
 	$("#eliminarConcurso").click(function(){
 
@@ -248,7 +104,7 @@
 				                        "facultad": data["facultad"][i],
 				                        "status": data["status"][i],
 				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
-				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
+				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
 				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
 				                    }).draw();                         
 				                }                        	
@@ -260,6 +116,258 @@
 	            }                                                               
 	        }
 	    });
+	});
+
+
+	$("#actualizarConcurso").click(function(){
+
+		toastr.clear();
+        var text = "";
+
+        var continua = true;
+
+        if (status == "Esperando Por Presupuesto") {
+
+	        $('#div_presupuesto').removeClass("has-error");
+
+	        if ($('#disponibilidad').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_presupuesto').addClass("has-error");
+	        }
+
+	        $('#div_fecha').removeClass("has-error");
+
+	        if ($('#fecha').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_fecha').addClass("has-error");
+	        }
+
+	        $('#div_control').removeClass("has-error");
+
+	        if ($('#control').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_control').addClass("has-error");
+	        }
+        }
+
+        if (status == "Esperando Por Concejo De Escuela") {
+
+        	$('#div_control1').removeClass("has-error");
+
+	        if ($('#control1').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_control1').addClass("has-error");
+	        }
+        }
+
+        if (status == "Esperando Por Concejo De Asuntos Profesorales") {
+
+        	$('#div_avala').removeClass("has-error");
+
+	        if ($('#avala').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_avala').addClass("has-error");
+	        }
+
+	        $('#div_justificacion').removeClass("has-error");
+
+	        if ($('#justificacion').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_justificacion').addClass("has-error");
+	        }
+
+	        $('#div_cargo').removeClass("has-error");
+
+	        if ($('#cargo').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_cargo').addClass("has-error");
+	        }
+
+	        $('#div_nya').removeClass("has-error");
+
+	        if ($('#nya').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_nya').addClass("has-error");
+	        }
+
+	        $('#div_cedula').removeClass("has-error");
+
+	        if ($('#cedula').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_cedula').addClass("has-error");
+	        }
+
+	        $('#div_fecha1').removeClass("has-error");
+
+	        if ($('#fecha1').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_fecha1').addClass("has-error");
+	        }
+
+	        $('#div_control2').removeClass("has-error");
+
+	        if ($('#control2').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_control2').addClass("has-error");
+	        }
+        }
+
+        if (status == "Esperando Por Auditoría Académica") {
+
+        	$('#div_avala1').removeClass("has-error");
+
+	        if ($('#avala1').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_avala1').addClass("has-error");
+	        }
+
+	        $('#div_justificacion1').removeClass("has-error");
+
+	        if ($('#justificacion1').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_justificacion1').addClass("has-error");
+	        }
+
+	        $('#div_cargo1').removeClass("has-error");
+
+	        if ($('#cargo1').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_cargo1').addClass("has-error");
+	        }
+
+	        $('#div_nya1').removeClass("has-error");
+
+	        if ($('#nya1').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_nya1').addClass("has-error");
+	        }
+
+	        $('#div_cedula1').removeClass("has-error");
+
+	        if ($('#cedula1').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_cedula1').addClass("has-error");
+	        }
+
+	        $('#div_fecha2').removeClass("has-error");
+
+	        if ($('#fecha2').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_fecha2').addClass("has-error");
+	        }
+
+	        $('#div_control3').removeClass("has-error");
+
+	        if ($('#control3').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_control3').addClass("has-error");
+	        }
+        }
+
+
+        if (status == "Esperando Por Consejo De Facultad") {
+
+        	$('#div_avala2').removeClass("has-error");
+
+	        if ($('#avala2').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_avala2').addClass("has-error");
+	        }
+
+	        $('#div_justificacion2').removeClass("has-error");
+
+	        if ($('#justificacion2').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_justificacion2').addClass("has-error");
+	        }
+
+	        $('#div_cargo2').removeClass("has-error");
+
+	        if ($('#cargo2').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_cargo2').addClass("has-error");
+	        }
+
+	        $('#div_nya2').removeClass("has-error");
+
+	        if ($('#nya2').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_nya2').addClass("has-error");
+	        }
+
+	        $('#div_cedula2').removeClass("has-error");
+
+	        if ($('#cedula2').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_cedula2').addClass("has-error");
+	        }
+
+	        $('#div_control4').removeClass("has-error");
+
+	        if ($('#control4').val() == ""){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_control4').addClass("has-error");
+	        }
+        }
+
+        if (continua) {
+
+        	// enviar actualizacion
+
+        } else {
+             toastr.error(text, "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+        }
 	});
 	
 	function eliminar(id, pos){
@@ -284,146 +392,16 @@
 	                    "extendedTImeout": "0"
 	                 });
 
-	            } else{
-
-	                $("#modif").addClass("hide");
-	                $("#elim").removeClass("hide");
-
-	                $("#modificarConcurso").addClass("hide");
-	                $("#eliminarConcurso").removeClass("hide");                  
+	            } else{                 
 	                
-	                document.getElementById("vacantes").value = data["vacantes"][0];
-	                document.getElementById("usuario").value = data["usuario"][0];
-	                document.getElementById("inicio").value = data["inicio"][0];
-	                document.getElementById("area").value = data["area"][0];
-	                document.getElementById("recepcion").value = data["recepcion"][0];
-	                document.getElementById("presentacion").value = data["presentacion"][0];
-	                document.getElementById("observacion").value = data["observacion"][0];           
+	                document.getElementById("nroVacantes1").value = data["nroVacantes"][0];
+	                document.getElementById("facultad1").value = data["facultad"][0]; 
+	                document.getElementById("status1").value = data["status"][0]; 
+	                document.getElementById("condicion1").value = data["condicion"][0];         
 	            }                           
 	        }
 	    });
 	}
-
-	$("#modificarConcurso").click(function(){
-
-		toastr.clear();
-        var text = "";
-
-        var fecha = $('#inicio').val();
-        var continua = true;
-
-        $('#fi').removeClass("has-error");
-
-        if (fecha == ""){
-
-            continua = false;
-            text = "Campo vacío";
-            $('#fi').addClass("has-error");
-        }
-
-        var cedula = $('#vacantes').val();
-
-        $('#fa').removeClass("has-error");
-
-        if (cedula == "" || cedula == 0 || cedula == '0'){
-
-            continua = false;
-            $('#fa').addClass("has-error");
-            text = "Campo vacío";
-        }
-
-        $('#fe').removeClass("has-error");
-
-        if ($('#area').val() == ""){
-
-            continua = false;
-            $('#fe').addClass("has-error");
-            text = "Campo vacío";
-        }
-        
-        if (isNaN($('#vacantes').val())){
-        
-        	continua = false;
-            $('#fa').addClass("has-error");
-            text = "No Es Un Número";
-        }
-        
-        if (continua) {
-                
-        	$.ajax({
-        	
-        	    method:"POST",
-		        url: "{{ path('modificarConcursoAjax') }}",
-		        dataType: 'json',
-		        data: {"id": ident,
-		        "Inicio":$("#inicio").val(), 
-		        "Vacantes":$("#vacantes").val(), 
-		        "Area":$("#area").val(), 
-		        "fechaDoc":$("#recepcion").val(), 
-		        "fechaPre":$("#presentacion").val(),
-		        "observacion": $("#observacion").val()},
-		        success: function(data)
-		        {
-		            if (data == "N"){
-	
-		                text = "Usted No Tiene Permiso";
-	
-		                toastr.error(text, "Error", {
-		                    "timeOut": "0",
-		                    "extendedTImeout": "0"
-		                 });
-	
-		            } else {
-	
-		                text = "Concurso Modificado";
-	
-		                toastr.success(text, "Exito", {
-		                    "timeOut": "0",
-		                    "extendedTImeout": "0"
-		                 });
-	
-		                $('#myModal').modal('toggle');
-	
-						tabla.clear().draw();
-	
-						$.ajax({
-
-							method:"POST",
-							url: "{{ path('listadoConcursosAjax') }}",
-							dataType: 'json',
-					        success: function(data)
-					        {
-				                for (var i = 0; i <= data["id"].length-1; i++) {
-
-				                    var num = data["id"][i];
-
-				                    tabla.row.add( {
-				                        "inicio": data["fechaInicio"][i],
-				                        "vacantes": data["nroVacantes"][i],
-				                        "condicion": data["condicion"][i],
-				                        "facultad": data["facultad"][i],
-				                        "status": data["status"][i],
-				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
-				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>',
-				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-				                    }).draw();                         
-				                }                       	
-					        }
-					     });
-	
-		               ident = null; 
-		               posicion = null;
-		            }                                                               
-		        }
-		    });
-        } else {
-        
-        	 toastr.error(text, "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-        }
-	});
 
 	function modificar(id, pos){
 
@@ -447,203 +425,42 @@
 	                    "extendedTImeout": "0"
 	                 });
 
-	            } else{
+	            } else{       
 
-	                $("#elim").addClass("hide");
-	                $("#modif").removeClass("hide");
-
-	                $("#eliminarConcurso").addClass("hide");
-	                $("#modificarConcurso").removeClass("hide");                  
+	            	status = data["status"][0];         
 	                
-	                document.getElementById("vacantes").value = data["vacantes"][0];
-	                document.getElementById("usuario").value = data["usuario"][0];
-	                document.getElementById("inicio").value = data["inicio"][0];
-	                document.getElementById("area").value = data["area"][0];
-	                document.getElementById("recepcion").value = data["recepcion"][0];
-	                document.getElementById("presentacion").value = data["presentacion"][0];
-	                document.getElementById("observacion").value = data["observacion"][0];
+	                document.getElementById("nroVacantes2").value = data["nroVacantes"][0];
+	                document.getElementById("facultad2").value = data["facultad"][0]; 
+	                document.getElementById("status2").value = data["status"][0]; 
+	                document.getElementById("condicion2").value = data["condicion"][0];
+
+	                $("#presupuesto").addClass("hide");
+	                $("#cf").addClass("hide");
+	                $("#prof").addClass("hide");
+	                $("#auditoria").addClass("hide");
+	                $("#consejo").addClass("hide");
+
+	                if (status == "Esperando Por Presupuesto")
+	                	$("#presupuesto").removeClass("hide");
+	                else {
+
+	                	if (status == "Esperando Por Concejo De Escuela") 
+	                		$("#cf").removeClass("hide");
+	                	else {
+
+	                		if (status == "Esperando Por Concejo De Asuntos Profesorales") 
+	                			$("#prof").removeClass("hide");
+	                		else {
+
+	                			if (status == "Esperando Por Auditoría Académica") 
+	                				$("#auditoria").removeClass("hide");
+	                			else $("#consejo").removeClass("hide");
+	                		}
+	                	}
+	                }        
 	            }                           
 	        }
-	        });
+	    });
 	}
-
-	function justNumbers(e){
-
-	    var keynum = window.event ? window.event.keyCode : e.which;
-
-	    if (keynum == 8 || keynum == 46){
-	        return true;
-	    }
-	    else return /\d/.test(String.fromCharCode(keynum));
-	}
-		
-	$('#ingresarCPEC').click(function (){
-	
-		toastr.clear();
-		var text = ""; 
-		var continua = true;
-		
-		if ($('#cedula1').val() == "" || $('#cedula1').val() == null){
-			
-			$("#spancedula1").removeClass("hide");
-			continua = false;
-			$('#cedulaa1').addClass("has-error");
-			text = "Campo Vacío";
-		} else {
-			$("#spancedula1").addClass("hide");
-			$('#cedulaa1').removeClass("has-error");
-		}
-		
-		if (isNaN($('#cedula1').val())){
-			
-			$("#spancedula1").removeClass("hide");
-			continua = false;
-			$('#cedulaa1').addClass("has-error");
-			text = "Esto No Es Un Número";
-		} 
-		
-		if ($('#nombre1').val() == "" || $('#nombre1').val() == null){
-			
-			$("#spannombre1").removeClass("hide");
-			continua = false;
-			$('#nombrea1').addClass("has-error");
-			text = "Campo Vacío";
-		} else {
-			$("#spannombre1").addClass("hide");
-			$('#nombrea1').removeClass("has-error");
-		}
-		
-		if ($('#apellido1').val() == "" || $('#apellido1').val() == null){
-			
-			$("#spanapellido1").removeClass("hide");
-			continua = false;
-			$('#apellidoa1').addClass("has-error");
-			text = "Campo Vacío";
-		} else {
-			$("#spanapellido1").addClass("hide");
-			$('#apellidoa1').removeClass("has-error");
-		}
-		
-		if ($('#facultad1').val() == "" || $('#facultad1').val() == null){
-			
-			$("#spanfacultad1").removeClass("hide");
-			continua = false;
-			$('#facultada1').addClass("has-error");
-			text = "Campo Vacío";
-		} else {
-			$("#spanfacultad1").addClass("hide");
-			$('#facultada1').removeClass("has-error");
-		}
-		
-		if ($('#universidad1').val() == "" || $('#universidad1').val() == null){
-			
-			$("#spanuniversidad1").removeClass("hide");
-			continua = false;
-			$('#universidada1').addClass("has-error");
-			text = "Campo Vacío";
-		} else {
-			$("#spanuniversidad1").addClass("hide");
-			$('#universidada1').removeClass("has-error");
-		}
-		
-		if ($('#area1').val() == "" || $('#area1').val() == null){
-			
-			$("#spanarea1").removeClass("hide");
-			continua = false;
-			$('#areaa1').addClass("has-error");
-			text = "Campo Vacío";
-		} else {
-			$("#spanarea1").addClass("hide");
-			$('#areaa1').removeClass("has-error");
-		}
-
-		if(continua){
-	
-			$.ajax({
-	            method: "POST",
-	            data: {"cedula": $('#cedula1').val(),
-			            "nombre":$('#nombre1').val(),
-			            "tipo":"OposicionCpec", 
-			            "apellido":$('#apellido1').val(), 
-						"facultad":$('#facultad1').val(), 
-						"universidad":$('#universidad1').val(), 
-						"area":$('#area1').val(),
-						"concurso": ident},
-	            url:  "{{ path('registroJuradosAjax') }}",
-	            dataType: 'json',
-	            success: function(data)
-	            {
-	                if (data == "S"){
-
-	                	continua = true;					
-
-	                	toastr.clear();
-
-						text = "Evaluador Insertado";
-
-						toastr.success(text, "Exito", {
-		                    "timeOut": "0",
-		                    "extendedTImeout": "0"
-		                 });
-		                 
-		                  $.ajax({
-
-					        method:"POST",
-					        url: "{{ path('listadoCPECAjax') }}",
-					        dataType: 'json',
-					        data: {"id": ident},
-					        success: function(data)
-					        {
-					        	tabla3.clear().draw();
-					        
-				        		for (var i = 0; i <= data["nombre"].length-1; i++) {
-			
-			                        tabla3.row.add( {
-			                            "nombre": data["nombre"][i],
-			                            "apellido": data["apellido"][i],
-			                            "areainvestigacion": data["areainvestigacion"][i],
-			                            "facultad": data["facultad"][i],
-			                            "universidad": data["universidad"][i]
-			                            }).draw();                               
-				                 }                                  
-					        }
-					    });		                 
-	                } 
-	                else{
-
-	                	toastr.clear();
-
-	                	if (data == "N")		                		
-	                		text = "Usted no tiene permiso";		                	
-	                	else
-		                	text = "Error al Registrar Jurados";			                		                	
-	                	
-	                	toastr.error(text, "Error", {
-				            "timeOut": "0",
-				            "extendedTImeout": "0"
-			         	});
-	                }
-	            }
-	        });	
-	        
-	        $('#myModal1').modal('toggle');	
-		}
-		else{
-			toastr.error(text, "Error", {
-	            "timeOut": "0",
-	            "extendedTImeout": "0"
-	         });
-		}
-	});
-	
-	$('#agregar').click(function (){
-	
-		$('#cedula1').val('');
-        $('#nombre1').val('');
-        $('#apellido1').val(''); 
-		$('#facultad1').val(''); 
-		$('#universidad1').val(''); 
-		$('#area1').val('');
-	});
 
 </script>

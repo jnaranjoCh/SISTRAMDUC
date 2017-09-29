@@ -11,153 +11,450 @@
       </ol>
     </section> 
 
+      <div class="example-modal">
+
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">Desea Eliminar Este Concurso?</h4>
+              </div>
+              <div class="modal-body">
+
+                  <label>Facultad</label>            
+                  <input class="form-control" value="" readOnly="true" id="facultad1"/>
+                  
+                  <br/>
+
+                  <label>Condición de Ingreso</label> 
+                  <input class="form-control" value="" readOnly="true" id="condicion1"/>
+
+                  <br/>
+
+                  <label>Vacantes</label> 
+                  <input class="form-control" value="" readOnly="true" id="nroVacantes1"/>
+
+                  <br/>
+
+                  <label>Status</label>                       
+                  <input class="form-control" value="" readOnly="true" id="status1"/>
+
+              </div>
+              <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-center" data-dismiss="modal">Cancelar</button>
+                <button id="eliminarConcurso" type="button" class="btn btn-success pull-center">Eliminar</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="example-modal">
+
+        <div class="modal fade" id="myModal2" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">Actualizar Concurso</h4>
+              </div>
+              <div class="modal-body">
+
+                  <label>Facultad</label>            
+                  <input class="form-control" value="" readOnly="true" id="facultad2"/>
+                  
+                  <br/>
+
+                  <label>Condición de Ingreso</label> 
+                  <input class="form-control" value="" readOnly="true" id="condicion2"/>
+
+                  <br/>
+
+                  <label>Vacantes</label> 
+                  <input class="form-control" value="" readOnly="true" id="nroVacantes2"/>
+
+                  <br/>
+                        
+                  <label> Status </label>
+                  <input class="form-control" value="" readOnly="true" id="status2"/>
+                  
+                  <br/>
+
+                  <div class="box-body hide" id="presupuesto">
+                      
+                    <div class="row">
+                  
+                    <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_presupuesto">
+                        
+                          <label> Disponibilidad Presupuestaria </label>
+                          
+                          <select id="disponibilidad" class="form-control select2" style="width: 100%;">
+                            <option selected="selected">...</option>
+                            <option>Sí</option>
+                            <option>No</option>
+                          </select>
+
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_fecha">
+                        
+                          <label> A Partir Del </label>
+                          
+                          <input id="fecha" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+
+                        </div>
+                    </div> 
+
+                    <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_control">
+                        
+                          <label> Nro. De Control u Oficio </label>
+                          
+                          <input type="text" class="form-control" maxlength="19" id='control'/>
+
+                        </div>
+                    </div> 
+
+                  </div>
+                </div>  
+              </div>
+
+              <div class="box-body hide" id="cf">
+                      
+                <div class="row">
+
+                  <div class="col-md-3"></div>
+
+                  <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_control1">
+                        
+                          <label> Nro. De Control u Oficio </label>
+                          
+                          <input type="text" class="form-control" maxlength="19" id='control1'/>
+
+                        </div>
+
+                    </div> 
+
+                </div>
+
+              </div>
+
+              <div class="box-body hide" id="prof">
+                      
+                <div class="row">
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_avala">
+                        
+                      <label> Avala </label>
+                      
+                      <select id="avala" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_justificacion">
+                        
+                      <label> Justificación </label>
+                      
+                      <input type="text" class="form-control" maxlength="200" id='justificacion'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_cargo">
+                        
+                      <label> Cargo </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='cargo'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_nya">
+                        
+                      <label> Nombre y Apellido </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='nya'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_cedula">
+                        
+                      <label> Cédula </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='cedula'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+                
+                      <div class="form-group has-feedback" id="div_fecha1">
+                      
+                        <label> Fecha </label>
+                        
+                        <input id="fecha1" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+
+                      </div>
+                  </div> 
+
+                  <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_control2">
+                        
+                          <label> Nro. De Control u Oficio </label>
+                          
+                          <input type="text" class="form-control" maxlength="19" id='control2'/>
+
+                        </div>
+
+                    </div> 
+
+                </div>
+
+              </div>
+
+
+
+              <div class="box-body hide" id="consejo">
+                      
+                <div class="row">
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_avala2">
+                        
+                      <label> Avala </label>
+                      
+                      <select id="avala2" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_justificacion2">
+                        
+                      <label> Justificación </label>
+                      
+                      <input type="text" class="form-control" maxlength="200" id='justificacion2'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_cargo2">
+                        
+                      <label> Cargo </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='cargo2'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_nya2">
+                        
+                      <label> Nombre y Apellido </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='nya2'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_cedula2">
+                        
+                      <label> Cédula </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='cedula2'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_control4">
+                        
+                          <label> Nro. De Control u Oficio </label>
+                          
+                          <input type="text" class="form-control" maxlength="19" id='control4'/>
+
+                        </div>
+
+                    </div> 
+
+                </div>
+
+              </div>
+
+
+
+              <div class="box-body hide" id="auditoria">
+                      
+                <div class="row">
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_avala1">
+                        
+                      <label> Avala </label>
+                      
+                      <select id="avala1" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_justificacion1">
+                        
+                      <label> Justificación </label>
+                      
+                      <input type="text" class="form-control" maxlength="200" id='justificacion1'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_cargo1">
+                        
+                      <label> Cargo </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='cargo1'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_nya1">
+                        
+                      <label> Nombre y Apellido </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='nya1'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_cedula1">
+                        
+                      <label> Cédula </label>
+                      
+                      <input type="text" class="form-control" maxlength="100" id='cedula1'/>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-md-6">
+                
+                      <div class="form-group has-feedback" id="div_fecha2">
+                      
+                        <label> Fecha </label>
+                        
+                        <input id="fecha2" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+
+                      </div>
+                  </div> 
+
+                  <div class="col-md-6">
+                
+                        <div class="form-group has-feedback" id="div_control3">
+                        
+                          <label> Nro. De Control u Oficio </label>
+                          
+                          <input type="text" class="form-control" maxlength="19" id='control3'/>
+
+                        </div>
+
+                    </div> 
+
+                </div>
+
+              </div>
+
+
+
+
+              <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button id="actualizarConcurso" type="button" class="btn btn-success">Guardar</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
     <br/>
     <div class="row">
       <!--Success message-->
       <section class="content-body col-md-offset-1 col-md-10">
-      
-        <div class="modal fade" id="myModal" role="dialog">
-          <div class="modal-dialog">
-          
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 id="elim" class="modal-title hide">Eliminar Concurso</h4>
-                <h4 id="modif" class="modal-title hide">Modificar Concurso</h4>
-              </div>
-              <div class="modal-body">
-
-                <div class="container form-group has-feedback" id="fi">
-                  <label><center>Fecha De Inicio</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-
-                                  <input class="form-control" id='inicio' value="" type="text" placeholder="dd/MM/yyyy" maxlength="10"/>
-
-                                  <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-calendar"></span>
-                                  </span>
-
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-
-                <div class="container form-group has-feedback" id="fa">
-                  <label><center>Nro Vacantes</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-
-                                  <input class="form-control" id='vacantes' value="" type='text' maxlength="3" placeholder="Ejemplo: 123" onkeypress="return justNumbers(event);"/>
-
-                                  <span class="input-group-addon">
-                                      <span class="fa fa-hashtag"></span>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-
-                <div class="container form-group has-feedback" id="fe">
-                  <label><center>Area De Postulaci&oacute;n</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-                                  <input class="form-control" id='area' value=""  maxlength="99" placeholder="Ejemplo: Literatura"/>
-                                  <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-font"></span>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
- 
-                <div class="container">
-                  <label><center>Fecha De Recepci&oacute;n De Documentos</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-
-                                  <input class="form-control" id='recepcion' value="" type="text" placeholder="dd/MM/yyyy" maxlength="10"/>
-
-                                  <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-calendar"></span>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-
-                <div class="container">
-                  <label><center>Fecha De Presentaci&oacute;n</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-                                  <input class="form-control" id='presentacion' value="" type="text" placeholder="dd/MM/yyyy" maxlength="10"/>
-                                  <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-calendar"></span>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>  
-
-                <div class="container">
-                  <label><center>Observaci&oacute;n</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-
-                                  <input type='text' class="form-control" id='observacion' value="" placeholder="comente acerca del concurso" maxlength="200"/>
-
-                                  <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-comment"></span>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>                 
-
-                <div class="container">
-                  <label><center>Responsable De Registro o Modificaci&oacute;n</center></label>
-                  <div class="row">
-                      <div class='col-sm-6'>
-                          <div class="form-group">
-                              <div class='input-group' >
-                                  <input class="form-control" id='usuario' value="" readOnly="true"/>
-                                  <span class="input-group-addon">
-                                      <span class="glyphicon glyphicon-font"></span>
-                                  </span>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                </div>
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                <button id="eliminarConcurso" type="button" class="btn btn-success">Eliminar</button>
-                <button id="modificarConcurso" type="button" class="btn btn-success">Modificar</button>
-              </div>
-            </div>
-            
-          </div>
-        </div>
 
         <br/>
         <div class="register-box-body">
@@ -190,392 +487,7 @@
   		</section> 
   </div>
   
-   <div class="row hide" id="jur">
-      <section class="content-body col-md-offset-1 col-md-10">
-
-        <br/>
-        <div class="register-box-body">
-  
-		  <div class="nav-tabs-custom">
-		    <ul class="nav nav-tabs pull-right">
-		      <li><a href="#suplente" data-toggle="tab">CPEC Suplentes</a></li>
-		      <li><a href="#cpec" data-toggle="tab">CPEC</a></li>
-		      <li><a href="#sales-chart" data-toggle="tab">Jurados Suplentes</a></li>
-		      <li class="active"><a href="#revenue-chart" data-toggle="tab">Jurados</a></li>	      
-		      <li class="pull-left header"><i class="glyphicon glyphicon-search"></i> Detalles</li>
-		    </ul>
-		    <div class="tab-content no-padding">
-		      <!-- Morris chart - Sales -->
-		      <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
-
-					<div class="box">
-                  <div class="box-header">
-                    <h3 class="box-title">Jurados</h3>
-                  </div>
-
-                   <div class="box-body hide" id="jurTabla">
-
-                      <table id="tabla1" class="table table-bordered table-striped">
-                          <thead>
-                          <tr>
-                            <th>Nombre(s)</th>
-                            <th>Apellido(s)</th>
-                            <th>Area Postulaci&oacute;n</th>
-                            <th>Facultad</th>
-                            <th>Universidad</th>                          
-                          </tr>
-                          </thead>
-                          <tbody>
-
-                          </tbody>
-                          <tfoot>
-                             <tr>
-                              <th>Nombre(s)</th>
-                              <th>Apellido(s)</th>
-                              <th>Area Postulaci&oacute;n</th>
-                              <th>Facultad</th>
-                              <th>Universidad</th>                           
-                            </tr>
-                          </tfoot>
-                      </table>
-                   </div>
-                   
-                   <div class="box-body hide" id="jurMensaje">
-
-                 	  <div class="row">		        
-					  	<div class="container form-group has-feedback has-error">
-						    <div class="row">
-						        <div class='col-sm-8'>
-						            <div class="form-group">
-						                <div class='input-group' >
-						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene Jurados Registrados" readOnly="true"/>
-						                    <span class="input-group-addon">
-						                        <span class="glyphicon glyphicon-warning-sign"></span>
-						                    </span>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						</div>
-					</div>
-                   </div>
-
-                </div>
-
-			  </div>
-		      <div class="chart tab-pane" id="sales-chart" style="position: relative;">
-
-					<div class="box">
-                  <div class="box-header">
-                    <h3 class="box-title">Jurados Suplentes</h3>
-                  </div>
-
-                   <div class="box-body hide" id="jurTabla2">
-
-                      <table id="tabla2" class="table table-bordered table-striped">
-                          <thead>
-                          <tr>
-                            <th>Nombre(s)</th>
-                            <th>Apellido(s)</th>
-                            <th>Area Postulaci&oacute;n</th>
-                            <th>Facultad</th>
-                            <th>Universidad</th>                          
-                          </tr>
-                          </thead>
-                          <tbody>
-
-                          </tbody>
-                          <tfoot>
-                             <tr>
-                              <th>Nombre(s)</th>
-                              <th>Apellido(s)</th>
-                              <th>Area Postulaci&oacute;n</th>
-                              <th>Facultad</th>
-                              <th>Universidad</th>                           
-                            </tr>
-                          </tfoot>
-                      </table>
-                   </div>
-                   
-                   <div class="box-body hide" id="jurMensaje2">
-
-                 	  <div class="row">		        
-					  	<div class="container form-group has-feedback has-error">
-						    <div class="row">
-						        <div class='col-sm-8'>
-						            <div class="form-group">
-						                <div class='input-group' >
-						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene Jurados Suplentes Registrados" readOnly="true"/>
-						                    <span class="input-group-addon">
-						                        <span class="glyphicon glyphicon-warning-sign"></span>
-						                    </span>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						</div>
-					</div>
-                   </div>
-
-                </div>
-
-			</div>
-			
-			<div class="chart tab-pane" id="cpec" style="position: relative;">
-
-					<div class="box">
-                  <div class="box-header">
-                    <h3 class="box-title">CPEC</h3>
-                  </div>
-
-                   <div class="box-body hide" id="jurTabla3">
-
-                      <table id="tabla3" class="table table-bordered table-striped">
-                          <thead>
-                          <tr>
-                            <th>Nombre(s)</th>
-                            <th>Apellido(s)</th>
-                            <th>Area Postulaci&oacute;n</th>
-                            <th>Facultad</th>
-                            <th>Universidad</th>                          
-                          </tr>
-                          </thead>
-                          <tbody>
-
-                          </tbody>
-                          <tfoot>
-                             <tr>
-                              <th>Nombre(s)</th>
-                              <th>Apellido(s)</th>
-                              <th>Area Postulaci&oacute;n</th>
-                              <th>Facultad</th>
-                              <th>Universidad</th>                           
-                            </tr>
-                          </tfoot>
-                      </table>
-                      
-                      <br/>
-                      
-                      <div class="container">
-	                  <div class="row">
-	                      <div class='col-sm-6'>
-	                          <div class="form-group">
-	                              <div class='input-group' >
-						              <button id="agregar" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#myModal1">+Agregar</button>
-	                              </div>
-	                          </div>
-	                      </div>
-	                  </div>
-	                </div>
-                      
-                   </div>
-                   
-                   <div class="box-body hide" id="jurMensaje3">
-
-                 	  <div class="row">		        
-					  	<div class="container form-group has-feedback has-error">
-						    <div class="row">
-						        <div class='col-sm-8'>
-						            <div class="form-group">
-						                <div class='input-group' >
-						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene CPEC Registrados" readOnly="true"/>
-						                    <span class="input-group-addon">
-						                        <span class="glyphicon glyphicon-warning-sign"></span>
-						                    </span>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						</div>						
-					</div>
-                   </div>
-                </div>
-			  </div>
-			  
-			  
-			  <div class="chart tab-pane" id="suplente" style="position: relative;">
-
-					<div class="box">
-                  <div class="box-header">
-                    <h3 class="box-title">Suplentes CPEC</h3>
-                  </div>
-
-                   <div class="box-body hide" id="jurTabla4">
-
-                      <table id="tabla4" class="table table-bordered table-striped">
-                          <thead>
-                          <tr>
-                            <th>Nombre(s)</th>
-                            <th>Apellido(s)</th>
-                            <th>Area Postulaci&oacute;n</th>
-                            <th>Facultad</th>
-                            <th>Universidad</th>                          
-                          </tr>
-                          </thead>
-                          <tbody>
-
-                          </tbody>
-                          <tfoot>
-                             <tr>
-                              <th>Nombre(s)</th>
-                              <th>Apellido(s)</th>
-                              <th>Area Postulaci&oacute;n</th>
-                              <th>Facultad</th>
-                              <th>Universidad</th>                           
-                            </tr>
-                          </tfoot>
-                      </table>
-                   </div>
-                   
-                   <div class="box-body hide" id="jurMensaje4">
-
-                 	  <div class="row">		        
-					  	<div class="container form-group has-feedback has-error">
-						    <div class="row">
-						        <div class='col-sm-8'>
-						            <div class="form-group">
-						                <div class='input-group' >
-						                    <input type="text" class="form-control" maxlength="9" value="Este Concurso No Tiene CPEC Registrados" readOnly="true"/>
-						                    <span class="input-group-addon">
-						                        <span class="glyphicon glyphicon-warning-sign"></span>
-						                    </span>
-						                </div>
-						            </div>
-						        </div>
-						    </div>
-						</div>
-					</div>
-                   </div>
-
-                </div>
-
-			  </div>
-			
-			
-			
-		    </div>
-		  </div>
-  		</div>      
-  	</section> 
-  </div>
-  
-  
-  
-  
-  <div class="modal fade" id="myModal1" role="dialog">
-      <div class="modal-dialog">
-      
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Registro de CPEC</h4>
-          </div>
-          <div class="modal-body">
           
-          	<div class="container form-group has-feedback" id="cedulaa1">
-	            <label><center>CPEC</center></label>
-				    <div class="row">
-				        <div class='col-sm-6'>
-				        	<span id="spancedula1" class="label label-danger hide">Vac&iacute;o</span>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="9" placeholder="C&eacute;dula" onkeypress="return justNumbers(event);" id='cedula1' value=""/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-address-card-o"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				<div class="container form-group has-feedback" id="nombrea1">
-				    <div class="row">
-				        <div class='col-sm-6'>
-				        	<span id="spannombre1" class="label label-danger hide">Vac&iacute;o</span>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Nombre Completo" id='nombre1' value=""/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				<div class="container form-group has-feedback" id='apellidoa1'>
-				    <div class="row">
-				        <div class='col-sm-6'>
-				        	<span id="spanapellido1" class="label label-danger hide">Vac&iacute;o</span>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Apellido Completo" id='apellido1' value=""/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-buysellads"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				<div class="container form-group has-feedback" id='facultada1'>
-				    <div class="row">
-				        <div class='col-sm-6'>
-				        	<span id="spanfacultad1" class="label label-danger hide">Vac&iacute;o</span>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Facultad donde ejerce" id='facultad1' value=""/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-graduation-cap"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				<div class="container form-group has-feedback" id='universidada1'>
-				    <div class="row">
-				        <div class='col-sm-6'>
-				        	<span id="spanuniversidad1" class="label label-danger hide">Vac&iacute;o</span>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Universidad donde ejerce" id='universidad1' value=""/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-graduation-cap"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-				<div class="container form-group has-feedback" id='areaa1'>
-				    <div class="row">
-				        <div class='col-sm-6'>
-				       		<span id="spanarea1" class="label label-danger hide">Vac&iacute;o</span>
-				            <div class="form-group">
-				                <div class='input-group' >
-				                    <input type="text" class="form-control" maxlength="30" placeholder="Area de investigaci&oacute;n" id='area1' value=""/>
-				                    <span class="input-group-addon">
-				                        <span class="fa fa-graduation-cap"></span>
-				                    </span>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-            <button id="ingresarCPEC" type="button" class="btn btn-success">Registrar</button>
-          </div>
-        </div>
-        
-      </div>
-    </div>
-  
-
-       
     <br/><br/>
     
 {% endblock %}
@@ -583,12 +495,12 @@
 {% block custom_javascripts %}
 
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
-
   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
 
   <script>
     
@@ -607,74 +519,14 @@
               { "data": "elim" }            
           ]
       });
-      
-      tabla1 = $('#tabla1').DataTable({
-        "language": {
-                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
-          },
-          columns: [
-              { "data": "nombre" },
-              { "data": "apellido" },
-              { "data": "areainvestigacion" },
-              { "data": "facultad" },
-              { "data": "universidad" }
-          ]
-      });
-      
-      tabla2 = $('#tabla2').DataTable({
-        "language": {
-                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
-          },
-          columns: [
-              { "data": "nombre" },
-              { "data": "apellido" },
-              { "data": "areainvestigacion" },
-              { "data": "facultad" },
-              { "data": "universidad" }                  
-          ]
-      });
-      
-      tabla3 = $('#tabla3').DataTable({
-        "language": {
-                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
-          },
-          columns: [
-              { "data": "nombre" },
-              { "data": "apellido" },
-              { "data": "areainvestigacion" },
-              { "data": "facultad" },
-              { "data": "universidad" }     
-          ]
-      });
-      
-      tabla4 = $('#tabla4').DataTable({
-        "language": {
-                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
-          },
-          columns: [
-              { "data": "nombre" },
-              { "data": "apellido" },
-              { "data": "areainvestigacion" },
-              { "data": "facultad" },
-              { "data": "universidad" }     
-          ]
-      });
-
+          
   </script>
 
   <script>
 
-    $('#inicio').datepicker({
-      autoclose: true
-    });
-
-    $('#recepcion').datepicker({
-      autoclose: true
-    });
-
-    $('#presentacion').datepicker({
-      autoclose: true
-    });
+    $(".select2").select2();
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+      $("[data-mask]").inputmask();
 
   </script>
 
