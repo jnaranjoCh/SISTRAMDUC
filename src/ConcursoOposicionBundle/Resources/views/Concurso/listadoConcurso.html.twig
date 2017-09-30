@@ -125,6 +125,8 @@
         var text = "";
 
         var continua = true;
+        var datos = {};
+        datos.id = ident;
 
         if (status == "Esperando Por Presupuesto") {
 
@@ -135,8 +137,9 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_presupuesto').addClass("has-error");
-	        }
 
+	        } else datos.disponibilidad = $('#disponibilidad').val();
+	        
 	        $('#div_fecha').removeClass("has-error");
 
 	        if ($('#fecha').val() == ""){
@@ -144,7 +147,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_fecha').addClass("has-error");
-	        }
+
+	        } else datos.fecha = $('#fecha').val();
 
 	        $('#div_control').removeClass("has-error");
 
@@ -153,6 +157,23 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_control').addClass("has-error");
+
+	        } else datos.control = $('#control').val();
+
+	        $('#div_aprobado').removeClass("has-error");
+
+	        if ($('#aprobado').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_aprobado').addClass("has-error");
+
+	        } else {
+
+	        	if ($('#aprobado').val() == "Sí")
+	        		datos.status = "Esperando Por Concejo De Escuela";
+	        	else 
+	        		datos.status = "Rechazado";
 	        }
         }
 
@@ -165,6 +186,23 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_control1').addClass("has-error");
+
+	        } else datos.control = $('#control1').val();
+
+	        $('#div_aprobado2').removeClass("has-error");
+
+	        if ($('#aprobado2').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_aprobado2').addClass("has-error");
+
+	        } else {
+
+	        	if ($('#aprobado2').val() == "Sí")
+	        		datos.status = "Esperando Por Concejo De Asuntos Profesorales";
+	        	else 
+	        		datos.status = "Rechazado";
 	        }
         }
 
@@ -177,7 +215,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_avala').addClass("has-error");
-	        }
+
+	        } else datos.avala = $('#avala').val();
 
 	        $('#div_justificacion').removeClass("has-error");
 
@@ -186,7 +225,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_justificacion').addClass("has-error");
-	        }
+
+	        } else datos.justificacion = $('#justificacion').val();
 
 	        $('#div_cargo').removeClass("has-error");
 
@@ -195,7 +235,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_cargo').addClass("has-error");
-	        }
+
+	        } else datos.cargo = $('#cargo').val();
 
 	        $('#div_nya').removeClass("has-error");
 
@@ -204,7 +245,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_nya').addClass("has-error");
-	        }
+
+	        } else datos.nya = $('#nya').val();
 
 	        $('#div_cedula').removeClass("has-error");
 
@@ -213,7 +255,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_cedula').addClass("has-error");
-	        }
+
+	        } else datos.cedula = $('#cedula').val();
 
 	        $('#div_fecha1').removeClass("has-error");
 
@@ -222,7 +265,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_fecha1').addClass("has-error");
-	        }
+
+	        } else datos.fecha = $('#fecha1').val();
 
 	        $('#div_control2').removeClass("has-error");
 
@@ -231,6 +275,23 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_control2').addClass("has-error");
+
+	        } else datos.control = $('#control2').val();
+
+	        $('#div_aprobado1').removeClass("has-error");
+
+	        if ($('#aprobado1').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_aprobado1').addClass("has-error");
+
+	        } else {
+
+	        	if ($('#aprobado1').val() == "Sí")
+	        		datos.status = "Esperando Por Auditoría Académica";
+	        	else 
+	        		datos.status = "Rechazado";
 	        }
         }
 
@@ -243,7 +304,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_avala1').addClass("has-error");
-	        }
+
+	        } else datos.avala = $('#avala1').val();
 
 	        $('#div_justificacion1').removeClass("has-error");
 
@@ -252,7 +314,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_justificacion1').addClass("has-error");
-	        }
+
+	        } else datos.justificacion = $('#justificacion1').val();
 
 	        $('#div_cargo1').removeClass("has-error");
 
@@ -261,7 +324,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_cargo1').addClass("has-error");
-	        }
+
+	        } else datos.cargo = $('#cargo1').val();
 
 	        $('#div_nya1').removeClass("has-error");
 
@@ -270,7 +334,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_nya1').addClass("has-error");
-	        }
+
+	        } else datos.nya = $('#nya1').val();
 
 	        $('#div_cedula1').removeClass("has-error");
 
@@ -279,7 +344,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_cedula1').addClass("has-error");
-	        }
+
+	        } else datos.cedula = $('#cedula1').val();
 
 	        $('#div_fecha2').removeClass("has-error");
 
@@ -288,7 +354,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_fecha2').addClass("has-error");
-	        }
+
+	        } else datos.fecha = $('#fecha2').val();
 
 	        $('#div_control3').removeClass("has-error");
 
@@ -297,11 +364,28 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_control3').addClass("has-error");
+
+	        } else datos.control = $('#control3').val();
+
+	        $('#div_aprobado3').removeClass("has-error");
+
+	        if ($('#aprobado3').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_aprobado3').addClass("has-error");
+
+	        } else {
+
+	        	if ($('#aprobado3').val() == "Sí")
+	        		datos.status = "Esperando Por Concejo De Facultad";
+	        	else 
+	        		datos.status = "Rechazado";
 	        }
         }
 
 
-        if (status == "Esperando Por Consejo De Facultad") {
+        if (status == "Esperando Por Concejo De Facultad") {        	
 
         	$('#div_avala2').removeClass("has-error");
 
@@ -310,7 +394,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_avala2').addClass("has-error");
-	        }
+
+	        } else datos.avala = $('#avala2').val();
 
 	        $('#div_justificacion2').removeClass("has-error");
 
@@ -319,7 +404,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_justificacion2').addClass("has-error");
-	        }
+
+	        } else datos.justificacion = $('#justificacion2').val();
 
 	        $('#div_cargo2').removeClass("has-error");
 
@@ -328,7 +414,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_cargo2').addClass("has-error");
-	        }
+
+	        } else datos.cargo = $('#cargo2').val();
 
 	        $('#div_nya2').removeClass("has-error");
 
@@ -337,7 +424,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_nya2').addClass("has-error");
-	        }
+
+	        } else datos.nya = $('#nya2').val();
 
 	        $('#div_cedula2').removeClass("has-error");
 
@@ -346,7 +434,8 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_cedula2').addClass("has-error");
-	        }
+
+	        } else datos.cedula = $('#cedula2').val();
 
 	        $('#div_control4').removeClass("has-error");
 
@@ -355,12 +444,88 @@
 	            continua = false;
 	            text = "Campo vacío";
 	            $('#div_control4').addClass("has-error");
+
+	        } else datos.control = $('#control4').val();
+
+	        $('#div_aprobado4').removeClass("has-error");
+
+	        if ($('#aprobado4').val() == "..."){
+
+	            continua = false;
+	            text = "Campo vacío";
+	            $('#div_aprobado4').addClass("has-error");
+
+	        } else {
+
+	        	if ($('#aprobado4').val() == "Sí")
+	        		datos.status = "Aprobado";
+	        	else 
+	        		datos.status = "Rechazado";
 	        }
         }
 
         if (continua) {
 
-        	// enviar actualizacion
+        	$.ajax({
+
+	        method:"POST",
+	        url: "{{ path('modificarConcursoAjax') }}",
+	        dataType: 'json',
+	        data: datos,
+	        success: function(data)
+	        {
+	            if (data == "N"){
+
+	                text = "No Se Encontró El Concurso";
+
+	                toastr.error(text, "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
+
+	            } else{                 
+	                
+	                text = "Concurso Eliminado";
+
+	                toastr.success(text, "Exito", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
+
+	                $('#myModal2').modal('toggle');
+
+	                tabla.clear().draw();
+	
+						$.ajax({
+
+							method:"POST",
+							url: "{{ path('listadoConcursosAjax') }}",
+							dataType: 'json',
+					        success: function(data)
+					        {
+				                for (var i = 0; i <= data["id"].length-1; i++) {
+
+				                    var num = data["id"][i];
+
+				                    tabla.row.add( {
+				                        "inicio": data["fechaInicio"][i],
+				                        "vacantes": data["nroVacantes"][i],
+				                        "condicion": data["condicion"][i],
+				                        "facultad": data["facultad"][i],
+				                        "status": data["status"][i],
+				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
+				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+				                    }).draw();                         
+				                }                        	
+					        }
+					     });
+
+	               ident = null; 
+	               posicion = null;	                         
+	            }                           
+	        }
+	    });
 
         } else {
              toastr.error(text, "Error", {
@@ -439,6 +604,7 @@
 	                $("#prof").addClass("hide");
 	                $("#auditoria").addClass("hide");
 	                $("#consejo").addClass("hide");
+	                $("#actualizarConcurso").removeClass("hide");
 
 	                if (status == "Esperando Por Presupuesto")
 	                	$("#presupuesto").removeClass("hide");
@@ -454,7 +620,16 @@
 
 	                			if (status == "Esperando Por Auditoría Académica") 
 	                				$("#auditoria").removeClass("hide");
-	                			else $("#consejo").removeClass("hide");
+	                			else {
+
+	                				if (status == "Esperando Por Concejo De Facultad") 
+	                					$("#consejo").removeClass("hide");
+	                				else {
+
+	                					$("#actualizarConcurso").addClass("hide");
+	                				}
+	                			}
+	                			
 	                		}
 	                	}
 	                }        
