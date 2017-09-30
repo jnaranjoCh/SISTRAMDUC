@@ -15,17 +15,31 @@ class SolicitudController extends Controller
         return $this->render('ClausulasContractualesABundle:Solicitud:discapacidad.html.twig');
     }
 
-    public function primaHijosAction($email, $state)
-    {
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($email);
-        $hijos = $user->getHijosObject();
-        $tipos = $this->getDoctrine()->getEntityManager()->getRepository('TramiteBundle:Duracion')->findAll();
-        return $this->render('ClausulasContractualesABundle:Solicitud:prima_hijos.html.twig', array('hijos' => $hijos, 'tipos' => $tipos));
+    public function becaIndexAction($state = "initial"){
+        $tipos = $this->getDoctrine()->getManager()->getRepository('TramiteBundle:Duracion')->findAll();
+        return $this->render('ClausulasContractualesABundle:Solicitud:beca.html.twig', array('tipos' => $tipos));
+    
+    }
+    public function primaHijosIndexAction($state = "initial"){
+        $tipos = $this->getDoctrine()->getManager()->getRepository('TramiteBundle:Duracion')->findAll();
+        return $this->render('ClausulasContractualesABundle:Solicitud:prima_hijos.html.twig', array('tipos' => $tipos));
+    }
+
+    public function primaHijosAction(Request $request){
+        if($request->isXmlHttpRequest()){
+            $value[][] = "";
+            $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('Cedula'));
+            $hijos = $user->getHijosObject();
+            $value = $this->bdToArrayDescription($hijos, $value);
+            return new JsonResponse($value);
+        }else
+            throw $this->createNotFoundException('Error al devolver datos');
+    
     }
 
     public function guardarArchivosPrimaAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($request->get('email'));
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('mail'));
         $dir_subida_carta_solteria = $this->container->getParameter('kernel.root_dir').'/../web/uploads/constancias/hijo/solteria/';
         $dir_subida_carta_solteria = $dir_subida_carta_solteria."carta_solteria_".$request->get('selectedHijo').".pdf";
         $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')->findOneByNombre('Carta de soltería');
@@ -78,24 +92,24 @@ class SolicitudController extends Controller
         $em->persist($recaudo);
         $em->flush();
 
-        if(move_uploaded_file($_FILES['input']['tmp_name'][0], $dir_subida_carta_solteria)) {
-            if(move_uploaded_file($_FILES['input']['tmp_name'][1], $dir_subida_carta_expensas)) {
-                if(move_uploaded_file($_FILES['input']['tmp_name'][2], $dir_subida_constancia_estudio)) {
-                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'success')));
+        if(move_uploaded_file($_FILES['inputPrima']['tmp_name'][0], $dir_subida_carta_solteria)) {
+            if(move_uploaded_file($_FILES['inputPrima']['tmp_name'][1], $dir_subida_carta_expensas)) {
+                if(move_uploaded_file($_FILES['inputPrima']['tmp_name'][2], $dir_subida_constancia_estudio)) {
+                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijosIndex',array('state' => 'success')));
                 }else{
-                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
+                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijosIndex',array('state' => 'error')));
                 }
             }else{
-                return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
+                return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijosIndex',array('state' => 'error')));
             }
         }else{
-            return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijos',array('email' => $request->get('email'), 'state' => 'error')));
+            return new RedirectResponse($this->generateUrl('clausulas_contractuales_prima_hijosIndex',array('state' => 'error')));
         }
     }
     
     public function discapacidadAction(Request $request){
         $value[][] = "";
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('Cedula'));
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('Cedula'));
         $hijos = $user->getHijosObject();
         $value = $this->bdToArrayDescription($hijos, $value);
         return new JsonResponse($value);
@@ -103,7 +117,7 @@ class SolicitudController extends Controller
 
     public function guardarArchivosDiscapacidadAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('mail'));
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('mail'));
 
         $dir_subida_carta_solteria = $this->container->getParameter('kernel.root_dir').'/../web/uploads/constancias/hijo/solteria/';
         $dir_subida_carta_solteria = $dir_subida_carta_solteria."carta_solteria_".$request->get('selectedHijo').".pdf";
@@ -201,67 +215,85 @@ class SolicitudController extends Controller
                     if(move_uploaded_file($_FILES['inputDiscapacidad']['tmp_name'][3], $dir_subida_cedula_identidad)) {
                         if(move_uploaded_file($_FILES['inputDiscapacidad']['tmp_name'][4], $dir_subida_carta_solteria)) {
                             if(move_uploaded_file($_FILES['inputDiscapacidad']['tmp_name'][5], $dir_subida_carta_expensas)) {                                
-                               return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'success')));
+                               return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'success')));
                             }else{
-                                return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'error')));    
+                                return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'error')));    
                             }
                         }else{
-                            return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'error')));    
+                            return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'error')));    
                         }
                     }else{
-                        return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'error')));
+                        return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'error')));
                     }
                 }else{
-                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'error')));
+                    return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'error')));
                 }
             }else{
-                return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'error')));
+                return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'error')));
             }
         }else{
-            return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidad',array('email' => $request->get('email'), 'state' => 'error')));
+            return new RedirectResponse($this->generateUrl('clausulas_contractuales_discapacidadIndex',array('state' => 'error')));
         }
     }
-    
-    public function becaAction($email, $state)
-    {
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($email);
+
+    public function becaAction(Request $request){
+        $value[][] = "";
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('Cedula'));
         $hijos = $user->getHijosObject();
-        $tipos = $this->getDoctrine()->getEntityManager()->getRepository('TramiteBundle:Duracion')->findAll();
-        return $this->render('ClausulasContractualesABundle:Solicitud:beca.html.twig', array('hijos' => $hijos, 'tipos' => $tipos));
+        $value = $this->bdToArrayDescription($hijos, $value);
+        return new JsonResponse($value);
     }
     
-    
+        
     public function guardarArchivosBecaAjaxAction(Request $request){
         $em = $this->getDoctrine()->getManager();
-        $newRecaudo = new Recaudo();
-        $user = $this->getDoctrine()->getEntityManager()->getRepository('AppBundle:Usuario')->findOneByCorreo($request->get('email'));
+        $recaudo = new Recaudo();
+        $user = $this->getDoctrine()->getManager()->getRepository('AppBundle:Usuario')->findOneByCedula($request->get('mail'));
         $duracion = $em->getRepository('TramiteBundle:Duracion')->findOneByValor($request->get('selectedDuracion')); 
         
-        $dir_subida = $this->container->getParameter('kernel.root_dir').'/../web/uploads/constancias/hijo/estudio/';
-        $dir_subida = $dir_subida."constancia_estudio_".$request->get('selectedHijo').".pdf";
+        $dir_subida_constancia_estudio = $this->container->getParameter('kernel.root_dir').'/../web/uploads/constancias/hijo/estudio/';
+        $dir_subida_constancia_estudio = $dir_subida_constancia_estudio."constancia_estudio_".$request->get('selectedHijo').".pdf";
         
-        $newRecaudo->setDuracion($duracion);
+        $recaudo->setDuracion($duracion);
         $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')->findOneByNombre('Constancia de estudio o de inscripción');
-        $newRecaudo->setName("constancia_estudio_".$request->get('selectedHijo').".pdf");
-        $newRecaudo->setFechaVencimiento(null);
-        $newRecaudo->setUsuario($user);
-        $newRecaudo->setTipoRecaudo($tipo_recaudo);
-        $newRecaudo->setTabla("");
-        $newRecaudo->setPath($dir_subida);
+        $recaudo->setName("constancia_estudio_".$request->get('selectedHijo').".pdf");
+        $recaudo->setFechaVencimiento(null);
+        $recaudo->setUsuario($user);
+        $recaudo->setTipoRecaudo($tipo_recaudo);
+        $recaudo->setTabla("");
+        $recaudo->setPath($dir_subida_constancia_estudio);
         if($duracion->getDescripcion() == "Otro"){
-            $newRecaudo->setDuracionAdministrador($request->get('valorOtro'));
+            $recaudo->setDuracionAdministrador($request->get('valorOtro'));
         }else{
-            $newRecaudo->setDuracionAdministrador($duracion->getValor());
+            $recaudo->setDuracionAdministrador($duracion->getValor());
         }
-        $em->persist($newRecaudo);
+        $em->persist($recaudo);
+        
+        $dir_subida_cedula_identidad = $this->container->getParameter('kernel.root_dir').'/../web/uploads/recaudos/cedula/hijos/';
+        $dir_subida_cedula_identidad = $dir_subida_cedula_identidad."cedula_identidad_".$request->get('selectedHijo').".pdf";
+        $tipo_recaudo = $em->getRepository('TramiteBundle:TipoRecaudo')->findOneByNombre('Cedula');
+        
+        $recaudo = new Recaudo();
+        $recaudo->setName("cedula_identidad_".$request->get('selectedHijo').".pdf");
+        $recaudo->setFechaVencimiento(null);
+        $recaudo->setDuracion($em->getRepository('TramiteBundle:Duracion')->findOneByValor('12'));
+        $recaudo->setUsuario($user);
+        $recaudo->setTipoRecaudo($tipo_recaudo);
+        $recaudo->setTabla("");
+        $recaudo->setPath($dir_subida_cedula_identidad);
+        $recaudo->setDuracionAdministrador(null);
+        $em->persist($recaudo);
+        
         $em->flush();
 
-        
-
-        if(move_uploaded_file($_FILES['input']['tmp_name'][0], $dir_subida)) {
-            return new RedirectResponse($this->generateUrl('clausulas_contractuales_beca',array('email' => $request->get('email'), 'state' => 'success')));
+        if(move_uploaded_file($_FILES['inputBeca']['tmp_name'][0], $dir_subida_constancia_estudio)) {
+            if(move_uploaded_file($_FILES['inputBeca']['tmp_name'][1], $dir_subida_cedula_identidad)) {
+                return new RedirectResponse($this->generateUrl('clausulas_contractuales_becaIndex',array( 'state' => 'success')));
+            }else{
+                return new RedirectResponse($this->generateUrl('clausulas_contractuales_becaIndex',array( 'state' => 'error')));
+            }                
         }else{
-            return new RedirectResponse($this->generateUrl('clausulas_contractuales_beca',array('email' => $request->get('email'), 'state' => 'error')));
+            return new RedirectResponse($this->generateUrl('clausulas_contractuales_becaIndex',array( 'state' => 'error')));
         }
     }
 

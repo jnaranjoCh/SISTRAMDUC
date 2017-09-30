@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/skins/_all-skins.min.css') }}">
   <!-- Multiple inputs css -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/cursorLink.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   {% block stylesheets %}{% endblock %}
@@ -235,11 +236,11 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li data-route="clausulas_contractuales_prima_hijos">
-                  <a href="{{ path('clausulas_contractuales_prima_hijos', { 'email': app.user.getCorreo(), 'state': 'initial' }) }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                <li data-route="clausulas_contractuales_prima_hijosIndex">
+                  <a href="{{ path('clausulas_contractuales_prima_hijosIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
                 </li>
-                <li data-route="clausulas_contractuales_beca">
-                  <a href="{{path('clausulas_contractuales_beca', { 'email': app.user.getCorreo(), 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
+                <li data-route="clausulas_contractuales_becaIndex">
+                  <a href="{{path('clausulas_contractuales_becaIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
                 </li>
                 <li data-route="clausulas_contractuales_discapacidadIndex">
                   <a href="{{path('clausulas_contractuales_discapacidadIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>

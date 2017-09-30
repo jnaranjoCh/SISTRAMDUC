@@ -23,41 +23,125 @@
       </div>
     </div>
     
+    <!-- Modal de búsqueda-->   
+    <div class="modal fade" id="registrosBusqueda" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Usuarios registrados</h4>
+          </div>
+          <div class="modal-body">
+            <div style="overflow-x: scroll; white-space: nowrap;">
+              <table id="tableUsers" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Cédula</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="registros">
+                </tbody>
+                <tfoot>
+                <tr>
+                 <th>Cédula</th>
+                 <th>Estado</th>
+                 <th>Acciones</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <div class="row">
-      <section class="content-body col-md-offset-2 col-md-8">
+      <section class="content-body">
         <br/>
           <form id="primaForm" action="{{ path('clausulas_contractuales_guardarArchivosPrimaAjaxAction') }}" method="post" enctype="multipart/form-data">
-            <input name="email" type="text" value="{{ app.user.getCorreo() }}" class="hidden"/>
-            <div class="box-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Seleccione un hijo para filtrar la información</label>
-                    <select id="selectedHijo" name="selectedHijo" class="form-control select2" style="width: 100%;">
-                      <option selected="selected" value="" disabled>Seleccione</option>
-                      {% for hijo in hijos %}
-                        <option value="{{ hijo.getPrimerNombre() }}_{{ hijo.getPrimerApellido() }}_{{ hijo.getId() }}">{{ hijo.getPrimerNombre() }} {{ hijo.getPrimerApellido() }}</option>
-                      {% endfor %}
-                    </select>
+            <!--sección de búsqueda-->
+            <div class="col-md-offset-1 col-md-10">
+              <div class="box box-default box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-search"></i><b>&nbsp;&nbsp;Búsqueda</b></h3>
+                </div>
+
+                <div class="box-body">
+                  <p>A continuación inserte la cédula de un titular y luego presione "Buscar" para presentar la información de los hijos.</p>
+                  <hr><br>
+                  <div class="row">
+                    <div class="col-md-offset-1 col-md-5">
+                      <div class="form-group has-feedback">
+                            <input id="mail" name="mail" type="email" class="form-control" placeholder="Inserte cédula">
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                        <button id="generate" type="button" class="btn btn-primary btn-block btn-flat">Buscar</button>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group has-feedback">
+                        <button  id="viewUsers" type="button" class="btn btn-primary btn-block btn-flat" data-toggle="modal" data-target="#registrosBusqueda">Ver usuarios</button>
+                      </div>
+                    </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div id="recaudos" class="col-md-12 hidden">
-              <div class="box box-info collapsed-box">
+            <!--fin de sección de búsqueda-->
+
+            <div class="col-md-offset-1 col-md-10">
+              <div class="box box-solid box-default" >
+
                 <div class="box-header with-border">
-                  <h3><i class="fa fa fa-list-alt"></i> Recaudos</h3>
-                  </br>
-                  <p>A continuación adjunte los recaudos especificados.</p>
-                  </br>
-                  
+                  <h3 class="box-title"><i class="fa fa-female"></i><i class="fa fa-child"></i><i class="fa fa-male"></i><b>&nbsp;&nbsp;Hijos</b></h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="miniPersonal" class="btn btn-box-tool hidden" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>
+
+                <div id="boxBodyHijos" class="box-body">
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                      <div class="form-group">
+                        <label>Seleccione un hijo para filtrar la información</label>
+                        <select id="selectedHijo" name="selectedHijo" class="form-control select2" style="width: 100%;">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="recaudos" class="col-md-10 col-md-offset-1">
+              <div class="box box-default box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;<b>Recaudos</b></h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" id="miniRecaudo" class="btn btn-box-tool hidden" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                  </div>
+                </div>             
+                
+                <div id="boxBodyRecaudos" class="box-body">
+                  <p>A continuación adjunte los recaudos especificados:</p>
+                  <hr>
                   <div class="row">    
                     <div class="col-md-12">
-                      <div id="duracion" class="form-group has-feedback">
-                        <label class="control-label">Tipo de período académico</label>
-                        <select id="selectedDuracion" name="selectedDuracion" class="form-control select2" style="width: 100%;">
-                          <option selected="selected" value="" disabled>Seleccione</option>
+                      <div id="divselectedDuracion" class="form-group has-feedback">
+                        <label for="divselectedDuracion" class="control-label">Tipo de período académico</label>
+                        <select id="selectedDuracion" name="selectedDuracion" class="form-control select2" style="width: 100%;" required>
+                          <option selected="selected" value="">Seleccione una opción</option>
                           {% for tipo in tipos %}
                             <option value="{{ tipo.getValor() }}">{{ tipo.getDescripcion() }}</option>
                           {% endfor %}
@@ -65,25 +149,26 @@
                       </div>
                     </div>
                   </div>
-
-                  <div id="duracionInput" class="row hidden">    
+                  <div class="row">    
                     <div class="col-md-12">
-                      <div class="form-group has-feedback">
+                      <div id="divvalorOtro" class="form-group has-feedback hidden">
                         <label class="control-label">Tiempo de duración de período académico</label>
                         </br>
                         <input id="valorOtro" name="valorOtro" type="number" min="1" max="24"/>
                       </div>
                     </div>
                   </div>
-
-                  <div class="row">    
-                    <div class="col-md-12">
-                      <div id="documentosPrima" class="form-group has-feedback">
-                        <label class="control-label">Constancia de inscripción o de estudio, Carta de soltería, Carta de expensas</label>
-                        <input id="cargarDocumentosPrima" name="input[]" accept="application/pdf" multiple type="file" class="file" data-show-upload="false" data-show-caption="true">
-                        <span id="spanDocumentosPrima" class="glyphicon form-control-feedback"></span>
-                      </div>
-                    </div>
+                  <br>
+                  <div id="divcargarDocumentos" class="form-group has-feedback">
+                    <label for="divcargarDocumentos" align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Cédula de identidad</label>
+                    <br>
+                    <label for="divcargarDocumentos" align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Constancia de estudio o de inscripción</label>
+                    <br>
+                    <label for="divcargarDocumentos" align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Carta de soltería</label>
+                    <br>
+                    <label for="divcargarDocumentos" align="justify"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Carta de expensas</label>
+                    <input id="cargarDocumentos" name="inputPrima[]" accept="application/pdf" multiple type="file" class="file" data-show-upload="false" data-show-caption="true">
+                    <span id="spanDocumentos" class="glyphicon form-control-feedback"></span>
                   </div>
                   
                   <div class="row">
@@ -101,6 +186,10 @@
 
 {% block custom_javascripts %}
   <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/loadSolicitud.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/inicializarSolicitud.js') }}"></script>
   <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/visible.js') }}"></script>
   <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/guardarDatos.js') }}"></script>
+  <script src="{{ asset('assets/js/ClausulasContractuales/Solicitud/buscar.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/tableUsersCopy.js') }}"></script>
+  <script src="{{ asset('assets/js/RegistroUnico/configTable.js') }}"></script>
 {% endblock %}

@@ -654,7 +654,7 @@ class ConsultarDatosController extends Controller
             {
               $data["Copiar"] = '<div class="col-md-2">
                     <div class="form-group has-feedback">
-                          <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                          <a id="copiar_'.$i.'">Seleccionar</a>
                     </div>
                   </div>';
                $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCedula().'</label>';
