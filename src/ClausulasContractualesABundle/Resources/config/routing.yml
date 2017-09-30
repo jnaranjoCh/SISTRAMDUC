@@ -46,3 +46,15 @@ clausulas_contractuales_discapacidadIndex:
     path:     /clausulas-contractuales/discapacidadIndex/{state}
     defaults: { _controller: ClausulasContractualesABundle:Solicitud:discapacidadIndex}
         
+
+clausulas_contractuales_indicador_de_reproceso_index:
+    path:     /clausulas-contractuales/indicadorDeReprocesoIndex
+    defaults: { _controller: ClausulasContractualesABundle:Reporte:indicadorDeReprocesoIndex}
+
+clausulas_contractuales_rendicion_por_frecuencia_index:
+    path:     /clausulas-contractuales/rendicionPorFrecuenciaIndex
+    defaults: { _controller: ClausulasContractualesABundle:Reporte:rendicionPorFrecuenciaIndex}
+    
+clausulas_contractuales_rendicion_por_monto_index:
+    path:     /clausulas-contractuales/rendicionPorMontoIndex
+    defaults: { _controller: ClausulasContractualesABundle:Reporte:rendicionPorMontoIndex}
