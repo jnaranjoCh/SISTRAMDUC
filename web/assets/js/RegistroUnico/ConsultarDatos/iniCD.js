@@ -41,4 +41,16 @@ $( window ).load(function() {
             "bDestroy": true
     });
     
+    $.ajax({
+        method: "POST",
+        url:  routeRegistroUnico['registro_obtener_ajax'],
+        dataType: 'json',
+        success: function(data){
+            var tipoDedicaion ="<option value='' selected='selected'>Seleccione una opción</option>";
+            for(var i = 0; i < data["tipo_dedicacion"].length; i++)
+                tipoDedicaion = tipoDedicaion+"<option value='"+data["tipo_dedicacion"][i]+"'>"+data["tipo_dedicacion"][i]+"</option>";
+            $("#tipoDedicacionDatos").html(tipoDedicaion);
+        }
+    });
+    
 });

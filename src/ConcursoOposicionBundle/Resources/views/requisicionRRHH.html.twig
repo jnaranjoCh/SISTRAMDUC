@@ -1,0 +1,632 @@
+{% extends 'base.html.twig' %}
+
+{% block content %} 
+
+	<div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+          <br/>
+          <label style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;">Guardando datos...</label>
+        </div>
+      </div>
+    </div>
+
+    <section class="content-header">
+      <h1>
+        Requisición RR.HH.
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Concurso Oposici&oacute;n</li>
+        <li class="active"> Requisición RR.HH. </li>
+      </ol>
+    </section>
+ 
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+        <br/>
+        <div class="register-box-body">
+            <form id="requisicionRRHH">
+		          
+		          <div class="box-body">
+	              <div class="box-group" id="accordion">
+
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                    
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+	                        Datos De La Solicitud
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseOne" class="panel-collapse collapse in">
+	                    <div class="box-body">
+	                    
+	                    	<div class="row">
+		             	
+		             		<div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_ordinario">
+				                
+				                	<label> Condición De Ingreso Como Ordinario </label>
+				                	
+				                	<select id="ordinario" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Instructor</option>
+					                  <option>Auxiliar Docente</option>
+					                  <option>Auxiliar De Investigación</option>
+					                  <option>Categoría Superior a Instructor</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_dedicacion">
+				                  
+									<label> Tiempo de Dedicación </label>
+				                	
+				                	<select id="dedicacion" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Dedicación Exclusiva</option>
+					                  <option>Tiempo Convencional</option>
+					                  <option>Medio Tiempo</option>
+					                  <option>Tiempo Completo</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+		                
+		                </div>
+		           		             			             	
+		             	<div class="row">
+		             	
+		             		<div class="col-md-6">
+		             		
+		             		<div class="form-group has-feedback" id="div_horas">
+		             		
+		             			<label> Nro de Horas </label>
+				                	
+			                	<select id="horas" class="form-control select2" style="width: 100%;">
+				                  <option selected="selected">...</option>
+				                  <option>1</option>
+				                  <option>2</option>
+				                  <option>3</option>
+				                  <option>4</option>
+				                  <option>5</option>
+				                  <option>6</option>
+				                  <option>7</option>
+				                  <option>18</option>
+				                  <option>35</option>
+				                  <option>38</option>
+				                </select>
+		             		
+		             		</div>
+		             		
+		             		</div>
+
+		             		<div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_control">
+				                
+				                	<label> Nro. Control </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="19" id='control'/>
+							  
+				                </div>
+				                
+				            </div>
+		             		
+		             	</div>
+	                    	
+	                    
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+	                        Ubicación Administrativa / Geográfica
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseTwo" class="panel-collapse collapse">
+	                    <div class="box-body">
+	                    
+	                    <div class="row">
+		             	
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_sede">
+				                
+				                	<label> Sede o Núcleo </label>
+				                	
+				                	<select id="sede" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Aragua/Morita</option>
+					                  <option>Carabobo</option>
+					                  <option>Cojedes</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_ciudad">
+				                
+				                	<label> Ciudad </label>
+				                	
+				                	<select id="ciudad" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Maracay</option>
+					                  <option>Valencia</option>
+					                  <option>San Carlos</option>
+					                  <option>Pto. Cabello</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+	                    
+	                    	<div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_facultad">
+				                
+				                <label> Facultad </label>
+				                				                	
+				                	<select id="facultad" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Facultad de Ciencias Jurídicas y Políticas</option>
+					                  <option>Facultad de Ciencias de la Salud</option>
+					                  <option>Facultad de Ingeniería</option>
+					                  <option>Facultad de Ciencias Económicas y Sociales</option>
+					                  <option>Facultad de Ciencias de la Educación</option>
+					                  <option>Facultad de Odontología</option>
+					                  <option>Facultad Experimental de Ciencias y Tecnología</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_departamento">
+				                
+				                	<label> Escuela / Departamento / Instituto </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="50" id='departamento'/>
+							  
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_investigacion">
+				                
+				                	<label> Unidad Académica / Centro de Investigación </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="50" id='unidad'/>
+							  
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_catedra">
+				                
+				                	<label> Cátedra o Equivalente </label>
+				                				                	
+				                	<input type="text" class="form-control" maxlength="50" id='catedra'/>
+							  
+				                </div>
+				                
+				            </div>
+	                    
+	                    </div>
+	                  </div>
+	                </div>           
+	                	                
+	              </div>
+	                
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+	                        Motivo de la Solicitud
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseThree" class="panel-collapse collapse">
+	                    <div class="box-body">
+	                    
+	                    	<div class="row">
+
+	                    		<div class="col-md-6">
+		            
+					                <div class="form-group has-feedback" id="div_motivo">
+					                
+					                <label> Motivo </label>
+					                				                	
+					                	<select id="motivo" class="form-control select2" style="width: 100%;" onChange="activar(this);">
+						                  <option selected="selected">...</option>
+						                  <option>Incremento de Matrícula Estudiantil</option>
+						                  <option>Reducción del Componente Docente</option>
+						                  <option>Creación de Programas Académicos</option>
+						                  <option>Desincorporación Temporal</option>
+						                  <option>Desincorporación Defínitiva</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6">
+		            
+					                <div class="form-group has-feedback" id="div_cargo">
+					                
+					                	<label> Nro Cargos </label>
+					                				                	
+					                	<input type="text" class="form-control" maxlength="3" id='cargo'/>
+								  
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion11">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion1">
+					                
+					                <label> Descripción </label>
+					                				                	
+					                	<select id="descripcion1" class="form-control select2" style="width: 100%;" onChange="activar2(this);">
+						                  <option selected="selected">...</option>
+						                  <option>Asignaturas</option>
+						                  <option>Carreras/Menciones</option>
+						                  <option>Otros</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion22">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion2">
+					                
+					                <label> Descripción </label>
+					                				                	
+					                	<select id="descripcion2" class="form-control select2" style="width: 100%;">
+						                  <option selected="selected">...</option>
+						                  <option>Año Sabático</option>
+						                  <option>Beca</option>
+						                  <option>Plan Conjunto</option>
+						                  <option>Comisión de Servicio</option>
+						                  <option>Concurso en Trámite</option>
+						                  <option>Misión de Intercambio</option>
+						                  <option>Representación Popular</option>
+						                  <option>Enfermedad o Reposos</option>
+						                  <option>Subsistemas de Educación</option>
+						                  <option>Licencia Remunerada</option>
+						                  <option>Licencia no Remunerada</option>
+						                  <option>Programas de Formación Especiales</option>
+						                  <option>Para Ejercer Cargo en la Administración Pública</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion33">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion3">
+					                
+					                <label> Descripción </label>
+					                				                	
+					                	<select id="descripcion3" class="form-control select2" style="width: 100%;">
+						                  <option selected="selected">...</option>
+						                  <option>Destitución</option>
+						                  <option>Fallecimiento</option>
+						                  <option>Discapacidad Absoluta y Permanente</option>
+						                  <option>Jubilación</option>
+						                  <option>Renuncia</option>
+						                  <option>Traslado</option>
+						                </select>
+
+					                </div>
+					                
+					            </div>
+
+					            <div class="col-md-6 hide" id="div_descripcion44">
+		            
+					                <div class="form-group has-feedback" id="div_descripcion4">
+					                
+					                	<label> Especifique </label>
+					                				                	
+					                	<input type="text" class="form-control" maxlength="100" id='descripcion4'/>
+								  
+					                </div>
+					                
+					            </div>
+
+	                    	</div>
+
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+	                        Justficación de la Solicitud
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseFour" class="panel-collapse collapse">
+	                    <div class="box-body">
+
+		                    <div class="form-group has-feedback" id="div_justificacion">
+		                    	
+		                    	<textarea id="justificacion" class="form-control" rows="3" placeholder="Justifique ..." maxlength="499"></textarea>
+		                    </div>                    	                   
+	                    </div>
+	                  </div>
+	                </div>
+
+	                <div class="panel box box-primary">
+	                  <div class="box-header with-border">
+	                    <h4 class="box-title">
+	                      <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+	                        Perfil del Candidato Requerido Para el Cargo
+	                      </a>
+	                    </h4>
+	                  </div>
+	                  
+	                  <div id="collapseFive" class="panel-collapse collapse">
+	                    <div class="box-body">
+
+	                    	<!-- acordion interno -->
+
+	                    	<div class="panel box box-success">
+			                  <div class="box-header with-border">
+			                    <h4 class="box-title">
+			                        Educación Formal
+			                    </h4>
+			                  </div>
+			                  
+			                  <div id="collapseSix">
+			                    <div class="box-body">
+
+			                    	<div class="col-md-6">
+		             		
+					             		<div class="form-group has-feedback" id="div_grado">
+					             		
+					             			<label> Grado Académico </label>
+							                	
+						                	<select id="grado" class="form-control select2" style="width: 100%;">
+							                  <option selected="selected">...</option>
+							                  <option>Bachiller</option>
+							                  <option>T.S.U</option>
+							                  <option>Licenciatura o Equivalente</option>
+							                  <option>Especialidad</option>
+							                  <option>Magíster</option>
+							                  <option>Doctor / PHD</option>
+							                </select>
+					             		
+					             		</div>
+					             		
+					             	</div>
+
+					             	<div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_profesion">
+						                
+						                	<label> Profesión </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="100" id='profesion'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-6">
+		             		
+					             		<div class="form-group has-feedback" id="div_experiencia">
+					             		
+					             			<label> Requiere Experiencia </label>
+							                	
+						                	<select id="experiencia" class="form-control select2" style="width: 100%;">
+							                  <option selected="selected">...</option>
+							                  <option>Sí</option>
+							                  <option>No</option>
+							                </select>
+					             		
+					             		</div>
+					             		
+					             	</div>
+
+					             	<div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_conocimiento">
+						                
+						                	<label> Área de Conocimiento </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="150" id='conocimiento'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_investigacion">
+						                
+						                	<label> Área de Investigación </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="150" id='investigacion'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-6">
+		            
+						                <div class="form-group has-feedback" id="div_extension">
+						                
+						                	<label> Área de Extensión </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="150" id='extension'/>
+									  
+						                </div>
+						                
+						            </div>
+
+
+				                                    	                   
+			                    </div>
+			                  </div>
+			                </div>
+
+			                <div class="panel box box-success">
+			                  <div class="box-header with-border">
+			                    <h4 class="box-title">
+			                        Educación no Formal
+			                    </h4>
+			                  </div>
+			                  
+			                  <div id="collapseSeven">
+			                    <div class="box-body">
+
+			                    	<div class="col-md-5">
+		            
+						                <div class="form-group has-feedback" id="div_curso">
+						                
+						                	<label> Nombre del Curso </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="50" id='curso'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-5">
+		            
+						                <div class="form-group has-feedback" id="div_tiempo">
+						                
+						                	<label> Tiempo </label>
+						                				                	
+						                	<input type="text" class="form-control" maxlength="3" id='tiempo'/>
+									  
+						                </div>
+						                
+						            </div>
+
+						            <div class="col-md-2">
+
+						            	<label> <br/> </label>
+		            
+						                <div class="form-group has-feedback" id="div_tiempo">
+						                						                				                	
+						                	<button id="agregarCurso" type="button" class="btn btn-success btn-block btn-flat">+</button>
+		               					 									  
+						                </div>
+						                
+						            </div>
+
+						            <br/><br/><br/>
+
+						            <div class="col-md-12">
+
+						            <table id="tabla" class="table table-bordered table-hover">
+			                          <thead>
+			                          <tr>
+			                            <th>Curso</th>
+			                            <th>Tiempo</th>                      
+			                          </tr>
+			                          </thead>
+			                          <tbody>
+
+			                          </tbody>
+			                      	</table>
+
+			                      	</div>
+
+
+			                    </div>
+	                  		   </div>
+	                  		</div>
+
+			                <!-- acordion interno -->
+		                                    	                   
+	                    </div>
+	                  </div>
+	                </div>
+	                
+	            </div>
+
+	            <br/><br/>
+
+	              <div class="row">
+		                <div class="col-xs-12">
+		                  <button id="registrarConcurso" type="button" class="btn btn-success btn-block btn-flat">Registrar Concurso</button>
+		                </div>
+	              </div>
+
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  {% include('ConcursoOposicionBundle:Concurso:saveConcurso.html.twig') %}
+  
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+         
+   <script>
+	  $(function () {
+	
+	    	$(".select2").select2();	
+			$("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+			$("[data-mask]").inputmask();
+		});
+
+		tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "curso" },
+              { "data": "tiempo" }             
+          ]
+      });
+
+  </script>
+
+{% endblock %}

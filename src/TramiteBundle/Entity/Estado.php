@@ -4,6 +4,7 @@ namespace TramiteBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use ConcursosBundle\Entity\Aspirante;
 
 /**
  * Estado
@@ -52,9 +53,15 @@ class Estado
      */
     protected $transicionesCatedra;
     
+    /**
+     * @ORM\OneToMany(targetEntity="ConcursosBundle\Entity\Aspirante", mappedBy="estado")
+     */
+    protected $aspirantes;
+    
     public function __construct()
     {
         $this->transiciones = new ArrayCollection();
+        $this->aspirantes = new ArrayCollection();
     }
 
     /**
@@ -186,6 +193,35 @@ class Estado
     public function getTransicionesConsejo()
     {
         return $this->transicionesConsejo;
+    }
+    
+    /**
+     * Add aspirante
+     * @param \ConcursosBundle\Entity\Aspirante $aspirante
+     * @return aspirante
+     */
+    public function addAspirante(\ConcursosBundle\Entity\Aspirante $aspirante)
+    {
+        $this->aspirantes[] = $aspirante;
+        return $this;
+    }
+
+    /**
+     * Remove aspirante
+     * @param \ConcursosBundle\Entity\Aspirante $aspirante
+     */
+    public function removeAspirante(\ConcursosBundle\Entity\Aspirante $aspirante)
+    {
+        $this->aspirantes->removeElement($aspirante);
+    }
+
+    /**
+     * Get aspirante
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAspirante()
+    {
+        return $this->aspirantes;
     }
 }
 

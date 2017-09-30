@@ -38,7 +38,8 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">',
                 "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
                 "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
-                "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
+                "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">',
+                "Archivo": '<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="Archivo'+tableRegistros.page.info().recordsTotal+'" href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
             }).draw();
             $('#tableRegistros_last').click();
         }
@@ -181,7 +182,7 @@ $('#restablecer').click(function(){
         url:   routeRegistroUnico['registro_consultardocumentshijos_ajax'],
         dataType: 'json',
         success: function(data){
-            if(data != null)
+            if($.trim(data.length))
             {
                 var paths = [];
                 var config = [];
@@ -266,6 +267,7 @@ $('#restablecer').click(function(){
             $("#FechaVencimientoCedulaDatos").val(DateFormat(data.Files[2].fecha_vencimiento.date));
             $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
             $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
+            $("#tipoDedicacionDatos").val(data.TipoDedicacion);
             data.Files = burbuja(data.Files);
             if($("#url").val().split('/')[1] == "assets")
             {
@@ -331,8 +333,8 @@ $('#restablecer').click(function(){
                                     "url": tableLenguage['datatable-spanish']
                             },
                             columns: [
-                                {"data": "Delete"},
-                                {"data": "Id"},
+                                {"data":"Delete"},
+                                {"data":"Id"},
                                 {"data":"TipoDeReferencia"},
                                 {"data":"Descripcion"},
                                 {"data":"Nivel"},
@@ -340,8 +342,9 @@ $('#restablecer').click(function(){
                                 {"data":"AnoDePublicacionAsistencia"},
                                 {"data":"EmpresaInstitucion"},
                                 {"data":"TituloObtenido"},
-                                { "data": "CiudadPais"},
-                                { "data": "Congreso"}
+                                { "data":"CiudadPais"},
+                                { "data":"Congreso"},
+                                {"data":"Archivo"}
                             ]
                         });
                         
@@ -409,7 +412,8 @@ $('#agregarRegistros').click(function(){
         "EmpresaInstitucion": '<input id="EmpresaInstitucion'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">',
         "TituloObtenido": '<input id="TituloObtenido'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Titulo Obtenido">',
         "CiudadPais": '<input id="CiudadPais'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Ciudad / Pais">',
-        "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">'
+        "Congreso": '<input id="Congreso'+tableRegistros.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Congreso">',
+        "Archivo": '<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="Archivo'+tableRegistros.page.info().recordsTotal+'" href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
     }).draw();
     $('#tableRegistros_last').click();
 });

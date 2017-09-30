@@ -1,5 +1,6 @@
 var id = getParameterByName('id');
 var nroAspirantes;
+var idAspiranteEliminar = "";
 
 aspirantes = $('#aspirantes').DataTable({
 "language": {
@@ -10,6 +11,7 @@ aspirantes = $('#aspirantes').DataTable({
 	{ "data": "nombreCompleto" },
 	{ "data": "correo" },
 	{ "data": "telefono" },
+	{ "data": "status" },
 	{ "data": "acciones" }
   ]
 });
@@ -39,8 +41,29 @@ $(window).load( function(){
             });
     var text = "";
     $("#dateTime1").datetimepicker();
-    $("#EscritaConductaReporteCargaDatos").fileinput({
-        language: "es"
+    $("#ComunicacionEscrita").fileinput({
+        language: "es",
+        maxFileCount: 1,
+        overwriteInitial: true,
+        uploadAsync: false,
+        initialPreviewAsData: true,
+        initialPreviewFileType: 'pdf'
+    });
+    $("#CartaConducta").fileinput({
+        language: "es",
+        maxFileCount: 1,
+        overwriteInitial: true,
+        uploadAsync: false,
+        initialPreviewAsData: true,
+        initialPreviewFileType: 'pdf'
+    });
+    $("#ReporteNota").fileinput({
+        language: "es",
+        maxFileCount: 1,
+        overwriteInitial: true,
+        uploadAsync: false,
+        initialPreviewAsData: true,
+        initialPreviewFileType: 'pdf'
     });
     document.getElementById("IdConcurso").value = id;
     $.ajax({
@@ -117,51 +140,88 @@ $(window).load( function(){
 				var date = parse[i].date;
 				var withOutTime = date.split(" ");
 				var insteadMonthDay = withOutTime[0].split("-");
-				var fechaRecepDoc = insteadMonthDay[1] + "/"+ insteadMonthDay[2] + "/"+ insteadMonthDay[0];
+				var fechaRecepDoc = insteadMonthDay[2] + "/"+ insteadMonthDay[1] + "/"+ insteadMonthDay[0];
 				
 				
 				contenidoHTML = contenidoHTML+
 						'<dt><u><b>Fechas Importantes</b></u></dt>'+
 						'<dd></dd>'+
 						'<dt>Recepción de Doc.:</dt>'+
-						'<dd>'+fechaRecepDoc+'</dd>'+
+						'<dd>'+fechaRecepDoc+'</dd>';
+				
+				if (respuesta["fechaPresentacion"][i] != null) {
+					var stringify = '['+JSON.stringify(respuesta["fechaPresentacion"][i])+']';
+					var parse = JSON.parse(stringify);
+					var date = parse[i].date;
+					var withOutTime = date.split(" ");
+					var insteadMonthDay = withOutTime[0].split("-");
+					var fechaPresentacion = insteadMonthDay[2] + "/"+ insteadMonthDay[1] + "/"+ insteadMonthDay[0];
+					
+					contenidoHTML = contenidoHTML+
+						'<dt>Presentación:</dt>'+
+						'<dd>'+fechaPresentacion+'</dd>';
+				}
+				
+				contenidoHTML = contenidoHTML+
 					'</dl>';
 					
 				$('#detalleConcursoSeleccionado').append(contenidoHTML);
 				
 				for (var i = 0; i <= respuesta["idAspirante"].length-1; i++) {
                     var idAspirante = respuesta["idAspirante"][i];
+                    var classSpan="";
+                    var classGestionar="";
+                    var classEliminar="hide";
+                    if(respuesta["estado"][i]=="Registrado"){
+                    	classSpan= "label-primary";
+                    	classEliminar= "";
+                    }else if(respuesta["estado"][i]=="Pendiente"){
+						classSpan= "label-warning";
+                    }else if(respuesta["estado"][i]=="Aprobado"){
+						classSpan= "label-success";
+                    }else if(respuesta["estado"][i]=="Rechazado"){
+						classSpan= "label-danger";
+						classGestionar= "hide";
+                    }else if(respuesta["estado"][i]=="Calificado"){
+						classSpan= "label-success";
+						classGestionar= "hide";
+                    }
                     aspirantes.row.add( {
                     	"cedula": respuesta["cedula"][i],
                         "nombreCompleto": respuesta["nombreCompleto"][i],
                         "correo": respuesta["correo"][i],
                         "telefono": respuesta["telefono"][i],
+                        "status": '<span class="label '+classSpan+'">'+respuesta["estado"][i]+'</span>',
                         "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="javascript:verDetalleAspirante('+idAspirante+')"><i class="fa fa-search"></i></button>'+
-                        			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Gestionar" onclick="javascript:gestionarAspirante('+idAspirante+')"><i class="fa fa-cogs"></i></button>'
+                        			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary '+classEliminar+'"'+' title="Eliminar" onclick="javascript:processEliminarAspirante('+idAspirante+')"><i class="fa fa-trash-o"></i></button>'+
+                        			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary '+classGestionar+'"'+' title="Gestionar" onclick="javascript:gestionarAspirante('+idAspirante+')"><i class="fa fa-cogs"></i></button>'
                     }).draw();                          
                 }
             }
 		}
     });
     
- //   var recaudos = ["AprobarPresupuesto","AprobarJurado","Veredicto","FechaRecepDoc","CambioJurado"];
-	// $.ajax({
- //       method: "POST",
- //       data: {"idTramite":id, "nombresRecaudos":recaudos},
- //       url: "/web/app_dev.php/preparadores/validar_accion_solicitud",
- //       dataType: 'json',
- //       beforeSend: function(){
- //           $("#cargandoAcciones").modal("show");
- //       },
- //       success: function(respuesta){
- //       	$("#cargandoAcciones").modal("hide");
- //       	if (respuesta != "") {
- //   		    $(respuesta).removeClass("hide");
- //   		}else{
- //   			text = "No hay acciones permitidas para esta solicitud.";
- //       		toastr.warning(text, "Alerta!", {"timeOut": "0","extendedTImeout": "0"});
- //   		}
- //   }});
+    var recaudos = ["CausalDesierto","FechaEvaluacion","Aspirantes","Nombramiento"];
+	$.ajax({
+        method: "POST",
+        data: {"idTramite":id, "nombresRecaudos":recaudos},
+        url: "/web/app_dev.php/preparadores/validar_accion_concurso",
+        dataType: 'json',
+        beforeSend: function(){
+            $("#cargando").modal("show");
+        },
+        success: function(respuesta){
+        	$("#cargando").modal("hide");
+        	if (respuesta.length > 0) {
+        		for (var i = 0; i <= respuesta.length-1; i++) {
+        			$(respuesta[i]).removeClass("hide");
+        		}
+    		}else{
+	   			text = "No tiene acciones permitidas para este concurso.";
+        		toastr.warning(text, "Alerta!", {"timeOut": "0","extendedTImeout": "0"});
+    		}
+    	}
+	});
 });
 
 $('#closeAspirantes').click(function (){ 
@@ -196,6 +256,7 @@ $('#cargarConcursoDesierto').click(function (){
         		    $("#guardandoDatos").modal("hide");
         		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
     				$('#divConcursoDesierto').addClass("hide");
+    				$('#divAspirantes').addClass("hide");
         		}
         }});
 	}
@@ -227,6 +288,7 @@ $('#enviarFechaEvaluacion').click(function (){
         		    $("#guardandoDatos").modal("hide");
         		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
     				$('#divFechaEvaluacion').addClass("hide");
+    				window.location.assign("/web/app_dev.php/preparadores/concurso/gestionar?id="+id);
         		}
         }});
     }
@@ -234,6 +296,7 @@ $('#enviarFechaEvaluacion').click(function (){
 
 $("#guardarAspirante").click(function (){
 	var inputs = ["Cedula","Correo","PrimerNombre","SegundoNombre","PrimerApellido","SegundoApellido","Promedio","Nota1","Nota2"];
+	var inputsFiles = ["ComunicacionEscrita","CartaConducta","ReporteNota"];
 	var falla = false;
 	var text = "";
 	
@@ -249,22 +312,40 @@ $("#guardarAspirante").click(function (){
         }
     }
     
+    for(var i = 0; i < inputsFiles.length; i++){
+        if($("#"+inputsFiles[i]).fileinput("getFilesCount") < 1){
+    		$("#div"+inputsFiles[i]).addClass("has-error");
+    		if(!falla){
+	    		falla = true;
+	    		text = "Debe seleccionar un archivo.";
+    		}
+        }else{
+    		$("#div"+inputsFiles[i]).removeClass("has-error");
+        }
+    }
+    
     if (falla){
 		toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
 	} else {
-		if($("#EscritaConductaReporteCargaDatos").fileinput("getFilesCount") > 3 || $("#EscritaConductaReporteCargaDatos").fileinput("getFilesCount") < 3){
-	        falla = true;
-	        // $("#spanEscritaConductaReporteCargaDatos").addClass("glyphicon-remove");
-	        $("#divEscritaConductaReporteCargaDatos").addClass("has-error");
-	        text = "Son sólo tres archivos en el orden especificado (Comunicación Escrita, Carta de Conducta y Reporte de Notas).";
-	    }
-	    if (falla){
-			toastr.error(text, "Error!", {"timeOut": "0","extendedTImeout": "0"});
-		} else {
-		    $("#guardandoDatos").modal("show");
-		    document.getElementById("newAspiranteForm").submit();
-		}
+	    $("#confirmRegister").modal("show");
 	}
+});
+
+$("#siRegistrar").click(function (){
+	toastr.clear();
+    $("#confirmRegister").modal("hide");
+    $("#guardandoDatos").modal("show");
+    document.getElementById("newAspiranteForm").submit();
+    $.ajax({
+        method: "POST",
+        data: {"idTramite":id, "nombreRecaudo":"Aspirantes", "valorRecaudo":"Registrados"},
+        url: "/web/app_dev.php/preparadores/agregar_recaudo_concurso",
+        dataType: 'json',
+        success: function(respuesta){
+    		if (respuesta.estado == "Insertado") {
+				$('#divConcursoDesierto').addClass("hide");
+    		}
+    }});
 });
 
 function verDetalleAspirante(idAspirante){
@@ -324,6 +405,44 @@ function verDetalleAspirante(idAspirante){
 				$('#detalles').removeClass("hide");	
             }
 		}
+    });
+}
+
+function processEliminarAspirante(idAspirante){
+	$("#confirmDelete").modal("show");
+	idAspiranteEliminar=idAspirante;
+	
+	//$("#siEliminar").attr('href', sprintf("{{ path('eliminar_aspirante',{'idAspirante':%s}) }}", idAspirante));
+}
+
+$("#siEliminar").click(function (){
+	toastr.clear();
+    $("#confirmDelete").modal("hide");
+    if(idAspiranteEliminar != ""){
+    	eliminarAspirante(idAspiranteEliminar);
+    }
+});
+
+function eliminarAspirante(idAspirante){
+
+	$.ajax({
+		method:"POST",
+		url: "/web/app_dev.php/preparadores/concurso/eliminar_aspirante",
+		dataType: 'json',
+		data: {"idAspirante": idAspirante},
+		beforeSend: function(){
+            $("#cargando").modal("show");
+        },
+        success: function(respuesta){
+			if (respuesta.estado == "Eliminado"){
+				toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+            } else if (respuesta.estado == "NoElimino"){
+            	toastr.error(respuesta.mensaje, "Error!", {"timeOut": "0","extendedTImeout": "0"});
+            }
+            window.location.assign("/web/app_dev.php/preparadores/concurso/gestionar?id="+id);
+/*            idAspiranteEliminar="";
+			$("#cargando").modal("hide");
+*/		}
     });
 }
 

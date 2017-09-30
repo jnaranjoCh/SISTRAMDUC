@@ -34,12 +34,13 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/skins/_all-skins.min.css') }}">
   <!-- Multiple inputs css -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/cursorLink.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   {% block stylesheets %}{% endblock %}
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<body id="sidebar-mini-aux" class="hold-transition skin-blue sidebar-mini">
+<div id="wraper-aux" class="wrapper">
   <header style="z-index:99;" class="main-header">
     <!-- Logo -->
     <a href="/" class="logo">
@@ -235,11 +236,11 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li data-route="clausulas_contractuales_prima_hijos">
-                  <a href="{{ path('clausulas_contractuales_prima_hijos', { 'email': app.user.getCorreo(), 'state': 'initial' }) }}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
+                <li data-route="clausulas_contractuales_prima_hijosIndex">
+                  <a href="{{ path('clausulas_contractuales_prima_hijosIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Prima por hijos</a>
                 </li>
-                <li data-route="clausulas_contractuales_beca">
-                  <a href="{{path('clausulas_contractuales_beca', { 'email': app.user.getCorreo(), 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
+                <li data-route="clausulas_contractuales_becaIndex">
+                  <a href="{{path('clausulas_contractuales_becaIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Beca académica para hijos</a>
                 </li>
                 <li data-route="clausulas_contractuales_discapacidadIndex">
                   <a href="{{path('clausulas_contractuales_discapacidadIndex', { 'state': 'initial' })}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
@@ -263,6 +264,26 @@
                 </li>
                 <li data-route="clausulas_contractuales_consultar_discapacidad">
                   <a href="{{path('clausulas_contractuales_consultar_discapacidad')}}"><i class="fa fa-circle-o"></i>Hijos con discapacidad</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="treeview-menu">
+            <li data-route="">
+              <a href="#"><i class="fa fa-circle-o"></i><span>Reportes</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li data-route="clausulas_contractuales_rendicion_por_frecuencia_index">
+                  <a href="{{path('clausulas_contractuales_rendicion_por_frecuencia_index')}}"><i class="fa fa-circle-o"></i>Rendición por frecuencia</a>
+                </li>
+                <li data-route="clausulas_contractuales_rendicion_por_monto_index">
+                  <a href="{{path('clausulas_contractuales_rendicion_por_monto_index')}}"><i class="fa fa-circle-o"></i>Rendición por monto</a>
+                </li>
+                <li data-route="clausulas_contractuales_indicador_de_reproceso_index">
+                  <a href="{{path('clausulas_contractuales_indicador_de_reproceso_index')}}"><i class="fa fa-circle-o"></i>Indicador de reproceso</a>
                 </li>
               </ul>
             </li>
@@ -374,22 +395,28 @@
             </span>
           </a>
           <ul class="treeview-menu">
+          
+          	<li data-route="requisicionRRHH">
+              <a href="{{ path('requisicionRRHH') }}"><i class="fa fa-circle-o"></i>Requisición RR.HH.</a>
+            </li>
+            
+            
+            
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-circle-o"></i><span>Concurso</span>
+                <i class="fa fa-circle-o"></i><span>Concursos</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li data-route="apertura_concurso_oposicion_index">
-                  <a href="{{ path('apertura_concurso_oposicion_index') }}"><i class="fa fa-circle-o"></i>Apertura de Concurso</a>
-                </li>
                 <li data-route="tablaBasicaConcurso">
-                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado de Concursos</a>
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado</a>
                 </li>
               </ul>
             </li>
+
+            <!--
 
             <li class="treeview">
               <a href="#">
@@ -484,6 +511,8 @@
                 </li>
               </ul>
             </li>
+            
+            -->
 
           </ul>
         </li>
@@ -519,7 +548,7 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div id="content-wrapper-aux" class="content-wrapper">
     <div class="container-fluid">
       {% block content %}{% endblock %}
     </div>

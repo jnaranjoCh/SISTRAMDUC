@@ -31,18 +31,23 @@ $(window).load( function(){
                     var id = respuesta["id"][i];
                     var classSpan="";
                     var classGestionar="";
+                    var classUpdate="";
                     if(respuesta["estado"][i]=="Enviada"){
                     	classSpan= "label-primary";
                     }else if(respuesta["estado"][i]=="En Proceso"){
 						classSpan= "label-warning";
+						classUpdate= "hide";
                     }else if(respuesta["estado"][i]=="Aprobada"){
 						classSpan= "label-success";
+						classUpdate= "hide";
                     }else if(respuesta["estado"][i]=="Negada"){
 						classSpan= "label-danger";
 						classGestionar= "hide";
+						classUpdate= "hide";
                     }else if(respuesta["estado"][i]=="Finalizada"){
                     	classSpan= "label-success";
 						classGestionar= "hide";
+						classUpdate= "hide";
                     }
                     tabla.row.add( {
                     	"nro": respuesta["id"][i],
@@ -50,6 +55,7 @@ $(window).load( function(){
                         "nroPlazas": respuesta["plazas"][i],
 						"status": '<span class="label '+classSpan+'">'+respuesta["estado"][i]+'</span>',
                         "acciones": '<button type="button" data-target="#detalles" data-toggle="modal" data-tooltip="tooltip" class="btn btn-xs btn-primary" title="Ver Detalles" onclick="javascript:verDetalleSolicitud('+id+')"><i class="fa fa-search"></i></button>'+
+                        			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary '+classUpdate+'" title="Actualizar" onclick="javascript:actualizarSolicitud('+id+')"><i class="fa fa-edit"></i></button>'+
                         			'<button type="button" data-tooltip="tooltip" class="btn btn-xs btn-primary '+classGestionar+'" title="Gestionar" onclick="javascript:gestionarSolicitud('+id+')"><i class="fa fa-cogs"></i></button>'
                     }).draw();                          
                 }
@@ -107,6 +113,10 @@ function verDetalleSolicitud(id){
     });
 }
 
+function actualizarSolicitud(id){
+	window.location.assign("/web/app_dev.php/preparadores/apertura_concurso/solicitar?id="+id);
+}
+
 function gestionarSolicitud(id){
-	window.location.replace("/web/app_dev.php/preparadores/apertura_concurso/gestionar?id="+id);
+	window.location.assign("/web/app_dev.php/preparadores/apertura_concurso/gestionar?id="+id);
 }

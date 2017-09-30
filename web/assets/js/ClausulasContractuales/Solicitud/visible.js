@@ -1,15 +1,26 @@
 $("#selectedHijo").change(function (){
     if ($("#selectedHijo").val() != ""){
-        $("#recaudos").removeClass("hidden");
+        $("#miniRecaudo").removeClass("hidden");
+        if($('#boxBodyRecaudos').css('display') == 'none'){
+            $("#miniRecaudo").click();
+        } 
     }else{
-        $("#recaudos").addClass("hidden");
+        $("#miniRecaudo").addClass("hidden");
+        if($('#boxBodyRecaudos').css('display') == 'block'){
+            $("#miniRecaudo").addClass("hidden");
+            $("#miniRecaudo").click();
+        } 
     }
+    $("#selectedDuracion option:selected").prop("selected", false);
+    $('#valorOtro').val('');
+    $('#divvalorOtro').addClass("hidden");
+    $('.fileinput-remove-button').click();
 });
 
 $("#selectedDuracion").change(function (){
     if ($("#selectedDuracion").val() == "Definido por el administrador"){
-        $("#duracionInput").removeClass("hidden");
+        $("#divvalorOtro").removeClass("hidden");
     }else{
-        $("#duracionInput").addClass("hidden");
+        $("#divvalorOtro").addClass("hidden");
     }
 });

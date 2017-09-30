@@ -151,10 +151,7 @@ class ConsultarDatosController extends Controller
         return new JsonResponse(array(
             'initialPreview' => $p1, 
             'initialPreviewConfig' => $p2,   
-            'append' => false // whether to append these configurations to initialPreview.
-                             // if set to false it will overwrite initial preview
-                             // if set to true it will append to initial preview
-                             // if this propery not set or passed, it will default to true.
+            'append' => false
         ));
     }
     
@@ -395,6 +392,10 @@ class ConsultarDatosController extends Controller
         $dataUser->SegundoApellido = $entity->getSegundoApellido();
         $dataUser->Nacionalidad = $entity->getNacionalidad();
         $dataUser->Telefono = $entity->getTelefono();
+        $dataUser->TipoDedicacion = $this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('DescargaHorariaBundle:TipoDedicacion')
+                                          ->findOneById($entity->getTipoDedicacionId())->getDescription();
         $dataUser->Rif = $entity->getRif();
         $dataUser->FechaNacimiento = $entity->getFechaNacimiento();
         $dataUser->Direccion = $entity->getDireccion();
@@ -653,7 +654,7 @@ class ConsultarDatosController extends Controller
             {
               $data["Copiar"] = '<div class="col-md-2">
                     <div class="form-group has-feedback">
-                          <button id="copiar_'.$i.'" type="button" class="btn btn-primary btn-block btn-flat">Seleccionar</button>
+                          <a id="copiar_'.$i.'">Seleccionar</a>
                     </div>
                   </div>';
                $data["Email"] = '<label id="email_'.$i.'" >'.$value->getCedula().'</label>';
@@ -695,7 +696,7 @@ class ConsultarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->updateSectionOne($request->get('personalData'));
-            $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
+            $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16],$request->get('tipoDedicacion'));
             $this->updateSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
             $this->updateSectionFour($request->get('hijoData'),$request->get('personalData')[16],(string)$request->get('input2bool'),(string)$request->get('input3bool'));
             $this->guardarUrlArchivosUser($request->get('personalData')[16],$request->get('fechasArchivos'));
@@ -733,7 +734,7 @@ class ConsultarDatosController extends Controller
         $em->flush();
     }
     
-    private function updateSectionTwo($cargos,$email)
+    private function updateSectionTwo($cargos,$email,$tipoDedicacion)
     {
         $i = 0;
         $em = $this->getDoctrine()->getManager();
@@ -762,15 +763,23 @@ class ConsultarDatosController extends Controller
           $UsuarioFechaCargo = new UsuarioFechaCargo();
           list($day, $month, $year) = explode('/', explode(' ', $cargo['fechaInicio'])[0]);
           $UsuarioFechaCargo->setDate(new \DateTime($year."-".$month."-".$day));
+          $UsuarioFechaCargo->setIsValidate(true);
         
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
+          $user->setTipoDedicacionId($this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('DescargaHorariaBundle:TipoDedicacion')
+                                          ->findOneByName($tipoDedicacion));
         }
         $em->flush();
     }
     
     private function updateSectionThree($registros,$participantes,$revistas,$email)
     {
+        $files = [];
+        $i = 0;
+        $prueba = "";
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Usuario')
                       ->findOneByCorreo($email);
@@ -800,15 +809,22 @@ class ConsultarDatosController extends Controller
                     $em->remove($part);
                 }
             }
+            
+            if($regi->getUrl() != "")
+            {
+                $files[$i] = $regi->getDescription().'_'.$user->getCedula().'.pdf';
+                $i++;
+            }
             $em->remove($regi);
         }
         $em->flush();
         $em->clear();
-        $this->registerSectionThree($registros,$participantes,$revistas,$email);
+        $this->registerSectionThree($registros,$participantes,$revistas,$email,$files);
     }
     
-    private function registerSectionThree($registros,$participantes,$revistas,$email)
+    private function registerSectionThree($registros,$participantes,$revistas,$email,$files)
     {
+        $prueba = "";
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Usuario')
                       ->findOneByCorreo($email);
@@ -893,6 +909,10 @@ class ConsultarDatosController extends Controller
         $pos = -1;
         $i = 0;
         $registross = [];
+        $pos2 = -1;
+        $noDeleteFiles = [];
+        $j = 0;
+        $filesDelete = [];
         foreach($registros as $registro){
             
             $newRegistro =  new Registro();
@@ -914,7 +934,29 @@ class ConsultarDatosController extends Controller
             $newRegistro->setTituloObtenido($registro['tituloObtenido']);
             $newRegistro->setCongreso($registro['congreso']);
             $newRegistro->setCiudadPais($registro['ciudadPais']);
-            $newRegistro->setIsValidate(false);
+            
+            if($registro['url'] != "" && $registro['url'] != null)
+            {
+                if(in_array($registro['url'],$files)){
+                    $pos2 = array_search($registro['url'],$files);
+                }else
+                    $pos2 = -1;
+                if($pos2 != -1)
+                {
+                    
+                    $noDeleteFiles[$j] = $files[$pos2];
+                    $j++;
+                    $newRegistro->setUrl($this->container->getParameter('kernel.root_dir').'/../web/uploads/registros/'.$registro['descripcion'].'_'.$user->getCedula().'.pdf');
+                    $newRegistro->setIsValidate(true);
+                    rename($this->container->getParameter('kernel.root_dir').'/../web/uploads/registros/'.$files[$pos2],$this->container->getParameter('kernel.root_dir').'/../web/uploads/registros/'.$registro['descripcion'].'_'.$user->getCedula().'.pdf');
+                }
+            }else
+            {
+                $newRegistro->setIsValidate(false);
+                $newRegistro->setUrl('');
+            }
+            
+            
             
             if(in_array($registro['idRegistro'],$idsrevistas)){
                 $pos = array_search($registro['idRegistro'],$idsrevistas);
@@ -931,7 +973,32 @@ class ConsultarDatosController extends Controller
             $em->flush();
             $i++;
         }
-        
+        $i = 0;
+        $band = true;
+        foreach($files as $file)
+        {
+            foreach($noDeleteFiles as $noDeleteFile)
+            {
+                if($file == $noDeleteFile && $band){
+                    $band = false;
+                }
+            }
+            if($band)
+            {
+                $filesDelete[$i] = $file;
+                $i++;
+            }
+            
+            if(!$band)
+            {
+                $band = true;
+            }
+                
+        }
+        foreach($filesDelete as $fileDelete)
+        {
+            unlink($this->container->getParameter('kernel.root_dir').'/../web/uploads/registros/'.$fileDelete);
+        }
         $user->addRegistros($registross);
         $em->flush();
     }

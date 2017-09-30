@@ -31,7 +31,7 @@
         </div>
       </div>
       
-      <div id="divConcursoDesierto" class="col-md-offset-1 col-md-10">
+      <div id="divConcursoDesierto" class="col-md-offset-1 col-md-10 hide">
         <div class="box box-info collapsed-box">
           <div class="box-header with-border">
             <h3 class="box-title"><b>Declarar Concurso Desierto</b></h3>
@@ -57,7 +57,7 @@
         </div>
       </div>
       
-      <div id="divAspirantes" class="col-md-offset-1 col-md-10">
+      <div id="divAspirantes" class="col-md-offset-1 col-md-10 hide">
         <div class="box box-info collapsed-box">
           <div class="box-header with-border">
             <h3 class="box-title"><b>Aspirantes</b></h3>
@@ -187,11 +187,27 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-12">
-                      <div id="divEscritaConductaReporteCargaDatos" class="form-group has-feedback">
-                        <label class="control-label">Seleccione la comunicación escrita, carta de conducta y reporte de notas</label>
-                        <input id="EscritaConductaReporteCargaDatos" name="input[]" accept="application/pdf"  type="file" class="file-loading" multiple data-show-upload="true" data-show-caption="true">
-                        {#<span id="spanEscritaConductaReporteCargaDatos" class="glyphicon form-control-feedback"></span>#}
+                    <div class="col-md-5">
+                      <div id="divComunicacionEscrita" class="form-group has-feedback">
+                        <label class="control-label">Seleccione la Comunicación Escrita</label>
+                        <input id="ComunicacionEscrita" name="input[]" accept="application/pdf"  type="file" class="file-loading" data-show-upload="false" data-show-caption="true">
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <span></span>
+                    </div>
+                    <div class="col-md-5">
+                      <div id="divCartaConducta" class="form-group has-feedback">
+                        <label class="control-label">Seleccione la Carta de Conducta</label>
+                        <input id="CartaConducta" name="input1[]" accept="application/pdf"  type="file" class="file-loading" data-show-upload="false" data-show-caption="true">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div id="divReporteNota" class="form-group has-feedback">
+                        <label class="control-label">Seleccione el Reporte de Notas</label>
+                        <input id="ReporteNota" name="input2[]" accept="application/pdf"  type="file" class="file-loading" data-show-upload="false" data-show-caption="true">
                       </div>
                     </div>
                   </div>
@@ -211,6 +227,7 @@
                   <th>Nombre Completo</th>
                   <th>Correo Electrónico</th>
                   <th>Teléfono</th>
+                  <th>Estatus</th>
                   <th id="accionesHead" class="hide">Acciones</th>
                 </tr>
               </thead>
@@ -223,6 +240,7 @@
                   <th>Nombre Completo</th>
                   <th>Correo Electrónico</th>
                   <th>Teléfono</th>
+                  <th>Estatus</th>
                   <th id="accionesFoot" class="hide">Acciones</th>
                 </tr>
               </tfoot>
@@ -231,7 +249,7 @@
         </div>
       </div>
       
-      <div id="divFechaEvaluacion" class="col-md-offset-1 col-md-10 ">
+      <div id="divFechaEvaluacion" class="col-md-offset-1 col-md-10 hide">
         <div class="box box-info collapsed-box">
           <div class="box-header with-border">
             <h3 class="box-title"><b>Registrar Fecha de Evaluacion</b></h3>
@@ -265,7 +283,7 @@
         </div>
       </div>
       
-      <div id="divProposicionNombramiento" class="col-md-offset-1 col-md-10">
+      <div id="divProposicionNombramiento" class="col-md-offset-1 col-md-10 hide">
         <div  class="box box-info collapsed-box">
           <div class="box-header with-border">
             <h3 class="box-title"><b>Registrar Proposición del Nombramiento</b></h3>
@@ -304,6 +322,44 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline" data-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Confirmacion Registro Aspirante-->
+      <div class="modal modal-warning fade" id="confirmRegister" role="dialog" aria-labelledby="confirmRegisterLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="confirmRegisterLabel">Confirmación de Registro</h3>
+            </div>
+            <div id="confirmRegisterModalBody" class="modal-body overlay">
+              <p>Verifique bien los datos suministrados, ya que no se permite la posterior actualización de este registro.</p>
+              <br></br>
+              <p>¿Esta seguro que desea continuar con el registro?</p>
+            </div>
+            <div class="modal-footer">
+              <button id="siRegistrar" type="button" class="btn btn-outline" data-dismiss="modal">Si</button>
+              <button type="button" class="btn btn-outline" data-dismiss="modal">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Confirmacion Eliminar Aspirante-->
+      <div class="modal modal-warning fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="confirmDeleteLabel">Confirmación de Eliminación</h3>
+            </div>
+            <div id="confirmDeleteModalBody" class="modal-body overlay">
+              <p>¿Esta seguro que desea eliminar el registro? Esta Acción no se puede deshacer</p>
+            </div>
+            <div class="modal-footer">
+              <button id="siEliminar" type="button" class="btn btn-outline">Si</button>
+              <button type="button" class="btn btn-outline" data-dismiss="modal">No</button>
             </div>
           </div>
         </div>

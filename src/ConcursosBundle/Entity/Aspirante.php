@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use ConcursoOposicionBundle\Entity\Recusacion;
+use TramiteBundle\Entity\Recaudo;
+use TramiteBundle\Entity\Estado;
 
 /**
  * Aspirante
@@ -166,11 +168,24 @@ class Aspirante
      * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Recusacion", mappedBy="aspirante_id", cascade={"persist", "remove"})
      */
     protected $recusa;
+    
+    /**
+     * @var array
+     * @ORM\OneToMany(targetEntity="Tramitebundle\Entity\Recaudo", mappedBy="aspirante", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $recaudos;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TramiteBundle\Entity\Estado", inversedBy="aspirantes")
+     * @ORM\JoinColumn(name="estado_id", referencedColumnName="id")
+     */
+    protected $estado;
 
 
     public function __construct()
     {
         $this->recusa = new ArrayCollection();
+        $this->recaudos = new ArrayCollection();
     }
     
     public function getRecusa()
@@ -670,6 +685,50 @@ class Aspirante
     {
         return $this->fechaRenuncia;
     }
+    
+    /**
+     * Get recaudos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecaudos()
+    {
+        return $this->recaudos;
+    }
 
+    /**
+     * Add recaudo
+     *
+     * @return aspirante
+     */
+    public function addRecaudo(\TramiteBundle\Entity\Recaudo $recaudo)
+    {
+        $this->recaudos[] = $recaudo;
+        $recaudo->setAspirante($this);
+
+        return $this;
+    }
+    
+    public function removeRecaudo(\TramiteBundle\Entity\Recaudo $recaudo)
+    {
+        $this->recaudos->removeElement($recaudo);
+        $recaudo->setAspirante(null);
+    }
+    
+    public function removeAllRecaudos()
+    {
+        $this->recaudos->clear();
+    }
+    
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+    
+    public function setEstado(\TramiteBundle\Entity\Estado $estado)
+    {
+        $this->estado = $estado;
+        return $this;
+    }
 
 }

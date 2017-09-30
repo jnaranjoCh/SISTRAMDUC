@@ -292,7 +292,7 @@
           <div id="formCargos" class="col-md-offset-1 col-md-10 hidden">
             <!-- /.box-info -->
             <div id="headerCargos" class="box-footer">
-              <strong>Sección para consultar y editar los cargos desempeñados en la UC.</strong>
+              <strong>Sección para consultar y editar los cargos desempeñados en la UC y el tipo de dedicación.</strong>
             </div>
              <!-- /.box-header -->
             <div class="box box-danger">
@@ -304,6 +304,18 @@
               </div>
               <!-- /.box-body -->
               <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                      <!-- /.form-group -->
+                        <div id="divTipoDedicacionDatos" class="form-group has-feedback">
+                          <label>Tipo de dedicacion</label>
+                          <select id="tipoDedicacionDatos" class="form-control select2" style="width: 100%;">
+                          </select>
+                          <span id="spanTipoDedicacionDatos" class="glyphicon form-control-feedback"></span>
+                        </div>
+                        <!-- /.form-group -->
+                    </div>
+                  </div>
                 <div style="overflow-x: scroll; white-space: nowrap;">
                   <table id="tableCargo" class="table table-bordered table-striped">
                     <thead>
@@ -369,6 +381,7 @@
                       <th>Titulo Obtenido</th>
                       <th>Ciudad / Pais</th>
                       <th>Congreso</th>
+                      <th>Archivo de validación</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -386,6 +399,7 @@
                       <th>Titulo Obtenido</th>
                       <th>Ciudad / Pais</th>
                       <th>Congreso</th>
+                      <th>Archivo de validación</th>
                     </tr>
                     </tfoot>
                   </table>

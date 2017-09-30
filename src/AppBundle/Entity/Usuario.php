@@ -182,7 +182,7 @@ class Usuario implements UserInterface
     protected $tramite;
     
     /**
-     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion")
+     * @ORM\ManyToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion", inversedBy="usuario")
      * @ORM\JoinColumn(name="tipo_dedicacion_id", referencedColumnName="id")
      */ 
     protected $tipo_dedicacion_id;
@@ -681,6 +681,11 @@ class Usuario implements UserInterface
                 $data[$i]['Congreso'] = '<input id="Congreso'.$i.'" value="" type="text" class="form-control" placeholder="Congreso" readonly>';
             else
                 $data[$i]['Congreso'] = '<input id="Congreso'.$i.'" value="'.$registro->getCongreso().'" type="text" class="form-control" placeholder="Congreso">';
+            if($registro->getUrl() == "")
+                $data[$i]['Archivo'] = '<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="Archivo'.$i.'" href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>';
+            else
+                $data[$i]['Archivo'] = '<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="Archivo'.$i.'" href="'.$registro->getUrl().'" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:blue;"></i></a></div>';;
+            
             $i++;
         }
 
@@ -966,6 +971,30 @@ class Usuario implements UserInterface
     public function getNombramientoCargo()
     {
        return $this->nombramiento_cargo;
+    }
+    
+    /**
+     * Set nivelId
+     *
+     * @param integer $nivelId
+     *
+     * @return Registro
+     */
+    public function setTipoDedicacionId($tipoDedicacionId)
+    {
+        $this->tipo_dedicacion_id = $tipoDedicacionId;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelId
+     *
+     * @return integer
+     */
+    public function getTipoDedicacionId()
+    {
+        return $this->tipo_dedicacion_id;
     }
     
 }

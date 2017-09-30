@@ -100,7 +100,8 @@ $('#agregarRegistro').click(function(){
                     "Empresa y/o institución": "",
                     "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
                     "Ciudad / Pais":$("#CiudadPaisDatos").val(),
-                    "Congreso":$("#CongresosDatos").val()
+                    "Congreso":$("#CongresosDatos").val(),
+                    "Archivo":'<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
                 } ).draw();
                 registro.idRegistro = idRegistro;
                 registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
@@ -112,6 +113,7 @@ $('#agregarRegistro').click(function(){
                 registro.tituloObtenido = $("#TituloObtenidoDatos").val();
                 registro.ciudadPais = $("#CiudadPaisDatos").val();
                 registro.congreso = $("#CongresosDatos").val();
+                registro.url = "";
                 registrosData[countRegistro] = registro;
                 countRegistro++;
                 idRegistro++;
@@ -126,7 +128,8 @@ $('#agregarRegistro').click(function(){
                     "Empresa y/o institución": $("#EmpresaDatos").val(),
                     "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
                     "Ciudad / Pais":$("#CiudadPaisDatos").val(),
-                    "Congreso":$("#CongresosDatos").val()
+                    "Congreso":$("#CongresosDatos").val(),
+                    "Archivo":'<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
                 } ).draw();
                 registro.idRegistro = idRegistro;
                 registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
@@ -138,6 +141,7 @@ $('#agregarRegistro').click(function(){
                 registro.tituloObtenido = $("#TituloObtenidoDatos").val();
                 registro.ciudadPais = $("#CiudadPaisDatos").val();
                 registro.congreso = $("#CongresosDatos").val();
+                registro.url = "";
                 registrosData[countRegistro] = registro;
                 countRegistro++;
                 idRegistro++;
@@ -152,7 +156,8 @@ $('#agregarRegistro').click(function(){
                     "Empresa y/o institución": $("#InstitucionDatos").val(),
                     "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
                     "Ciudad / Pais":$("#CiudadPaisDatos").val(),
-                    "Congreso":$("#CongresosDatos").val()
+                    "Congreso":$("#CongresosDatos").val(),
+                    "Archivo":'<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
                 } ).draw();
                 registro.idRegistro = idRegistro;
                 registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
@@ -164,6 +169,7 @@ $('#agregarRegistro').click(function(){
                 registro.tituloObtenido = $("#TituloObtenidoDatos").val();
                 registro.ciudadPais = $("#CiudadPaisDatos").val();
                 registro.congreso = $("#CongresosDatos").val();
+                registro.url = "";
                 registrosData[countRegistro] = registro;
                 countRegistro++;
                 idRegistro++;
@@ -186,7 +192,8 @@ $('#agregarRegistro').click(function(){
                     "Empresa y/o institución": "",
                     "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
                     "Ciudad / Pais":$("#CiudadPaisDatos").val(),
-                    "Congreso":$("#CongresosDatos").val()
+                    "Congreso":$("#CongresosDatos").val(),
+                    "Archivo":'<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
                 }).draw();
                 registro.idRegistro = idRegistro;
                 registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
@@ -198,6 +205,7 @@ $('#agregarRegistro').click(function(){
                 registro.tituloObtenido = $("#TituloObtenidoDatos").val();
                 registro.ciudadPais = $("#CiudadPaisDatos").val();
                 registro.congreso = $("#CongresosDatos").val();
+                registro.url = "";
                 registrosData[countRegistro] = registro;
                 countRegistro++;
                 idRegistro++;
@@ -212,7 +220,8 @@ $('#agregarRegistro').click(function(){
                     "Empresa y/o institución": $("#EmpresaDatos").val(),
                     "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
                     "Ciudad / Pais":$("#CiudadPaisDatos").val(),
-                    "Congreso":$("#CongresosDatos").val()
+                    "Congreso":$("#CongresosDatos").val(),
+                    "Archivo":'<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
                 } ).draw();
                 registro.idRegistro = idRegistro;
                 registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
@@ -224,6 +233,7 @@ $('#agregarRegistro').click(function(){
                 registro.tituloObtenido = $("#TituloObtenidoDatos").val();
                 registro.ciudadPais = $("#CiudadPaisDatos").val();
                 registro.congreso = $("#CongresosDatos").val();
+                registro.url = "";
                 registrosData[countRegistro] = registro;
                 countRegistro++;
                 idRegistro++;
@@ -238,7 +248,8 @@ $('#agregarRegistro').click(function(){
                     "Empresa y/o institución": $("#InstitucionDatos").val(),
                     "Titulo Obtenido":$("#TituloObtenidoDatos").val(),
                     "Ciudad / Pais":$("#CiudadPaisDatos").val(),
-                    "Congreso":$("#CongresosDatos").val()
+                    "Congreso":$("#CongresosDatos").val(),
+                    "Archivo":'<div class="col-offset-xs-2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true" style="font-size:48px;color:red;"></i></a></div>'
                 } ).draw();
                 registro.idRegistro = idRegistro;
                 registro.tipoDeReferencia = $("#TipoDeRegistroDatos").find('option:selected').val();
@@ -250,6 +261,7 @@ $('#agregarRegistro').click(function(){
                 registro.tituloObtenido = $("#TituloObtenidoDatos").val();
                 registro.ciudadPais = $("#CiudadPaisDatos").val();
                 registro.congreso = $("#CongresosDatos").val();
+                registro.url = "";
                 registrosData[countRegistro] = registro;
                 countRegistro++;
                 idRegistro++;

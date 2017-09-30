@@ -43,13 +43,29 @@ class ListadosOposicionController extends Controller
             }else
             {
                 $val = $this->asignarFilaConcursos($concurso,'id',$val, 0);
-                $val = $this->asignarFilaConcursos($concurso,'usuario',$val, 1);
-                $val = $this->asignarFilaConcursos($concurso,'observacion',$val, 2);
-                $val = $this->asignarFilaConcursos($concurso,'vacantes',$val, 3);
-                $val = $this->asignarFilaConcursos($concurso,'area',$val, 4);
-                $val = $this->asignarFilaConcursos($concurso,'inicio',$val, 5);
-                $val = $this->asignarFilaFechaRecepcion($concurso,'recepcion',$val);
-                $val = $this->asignarFilaFechaPresentacion($concurso,'presentacion',$val);
+                $val = $this->asignarFilaConcursos($concurso,'fechaInicio',$val, 1);
+                $val = $this->asignarFilaConcursos($concurso,'nroVacantes',$val, 2);
+                $val = $this->asignarFilaConcursos($concurso,'areaPostulacion',$val, 3);
+                $val = $this->asignarFilaConcursos($concurso,'idUsuario',$val, 4);
+                $val = $this->asignarFilaConcursos($concurso,'condicion',$val, 5);
+                $val = $this->asignarFilaConcursos($concurso,'tiempo_dedicacion',$val, 6);
+                $val = $this->asignarFilaConcursos($concurso,'nro_horas',$val, 7);
+                $val = $this->asignarFilaConcursos($concurso,'facultad',$val, 8);
+                $val = $this->asignarFilaConcursos($concurso,'sede',$val, 9);
+                $val = $this->asignarFilaConcursos($concurso,'ciudad',$val, 10);
+                $val = $this->asignarFilaConcursos($concurso,'escuela',$val, 11);
+                $val = $this->asignarFilaConcursos($concurso,'departamento',$val, 12);
+                $val = $this->asignarFilaConcursos($concurso,'motivo',$val, 13);
+                $val = $this->asignarFilaConcursos($concurso,'desc_motivo',$val, 14);
+                $val = $this->asignarFilaConcursos($concurso,'justificacion',$val, 15);
+                $val = $this->asignarFilaConcursos($concurso,'grado_academico',$val, 16);
+                $val = $this->asignarFilaConcursos($concurso,'profesion',$val, 17);
+                $val = $this->asignarFilaConcursos($concurso,'experiencia',$val, 18);
+                $val = $this->asignarFilaConcursos($concurso,'area_conocimiento',$val, 19);
+                $val = $this->asignarFilaConcursos($concurso,'area_investigacion',$val, 20);
+                $val = $this->asignarFilaConcursos($concurso,'area_extension',$val, 21);
+                $val = $this->asignarFilaConcursos($concurso,'status',$val, 22);
+                $val = $this->asignarFilaConcursos($concurso,'idUsuarioAct',$val, 23);
             }
             return new JsonResponse($val);
         }
@@ -92,11 +108,29 @@ class ListadosOposicionController extends Controller
         foreach($object as $value)
         {
            switch ($pos) {
-               case 1: $val[$entidad][$i] = $this->usuarioAsigna($value->getIdUsuario()); break;
-               case 2: $val[$entidad][$i] = $value->getObservaciones(); break;
-               case 3: $val[$entidad][$i] = $value->getNroVacantes();break;
-               case 4: $val[$entidad][$i] = $value->getAreaPostulacion(); break;
-               case 5: $val[$entidad][$i] = date_format($value->getFechaInicio(), 'd-m-Y'); break;
+               case 1: $val[$entidad][$i] = date_format($value->getFechaInicio(), 'd-m-Y'); break;
+               case 2: $val[$entidad][$i] = $value->getNroVacantes(); break;
+               case 3: $val[$entidad][$i] = $value->getAreaPostulacion();break;
+               case 4: $val[$entidad][$i] = $value->getIdUsuario(); break;
+               case 5: $val[$entidad][$i] = $value->getCondicion(); break;
+               case 6: $val[$entidad][$i] = $value->getTiempoDedicacion(); break;
+               case 7: $val[$entidad][$i] = $value->getNroHoras(); break;
+               case 8: $val[$entidad][$i] = $value->getFacultad(); break;
+               case 9: $val[$entidad][$i] = $value->getSede(); break;
+               case 10: $val[$entidad][$i] = $value->getCiudad(); break;
+               case 11: $val[$entidad][$i] = $value->getEscuela(); break;
+               case 12: $val[$entidad][$i] = $value->getDepartamento(); break;
+               case 13: $val[$entidad][$i] = $value->getMotivo(); break;
+               case 14: $val[$entidad][$i] = $value->getDescMotivo(); break;
+               case 15: $val[$entidad][$i] = $value->getJustificacion(); break;
+               case 16: $val[$entidad][$i] = $value->getGradoAcademico(); break;
+               case 17: $val[$entidad][$i] = $value->getProfesion(); break;
+               case 18: $val[$entidad][$i] = $value->getExperiencia(); break;
+               case 19: $val[$entidad][$i] = $value->getAreaConocimiento(); break;
+               case 20: $val[$entidad][$i] = $value->getAreaInvestigacion(); break;
+               case 21: $val[$entidad][$i] = $value->getAreaExtension(); break;
+               case 22: $val[$entidad][$i] = $value->getStatus(); break;
+               case 23: $val[$entidad][$i] = $value->getIdUsuarioAct(); break;
 
                default: $val[$entidad][$i] = $value->getId(); break;
            }
@@ -384,13 +418,30 @@ class ListadosOposicionController extends Controller
                  return new JsonResponse("N");
             }else
             {
-                $val = $this->asignarFilaConcursos($concurso,'usuario',$val, 1);
-                $val = $this->asignarFilaConcursos($concurso,'observacion',$val, 2);
-                $val = $this->asignarFilaConcursos($concurso,'vacantes',$val, 3);
-                $val = $this->asignarFilaConcursos($concurso,'area',$val, 4);
-                $val = $this->asignarFilaConcursos($concurso,'inicio',$val, 5);
-                $val = $this->asignarFilaFechaRecepcion($concurso,'recepcion',$val);
-                $val = $this->asignarFilaFechaPresentacion($concurso,'presentacion',$val);
+                $val = $this->asignarFilaConcursos($concurso,'id',$val, 0);
+                $val = $this->asignarFilaConcursos($concurso,'fechaInicio',$val, 1);
+                $val = $this->asignarFilaConcursos($concurso,'nroVacantes',$val, 2);
+                $val = $this->asignarFilaConcursos($concurso,'areaPostulacion',$val, 3);
+                $val = $this->asignarFilaConcursos($concurso,'idUsuario',$val, 4);
+                $val = $this->asignarFilaConcursos($concurso,'condicion',$val, 5);
+                $val = $this->asignarFilaConcursos($concurso,'tiempo_dedicacion',$val, 6);
+                $val = $this->asignarFilaConcursos($concurso,'nro_horas',$val, 7);
+                $val = $this->asignarFilaConcursos($concurso,'facultad',$val, 8);
+                $val = $this->asignarFilaConcursos($concurso,'sede',$val, 9);
+                $val = $this->asignarFilaConcursos($concurso,'ciudad',$val, 10);
+                $val = $this->asignarFilaConcursos($concurso,'escuela',$val, 11);
+                $val = $this->asignarFilaConcursos($concurso,'departamento',$val, 12);
+                $val = $this->asignarFilaConcursos($concurso,'motivo',$val, 13);
+                $val = $this->asignarFilaConcursos($concurso,'desc_motivo',$val, 14);
+                $val = $this->asignarFilaConcursos($concurso,'justificacion',$val, 15);
+                $val = $this->asignarFilaConcursos($concurso,'grado_academico',$val, 16);
+                $val = $this->asignarFilaConcursos($concurso,'profesion',$val, 17);
+                $val = $this->asignarFilaConcursos($concurso,'experiencia',$val, 18);
+                $val = $this->asignarFilaConcursos($concurso,'area_conocimiento',$val, 19);
+                $val = $this->asignarFilaConcursos($concurso,'area_investigacion',$val, 20);
+                $val = $this->asignarFilaConcursos($concurso,'area_extension',$val, 21);
+                $val = $this->asignarFilaConcursos($concurso,'status',$val, 22);
+                $val = $this->asignarFilaConcursos($concurso,'idUsuarioAct',$val, 23);
             }
             return new JsonResponse($val);
         }

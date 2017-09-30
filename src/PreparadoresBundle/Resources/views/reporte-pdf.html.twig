@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte PDF</title>
+
+</head>
+
+<body>
+
+    <!-- Main content -->
+    <section class="invoice">
+        <div>
+            <div class="row">
+                <div style="text-align:center;" class="col-xs-12">
+                    <h3 class="pager">
+                        <br/>
+                        UNIVERSIDAD DE CARABOBO <br/></h3>
+                        <div style="text-align:center;">
+                            <img src="https://raw.githubusercontent.com/CesarManriqueH/SISTRAMDUC/fadac8798b9392556ba6adabf251314883114cab/web/assets/images/UC.png" width="100" height="120" alt="Logo UC" /> <br/>
+                        </div>
+                    <h3 class="pager">
+                        PRUEBA HTML
+                    </h3>
+                    <br/><br/><br/>
+                </div>
+            </div>
+
+            {#{% for informe in documento %}#}
+            {#    <div class="row">#}
+            {#        <div style="text-align:right;">#}
+            {#            <dl class="dl-horizontal">#}
+            {#                <dt>Asunto: {{ informe.getAsunto() }}</dt>#}
+            {#                <dd>Acta: {{ informe.getActa() }}</dd>#}
+            {#                <dt>Fecha: {{ informe.getFecha|date('d-m-Y') }}</dt>#}
+            {#            </dl>#}
+            {#        </div>#}
+            {#        <div style="text-align:left;">#}
+            {#            Nº {{ informe.getNum() }}#}
+            {#        </div>#}
+            {#    </div>#}
+            {#    <br/> <br/><br/> <br/><br/>#}
+            {#    <div class="row">#}
+            {#        <div class="col-xs-10">#}
+            {#            {{ informe.getContenido() }}#}
+            {#        </div>#}
+            {#    </div>#}
+            {#{% endfor %}#}
+            <br/> <br/><br/> <br/>
+            <div style="text-align:center;">
+                <p>
+                    Atentamente, <br/>
+                    Pablo Aure Sánchez <br/>
+                    Secretario
+                </p>
+            </div>
+            <div>
+                <br/> <br/>
+                <p class="-align-left" style="margin-top: 10px;">
+                    c.c. <br/>
+                    Consejo de la Facultad Experimental de Ciencias y Tecnología <br/>
+                    Dirección de Planificación y Programación Prosupuestaria <br/>
+                    Dirección de Auditoría interna <br/>
+                    Dirección de Administración y Finanzas Central <br/>
+                    Dirección General de Asuntos Profesorales <br/>
+                    Dirección de Recursos Humanos <br/>
+                    Comisión de Auditoría Académica <br/>
+                    Departamento de Nómina <br/>
+                    Departamento de Seguro Social <br/>
+                    Comisión Electoral Universitaria <br/>
+                </p>
+                <br/>
+            </div>
+            <br/> <br/>
+            <div class="row">
+                <div class="col-xs-12" style="text-align:center;">
+                    <small class="text-muted well well-sm no-shadow">
+                        Dirección de la Secretaría del Consejo Universitario Rectorado.
+                        Universidad de Carabobo, Av. Bolívar Norte.....
+                        Valencia 2005  | Carabobo - Venezuela  | Telf: (0241)625 0416 y Fax 83691634
+                    </small>
+                </div>
+            </div>
+            <br/> <br/>
+            <div>
+                {#<img align="center" {{ render(controller('ComisionRemuneradaBundle:Default:barcodeImage')) }} alt="Codigo de barras"/>#}
+                <!--<img src="http://localhost:8000/jubilacion/codigo-barra" width="100" height="120" alt="Logo UC" /> <br/>-->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</body>
+
+</html>
