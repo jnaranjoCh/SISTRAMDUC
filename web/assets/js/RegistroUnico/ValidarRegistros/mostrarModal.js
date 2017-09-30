@@ -16,8 +16,12 @@ $( window ).load(function() {
 $('#validar').click(function(){
    $('#EmailDelRegistro').val(parent.getEmail());
    $('#idDelRegistro').val(parent.getId());
-   document.getElementById("completeForm").submit();
-   parent.validarIFrame();
+   if($("#registro").fileinput("getFilesCount") == 1)
+   {
+       document.getElementById("completeForm").submit();
+       parent.validarIFrame();
+   }else
+       parent.sendMessage();
 });
 
 $('#continuar').click(function(){

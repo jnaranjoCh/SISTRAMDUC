@@ -32,7 +32,7 @@ class RegistrarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->registerSectionOne($request->get('personalData'));
-            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
+            $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[16],$request->get('tipoDedicacion'));
             $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
             $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[16]);
             return new JsonResponse("Datos guardados");
@@ -166,10 +166,10 @@ class RegistrarDatosController extends Controller
             $nivel = $this->getAll("RegistroUnicoBundle:","Nivel");
             $tipo_regitro = $this->getAll("RegistroUnicoBundle:","TipoRegistro");
             $cargo = $this->getAll("RegistroUnicoBundle:","Cargo");
-            
+            $tipoDedicacion = $this->getAll("DescargaHorariaBundle:","TipoDedicacion");
             $rol = $this->getAll("AppBundle:","Rol");
 
-            if (!$estatus || !$nivel || !$tipo_regitro || !$cargo || !$rol) {
+            if (!$estatus || !$nivel || !$tipo_regitro || !$cargo || !$rol || !$tipoDedicacion) {
                  throw $this->createNotFoundException('Error al obtener datos iniciales');
             }else
             {
@@ -177,6 +177,7 @@ class RegistrarDatosController extends Controller
                 $val = $this->bdToArrayDescription($nivel,'nivel',$val);
                 $val = $this->bdToArrayDescription($tipo_regitro,'tipo_registro',$val);
                 $val = $this->bdToArrayDescription($cargo,'cargo',$val);
+                $val = $this->bdToArrayDescription($tipoDedicacion,'tipo_dedicacion',$val);
                 $val = $this->bdToArrayNombre($rol,'rol',$val);
                 return new JsonResponse($val);
             }
@@ -309,7 +310,7 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-    private function registerSectionTwo($cargos,$email)
+    private function registerSectionTwo($cargos,$email,$tipoDedicacion)
     {
         $i = 0;
         $em = $this->getDoctrine()->getManager();
@@ -333,6 +334,10 @@ class RegistrarDatosController extends Controller
         
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
+          $user->setTipoDedicacionId($this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('DescargaHorariaBundle:TipoDedicacion')
+                                          ->findOneByName($tipoDedicacion));
         }
         $em->flush();
     }

@@ -101,6 +101,7 @@ $('#submitData').click(function(){
     personalData[indPersonalData] = $("#mail").val();
     indPersonalData++;
     
+    
     if(can_register && (((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) < -1) || ((parseInt($('#EdadDatos').val())-(parseInt(date.getFullYear())-anio)) > 0))){
         can_register = false;
         $("#headerPersonal").css({ 'color': "red" });
@@ -108,16 +109,31 @@ $('#submitData').click(function(){
     }
 
     if(can_register && countCargo < 1){
-            can_register = false;
-            $("#spanCargosDatos").addClass("glyphicon-remove");
-            $("#divCargosDatos").addClass("has-error");
-            $("#divFechaInicioCargoDatos").addClass("has-error");
-            $("#headerCargos").css({ 'color': "red" });
-            text = "Debe seleccionar los cargos.";
+        can_register = false;
+        $("#spanCargosDatos").addClass("glyphicon-remove");
+        $("#divCargosDatos").addClass("has-error");
+        $("#divFechaInicioCargoDatos").addClass("has-error");
+        $("#headerCargos").css({ 'color': "red" });
+        text = "Debe seleccionar los cargos.";
     }else{
         $("#spanCargosDatos").removeClass("glyphicon-remove");
         $("#divCargosDatos").removeClass("has-error");
         $("#headerCargos").css({ 'color': "black" });
+        
+        if($("#tipoDedicacionDatos").find('option:selected').val() == "")
+        {
+            can_register = false;
+            $("#spanTipoDedicacionDatos").addClass("glyphicon-remove");
+            $("#divTipoDedicacionDatos").addClass("has-error");
+            $("#headerCargos").css({ 'color': "red" });
+            text = "Debe seleccionar un tipo de dedicación.";
+        }else
+        {
+            $("#headerCargos").css({ 'color': "black" });
+            $("#spanTipoDedicacionDatos").removeClass("glyphicon-remove");
+            $("#divTipoDedicacionDatos").removeClass("has-error");
+        }
+    
     }
     
     if(can_register && countRegistro < 1){
@@ -360,7 +376,7 @@ $("#continue").click(function(){
     if($('#checkboxHijos').prop('checked')){
         $.ajax({
                 method: "POST",
-                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val()},
                 url:  routeRegistroUnico['registro_guardar_ajax'],
                 dataType: 'json',
                 beforeSend: function(){
@@ -374,7 +390,7 @@ $("#continue").click(function(){
     }else{
         $.ajax({
                 method: "POST",
-                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData},
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val()},
                 url:  routeRegistroUnico['registro_guardar_ajax'],
                 dataType: 'json',
                 beforeSend: function(){

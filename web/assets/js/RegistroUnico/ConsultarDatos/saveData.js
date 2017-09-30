@@ -180,7 +180,7 @@ $("#guardar").click(function(){
                     fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
                     $.ajax({
                         method: "POST",
-                        data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":false, "input3bool":input3bool},
+                        data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":false, "input3bool":input3bool, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val()},
                         url:  routeRegistroUnico['registro_editardatos_ajax'],
                         dataType: 'json',
                         beforeSend: function(){
@@ -360,6 +360,12 @@ function validarCargos()
         cargoData[indCargoData] = cargo;
         indCargoData++;
     }
+    
+    if($("#tipoDedicacionDatos").find('option:selected').val() == "")
+    {
+        valido = false;
+    }
+    
     return valido;
 }
 

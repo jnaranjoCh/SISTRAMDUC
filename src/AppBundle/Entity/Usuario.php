@@ -182,7 +182,7 @@ class Usuario implements UserInterface
     protected $tramite;
     
     /**
-     * @ORM\OneToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion")
+     * @ORM\ManyToOne(targetEntity="DescargaHorariaBundle\Entity\TipoDedicacion", inversedBy="usuario")
      * @ORM\JoinColumn(name="tipo_dedicacion_id", referencedColumnName="id")
      */ 
     protected $tipo_dedicacion_id;
@@ -971,6 +971,30 @@ class Usuario implements UserInterface
     public function getNombramientoCargo()
     {
        return $this->nombramiento_cargo;
+    }
+    
+    /**
+     * Set nivelId
+     *
+     * @param integer $nivelId
+     *
+     * @return Registro
+     */
+    public function setTipoDedicacionId($tipoDedicacionId)
+    {
+        $this->tipo_dedicacion_id = $tipoDedicacionId;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelId
+     *
+     * @return integer
+     */
+    public function getTipoDedicacionId()
+    {
+        return $this->tipo_dedicacion_id;
     }
     
 }

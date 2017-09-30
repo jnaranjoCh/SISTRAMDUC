@@ -26,6 +26,7 @@ $('#generate').click(function(){
         success: function(data){
             if(data){
                $("#load").val("true");
+               
             }else{
                $("#load").val("false");
                toastr.error("El usuario no se encuentra registrado, está inactivo o no ha realizado el registro de datos.", "Error", {
@@ -188,6 +189,7 @@ function initTableConsultar(){
                 $("#FechaVencimientoCedulaDatos").val(DateFormat(data.Files[2].fecha_vencimiento.date));
                 $("#FechaVencimientoActaNacimientoDatos").val(DateFormat(data.Files[0].fecha_vencimiento.date));
                 $("#FechaVencimientoRifDatos").val(DateFormat(data.Files[1].fecha_vencimiento.date));
+                $("#tipoDedicacionDatos").val(data.TipoDedicacion);
                 data.Files = burbuja(data.Files);
                 if($("#url").val().split('/')[1] == "assets")
                 {

@@ -392,6 +392,10 @@ class ConsultarDatosController extends Controller
         $dataUser->SegundoApellido = $entity->getSegundoApellido();
         $dataUser->Nacionalidad = $entity->getNacionalidad();
         $dataUser->Telefono = $entity->getTelefono();
+        $dataUser->TipoDedicacion = $this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('DescargaHorariaBundle:TipoDedicacion')
+                                          ->findOneById($entity->getTipoDedicacionId())->getDescription();
         $dataUser->Rif = $entity->getRif();
         $dataUser->FechaNacimiento = $entity->getFechaNacimiento();
         $dataUser->Direccion = $entity->getDireccion();
@@ -692,7 +696,7 @@ class ConsultarDatosController extends Controller
         if($request->isXmlHttpRequest())
         {
             $this->updateSectionOne($request->get('personalData'));
-            $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16]);
+            $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16],$request->get('tipoDedicacion'));
             $this->updateSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
             $this->updateSectionFour($request->get('hijoData'),$request->get('personalData')[16],(string)$request->get('input2bool'),(string)$request->get('input3bool'));
             $this->guardarUrlArchivosUser($request->get('personalData')[16],$request->get('fechasArchivos'));
@@ -730,7 +734,7 @@ class ConsultarDatosController extends Controller
         $em->flush();
     }
     
-    private function updateSectionTwo($cargos,$email)
+    private function updateSectionTwo($cargos,$email,$tipoDedicacion)
     {
         $i = 0;
         $em = $this->getDoctrine()->getManager();
@@ -763,6 +767,10 @@ class ConsultarDatosController extends Controller
         
           $user->addUsuarioFechaCargos($UsuarioFechaCargo);
           $car->addUsuarioFechaCargos($UsuarioFechaCargo);
+          $user->setTipoDedicacionId($this->getDoctrine()
+                                          ->getManager()
+                                          ->getRepository('DescargaHorariaBundle:TipoDedicacion')
+                                          ->findOneByName($tipoDedicacion));
         }
         $em->flush();
     }

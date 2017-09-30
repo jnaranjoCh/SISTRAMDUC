@@ -3,7 +3,7 @@
 namespace DescargaHorariaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * TipoDedicacion
  *
@@ -28,7 +28,18 @@ class TipoDedicacion
      */
     private $name;
 
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Usuario", mappedBy="tipo_dedicacion_id", cascade={"persist"})
+     */
+    protected $usuario;
 
+
+    public function __construct()
+    {
+        $this->usuario = new ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -46,7 +57,7 @@ class TipoDedicacion
      *
      * @return TipoDedicacion
      */
-    public function setName($name)
+    public function setDescription($name)
     {
         $this->name = $name;
 
@@ -58,7 +69,7 @@ class TipoDedicacion
      *
      * @return string
      */
-    public function getName()
+    public function getDescription()
     {
         return $this->name;
     }

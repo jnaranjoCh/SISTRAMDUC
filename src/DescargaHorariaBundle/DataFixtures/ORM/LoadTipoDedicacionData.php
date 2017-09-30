@@ -17,7 +17,7 @@ class LoadTipoDedicacionData extends AbstractFixture implements OrderedFixtureIn
         
         foreach($array as $val){
             $tipo = new TipoDedicacion();
-            $tipo->setName($val);
+            $tipo->setDescription($val);
             $manager->persist($tipo);
             $manager->flush();
         }

@@ -168,3 +168,12 @@ function findProp(table, cellTable)
         valor = table.cell(cellTable).nodes().to$().find('select')[0].checked;
     return valor;
 }
+
+function sendMessage()
+{
+    toastr.clear();
+    toastr.error("Solo debe adjuntar un solo archivo", "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             });
+}
