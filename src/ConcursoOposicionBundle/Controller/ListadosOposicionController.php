@@ -14,6 +14,7 @@ use ConcursoOposicionBundle\Entity\Recusacion;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ConcursoOposicionBundle\Entity\Responsable;
 
 class ListadosOposicionController extends Controller
 {
@@ -499,47 +500,64 @@ class ListadosOposicionController extends Controller
                     $encontrado = true;
             }
 
-            if ($encontrado){
+            $em = $this->getDoctrine()->getManager();
 
-                $em = $this->getDoctrine()->getManager();
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
 
-                $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
+            if (!$concurso) {
 
-                if ($request->get("Vacantes") != null || $request->get("Vacantes") != "")
-                	$concurso->setNroVacantes(intval($request->get("Vacantes")));
-                
-                if ($request->get("Area") != null || $request->get("Area") != "")
-                	$concurso->setAreaPostulacion($request->get("Area"));
-                
-                $concurso->setIdUsuario($this->getUser()->getId());
-                
-                $concurso->setObservaciones($request->get("observacion"));
-                               
-                if ($request->get("Inicio") != null)
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("Inicio"));
-                    $concurso->setFechaInicio(date_create($fecha));
-                }               
-               
-                if ($request->get("fechaDoc") != null)
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaDoc"));
-                    $concurso->setFechaRecepDoc(date_create($fecha));
+                return new JsonResponse("N");
+
+            } else {
+
+                $concurso->setStatus($request->get("status"));
+
+                $responsable = new Responsable();
+
+                $responsable->setNyAR($this->getUser()->getNombreCorto());
+                $responsable->setFechaR(date_create());
+
+                if ($request->get("status") == "Esperando Por Concejo De Escuela") {
+
+                    $responsable->setPresupuesto($request->get("disponibilidad"));
+                    $responsable->setFechaInicioResolucion(date_create($request->get("fecha")));
+                    $responsable->setControl($request->get("control"));
+
+                } else {
+
+                    if ($request->get("status") == "Esperando Por Concejo De Asuntos Profesorales") {
+
+                        $responsable->setControl($request->get("control"));
+
+                    } else {
+
+                        if ($request->get("status") == "Esperando Por Auditoría Académica" || $request->get("status") == "Esperando Por Concejo De Facultad" || $request->get("status") == "Aprobado") {
+
+                            $responsable->setAvala($request->get("avala"));
+                            $responsable->setJustificacion($request->get("justificacion"));
+                            $responsable->setCargoR($request->get("cargo"));
+                            $responsable->setNyAResolucion($request->get("nya"));
+                            $responsable->setCedulaR($request->get("cedula"));
+                            $responsable->setFechaInicioResolucion(date_create($request->get("fecha")));
+                            $responsable->setControl($request->get("control"));
+                        
+                        }
+                    }
                 }
-                else $concurso->setFechaRecepDoc(null);
-           
-                if ($request->get("fechaPre") != null)
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaPre"));
-                    $concurso->setFechaPresentacion(date_create($fecha));
+
+                if ($request->get("status") != "Esperando Por Concejo De Facultad") {
+
+                    $responsable->setNyAE($this->getUser()->getNombreCorto());
+                    $responsable->setFechaE(date_create());
                 }
-                else $concurso->setFechaPresentacion(null);
                 
+
+                $concurso->addResponsable($responsable);
+
                 $em->flush();
-                
-                return new JsonResponse("S");
 
-            } else return new JsonResponse("N");             
+                return new JsonResponse("S");
+            }
         }
         else
              throw $this->createNotFoundException('Error al devolver datos');
