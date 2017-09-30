@@ -5,6 +5,10 @@ namespace DescargaHorariaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use AppBundle\Entity\Usuario;
 
 class SolicitarDescargaController extends Controller
 {
@@ -23,11 +27,6 @@ class SolicitarDescargaController extends Controller
         return $this->render('DescargaHorariaBundle:Solicitud:generar_oficio_solicitud.html.twig');
     }
     
-    /*public function oficioSolicitudAction()
-    {
-        return $this->render('DescargaHorariaBundle:Informes:oficio_solicitud.html.twig');
-    }*/
-    
     public function oficioSolicitudAction(Request $request)
     {
         return $this->render('DescargaHorariaBundle:Informes:oficio_solicitud.html.twig');
@@ -36,33 +35,6 @@ class SolicitarDescargaController extends Controller
     public function getDatosOficioSolicitudAction(Request $request){
         
         $usuario = $this->getOneCedula("AppBundle:","Usuario",$request->get("Cedula"));
-    }
-   
-    
-    public function oficioSolicitudDataAjaxAction(Request $request)
-    {
-        $val[][] = "";
-        if($request->isXmlHttpRequest())
-        {
-            /*$estatus = $this->getAll("RegistroUnicoBundle:","Estatus");
-            $nivel = $this->getAll("RegistroUnicoBundle:","Nivel");
-            $cargo = $this->getAll("RegistroUnicoBundle:","Cargo");*/
-            $facultad = $this->getAll("RegistroUnicoBundle:","Facultad");
-            
-
-            if (!$facultad) {
-                 throw $this->createNotFoundException('Error al obtener datos');
-            }else
-            {
-                /*$val = $this->bdToArrayDescription($estatus,'estatus',$val);
-                $val = $this->bdToArrayDescription($nivel,'nivel',$val);
-                $val = $this->bdToArrayDescription($cargo,'cargo',$val);*/
-                $val = $this->bdToArrayNombre($facultad,'facul',$val);
-                return new JsonResponse($val);
-            }
-        }
-        else
-             throw $this->createNotFoundException('Error al solicitar datos');
     }
     
     public function buscarCedulaAjaxAction(Request $request)
@@ -86,8 +58,8 @@ class SolicitarDescargaController extends Controller
         else
              throw $this->createNotFoundException('Error al solicitar datos');
     }
-    
-    
+   
+    /*Funciones privadas*/
     private function getOneCedula($bundle,$entidad,$cedula)
     {
         return $this->getDoctrine()

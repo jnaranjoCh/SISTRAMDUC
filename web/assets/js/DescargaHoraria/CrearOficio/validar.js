@@ -1,61 +1,26 @@
-$('#cedulaUser').on('input',function(e){
-    $("#formOficio").addClass("hidden");
-});
+ $('#cedula').on('input',function(e){
+        $("#formOficio").addClass("hidden");
+    });
 
-$('#validarUsuario').click(function(){
+
+$('#validar').click(function(){
     toastr.clear();
+    
     $.ajax({
         method: "POST",
-        data: {"Cedula":$('#cedulaUser').val()},
-        url: routeDescargaHoraria['oficio_solicitud_buscarcedula_ajax'],
+        data: {"Cedula":$('#cedula').val()},
+        url:   routeDescargaHoraria['oficio_buscarcedula_ajax'] ,
         dataType: 'json',
         success: function(data){
-             $("#EmailUser").val($('#cedulaUser').val());
-            
             if(data){
-                $.ajax({
-                    method: "POST",
-                    data: {"Email":$('#cedulaUser').val()},
-                    url: routeRegistroUnico['registro_consultarusuario_ajax'],
-                    dataType: 'json',
-                    success: function(data){
-                        $("#EmailUser").val($('#cedulaUser').val());
-                        $("#CedulaUser").val(data.Cedula);
-                        $("#id").val(data.Id);
-                        $("#formUsuario").removeClass("hidden");
-                        tableRol = $('#tableRol').DataTable({
-                                        "ajax":{
-                                        "url": routeRegistroUnico['registro_consultarroles_ajax'],
-                                        "type": 'POST',
-                                        "data": {"Email":$('#cedulaUser').val()}
-                                        },
-                                        "pagingType": "full_numbers",
-                                        "bDestroy": true,
-                                        "language": {
-                                                "url": tableLenguage['datatable-spanish']
-                                        },
-                                        columns: [
-                                            { "data": "Rol"}
-                                        ]
-                                    });
-                        refreshIntervalId = setInterval(initCountRol, 2500);
-                    }
-                });          
+               $("#load").val("true");
             }else{
-                toastr.error("El usuario no se encuentra registrado", "Error", {
-                            "timeOut": "0",
-                            "extendedTImeout": "0"
-                            });
-                $("#formUsuario").addClass("hidden");
+               $("#load").val("false");
+               toastr.error("El usuario no se encuentra registrado, está inactivo o no ha realizado el registro de datos.", "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             });
             }
         }
     });
 });
-
-function initCountRol(){
-    countRol = tableRol.page.info().recordsTotal;
-    if(countRol > 0)
-    {
-        clearInterval(refreshIntervalId);
-    }
-}

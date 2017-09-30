@@ -29,22 +29,29 @@ descarga_horaria_informe_pdf:
     defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:informePDF }
     requirements:
         _method: GET
-        
-oficio_solicitud_data_ajax:
-    path:     /descarga_horaria/oficio-solicitud-datos
-    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:oficioSolicitudData }
-    requirements:
-        _method:  POST
 
-oficio_solicitud_buscarcedula_ajax:
-    path:     /descarga_horaria/oficio-solicitud-buscar-cedula
+oficio_buscarcedula_ajax:
+    path:     /descarga_horaria/oficio-buscar-cedula
     defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:buscarCedulaAjax }
     requirements:
         _method:  POST
-
+        
+        
+solicitud_buscarcedula_ajax:
+    path:     /solicitud/buscar-cedula
+    defaults: { _controller: ComisionRemuneradaBundle:SolicitudComisionServicio:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+        
 registro_buscaremailconsultar_ajax:
     path:     /consulta/buscar-email-consulta-usuario
     defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:buscarEmailAjax }
+    requirements:
+        _method:  POST
+        
+registro_obtener_ajax:
+    path:     /registro/obtener-datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
     requirements:
         _method:  POST
     

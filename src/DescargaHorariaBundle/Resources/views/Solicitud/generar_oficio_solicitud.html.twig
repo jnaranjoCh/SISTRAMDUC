@@ -24,7 +24,8 @@
         <div class="callout callout-info">
             <p align="center"><tt><b>Si desea generar de manera automática su oficio de solicitud de Descarga 
                     Horaria, necesario para el proceso, por favor introduzca su número de cédula y seleccione 
-                    el botón 'Aceptar' que aparece en la parte inferior.</b></tt></p>
+                    el botón 'Aceptar'que aparece en la parte inferior. Posteriormente, debe llenar los datos 
+                    que se le solicitan en el formulario y cuando esté listo, seleccione 'Generar Oficio'. </b></tt></p>
         </div>
         <!-- Box -->
         <div class="box box-primary">
@@ -39,71 +40,55 @@
             <br/>
             <div class="register-box-body">
                 <form>
-                    <div id="divCedulaUser" class="form-group has-feedback">
+                    <div id="divCedula" class="form-group has-feedback">
                         <label>Ingrese la Cédula de Identidad: </label>
-                        <input id="cedulaUser" name="cedulaUser" type="number" class="form-control" placeholder="Cédula">
+                        <input id="cedula" name="cedula" type="number" class="form-control" placeholder="Cédula">
                         <span id="spanCedulaUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
-                    </div>
-                    
-                    <div class="form-group has-feedback">
-                        <input id="gemail" name="gemail" type="email" class="form-control" placeholder="Email del usuario">
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                   
                     <div class="row">
                         <div class="col-xs-12">
-                            <button id="validarUsuario" type="button" class="btn btn-primary btn-block btn-flat">Validar</button>
+                            <button id="validar" type="button" class="btn btn-primary btn-block btn-flat">Aceptar</button>
                         </div>
                     </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
                 </form>
             </div>
           </section>
         </div>
 
-        <div id="formOficio">
+        <div id="formOficio" class="hidden">
             <!--Success message-->
             <section class="content-body col-md-offset-2 col-md-8">
                 <br/>
                 <div class="register-box-body">
                     <form>
-    
-                      <div id="divCedulaUser" class="form-group has-feedback">
-                        <label>Ingrese la Cédula de Identidad: </label>
-                        <input id="cedulaUser" type="number" class="form-control" placeholder="Cédula">
-                        <span id="spanCedulaUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
-                      </div>
-                      
-                      <div id="divRolUser" class="form-group has-feedback">
-                          <label>Tipo de Rol</label>
-                          <select id="rolUser" class="form-control select2" style="width: 100%;">
-                          </select>
-                          <span id="spanRolUser" class="glyphicon form-control-feedback"></span>
-                      </div>
-                  
-                      <div id="divCargoUser" class="form-group has-feedback">
-                          <label>Tipo de Cargo</label>
-                          <select id="cargoUser" class="form-control select2" style="width: 100%;">
-                          </select>
-                          <span id="spanCargoUser" class="glyphicon form-control-feedback"></span>
-                      </div>
-                  
-                      <div id="divFacultad" class="form-group has-feedback">
+                       <div id="divFacultad" class="form-group has-feedback">
                           <label>Facultad</label>
-                          <select id="facultad" class="form-control select2" style="width: 100%;">
+                          <select id="facultad" class="form-control select2" style="width: 100%;" required>
+                              <option selected="selected" value="">Seleccione una opción</option>
+                              <option value="facyt">Facultad Experimental de Ciencias y Tecnología</option>
+                              <option value="ing">Facultad de Ingeniería</option>
+                              <option value="faces">Facultad de Económicas y Sociales</option>
+                              <option value="face">Facultad de Ciencias de la Educación</option>
+                              <option value="face">Facultad de Ciencias Jurídicas y Políticas</option>
+                              <option value="fcs">Facultad de Ciencias de la Salud</option>
+                              <option value="odontologia">Facultad de Odontologia</option>
                           </select>
                           <span id="spanfacultad" class="glyphicon form-control-feedback"></span>
                       </div>
-                  
+                      
                       <div id="divDestinatario" class="form-group has-feedback">
-                          <label>Destinatario</label>
-                          <input id="destinatario" type="number" class="form-control" placeholder="Cédula">
-                          <span id="spanDestinatario" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
+                          <label>Ingrese el nombre del Decano</label>
+                          <input id="destinatario" type="text" class="form-control" placeholder="Ingrese el nombre del Decano">
+                          <span id="spanDestinatario" class="glyphicon glyphicon-user form-control-feedback"></span>
                       </div>
             
                       <hr/>
                       <div class="row">
                         <div class="col-xs-12">
-                             <button id="actualizarUsuario" type="button" class="btn btn-primary btn-block btn-flat">Aceptar</button>
+                             <button id="generarOficio
+                             " type="button" class="btn btn-primary btn-block btn-flat">Generar Oficio</button>
                         </div>
                       </div>
                     </form>
@@ -127,6 +112,5 @@
 {% endblock %}
 
 {% block custom_javascripts %}
-   <script src="{{ asset('assets/js/DescargaHoraria/CrearOficio/datos.js') }}"></script>
    <script src="{{ asset('assets/js/DescargaHoraria/CrearOficio/validar.js') }}"></script>
 {% endblock %}

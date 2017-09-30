@@ -11,17 +11,5 @@ $( window ).load(function() {
 
         }
     });
-    
-    $.ajax({
-        method: "POST",
-        url: routeDescargaHoraria['oficio_solicitud_data_ajax'],
-        dataType: 'json',
-        success: function(data){
-            var facul ="<option value='' selected='selected'>Seleccione una opción</option>";
-            for(var i = 0; i < data["facul"].length; i++)
-                facul = facul+"<option value='"+data["facul"][i]+"'>"+data["facul"][i]+"</option>";
-            $("#facultad").html(facul);
 
-        }
-    });
 });
