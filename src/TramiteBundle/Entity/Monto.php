@@ -31,7 +31,7 @@ class Monto
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal", precision=2, scale=0)
+     * @ORM\Column(name="amount", type="decimal")
      */
     private $amount;
 

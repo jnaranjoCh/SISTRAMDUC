@@ -69,3 +69,13 @@ clausulas_contractuales_becaIndex:
 clausulas_contractuales_prima_hijosIndex:
     path:     /clausulas-contractuales/primaHijosIndex/{state}
     defaults: { _controller: ClausulasContractualesABundle:Solicitud:primaHijosIndex}
+
+clausulas_contractuales_mantenimiento_de_montos:
+    path:     /clausulas-contractuales/mantenimientoDeMontos
+    defaults: { _controller: ClausulasContractualesABundle:MantenimientoMontos:mantenimientoDeMontosIndex}
+
+clausulas_contractuales_mantenimiento_de_montos_enviar_data:
+    path:     /clausulas-contractuales/mantenimientoDeMontosEnviarData
+    defaults: { _controller: ClausulasContractualesABundle:MantenimientoMontos:mantenimientoDeMontosEnviarData}
+    requirements:
+        _method:  POST

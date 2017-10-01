@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>Mantenimiento de montos</h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-handshake-o"></i>Clausulas Contractuales</li>
+        <li class="active">Mantenimiento de montos</li>
+      </ol>
+    </section>
+    <br/>
+    <div class="row">
+       <section class="content-body">
+                    
+          <div class="col-md-offset-1 col-md-10">
+             <!-- /.box-header -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Ingrese los datos del nuevo monto</h3>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div id="divDescripcionMontoDatos" class="form-group has-feedback">
+                      <label>Descripción</label>
+                      <input type="text" id="DescripcionMontoDatos" class="form-control" placeholder="Descripcion" required>
+                      <span id="spanDescripcionMontoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div id="divMontoMontoDatos" class="form-group has-feedback">
+                      <label>Monto</label>
+                      <input type="number" id="MontoMontoDatos" class="form-control" placeholder="Monto" required>
+                      <span id="spanMontoMontoDatos" class="glyphicon form-control-feedback"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                      <div class="form-group has-feedback">
+                            <button id="agregarMonto" type="button" class="btn btn-block btn-flat"></button>
+                      </div>
+                  </div><!--col-xs-12   col-md-offset-5 -->
+                </div>
+              </div>
+            </div>
+            <!-- /.box -->
+          </div>
+          <!--research,courses and studies box-->
+          <div class="col-md-offset-1 col-md-10">
+             <!-- /.box-header -->
+            <div class="box box-success">
+              <div class="box-header with-border">
+                <h3 class="box-title">Montos</h3>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-body">
+                <div style="overflow-x: scroll; white-space: nowrap;">
+                 <table id="tableMontos" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th class="hidden">Id</th>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th class="hidden">Id</th>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!-- /.box -->
+          </div>
+          <!--research,courses and studies box-->
+          <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="form-group has-feedback">
+                      <button  id="actualizarInformacion" type="button" class="btn btn-danger btn-block btn-flat">Guardar&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-floppy-o"></i></button>
+                </div>
+            </div><!--col-xs-12   col-md-offset-5 -->
+          </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block custom_javascripts %}
+      <script src="{{ asset('assets/js/ClausulasContractuales/MantenimientoMonto/inicializacion.js') }}"></script>
+      <script src="{{ asset('assets/js/ClausulasContractuales/MantenimientoMonto/insertarEliminarActualizar.js') }}"></script>
+{% endblock %}
