@@ -15,6 +15,7 @@ use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ConcursoOposicionBundle\Entity\Responsable;
+use ConcursoOposicionBundle\Entity\Curso;
 
 class ListadosOposicionController extends Controller
 {
@@ -72,6 +73,54 @@ class ListadosOposicionController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarCursoAjax", name="buscarCursoAjax")
+     * @Method("POST")
+     */
+    public function buscarCursoAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Curso');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.concurso = :cadena')
+                ->setParameter('cadena', $request->get("id"))
+                ->orderBy('p.id', 'DESC')
+                ->getQuery();
+             
+            $concurso = $query->getResult();
+
+            if (!$concurso) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaCursos($concurso,'tiempo',$val, 0);
+                $val = $this->asignarFilaCursos($concurso,'curso',$val, 1);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+     private function asignarFilaCursos($object,$entidad,$val, $pos)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           switch ($pos) {
+               case 0: $val[$entidad][$i] = $value->getTiempo(); break;
+               case 1: $val[$entidad][$i] = $value->getNombre(); break;
+           }
+           $i++;
+        }
+        return $val;
     }
 
     private function asignarFilaFechaPresentacion($object,$entidad,$val)
@@ -491,15 +540,7 @@ class ListadosOposicionController extends Controller
     public function modificarConcursoAjaxAction(Request $request){
 
         if($request->isXmlHttpRequest())
-        {
-            $encontrado = false;
-
-            foreach ($this->getUser()->getRoles() as $rol => $valor) {
-                
-                if ($valor == "Asuntos Profesorales")
-                    $encontrado = true;
-            }
-
+        {       
             $em = $this->getDoctrine()->getManager();
 
             $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));

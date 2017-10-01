@@ -37,9 +37,10 @@
 	                        "condicion": data["condicion"][i],
 	                        "facultad": data["facultad"][i],
 	                        "status": data["status"][i],
-	                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+	                       "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 	                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
 	                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+	                        //,"pdf": '<span class="fa fa-file-pdf-o" onclick="javascript:pdf('+num+')"></span>'
 	                    }).draw();                         
 	                }                                             
 	            }                       	
@@ -103,7 +104,7 @@
 				                        "condicion": data["condicion"][i],
 				                        "facultad": data["facultad"][i],
 				                        "status": data["status"][i],
-				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+				                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
 				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
 				                    }).draw();                         
@@ -485,7 +486,7 @@
 
 	            } else{                 
 	                
-	                text = "Concurso Eliminado";
+	                text = "Concurso Modificado";
 
 	                toastr.success(text, "Exito", {
 	                    "timeOut": "0",
@@ -513,7 +514,7 @@
 				                        "condicion": data["condicion"][i],
 				                        "facultad": data["facultad"][i],
 				                        "status": data["status"][i],
-				                       // "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+				                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
 				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
 				                    }).draw();                         
@@ -637,5 +638,79 @@
 	        }
 	    });
 	}
+
+
+    function ver(id){
+
+    	ident = id;
+
+	    $.ajax({
+
+	        method:"POST",
+	        url: "{{ path('buscarConcursoAjax') }}",
+	        dataType: 'json',
+	        data: {"id": id},
+	        success: function(data)
+	        {
+	            if (data == "N"){
+
+	                text = "No Se Encontró El Concurso";
+
+	                toastr.error(text, "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
+
+	            } else{       
+
+	            	  $('#ver').removeClass('hide'); 
+
+	            	  $('#condicion').val(data['condicion']); 
+	            	  $('#tiempo').val(data['tiempo_dedicacion']); 
+	            	  $('#horas').val(data['nro_horas']); 
+	            	  $('#sede').val(data['sede']); 
+	            	  $('#ciudad').val(data['ciudad']); 
+	            	  $('#facultad').val(data['facultad']); 
+	            	  $('#escuela').val(data['departamento']);	            	   
+	            	  $('#unidad').val(data['areaPostulacion']);
+	            	  $('#catedra').val(data['escuela']); 
+	            	  $('#motivo').val(data['motivo']); 
+	            	  $('#desc_motivo').val(data['desc_motivo']); 
+	            	  $('#nroVacantes').val(data['nroVacantes']); 	            	  
+	            	  $('#justificacion9').val(data['justificacion']); 
+	            	  $('#grado_academico9').val(data['grado_academico']); 
+	            	  $('#profesion').val(data['profesion']); 
+	            	  $('#Experiencia9').val(data['experiencia']); 
+	            	  $('#Conocimiento9').val(data['area_conocimiento']); 
+	            	  $('#investigacion9').val(data['area_investigacion']); 
+	            	  $('#registro').val(data['fechaInicio']);
+
+	            	  var idUsuario = data['idUsuario'][0]; 
+
+
+	            	  $.ajax({
+
+					        method:"POST",
+					        url: "{{ path('buscarCursoAjax') }}",
+					        dataType: 'json',
+					        data: {"id": idUsuario},
+					        success: function(data)
+					        {
+					        	tabla2.clear().draw();
+
+					        	for (var i = 0; i <= data["curso"].length-1; i++) {
+
+				                    tabla2.row.add( {
+				                        "curso": data["curso"][i],
+				                        "tiempo": data["tiempo"][i]
+				                    }).draw();                         
+				                } 
+
+					        }
+					    });
+	            }                           
+	        }
+	    });
+    }
 
 </script>
