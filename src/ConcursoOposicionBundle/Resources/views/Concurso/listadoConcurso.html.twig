@@ -40,7 +40,7 @@
 	                       "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
 	                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
 	                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-	                        //,"pdf": '<span class="fa fa-file-pdf-o" onclick="javascript:pdf('+num+')"></span>'
+	                        ,"pdf": '<span class="fa fa-file-pdf-o" onclick="javascript:pdf('+num+')"></span>'
 	                    }).draw();                         
 	                }                                             
 	            }                       	
@@ -99,15 +99,16 @@
 				                    var num = data["id"][i];
 
 				                    tabla.row.add( {
-				                        "inicio": data["fechaInicio"][i],
-				                        "vacantes": data["nroVacantes"][i],
-				                        "condicion": data["condicion"][i],
-				                        "facultad": data["facultad"][i],
-				                        "status": data["status"][i],
-				                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
-				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
-				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-				                    }).draw();                         
+			                        "inicio": data["fechaInicio"][i],
+			                        "vacantes": data["nroVacantes"][i],
+			                        "condicion": data["condicion"][i],
+			                        "facultad": data["facultad"][i],
+			                        "status": data["status"][i],
+			                       "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+			                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
+			                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+			                        ,"pdf": '<span class="fa fa-file-pdf-o" onclick="javascript:pdf('+num+')"></span>'
+			                    }).draw();                         
 				                }                        	
 					        }
 					     });
@@ -509,15 +510,16 @@
 				                    var num = data["id"][i];
 
 				                    tabla.row.add( {
-				                        "inicio": data["fechaInicio"][i],
-				                        "vacantes": data["nroVacantes"][i],
-				                        "condicion": data["condicion"][i],
-				                        "facultad": data["facultad"][i],
-				                        "status": data["status"][i],
-				                        "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
-				                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
-				                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
-				                    }).draw();                         
+			                        "inicio": data["fechaInicio"][i],
+			                        "vacantes": data["nroVacantes"][i],
+			                        "condicion": data["condicion"][i],
+			                        "facultad": data["facultad"][i],
+			                        "status": data["status"][i],
+			                       "ver": '<span class="glyphicon glyphicon-search" onclick="javascript:ver('+num+')"></span>',
+			                        "modif": '<span class="glyphicon glyphicon-pencil" onclick="javascript:modificar('+num+','+i+')" data-toggle="modal" data-target="#myModal2"></span>',
+			                        "elim": '<span class="glyphicon glyphicon-trash" onclick="javascript:eliminar('+num+','+i+')" data-toggle="modal" data-target="#myModal"></span>'
+			                        ,"pdf": '<span class="fa fa-file-pdf-o" onclick="javascript:pdf('+num+')"></span>'
+			                    }).draw();                          
 				                }                        	
 					        }
 					     });
@@ -712,5 +714,22 @@
 	        }
 	    });
     }
+
+    function pdf(id){
+
+	    ident = id;
+
+	    $.ajax({
+
+	        method:"POST",
+	        url: "{{ path('pdfAjax') }}",
+	        dataType: 'json',
+	        data: {"id": ident},
+	        success: function(data)
+	        {
+	                                   
+	        }
+	    });
+	}
 
 </script>

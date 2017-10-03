@@ -18,6 +18,7 @@ use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ConcursosBundle\Entity\Resultado;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
 {
@@ -605,5 +606,42 @@ class DefaultController extends Controller
     	}
     	else
     		throw $this->createNotFoundException('Error al insertar datos');
-    }   
+    }
+
+
+     /**
+     * @Route("/concursoOposicion/pdfAjax", name="pdfAjax")
+     * @Method("POST")
+     */
+    public function pdfAjaxAction(Request $request){
+    
+        if($request->isXmlHttpRequest())
+        {
+            
+            $pdf = new \FPDF();
+
+            $pdf->AddPage();
+            $pdf->SetFont('Arial','B',16);
+            $pdf->Cell(40,10,'Hello World!');
+            
+            /*
+            $response = new Response($pdf->Output(), Response::HTTP_OK, array('content-Type' => 'application/pdf'));
+
+            $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+
+            $response->headers->set('Content-Disposition', $d);
+
+            return $response;
+            */
+            
+
+            $retorna = new Response($pdf->Output(), 200, array(
+                'Content-Type' => 'application/pdf'));
+
+            return $retorna;
+                      
+        }
+        else
+            throw $this->createNotFoundException('Error al ejecutar pdf');
+    }  
 }
