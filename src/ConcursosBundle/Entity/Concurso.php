@@ -12,6 +12,7 @@ use AppBundle\Entity\Usuario;
 use TramiteBundle\Entity\Transicion;
 use ConcursoOposicionBundle\Entity\Curso;
 use ConcursoOposicionBundle\Entity\Responsable;
+use ConcursoOposicionBundle\Entity\Acta;
 
 /**
  * Concurso
@@ -276,6 +277,12 @@ class Concurso extends Tramite
      * @ORM\Column(name="nombre", type="string", length=100, nullable=true)
      */
     private $nombre;
+
+    /**
+     * @ORM\OneToOne(targetEntity="ConcursoOposicionBundle\Entity\Acta", mappedBy="concurso", cascade={"remove", "persist"})
+     * @ORM\JoinColumn(name="acta_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $acta;
 
     public function __construct()
     {
@@ -1087,5 +1094,29 @@ class Concurso extends Tramite
     public function getResponsable()
     {
         return $this->responsable;
+    }
+
+    /**
+     * Set acta
+     *
+     * @param Acta $acta
+     *
+     * @return Concurso
+     */
+    public function setActa(Acta $acta)
+    {
+        $this->acta = $acta;
+    
+        return $this;
+    }
+    
+    /**
+     * Get acta
+     *
+     * @return Acta
+     */
+    public function getActa()
+    {
+        return $this->acta;
     }
 }

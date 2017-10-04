@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "AdminLTE": "admin-lte#^2.3.11",
+    "AdminLTE": "admin-lte#2.3.11",
     "font-awesome": "^4.7.0",
     "Ionicons": "ionicons#^2.0.1",
     "toastr": "^2.1.3",

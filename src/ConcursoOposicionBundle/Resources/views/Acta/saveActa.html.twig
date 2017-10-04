@@ -1,0 +1,115 @@
+<script type="text/javascript">
+
+	
+	$('#registrarActa').click(function (){ 
+
+		toastr.clear();
+        var text = "";
+
+        var continua = true;
+
+        $('#div_fecha').removeClass("has-error");
+
+        if ($('#fecha').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_fecha').addClass("has-error");
+        }
+
+        $('#div_minuto').removeClass("has-error");
+
+        if ($('#minuto').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_minuto').addClass("has-error");
+        }
+
+        $('#div_hora').removeClass("has-error");
+
+        if ($('#hora').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_hora').addClass("has-error");
+        }
+
+        $('#div_ampm').removeClass("has-error");
+
+        if ($('#ampm').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_ampm').addClass("has-error");
+        }
+
+        $('#div_acta').removeClass("has-error");
+
+        if ($('#acta').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_acta').addClass("has-error");
+        }
+
+        $('#div_lugar').removeClass("has-error");
+
+        if ($('#lugar').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_lugar').addClass("has-error");
+        }
+
+        $('#div_asunto').removeClass("has-error");
+
+        if ($('#asunto').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_asunto').addClass("has-error");
+        }
+
+        $('#div_resolucion').removeClass("has-error");
+
+        if ($('#resolucion').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_resolucion').addClass("has-error");
+        }
+
+        $('#div_avala').removeClass("has-error");
+
+        if ($('#avala').val() == "..."){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_avala').addClass("has-error");
+        }
+
+        $('#div_justificacion').removeClass("has-error");
+
+        if ($('#justificacion').val() == ""){
+
+            continua = false;
+            text = "Campo vacío";
+            $('#div_justificacion').addClass("has-error");
+        }
+
+        if (continua) {
+
+        	// json
+
+
+        } else {
+
+        	toastr.error(text, "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+        }
+	});
+
+</script>
