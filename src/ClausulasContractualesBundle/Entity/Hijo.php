@@ -69,6 +69,10 @@ class Hijo
      */
     private $partidaNacimientoUrl;
 
+    /**
+     * 
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Usuario", mappedBy="hijos")
+     */
     protected $usuarios;
 
     public function __construct()

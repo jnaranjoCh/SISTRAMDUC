@@ -31,10 +31,10 @@ class RegistrarDatosController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
-            $this->registerSectionOne($request->get('personalData'));
+            $this->registerSectionOne($request->get('personalData'),$request->get('registerOtherUser'),$request->get('hijoData'),$request->get('registerOtherUserPadre'),$request->get('registerOtherUserMadre'));
             $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[16],$request->get('tipoDedicacion'));
             $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
-            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[16]);
+            $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[16],$request->get('registerOtherUser'),$request->get('registerOtherUserPadre'),$request->get('registerOtherUserMadre'));
             return new JsonResponse("Datos guardados");
         }
         else
@@ -146,12 +146,19 @@ class RegistrarDatosController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
+            $values = [];
             $encontrado = $this->getOneEmail("AppBundle:","Usuario",$request->get("Email"));
-
+            
             if (!$encontrado) {
-                return new JsonResponse(0);
+                $values["ci"] = "";
+                $values["is_register"] = 0;     
+                return new JsonResponse($values);
             }else
-                return new JsonResponse($encontrado->getActivo() && !$encontrado->getIsRegister());
+            {
+                $values["ci"] = $encontrado->getCedula();
+                $values["is_register"] = $encontrado->getActivo() && !$encontrado->getIsRegister();
+                return new JsonResponse($values);
+            }
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');
@@ -283,7 +290,7 @@ class RegistrarDatosController extends Controller
                     ->findOneById($id);
     }
     
-    private function registerSectionOne($user)
+    private function registerSectionOne($user, $registerOtherUser, $hijos, $registerOtherUserPadre, $registerOtherUserMadre)
     {
         $em = $this->getDoctrine()->getManager();
         $newUser = $em->getRepository('AppBundle:Usuario')
@@ -307,7 +314,48 @@ class RegistrarDatosController extends Controller
         $newUser->setTelefono($user[9].'-'.$user[10]);
         $newUser->setDireccion($user[15]);
         
+        if(strcmp($registerOtherUser,"true")==0)
+        {
+            $roles[] = new Rol();
+            $otherUser = new Usuario();
+            $otherUser = $this->initialiceUser($otherUser);
+            if(strcmp($registerOtherUserMadre,"true")==0)
+            {
+                $otherUser->setCedula($hijos[0]['ciMadre']);
+                $otherUser->setCorreo("Cedula: ".$hijos[0]['ciMadre']." (Sin registrar)");
+            }
+            if(strcmp($registerOtherUserPadre,"true")==0)
+            {
+                $otherUser->setCedula($hijos[0]['ciPadre']);
+                $otherUser->setCorreo("Cedula: ".$hijos[0]['ciPadre']." (Sin registrar)");
+            }
+            $encoder = $this->container->get('security.password_encoder');
+            $encoded = $encoder->encodePassword($otherUser,"123");
+            $otherUser->setPassword($encoded);
+            $otherUser->setActivo(0);
+            $otherUser->setIsRegister(0);
+            $roles[0] = $this->getByName("AppBundle:","Rol","Profesor");
+            $otherUser->addRoles($roles);
+            $em->persist($otherUser);
+        }
         $em->flush();
+    }
+    
+    private function initialiceUser($usuario)
+    {
+        $usuario->setCedula("");
+        $usuario->setPrimerNombre("");
+        $usuario->setSegundoNombre("");
+        $usuario->setPrimerApellido("");
+        $usuario->setSegundoApellido("");
+        $usuario->setNacionalidad("");
+        $usuario->setDireccion("");
+        $usuario->setTelefono('');
+        $usuario->setRif('');
+        $usuario->setEdad(0);
+        $usuario->setSexo('');
+        
+        return $usuario;
     }
     
     private function registerSectionTwo($cargos,$email,$tipoDedicacion)
@@ -472,13 +520,27 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-     private function registerSectionFour($hijos,$email)
+     private function registerSectionFour($hijos,$email, $registerOtherUser, $registerOtherUserPadre, $registerOtherUserMadre)
      {
          if($hijos != null){
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('AppBundle:Usuario')
                           ->findOneByCorreo($email);
-        
+            if(strcmp($registerOtherUser,"true")==0)
+            {   
+                if(strcmp($registerOtherUserPadre,"true")==0)
+                {
+                    $otherUser  = $em->getRepository('AppBundle:Usuario')
+                                ->findOneByCedula($hijos[0]['ciPadre']);
+                }
+                
+                if(strcmp($registerOtherUserMadre,"true")==0)
+                {
+                    $otherUser  = $em->getRepository('AppBundle:Usuario')
+                                ->findOneByCedula($hijos[0]['ciMadre']);
+                }
+            }
+            
             if (!$user) {
                 throw $this->createNotFoundException(
                     'Usuario no encontrado por el correo '.$email
@@ -521,8 +583,88 @@ class RegistrarDatosController extends Controller
                  $em->flush();
                  $i++;
             }
+            $otherUser->addHijos($hijoss);
             $user->addHijos($hijoss);
             $em->flush();
         } 
+    }
+    
+    private function getByName($bundle,$entidad,$name)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByNombre($name);
+    }
+    
+    public function enviarParentescoAction(Request $request)
+    {
+        $users = null;
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCorreo($request->get("Email"));
+        
+        $hijos = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT h
+                                     FROM ClausulasContractualesBundle:Hijo h
+                                        INNER JOIN  h.usuarios u
+                                     WHERE u.id = :id')
+                      ->setParameter('id',$user->getId())
+                      ->getResult();
+        
+        if($hijos)
+        {
+            $users = $this->getDoctrine()
+                          ->getManager()
+                          ->createQuery('SELECT u.cedula, u.primerNombre, u.segundoNombre, u.primerApellido, u.segundoApellido
+                                         FROM AppBundle:Usuario u
+                                            INNER JOIN  u.hijos h
+                                         WHERE h in(:ids) AND u.cedula != :cedula')
+                          ->setParameter('ids',$hijos)
+                          ->setParameter('cedula',$user->getCedula())
+                          ->getResult();
+        }
+            
+        return new JsonResponse($users);
+    }
+    
+    public function enviarParentescoHijosAction(Request $request)
+    {
+        $data[] = [];
+        $i = 0;
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCedula($request->get("cedula"));
+        $Hijos = $this->getDoctrine()
+                      ->getManager()
+                      ->createQuery('SELECT h.cedulaHijo, h.cedulaMadre, h.cedulaPadre,
+                                            h.primerNombre, h.segundoNombre, h.primerApellido,
+                                            h.segundoApellido, h.nacionalidad, h.fechaNacimiento
+                                     FROM AppBundle:Usuario u
+                                        INNER JOIN u.hijos h
+                                     WHERE u.id = :id')
+                      ->setParameter('id',$user->getId())
+                      ->getResult();
+        foreach($Hijos as $Hijo)
+        {
+            $data[$i]["CIMadre"] = $Hijo['cedulaMadre'];
+            $data[$i]["CIPadre"] = $Hijo['cedulaPadre'];
+            $data[$i]["CIHijo"] = $Hijo['cedulaHijo'];
+            $data[$i]["1erNombre"] = $Hijo['primerNombre'];
+            $data[$i]["2doNombre"] = $Hijo['segundoNombre'];
+            $data[$i]["1erApellido"] = $Hijo['primerApellido'];
+            $data[$i]["2doApellido"] = $Hijo['segundoApellido'];
+            $data[$i]["FNacimiento"] = $Hijo['fechaNacimiento']->format('d/m/Y H:i');
+            $data[$i]["Nacionalidad"] = $Hijo['nacionalidad'];
+            $i++;
+        }
+        
+        return new JsonResponse(array(
+            "draw"            => 1,
+	        "recordsTotal"    => $i,
+	        "recordsFiltered" => $i,
+	        "data"            => $data 
+        ));
     }
 }

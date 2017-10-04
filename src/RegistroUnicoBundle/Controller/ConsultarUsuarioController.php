@@ -106,6 +106,7 @@ class ConsultarUsuarioController extends Controller
               $roles[$i] = $this->getByName("AppBundle:","Rol",$rol);
               $i++;
             }
+            $user->setActivo(1);
             $user->setRoles($roles);
             $user->setCorreo($request->get("Email"));
             $em->flush();

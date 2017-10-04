@@ -722,6 +722,14 @@ $('#agregarHijo').click(function(){
              });
        $("#headerHijos").css({ 'color': "red" });
        band = true;
+   }else if(!band && ($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val()))
+   {
+        band = true;
+        $("#headerHijos").css({ 'color': "red" });
+        toastr.error("La cedula del padre y la madre son iguales.", "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
    }
        
    

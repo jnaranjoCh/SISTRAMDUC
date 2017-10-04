@@ -153,11 +153,9 @@ class Usuario implements UserInterface
     protected $facultades;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", cascade={"remove", "persist"})
-     * @ORM\JoinTable(name="usuario_hijo",
-     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id", onDelete="CASCADE")}
-     *      )
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuario_hijo")
      */
     protected $hijos;
 
