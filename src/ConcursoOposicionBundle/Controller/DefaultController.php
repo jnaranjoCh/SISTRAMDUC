@@ -23,12 +23,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class DefaultController extends Controller
 {
 	/**
-	 * @Route("/concursoOposicion/requisicionRRHH", name="requisicionRRHH")
+	 * @Route("/concursoOposicion/actaVCAP", name="actaVCAP")
 	 */
-	public function requisicionRRHHAction()
+	public function actaVCAPAction()
 	{
-		return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
+		return $this->render('ConcursoOposicionBundle::actaVerificacionCAP.html.twig');
 	}
+
+    /**
+     * @Route("/concursoOposicion/requisicionRRHH", name="requisicionRRHH")
+     */
+    public function requisicionRRHHAction()
+    {
+        return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
+    }
 
     /**
      * @Route("/concursoOposicion/jurado", name="jurado")
