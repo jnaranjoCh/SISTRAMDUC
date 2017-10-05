@@ -79,7 +79,7 @@ $("#registrarUsuario").click(function (){
                         else{
                             var array = new Array(countRol);
                             var i = 0;
-                            tableRol.column(0)
+                            tableRol.column(1)
                                 .data()
                                 .each( function ( value,index ) {
                                     array[i] = value;

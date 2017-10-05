@@ -95,6 +95,7 @@ $("#actualizarUsuario").click(function (){
                                 },
                                 success: function(data){
                                         if(data == "actualizado"){
+                                            $("#CedulaUser").prop('disabled', false);
                                             $("#PasswordUser").val("");
                                             $("#RetryPasswordUser").val("");
                                             $("#CedulaUser").val("");

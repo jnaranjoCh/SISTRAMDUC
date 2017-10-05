@@ -17,6 +17,10 @@ $('#generate').click(function(){
                     url: routeRegistroUnico['registro_consultarusuario_ajax'],
                     dataType: 'json',
                     success: function(data){
+                        if($('#gemail').val().indexOf("(Sin registrar)") >= 0)
+                        {
+                            $("#CedulaUser").prop('disabled', true);
+                        }
                         $("#EmailUser").val($('#gemail').val());
                         $("#CedulaUser").val(data.Cedula);
                         $("#id").val(data.Id);

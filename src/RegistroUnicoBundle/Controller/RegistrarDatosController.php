@@ -314,29 +314,42 @@ class RegistrarDatosController extends Controller
         $newUser->setTelefono($user[9].'-'.$user[10]);
         $newUser->setDireccion($user[15]);
         
+        
         if(strcmp($registerOtherUser,"true")==0)
         {
-            $roles[] = new Rol();
-            $otherUser = new Usuario();
-            $otherUser = $this->initialiceUser($otherUser);
+            $cedulaAux = null;
+            $correoAux = null;
             if(strcmp($registerOtherUserMadre,"true")==0)
             {
-                $otherUser->setCedula($hijos[0]['ciMadre']);
-                $otherUser->setCorreo("Cedula: ".$hijos[0]['ciMadre']." (Sin registrar)");
+                $cedulaAux = $hijos[0]['ciMadre'];
+                $correoAux = "Cedula: ".$hijos[0]['ciMadre']." (Sin registrar)";
+                $otherUser = $em->getRepository('AppBundle:Usuario')
+                                    ->findOneByCorreo($hijos[0]['ciMadre']);
             }
+            
             if(strcmp($registerOtherUserPadre,"true")==0)
             {
-                $otherUser->setCedula($hijos[0]['ciPadre']);
-                $otherUser->setCorreo("Cedula: ".$hijos[0]['ciPadre']." (Sin registrar)");
+                $cedulaAux = $hijos[0]['ciPadre'];
+                $correoAux = "Cedula: ".$hijos[0]['ciPadre']." (Sin registrar)";
+                $otherUser = $em->getRepository('AppBundle:Usuario')
+                                ->findOneByCorreo($hijos[0]['ciPadre']);
             }
-            $encoder = $this->container->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($otherUser,"123");
-            $otherUser->setPassword($encoded);
-            $otherUser->setActivo(0);
-            $otherUser->setIsRegister(0);
-            $roles[0] = $this->getByName("AppBundle:","Rol","Profesor");
-            $otherUser->addRoles($roles);
-            $em->persist($otherUser);
+            if(!$otherUser)
+            {
+                $roles[] = new Rol();
+                $otherUser = new Usuario();
+                $otherUser = $this->initialiceUser($otherUser);
+                $otherUser->setCorreo($correoAux);
+                $otherUser->setCedula($cedulaAux);
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($otherUser,"123");
+                $otherUser->setPassword($encoded);
+                $otherUser->setActivo(0);
+                $otherUser->setIsRegister(0);
+                $roles[0] = $this->getByName("AppBundle:","Rol","Profesor");
+                $otherUser->addRoles($roles);
+                $em->persist($otherUser);
+            }
         }
         $em->flush();
     }
@@ -523,10 +536,12 @@ class RegistrarDatosController extends Controller
      private function registerSectionFour($hijos,$email, $registerOtherUser, $registerOtherUserPadre, $registerOtherUserMadre)
      {
          if($hijos != null){
+             
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('AppBundle:Usuario')
-                          ->findOneByCorreo($email);
-            if(strcmp($registerOtherUser,"true")==0)
+                       ->findOneByCorreo($email);
+                          
+            /*if(strcmp($registerOtherUser,"true")==0)
             {   
                 if(strcmp($registerOtherUserPadre,"true")==0)
                 {
@@ -539,7 +554,7 @@ class RegistrarDatosController extends Controller
                     $otherUser  = $em->getRepository('AppBundle:Usuario')
                                 ->findOneByCedula($hijos[0]['ciMadre']);
                 }
-            }
+            }*/
             
             if (!$user) {
                 throw $this->createNotFoundException(
@@ -583,7 +598,7 @@ class RegistrarDatosController extends Controller
                  $em->flush();
                  $i++;
             }
-            $otherUser->addHijos($hijoss);
+            //$otherUser->addHijos($hijoss);
             $user->addHijos($hijoss);
             $em->flush();
         } 

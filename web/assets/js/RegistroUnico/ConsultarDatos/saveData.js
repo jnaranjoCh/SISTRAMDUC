@@ -138,7 +138,7 @@ $("#guardar").click(function(){
                 else if($("#checkboxHijos").prop('checked'))
                 {
                     if(!validarHijos())
-                        text = "Campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos.";        
+                        text = "Campos mal introducido, datos sin introducir, faltan o sobran documentos en la sección de hijos, solamente se permiten 6 hijos maximo.";        
                     else
                     {
                         participantesData = burbuja(participantesData);
@@ -727,89 +727,93 @@ function validarHijos()
         valido = false;
     else
     {
-        for(var i = 0; i < numFilas; i++)
-        {
-            cellsHijos = new Object();
-            cellsHijos.row = i;
-            cellsHijos.column = 3;
-            cellsHijos.columnVisible = "0";
-            cedulasHijos[indCedulasHijos] = findValue(tableHijos, cellsHijos);
-            indCedulasHijos++;
-        }
-
-        if((removeItemFromArr(cedulasHijos,"").length != removeItemFromArr(cedulasHijos,"").unique().length))
-            valido = false;
-        else
+        if(numFilas <= 6)
         {
             for(var i = 0; i < numFilas; i++)
             {
-                var hijo = new Object();
-                for(var j = 1; j < numColumn-1; j++)
+                cellsHijos = new Object();
+                cellsHijos.row = i;
+                cellsHijos.column = 3;
+                cellsHijos.columnVisible = "0";
+                cedulasHijos[indCedulasHijos] = findValue(tableHijos, cellsHijos);
+                indCedulasHijos++;
+            }
+    
+            if((removeItemFromArr(cedulasHijos,"").length != removeItemFromArr(cedulasHijos,"").unique().length))
+                valido = false;
+            else
+            {
+                for(var i = 0; i < numFilas; i++)
                 {
-                    cellsHijos = new Object();
-                    cellsHijos.row = i;
-                    cellsHijos.column = j;
-                    cellsHijos.columnVisible = "0";
-                    if(j != 3 && findValue(tableHijos, cellsHijos) == "")
-                        valido = false;
-                        
-                    if(valido)
+                    var hijo = new Object();
+                    for(var j = 1; j < numColumn-1; j++)
                     {
-                        switch (j) {
-                            case 1:
-                                    hijo.ciMadre = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 2:
-                                    hijo.ciPadre = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 3:
-                                    hijo.ciHijo = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 4:
-                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
-                                    {
-                                        valido = false;
-                                    }
-                                    hijo.primerNombre = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 5:
-                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
-                                    {
-                                        valido = false;
-                                    }
-                                    hijo.segundoNombre = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 6:
-                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
-                                    {
-                                        valido = false;
-                                    }
-                                    hijo.primerApellido = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 7:
-                                    if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
-                                    {
-                                        valido = false;
-                                    }
-                                    hijo.segundoApellido = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 8:
-                                    hijo.fechaNacimiento = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 9:
-                                    hijo.fechaVencimiento = findValue(tableHijos, cellsHijos);
-                                break;
-                            case 10:
-                                    hijo.nacionalidad = findValue(tableHijos, cellsHijos);
-                                break;
+                        cellsHijos = new Object();
+                        cellsHijos.row = i;
+                        cellsHijos.column = j;
+                        cellsHijos.columnVisible = "0";
+                        if(j != 3 && findValue(tableHijos, cellsHijos) == "")
+                            valido = false;
                             
+                        if(valido)
+                        {
+                            switch (j) {
+                                case 1:
+                                        hijo.ciMadre = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 2:
+                                        hijo.ciPadre = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 3:
+                                        hijo.ciHijo = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 4:
+                                        if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
+                                        {
+                                            valido = false;
+                                        }
+                                        hijo.primerNombre = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 5:
+                                        if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
+                                        {
+                                            valido = false;
+                                        }
+                                        hijo.segundoNombre = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 6:
+                                        if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
+                                        {
+                                            valido = false;
+                                        }
+                                        hijo.primerApellido = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 7:
+                                        if(!(/^[a-zA-Z]*$/).test(findValue(tableHijos, cellsHijos)))
+                                        {
+                                            valido = false;
+                                        }
+                                        hijo.segundoApellido = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 8:
+                                        hijo.fechaNacimiento = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 9:
+                                        hijo.fechaVencimiento = findValue(tableHijos, cellsHijos);
+                                    break;
+                                case 10:
+                                        hijo.nacionalidad = findValue(tableHijos, cellsHijos);
+                                    break;
+                                
+                            }
                         }
                     }
+                    hijoData[countHijo] = hijo;
+                    countHijo++;
                 }
-                hijoData[countHijo] = hijo;
-                countHijo++;
             }
-        }
+        }else
+            valido = false;
     }
 
     return valido;

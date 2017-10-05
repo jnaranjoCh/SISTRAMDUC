@@ -296,3 +296,16 @@ $("#closeParent").click(function(){
         $('#checkboxMadre').prop('checked',false);
     }
 });
+
+
+$("#AnoPublicacionDatos").keypress(function(){
+    $("#AnoPublicacionDatos").val('');
+});
+
+$("#AnoPublicacionDatos").keyup(function(){
+    $("#AnoPublicacionDatos").val('');
+});
+
+$("#AnoPublicacionDatos").keydown(function(){
+    $("#AnoPublicacionDatos").val('');
+});

@@ -210,11 +210,11 @@ $('#submitData').click(function(){
         $("#headerHijos").css({ 'color': "black" });
     }
     
-    tableRegistros.column(1)
+    tableRegistros.column(2)
                         .data()
                         .each( function ( value1,index1 ) {
                             if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
-                                tableRegistros.column(0)
+                                tableRegistros.column(1)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
                                                     if(index1==index2){
@@ -224,7 +224,7 @@ $('#submitData').click(function(){
                                                 });                                   
                             }
                             if(value1=="Articulo publicado"){
-                                tableRegistros.column(0)
+                                tableRegistros.column(1)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
                                                     if(index1==index2){
@@ -236,7 +236,7 @@ $('#submitData').click(function(){
                         });
                         
     if(can_register &&  indRegistroParticipantes>0){
-        tableParticipantes.column(0)
+        tableParticipantes.column(1)
                             .data()
                             .each( function ( value,index ) {
                                 idParticipantes[indParticipantes]=value;
@@ -266,7 +266,7 @@ $('#submitData').click(function(){
     }
                         
     if(can_register &&  indRegistroRevistas>0){
-        tableRevista.column(0)
+        tableRevista.column(1)
                             .data()
                             .each( function ( value,index ) {
                                 idRevistas[indRevistas]=value;

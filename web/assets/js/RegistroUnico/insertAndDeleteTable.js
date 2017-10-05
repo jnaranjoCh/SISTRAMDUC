@@ -20,7 +20,7 @@ $('#agregarRegistro').click(function(){
     var registro = new Object();
 
     if(($('#tableRegistros td').length) > 0){
-         tableRegistros.column(2)
+         tableRegistros.column(3)
               .data()
               .each( function ( value,index ) {
                     if(value == $("#DescripcionDatos").val()){ 
@@ -91,6 +91,7 @@ $('#agregarRegistro').click(function(){
        if(($('#tableRegistros td').length)==0 && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
             if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de tesis"){
                 tableRegistros.row.add( {
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                     "Id del registro": idRegistro,
                     "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                     "Descripcion": $("#DescripcionDatos").val(),
@@ -119,6 +120,7 @@ $('#agregarRegistro').click(function(){
                 idRegistro++;
             }else if($("#EmpresaDatos").val()!=""){
                 tableRegistros.row.add( {
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                     "Id del registro": idRegistro,
                     "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                     "Descripcion": $("#DescripcionDatos").val(),
@@ -147,6 +149,7 @@ $('#agregarRegistro').click(function(){
                 idRegistro++;
             }else if($("#InstitucionDatos").val()!=""){
                 tableRegistros.row.add( {
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                     "Id del registro": idRegistro,
                     "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                     "Descripcion": $("#DescripcionDatos").val(),
@@ -183,6 +186,7 @@ $('#agregarRegistro').click(function(){
        }else if(!band && $("#DescripcionDatos").val()!="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="" && $("#NivelDeEstudioDatos").find('option:selected').val()!="" && $("#EstatusDatos").find('option:selected').val()!="" && $("#AnoPublicacionDatos").val()!=""){
             if($("#EmpresaDatos").val()=="" && $("#InstitucionDatos").val()=="" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de servicio comunitario" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de pasantias" && $("#TipoDeRegistroDatos").find('option:selected').val()!="Tutoria de tesis"){
                 tableRegistros.row.add({
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                     "Id del registro": idRegistro,
                     "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                     "Descripcion": $("#DescripcionDatos").val(),
@@ -211,6 +215,7 @@ $('#agregarRegistro').click(function(){
                 idRegistro++;
             }else if($("#EmpresaDatos").val()!=""){
                 tableRegistros.row.add( {
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                     "Id del registro": idRegistro,
                     "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                     "Descripcion": $("#DescripcionDatos").val(),
@@ -239,6 +244,7 @@ $('#agregarRegistro').click(function(){
                 idRegistro++;
             }else if($("#InstitucionDatos").val()!=""){
                 tableRegistros.row.add( {
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                     "Id del registro": idRegistro,
                     "Tipo de referencia": $("#TipoDeRegistroDatos").find('option:selected').val(),
                     "Descripcion": $("#DescripcionDatos").val(),
@@ -314,7 +320,7 @@ $('#agregarRegistro').click(function(){
        }
    }
    
-   tableRegistros.column(1)
+   tableRegistros.column(2)
                  .data()
                  .each( function ( value1,index1 ) {
                         if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
@@ -323,7 +329,7 @@ $('#agregarRegistro').click(function(){
                                 bandConcatPart = false;
                            }
                            
-                           tableRegistros.column(0)
+                           tableRegistros.column(1)
                                          .data()
                                          .each( function ( value2,index2 ) {
                                                 if(index1 == index2)
@@ -335,7 +341,7 @@ $('#agregarRegistro').click(function(){
                                 revistasId="<option value='-1'>Seleccione una opción</option>";
                                 bandConcatRevist = false;
                             }
-                            tableRegistros.column(0)
+                            tableRegistros.column(1)
                                          .data()
                                          .each( function ( value2,index2 ) {
                                                 if(index1 == index2)
@@ -352,45 +358,48 @@ $('#agregarRegistro').click(function(){
                                                 
 });
 
-$('#tableRegistros').on( 'click', 'tbody tr', function () {
+$('#tableRegistros').on( 'click', 'td', function () {
     var bandConcatRevist = true,bandConcatPart = true;
     var participantesId="<option value='-1'>No existen registros</option>";
     var revistasId="<option value='-1'>No existen registros</option>";
 
-    tableRegistros.row( this ).remove().draw();
-    if(countRegistro > 0){
-       tableRegistros.column(1)
-                     .data()
-                     .each( function ( value1,index1 ) {
-                            if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
-                               if(bandConcatPart){
-                                    participantesId="<option value='-1'>Seleccione una opción</option>";
-                                    bandConcatPart = false;
-                               }
-                               tableRegistros.column(0)
-                                             .data()
-                                             .each( function ( value2,index2 ) {
-                                                    if(index1 == index2)
-                                                        participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
-                                              });                         
-                            }
-                            if(value1=="Articulo publicado"){
-                                if(bandConcatRevist){
-                                    revistasId="<option value='-1'>Seleccione una opción</option>";
-                                    bandConcatRevist = false;
+    if(tableRegistros.cell( this ).index().column == 0)
+    {
+        tableRegistros.row(tableRegistros.cell( this ).index().row).remove().draw();
+        if(countRegistro > 0){
+           tableRegistros.column(2)
+                         .data()
+                         .each( function ( value1,index1 ) {
+                                if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
+                                   if(bandConcatPart){
+                                        participantesId="<option value='-1'>Seleccione una opción</option>";
+                                        bandConcatPart = false;
+                                   }
+                                   tableRegistros.column(1)
+                                                 .data()
+                                                 .each( function ( value2,index2 ) {
+                                                        if(index1 == index2)
+                                                            participantesId = participantesId+"<option value='"+value2+"'>"+value2+"</option>";
+                                                  });                         
                                 }
-                                tableRegistros.column(0)
-                                             .data()
-                                             .each( function ( value2,index2 ) {
-                                                    if(index1 == index2)
-                                                        revistasId = revistasId+"<option value='"+value2+"'>"+value2+"</option>";
-                                              });
-                            }
-                      });
-        $('#IdParticipanteRegistro').html(participantesId);
-        $('#idRevistaRegistro').html(revistasId);
-        registrosData.splice(this._DT_RowIndex,1);
-        countRegistro--;
+                                if(value1=="Articulo publicado"){
+                                    if(bandConcatRevist){
+                                        revistasId="<option value='-1'>Seleccione una opción</option>";
+                                        bandConcatRevist = false;
+                                    }
+                                    tableRegistros.column(1)
+                                                 .data()
+                                                 .each( function ( value2,index2 ) {
+                                                        if(index1 == index2)
+                                                            revistasId = revistasId+"<option value='"+value2+"'>"+value2+"</option>";
+                                                  });
+                                }
+                          });
+            $('#IdParticipanteRegistro').html(participantesId);
+            $('#idRevistaRegistro').html(revistasId);
+            registrosData.splice(this._DT_RowIndex,1);
+            countRegistro--;
+        }
     }
 } );
 
@@ -399,10 +408,10 @@ $('#agregarParticipantes').click(function(){
     var band = false;
     var participante = new Object();
     if(($('#tableParticipantes td').length) > 0){
-         tableParticipantes.column(0)
+         tableParticipantes.column(1)
               .data()
               .each( function ( value1,index1 ) {
-                  tableParticipantes.column(2)
+                  tableParticipantes.column(3)
                       .data()
                       .each( function ( value2,index2 ) {
                             if(index1 == index2 && value1 == $("#IdParticipanteRegistro").val() && value2 == $("#CedulaParticipanteRegistro").val()){ 
@@ -430,6 +439,7 @@ $('#agregarParticipantes').click(function(){
    
    if(!band && $("#IdParticipanteRegistro").val() != -1 && $("#NombreParticipanteRegistro").val() != "" && $("#CedulaParticipanteRegistro").val() != ""){
        tableParticipantes.row.add( {
+                "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                 "Id del registro": $("#IdParticipanteRegistro").val(),
                 "Nombre": $("#NombreParticipanteRegistro").val(),
                 "Cedula": $("#CedulaParticipanteRegistro").val()
@@ -462,12 +472,15 @@ $('#agregarParticipantes').click(function(){
    }
 }); 
 
-$('#tableParticipantes').on( 'click', 'tbody tr', function () {
-    tableParticipantes.row( this ).remove().draw();
-    participantesData.splice(this._DT_RowIndex,1);
-    if(countParticipante > 0)
-        countParticipante--;
-} );
+$('#tableParticipantes').on( 'click', 'td', function () {
+    if(tableParticipantes.cell( this ).index().column == 0)
+    {
+        tableParticipantes.row(tableParticipantes.cell( this ).index().row).remove().draw();
+        participantesData.splice(this._DT_RowIndex,1);
+        if(countParticipante > 0)
+            countParticipante--;
+    }
+});
 
 
 $('#agregarCargoDatos').click(function(){
@@ -475,7 +488,7 @@ $('#agregarCargoDatos').click(function(){
     toastr.clear();
     var band = false;
     if(($('#tableCargo td').length) > 0){
-         tableCargo.column(0)
+         tableCargo.column(1)
               .data()
               .each( function ( value,index ) {
                     if(value == $("#cargosDatos").find('option:selected').val()){
@@ -495,6 +508,7 @@ $('#agregarCargoDatos').click(function(){
    
    if(($('#tableCargo td').length)==0 && $("#cargosDatos").find('option:selected').val() != "" && $("#FechaInicioCargoDatos").val() != ""){
        tableCargo.row.add( {
+                "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                 "Cargo": $("#cargosDatos").find('option:selected').val(),
                 "Fecha de inicio en el cargo": $("#FechaInicioCargoDatos").val()
        }).draw();
@@ -504,6 +518,7 @@ $('#agregarCargoDatos').click(function(){
        countCargo++;
    }else if(!band && $("#cargosDatos").find('option:selected').val() != "" && $("#FechaInicioCargoDatos").val() != ""){
        tableCargo.row.add( {
+                "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                 "Cargo": $("#cargosDatos").find('option:selected').val(),
                 "Fecha de inicio en el cargo": $("#FechaInicioCargoDatos").val()
         }).draw();
@@ -527,7 +542,7 @@ $('#rolUser').change(function(){
     toastr.clear();
     var band = false;
     if(($('#tableRol td').length) > 0){
-         tableRol.column(0)
+         tableRol.column(1)
               .data()
               .each( function ( value,index ) {
                     if(value == $("#rolUser").find('option:selected').val()){
@@ -542,38 +557,46 @@ $('#rolUser').change(function(){
    
    if(($('#tableRol td').length)==0 && $("#rolUser").find('option:selected').val() != ""){
        tableRol.row.add( {
+                "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                 "Rol": $("#rolUser").find('option:selected').val()
         }).draw();
         countRol++;
    }else if(!band && $("#rolUser").find('option:selected').val() != ""){
        tableRol.row.add( {
+                "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                 "Rol": $("#rolUser").find('option:selected').val()
         }).draw();
         countRol++;
    }
 });
 
-$('#tableRol').on( 'click', 'tbody tr', function () {
-    tableRol.row( this ).remove().draw();
-    if(countRol > 0)
-        countRol--;
+$('#tableRol').on( 'click', 'td', function () {
+    if(tableRol.cell( this ).index().column == 0)
+    {
+        tableRol.row(tableRol.cell( this ).index().row).remove().draw();
+        if(countRol > 0)
+            countRol--;
+    }
 });
 
-$('#tableCargo').on( 'click', 'tbody tr', function () {
-    tableCargo.row( this ).remove().draw();
-    if(countCargo > 0)
-        countCargo--;
-} );
+$('#tableCargo').on( 'click', 'td', function () {
+    if(tableCargo.cell( this ).index().column == 0)
+    {
+        tableCargo.row(tableCargo.cell( this ).index().row).remove().draw();
+        if(countCargo > 0)
+            countCargo--;
+    }
+});
 
 $('#agregarRevista').click(function(){
     var revista = new Object();
     toastr.clear();
     var band = false;
     if(($('#tableRevista td').length) > 0){
-         tableRevista.column(0)
+         tableRevista.column(1)
               .data()
               .each( function ( value1,index1 ) {
-                  tableRevista.column(1)
+                  tableRevista.column(2)
                       .data()
                       .each( function ( value2,index2 ) {
                             if(index1 == index2 && value1 == $("#idRevistaRegistro").val() && value2 ==  $("#descrpcionRevistaRegistro").val()){ 
@@ -589,6 +612,7 @@ $('#agregarRevista').click(function(){
    
    if(!band && $("#idRevistaRegistro").val() != -1 && $("#descrpcionRevistaRegistro").val() != ""){
        tableRevista.row.add( {
+                "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
                 "Id del registro": $("#idRevistaRegistro").val(),
                 "Revista": $("#descrpcionRevistaRegistro").val(),
                 "Volumen": $("#volumenRevistaRegistro").val(),
@@ -627,207 +651,225 @@ $('#agregarRevista').click(function(){
    }
 });
 
-$('#tableRevista').on( 'click', 'tbody tr', function () {
-    tableRevista.row( this ).remove().draw();
-    revistasData.splice(this._DT_RowIndex,1);
-    if(countRevista > 0)
-        countRevista--;
-} );
+$('#tableRevista').on( 'click', 'td', function () {
+    if(tableRevista.cell( this ).index().column == 0)
+    {
+        tableRevista.row(tableRevista.cell( this ).index().row).remove().draw();
+        revistasData.splice(this._DT_RowIndex,1);
+        if(countRevista > 0)
+            countRevista--;
+    }
+});
 
 $('#agregarHijo').click(function(){
     var hijo = new Object();
     toastr.clear();
     var band = false;
-    if(($('#tableHijos td').length) > 0){
-         tableHijos.column(2)
-              .data()
-              .each( function ( value,index ) {
-                    if(value == $("#CedulaHijoDatos").val() && $("#CedulaHijoDatos").val() != 0){ 
-                        band = true;
-                        toastr.error("Error el hijo ya se encuentra registrado.", "Error", {
-                            "timeOut": "0",
-                            "extendedTImeout": "0"
-                         });
-                    }
-               });
-    }
     
-   if(!band && !(/^\d*$/).test($("#CedulaMadreHijoDatos").val()))
-   {
-       $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
-       $("#divCedulaMadreHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!band && !(/^\d*$/).test($("#CedulaPadreHijoDatos").val()))
-   {
-       $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
-       $("#divCedulaPadreHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!(/^\d*$/).test($("#CedulaHijoDatos").val()))
-   {
-       $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
-       $("#divCedulaHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerNombreHijoDatos").val()))
-   {
-       $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
-       $("#divPrimerNombreHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoNombreHijoDatos").val()))
-   {
-       $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
-       $("#divSegundoNombreHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerApellidoHijoDatos").val()))
-   {
-       $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
-       $("#divPrimerApellidoHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoApellidoHijoDatos").val()))
-   {
-       $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
-       $("#divSegundoApellidoHijoDatos").addClass("has-error");
-       toastr.error("Error campo mal introducido.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-       $("#headerHijos").css({ 'color': "red" });
-       band = true;
-   }else if(!band && ($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val()))
-   {
-        band = true;
-        $("#headerHijos").css({ 'color': "red" });
-        toastr.error("La cedula del padre y la madre son iguales.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-   }
+    if(($('#tableHijos tr').length) <= 7)
+    {
+        if(($('#tableHijos td').length) > 0){
+             tableHijos.column(3)
+                  .data()
+                  .each( function ( value,index ) {
+                        if(value == $("#CedulaHijoDatos").val() && $("#CedulaHijoDatos").val() != 0){ 
+                            band = true;
+                            toastr.error("Error el hijo ya se encuentra registrado.", "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             });
+                        }
+                   });
+        }
+        
+       if(!band && !(/^\d*$/).test($("#CedulaMadreHijoDatos").val()))
+       {
+           $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+           $("#divCedulaMadreHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!band && !(/^\d*$/).test($("#CedulaPadreHijoDatos").val()))
+       {
+           $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+           $("#divCedulaPadreHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!(/^\d*$/).test($("#CedulaHijoDatos").val()))
+       {
+           $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+           $("#divCedulaHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerNombreHijoDatos").val()))
+       {
+           $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+           $("#divPrimerNombreHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoNombreHijoDatos").val()))
+       {
+           $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+           $("#divSegundoNombreHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerApellidoHijoDatos").val()))
+       {
+           $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+           $("#divPrimerApellidoHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoApellidoHijoDatos").val()))
+       {
+           $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+           $("#divSegundoApellidoHijoDatos").addClass("has-error");
+           toastr.error("Error campo mal introducido.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+           $("#headerHijos").css({ 'color': "red" });
+           band = true;
+       }else if(!band && ($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val()))
+       {
+            band = true;
+            $("#headerHijos").css({ 'color': "red" });
+            toastr.error("La cedula del padre y la madre son iguales.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+       }
+           
        
-   
-   if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
-        if($("#CedulaHijoDatos").val() != "")
-           tableHijos.row.add( {
-                "CI Madre":$("#CedulaMadreHijoDatos").val(),
-                "CI Padre":$("#CedulaPadreHijoDatos").val(),
-                "CI Hijo":$("#CedulaHijoDatos").val(),
-                "1er Nombre":$("#PrimerNombreHijoDatos").val(),
-                "2do Nombre":$("#SegundoNombreHijoDatos").val(),
-                "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
-                "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
-                "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
-                "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
-                "Nacionalidad":$("#NacionalidadHijoDatos").val()
-            } ).draw();
-        else
-            tableHijos.row.add( {
-                "CI Madre":$("#CedulaMadreHijoDatos").val(),
-                "CI Padre":$("#CedulaPadreHijoDatos").val(),
-                "CI Hijo":0,
-                "1er Nombre":$("#PrimerNombreHijoDatos").val(),
-                "2do Nombre":$("#SegundoNombreHijoDatos").val(),
-                "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
-                "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
-                "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
-                "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
-                "Nacionalidad":$("#NacionalidadHijoDatos").val()
-            } ).draw();
-        hijo.ciMadre = $("#CedulaMadreHijoDatos").val();
-        hijo.ciPadre = $("#CedulaPadreHijoDatos").val();
-        hijo.ciHijo = $("#CedulaHijoDatos").val();
-        hijo.primerNombre = $("#PrimerNombreHijoDatos").val();
-        hijo.segundoNombre = $("#SegundoNombreHijoDatos").val();
-        hijo.primerApellido = $("#PrimerApellidoHijoDatos").val();
-        hijo.segundoApellido = $("#SegundoApellidoHijoDatos").val();
-        hijo.fechaNacimiento = $("#FechaNacimientoHijoDatos").val();
-        hijo.fechaVencimiento = $("#FechaVencimientoActaNacimientoHijoDatos").val();
-        hijo.nacionalidad = $("#NacionalidadHijoDatos").val();
-        hijoData[countHijo] = hijo;
-        countHijo++;
-        $("#headerHijos").css({ 'color': "black" });
-        $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
-        $("#divCedulaMadreHijoDatos").removeClass("has-error");
-        $("#spanCedulaPadreHijoDatos").removeClass("glyphicon-remove");
-        $("#divCedulaPadreHijoDatos").removeClass("has-error");
-        $("#spanCedulaHijoDatos").removeClass("glyphicon-remove");
-        $("#divCedulaHijoDatos").removeClass("has-error");
-        $("#spanPrimerNombreHijoDatos").removeClass("glyphicon-remove");
-        $("#divPrimerNombreHijoDatos").removeClass("has-error");
-        $("#spanSegundoNombreHijoDatos").removeClass("glyphicon-remove");
-        $("#divSegundoNombreHijoDatos").removeClass("has-error");
-        $("#spanPrimerApellidoHijoDatos").removeClass("glyphicon-remove");
-        $("#divPrimerApellidoHijoDatos").removeClass("has-error");
-        $("#spanSegundoApellidoHijoDatos").removeClass("glyphicon-remove");
-        $("#divSegundoApellidoHijoDatos").removeClass("has-error");
-        $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
-        $("#divNacionalidadHijoDatos").removeClass("has-error");
-        $("#divFechaVencimientoActaNacimientoHijoDatos").removeClass("has-error");
-        $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
-        $("#divFechaNacimientoHijoDatos").removeClass("has-error");
-        $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
-        $("#divActaNacCargaHijoDatos").removeClass("has-error");
-   }else if(!band){
-       toastr.error("Error faltan datos.", "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-
-        $("#headerHijos").css({ 'color': "red" });
-        $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
-        $("#divCedulaMadreHijoDatos").addClass("has-error");
-        $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
-        $("#divCedulaPadreHijoDatos").addClass("has-error");
-        $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
-        $("#divCedulaHijoDatos").addClass("has-error");
-        $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
-        $("#divPrimerNombreHijoDatos").addClass("has-error");
-        $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
-        $("#divSegundoNombreHijoDatos").addClass("has-error");
-        $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
-        $("#divPrimerApellidoHijoDatos").addClass("has-error");
-        $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
-        $("#divSegundoApellidoHijoDatos").addClass("has-error");
-        $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
-        $("#divNacionalidadHijoDatos").addClass("has-error");
-        $("#divFechaVencimientoActaNacimientoHijoDatos").addClass("has-error");
-        $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
-        $("#divFechaNacimientoHijoDatos").addClass("has-error");
-        $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
-        $("#divActaNacCargaHijoDatos").addClass("has-error");
-   }
+       if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
+            if($("#CedulaHijoDatos").val() != "")
+               tableHijos.row.add( {
+                   "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
+                    "CI Madre":$("#CedulaMadreHijoDatos").val(),
+                    "CI Padre":$("#CedulaPadreHijoDatos").val(),
+                    "CI Hijo":$("#CedulaHijoDatos").val(),
+                    "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+                    "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+                    "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+                    "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+                    "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+                    "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
+                    "Nacionalidad":$("#NacionalidadHijoDatos").val()
+                } ).draw();
+            else
+                tableHijos.row.add( {
+                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
+                    "CI Madre":$("#CedulaMadreHijoDatos").val(),
+                    "CI Padre":$("#CedulaPadreHijoDatos").val(),
+                    "CI Hijo":0,
+                    "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+                    "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+                    "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+                    "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+                    "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+                    "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
+                    "Nacionalidad":$("#NacionalidadHijoDatos").val()
+                } ).draw();
+            hijo.ciMadre = $("#CedulaMadreHijoDatos").val();
+            hijo.ciPadre = $("#CedulaPadreHijoDatos").val();
+            hijo.ciHijo = $("#CedulaHijoDatos").val();
+            hijo.primerNombre = $("#PrimerNombreHijoDatos").val();
+            hijo.segundoNombre = $("#SegundoNombreHijoDatos").val();
+            hijo.primerApellido = $("#PrimerApellidoHijoDatos").val();
+            hijo.segundoApellido = $("#SegundoApellidoHijoDatos").val();
+            hijo.fechaNacimiento = $("#FechaNacimientoHijoDatos").val();
+            hijo.fechaVencimiento = $("#FechaVencimientoActaNacimientoHijoDatos").val();
+            hijo.nacionalidad = $("#NacionalidadHijoDatos").val();
+            hijoData[countHijo] = hijo;
+            countHijo++;
+            $("#headerHijos").css({ 'color': "black" });
+            $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
+            $("#divCedulaMadreHijoDatos").removeClass("has-error");
+            $("#spanCedulaPadreHijoDatos").removeClass("glyphicon-remove");
+            $("#divCedulaPadreHijoDatos").removeClass("has-error");
+            $("#spanCedulaHijoDatos").removeClass("glyphicon-remove");
+            $("#divCedulaHijoDatos").removeClass("has-error");
+            $("#spanPrimerNombreHijoDatos").removeClass("glyphicon-remove");
+            $("#divPrimerNombreHijoDatos").removeClass("has-error");
+            $("#spanSegundoNombreHijoDatos").removeClass("glyphicon-remove");
+            $("#divSegundoNombreHijoDatos").removeClass("has-error");
+            $("#spanPrimerApellidoHijoDatos").removeClass("glyphicon-remove");
+            $("#divPrimerApellidoHijoDatos").removeClass("has-error");
+            $("#spanSegundoApellidoHijoDatos").removeClass("glyphicon-remove");
+            $("#divSegundoApellidoHijoDatos").removeClass("has-error");
+            $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
+            $("#divNacionalidadHijoDatos").removeClass("has-error");
+            $("#divFechaVencimientoActaNacimientoHijoDatos").removeClass("has-error");
+            $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
+            $("#divFechaNacimientoHijoDatos").removeClass("has-error");
+            $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
+            $("#divActaNacCargaHijoDatos").removeClass("has-error");
+       }else if(!band){
+           toastr.error("Error faltan datos.", "Error", {
+                    "timeOut": "0",
+                    "extendedTImeout": "0"
+                 });
+    
+            $("#headerHijos").css({ 'color': "red" });
+            $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+            $("#divCedulaMadreHijoDatos").addClass("has-error");
+            $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+            $("#divCedulaPadreHijoDatos").addClass("has-error");
+            $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+            $("#divCedulaHijoDatos").addClass("has-error");
+            $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+            $("#divPrimerNombreHijoDatos").addClass("has-error");
+            $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+            $("#divSegundoNombreHijoDatos").addClass("has-error");
+            $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+            $("#divPrimerApellidoHijoDatos").addClass("has-error");
+            $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+            $("#divSegundoApellidoHijoDatos").addClass("has-error");
+            $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
+            $("#divNacionalidadHijoDatos").addClass("has-error");
+            $("#divFechaVencimientoActaNacimientoHijoDatos").addClass("has-error");
+            $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
+            $("#divFechaNacimientoHijoDatos").addClass("has-error");
+            $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
+            $("#divActaNacCargaHijoDatos").addClass("has-error");
+       }
+    }else
+    {
+        toastr.error("Error solo puede registrar 6 hijos como maximo.", "Error", {
+                        "timeOut": "0",
+                        "extendedTImeout": "0"
+                     });
+    }
 });
 
-$('#tableHijos').on( 'click', 'tbody tr', function () {
-    tableHijos.row( this ).remove().draw();
-    hijoData.splice(this._DT_RowIndex,1);
-    if(countHijo > 0)
-        countHijo--;
+$('#tableHijos').on( 'click', 'td', function () {
+    if(tableHijos.cell( this ).index().column == 0)
+    {
+        tableHijos.row(tableHijos.cell( this ).index().row).remove().draw();
+        hijoData.splice(this._DT_RowIndex,1);
+        if(countHijo > 0)
+            countHijo--;
+    }
 });

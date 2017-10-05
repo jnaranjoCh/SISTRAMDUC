@@ -102,4 +102,9 @@ $( window ).load(function() {
     $("#ActaNacCargaHijoDatos").fileinput({
         language: "es"
     });
+    $('#AnoPublicacionDatos').datepicker({
+        format: " yyyy",
+        viewMode: "years", 
+        minViewMode: "years"
+    });
 });

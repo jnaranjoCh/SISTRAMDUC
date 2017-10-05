@@ -431,6 +431,7 @@
                     <table id="tableCargo" class="table table-bordered table-striped">
                       <thead>
                       <tr>
+                        <th></th>
                         <th>Cargo</th>
                         <th>Fecha de inicio en el cargo</th>
                       </tr>
@@ -439,8 +440,9 @@
                       </tbody>
                       <tfoot>
                       <tr>
-                       <th>Cargo</th>
-                       <th>Fecha de inicio en el cargo</th>
+                        <th></th>
+                        <th>Cargo</th>
+                        <th>Fecha de inicio en el cargo</th>
                       </tr>
                       </tfoot>
                     </table>
@@ -511,7 +513,7 @@
                     <div class="col-md-6">
                       <div id="divAnoPublicacionDatos" class="form-group has-feedback">
                         <label id="AnoPublicacionLabel"></label>
-                        <input id="AnoPublicacionDatos" type="number" class="form-control" placeholder="Año" min="1">
+                        <input id="AnoPublicacionDatos" type="text" class="form-control" placeholder="Año" min="1">
                         <span id="spanAnoPublicacionDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
@@ -573,6 +575,7 @@
                    <table id="tableRegistros" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
@@ -590,6 +593,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
@@ -647,6 +651,7 @@
                   <table id="tableParticipantes" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Nombre</th>
                       <th>Cedula</th>
@@ -656,6 +661,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Nombre</th>
                       <th>Cedula</th>
@@ -715,6 +721,7 @@
                     <table id="tableRevista" class="table table-bordered table-striped">
                       <thead>
                       <tr>
+                        <th></th>
                         <th>Id del registro</th>
                         <th>Revista</th>
                         <th>Volumen</th>
@@ -725,6 +732,7 @@
                       </tbody>
                       <tfoot>
                       <tr>
+                        <th></th>
                         <th>Id del registro</th>
                         <th>Revista</th>
                         <th>Volumen</th>
@@ -871,6 +879,7 @@
                   <table id="tableHijos" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>CI Madre</th>
                       <th>CI Padre</th>
                       <th>CI Hijo</th>
@@ -887,6 +896,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>CI Madre</th>
                       <th>CI Padre</th>
                       <th>CI Hijo</th>
@@ -904,7 +914,9 @@
                 <br/>
                 <hr/>
                 <div>
-                  <h3 id="otherChildrens" class="hidden">Otros hijos</h3>
+                  <div id="otherChildrens" class="hidden">
+                    <h3>Otros hijos</h3>
+                  </div>
                   <div id="relationship" class="hidden">
                   </div>
                 </div>

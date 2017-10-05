@@ -108,7 +108,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 cell.column = "10";
                 tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso">').draw();
             }
-            $('#tableRegistros_last').click();
+            //$('#tableRegistros_last').click();
         });
     }
 });
@@ -388,6 +388,7 @@ $('#restablecer').click(function(){
                                 { "data": "PrimerayUltimaPagina" }
                             ]
                         });
+     refreshIntervalIdThree = setInterval(initDatePickerYear, 2500);
 });
 
 $('#agregarRegistros').click(function(){
@@ -450,53 +451,56 @@ $('#agregarRevistas').click(function(){
 });
 
 $('#agregarHijos').click(function(){
-    var aux = tableHijos.page.info().recordsTotal;
-    tableHijos.row.add( {
-        "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
-        "CIMadre" :'<input id="CIMadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Madre">',
-        "CIPadre" :'<input id="CIPadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Padre">',
-        "CIHijo" :'<input id="CIHijo'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Hijo">',
-        "1erNombre" :'<input id="1erNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Nombre">',
-        "2doNombre" :'<input id="2doNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Nombre">',
-        "1erApellido" :'<input id="1erApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Apellido">',
-        "2doApellido" :'<input id="2doApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Apellido">',
-        "FNacimiento" :'<div class="row">'+
-                                '<div class="col-xs-12">'+
-                                    '<div class="form-group has-feedback">'+
-                                        '<div class="input-group date">'+
-                                            '<input id="datepickerHijo1'+tableHijos.page.info().recordsTotal+'" value="" name="FNacimiento'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 240px;"/>'+
-                                            '<span class="input-group-addon">'+
-                                                '<span class="glyphicon glyphicon-calendar"></span>'+
-                                            '</span>'+
+    if(($('#tableHijos tr').length) <= 7)
+    {
+        var aux = tableHijos.page.info().recordsTotal;
+        tableHijos.row.add( {
+            "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
+            "CIMadre" :'<input id="CIMadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Madre">',
+            "CIPadre" :'<input id="CIPadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Padre">',
+            "CIHijo" :'<input id="CIHijo'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Hijo">',
+            "1erNombre" :'<input id="1erNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Nombre">',
+            "2doNombre" :'<input id="2doNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Nombre">',
+            "1erApellido" :'<input id="1erApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Apellido">',
+            "2doApellido" :'<input id="2doApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Apellido">',
+            "FNacimiento" :'<div class="row">'+
+                                    '<div class="col-xs-12">'+
+                                        '<div class="form-group has-feedback">'+
+                                            '<div class="input-group date">'+
+                                                '<input id="datepickerHijo1'+tableHijos.page.info().recordsTotal+'" value="" name="FNacimiento'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 240px;"/>'+
+                                                '<span class="input-group-addon">'+
+                                                    '<span class="glyphicon glyphicon-calendar"></span>'+
+                                                '</span>'+
+                                            '</div>'+
                                         '</div>'+
-                                    '</div>'+
-                                    '</div>'+
-                                '</div>',
-        "FVencimientoActa" :'<div class="row">'+
-                                '<div class="col-xs-12">'+
-                                    '<div class="form-group has-feedback">'+
-                                        '<div class="input-group date">'+
-                                            '<input id="datepickerHijo2'+tableHijos.page.info().recordsTotal+'" value="" name="FVencimientoActa'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 200px;"/>'+
-                                            '<span class="input-group-addon">'+
-                                                '<span class="glyphicon glyphicon-calendar"></span>'+
-                                            '</span>'+
                                         '</div>'+
-                                    '</div>'+
-                                    '</div>'+
-                                '</div>',
-        "Nacionalidad" : '<select id="NacionalidadDatos'+tableHijos.page.info().recordsTotal+'" class="form-control select2" style="width: 200xp;" required>'+
-                                '<option selected="selected" value="">Seleccione una opción</option>'+
-                                '<option value="Venezolano">Venezolano</option>'+
-                                '<option value="Extranjero">Extranjero</option>'+
-                          '</select>'
-    }).draw();
-    $('#tableHijos_last').click();
-    $('#datepickerHijo1'+aux).datepicker({
-        autoclose: true
-    });
-    $('#datepickerHijo2'+aux).datepicker({
-        autoclose: true
-    });
+                                    '</div>',
+            "FVencimientoActa" :'<div class="row">'+
+                                    '<div class="col-xs-12">'+
+                                        '<div class="form-group has-feedback">'+
+                                            '<div class="input-group date">'+
+                                                '<input id="datepickerHijo2'+tableHijos.page.info().recordsTotal+'" value="" name="FVencimientoActa'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 200px;"/>'+
+                                                '<span class="input-group-addon">'+
+                                                    '<span class="glyphicon glyphicon-calendar"></span>'+
+                                                '</span>'+
+                                            '</div>'+
+                                        '</div>'+
+                                        '</div>'+
+                                    '</div>',
+            "Nacionalidad" : '<select id="NacionalidadDatos'+tableHijos.page.info().recordsTotal+'" class="form-control select2" style="width: 200xp;" required>'+
+                                    '<option selected="selected" value="">Seleccione una opción</option>'+
+                                    '<option value="Venezolano">Venezolano</option>'+
+                                    '<option value="Extranjero">Extranjero</option>'+
+                              '</select>'
+        }).draw();
+        $('#tableHijos_last').click();
+        $('#datepickerHijo1'+aux).datepicker({
+            autoclose: true
+        });
+        $('#datepickerHijo2'+aux).datepicker({
+            autoclose: true
+        });
+    }
 });
 
 $('#agregarCargo').click(function(){

@@ -31,66 +31,69 @@ $('#generate').click(function(){
                         url: routeRegistroUnico['registro_consultar_parentesco_ajax'],
                         dataType: 'json',
                         success: function(data){
-                            $('#otherChildrens').removeClass("hidden");
-                            $('#relationship').removeClass("hidden");
-                            for(var i = 0; i < data.length; i++)
+                            if($.trim(data.length))
                             {
-                                tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
-                                tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
-                                                                            '<thead>'+
-                                                                            '<tr>'+
-                                                                              '<th>CI Madre</th>'+
-                                                                              '<th>CI Padre</th>'+
-                                                                              '<th>CI Hijo</th>'+
-                                                                              '<th>1er Nombre</th>'+
-                                                                              '<th>2do Nombre</th>'+
-                                                                              '<th>1er Apellido</th>'+
-                                                                              '<th>2do Apellido</th>'+
-                                                                              '<th>F Nacimiento</th>'+
-                                                                              '<th>Nacionalidad</th>'+          
-                                                                            '</tr>'+
-                                                                            '</thead>'+
-                                                                            '<tbody>'+
-                                                                            '</tbody>'+
-                                                                            '<tfoot>'+
-                                                                            '<tr>'+
-                                                                              '<th>CI Madre</th>'+
-                                                                              '<th>CI Padre</th>'+
-                                                                              '<th>CI Hijo</th>'+
-                                                                              '<th>1er Nombre</th>'+
-                                                                              '<th>2do Nombre</th>'+
-                                                                              '<th>1er Apellido</th>'+
-                                                                              '<th>2do Apellido</th>'+
-                                                                              '<th>F Nacimiento</th>'+
-                                                                              '<th>Nacionalidad</th>'+
-                                                                            '</tr>'+
-                                                                            '</tfoot>'+
-                                                                          '</table>';
-                                tableRelationship = tableRelationship+'</div>';
-                                $('#relationship').html(tableRelationship);
-                                $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
-                                $('#tableRelationship'+i).DataTable({
-                                            "ajax":{
-                                               "url": routeRegistroUnico['registro_consultar_parentesco_hijos_ajax'],
-                                               "type": 'POST',
-                                               "data": {"cedula":data[i].cedula}
-                                            },
-                                            "pagingType": "full_numbers",
-                                    	    "language": {
-                                                	"url": tableLenguage['datatable-spanish']
-                                            },
-                                            columns: [
-                                                {"data":"CIMadre"},
-                                                {"data":"CIPadre"},
-                                                {"data":"CIHijo"},
-                                                {"data":"1erNombre"},
-                                                {"data":"2doNombre"},
-                                                {"data":"1erApellido"},
-                                                {"data":"2doApellido"},
-                                                {"data":"FNacimiento"},
-                                                {"data":"Nacionalidad"}
-                                            ]
-                                });
+                                $('#otherChildrens').removeClass("hidden");
+                                $('#relationship').removeClass("hidden");
+                                for(var i = 0; i < data.length; i++)
+                                {
+                                    tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
+                                    tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
+                                                                                '<thead>'+
+                                                                                '<tr>'+
+                                                                                  '<th>CI Madre</th>'+
+                                                                                  '<th>CI Padre</th>'+
+                                                                                  '<th>CI Hijo</th>'+
+                                                                                  '<th>1er Nombre</th>'+
+                                                                                  '<th>2do Nombre</th>'+
+                                                                                  '<th>1er Apellido</th>'+
+                                                                                  '<th>2do Apellido</th>'+
+                                                                                  '<th>F Nacimiento</th>'+
+                                                                                  '<th>Nacionalidad</th>'+          
+                                                                                '</tr>'+
+                                                                                '</thead>'+
+                                                                                '<tbody>'+
+                                                                                '</tbody>'+
+                                                                                '<tfoot>'+
+                                                                                '<tr>'+
+                                                                                  '<th>CI Madre</th>'+
+                                                                                  '<th>CI Padre</th>'+
+                                                                                  '<th>CI Hijo</th>'+
+                                                                                  '<th>1er Nombre</th>'+
+                                                                                  '<th>2do Nombre</th>'+
+                                                                                  '<th>1er Apellido</th>'+
+                                                                                  '<th>2do Apellido</th>'+
+                                                                                  '<th>F Nacimiento</th>'+
+                                                                                  '<th>Nacionalidad</th>'+
+                                                                                '</tr>'+
+                                                                                '</tfoot>'+
+                                                                              '</table>';
+                                    tableRelationship = tableRelationship+'</div>';
+                                    $('#relationship').html(tableRelationship);
+                                    $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
+                                    $('#tableRelationship'+i).DataTable({
+                                                "ajax":{
+                                                   "url": routeRegistroUnico['registro_consultar_parentesco_hijos_ajax'],
+                                                   "type": 'POST',
+                                                   "data": {"cedula":data[i].cedula}
+                                                },
+                                                "pagingType": "full_numbers",
+                                        	    "language": {
+                                                    	"url": tableLenguage['datatable-spanish']
+                                                },
+                                                columns: [
+                                                    {"data":"CIMadre"},
+                                                    {"data":"CIPadre"},
+                                                    {"data":"CIHijo"},
+                                                    {"data":"1erNombre"},
+                                                    {"data":"2doNombre"},
+                                                    {"data":"1erApellido"},
+                                                    {"data":"2doApellido"},
+                                                    {"data":"FNacimiento"},
+                                                    {"data":"Nacionalidad"}
+                                                ]
+                                    });
+                                }
                             }
                         }
                     });

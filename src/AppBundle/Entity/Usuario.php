@@ -662,7 +662,7 @@ class Usuario implements UserInterface
             $data[$i]['Descripcion'] = '<input id="Descripcion'.$i.'" value="'.$registro->getDescription().'" type="text" class="form-control" placeholder="Descripción">';
             $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
-            $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
+            $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="text" class="form-control" placeholder="Año de publicación y/o asistencia">';
             if($registro->getInstitucionEmpresaCasaeditorial() == "")
                 $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">';
             else
