@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ConcursoOposicionBundle\Entity\Responsable;
 use ConcursoOposicionBundle\Entity\Curso;
+use ConcursoOposicionBundle\Entity\Autorizadores;
 
 class ListadosOposicionController extends Controller
 {
@@ -112,11 +113,65 @@ class ListadosOposicionController extends Controller
              throw $this->createNotFoundException('Error al devolver datos');
     }
 
+    /**
+     * @Route("/concursoOposicion/listadoAutorizadoresAjax", name="listadoAutorizadoresAjax")
+     * @Method("POST")
+     */
+    public function listadoAutorizadoresAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Autorizadores');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.acta = :cadena')
+                ->setParameter('cadena', $request->get("id"))
+                ->getQuery();
+             
+            $acta = $query->getResult();
+
+            if (!$acta) {
+                 return new JsonResponse("N");
+            }else {
+
+                $val = $this->asignarFilaAutorizadores($acta,'id',$val, 0);
+                $val = $this->asignarFilaAutorizadores($acta,'cargo',$val, 1);
+                $val = $this->asignarFilaAutorizadores($acta,'cedula',$val, 2);
+                $val = $this->asignarFilaAutorizadores($acta,'nya',$val, 3);
+
+                return new JsonResponse($val);
+            }            
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    private function asignarFilaAutorizadores($object,$entidad,$val, $pos)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           switch ($pos) {
+               case 1: $val[$entidad][$i] = $value->getCargo(); break;
+               case 2: $val[$entidad][$i] = $value->getCedula(); break;
+               case 3: $val[$entidad][$i] = $value->getNombreApellido();break;
+
+               default: $val[$entidad][$i] = $value->getId(); break;
+           }
+           $i++;
+        }
+
+        return $val;
+    }
+
     private function asignarFilaActas($object,$entidad,$val, $pos)
     {
 
        switch ($pos) {
-           case 1: $val[$entidad][0] = date_format($object->getFecha(), 'd-m-Y'); break;
+           case 1: $val[$entidad][0] = date_format($object->getFecha(), 'd-M-Y H:i:s'); break;
            case 2: $val[$entidad][0] = $object->getLugar(); break;
            case 3: $val[$entidad][0] = $object->getAsunto();break;
            case 4: $val[$entidad][0] = $object->getResolucion();break;

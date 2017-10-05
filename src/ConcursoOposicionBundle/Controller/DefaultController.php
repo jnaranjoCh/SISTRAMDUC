@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ConcursosBundle\Entity\Resultado;
 use ConcursoOposicionBundle\Entity\Acta;
+use ConcursoOposicionBundle\Entity\Autorizadores;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
@@ -329,6 +330,123 @@ class DefaultController extends Controller
 
                     return new JsonResponse("S"); 
                 }               
+            }                                   
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');      
+    }
+
+    /**
+     * @Route("/concursoOposicion/guardarAutorizadorAjax", name="guardarAutorizadorAjax")
+     * @Method("POST")
+     */
+    public function guardarAutorizadorAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest()){
+
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Autorizadores');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.acta = :cadena')
+                ->setParameter('cadena', $request->get("id"))
+                ->getQuery();
+             
+            $autorizadores = $query->getResult();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $acta = $em->getRepository('ConcursoOposicionBundle:Acta')->find(intval($request->get("id")));
+
+            if (!$autorizadores) {
+
+                $encontrado = false;
+
+                foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                    
+                    if ($valor == $request->get("cargo"))
+                        $encontrado = true;
+                }
+
+                if ($encontrado) {
+
+                    $autorizador = new Autorizadores(); 
+
+                    $autorizador->setCargo($request->get("cargo"));
+                    $autorizador->setCedula($this->getUser()->getCedula());
+                    $autorizador->setNombreApellido($this->getUser()->getNombreCorto());
+
+                    $acta->addAutorizadores($autorizador);
+
+                    $em->flush();
+
+                    return new JsonResponse("S"); 
+
+                } else {
+
+                    return new JsonResponse("N"); 
+                }                
+
+            } else {
+
+                $encontrado = false;
+
+                foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                    
+                    if ($valor == $request->get("cargo"))
+                        $encontrado = true;
+                }
+
+                if ($encontrado) {
+
+                    $encontrado = false;
+
+                    foreach ($autorizadores as $rol => $valor) {
+                        
+                        if ($valor->getCargo() == $request->get("cargo"))
+                            $encontrado = true;
+                    }
+
+                    $contador = 0;
+
+                    if ($request->get("cargo") == "Director de Escuela" && $encontrado) {
+
+                         foreach ($autorizadores as $rol => $valor) {
+                        
+                            if ($valor->getCargo() == "Director de Escuela") {
+                                $contador = $contador+1;
+                            }
+                        }
+
+                        if ($contador == 2)
+                            $encontrado = true;
+                        else 
+                            $encontrado = false;
+                    }
+
+                    if ($encontrado) {
+
+                        return new JsonResponse("R"); 
+
+                    } else {
+
+                        $autorizador = new Autorizadores(); 
+
+                        $autorizador->setCargo($request->get("cargo"));
+                        $autorizador->setCedula($this->getUser()->getCedula());
+                        $autorizador->setNombreApellido($this->getUser()->getNombreCorto());
+
+                        $acta->addAutorizadores($autorizador);
+
+                        $em->flush();
+
+                        return new JsonResponse("S"); 
+                    } 
+
+                } else {
+
+                    return new JsonResponse("N"); 
+                }
             }                                   
         }
         else

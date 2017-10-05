@@ -20,33 +20,43 @@
 
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                <h4 class="modal-title">Desea Eliminar Este Concurso?</h4>
+                <h4 class="modal-title">Seguro Que Desea Incluirse?</h4>
               </div>
               <div class="modal-body">
 
-                  <label>Facultad</label>            
-                  <input class="form-control" value="" readOnly="true" id="facultad1"/>
-                  
-                  <br/>
+                <div class="row">
+            
+                  <div class="col-md-12">
+                
+                      <div class="form-group has-feedback" id="div_cargo">
+                      
+                        <label> Cargo </label>
+                        
+                        <select id="cargoq" class="form-control select2" style="width: 100%;">
+                          <option selected="selected">...</option>
+                          <option>Decano</option>
+                          <option>Director de Asuntos Profesorales</option>
+                          <option>Director de Escuela</option>
+                          <option>Director de Investigación y Producción Intelectual</option>
+                          <option>Director de Extesión y Servicio</option>
+                          <option>Director de Docencia y Currículo</option>
+                          <option>Director de Asuntos Estudiantiles</option>
+                          <option>Director de Tecnología de Información y Comunicación (TIC)</option>
+                          <option>Representante del Comité Técnico de Auditoría Académica</option>
+                          <option>Representante del Comité Técnico de Auditoría Académica - APUC</option>
+                        </select>
 
-                  <label>Condición de Ingreso</label> 
-                  <input class="form-control" value="" readOnly="true" id="condicion1"/>
+                      </div>
+                      
+                  </div>
 
-                  <br/>
-
-                  <label>Vacantes</label> 
-                  <input class="form-control" value="" readOnly="true" id="nroVacantes1"/>
-
-                  <br/>
-
-                  <label>Status</label>                       
-                  <input class="form-control" value="" readOnly="true" id="status1"/>
+                </div>
 
               </div>
               <div class="modal-footer">
 
-                <button type="button" class="btn btn-default pull-center" data-dismiss="modal">Cancelar</button>
-                <button id="eliminarConcurso" type="button" class="btn btn-success pull-center">Eliminar</button>
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button id="guardarAutorizador" type="button" class="btn btn-success pull-center">Guardar</button>
               </div>
             </div>
 
@@ -72,17 +82,163 @@
                    <div class="box-body">
 
                      <div class="box-body form-group has-feedback" id="div_concurso">
+                      
                       <div class="row">
-                        <div class="col-md-12">
+
+                        <div class="col-md-10">
+
                           <label>Concursos</label>
 
-                            <select class="form-control select2" style="width: 100%;" id="lista">
-                            </select>                     
                         </div>
-                      </div>
-                    </div>       
 
-                      <br/>
+                      </div>                      
+
+                      <div class="row">
+
+                        <div class="col-md-10">
+                
+                            <div class="form-group has-feedback">
+                            
+                              <select class="form-control select2" style="width: 100%;" id="lista">
+                              </select> 
+                    
+                            </div>
+
+                        </div>
+
+                         <div class="col-md-2">
+
+                            <div class="form-group has-feedback">
+
+                              <button id="bucarActa" type="button" class="btn btn-success btn-block btn-flat">Buscar</button>
+
+                            </div>
+
+                         </div>
+
+                      </div>
+
+                      <br/><br/>
+
+                      <div class="row hide" id="detalle">
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Fecha</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="fecha"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Nro. Acta</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="acta"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Lugar</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="lugar"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Asunto</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="asunto"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Resolución</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="resolucion"/>
+                    
+                            </div>
+
+                        </div>
+
+                         <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Avala</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="avala"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Justificación</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="justificacion"/>
+                    
+                            </div>
+
+                        </div>
+
+                      </div>
+
+                      <br/><br/>
+
+                      <div class="row hide" id="responsables">
+                        <div class="box">
+                            <div class="box-header">
+                              <h3 class="box-title">Responsables</h3>
+                            </div>
+
+                             <div class="box-body">
+
+                                <table id="tabla" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                      <th>Cargo</th>
+                                      <th>Cédula</th>
+                                      <th>Nombre y Apellido</th>                           
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cuerpo">
+
+                                    </tbody>
+                                </table>
+                             </div>
+
+                          </div>
+
+                          <button type="button" class="btn btn-primary pull-center" id="incluir" data-toggle="modal" data-target="#myModal">Incluirme</button>
+
+                    </div> 
+
+                    </div>       
 
                    </div>
 
@@ -109,6 +265,21 @@
     $("#datemask").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
       $("[data-mask]").inputmask();
 
+  </script>
+
+  <script>
+    
+      tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "cargo" },
+              { "data": "cedula" },
+              { "data": "nya" }            
+          ]
+      });
+          
   </script>
 
   {% include('ConcursoOposicionBundle:Acta:listadoActas.html.twig') %}
