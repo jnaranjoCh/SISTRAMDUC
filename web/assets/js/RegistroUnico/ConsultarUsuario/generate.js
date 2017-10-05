@@ -27,9 +27,9 @@ $('#generate').click(function(){
                         $("#formUsuario").removeClass("hidden");
                         tableRol = $('#tableRol').DataTable({
                                         "ajax":{
-                                        "url": routeRegistroUnico['registro_consultarroles_ajax'],
-                                        "type": 'POST',
-                                        "data": {"Email":$('#gemail').val()}
+                                            "url": routeRegistroUnico['registro_consultarroles_ajax'],
+                                            "type": 'POST',
+                                            "data": {"Email":$('#gemail').val()}
                                         },
                                         "pagingType": "full_numbers",
                                         "bDestroy": true,
@@ -37,6 +37,7 @@ $('#generate').click(function(){
                                                 "url": tableLenguage['datatable-spanish']
                                         },
                                         columns: [
+                                            { "data": "Delete" },
                                             { "data": "Rol"}
                                         ]
                                     });

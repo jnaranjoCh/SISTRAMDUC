@@ -615,6 +615,7 @@ class RegistrarDatosController extends Controller
     public function enviarParentescoAction(Request $request)
     {
         $users = null;
+        $cedulaAbuscar = null;
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Usuario')
                    ->findOneByCorreo($request->get("Email"));
@@ -623,11 +624,10 @@ class RegistrarDatosController extends Controller
                       ->getManager()
                       ->createQuery('SELECT h
                                      FROM ClausulasContractualesBundle:Hijo h
-                                        INNER JOIN  h.usuarios u
-                                     WHERE u.id = :id')
-                      ->setParameter('id',$user->getId())
+                                     WHERE h.cedulaMadre = :cedula or h.cedulaPadre = :cedula')
+                      ->setParameter('cedula',$user->getCedula())
                       ->getResult();
-        
+    
         if($hijos)
         {
             $users = $this->getDoctrine()

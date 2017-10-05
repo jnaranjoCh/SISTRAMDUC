@@ -32,7 +32,7 @@ $('#generate').click(function(){
                     url: routeRegistroUnico['registro_consultar_parentesco_ajax'],
                     dataType: 'json',
                     success: function(data){
-                        if($.trim(data.length))
+                        if($.trim(data.length) && data.length>0)
                         {
                             $('#otherChildrens').removeClass("hidden");
                             $('#relationship').removeClass("hidden");

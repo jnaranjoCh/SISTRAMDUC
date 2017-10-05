@@ -19,6 +19,5 @@
 /.idea/*
 /node_modules
 /.phpintel/*
-/web/uploads/*
 .idea/
 .settings/
