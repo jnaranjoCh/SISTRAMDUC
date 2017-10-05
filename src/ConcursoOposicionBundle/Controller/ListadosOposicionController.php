@@ -76,6 +76,61 @@ class ListadosOposicionController extends Controller
     }
 
     /**
+     * @Route("/concursoOposicion/buscarActasAjax", name="buscarActasAjax")
+     * @Method("POST")
+     */
+    public function buscarActasAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
+
+            $acta = $concurso->getActa();
+
+            if (!$acta) {
+                 return new JsonResponse("N");
+            }else {
+
+                $val = $this->asignarFilaActas($acta,'id',$val, 0);
+                $val = $this->asignarFilaActas($acta,'fecha',$val, 1);
+                $val = $this->asignarFilaActas($acta,'lugar',$val, 2);
+                $val = $this->asignarFilaActas($acta,'asunto',$val, 3);
+                $val = $this->asignarFilaActas($acta,'resolucion',$val, 4);
+                $val = $this->asignarFilaActas($acta,'avala',$val, 5);
+                $val = $this->asignarFilaActas($acta,'justificacion',$val, 6);
+                $val = $this->asignarFilaActas($acta,'ampm',$val, 7);
+                $val = $this->asignarFilaActas($acta,'nro',$val, 8);
+
+                return new JsonResponse($val);
+            }            
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    private function asignarFilaActas($object,$entidad,$val, $pos)
+    {
+
+       switch ($pos) {
+           case 1: $val[$entidad][0] = date_format($object->getFecha(), 'd-m-Y'); break;
+           case 2: $val[$entidad][0] = $object->getLugar(); break;
+           case 3: $val[$entidad][0] = $object->getAsunto();break;
+           case 4: $val[$entidad][0] = $object->getResolucion();break;
+           case 5: $val[$entidad][0] = $object->getAvala();break;
+           case 6: $val[$entidad][0] = $object->getJustificacion();break;
+           case 7: $val[$entidad][0] = $object->getAmpm();break;
+           case 8: $val[$entidad][0] = $object->getNroActa();break;
+
+           default: $val[$entidad][0] = $object->getId(); break;
+        }
+        return $val;
+    }
+
+    /**
      * @Route("/concursoOposicion/buscarCursoAjax", name="buscarCursoAjax")
      * @Method("POST")
      */

@@ -18,6 +18,7 @@ use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ConcursosBundle\Entity\Resultado;
+use ConcursoOposicionBundle\Entity\Acta;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
@@ -274,6 +275,53 @@ class DefaultController extends Controller
 
                 return new JsonResponse("N");
             }               
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');      
+    }
+
+    /**
+     * @Route("/concursoOposicion/registroActaAjax", name="registroActaAjax")
+     * @Method("POST")
+     */
+    public function registroActaAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("concurso")));
+
+            if (!$concurso) {
+
+                return new JsonResponse("N");  
+
+            } else {
+
+                $acta = new Acta();
+
+                $acta->setFecha(date_create($request->get("fecha")));
+                $acta->setNroActa($request->get("acta"));
+                $acta->setLugar($request->get("lugar"));
+                $acta->setAsunto($request->get("asunto"));
+                $acta->setResolucion($request->get("resolucion"));
+                $acta->setAvala($request->get("avala"));
+                $acta->setJustificacion($request->get("justificacion"));
+                $acta->setAmpm($request->get("ampm"));
+
+                $existe = $concurso->getActa();
+
+                if ($existe)
+                    return new JsonResponse("R"); 
+                else {
+
+                    $concurso->setActa($acta);
+
+                    $em->flush();
+
+                    return new JsonResponse("S"); 
+                }               
+            }                                   
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');      

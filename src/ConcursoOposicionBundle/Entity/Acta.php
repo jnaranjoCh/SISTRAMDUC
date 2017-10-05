@@ -4,6 +4,8 @@ namespace ConcursoOposicionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use ConcursoOposicionBundle\Entity\Autorizadores;
 
 /**
@@ -71,6 +73,13 @@ class Acta
      * @ORM\Column(name="justificacion", type="string", length=200, nullable=true)
      */
     private $justificacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ampm", type="string", length=4, nullable=true)
+     */
+    private $ampm;
 
     /**
      * @ORM\OneToMany(targetEntity="ConcursoOposicionBundle\Entity\Autorizadores", mappedBy="acta", cascade={"remove", "persist"})
@@ -235,6 +244,30 @@ class Acta
     public function getAvala()
     {
         return $this->avala;
+    }
+
+    /**
+     * Set ampm
+     *
+     * @param string $ampm
+     *
+     * @return ampm
+     */
+    public function setAmpm($ampm)
+    {
+        $this->ampm = $ampm;
+
+        return $this;
+    }
+
+    /**
+     * Get ampm
+     *
+     * @return string
+     */
+    public function getAmpm()
+    {
+        return $this->ampm;
     }
 
     /**

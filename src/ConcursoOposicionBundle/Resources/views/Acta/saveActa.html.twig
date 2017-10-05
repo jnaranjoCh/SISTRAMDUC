@@ -1,5 +1,40 @@
 <script type="text/javascript">
 
+	$( window ).load(function (){
+
+		$.ajax({
+	        method: "POST",
+	        url:  "{{ path('listadoConcursosAjax') }}",
+	        dataType: 'json',
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        		
+	        		toastr.error("No Hay Concursos Registrados", "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			         });
+	        		
+	        	} else {
+	        
+		        	opcion = "<option id='concurso' selected='selected'>...</option>";
+		 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion = opcion+"<option value="+num+"><b>Facultad:</b> "+data["facultad"][i]+
+		        		"   -   <b>Vacantes:</b> "+data["nroVacantes"][i]
+		        		+"   -   <b>Condición</b> "+data["condicion"][i]
+		        		+"   -   <b>Fecha Registro:</b> "+data["fechaInicio"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#lista").html(opcion);
+	        	}
+	        }
+	    });	
+	});
 	
 	$('#registrarActa').click(function (){ 
 
@@ -8,12 +43,27 @@
 
         var continua = true;
 
-        $('#div_fecha').removeClass("has-error");
+        $('#div_concurso').removeClass("has-error");
 
-        if ($('#fecha').val() == ""){
+        if ($('#lista').val() == "..."){
 
             continua = false;
-            text = "Campo vacío";
+            text = "Concurso vacío";
+            $('#div_concurso').addClass("has-error");
+        }
+
+        $('#div_fecha').removeClass("has-error");
+
+        var sigue = true;
+        var fecha = $('#fecha').val();
+
+        if (isNaN(fecha.substring(0,2)) && isNaN(fecha.substring(3,5)) && isNaN(fecha.substring(6,10)))
+        	sigue = false;
+
+        if ($('#fecha').val() == "" || !sigue){
+
+            continua = false;
+            text = "Campo vacío o Erroneo";
             $('#div_fecha').addClass("has-error");
         }
 
@@ -100,7 +150,55 @@
 
         if (continua) {
 
-        	// json
+        	$.ajax({
+                method: "POST",
+                data: {
+                "fecha": $('#fecha').val()+" "+$('#hora').val()+":"+$('#minuto').val()+":"+"00",
+                "ampm": $('#ampm').val(),
+                "acta": $('#acta').val(),
+                "lugar": $('#lugar').val(),
+                "asunto": $('#asunto').val(),
+                "resolucion": $('#resolucion').val(),
+                "avala": $('#avala').val(),
+                "justificacion": $('#justificacion').val(),
+                "concurso": $('#lista').val()
+                },
+                url:  "{{ path('registroActaAjax') }}",
+                dataType: 'json',
+                success: function(data)
+                {
+                    if (data == "S"){
+
+                        document.getElementById('actaVCAP').reset();
+
+                        toastr.success("Acta Insertada", "Exito", {
+                                    "timeOut": "0",
+                                    "extendedTImeout": "0"
+                                 });            
+                    } 
+                    else{
+
+                        if (data == "R") {
+
+                            text = "Este Concurso Ya Tiene Acta";
+                       
+                            toastr.error(text, "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             }); 
+
+                        } else {
+
+                            text = "Error al Registrar Acta";
+                       
+                            toastr.error(text, "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             }); 
+                        }                 
+                    }
+                }
+            }); 
 
 
         } else {

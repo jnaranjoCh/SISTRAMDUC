@@ -51,10 +51,7 @@
 
 	$("#eliminarConcurso").click(function(){
 
-		tabla1.clear().draw();
 		tabla2.clear().draw();
-		tabla3.clear().draw();
-		tabla4.clear().draw();
 		toastr.clear();
 
 	    $.ajax({
@@ -144,10 +141,16 @@
 	        
 	        $('#div_fecha').removeClass("has-error");
 
-	        if ($('#fecha').val() == ""){
+	        var sigue = true;
+        	var fecha = $('#fecha').val();
+
+	        if (isNaN(fecha.substring(0,2)) && isNaN(fecha.substring(3,5)) && isNaN(fecha.substring(6,10)))
+	        	sigue = false;
+
+	        if ($('#fecha').val() == "" || !sigue){
 
 	            continua = false;
-	            text = "Campo vacío";
+	            text = "Campo vacío o Erroneo";
 	            $('#div_fecha').addClass("has-error");
 
 	        } else datos.fecha = $('#fecha').val();
@@ -260,12 +263,18 @@
 
 	        } else datos.cedula = $('#cedula').val();
 
+	        var sigue = true;
+	        var fecha = $('#fecha1').val();
+
+	        if (isNaN(fecha.substring(0,2)) && isNaN(fecha.substring(3,5)) && isNaN(fecha.substring(6,10)))
+	        	sigue = false;
+
 	        $('#div_fecha1').removeClass("has-error");
 
-	        if ($('#fecha1').val() == ""){
+	        if ($('#fecha1').val() == "" || !sigue){
 
 	            continua = false;
-	            text = "Campo vacío";
+	            text = "Campo vacío o Erroneo";
 	            $('#div_fecha1').addClass("has-error");
 
 	        } else datos.fecha = $('#fecha1').val();
@@ -349,12 +358,18 @@
 
 	        } else datos.cedula = $('#cedula1').val();
 
+	        var sigue = true;
+	        var fecha = $('#fecha2').val();
+
+	        if (isNaN(fecha.substring(0,2)) && isNaN(fecha.substring(3,5)) && isNaN(fecha.substring(6,10)))
+	        	sigue = false;
+
 	        $('#div_fecha2').removeClass("has-error");
 
-	        if ($('#fecha2').val() == ""){
+	        if ($('#fecha2').val() == "" || !sigue){
 
 	            continua = false;
-	            text = "Campo vacío";
+	            text = "Campo vacío o Erroneo";
 	            $('#div_fecha2').addClass("has-error");
 
 	        } else datos.fecha = $('#fecha2').val();
@@ -383,9 +398,8 @@
 	        		datos.status = "Esperando Por Concejo De Facultad";
 	        	else 
 	        		datos.status = "Rechazado";
-	        }
+	        }	      
         }
-
 
         if (status == "Esperando Por Concejo De Facultad") {        	
 
@@ -468,7 +482,46 @@
 
         if (continua) {
 
-        	$.ajax({
+        	if (status == "Esperando Por Auditoría Académica") {
+
+        		$.ajax({
+					method:"POST",
+					url: "{{ path('buscarActasAjax') }}",
+					dataType: 'json',
+					data : {"id" : ident},
+			        success: function(data)
+			        {
+		           		if (data == "N") {
+
+		           			text = "No Hay Acta Registrada";
+
+			                toastr.error(text, "Error", {
+			                    "timeOut": "0",
+			                    "extendedTImeout": "0"
+			                 });
+
+		           		} else {
+
+		           			estatus(datos);
+		           		}
+			        }
+			    });
+        	} else {
+
+        		estatus(datos);
+        	}     	
+
+        } else {
+             toastr.error(text, "Error", {
+                "timeOut": "0",
+                "extendedTImeout": "0"
+             });
+        }
+	});
+
+	function estatus(datos) {
+
+		$.ajax({
 
 	        method:"POST",
 	        url: "{{ path('modificarConcursoAjax') }}",
@@ -529,19 +582,13 @@
 	            }                           
 	        }
 	    });
-
-        } else {
-             toastr.error(text, "Error", {
-                "timeOut": "0",
-                "extendedTImeout": "0"
-             });
-        }
-	});
+	}
 	
 	function eliminar(id, pos){
 
 	    ident = id;
 	    posicion = pos;
+	    $('#ver').addClass('hide'); 
 
 	    $.ajax({
 
@@ -575,6 +622,7 @@
 
 	    ident = id;
 	    posicion = pos;
+	    $('#ver').addClass('hide'); 
 
 	    $.ajax({
 
