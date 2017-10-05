@@ -24,12 +24,20 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class DefaultController extends Controller
 {
 	/**
-	 * @Route("/concursoOposicion/actaVCAP", name="actaVCAP")
+	 * @Route("/concursoOposicion/tablaBasicaActaVCAP", name="tablaBasicaActaVCAP")
 	 */
-	public function actaVCAPAction()
+	public function tablaBasicaActaVCAPAction()
 	{
-		return $this->render('ConcursoOposicionBundle::actaVerificacionCAP.html.twig');
+		return $this->render('ConcursoOposicionBundle::listadoActasVCAP.html.twig');
 	}
+
+    /**
+     * @Route("/concursoOposicion/actaVCAP", name="actaVCAP")
+     */
+    public function actaVCAPAction()
+    {
+        return $this->render('ConcursoOposicionBundle::actaVerificacionCAP.html.twig');
+    }
 
     /**
      * @Route("/concursoOposicion/requisicionRRHH", name="requisicionRRHH")

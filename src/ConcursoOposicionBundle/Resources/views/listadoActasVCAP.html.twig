@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Listado de Actas de Verificación de Concejo de Asuntos Profesorales
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Listado de Actas</li>
+      </ol>
+    </section> 
+
+      <div class="example-modal">
+
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">Desea Eliminar Este Concurso?</h4>
+              </div>
+              <div class="modal-body">
+
+                  <label>Facultad</label>            
+                  <input class="form-control" value="" readOnly="true" id="facultad1"/>
+                  
+                  <br/>
+
+                  <label>Condición de Ingreso</label> 
+                  <input class="form-control" value="" readOnly="true" id="condicion1"/>
+
+                  <br/>
+
+                  <label>Vacantes</label> 
+                  <input class="form-control" value="" readOnly="true" id="nroVacantes1"/>
+
+                  <br/>
+
+                  <label>Status</label>                       
+                  <input class="form-control" value="" readOnly="true" id="status1"/>
+
+              </div>
+              <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-center" data-dismiss="modal">Cancelar</button>
+                <button id="eliminarConcurso" type="button" class="btn btn-success pull-center">Eliminar</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+
+        <br/>
+        <div class="register-box-body">
+
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Actas</h3>
+                  </div>
+
+                   <div class="box-body">
+
+                     <div class="box-body form-group has-feedback" id="div_concurso">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Concursos</label>
+
+                            <select class="form-control select2" style="width: 100%;" id="lista">
+                            </select>                     
+                        </div>
+                      </div>
+                    </div>       
+
+                      <br/>
+
+                   </div>
+
+                </div>
+  			 </div>      
+  		</section> 
+  </div>  
+            
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+
+  <script>
+
+    $(".select2").select2();
+    $("#datemask").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+      $("[data-mask]").inputmask();
+
+  </script>
+
+  {% include('ConcursoOposicionBundle:Acta:listadoActas.html.twig') %}
+
+{% endblock %}

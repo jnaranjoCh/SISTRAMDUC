@@ -1,0 +1,39 @@
+<script type="text/javascript">
+
+	$( window ).load(function (){
+
+		$.ajax({
+	        method: "POST",
+	        url:  "{{ path('listadoConcursosAjax') }}",
+	        dataType: 'json',
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        		
+	        		toastr.error("No Hay Concursos Registrados", "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			         });
+	        		
+	        	} else {
+	        
+		        	opcion = "<option id='concurso' selected='selected'>...</option>";
+		 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion = opcion+"<option value="+num+"><b>Facultad:</b> "+data["facultad"][i]+
+		        		"   -   <b>Vacantes:</b> "+data["nroVacantes"][i]
+		        		+"   -   <b>Condición</b> "+data["condicion"][i]
+		        		+"   -   <b>Fecha Registro:</b> "+data["fechaInicio"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#lista").html(opcion);
+	        	}
+	        }
+	    });	
+	});
+
+</script>
