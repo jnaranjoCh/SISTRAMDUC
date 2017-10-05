@@ -325,15 +325,14 @@ class RegistrarDatosController extends Controller
                 $correoAux = "Cedula: ".$hijos[0]['ciMadre']." (Sin registrar)";
                 $otherUser = $em->getRepository('AppBundle:Usuario')
                                     ->findOneByCorreo($hijos[0]['ciMadre']);
-            }
-            
-            if(strcmp($registerOtherUserPadre,"true")==0)
+            }else if(strcmp($registerOtherUserPadre,"true")==0)
             {
                 $cedulaAux = $hijos[0]['ciPadre'];
                 $correoAux = "Cedula: ".$hijos[0]['ciPadre']." (Sin registrar)";
                 $otherUser = $em->getRepository('AppBundle:Usuario')
                                 ->findOneByCorreo($hijos[0]['ciPadre']);
             }
+            
             if(!$otherUser)
             {
                 $roles[] = new Rol();

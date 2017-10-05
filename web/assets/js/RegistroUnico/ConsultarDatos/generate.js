@@ -70,6 +70,7 @@ $('#generate').click(function(){
                                                                             '</tfoot>'+
                                                                           '</table>';
                                 tableRelationship = tableRelationship+'</div>';
+                                tableRelationshipList[i] = "#infoOtherParent"+i;
                                 $('#relationship').html(tableRelationship);
                                 if(data[i].primerNombre == "" && data[i].segundoNombre == "" && data[i].primerApellido == "" && data[i].segundoApellido == "")
                                     $("#infoOtherParent"+i).html("<strong>Usuario en espera por registrar ( Cedula: "+data[i].cedula+")</strong>");
@@ -82,6 +83,7 @@ $('#generate').click(function(){
                                                "data": {"cedula":data[i].cedula}
                                             },
                                             "pagingType": "full_numbers",
+                                            "bDestroy": true,
                                     	    "language": {
                                                 	"url": tableLenguage['datatable-spanish']
                                             },

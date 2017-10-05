@@ -187,6 +187,7 @@ $('#restablecer').click(function(){
                 $('#relationship').removeClass("hidden");
                 for(var i = 0; i < data.length; i++)
                 {
+                    $(tableRelationshipList[i]).dataTable().fnDestroy();
                     tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
                     tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
                                                                 '<thead>'+
@@ -220,6 +221,7 @@ $('#restablecer').click(function(){
                                                               '</table>';
                     tableRelationship = tableRelationship+'</div>';
                     $('#relationship').html(tableRelationship);
+                    tableRelationshipList[i] = "#infoOtherParent"+i;
                     if(data[i].primerNombre == "" && data[i].segundoNombre == "" && data[i].primerApellido == "" && data[i].segundoApellido == "")
                         $("#infoOtherParent"+i).html("<strong>Usuario en espera por registrar ( Cedula: "+data[i].cedula+")</strong>");
                     else
@@ -231,6 +233,7 @@ $('#restablecer').click(function(){
                                    "data": {"cedula":data[i].cedula}
                                 },
                                 "pagingType": "full_numbers",
+                                "bDestroy": true,
                         	    "language": {
                                     	"url": tableLenguage['datatable-spanish']
                                 },

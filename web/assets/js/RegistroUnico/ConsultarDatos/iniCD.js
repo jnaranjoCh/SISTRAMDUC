@@ -3,6 +3,7 @@ var miniRegistros = true;
 var miniCargos = true;
 var miniHijos = true;
 var copiar = 0;
+var tableRelationshipList = [];
 
 $( window ).load(function() {
     
