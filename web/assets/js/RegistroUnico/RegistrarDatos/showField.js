@@ -248,3 +248,64 @@ $('#checkboxHijos').click(function(){
     }else
         $("#formHijos").addClass("hidden");
 });
+
+$('#checkboxMadre').click(function(){
+    if( $(this).prop('checked') ) {
+        $("#nameParent2").html("del padre");
+        $("#nameParent1").html("de la madre");
+        $("#nameParent3").html("madre");
+        $("#myModalHijosMessage").modal("show");
+    }
+});
+
+$('#checkboxPadre').click(function(){
+    if( $(this).prop('checked') ) {
+        $("#nameParent1").html("del padre");
+        $("#nameParent2").html("de la madre");
+        $("#nameParent3").html("padre");
+        $("#myModalHijosMessage").modal("show");
+    }
+});
+
+
+$("#continueParent").click(function(){
+    if( $('#checkboxPadre').prop('checked') ) {
+        $("#checkboxMadre").prop('disabled', true);
+        $("#CedulaPadreHijoDatos").prop('disabled', false);
+        $("#checkboxPadre").prop('disabled', true);
+        registerOtherUserPadre = true;
+    }
+    
+    if($('#checkboxMadre').prop('checked'))
+    {
+        $("#checkboxMadre").prop('disabled', true);
+        $("#CedulaMadreHijoDatos").prop('disabled', false);
+        $("#checkboxPadre").prop('disabled', true);
+        registerOtherUserMadre = true;
+    }
+    $("#myModalHijosMessage").modal("hide");
+    
+});
+
+$("#closeParent").click(function(){
+    if( $('#checkboxPadre').prop('checked') ) {
+        $('#checkboxPadre').prop('checked',false);
+    }
+    
+    if($('#checkboxMadre').prop('checked')){
+        $('#checkboxMadre').prop('checked',false);
+    }
+});
+
+
+$("#AnoPublicacionDatos").keypress(function(){
+    $("#AnoPublicacionDatos").val('');
+});
+
+$("#AnoPublicacionDatos").keyup(function(){
+    $("#AnoPublicacionDatos").val('');
+});
+
+$("#AnoPublicacionDatos").keydown(function(){
+    $("#AnoPublicacionDatos").val('');
+});

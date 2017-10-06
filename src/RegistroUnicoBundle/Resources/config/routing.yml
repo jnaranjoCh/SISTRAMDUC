@@ -200,3 +200,16 @@ registro_validaractualizararchivos_ajax:
     defaults: { _controller: RegistroUnicoBundle:ValidarRegistros:validarArchivos }
     requirements:
         _method:  POST
+
+
+registro_consultar_parentesco_ajax:
+    path:     /registro/consultar-parentesco
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarParentesco }
+    requirements:
+        _method:  POST
+        
+registro_consultar_parentesco_hijos_ajax:
+    path:     /registro/consultar-parentesco-hijos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarParentescoHijos }
+    requirements:
+        _method:  POST

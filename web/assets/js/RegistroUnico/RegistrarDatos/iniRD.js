@@ -4,6 +4,9 @@ var miniRegistros = true;
 var miniCargos = true;
 var miniHijos = true;
 var copiar = 0;
+var registerOtherUserMadre = false;
+var registerOtherUserPadre = false;
+
 
 $( window ).load(function() {
     
@@ -73,7 +76,7 @@ $( window ).load(function() {
         }
     });
     
-        $.ajax({
+    $.ajax({
         method: "POST",
         url:  routeRegistroUnico['registro_obtenerlastid_ajax'],
         dataType: 'json',
@@ -98,5 +101,10 @@ $( window ).load(function() {
     });
     $("#ActaNacCargaHijoDatos").fileinput({
         language: "es"
+    });
+    $('#AnoPublicacionDatos').datepicker({
+        format: " yyyy",
+        viewMode: "years", 
+        minViewMode: "years"
     });
 });

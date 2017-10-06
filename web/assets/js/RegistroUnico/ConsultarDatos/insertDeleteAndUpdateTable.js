@@ -108,7 +108,7 @@ $('#tableRegistros tbody').on( 'click', 'td', function () {
                 cell.column = "10";
                 tableRegistros.cell(cell).data('<input id="Congreso'+row+'" value="" type="text" class="form-control" placeholder="Congreso">').draw();
             }
-            $('#tableRegistros_last').click();
+            //$('#tableRegistros_last').click();
         });
     }
 });
@@ -175,6 +175,84 @@ function updateReferencesDelete(table,iid)
 }
 
 $('#restablecer').click(function(){
+    $.ajax({
+        method: "POST",
+        data: {"Email":$('#mail').val()},
+        url: routeRegistroUnico['registro_consultar_parentesco_ajax'],
+        dataType: 'json',
+        success: function(data){
+            if($.trim(data.length) && data.length>0)
+            {
+                $('#otherChildrens').removeClass("hidden");
+                $('#relationship').removeClass("hidden");
+                for(var i = 0; i < data.length; i++)
+                {
+                    $(tableRelationshipList[i]).dataTable().fnDestroy();
+                    tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
+                    tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
+                                                                '<thead>'+
+                                                                '<tr>'+
+                                                                  '<th>CI Madre</th>'+
+                                                                  '<th>CI Padre</th>'+
+                                                                  '<th>CI Hijo</th>'+
+                                                                  '<th>1er Nombre</th>'+
+                                                                  '<th>2do Nombre</th>'+
+                                                                  '<th>1er Apellido</th>'+
+                                                                  '<th>2do Apellido</th>'+
+                                                                  '<th>F Nacimiento</th>'+
+                                                                  '<th>Nacionalidad</th>'+          
+                                                                '</tr>'+
+                                                                '</thead>'+
+                                                                '<tbody>'+
+                                                                '</tbody>'+
+                                                                '<tfoot>'+
+                                                                '<tr>'+
+                                                                  '<th>CI Madre</th>'+
+                                                                  '<th>CI Padre</th>'+
+                                                                  '<th>CI Hijo</th>'+
+                                                                  '<th>1er Nombre</th>'+
+                                                                  '<th>2do Nombre</th>'+
+                                                                  '<th>1er Apellido</th>'+
+                                                                  '<th>2do Apellido</th>'+
+                                                                  '<th>F Nacimiento</th>'+
+                                                                  '<th>Nacionalidad</th>'+
+                                                                '</tr>'+
+                                                                '</tfoot>'+
+                                                              '</table>';
+                    tableRelationship = tableRelationship+'</div>';
+                    $('#relationship').html(tableRelationship);
+                    tableRelationshipList[i] = "#infoOtherParent"+i;
+                    if(data[i].primerNombre == "" && data[i].segundoNombre == "" && data[i].primerApellido == "" && data[i].segundoApellido == "")
+                        $("#infoOtherParent"+i).html("<strong>Usuario en espera por registrar ( Cedula: "+data[i].cedula+")</strong>");
+                    else
+                        $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
+                    $('#tableRelationship'+i).DataTable({
+                                "ajax":{
+                                   "url": routeRegistroUnico['registro_consultar_parentesco_hijos_ajax'],
+                                   "type": 'POST',
+                                   "data": {"cedula":data[i].cedula}
+                                },
+                                "pagingType": "full_numbers",
+                                "bDestroy": true,
+                        	    "language": {
+                                    	"url": tableLenguage['datatable-spanish']
+                                },
+                                columns: [
+                                    {"data":"CIMadre"},
+                                    {"data":"CIPadre"},
+                                    {"data":"CIHijo"},
+                                    {"data":"1erNombre"},
+                                    {"data":"2doNombre"},
+                                    {"data":"1erApellido"},
+                                    {"data":"2doApellido"},
+                                    {"data":"FNacimiento"},
+                                    {"data":"Nacionalidad"}
+                                ]
+                    });
+                }
+            }
+        }
+    });
     $("#ActaNacCargaHijoDatos").fileinput('refresh');
     $.ajax({
         method: "POST",
@@ -388,6 +466,7 @@ $('#restablecer').click(function(){
                                 { "data": "PrimerayUltimaPagina" }
                             ]
                         });
+     refreshIntervalIdThree = setInterval(initDatePickerYear, 2500);
 });
 
 $('#agregarRegistros').click(function(){
@@ -450,53 +529,56 @@ $('#agregarRevistas').click(function(){
 });
 
 $('#agregarHijos').click(function(){
-    var aux = tableHijos.page.info().recordsTotal;
-    tableHijos.row.add( {
-        "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
-        "CIMadre" :'<input id="CIMadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Madre">',
-        "CIPadre" :'<input id="CIPadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Padre">',
-        "CIHijo" :'<input id="CIHijo'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Hijo">',
-        "1erNombre" :'<input id="1erNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Nombre">',
-        "2doNombre" :'<input id="2doNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Nombre">',
-        "1erApellido" :'<input id="1erApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Apellido">',
-        "2doApellido" :'<input id="2doApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Apellido">',
-        "FNacimiento" :'<div class="row">'+
-                                '<div class="col-xs-12">'+
-                                    '<div class="form-group has-feedback">'+
-                                        '<div class="input-group date">'+
-                                            '<input id="datepickerHijo1'+tableHijos.page.info().recordsTotal+'" value="" name="FNacimiento'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 240px;"/>'+
-                                            '<span class="input-group-addon">'+
-                                                '<span class="glyphicon glyphicon-calendar"></span>'+
-                                            '</span>'+
+    if(($('#tableHijos tr').length) <= 7)
+    {
+        var aux = tableHijos.page.info().recordsTotal;
+        tableHijos.row.add( {
+            "Delete":"<img src='"+routeFiles['delete-png']+"' width='30px' heigth='30px'/>",
+            "CIMadre" :'<input id="CIMadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Madre">',
+            "CIPadre" :'<input id="CIPadre'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Padre">',
+            "CIHijo" :'<input id="CIHijo'+tableHijos.page.info().recordsTotal+'" value="" type="number" class="form-control" placeholder="Cedula Hijo">',
+            "1erNombre" :'<input id="1erNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Nombre">',
+            "2doNombre" :'<input id="2doNombre'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Nombre">',
+            "1erApellido" :'<input id="1erApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Primer Apellido">',
+            "2doApellido" :'<input id="2doApellido'+tableHijos.page.info().recordsTotal+'" value="" type="text" class="form-control" placeholder="Segundo Apellido">',
+            "FNacimiento" :'<div class="row">'+
+                                    '<div class="col-xs-12">'+
+                                        '<div class="form-group has-feedback">'+
+                                            '<div class="input-group date">'+
+                                                '<input id="datepickerHijo1'+tableHijos.page.info().recordsTotal+'" value="" name="FNacimiento'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 240px;"/>'+
+                                                '<span class="input-group-addon">'+
+                                                    '<span class="glyphicon glyphicon-calendar"></span>'+
+                                                '</span>'+
+                                            '</div>'+
                                         '</div>'+
-                                    '</div>'+
-                                    '</div>'+
-                                '</div>',
-        "FVencimientoActa" :'<div class="row">'+
-                                '<div class="col-xs-12">'+
-                                    '<div class="form-group has-feedback">'+
-                                        '<div class="input-group date">'+
-                                            '<input id="datepickerHijo2'+tableHijos.page.info().recordsTotal+'" value="" name="FVencimientoActa'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 200px;"/>'+
-                                            '<span class="input-group-addon">'+
-                                                '<span class="glyphicon glyphicon-calendar"></span>'+
-                                            '</span>'+
                                         '</div>'+
-                                    '</div>'+
-                                    '</div>'+
-                                '</div>',
-        "Nacionalidad" : '<select id="NacionalidadDatos'+tableHijos.page.info().recordsTotal+'" class="form-control select2" style="width: 200xp;" required>'+
-                                '<option selected="selected" value="">Seleccione una opción</option>'+
-                                '<option value="Venezolano">Venezolano</option>'+
-                                '<option value="Extranjero">Extranjero</option>'+
-                          '</select>'
-    }).draw();
-    $('#tableHijos_last').click();
-    $('#datepickerHijo1'+aux).datepicker({
-        autoclose: true
-    });
-    $('#datepickerHijo2'+aux).datepicker({
-        autoclose: true
-    });
+                                    '</div>',
+            "FVencimientoActa" :'<div class="row">'+
+                                    '<div class="col-xs-12">'+
+                                        '<div class="form-group has-feedback">'+
+                                            '<div class="input-group date">'+
+                                                '<input id="datepickerHijo2'+tableHijos.page.info().recordsTotal+'" value="" name="FVencimientoActa'+tableHijos.page.info().recordsTotal+'" type="text" class="form-control" style="width: 200px;"/>'+
+                                                '<span class="input-group-addon">'+
+                                                    '<span class="glyphicon glyphicon-calendar"></span>'+
+                                                '</span>'+
+                                            '</div>'+
+                                        '</div>'+
+                                        '</div>'+
+                                    '</div>',
+            "Nacionalidad" : '<select id="NacionalidadDatos'+tableHijos.page.info().recordsTotal+'" class="form-control select2" style="width: 200xp;" required>'+
+                                    '<option selected="selected" value="">Seleccione una opción</option>'+
+                                    '<option value="Venezolano">Venezolano</option>'+
+                                    '<option value="Extranjero">Extranjero</option>'+
+                              '</select>'
+        }).draw();
+        $('#tableHijos_last').click();
+        $('#datepickerHijo1'+aux).datepicker({
+            autoclose: true
+        });
+        $('#datepickerHijo2'+aux).datepicker({
+            autoclose: true
+        });
+    }
 });
 
 $('#agregarCargo').click(function(){

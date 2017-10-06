@@ -16,8 +16,9 @@ $('#mail').on('input',function(e){
 });
 
 $('#generate').click(function(){
-    toastr.clear();
+    var tableRelationship;
     
+    toastr.clear();
     $.ajax({
         method: "POST",
         data: {"Email":$('#mail').val()},
@@ -25,6 +26,83 @@ $('#generate').click(function(){
         dataType: 'json',
         success: function(data){
             if(data){
+              $.ajax({
+                    method: "POST",
+                    data: {"Email":$('#mail').val()},
+                    url: routeRegistroUnico['registro_consultar_parentesco_ajax'],
+                    dataType: 'json',
+                    success: function(data){
+                        if($.trim(data.length) && data.length>0)
+                        {
+                            $('#otherChildrens').removeClass("hidden");
+                            $('#relationship').removeClass("hidden");
+                            for(var i = 0; i < data.length; i++)
+                            {
+                                tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
+                                tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
+                                                                            '<thead>'+
+                                                                            '<tr>'+
+                                                                              '<th>CI Madre</th>'+
+                                                                              '<th>CI Padre</th>'+
+                                                                              '<th>CI Hijo</th>'+
+                                                                              '<th>1er Nombre</th>'+
+                                                                              '<th>2do Nombre</th>'+
+                                                                              '<th>1er Apellido</th>'+
+                                                                              '<th>2do Apellido</th>'+
+                                                                              '<th>F Nacimiento</th>'+
+                                                                              '<th>Nacionalidad</th>'+          
+                                                                            '</tr>'+
+                                                                            '</thead>'+
+                                                                            '<tbody>'+
+                                                                            '</tbody>'+
+                                                                            '<tfoot>'+
+                                                                            '<tr>'+
+                                                                              '<th>CI Madre</th>'+
+                                                                              '<th>CI Padre</th>'+
+                                                                              '<th>CI Hijo</th>'+
+                                                                              '<th>1er Nombre</th>'+
+                                                                              '<th>2do Nombre</th>'+
+                                                                              '<th>1er Apellido</th>'+
+                                                                              '<th>2do Apellido</th>'+
+                                                                              '<th>F Nacimiento</th>'+
+                                                                              '<th>Nacionalidad</th>'+
+                                                                            '</tr>'+
+                                                                            '</tfoot>'+
+                                                                          '</table>';
+                                tableRelationship = tableRelationship+'</div>';
+                                tableRelationshipList[i] = "#infoOtherParent"+i;
+                                $('#relationship').html(tableRelationship);
+                                if(data[i].primerNombre == "" && data[i].segundoNombre == "" && data[i].primerApellido == "" && data[i].segundoApellido == "")
+                                    $("#infoOtherParent"+i).html("<strong>Usuario en espera por registrar ( Cedula: "+data[i].cedula+")</strong>");
+                                else
+                                    $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
+                                $('#tableRelationship'+i).DataTable({
+                                            "ajax":{
+                                               "url": routeRegistroUnico['registro_consultar_parentesco_hijos_ajax'],
+                                               "type": 'POST',
+                                               "data": {"cedula":data[i].cedula}
+                                            },
+                                            "pagingType": "full_numbers",
+                                            "bDestroy": true,
+                                    	    "language": {
+                                                	"url": tableLenguage['datatable-spanish']
+                                            },
+                                            columns: [
+                                                {"data":"CIMadre"},
+                                                {"data":"CIPadre"},
+                                                {"data":"CIHijo"},
+                                                {"data":"1erNombre"},
+                                                {"data":"2doNombre"},
+                                                {"data":"1erApellido"},
+                                                {"data":"2doApellido"},
+                                                {"data":"FNacimiento"},
+                                                {"data":"Nacionalidad"}
+                                            ]
+                                });
+                            }
+                        }
+                    }
+                });
                $("#load").val("true");
                
             }else{
@@ -38,6 +116,7 @@ $('#generate').click(function(){
     });
     refreshIntervalId = setInterval(initTableConsultar, 2500);
     refreshIntervalIdTwo = setInterval(initDatePicker, 2500);
+    refreshIntervalIdThree = setInterval(initDatePickerYear, 2500);
     refreshIntervalIdFour = setInterval(initDatePickerHijo, 2500);
 });
 
@@ -53,32 +132,67 @@ function initDatePicker(){
     {
         for(var i = 0; i < tableCargo.page.info().recordsTotal; i++)
         {
-            aux = $('#datepicker'+i).val();
-            $('#datepicker'+i).datepicker({
+            var cell = new Object();
+            cell.row = i; cell.column = "2"; cell.columnVisible = "0";
+            aux = tableCargo.cell(cell).nodes().to$().find('#datepicker'+i).val();
+            tableCargo.cell(cell).nodes().to$().find('#datepicker'+i).datepicker({
               autoclose: true
             });
-            $('#datepicker'+i).val(aux);
+            tableCargo.cell(cell).nodes().to$().find('#datepicker'+i).val(aux);
         }
         clearInterval(refreshIntervalIdTwo);
     }
 }
-
+function initDatePickerYear(){
+    if(tableRegistros.page.info().recordsTotal>0)
+    {
+        for(var i = 0; i < tableRegistros.page.info().recordsTotal; i++)
+        {
+            var cell = new Object();
+            cell.row = i; cell.column = "6"; cell.columnVisible = "0";
+            aux = tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).val();
+            tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).datepicker({
+                format: " yyyy",
+                viewMode: "years", 
+                minViewMode: "years"
+            });
+            tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).val(aux);
+            
+            tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).keypress(function(){
+                tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).val('');
+            });
+            
+            tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).keyup(function(){
+                tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).val('');
+            });
+            tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).keydown(function(){
+                tableRegistros.cell(cell).nodes().to$().find('#AnoDePublicacionAsistencia'+i).val('');
+            });
+        }
+        clearInterval(refreshIntervalIdThree);
+    }
+    
+}
 function initDatePickerHijo(){
     if(tableHijos.page.info().recordsTotal>0)
     {
         for(var i = 0; i < tableHijos.page.info().recordsTotal; i++)
         {
-            aux = $('#datepickerHijo1'+i).val();
-            $('#datepickerHijo1'+i).datepicker({
+            var cell = new Object();
+            cell.row = i; cell.column = "8"; cell.columnVisible = "0";
+            aux = tableHijos.cell(cell).nodes().to$().find('#datepickerHijo1'+i).val();
+            tableHijos.cell(cell).nodes().to$().find('#datepickerHijo1'+i).datepicker({
               autoclose: true
             });
-            $('#datepickerHijo1'+i).val(aux);
+            tableHijos.cell(cell).nodes().to$().find('#datepickerHijo1'+i).val(aux);
             
-            aux = $('#datepickerHijo2'+i).val();
-            $('#datepickerHijo2'+i).datepicker({
+            var cell = new Object();
+            cell.row = i; cell.column = "9"; cell.columnVisible = "0";
+            aux = tableHijos.cell(cell).nodes().to$().find('#datepickerHijo2'+i).val();
+            tableHijos.cell(cell).nodes().to$().find('#datepickerHijo2'+i).datepicker({
               autoclose: true
             });
-            $('#datepickerHijo2'+i).val(aux);
+            tableHijos.cell(cell).nodes().to$().find('#datepickerHijo2'+i).val(aux);
         }
         clearInterval(refreshIntervalIdFour);
     }

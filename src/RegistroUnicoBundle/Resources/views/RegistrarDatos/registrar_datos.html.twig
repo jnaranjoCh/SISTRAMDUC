@@ -52,6 +52,46 @@
     </div>
     <!-- Modal -->
     
+    <!-- Modal -->
+    <div class="modal fade" id="myModalHijosMessage" role="dialog"  data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content alert alert-warning" style="border-radius: 25px;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Advertencia!</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-offset-2 col-md-3">
+                <img src="{{ asset('assets/images/danger-34250_640.png') }}" class="img-rounded" alt="Cinque Terre" width="70%" height="70%" />
+                <!--<img src="{{ asset('assets/images/danger-34250_640.png') }}"/>-->
+              </div>
+              <div class="col-xs-pul-1 col-md-6">
+                <h3>Una vez seleccionado el checkbox <span id="nameParent1"></span> no podra deshabilitar el <span id="nameParent2"></span>!</h3>
+                </br>
+                <div id="divCheckboxParent" class="col-md-offset-1 col-md-10">
+                  <input type="checkbox" id="checkboxParent" name="checkboxParent" value="activo"/> <strong>Indique si su <span id="nameParent3"></span> trabaja en la UC.</strong><br/><br/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-1">
+                  <button id="continueParent" type="button" class="btn btn-default">Continuar</button>
+              </div>
+              <div class="col-xs-10">
+                  <button id="closeParent" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Modal -->
     <div class="modal fade" id="myModal2" role="dialog" data-keyboard="false" data-backdrop="static">
       <div class="modal-dialog">
         <!-- Modal content-->
@@ -391,6 +431,7 @@
                     <table id="tableCargo" class="table table-bordered table-striped">
                       <thead>
                       <tr>
+                        <th></th>
                         <th>Cargo</th>
                         <th>Fecha de inicio en el cargo</th>
                       </tr>
@@ -399,8 +440,9 @@
                       </tbody>
                       <tfoot>
                       <tr>
-                       <th>Cargo</th>
-                       <th>Fecha de inicio en el cargo</th>
+                        <th></th>
+                        <th>Cargo</th>
+                        <th>Fecha de inicio en el cargo</th>
                       </tr>
                       </tfoot>
                     </table>
@@ -471,7 +513,7 @@
                     <div class="col-md-6">
                       <div id="divAnoPublicacionDatos" class="form-group has-feedback">
                         <label id="AnoPublicacionLabel"></label>
-                        <input id="AnoPublicacionDatos" type="number" class="form-control" placeholder="Año" min="1">
+                        <input id="AnoPublicacionDatos" type="text" class="form-control" placeholder="Año" min="1">
                         <span id="spanAnoPublicacionDatos" class="glyphicon form-control-feedback"></span>
                       </div>
                       <!-- /.form-group -->
@@ -533,6 +575,7 @@
                    <table id="tableRegistros" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
@@ -550,6 +593,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Tipo de referencia</th>
                       <th>Descripción</th>
@@ -607,6 +651,7 @@
                   <table id="tableParticipantes" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Nombre</th>
                       <th>Cedula</th>
@@ -616,6 +661,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>Id del registro</th>
                       <th>Nombre</th>
                       <th>Cedula</th>
@@ -675,6 +721,7 @@
                     <table id="tableRevista" class="table table-bordered table-striped">
                       <thead>
                       <tr>
+                        <th></th>
                         <th>Id del registro</th>
                         <th>Revista</th>
                         <th>Volumen</th>
@@ -685,6 +732,7 @@
                       </tbody>
                       <tfoot>
                       <tr>
+                        <th></th>
                         <th>Id del registro</th>
                         <th>Revista</th>
                         <th>Volumen</th>
@@ -722,7 +770,8 @@
                   <div class="col-md-6">
                     <div id="divCedulaMadreHijoDatos" class="form-group has-feedback">
                       <label>Cedula de la madre</label>
-                      <input type="number" id="CedulaMadreHijoDatos" class="form-control" placeholder="Cedula de la madre" required>
+                      <input type="checkbox" id="checkboxMadre" name="checkboxMadre" value="activo"/>
+                      <input type="number" id="CedulaMadreHijoDatos" class="form-control" placeholder="Cedula de la madre" required disabled>
                       <span id="spanCedulaMadreHijoDatos" class="glyphicon form-control-feedback"></span>
                     </div>
                   </div>
@@ -730,7 +779,8 @@
                   <div class="col-md-6">
                     <div id="divCedulaPadreHijoDatos" class="form-group has-feedback">
                       <label>Cedula del padre</label>
-                      <input type="number" id="CedulaPadreHijoDatos" class="form-control" placeholder="Cedula del padre" required>
+                      <input type="checkbox" id="checkboxPadre" name="checkboxPadre" value="activo"/>
+                      <input type="number" id="CedulaPadreHijoDatos" class="form-control" placeholder="Cedula del padre" required disabled>
                       <span id="spanCedulaPadreHijoDatos" class="glyphicon form-control-feedback"></span>
                     </div>
                   </div>
@@ -829,6 +879,7 @@
                   <table id="tableHijos" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                      <th></th>
                       <th>CI Madre</th>
                       <th>CI Padre</th>
                       <th>CI Hijo</th>
@@ -845,6 +896,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
+                      <th></th>
                       <th>CI Madre</th>
                       <th>CI Padre</th>
                       <th>CI Hijo</th>
@@ -858,6 +910,15 @@
                     </tr>
                     </tfoot>
                   </table>
+                </div>
+                <br/>
+                <hr/>
+                <div>
+                  <div id="otherChildrens" class="hidden">
+                    <h3>Otros hijos</h3>
+                  </div>
+                  <div id="relationship" class="hidden">
+                  </div>
                 </div>
               </div>
               <!-- /.box -->

@@ -18,7 +18,7 @@
 /tests/PlanSeptenalBundle/LearningTests/
 /.idea/*
 /node_modules
-/.phpintel/*
 /web/uploads/*
+/.phpintel/*
 .idea/
 .settings/

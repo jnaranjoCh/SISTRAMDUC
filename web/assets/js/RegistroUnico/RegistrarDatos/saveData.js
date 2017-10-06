@@ -1,4 +1,5 @@
 var personalData = [];
+var registerOtherUser = false;
 
 $('#submitData').click(function(){
     toastr.clear();
@@ -199,11 +200,21 @@ $('#submitData').click(function(){
         }
     }
 
-    tableRegistros.column(1)
+    if($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val())
+    {
+        can_register = false;
+        $("#headerHijos").css({ 'color': "red" });
+        text = "La cedula del padre y la madre son iguales.";
+    }else
+    {
+        $("#headerHijos").css({ 'color': "black" });
+    }
+    
+    tableRegistros.column(2)
                         .data()
                         .each( function ( value1,index1 ) {
                             if(value1=="Tutoria de pasantias" || value1=="Tutoria de servicio comunitario" || value1=="Tutoria de tesis" || value1=="Articulo publicado"){
-                                tableRegistros.column(0)
+                                tableRegistros.column(1)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
                                                     if(index1==index2){
@@ -213,7 +224,7 @@ $('#submitData').click(function(){
                                                 });                                   
                             }
                             if(value1=="Articulo publicado"){
-                                tableRegistros.column(0)
+                                tableRegistros.column(1)
                                                 .data()
                                                 .each( function ( value2,index2 ) {
                                                     if(index1==index2){
@@ -225,7 +236,7 @@ $('#submitData').click(function(){
                         });
                         
     if(can_register &&  indRegistroParticipantes>0){
-        tableParticipantes.column(0)
+        tableParticipantes.column(1)
                             .data()
                             .each( function ( value,index ) {
                                 idParticipantes[indParticipantes]=value;
@@ -255,7 +266,7 @@ $('#submitData').click(function(){
     }
                         
     if(can_register &&  indRegistroRevistas>0){
-        tableRevista.column(0)
+        tableRevista.column(1)
                             .data()
                             .each( function ( value,index ) {
                                 idRevistas[indRevistas]=value;
@@ -374,9 +385,12 @@ $("#continue").click(function(){
     revistasData = burbuja(revistasData);
     $("#myModal3").modal("hide");
     if($('#checkboxHijos').prop('checked')){
+        if($('#checkboxParent').prop('checked')){
+            registerOtherUser = true;
+        }
         $.ajax({
                 method: "POST",
-                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val()},
+                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val(), "registerOtherUser":registerOtherUser, "registerOtherUserPadre":registerOtherUserPadre, "registerOtherUserMadre":registerOtherUserMadre},
                 url:  routeRegistroUnico['registro_guardar_ajax'],
                 dataType: 'json',
                 beforeSend: function(){
@@ -390,7 +404,7 @@ $("#continue").click(function(){
     }else{
         $.ajax({
                 method: "POST",
-                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val()},
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val(), "registerOtherUser":false, "registerOtherUserPadre":false, "registerOtherUserMadre":false},
                 url:  routeRegistroUnico['registro_guardar_ajax'],
                 dataType: 'json',
                 beforeSend: function(){

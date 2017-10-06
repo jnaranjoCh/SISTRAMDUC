@@ -288,6 +288,11 @@
               </ul>
             </li>
           </ul>
+          <ul class="treeview-menu">
+            <li data-route="clausulas_contractuales_mantenimiento_de_montos">
+              <a href="{{ path('clausulas_contractuales_mantenimiento_de_montos') }}"><i class="fa fa-circle-o"></i>Mantenimiento de montos</a>
+            </li>
+          </ul>
         </li>
 
         <li class="treeview">
@@ -400,20 +405,28 @@
               <a href="{{ path('requisicionRRHH') }}"><i class="fa fa-circle-o"></i>Requisición RR.HH.</a>
             </li>
             
-            
+            <li data-route="actaVCAP">
+              <a href="{{ path('actaVCAP') }}"><i class="fa fa-circle-o"></i>Acta Verificación CAP</a>
+            </li>
             
             <li class="treeview">
               <a href="#">
-                <i class="fa fa-circle-o"></i><span>Concursos</span>
+                <i class="fa fa-circle-o"></i><span>Listados</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
               </a>
               <ul class="treeview-menu">
                 <li data-route="tablaBasicaConcurso">
-                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Listado</a>
+                  <a href="{{ path('tablaBasicaConcurso') }}"><i class="fa fa-circle-o"></i>Concursos</a>
                 </li>
               </ul>
+              <ul class="treeview-menu">
+                <li data-route="tablaBasicaActaVCAP">
+                  <a href="{{ path('tablaBasicaActaVCAP') }}"><i class="fa fa-circle-o"></i>Actas Verificación CAP</a>
+                </li>
+              </ul>
+
             </li>
 
             <!--

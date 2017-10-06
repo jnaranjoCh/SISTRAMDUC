@@ -1,0 +1,287 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <section class="content-header">
+      <h1>
+        Listado de Actas de Verificación de Concejo de Asuntos Profesorales
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Oposici&oacute;n</li>
+        <li class="active"> Listado de Actas</li>
+      </ol>
+    </section> 
+
+      <div class="example-modal">
+
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                <h4 class="modal-title">Seguro Que Desea Incluirse?</h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="row">
+            
+                  <div class="col-md-12">
+                
+                      <div class="form-group has-feedback" id="div_cargo">
+                      
+                        <label> Cargo </label>
+                        
+                        <select id="cargoq" class="form-control select2" style="width: 100%;">
+                          <option selected="selected">...</option>
+                          <option>Decano</option>
+                          <option>Director de Asuntos Profesorales</option>
+                          <option>Director de Escuela</option>
+                          <option>Director de Investigación y Producción Intelectual</option>
+                          <option>Director de Extesión y Servicio</option>
+                          <option>Director de Docencia y Currículo</option>
+                          <option>Director de Asuntos Estudiantiles</option>
+                          <option>Director de Tecnología de Información y Comunicación (TIC)</option>
+                          <option>Representante del Comité Técnico de Auditoría Académica</option>
+                          <option>Representante del Comité Técnico de Auditoría Académica - APUC</option>
+                        </select>
+
+                      </div>
+                      
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="modal-footer">
+
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancelar</button>
+                <button id="guardarAutorizador" type="button" class="btn btn-success pull-center">Guardar</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+
+        <br/>
+        <div class="register-box-body">
+
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Actas</h3>
+                  </div>
+
+                   <div class="box-body">
+
+                     <div class="box-body form-group has-feedback" id="div_concurso">
+                      
+                      <div class="row">
+
+                        <div class="col-md-10">
+
+                          <label>Concursos</label>
+
+                        </div>
+
+                      </div>                      
+
+                      <div class="row">
+
+                        <div class="col-md-10">
+                
+                            <div class="form-group has-feedback">
+                            
+                              <select class="form-control select2" style="width: 100%;" id="lista">
+                              </select> 
+                    
+                            </div>
+
+                        </div>
+
+                         <div class="col-md-2">
+
+                            <div class="form-group has-feedback">
+
+                              <button id="bucarActa" type="button" class="btn btn-success btn-block btn-flat">Buscar</button>
+
+                            </div>
+
+                         </div>
+
+                      </div>
+
+                      <br/><br/>
+
+                      <div class="row hide" id="detalle">
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Fecha</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="fecha"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Nro. Acta</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="acta"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Lugar</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="lugar"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Asunto</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="asunto"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Resolución</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="resolucion"/>
+                    
+                            </div>
+
+                        </div>
+
+                         <div class="col-md-6">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Avala</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="avala"/>
+                    
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12">
+                
+                            <div class="form-group has-feedback">
+
+                              <label>Justificación</label>
+                            
+                               <input class="form-control" value="" readOnly="true" id="justificacion"/>
+                    
+                            </div>
+
+                        </div>
+
+                      </div>
+
+                      <br/><br/>
+
+                      <div class="row hide" id="responsables">
+                        <div class="box">
+                            <div class="box-header">
+                              <h3 class="box-title">Responsables</h3>
+                            </div>
+
+                             <div class="box-body">
+
+                                <table id="tabla" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                      <th>Cargo</th>
+                                      <th>Cédula</th>
+                                      <th>Nombre y Apellido</th>                           
+                                    </tr>
+                                    </thead>
+                                    <tbody id="cuerpo">
+
+                                    </tbody>
+                                </table>
+                             </div>
+
+                          </div>
+
+                          <button type="button" class="btn btn-primary pull-center" id="incluir" data-toggle="modal" data-target="#myModal">Incluirme</button>
+
+                    </div> 
+
+                    </div>       
+
+                   </div>
+
+                </div>
+  			 </div>      
+  		</section> 
+  </div>  
+            
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+  <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+
+  <script>
+
+    $(".select2").select2();
+    $("#datemask").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+      $("[data-mask]").inputmask();
+
+  </script>
+
+  <script>
+    
+      tabla = $('#tabla').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "cargo" },
+              { "data": "cedula" },
+              { "data": "nya" }            
+          ]
+      });
+          
+  </script>
+
+  {% include('ConcursoOposicionBundle:Acta:listadoActas.html.twig') %}
+
+{% endblock %}

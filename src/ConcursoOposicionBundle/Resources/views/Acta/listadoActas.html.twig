@@ -1,0 +1,176 @@
+<script type="text/javascript">
+
+	var ident;
+
+	$( window ).load(function (){
+
+		toastr.clear();
+
+		$.ajax({
+	        method: "POST",
+	        url:  "{{ path('listadoConcursosAjax') }}",
+	        dataType: 'json',
+	        success: function(data)
+	        {
+	        	if (data == "N"){
+	        		
+	        		toastr.error("No Hay Concursos Registrados", "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			         });
+	        		
+	        	} else {
+	        
+		        	opcion = "<option id='concurso' selected='selected'>...</option>";
+		 
+		        	for (var i = 0; i < data["id"].length; i++) {
+		        		
+		        		var num = data["id"][i];
+	
+		        		opcion = opcion+"<option value="+num+"><b>Facultad:</b> "+data["facultad"][i]+
+		        		"   -   <b>Vacantes:</b> "+data["nroVacantes"][i]
+		        		+"   -   <b>Condición</b> "+data["condicion"][i]
+		        		+"   -   <b>Fecha Registro:</b> "+data["fechaInicio"][i]
+		        		+"</option>";   		
+		        	}
+	
+		        	$("#lista").html(opcion);
+	        	}
+	        }
+	    });	
+	});
+
+
+	$('#bucarActa').click(function (){
+
+		toastr.clear();
+
+		$('#detalle').addClass('hide');
+		$('#responsables').addClass('hide');
+
+		$.ajax({
+			method:"POST",
+			url: "{{ path('buscarActasAjax') }}",
+			dataType: 'json',
+			data : {"id" : $('#lista').val()},
+	        success: function(data)
+	        {
+           		if (data == "N") {
+
+           			ident = null;
+
+           			text = "No Hay Acta Registrada";
+
+	                toastr.error(text, "Error", {
+	                    "timeOut": "0",
+	                    "extendedTImeout": "0"
+	                 });
+
+           		} else {
+
+           			$('#detalle').removeClass('hide');
+
+           			$('#fecha').val(data["fecha"]+" "+data["ampm"]);
+           			$('#acta').val(data["nro"]);
+           			$('#lugar').val(data["lugar"]);
+           			$('#asunto').val(data["asunto"]);
+           			$('#resolucion').val(data["resolucion"]);
+           			$('#avala').val(data["avala"]);
+           			$('#justificacion').val(data["justificacion"]);
+
+           			$('#responsables').removeClass('hide');
+
+           			ident = data["id"][0];
+
+           			$.ajax({
+						method:"POST",
+						url: "{{ path('listadoAutorizadoresAjax') }}",
+						dataType: 'json',
+						data : {"id" : data["id"][0]},
+				        success: function(datas)
+				        {
+			           		if (data != "N") {
+
+			           			tabla.clear().draw();
+
+			           			for (var i = 0; i <= datas["id"].length-1; i++) {
+
+				                    tabla.row.add( {
+				                        "cargo": datas["cargo"][i],
+				                        "cedula": datas["cedula"][i],
+				                        "nya": datas["nya"][i]
+				                    }).draw();                          
+				                } 
+			           		}
+				        }
+				    });
+           		}
+	        }
+	    });
+	});
+
+	$('#guardarAutorizador').click(function (){
+
+		toastr.clear();
+
+		$.ajax({
+			method:"POST",
+			url: "{{ path('guardarAutorizadorAjax') }}",
+			dataType: 'json',
+			data : {"id" : ident, "cargo" : $('#cargoq').val()},
+	        success: function(data)
+	        {
+           		if (data == "N") {
+
+           			toastr.error("Usted No Tiene Este Rol", "Error", {
+			            "timeOut": "0",
+			            "extendedTImeout": "0"
+			         });
+           		} else {
+
+           			if (data == "S") {
+
+           				toastr.success("Autorizador Registrado", "Exito", {
+				            "timeOut": "0",
+				            "extendedTImeout": "0"
+				         });
+
+				         $.ajax({
+							method:"POST",
+							url: "{{ path('listadoAutorizadoresAjax') }}",
+							dataType: 'json',
+							data : {"id" : ident},
+					        success: function(datas)
+					        {
+				           		if (data != "N") {
+
+				           			tabla.clear().draw();
+
+				           			for (var i = 0; i <= datas["id"].length-1; i++) {
+
+					                    tabla.row.add( {
+					                        "cargo": datas["cargo"][i],
+					                        "cedula": datas["cedula"][i],
+					                        "nya": datas["nya"][i]
+					                    }).draw();                          
+					                } 
+				           		}
+					        }
+					    });
+
+           			} else {
+
+						toastr.error("El Acta Ya tiene Este Cargo Registrado", "Error", {
+				            "timeOut": "0",
+				            "extendedTImeout": "0"
+				         });           				
+           			}
+           		}
+	        }
+	    });
+
+	    $('#myModal').modal('toggle');
+
+	});
+
+</script>

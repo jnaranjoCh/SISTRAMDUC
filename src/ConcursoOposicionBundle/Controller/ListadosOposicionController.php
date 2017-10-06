@@ -14,6 +14,9 @@ use ConcursoOposicionBundle\Entity\Recusacion;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ConcursoOposicionBundle\Entity\Responsable;
+use ConcursoOposicionBundle\Entity\Curso;
+use ConcursoOposicionBundle\Entity\Autorizadores;
 
 class ListadosOposicionController extends Controller
 {
@@ -71,6 +74,163 @@ class ListadosOposicionController extends Controller
         }
         else
              throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarActasAjax", name="buscarActasAjax")
+     * @Method("POST")
+     */
+    public function buscarActasAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
+
+            $acta = $concurso->getActa();
+
+            if (!$acta) {
+                 return new JsonResponse("N");
+            }else {
+
+                $val = $this->asignarFilaActas($acta,'id',$val, 0);
+                $val = $this->asignarFilaActas($acta,'fecha',$val, 1);
+                $val = $this->asignarFilaActas($acta,'lugar',$val, 2);
+                $val = $this->asignarFilaActas($acta,'asunto',$val, 3);
+                $val = $this->asignarFilaActas($acta,'resolucion',$val, 4);
+                $val = $this->asignarFilaActas($acta,'avala',$val, 5);
+                $val = $this->asignarFilaActas($acta,'justificacion',$val, 6);
+                $val = $this->asignarFilaActas($acta,'ampm',$val, 7);
+                $val = $this->asignarFilaActas($acta,'nro',$val, 8);
+
+                return new JsonResponse($val);
+            }            
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    /**
+     * @Route("/concursoOposicion/listadoAutorizadoresAjax", name="listadoAutorizadoresAjax")
+     * @Method("POST")
+     */
+    public function listadoAutorizadoresAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Autorizadores');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.acta = :cadena')
+                ->setParameter('cadena', $request->get("id"))
+                ->getQuery();
+             
+            $acta = $query->getResult();
+
+            if (!$acta) {
+                 return new JsonResponse("N");
+            }else {
+
+                $val = $this->asignarFilaAutorizadores($acta,'id',$val, 0);
+                $val = $this->asignarFilaAutorizadores($acta,'cargo',$val, 1);
+                $val = $this->asignarFilaAutorizadores($acta,'cedula',$val, 2);
+                $val = $this->asignarFilaAutorizadores($acta,'nya',$val, 3);
+
+                return new JsonResponse($val);
+            }            
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+    private function asignarFilaAutorizadores($object,$entidad,$val, $pos)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           switch ($pos) {
+               case 1: $val[$entidad][$i] = $value->getCargo(); break;
+               case 2: $val[$entidad][$i] = $value->getCedula(); break;
+               case 3: $val[$entidad][$i] = $value->getNombreApellido();break;
+
+               default: $val[$entidad][$i] = $value->getId(); break;
+           }
+           $i++;
+        }
+
+        return $val;
+    }
+
+    private function asignarFilaActas($object,$entidad,$val, $pos)
+    {
+
+       switch ($pos) {
+           case 1: $val[$entidad][0] = date_format($object->getFecha(), 'd-M-Y H:i:s'); break;
+           case 2: $val[$entidad][0] = $object->getLugar(); break;
+           case 3: $val[$entidad][0] = $object->getAsunto();break;
+           case 4: $val[$entidad][0] = $object->getResolucion();break;
+           case 5: $val[$entidad][0] = $object->getAvala();break;
+           case 6: $val[$entidad][0] = $object->getJustificacion();break;
+           case 7: $val[$entidad][0] = $object->getAmpm();break;
+           case 8: $val[$entidad][0] = $object->getNroActa();break;
+
+           default: $val[$entidad][0] = $object->getId(); break;
+        }
+        return $val;
+    }
+
+    /**
+     * @Route("/concursoOposicion/buscarCursoAjax", name="buscarCursoAjax")
+     * @Method("POST")
+     */
+    public function buscarCursoAjaxAction(Request $request){
+
+        $val[][] = "";
+
+        if($request->isXmlHttpRequest())
+        {
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Curso');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.concurso = :cadena')
+                ->setParameter('cadena', $request->get("id"))
+                ->orderBy('p.id', 'DESC')
+                ->getQuery();
+             
+            $concurso = $query->getResult();
+
+            if (!$concurso) {
+                 return new JsonResponse("N");
+            }else
+            {
+                $val = $this->asignarFilaCursos($concurso,'tiempo',$val, 0);
+                $val = $this->asignarFilaCursos($concurso,'curso',$val, 1);
+            }
+            return new JsonResponse($val);
+        }
+        else
+             throw $this->createNotFoundException('Error al devolver datos');
+    }
+
+     private function asignarFilaCursos($object,$entidad,$val, $pos)
+    {
+        $i = 0;
+        foreach($object as $value)
+        {
+           switch ($pos) {
+               case 0: $val[$entidad][$i] = $value->getTiempo(); break;
+               case 1: $val[$entidad][$i] = $value->getNombre(); break;
+           }
+           $i++;
+        }
+        return $val;
     }
 
     private function asignarFilaFechaPresentacion($object,$entidad,$val)
@@ -490,56 +650,65 @@ class ListadosOposicionController extends Controller
     public function modificarConcursoAjaxAction(Request $request){
 
         if($request->isXmlHttpRequest())
-        {
-            $encontrado = false;
+        {       
+            $em = $this->getDoctrine()->getManager();
 
-            foreach ($this->getUser()->getRoles() as $rol => $valor) {
-                
-                if ($valor == "Asuntos Profesorales")
-                    $encontrado = true;
-            }
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
 
-            if ($encontrado){
+            if (!$concurso) {
 
-                $em = $this->getDoctrine()->getManager();
+                return new JsonResponse("N");
 
-                $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("id")));
+            } else {
 
-                if ($request->get("Vacantes") != null || $request->get("Vacantes") != "")
-                	$concurso->setNroVacantes(intval($request->get("Vacantes")));
-                
-                if ($request->get("Area") != null || $request->get("Area") != "")
-                	$concurso->setAreaPostulacion($request->get("Area"));
-                
-                $concurso->setIdUsuario($this->getUser()->getId());
-                
-                $concurso->setObservaciones($request->get("observacion"));
-                               
-                if ($request->get("Inicio") != null)
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("Inicio"));
-                    $concurso->setFechaInicio(date_create($fecha));
-                }               
-               
-                if ($request->get("fechaDoc") != null)
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaDoc"));
-                    $concurso->setFechaRecepDoc(date_create($fecha));
+                $concurso->setStatus($request->get("status"));
+
+                $responsable = new Responsable();
+
+                $responsable->setNyAR($this->getUser()->getNombreCorto());
+                $responsable->setFechaR(date_create());
+
+                if ($request->get("status") == "Esperando Por Concejo De Escuela") {
+
+                    $responsable->setPresupuesto($request->get("disponibilidad"));
+                    $responsable->setFechaInicioResolucion(date_create($request->get("fecha")));
+                    $responsable->setControl($request->get("control"));
+
+                } else {
+
+                    if ($request->get("status") == "Esperando Por Concejo De Asuntos Profesorales") {
+
+                        $responsable->setControl($request->get("control"));
+
+                    } else {
+
+                        if ($request->get("status") == "Esperando Por Auditoría Académica" || $request->get("status") == "Esperando Por Concejo De Facultad" || $request->get("status") == "Aprobado") {
+
+                            $responsable->setAvala($request->get("avala"));
+                            $responsable->setJustificacion($request->get("justificacion"));
+                            $responsable->setCargoR($request->get("cargo"));
+                            $responsable->setNyAResolucion($request->get("nya"));
+                            $responsable->setCedulaR($request->get("cedula"));
+                            $responsable->setFechaInicioResolucion(date_create($request->get("fecha")));
+                            $responsable->setControl($request->get("control"));
+                        
+                        }
+                    }
                 }
-                else $concurso->setFechaRecepDoc(null);
-           
-                if ($request->get("fechaPre") != null)
-                {
-                    $fecha = $this->cambiarFormatoFecha($request->get("fechaPre"));
-                    $concurso->setFechaPresentacion(date_create($fecha));
+
+                if ($request->get("status") != "Esperando Por Concejo De Facultad") {
+
+                    $responsable->setNyAE($this->getUser()->getNombreCorto());
+                    $responsable->setFechaE(date_create());
                 }
-                else $concurso->setFechaPresentacion(null);
                 
+
+                $concurso->addResponsable($responsable);
+
                 $em->flush();
-                
-                return new JsonResponse("S");
 
-            } else return new JsonResponse("N");             
+                return new JsonResponse("S");
+            }
         }
         else
              throw $this->createNotFoundException('Error al devolver datos');

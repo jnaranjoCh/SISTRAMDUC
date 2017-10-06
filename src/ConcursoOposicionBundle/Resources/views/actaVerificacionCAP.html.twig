@@ -1,0 +1,256 @@
+{% extends 'base.html.twig' %}
+
+{% block content %} 
+
+	<div class="modal fade" id="myModal" role="dialog" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div>
+          <img src="{{ asset('assets/images/carga.gif') }}" style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:20%;"/>
+          <br/>
+          <label style="position: absolute; top:50%; left:50%; width:400px; margin-left:-200px; height:300px; margin-top:5%; color: white; font: 150% sans-serif;">Guardando datos...</label>
+        </div>
+      </div>
+    </div>
+
+    <section class="content-header">
+      <h1>
+        Acta de Verificación de Concejo de Asuntos Profesorales
+      </h1> 
+      <ol class="breadcrumb">
+        <li><i class="fa fa fa-users"></i> Concurso Oposici&oacute;n</li>
+        <li class="active"> acta V.C.A.P. </li>
+      </ol>
+    </section>
+ 
+    <br/>
+    <div class="row">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+        <br/>
+        <div class="register-box-body">
+            <form id="actaVCAP">
+
+            	<div class="box-body form-group has-feedback" id="div_concurso">
+		          <div class="row">
+		            <div class="col-md-12">
+			            <label>Concursos</label>
+
+		                <select class="form-control select2" style="width: 100%;" id="lista">
+		                </select> 		                
+		            </div>
+		          </div>
+		        </div>	     
+
+	            <br/>
+		          
+		          <div class="box-body">
+	              <div class="box-group" id="accordion">
+
+	                <div class="panel box box-success">
+	                  	                  
+	                    <div class="box-body">
+	                    
+	                    	<div class="row">
+		             	
+		             		<div class="col-md-3">
+		            
+				                <div class="form-group has-feedback" id="div_fecha">
+				                
+				                	<label> Celebrado en Fecha </label>
+				                	
+				                	<input id="fecha" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-2">
+		            
+				                <div class="form-group has-feedback" id="div_hora">
+				                
+				                	<label> Hora </label>
+				                	
+				                	<select id="hora" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>1</option>
+					                  <option>2</option>
+					                  <option>3</option>
+					                  <option>4</option>
+					                  <option>5</option>
+					                  <option>6</option>
+					                  <option>7</option>
+					                  <option>8</option>
+					                  <option>9</option>
+					                  <option>10</option>
+					                  <option>11</option>
+					                  <option>12</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-2">
+		            
+				                <div class="form-group has-feedback" id="div_minuto">
+				                
+				                	<label> Minuto </label>
+				                	
+				                	<select id="minuto" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>00</option>
+					                  <option>10</option>
+					                  <option>15</option>
+					                  <option>20</option>
+					                  <option>25</option>
+					                  <option>30</option>
+					                  <option>35</option>
+					                  <option>40</option>
+					                  <option>45</option>
+					                  <option>50</option>
+					                  <option>55</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-2">
+		            
+				                <div class="form-group has-feedback" id="div_ampm">
+				                
+				                	<label> AM / PM </label>
+				                	
+				                	<select id="ampm" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>AM</option>
+					                  <option>PM</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+				            
+				            <div class="col-md-3">
+		            
+				                <div class="form-group has-feedback" id="div_acta">
+				                  
+									<label> Nro. Acta </label>
+				                	
+				                	<input type="text" class="form-control" maxlength="29" id='acta' align="center"/>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-12">
+		            
+				                <div class="form-group has-feedback" id="div_lugar">
+				                  
+									<label> Lugar </label>
+				                	
+				                	<textarea id="lugar" class="form-control" rows="3" placeholder="Indique ..." maxlength="499"></textarea>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-12">
+		            
+				                <div class="form-group has-feedback" id="div_asunto">
+				                  
+									<label> Asunto </label>
+				                	
+				                	<textarea id="asunto" class="form-control" rows="3" placeholder="Indique ..." maxlength="499"></textarea>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_resolucion">
+				                  
+									<label> Resolución </label>
+				                	
+				                	<input type="text" class="form-control" maxlength="150" id='resolucion' align="center"/>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-6">
+		            
+				                <div class="form-group has-feedback" id="div_avala">
+				                
+				                	<label> Avala</label>
+				                	
+				                	<select id="avala" class="form-control select2" style="width: 100%;">
+					                  <option selected="selected">...</option>
+					                  <option>Sí</option>
+					                  <option>No</option>
+					                </select>
+
+				                </div>
+				                
+				            </div>
+
+				            <div class="col-md-12">
+		            
+				                <div class="form-group has-feedback" id="div_justificacion">
+				                  
+									<label> Justificación </label>
+				                	
+				                	<textarea id="justificacion" class="form-control" rows="3" placeholder="Indique ..." maxlength="499"></textarea>
+
+				                </div>
+				                
+				            </div>
+		                
+		                </div>
+
+	                  </div>
+	                </div>
+	       	         	                
+	            </div>
+
+	            <br/>
+
+	              <div class="row">
+		                <div class="col-xs-12">
+		                  <button id="registrarActa" type="button" class="btn btn-success btn-block btn-flat">Registrar Acta</button>
+		                </div>
+	              </div>
+
+            </form>
+        </div>
+      </section>
+    </div>
+    <br/><br/>
+    
+{% endblock %}
+
+{% block custom_javascripts %}
+
+  {% include('ConcursoOposicionBundle:Acta:saveActa.html.twig') %}
+  
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.full.min.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+   <script src="{{ asset('assets/vendor/AdminLTE/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
+         
+   <script>
+	  $(function () {
+	
+	    	$(".select2").select2();	
+			$("#datemask").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
+			$("[data-mask]").inputmask();
+		});
+
+  </script>
+
+{% endblock %}

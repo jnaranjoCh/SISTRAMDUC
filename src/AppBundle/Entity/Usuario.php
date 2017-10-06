@@ -153,11 +153,9 @@ class Usuario implements UserInterface
     protected $facultades;
 
     /**
-     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", cascade={"remove", "persist"})
-     * @ORM\JoinTable(name="usuario_hijo",
-     *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="hijo_id", referencedColumnName="id", onDelete="CASCADE")}
-     *      )
+     * Many Users have Many Groups.
+     * @ORM\ManyToMany(targetEntity="ClausulasContractualesBundle\Entity\Hijo", inversedBy="usuarios")
+     * @ORM\JoinTable(name="usuario_hijo")
      */
     protected $hijos;
 
@@ -664,7 +662,7 @@ class Usuario implements UserInterface
             $data[$i]['Descripcion'] = '<input id="Descripcion'.$i.'" value="'.$registro->getDescription().'" type="text" class="form-control" placeholder="Descripción">';
             $data[$i]['Nivel'] = $registro->getNivel()->getDescription();
             $data[$i]['Estatus'] = $registro->getEstatus()->getDescription();
-            $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="number" class="form-control" placeholder="Año de publicación y/o asistencia">';
+            $data[$i]['AnoDePublicacionAsistencia'] = '<input id="AnoDePublicacionAsistencia'.$i.'" value="'.$registro->getAño().'" type="text" class="form-control" placeholder="Año de publicación y/o asistencia">';
             if($registro->getInstitucionEmpresaCasaeditorial() == "")
                 $data[$i]['EmpresaInstitucion'] = '<input id="EmpresaInstitucion'.$i.'" value="" type="text" class="form-control" placeholder="Empresa / Institución / Financiamiento y/o Casa editorial">';
             else

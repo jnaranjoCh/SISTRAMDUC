@@ -3,6 +3,7 @@ tableRegistros = $('#tableRegistros').DataTable({
             "url": tableLenguage['datatable-spanish']
     },
     columns: [
+        { "data": "Delete" },
         { "data": "Id del registro" },
         { "data": "Tipo de referencia" },
         { "data": "Descripcion" },
@@ -22,6 +23,7 @@ tableParticipantes = $('#tableParticipantes').DataTable({
             "url": tableLenguage['datatable-spanish']
     },
     columns: [
+        { "data": "Delete" },
         { "data": "Id del registro" },
         { "data": "Nombre" },
         { "data": "Cedula" }
@@ -33,6 +35,7 @@ tableCargo = $('#tableCargo').DataTable({
             "url": tableLenguage['datatable-spanish']
     },
     columns: [
+        { "data": "Delete" },
         { "data": "Cargo" },
         { "data": "Fecha de inicio en el cargo" }
     ]
@@ -43,6 +46,7 @@ tableRevista = $('#tableRevista').DataTable({
             "url": tableLenguage['datatable-spanish']
     },
     columns: [
+        { "data": "Delete" },
         { "data": "Id del registro" },
         { "data": "Revista" },
         { "data": "Volumen" },
@@ -55,6 +59,7 @@ tableRol = $('#tableRol').DataTable({
             "url": tableLenguage['datatable-spanish']
     },
     columns: [
+        { "data": "Delete" },
         { "data": "Rol" }
     ]
 });
@@ -64,6 +69,7 @@ tableHijos = $('#tableHijos').DataTable({
             "url": tableLenguage['datatable-spanish']
     },
     columns: [
+        {"data": "Delete"},
         {"data":"CI Madre"},
         {"data":"CI Padre"},
         {"data":"CI Hijo"},

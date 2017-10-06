@@ -114,7 +114,7 @@
                         
                           <label> A Partir Del </label>
                           
-                          <input id="fecha" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                          <input id="fecha" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
 
                         </div>
                     </div> 
@@ -130,6 +130,22 @@
                         </div>
                     </div> 
 
+                    <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_aprobado">
+                        
+                      <label> Aprobado? </label>
+                      
+                      <select id="aprobado" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+
                   </div>
                 </div>  
               </div>
@@ -137,8 +153,6 @@
               <div class="box-body hide" id="cf">
                       
                 <div class="row">
-
-                  <div class="col-md-3"></div>
 
                   <div class="col-md-6">
                 
@@ -151,6 +165,22 @@
                         </div>
 
                     </div> 
+
+                    <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_aprobado2">
+                        
+                      <label> Aprobado? </label>
+                      
+                      <select id="aprobado2" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                    </div>                    
 
                 </div>
 
@@ -230,7 +260,7 @@
                       
                         <label> Fecha </label>
                         
-                        <input id="fecha1" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                        <input id="fecha1" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
 
                       </div>
                   </div> 
@@ -246,6 +276,22 @@
                         </div>
 
                     </div> 
+
+                    <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_aprobado1">
+                        
+                      <label> Aprobado? </label>
+                      
+                      <select id="aprobado1" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                  </div>
 
                 </div>
 
@@ -333,6 +379,22 @@
 
                     </div> 
 
+                  <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_aprobado4">
+                        
+                      <label> Aprobado? </label>
+                      
+                      <select id="aprobado4" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
+
+                    </div> 
+
                 </div>
 
               </div>
@@ -413,7 +475,7 @@
                       
                         <label> Fecha </label>
                         
-                        <input id="fecha2" type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                        <input id="fecha2" type="text" class="form-control" data-inputmask="'alias': 'mm/dd/yyyy'" data-mask>
 
                       </div>
                   </div> 
@@ -427,6 +489,23 @@
                           <input type="text" class="form-control" maxlength="19" id='control3'/>
 
                         </div>
+
+                    </div> 
+
+
+                    <div class="col-md-6">
+
+                    <div class="form-group has-feedback" id="div_aprobado3">
+                        
+                      <label> Aprobado? </label>
+                      
+                      <select id="aprobado3" class="form-control select2" style="width: 100%;">
+                        <option selected="selected">...</option>
+                        <option>Sí</option>
+                        <option>No</option>
+                      </select>
+
+                    </div>
 
                     </div> 
 
@@ -486,6 +565,261 @@
   			 </div>      
   		</section> 
   </div>
+
+  <br/>
+    <div class="row hide" id="ver">
+      <!--Success message-->
+      <section class="content-body col-md-offset-1 col-md-10">
+
+        <br/>
+        <div class="register-box-body">
+
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Detalles</h3>
+                  </div>
+
+                   <div class="box-body">
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Condición de Ingreso Como Ordinario</label>                       
+                        <input class="form-control" value="" readOnly="true" id="condicion"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Tiempo de Dedidación</label>                       
+                        <input class="form-control" value="" readOnly="true" id="tiempo"/>
+
+                      </div>
+
+                      </div>
+
+                      <br/>
+
+                      <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Nro de Horas</label>                       
+                        <input class="form-control" value="" readOnly="true" id="horas"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Sede o Núcleo</label>                       
+                        <input class="form-control" value="" readOnly="true" id="sede"/>
+
+                      </div>
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Ciudad</label>                       
+                        <input class="form-control" value="" readOnly="true" id="ciudad"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Facultad</label>                       
+                        <input class="form-control" value="" readOnly="true" id="facultad"/>
+
+                      </div>
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Escuela / Departamento / Instituto</label>                       
+                        <input class="form-control" value="" readOnly="true" id="escuela"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Unidad Académica / Centro de Investigación</label>                       
+                        <input class="form-control" value="" readOnly="true" id="unidad"/>
+
+                      </div>
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Cátedra o Equivalente</label>                       
+                        <input class="form-control" value="" readOnly="true" id="catedra"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Nro. Cargos</label>                       
+                        <input class="form-control" value="" readOnly="true" id="nroVacantes"/>
+
+                      </div>                     
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Motivo</label>                       
+                        <input class="form-control" value="" readOnly="true" id="motivo"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Descripción de Motivo</label>                       
+                        <input class="form-control" value="" readOnly="true" id="desc_motivo"/>
+
+                      </div>                     
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Justificación</label>                       
+                        <input class="form-control" value="" readOnly="true" id="justificacion9"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Grado Académico</label>                       
+                        <input class="form-control" value="" readOnly="true" id="grado_academico"/>
+
+                      </div>                     
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Profesión</label>                       
+                        <input class="form-control" value="" readOnly="true" id="profesion"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Grado Académico</label>                       
+                        <input class="form-control" value="" readOnly="true" id="grado_academico9"/>
+
+                      </div>                     
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Requiere Experiencia?</label>                       
+                        <input class="form-control" value="" readOnly="true" id="Experiencia9"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Área de Conocimiento</label>                       
+                        <input class="form-control" value="" readOnly="true" id="Conocimiento9"/>
+
+                      </div>                     
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Área de Investigación</label>                       
+                        <input class="form-control" value="" readOnly="true" id="investigacion9"/>
+
+                      </div>
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Área de Extesión</label>                       
+                        <input class="form-control" value="" readOnly="true" id="area_extension"/>
+
+                      </div>                     
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                                                      
+                        <label>Fecha de Registro</label>                       
+                        <input class="form-control" value="" readOnly="true" id="registro"/>
+
+                      </div>                    
+
+                    </div>
+
+                    <br/>
+
+                    <div class="row">
+
+                      <h3>Cursos del Concurso</h3> 
+
+                      <br/>
+                      
+                        <table id="tabla2" class="table table-bordered table-striped">
+                          <thead>
+                          <tr>
+                            <th>Curso</th>
+                            <th>Tiempo</th>                          
+                          </tr>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                      </table>              
+
+                    </div>
+
+                   </div>
+
+                </div>
+         </div>      
+      </section> 
+  </div>
   
           
     <br/><br/>
@@ -514,9 +848,20 @@
               { "data": "condicion" },
               { "data": "facultad" },
               { "data": "status" },
-             // { "data": "ver" },
+              { "data": "ver" },
               { "data": "modif" },
-              { "data": "elim" }            
+              { "data": "elim" }
+              ,{ "data": "pdf" }            
+          ]
+      });
+
+      tabla2 = $('#tabla2').DataTable({
+        "language": {
+                "url": "{{ asset('assets/js/datatable-spanish.json') }}"
+          },
+          columns: [
+              { "data": "curso" },
+              { "data": "tiempo" }          
           ]
       });
           
@@ -525,7 +870,7 @@
   <script>
 
     $(".select2").select2();
-    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    $("#datemask").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
       $("[data-mask]").inputmask();
 
   </script>

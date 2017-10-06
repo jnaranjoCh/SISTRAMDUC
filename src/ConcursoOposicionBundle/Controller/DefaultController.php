@@ -18,16 +18,35 @@ use AppBundle\Entity\Usuario;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ConcursosBundle\Entity\Resultado;
+use ConcursoOposicionBundle\Entity\Acta;
+use ConcursoOposicionBundle\Entity\Autorizadores;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class DefaultController extends Controller
 {
 	/**
-	 * @Route("/concursoOposicion/requisicionRRHH", name="requisicionRRHH")
+	 * @Route("/concursoOposicion/tablaBasicaActaVCAP", name="tablaBasicaActaVCAP")
 	 */
-	public function requisicionRRHHAction()
+	public function tablaBasicaActaVCAPAction()
 	{
-		return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
+		return $this->render('ConcursoOposicionBundle::listadoActasVCAP.html.twig');
 	}
+
+    /**
+     * @Route("/concursoOposicion/actaVCAP", name="actaVCAP")
+     */
+    public function actaVCAPAction()
+    {
+        return $this->render('ConcursoOposicionBundle::actaVerificacionCAP.html.twig');
+    }
+
+    /**
+     * @Route("/concursoOposicion/requisicionRRHH", name="requisicionRRHH")
+     */
+    public function requisicionRRHHAction()
+    {
+        return $this->render('ConcursoOposicionBundle::requisicionRRHH.html.twig');
+    }
 
     /**
      * @Route("/concursoOposicion/jurado", name="jurado")
@@ -265,6 +284,170 @@ class DefaultController extends Controller
 
                 return new JsonResponse("N");
             }               
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');      
+    }
+
+    /**
+     * @Route("/concursoOposicion/registroActaAjax", name="registroActaAjax")
+     * @Method("POST")
+     */
+    public function registroActaAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest()){
+
+            $em = $this->getDoctrine()->getManager();
+
+            $concurso = $em->getRepository('ConcursosBundle:Concurso')->find(intval($request->get("concurso")));
+
+            if (!$concurso) {
+
+                return new JsonResponse("N");  
+
+            } else {
+
+                $acta = new Acta();
+
+                $acta->setFecha(date_create($request->get("fecha")));
+                $acta->setNroActa($request->get("acta"));
+                $acta->setLugar($request->get("lugar"));
+                $acta->setAsunto($request->get("asunto"));
+                $acta->setResolucion($request->get("resolucion"));
+                $acta->setAvala($request->get("avala"));
+                $acta->setJustificacion($request->get("justificacion"));
+                $acta->setAmpm($request->get("ampm"));
+
+                $existe = $concurso->getActa();
+
+                if ($existe)
+                    return new JsonResponse("R"); 
+                else {
+
+                    $concurso->setActa($acta);
+
+                    $em->flush();
+
+                    return new JsonResponse("S"); 
+                }               
+            }                                   
+        }
+        else
+             throw $this->createNotFoundException('Error al solicitar datos');      
+    }
+
+    /**
+     * @Route("/concursoOposicion/guardarAutorizadorAjax", name="guardarAutorizadorAjax")
+     * @Method("POST")
+     */
+    public function guardarAutorizadorAjaxAction(Request $request){
+
+        if($request->isXmlHttpRequest()){
+
+            $repository = $this->getDoctrine()
+                ->getRepository('ConcursoOposicionBundle:Autorizadores');
+             
+            $query = $repository->createQueryBuilder('p')
+                ->where('p.acta = :cadena')
+                ->setParameter('cadena', $request->get("id"))
+                ->getQuery();
+             
+            $autorizadores = $query->getResult();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $acta = $em->getRepository('ConcursoOposicionBundle:Acta')->find(intval($request->get("id")));
+
+            if (!$autorizadores) {
+
+                $encontrado = false;
+
+                foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                    
+                    if ($valor == $request->get("cargo"))
+                        $encontrado = true;
+                }
+
+                if ($encontrado) {
+
+                    $autorizador = new Autorizadores(); 
+
+                    $autorizador->setCargo($request->get("cargo"));
+                    $autorizador->setCedula($this->getUser()->getCedula());
+                    $autorizador->setNombreApellido($this->getUser()->getNombreCorto());
+
+                    $acta->addAutorizadores($autorizador);
+
+                    $em->flush();
+
+                    return new JsonResponse("S"); 
+
+                } else {
+
+                    return new JsonResponse("N"); 
+                }                
+
+            } else {
+
+                $encontrado = false;
+
+                foreach ($this->getUser()->getRoles() as $rol => $valor) {
+                    
+                    if ($valor == $request->get("cargo"))
+                        $encontrado = true;
+                }
+
+                if ($encontrado) {
+
+                    $encontrado = false;
+
+                    foreach ($autorizadores as $rol => $valor) {
+                        
+                        if ($valor->getCargo() == $request->get("cargo"))
+                            $encontrado = true;
+                    }
+
+                    $contador = 0;
+
+                    if ($request->get("cargo") == "Director de Escuela" && $encontrado) {
+
+                         foreach ($autorizadores as $rol => $valor) {
+                        
+                            if ($valor->getCargo() == "Director de Escuela") {
+                                $contador = $contador+1;
+                            }
+                        }
+
+                        if ($contador == 2)
+                            $encontrado = true;
+                        else 
+                            $encontrado = false;
+                    }
+
+                    if ($encontrado) {
+
+                        return new JsonResponse("R"); 
+
+                    } else {
+
+                        $autorizador = new Autorizadores(); 
+
+                        $autorizador->setCargo($request->get("cargo"));
+                        $autorizador->setCedula($this->getUser()->getCedula());
+                        $autorizador->setNombreApellido($this->getUser()->getNombreCorto());
+
+                        $acta->addAutorizadores($autorizador);
+
+                        $em->flush();
+
+                        return new JsonResponse("S"); 
+                    } 
+
+                } else {
+
+                    return new JsonResponse("N"); 
+                }
+            }                                   
         }
         else
              throw $this->createNotFoundException('Error al solicitar datos');      
@@ -605,5 +788,42 @@ class DefaultController extends Controller
     	}
     	else
     		throw $this->createNotFoundException('Error al insertar datos');
-    }   
+    }
+
+
+     /**
+     * @Route("/concursoOposicion/pdfAjax", name="pdfAjax")
+     * @Method("POST")
+     */
+    public function pdfAjaxAction(Request $request){
+    
+        if($request->isXmlHttpRequest())
+        {
+            
+            $pdf = new \FPDF();
+
+            $pdf->AddPage();
+            $pdf->SetFont('Arial','B',16);
+            $pdf->Cell(40,10,'Hello World!');
+            
+            /*
+            $response = new Response($pdf->Output(), Response::HTTP_OK, array('content-Type' => 'application/pdf'));
+
+            $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+
+            $response->headers->set('Content-Disposition', $d);
+
+            return $response;
+            */
+            
+
+            $retorna = new Response($pdf->Output(), 200, array(
+                'Content-Type' => 'application/pdf'));
+
+            return $retorna;
+                      
+        }
+        else
+            throw $this->createNotFoundException('Error al ejecutar pdf');
+    }  
 }

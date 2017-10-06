@@ -57,6 +57,7 @@ class ConsultarUsuarioController extends Controller
             
             foreach($roles as $rol)
             {
+                $data->data[$i]["Delete"] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
                 $data->data[$i]["Rol"] = $rol;
                 $i++;
             }
@@ -106,6 +107,7 @@ class ConsultarUsuarioController extends Controller
               $roles[$i] = $this->getByName("AppBundle:","Rol",$rol);
               $i++;
             }
+            $user->setActivo(1);
             $user->setRoles($roles);
             $user->setCorreo($request->get("Email"));
             $em->flush();
