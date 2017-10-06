@@ -764,18 +764,16 @@
     }
 
     function pdf(id){
-
-	    ident = id;
-
+	   
 	    $.ajax({
 
 	        method:"POST",
 	        url: "{{ path('pdfAjax') }}",
 	        dataType: 'json',
-	        data: {"id": ident},
+	        data: {"id": id},
 	        success: function(data)
 	        {
-	                                   
+	        	
 	        }
 	    });
 	}

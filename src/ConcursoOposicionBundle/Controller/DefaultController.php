@@ -798,29 +798,23 @@ class DefaultController extends Controller
     public function pdfAjaxAction(Request $request){
     
         if($request->isXmlHttpRequest())
-        {
-            
-            $pdf = new \FPDF();
+        {            
+            $snappy = $this->get('knp_snappy.pdf');
 
-            $pdf->AddPage();
-            $pdf->SetFont('Arial','B',16);
-            $pdf->Cell(40,10,'Hello World!');
-            
-            /*
-            $response = new Response($pdf->Output(), Response::HTTP_OK, array('content-Type' => 'application/pdf'));
+            $html = $this->renderView('ConcursoOposicionBundle::reporteConcurso.html.twig', array(
+                //..Send some data to your view if you need to //
+            ));
 
-            $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+            $filename = 'Concurso-Oposicion';
 
-            $response->headers->set('Content-Disposition', $d);
-
-            return $response;
-            */
-            
-
-            $retorna = new Response($pdf->Output(), 200, array(
-                'Content-Type' => 'application/pdf'));
-
-            return $retorna;
+            return new Response(
+                $snappy->getOutputFromHtml($html),
+                200,
+                array(
+                    'Content-Type'          => 'application/pdf',
+                    'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
+                )
+            );
                       
         }
         else
