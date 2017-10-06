@@ -1,0 +1,69 @@
+{% extends '::base.html.twig' %}
+
+{% block opcionsidebar %}
+        <li data-route="descarga_horaria_informacion">
+            <a href="{{ path('descarga_horaria_informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+        </li>
+        <li data-route="descarga_horaria_solicitud">
+            <a href="{{ path('descarga_horaria_solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+        </li>>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>Realizar Solicitud de Descarga Horaria</h1>
+      <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-fw fa-clock-o"></i> Descarga Horaria</a></li>
+          <li class="active">Realizar Solicitud</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="callout callout-info">
+            <p align="center"><tt><big>Para continuar con el proceso adjunte todos los recaudos exigidos:</big></tt></p>
+        </div>
+        <!-- Default box -->
+        <div class="box box-solid box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>Adjuntar Documentos:</b></h3>
+            </div>
+
+            <section class="content">
+                <!-- general form elements -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="exampleInputFile">Oficio de Solicitud de la Descarga Horaria.</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Adjunte el Archivo Correspondiente.</p>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Copia de la Designación o Ratificación del
+                                cargo en la  Administración Universitaria de elección, de designación o gremial.</label>
+                            <input type="file" id="exampleInputFile">
+
+                            <p class="help-block">Adjunte el Archivo Correspondiente.</p>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </form>
+                <!-- /.box -->
+            </section>
+        </div>
+        <div class="box-body">
+            <div class="pull-right">
+                <a href="{{ path('jubilacion-estado-solicitud') }}">
+                    <button type="button" class="btn btn-block btn-primary">Enviar Solicitud</button>
+                </a>
+            </div>
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+    <!-- /.content-wrapper -->
+{% endblock %}

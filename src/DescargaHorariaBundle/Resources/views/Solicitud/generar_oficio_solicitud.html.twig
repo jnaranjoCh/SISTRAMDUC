@@ -1,0 +1,116 @@
+{% extends '::base.html.twig' %}
+
+{% block opcionsidebar %}
+        <li data-route="descarga_horaria_informacion">
+            <a href="{{ path('descarga_horaria_informacion') }}"><i class="fa fa-circle-o"></i>Requisitos</a>
+        </li>
+        <li data-route="descarga_horaria_solicitud">
+            <a href="{{ path('descarga_horaria_solicitud') }}"><i class="fa fa-circle-o"></i>Realizar Solicitud</a>
+        </li>>
+{% endblock %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>Generar Oficio de Solicitud de Descarga Horaria</h1>
+      <ol class="breadcrumb">
+          <li><a href="#"><i class="fa fa-fw fa-clock-o"></i> Descarga Horaria</a></li>
+          <li class="active">Generar Oficio de Solicitud</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="callout callout-info">
+            <p align="center"><tt><b>Si desea generar de manera automática su oficio de solicitud de Descarga 
+                    Horaria, necesario para el proceso, por favor introduzca su número de cédula y seleccione 
+                    el botón 'Aceptar'que aparece en la parte inferior. Posteriormente, debe llenar los datos 
+                    que se le solicitan en el formulario y cuando esté listo, seleccione 'Generar Oficio'. </b></tt></p>
+        </div>
+        <!-- Box -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title"><b>Generar Oficio de Solicitud</b></h3>
+            </div>
+            
+        <!--seccion for generate form-->
+        <div id="formValidar">
+          <!--Success message-->
+          <section class="content-body col-md-offset-2 col-md-8">
+            <br/>
+            <div class="register-box-body">
+                <form>
+                    <div id="divCedula" class="form-group has-feedback">
+                        <label>Ingrese la Cédula de Identidad: </label>
+                        <input id="cedula" name="cedula" type="number" class="form-control" placeholder="Cédula">
+                        <span id="spanCedulaUser" class="glyphicon glyphicon-credit-card form-control-feedback"></span>
+                    </div>
+                  
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button id="validar" type="button" class="btn btn-primary btn-block btn-flat">Aceptar</button>
+                        </div>
+                    </div>
+                    <input id="load" name="load" type="text" class="form-control hidden" placeholder="bool"/>
+                </form>
+            </div>
+          </section>
+        </div>
+
+        <div id="formOficio" class="hidden">
+            <!--Success message-->
+            <section class="content-body col-md-offset-2 col-md-8">
+                <br/>
+                <div class="register-box-body">
+                    <form>
+                       <div id="divFacultad" class="form-group has-feedback">
+                          <label>Facultad</label>
+                          <select id="facultad" class="form-control select2" style="width: 100%;" required>
+                              <option selected="selected" value="">Seleccione una opción</option>
+                              <option value="facyt">Facultad Experimental de Ciencias y Tecnología</option>
+                              <option value="ing">Facultad de Ingeniería</option>
+                              <option value="faces">Facultad de Económicas y Sociales</option>
+                              <option value="face">Facultad de Ciencias de la Educación</option>
+                              <option value="face">Facultad de Ciencias Jurídicas y Políticas</option>
+                              <option value="fcs">Facultad de Ciencias de la Salud</option>
+                              <option value="odontologia">Facultad de Odontologia</option>
+                          </select>
+                          <span id="spanfacultad" class="glyphicon form-control-feedback"></span>
+                      </div>
+                      
+                      <div id="divDestinatario" class="form-group has-feedback">
+                          <label>Ingrese el nombre del Decano</label>
+                          <input id="destinatario" type="text" class="form-control" placeholder="Ingrese el nombre del Decano">
+                          <span id="spanDestinatario" class="glyphicon glyphicon-user form-control-feedback"></span>
+                      </div>
+            
+                      <hr/>
+                      <div class="row">
+                        <div class="col-xs-12">
+                             <button id="generarOficio
+                             " type="button" class="btn btn-primary btn-block btn-flat">Generar Oficio</button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- MODIFICAAAAAAARRRRR -->
+        <div class="box-body">
+            <div class="col-md-2 pull-right">
+                <a href="{{ path('descarga_horaria_nuevo_oficio') }}">
+                    <button type="button" class="btn btn-primary btn-block btn-fla">Aceptar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+    <!-- /.content-wrapper -->
+{% endblock %}
+
+{% block custom_javascripts %}
+   <script src="{{ asset('assets/js/DescargaHoraria/CrearOficio/validar.js') }}"></script>
+{% endblock %}

@@ -10,8 +10,48 @@ descarga_horaria_cargos_adm_univ:
     path:     /descarga_horaria/cargos
     defaults: { _controller: DescargaHorariaBundle:Cargos:consultarCargos }
 
+descarga_horaria_solicitud:
+    path:     /descarga_horaria/solicitud
+    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:solicitar }
+    
+descarga_horaria_generar_oficio_solicitud:
+    path:     /descarga_horaria/generar-oficio-solicitud
+    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:generarOficioSolicitud }
+    
+descarga_horaria_nuevo_oficio:
+    path:     /descarga_horaria/nuevo-oficio
+    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:oficioSolicitud }
+    requirements:
+        _method: POST|GET
 
-registro_usuario_index: 
-    path:     /registro/usuario
-    defaults: { _controller: RegistroUnicoBundle:RegistrarUsuario:registrarUsuario }
+descarga_horaria_informe_pdf:
+    path:     /descarga_horaria/informe-pdf
+    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:informePDF }
+    requirements:
+        _method: GET
+
+oficio_buscarcedula_ajax:
+    path:     /descarga_horaria/oficio-buscar-cedula
+    defaults: { _controller: DescargaHorariaBundle:SolicitarDescarga:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+        
+        
+solicitud_buscarcedula_ajax:
+    path:     /solicitud/buscar-cedula
+    defaults: { _controller: ComisionRemuneradaBundle:SolicitudComisionServicio:buscarCedulaAjax }
+    requirements:
+        _method:  POST
+        
+registro_buscaremailconsultar_ajax:
+    path:     /consulta/buscar-email-consulta-usuario
+    defaults: { _controller: RegistroUnicoBundle:ConsultarUsuario:buscarEmailAjax }
+    requirements:
+        _method:  POST
+        
+registro_obtener_ajax:
+    path:     /registro/obtener-datos
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarDataAjax }
+    requirements:
+        _method:  POST
     
