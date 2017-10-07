@@ -145,9 +145,20 @@ $('#enviarEvaluarRequisitosAspirante').click(function (){
             },
 	        success: function(respuesta){
         		if (respuesta.estado == "Insertado") {
-        		    $("#cargando").modal("hide");
-        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
-    				$('#divEvaluarRequisitosAspirante').addClass("hide");
+        		    if(optionSelected=="Si"){
+        		        $.ajax({
+                            method: "POST",
+                            data: {"idTramite":idConcurso, "nombreRecaudo":"Aspirantes", "valorRecaudo":"Aprobados"},
+                            url: "/web/app_dev.php/preparadores/agregar_recaudo_concurso",
+                            dataType: 'json',
+                            success: function(respuesta){
+                        		if (respuesta.estado == "Insertado") {
+                    				$("#cargando").modal("hide");
+                        		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+                    				$('#divEvaluarRequisitosAspirante').addClass("hide");
+                        		}
+                        }});
+        		    }
         		}
         }});
     }
@@ -280,11 +291,24 @@ $('#registrarCalificacion').click(function (){
                         url: "/web/app_dev.php/preparadores/aspirante/validar_calificacion_aspirante",
                         dataType: 'json',
             	        success: function(respuesta){
-                    		if (respuesta.estado == "Insertado") {
+            	            if (respuesta.estado == "Realizado") {
+            	                $.ajax({
+                                    method: "POST",
+                                    data: {"idTramite":idConcurso, "nombreRecaudo":"Aspirantes", "valorRecaudo":"Evaluados"},
+                                    url: "/web/app_dev.php/preparadores/agregar_recaudo_concurso",
+                                    dataType: 'json',
+                                    success: function(respuesta){
+                                		if (respuesta.estado == "Insertado") {
+                            				$("#cargando").modal("hide");
+                                		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
+                            				$('#divCalificacion').addClass("hide");
+                                		}
+                                }});
+            	            }else{
                     		    $("#cargando").modal("hide");
                     		    toastr.success(respuesta.mensaje, "Éxito!", {"timeOut": "0","extendedTImeout": "0"});
                 				$('#divCalificacion').addClass("hide");
-                    		}
+            	            }
                     }});
         		}
         }});

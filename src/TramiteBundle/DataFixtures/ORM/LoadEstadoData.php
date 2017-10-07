@@ -62,6 +62,13 @@ class LoadEstadoData extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($estado_reproceso);
         $manager->flush();
         
+        $estado_realizado = new Estado();
+        $estado_realizado->setNombre('Realizado');
+        $estado_realizado->setDescripcion('Concurso ha sido realizado.');
+
+        $manager->persist($estado_realizado);
+        $manager->flush();
+        
         $estado_rechazado = new Estado();
         $estado_rechazado->setNombre('Rechazado');
         $estado_rechazado->setDescripcion('Aspirante ha sido rechazado.');

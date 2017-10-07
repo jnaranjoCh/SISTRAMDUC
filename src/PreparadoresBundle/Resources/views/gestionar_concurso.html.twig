@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('assets/css/concursoPreparadores/modals5.css') }}">
+{% endblock %}
+
 {% block content %}
   <section class="content-header">
     <h1>
@@ -214,7 +218,7 @@
                 </div>
                 <div class="box-footer">
                   <div class="col-sm-offset-4 col-sm-4">
-                    <button id="guardarAspirante" type="button" class="btn btn-success btn-block">Guardar  <i class="fa fa-save"></i></button>
+                    <button id="guardarAspirante" type="button" class="btn btn-success btn-block"><i class="fa fa-save"></i>&nbsp;&nbsp;Guardar</button>
                   </div>
                 </div>
               </form>
@@ -321,27 +325,27 @@
               <i class="fa fa-refresh fa-spin"></i>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline" data-dismiss="modal">Aceptar</button>
+              <button type="button" class="btn btn-outline" data-dismiss="modal">¡Aceptar</button>
             </div>
           </div>
         </div>
       </div>
       
       <!-- Modal Confirmacion Registro Aspirante-->
-      <div class="modal modal-warning fade" id="confirmRegister" role="dialog" aria-labelledby="confirmRegisterLabel">
-        <div class="modal-dialog" role="document">
+      <div class="modal modal-warning fade" id="confirmRegister" role="dialog" aria-labelledby="confirmRegisterLabel" style="border-radius:25px;">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h3 class="modal-title" id="confirmRegisterLabel">Confirmación de Registro</h3>
+              <h3 class="modal-title" id="confirmRegisterLabel"><i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;Advertencia!</h3>
             </div>
             <div id="confirmRegisterModalBody" class="modal-body overlay">
-              <p>Verifique bien los datos suministrados, ya que no se permite la posterior actualización de este registro.</p>
-              <br></br>
-              <p>¿Esta seguro que desea continuar con el registro?</p>
+              <h4>Por favor verifique que los datos y los archivos estén correctos, ya que no se permitirá la actualización de este registro.</h4>
+              </br>
+              <h4>¿Está seguro que desea continuar?</h4>
             </div>
             <div class="modal-footer">
-              <button id="siRegistrar" type="button" class="btn btn-outline" data-dismiss="modal">Si</button>
-              <button type="button" class="btn btn-outline" data-dismiss="modal">No</button>
+              <button id="siRegistrar" type="button" class="btn btn-default" data-dismiss="modal">Sí</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
             </div>
           </div>
         </div>
@@ -349,7 +353,7 @@
       
       <!-- Modal Confirmacion Eliminar Aspirante-->
       <div class="modal modal-warning fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h3 class="modal-title" id="confirmDeleteLabel">Confirmación de Eliminación</h3>

@@ -160,7 +160,9 @@ class Aspirante
      */
     private $fechaRenuncia;
     
-   
+    /**
+    * @ORM\ManyToMany(targetEntity="ConcursosBundle\Entity\Concurso", mappedBy="aspirantes")
+    */
     protected $concursos;
 
 

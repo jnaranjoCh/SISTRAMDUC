@@ -36,6 +36,8 @@ $(window).load( function(){
 						classSpan= "label-warning";
                     }else if(respuesta["estado"][i]=="Aprobada"){
 						classSpan= "label-success";
+                    }else if(respuesta["estado"][i]=="Realizado"){
+						classSpan= "label-success";
                     }else if(respuesta["estado"][i]=="Negada"){
 						classSpan= "label-danger";
 						classGestionar= "hide";
