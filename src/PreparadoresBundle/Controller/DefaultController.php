@@ -1233,31 +1233,66 @@ class DefaultController extends Controller
             $concurso = $em->getRepository('ConcursosBundle:Concurso')
                               ->findOneBy(["id" => $idConcurso]);
             
-            $query = $em->createQuery('SELECT COUNT(A)
-                                       FROM ConcursosBundle:Concurso C, TramiteBundle:Estado E
-                                       JOIN C.aspirante_id A
-                                       WHERE C.id = :idConcurso
-                                       AND C.estado = E.id
-                                       AND E.nombre != :nameEstado'
-            )->setParameter('idConcurso', $idConcurso)
-             ->setParameter('nameEstado', 'Rechazado');
-           
-            $cantAspirantes = $query->getResult();
+            $estado = $em->getRepository('TramiteBundle:Estado')
+                              ->findOneBy(["nombre" => "Rechazado"]);
             
-            if($cantAspirantes != null){
-               return new JsonResponse(array(
+            $idEstado = $estado->getId();
+            
+            $cantAspirantes = sizeof($concurso->getAspirantes());
+            
+            $query = $em->createQueryBuilder();
+ 
+            $cantParticipantes= $query->select($query->expr()->count('A'))
+                         ->from('ConcursosBundle:Aspirante', 'A')
+                         ->innerJoin('A.concursos','C')
+                         ->where($query->expr()->eq('C.id',':idConcurso'))
+                         ->andWhere($query->expr()->neq('A.estado',':idEstado'))
+                         ->setParameters(array('idConcurso' => $idConcurso, 'idEstado' => $idEstado))
+                         ->getQuery()->getSingleScalarResult();
+            
+            $estado = $em->getRepository('TramiteBundle:Estado')
+                              ->findOneBy(["nombre" => "Calificado"]);
+            
+            $idEstado = $estado->getId();
+            
+            $query = $em->createQueryBuilder();
+ 
+            $cantParticipantesCalificados= $query->select($query->expr()->count('A'))
+                         ->from('ConcursosBundle:Aspirante', 'A')
+                         ->innerJoin('A.concursos','C')
+                         ->where($query->expr()->eq('C.id',':idConcurso'))
+                         ->andWhere($query->expr()->eq('A.estado',':idEstado'))
+                         ->setParameters(array('idConcurso' => $idConcurso, 'idEstado' => $idEstado))
+                         ->getQuery()->getSingleScalarResult();
+
+            if($cantParticipantesCalificados = $cantParticipantes){
+                
+                $estado = $em->getRepository('TramiteBundle:Estado')
+                              ->findOneBy(["nombre" => "Realizado"]);
+                              
+                $transicion = new Transicion();
+                $transicion->setDoc_info("Concurso Realizado.");
+                $transicion->setFecha(new \DateTime("now"));
+                $transicion->setEstado($estado);                  
+                $transicion->setEstadoConsejo($estado);
+                
+                $concurso->addTransicion($transicion);
+                
+                $em->persist($concurso);
+                
+                $em->flush();
+                
+                return new JsonResponse(array(
+                    'estado' => 'Realizado',
+                    'mensaje' => 'Datos Enviados exitosamente Realizado!.'
+                ));
+                
+            }else{
+                return new JsonResponse(array(
                     'estado' => 'Insertado',
-                    'mensaje' => 'Holis'
-                )); 
+                    'mensaje' => 'Datos Enviados exitosamente!.'
+                ));
             }
-            //$em->persist($aspirante);
-            
-            //$em->flush();
-            
-            return new JsonResponse(array(
-                'estado' => 'Falla',
-                'mensaje' => 'Chais'
-            ));
         }else
             throw $this->createNotFoundException('Error al solicitar datos');
     }
@@ -1346,7 +1381,8 @@ class DefaultController extends Controller
                             $respuesta[1] = "#divFechaEvaluacion";
                         }
                     }elseif ($valorRecaudo[2] == "Evaluados") {
-                        $respuesta[0] = "#divProposicionNombramiento";
+                        $respuesta[0] = "#divAspirantes";
+                        $respuesta[1] = "#divProposicionNombramiento";
                     }
                 }
             }
