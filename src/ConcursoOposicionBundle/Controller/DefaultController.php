@@ -25,6 +25,14 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class DefaultController extends Controller
 {
 	/**
+	 * @Route("/concursoOposicion/reporteConcurso", name="reporteConcurso")
+	 */
+	public function reporteConcursoAction()
+	{
+		return $this->render('ConcursoOposicionBundle::reporteConcurso.html.twig');
+	}
+	
+	/**
 	 * @Route("/concursoOposicion/tablaBasicaActaVCAP", name="tablaBasicaActaVCAP")
 	 */
 	public function tablaBasicaActaVCAPAction()
@@ -797,27 +805,25 @@ class DefaultController extends Controller
      */
     public function pdfAjaxAction(Request $request){
     
-        if($request->isXmlHttpRequest())
-        {            
-            $snappy = $this->get('knp_snappy.pdf');
-
-            $html = $this->renderView('ConcursoOposicionBundle::reporteConcurso.html.twig', array(
-                //..Send some data to your view if you need to //
-            ));
-
-            $filename = 'Concurso-Oposicion';
-
-            return new Response(
-                $snappy->getOutputFromHtml($html),
-                200,
-                array(
-                    'Content-Type'          => 'application/pdf',
-                    'Content-Disposition'   => 'inline; filename="'.$filename.'.pdf"'
-                )
-            );
-                      
-        }
-        else
-            throw $this->createNotFoundException('Error al ejecutar pdf');
+        $variables= 'Hola mundo';        
+        $html = $this->renderView('PreparadoresBundle::reporte-pdf.html.twig', array(
+            'variables' => $variables
+        ));
+        
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $this->renderView('PreparadoresBundle::reporte-pdf.html.twig',array(
+                    'variables' => $variables
+                )),
+            $this->container->getParameter('kernel.root_dir').'/../web/uploads/prueba.pdf'
+        );
+        
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="prueba.pdf"'
+            )
+        );
     }  
 }

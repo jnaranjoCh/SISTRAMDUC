@@ -1,30 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Reporte PDF</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Reporte Concurso</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/bootstrap/css/bootstrap.min.css') }}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/font-awesome/css/font-awesome.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/Ionicons/css/ionicons.min.css') }}">
+  <!-- datetimepicker -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/iCheck/flat/blue.css') }}">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/datepicker3.css') }}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.css') }}">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/toastr/toastr.min.css') }}">
 
+  <!-- Select -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/plugins/select2/select2.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('assets/fonts/SourceSansPro/SourceSansPro.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/AdminLTE.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('assets/vendor/AdminLTE/dist/css/skins/_all-skins.min.css') }}">
+  <!-- Multiple inputs css -->
+  <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-fileinput/css/fileinput.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/cursorLink.css') }}">
 </head>
 
 <body>
+
+<div id="pdf">
 
     <!-- Main content -->
     <section class="invoice">
         <div>
             <div class="row">
-                <div style="text-align:center;" class="col-xs-12">
-                    <h3 class="pager">
-                        <br/>
-                        UNIVERSIDAD DE CARABOBO <br/></h3>
-                    <h3 class="pager">
-                        PRUEBA HTML
-                    </h3>
-                    <br/><br/><br/>
+                <div  class="col-xs-12">
+                    <img src="{{ asset('assets/images/encabezadof1.jpeg') }}" height="147px" width="756px" />
+                    <br/><br/>
+                </div>
+
+                <div style="text-align:center; background-color: rgb(182, 221, 232); width: 748px; margin-left: 20px; border: 1px solid #000;" class="col-xs-12" >
+
+                    <label style="">1. DATOS DE LA SOLICITUD</label>
+
                 </div>
             </div>
-        </div>
+            <div class="row" style="width: 750px; margin-left: 5px; ">
+
+                <div class="col-md-6" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Condición de Ingreso como Ordinario </label>
+
+                </div>
+
+                <div class="col-md-6" style="border: 1px solid #000; width: 373px">
+
+                        <label style="text-align: left"> Tiempo de Dedicación </label>
+                </div>
+
+                <div class="col-md-6" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Nro de Horas </label>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div style="text-align:center; background-color: rgb(182, 221, 232); width: 748px; margin-left: 20px; border: 1px solid #000;" class="col-xs-12" >
+
+                    <label>2. UBICACIÓN ADMINISTRATIVA / GEOGRÁFICA </label>
+
+                </div>
+            </div>
+            <div class="row" style="width: 748px; margin-left: 5px; ">
+
+                <div class="col-md-12" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Sede o Núcleo </label>
+
+                </div>
+
+                <div class="col-md-12" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Facultad </label>
+
+                </div>
+
+                <div class="col-md-6" style="border: 1px solid #000;">
+
+                        <label style="text-align: left"> Ciudad </label>
+                </div>
+
+                <div class="col-md-6" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Escuela / Departamento / Institución </label>
+
+                </div>
+
+                <div class="col-md-12" style="border: 1px solid #000;">
+
+                        <label style="text-align: left"> Departamento / Unidad Académica / Centro de Investigación </label>
+                </div>
+
+                <div class="col-md-12" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Cátedra o Equivalente </label>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div style="text-align:center; background-color: rgb(182, 221, 232); width: 748px; margin-left: 20px; border: 1px solid #000;" class="col-xs-12" >
+
+                    <label>3. MOTIVO DE LA SOLICITUD </label>
+
+                </div>
+            </div>
+            <div class="row" style="width: 748px; margin-left: 5px; ">
+
+                <div class="col-md-6" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Tipo de Motivo </label>
+
+                </div>
+
+                <div class="col-md-6" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Nro de Cargos </label>
+
+                </div>
+
+                <div class="col-md-12" style="border: 1px solid #000">
+            
+                    <label style="text-align: left"> Descripción Motivo </label>
+
+                </div>
+            </div>
+             <div class="row">
+
+                <div style="text-align:center; background-color: rgb(182, 221, 232); width: 748px; margin-left: 20px; border: 1px solid #000;" class="col-xs-12" >
+
+                    <label>4. JUSTIFICACIÓN DE LA SOLICITUD </label>
+
+                </div>
+            </div>
+            <div class="row" style="width: 748px; margin-left: 5px; ">
+
+                <div class="col-md-12" style="border: 1px solid #000; text-align: center">
+            
+                    <label style="text-align: center; font-size: x-small;"> Tipo de Motivo </label>
+
+                </div>
+            </div>
+            <div class="row">
+
+                <div style="text-align:center; background-color: rgb(182, 221, 232); width: 748px; margin-left: 20px; border: 1px solid #000;" class="col-xs-12" >
+
+                    <label>5. PERFIL DEL CANDIDATO REQUERIDO PARA EL CARGO </label>
+
+                </div>
+            </div>
+            <div class="row" style="width: 748px; margin-left: 5px; ">
+
+                <div class="col-md-12" style="border: 1px solid #000; text-align: center">
+            
+                    <label style="text-align: center;"> Educación Formal </label>
+
+                </div>
+            </div>
     </section>
+
+</div>
     <!-- /.content -->
 </body>
+
+{% block custom_javascripts %}
+
+
+<script src="{{ asset('assets/vendor/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
+<!-- daterangepicker -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/moment.js') }}"></script>
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- DataTables -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+<!-- datepicker -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+<!-- Slimscroll -->
+<script src="{{ asset('assets/vendor/AdminLTE/plugins/slimScroll/jquery.slimscroll.js') }}"></script>
+<!-- bootstrap-datetimepicker -->
+<script src="{{ asset('assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+<!-- Slide to top -->
+<script src="{{ asset('assets/js/SlideToTop.js') }}"></script>
+<!-- Toastr -->
+<script src="{{ asset('assets/vendor/toastr/toastr.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('assets/vendor/AdminLTE/dist/js/app.js') }}"></script>
+<!-- Multiple Inputs Js -->
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/plugins/sortable.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/plugins/purify.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/themes/fa/theme.js') }}"></script>
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/locales/es.js') }}"></script>
+
+<script src="{{ asset('assets/vendor/bootstrap-fileinput/js/locales/es.js') }}"></script>
+
+{% include('ConcursoOposicionBundle:Concurso:listadoConcurso.html.twig') %}
+
+{% endblock %}
 
 </html>
