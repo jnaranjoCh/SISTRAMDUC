@@ -21,9 +21,22 @@ use ConcursosBundle\Entity\Resultado;
 use ConcursoOposicionBundle\Entity\Acta;
 use ConcursoOposicionBundle\Entity\Autorizadores;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Dompdf\Dompdf;
+use Knp\Snappy\Pdf;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/concursoOposicion/reporteActaVCAP", name="reporteActaVCAP")
+     */
+    public function reporteActaVCAPAction()
+    {
+        return $this->render('ConcursoOposicionBundle::actaVCAP.html.twig');
+    }
+
 	/**
 	 * @Route("/concursoOposicion/reporteConcurso", name="reporteConcurso")
 	 */
@@ -415,23 +428,6 @@ class DefaultController extends Controller
                             $encontrado = true;
                     }
 
-                    $contador = 0;
-
-                    if ($request->get("cargo") == "Director de Escuela" && $encontrado) {
-
-                         foreach ($autorizadores as $rol => $valor) {
-                        
-                            if ($valor->getCargo() == "Director de Escuela") {
-                                $contador = $contador+1;
-                            }
-                        }
-
-                        if ($contador == 2)
-                            $encontrado = true;
-                        else 
-                            $encontrado = false;
-                    }
-
                     if ($encontrado) {
 
                         return new JsonResponse("R"); 
@@ -804,14 +800,43 @@ class DefaultController extends Controller
      * @Method("POST")
      */
     public function pdfAjaxAction(Request $request){
-    
+         
+
         $variables= 'Hola mundo';        
-        $html = $this->renderView('PreparadoresBundle::reporte-pdf.html.twig', array(
+        $html = $this->renderView('ConcursoOposicionBundle::reporteConcurso.html.twig', array(
             'variables' => $variables
         ));
         
         $this->get('knp_snappy.pdf')->generateFromHtml(
-            $this->renderView('PreparadoresBundle::reporte-pdf.html.twig',array(
+            $this->renderView('ConcursoOposicionBundle::reporteConcurso.html.twig',array(
+                    'variables' => $variables
+                )),
+            $this->container->getParameter('kernel.root_dir')." ../web/uploads/prueba.pdf"
+        );
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            array(
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="prueba.pdf"'
+            )
+        );       
+    } 
+
+     /**
+     * @Route("/concursoOposicion/pdfAVCAPAjax", name="pdfAVCAPAjax")
+     * @Method("POST")
+     */
+    public function pdfAVCAPAjaxAction(Request $request){
+    
+        $variables= 'Hola mundo';        
+        $html = $this->renderView('ConcursoOposicionBundle::actaVCAP.html.twig', array(
+            'variables' => $variables
+        ));
+        
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+            $this->renderView('ConcursoOposicionBundle::actaVCAP.html.twig',array(
                     'variables' => $variables
                 )),
             $this->container->getParameter('kernel.root_dir').'/../web/uploads/prueba.pdf'
@@ -825,5 +850,5 @@ class DefaultController extends Controller
                 'Content-Disposition' => 'attachment; filename="prueba.pdf"'
             )
         );
-    }  
+    } 
 }

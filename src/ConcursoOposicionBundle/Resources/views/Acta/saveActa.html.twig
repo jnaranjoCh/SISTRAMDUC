@@ -210,4 +210,17 @@
         }
 	});
 
+    $('#pdf').click(function (){
+
+        $.ajax({
+            method: "POST",
+            url:  "{{ path('pdfAVCAPAjax') }}",
+            dataType: 'json',
+            success: function(data)
+            {
+                
+            }
+        }); 
+    });
+
 </script>
