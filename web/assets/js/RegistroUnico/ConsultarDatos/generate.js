@@ -17,6 +17,15 @@ $('#mail').on('input',function(e){
 
 $('#generate').click(function(){
     var tableRelationship;
+    $.ajax({
+            method: "POST",
+            data: {"Email":$('#mail').val()},
+            url: routeRegistroUnico['registro_buscaremail_ajax'],
+            dataType: 'json',
+            success: function(data){
+                $("#ciAux").val(data["ci"]);        
+            }
+    });
     
     toastr.clear();
     $.ajax({
@@ -36,9 +45,12 @@ $('#generate').click(function(){
                         {
                             $('#otherChildrens').removeClass("hidden");
                             $('#relationship').removeClass("hidden");
+                            $('#relationship').html('');
+                            tableRelationship = "";
                             for(var i = 0; i < data.length; i++)
                             {
-                                tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
+                                $(tableRelationshipList[i]).dataTable().fnDestroy();
+                                tableRelationship = tableRelationship + '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
                                 tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
                                                                             '<thead>'+
                                                                             '<tr>'+
@@ -70,20 +82,22 @@ $('#generate').click(function(){
                                                                             '</tfoot>'+
                                                                           '</table>';
                                 tableRelationship = tableRelationship+'</div>';
-                                tableRelationshipList[i] = "#infoOtherParent"+i;
-                                $('#relationship').html(tableRelationship);
+                                tableRelationshipList[i] = "#tableRelationship"+i;
+                            }
+                            $('#relationship').html(tableRelationship);
+                            for(var i = 0; i < data.length; i++)
+                            {
                                 if(data[i].primerNombre == "" && data[i].segundoNombre == "" && data[i].primerApellido == "" && data[i].segundoApellido == "")
                                     $("#infoOtherParent"+i).html("<strong>Usuario en espera por registrar ( Cedula: "+data[i].cedula+")</strong>");
                                 else
                                     $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
-                                $('#tableRelationship'+i).DataTable({
+                                $(tableRelationshipList[i]).DataTable({
                                             "ajax":{
                                                "url": routeRegistroUnico['registro_consultar_parentesco_hijos_ajax'],
                                                "type": 'POST',
-                                               "data": {"cedula":data[i].cedula}
+                                               "data": {"cedula":data[i].cedula,"Email":$('#mail').val()}
                                             },
                                             "pagingType": "full_numbers",
-                                            "bDestroy": true,
                                     	    "language": {
                                                 	"url": tableLenguage['datatable-spanish']
                                             },
@@ -100,6 +114,10 @@ $('#generate').click(function(){
                                             ]
                                 });
                             }
+                        }else
+                        {
+                            $('#otherChildrens').addClass("hidden");
+                            $('#relationship').addClass("hidden");
                         }
                     }
                 });
@@ -193,6 +211,56 @@ function initDatePickerHijo(){
               autoclose: true
             });
             tableHijos.cell(cell).nodes().to$().find('#datepickerHijo2'+i).val(aux);
+        }
+
+        var cellMadre = new Object();
+        var cellPadre = new Object();
+        var cellMadreAux = new Object();
+        var cellPadreAux = new Object();
+        cellMadre.row = 0; cellMadre.column = "1"; cellMadre.columnVisible = "0"; 
+        cellPadre.row = 0; cellPadre.column = "2"; cellPadre.columnVisible = "0"; 
+        
+        if(tableHijos.cell(cellMadre).nodes().to$().find("#checkboxMadre").prop('checked'))
+        {
+            registerOtherUserPadre = false;
+            registerOtherUserMadre = true;    
+        }else if(tableHijos.cell(cellPadre).nodes().to$().find("#checkboxPadre").prop('checked'))
+        {
+            registerOtherUserPadre = true;
+            registerOtherUserMadre = false;
+        }
+        
+        if(otherUsersCount == 0)
+        {
+            cellMadreAux.row = 0; cellMadreAux.column = "1"; cellMadreAux.columnVisible = "0"; 
+            cellPadreAux.row = 0; cellPadreAux.column = "2"; cellPadreAux.columnVisible = "0";
+            for(var i = 0; i < tableHijos.page.info().recordsTotal; i++)
+            {
+                cellMadre.row = i; cellMadre.column = "1"; cellMadre.columnVisible = "0"; 
+                cellPadre.row = i; cellPadre.column = "2"; cellPadre.columnVisible = "0"; 
+                if(tableHijos.cell(cellMadreAux).nodes().to$().find("#checkboxMadre").prop('checked'))
+                {   
+                    var user = new Object();
+                    user.ci = tableHijos.cell(cellMadre).nodes().to$().find("#CIMadre"+i).val();
+                    user.register = false;
+                    if(!existe(registerOtherUsers,user))
+                    {
+                        registerOtherUsers[otherUsersCount] = user;
+                        otherUsersCount++;
+                    }
+                }else if(tableHijos.cell(cellPadreAux).nodes().to$().find("#checkboxPadre").prop('checked'))
+                {
+                    var user = new Object();
+                    user.ci = tableHijos.cell(cellPadre).nodes().to$().find("#CIPadre"+i).val();
+                    user.register = false;
+                    if(!existe(registerOtherUsers,user))
+                    {
+                        registerOtherUsers[otherUsersCount] = user;
+                        otherUsersCount++;
+                    }
+                }
+                
+            }
         }
         clearInterval(refreshIntervalIdFour);
     }
@@ -453,4 +521,8 @@ function burbuja(array)
     }
  
     return array;
+}
+
+function existe(users, user){
+    return users.any(function(t){ return t.ci == user.ci});
 }

@@ -1,5 +1,5 @@
 var copiar = 1;
-
+var tableUsers;
 $( window ).load(function() {
     $.ajax({
         method: "POST",
@@ -22,6 +22,7 @@ $( window ).load(function() {
                 { "data": "Registro Completo" },
                 { "data": "Copiar" }
             ],
+            "bDestroy": true,
             "language": {
                 "url": tableLenguage['datatable-spanish']
             }

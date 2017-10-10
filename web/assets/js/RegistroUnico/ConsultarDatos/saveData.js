@@ -148,7 +148,7 @@ $("#guardar").click(function(){
                         fechasArchivos[2] = $("#FechaVencimientoActaNacimientoDatos").val();
                         $.ajax({
                             method: "POST",
-                            data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":input2bool, "input3bool":input3bool},
+                            data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "fechasArchivos":fechasArchivos, "input2bool":input2bool, "input3bool":input3bool, "registerOtherUsers":registerOtherUsers},
                             url:  routeRegistroUnico['registro_editardatos_ajax'],
                             dataType: 'json',
                             beforeSend: function(){
@@ -815,7 +815,7 @@ function validarHijos()
         }else
             valido = false;
     }
-
+    
     return valido;
 }
 
@@ -868,6 +868,17 @@ function findValue(table, cellTable)
     var valor;
     if(table.cell(cellTable).nodes().to$().find('a').length > 0 && table.cell(cellTable).nodes().to$().find('a')[0].href.includes("#"))
         valor = "";
+    else if(table.table().node().id == "tableHijos" && cellTable.row == 0 && (cellTable.column == 1 || cellTable.column == 2))
+    {
+        if (cellTable.column == 1)
+        {
+            valor = table.cell(cellTable).nodes().to$().find("#CIMadre0").val();
+        }
+        else if(cellTable.column == 2)
+        {
+            valor = table.cell(cellTable).nodes().to$().find("#CIPadre0").val();
+        }
+    }
     else if(table.cell(cellTable).nodes().to$().find('a').length > 0)
         valor = table.cell(cellTable).nodes().to$().find('a')[0].href.split('/')[table.cell(cellTable).nodes().to$().find('a')[0].href.split('/').length-1];
     else if(table.cell(cellTable).nodes().to$().find('input').val() != null)
@@ -875,4 +886,15 @@ function findValue(table, cellTable)
     else
         valor = table.cell(cellTable).nodes().to$().find('select').val();    
     return valor;
+}
+
+function existe(users, user){
+    return users.any(function(t){ return t.ci == user.ci});
+}
+
+function existeHijoData(hijoData, user, registerOtherUserMadre, registerOtherUserPadre){
+    if(registerOtherUserMadre)
+        return hijoData.any(function(t){ return t.ciMadre == user.ci});
+    else if(registerOtherUserPadre)
+        return hijoData.any(function(t){ return t.ciPadre == user.ci});
 }

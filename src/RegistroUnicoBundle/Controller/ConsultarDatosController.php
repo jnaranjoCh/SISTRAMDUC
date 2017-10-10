@@ -461,8 +461,24 @@ class ConsultarDatosController extends Controller
                     $data[$i]['Delete'] = "<img src='/assets/images/delete.png' width='30px' heigth='30px'/>";
                 else
                     $data[$i]['Delete'] = "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>";
-                $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
-                $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
+                
+                if($entity->getCedula() == $hijo['cedulaMadre'] && $i == 0)
+                    $data[$i]['CIMadre'] = '<input type="checkbox" id="checkboxMadre" name="checkboxMadre" value="activo" class="hidden" /><input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre" disabled>';
+                else if($entity->getCedula() != $hijo['cedulaMadre'] && $i == 0)
+                    $data[$i]['CIMadre'] = '<input type="checkbox" id="checkboxMadre" name="checkboxMadre" value="activo" class="hidden"  checked/><input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
+                else if($entity->getCedula() == $hijo['cedulaMadre'])
+                    $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre" disabled>';
+                else
+                    $data[$i]['CIMadre'] = '<input id="CIMadre'.$i.'" value="'.$hijo['cedulaMadre'].'" type="number" class="form-control" placeholder="Cedula Madre">';
+                
+                if($entity->getCedula() == $hijo['cedulaPadre'] && $i == 0)
+                    $data[$i]['CIPadre'] = '<input type="checkbox" id="checkboxPadre" name="checkboxPadre" value="activo" class="hidden" /><input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre" disabled>';
+                else if($entity->getCedula() != $hijo['cedulaPadre'] && $i == 0)
+                    $data[$i]['CIPadre'] = '<input type="checkbox" id="checkboxPadre" name="checkboxPadre" value="activo" class="hidden"  checked/><input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
+                else if($entity->getCedula() == $hijo['cedulaPadre'])
+                    $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre" disabled>';
+                else
+                    $data[$i]['CIPadre'] = '<input id="CIPadre'.$i.'" value="'.$hijo['cedulaPadre'].'" type="number" class="form-control" placeholder="Cedula Padre">';
                 $data[$i]['CIHijo'] = '<input id="CIHijo'.$i.'" value="'.$hijo['cedulaHijo'].'" type="number" class="form-control" placeholder="Cedula Hijo">';
                 $data[$i]['1erNombre'] = '<input id="1erNombre'.$i.'" value="'.$hijo['primerNombre'].'" type="text" class="form-control" placeholder="Primer Nombre">';
                 $data[$i]['2doNombre'] = '<input id="2doNombre'.$i.'" value="'.$hijo['segundoNombre'].'" type="text" class="form-control" placeholder="Segundo Nombre">';
@@ -695,7 +711,7 @@ class ConsultarDatosController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
-            $this->updateSectionOne($request->get('personalData'));
+            $this->updateSectionOne($request->get('personalData'),$request->get('registerOtherUsers'));
             $this->updateSectionTwo($request->get('cargoData'),$request->get('personalData')[16],$request->get('tipoDedicacion'));
             $this->updateSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
             $this->updateSectionFour($request->get('hijoData'),$request->get('personalData')[16],(string)$request->get('input2bool'),(string)$request->get('input3bool'));
@@ -706,7 +722,7 @@ class ConsultarDatosController extends Controller
             return new JsonResponse("Error");
     }
     
-    private function updateSectionOne($user)
+    private function updateSectionOne($user, $users)
     {
         $em = $this->getDoctrine()->getManager();
         $updateUser = $em->getRepository('AppBundle:Usuario')
@@ -731,7 +747,56 @@ class ConsultarDatosController extends Controller
         $updateUser->setTelefono($user[9].'-'.$user[10]);
         $updateUser->setDireccion($user[15]);
         
+        foreach($users as $userr)
+        {
+            $cedulaAux = $userr['ci'];
+            $correoAux = "Cedula: ".$userr['ci']." (Sin registrar)";
+            $otherUser = $em->getRepository('AppBundle:Usuario')
+                            ->findOneByCedula($userr['ci']);
+                
+            if(!$otherUser && strcmp($userr['register'],"true")==0)
+            {
+                $otherUser = new Usuario();
+                $otherUser = $this->initialiceUser($otherUser);
+                $otherUser->setCorreo($correoAux);
+                $otherUser->setCedula($cedulaAux);
+                $encoder = $this->container->get('security.password_encoder');
+                $encoded = $encoder->encodePassword($otherUser,"123");
+                $otherUser->setPassword($encoded);
+                $otherUser->setActivo(0);
+                $otherUser->setIsRegister(0);
+                $roles[0] = $this->getByName("AppBundle:","Rol","Profesor");
+                $otherUser->addRoles($roles);
+                $em->persist($otherUser);
+                $em->flush();
+            }
+        }
         $em->flush();
+    }
+    
+    private function getByName($bundle,$entidad,$name)
+    {
+        return $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository($bundle.$entidad)
+                    ->findOneByNombre($name);
+    }
+    
+    private function initialiceUser($usuario)
+    {
+        $usuario->setCedula("");
+        $usuario->setPrimerNombre("");
+        $usuario->setSegundoNombre("");
+        $usuario->setPrimerApellido("");
+        $usuario->setSegundoApellido("");
+        $usuario->setNacionalidad("");
+        $usuario->setDireccion("");
+        $usuario->setTelefono('');
+        $usuario->setRif('');
+        $usuario->setEdad(0);
+        $usuario->setSexo('');
+        
+        return $usuario;
     }
     
     private function updateSectionTwo($cargos,$email,$tipoDedicacion)

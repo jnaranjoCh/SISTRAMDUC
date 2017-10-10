@@ -274,6 +274,11 @@ $("#continueParent").click(function(){
         $("#CedulaPadreHijoDatos").prop('disabled', false);
         $("#checkboxPadre").prop('disabled', true);
         registerOtherUserPadre = true;
+        registerOtherUserMadre = false;
+        if($('#checkboxParent').prop('checked') && otherUsersCount>0)
+            registerOtherUsers[otherUsersCount-1].register = true;
+        else if(!$('#checkboxParent').prop('checked') && otherUsersCount>0)
+            registerOtherUsers[otherUsersCount-1].register = false;
     }
     
     if($('#checkboxMadre').prop('checked'))
@@ -282,6 +287,11 @@ $("#continueParent").click(function(){
         $("#CedulaMadreHijoDatos").prop('disabled', false);
         $("#checkboxPadre").prop('disabled', true);
         registerOtherUserMadre = true;
+        registerOtherUserPadre = false;
+        if($('#checkboxParent').prop('checked') && otherUsersCount>0)
+            registerOtherUsers[otherUsersCount-1].register = true;
+        else if(!$('#checkboxParent').prop('checked') && otherUsersCount>0)
+            registerOtherUsers[otherUsersCount-1].register = false;
     }
     $("#myModalHijosMessage").modal("hide");
     
@@ -308,4 +318,16 @@ $("#AnoPublicacionDatos").keyup(function(){
 
 $("#AnoPublicacionDatos").keydown(function(){
     $("#AnoPublicacionDatos").val('');
+});
+
+$("#AnoPublicacionDatos").change(function(){
+    var date = new Date();
+    if($("#AnoPublicacionDatos").val() > date.getUTCFullYear())
+    {
+        $("#AnoPublicacionDatos").val('');
+        toastr.error("El año supera la actual.", "Error", {
+                                "timeOut": "0",
+                                "extendedTImeout": "0"
+                             });
+    }
 });

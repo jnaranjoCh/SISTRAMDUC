@@ -123,7 +123,7 @@ class Usuario implements UserInterface
      * @ORM\ManyToMany(targetEntity="Rol")
      * @ORM\JoinTable(name="usuario_rol",
      *      joinColumns={@ORM\JoinColumn(name="usuario_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id", onDelete="CASCADE")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="rol_id", referencedColumnName="id", onDelete="CASCADE" )}
      *      )
      */
     protected $roles;

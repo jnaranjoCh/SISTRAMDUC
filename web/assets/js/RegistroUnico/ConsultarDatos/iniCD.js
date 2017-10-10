@@ -4,6 +4,11 @@ var miniCargos = true;
 var miniHijos = true;
 var copiar = 0;
 var tableRelationshipList = [];
+var registerOtherUserMadre = false;
+var registerOtherUserPadre = false;
+var registerOtherUsers = [];
+var otherUsersCount = 0;
+
 
 $( window ).load(function() {
     
@@ -12,10 +17,22 @@ $( window ).load(function() {
     $("#miniCargos").click();
     $("#miniHijos").click();
     
-    $('#datetimepickerFN').datetimepicker();
-    $('#datetimepickerFVC').datetimepicker();
-    $('#datetimepickerFVR').datetimepicker();
-    $('#datetimepickerFVAN').datetimepicker();
+    $('#datetimepickerFN').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepickerFVC').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepickerFVR').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepickerFVAN').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
 
     var status = window.location.href.split("/");
     if(status[status.length-1] == "success")

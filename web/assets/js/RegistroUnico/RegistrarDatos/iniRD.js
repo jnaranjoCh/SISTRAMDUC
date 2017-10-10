@@ -6,7 +6,9 @@ var miniHijos = true;
 var copiar = 0;
 var registerOtherUserMadre = false;
 var registerOtherUserPadre = false;
-
+var registerOtherUsers = [];
+var otherUsersCount = 0;
+var tableRelationshipList = [];
 
 $( window ).load(function() {
     
@@ -89,13 +91,34 @@ $( window ).load(function() {
     });
     $('#IdParticipanteRegistro').html("<option value='-1'>No existen registros</option>");
     $('#idRevistaRegistro').html("<option value='-1'>No existen registros</option>");
-    $('#datetimepicker1').datetimepicker();
-    $('#datetimepicker2').datetimepicker();
-    $('#datetimepicker3').datetimepicker();
-    $('#datetimepicker4').datetimepicker();
-    $('#datetimepicker5').datetimepicker();
-    $('#datetimepicker6').datetimepicker();
-    $('#datetimepicker7').datetimepicker();
+    $('#datetimepicker1').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepicker2').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepicker3').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepicker4').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepicker5').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepicker6').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
+    $('#datetimepicker7').datetimepicker({
+      maxDate: moment(), 
+      format:'DD/MM/YYYY HH:mm'
+    });
     $("#CedulaRifActaCargaDatos").fileinput({
         language: "es"
     });

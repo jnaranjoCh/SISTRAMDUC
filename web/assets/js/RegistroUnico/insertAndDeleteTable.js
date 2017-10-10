@@ -10,6 +10,7 @@ var participantesData = [];
 var revistasData = [];
 var hijoData = [];
 var cargoData = [];
+var auxhijo = new Object();
 
 $('#agregarRegistro').click(function(){
     var inputsR = ["EstatusDatos","NivelDeEstudioDatos","TipoDeRegistroDatos","DescripcionDatos","AnoPublicacionDatos","EmpresaDatos","InstitucionDatos","TituloObtenidoDatos","CiudadPaisDatos","CongresosDatos"];
@@ -365,6 +366,7 @@ $('#tableRegistros').on( 'click', 'td', function () {
 
     if(tableRegistros.cell( this ).index().column == 0)
     {
+        registrosData.splice(tableRegistros.cell( this ).index().row,1);
         tableRegistros.row(tableRegistros.cell( this ).index().row).remove().draw();
         if(countRegistro > 0){
            tableRegistros.column(2)
@@ -397,7 +399,6 @@ $('#tableRegistros').on( 'click', 'td', function () {
                           });
             $('#IdParticipanteRegistro').html(participantesId);
             $('#idRevistaRegistro').html(revistasId);
-            registrosData.splice(this._DT_RowIndex,1);
             countRegistro--;
         }
     }
@@ -475,8 +476,8 @@ $('#agregarParticipantes').click(function(){
 $('#tableParticipantes').on( 'click', 'td', function () {
     if(tableParticipantes.cell( this ).index().column == 0)
     {
+        participantesData.splice(tableParticipantes.cell( this ).index().row,1);
         tableParticipantes.row(tableParticipantes.cell( this ).index().row).remove().draw();
-        participantesData.splice(this._DT_RowIndex,1);
         if(countParticipante > 0)
             countParticipante--;
     }
@@ -582,6 +583,7 @@ $('#tableRol').on( 'click', 'td', function () {
 $('#tableCargo').on( 'click', 'td', function () {
     if(tableCargo.cell( this ).index().column == 0)
     {
+        cargoData.splice(cargoData.cell( this ).index().row,1);
         tableCargo.row(tableCargo.cell( this ).index().row).remove().draw();
         if(countCargo > 0)
             countCargo--;
@@ -654,8 +656,8 @@ $('#agregarRevista').click(function(){
 $('#tableRevista').on( 'click', 'td', function () {
     if(tableRevista.cell( this ).index().column == 0)
     {
+        revistasData.splice(tableRevista.cell( this ).index().row,1);
         tableRevista.row(tableRevista.cell( this ).index().row).remove().draw();
-        revistasData.splice(this._DT_RowIndex,1);
         if(countRevista > 0)
             countRevista--;
     }
@@ -668,193 +670,264 @@ $('#agregarHijo').click(function(){
     
     if(($('#tableHijos tr').length) <= 7)
     {
-        if(($('#tableHijos td').length) > 0){
-             tableHijos.column(3)
-                  .data()
-                  .each( function ( value,index ) {
-                        if(value == $("#CedulaHijoDatos").val() && $("#CedulaHijoDatos").val() != 0){ 
-                            band = true;
-                            toastr.error("Error el hijo ya se encuentra registrado.", "Error", {
-                                "timeOut": "0",
-                                "extendedTImeout": "0"
-                             });
+        $.ajax({
+            method: "POST",
+            data: {"CedulaMadre":$('#CedulaMadreHijoDatos').val(),"CedulaPadre":$('#CedulaPadreHijoDatos').val(),"Madre":registerOtherUserMadre,"Padre":registerOtherUserPadre},
+            url: routeRegistroUnico['registro_verificarcipadremadre_ajax'],
+            dataType: 'json',
+            success: function(data){
+                if(!$.trim(data))
+                {
+                    $.ajax({
+                        method: "POST",
+                        data: {"CedulaHijo":$("#CedulaHijoDatos").val()},
+                        url: routeRegistroUnico['registro_verificarhijo_ajax'],
+                        dataType: 'json',
+                        success: function(data){
+                            if(!$.trim(data))
+                            {
+                                if(($('#tableHijos td').length) > 0){
+                                     tableHijos.column(3)
+                                          .data()
+                                          .each( function ( value,index ) {
+                                                if(value == $("#CedulaHijoDatos").val() && $("#CedulaHijoDatos").val() != 0){ 
+                                                    band = true;
+                                                    toastr.error("Error el hijo ya se encuentra registrado.", "Error", {
+                                                        "timeOut": "0",
+                                                        "extendedTImeout": "0"
+                                                     });
+                                                }
+                                           });
+                                }
+                                
+                               if(!band && !(/^\d*$/).test($("#CedulaMadreHijoDatos").val()))
+                               {
+                                   $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+                                   $("#divCedulaMadreHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!band && !(/^\d*$/).test($("#CedulaPadreHijoDatos").val()))
+                               {
+                                   $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+                                   $("#divCedulaPadreHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!(/^\d*$/).test($("#CedulaHijoDatos").val()))
+                               {
+                                   $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+                                   $("#divCedulaHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerNombreHijoDatos").val()))
+                               {
+                                   $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+                                   $("#divPrimerNombreHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoNombreHijoDatos").val()))
+                               {
+                                   $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+                                   $("#divSegundoNombreHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerApellidoHijoDatos").val()))
+                               {
+                                   $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+                                   $("#divPrimerApellidoHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoApellidoHijoDatos").val()))
+                               {
+                                   $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+                                   $("#divSegundoApellidoHijoDatos").addClass("has-error");
+                                   toastr.error("Error campo mal introducido.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                                   $("#headerHijos").css({ 'color': "red" });
+                                   band = true;
+                               }else if(!band && ($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val()))
+                               {
+                                    band = true;
+                                    $("#headerHijos").css({ 'color': "red" });
+                                    toastr.error("La cedula del padre y la madre son iguales.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                               }
+                               
+                               
+                               if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
+                                    if($("#CedulaHijoDatos").val() != "")
+                                       tableHijos.row.add( {
+                                           "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
+                                            "CI Madre":$("#CedulaMadreHijoDatos").val(),
+                                            "CI Padre":$("#CedulaPadreHijoDatos").val(),
+                                            "CI Hijo":$("#CedulaHijoDatos").val(),
+                                            "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+                                            "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+                                            "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+                                            "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+                                            "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+                                            "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
+                                            "Nacionalidad":$("#NacionalidadHijoDatos").val()
+                                        } ).draw();
+                                    else
+                                        tableHijos.row.add( {
+                                            "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
+                                            "CI Madre":$("#CedulaMadreHijoDatos").val(),
+                                            "CI Padre":$("#CedulaPadreHijoDatos").val(),
+                                            "CI Hijo":0,
+                                            "1er Nombre":$("#PrimerNombreHijoDatos").val(),
+                                            "2do Nombre":$("#SegundoNombreHijoDatos").val(),
+                                            "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
+                                            "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
+                                            "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
+                                            "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
+                                            "Nacionalidad":$("#NacionalidadHijoDatos").val()
+                                        } ).draw();
+                                    hijo.ciMadre = $("#CedulaMadreHijoDatos").val();
+                                    hijo.ciPadre = $("#CedulaPadreHijoDatos").val();
+                                    hijo.ciHijo = $("#CedulaHijoDatos").val();
+                                    hijo.primerNombre = $("#PrimerNombreHijoDatos").val();
+                                    hijo.segundoNombre = $("#SegundoNombreHijoDatos").val();
+                                    hijo.primerApellido = $("#PrimerApellidoHijoDatos").val();
+                                    hijo.segundoApellido = $("#SegundoApellidoHijoDatos").val();
+                                    hijo.fechaNacimiento = $("#FechaNacimientoHijoDatos").val();
+                                    hijo.fechaVencimiento = $("#FechaVencimientoActaNacimientoHijoDatos").val();
+                                    hijo.nacionalidad = $("#NacionalidadHijoDatos").val();
+                                    auxhijo = hijo;
+                                    hijoData[countHijo] = hijo;
+                                    countHijo++;
+                                    $("#headerHijos").css({ 'color': "black" });
+                                    $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divCedulaMadreHijoDatos").removeClass("has-error");
+                                    $("#spanCedulaPadreHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divCedulaPadreHijoDatos").removeClass("has-error");
+                                    $("#spanCedulaHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divCedulaHijoDatos").removeClass("has-error");
+                                    $("#spanPrimerNombreHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divPrimerNombreHijoDatos").removeClass("has-error");
+                                    $("#spanSegundoNombreHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divSegundoNombreHijoDatos").removeClass("has-error");
+                                    $("#spanPrimerApellidoHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divPrimerApellidoHijoDatos").removeClass("has-error");
+                                    $("#spanSegundoApellidoHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divSegundoApellidoHijoDatos").removeClass("has-error");
+                                    $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divNacionalidadHijoDatos").removeClass("has-error");
+                                    $("#divFechaVencimientoActaNacimientoHijoDatos").removeClass("has-error");
+                                    $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divFechaNacimientoHijoDatos").removeClass("has-error");
+                                    $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
+                                    $("#divActaNacCargaHijoDatos").removeClass("has-error");
+                                    
+                                    var user = new Object();
+                                    
+                                    if(registerOtherUserMadre)
+                                    {
+                                        user.ci = hijo.ciMadre;
+                                    }else if(registerOtherUserPadre)
+                                    {
+                                        user.ci = hijo.ciPadre;
+                                    }
+                                    
+                                    if(!existe(registerOtherUsers,user))
+                                    {
+                                        if(otherUsersCount>0)
+                                        {
+                                            $("#principalMessageModal").addClass("hidden");
+                                            $("#myModalHijosMessage").modal("show");
+                                        }
+                                        if($('#checkboxParent').prop('checked'))
+                                            user.register = true;
+                                        else
+                                            user.register = false;
+                                        registerOtherUsers[otherUsersCount] = user;
+                                        otherUsersCount++;
+                                    }
+                                    
+                               }else if(!band){
+                                   toastr.error("Error faltan datos.", "Error", {
+                                            "timeOut": "0",
+                                            "extendedTImeout": "0"
+                                         });
+                            
+                                    $("#headerHijos").css({ 'color': "red" });
+                                    $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
+                                    $("#divCedulaMadreHijoDatos").addClass("has-error");
+                                    $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
+                                    $("#divCedulaPadreHijoDatos").addClass("has-error");
+                                    $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
+                                    $("#divCedulaHijoDatos").addClass("has-error");
+                                    $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
+                                    $("#divPrimerNombreHijoDatos").addClass("has-error");
+                                    $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
+                                    $("#divSegundoNombreHijoDatos").addClass("has-error");
+                                    $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
+                                    $("#divPrimerApellidoHijoDatos").addClass("has-error");
+                                    $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
+                                    $("#divSegundoApellidoHijoDatos").addClass("has-error");
+                                    $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
+                                    $("#divNacionalidadHijoDatos").addClass("has-error");
+                                    $("#divFechaVencimientoActaNacimientoHijoDatos").addClass("has-error");
+                                    $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
+                                    $("#divFechaNacimientoHijoDatos").addClass("has-error");
+                                    $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
+                                    $("#divActaNacCargaHijoDatos").addClass("has-error");
+                               }
+                            }
+                            else
+                            {
+                                toastr.error("El hijo ya se encuentra registrado.", "Error", {
+                                                "timeOut": "0",
+                                                "extendedTImeout": "0"
+                                             });            
+                            }
                         }
-                   });
-        }
-        
-       if(!band && !(/^\d*$/).test($("#CedulaMadreHijoDatos").val()))
-       {
-           $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
-           $("#divCedulaMadreHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!band && !(/^\d*$/).test($("#CedulaPadreHijoDatos").val()))
-       {
-           $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
-           $("#divCedulaPadreHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!(/^\d*$/).test($("#CedulaHijoDatos").val()))
-       {
-           $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
-           $("#divCedulaHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerNombreHijoDatos").val()))
-       {
-           $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
-           $("#divPrimerNombreHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoNombreHijoDatos").val()))
-       {
-           $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
-           $("#divSegundoNombreHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!band && !(/^[a-zA-Z]*$/).test($("#PrimerApellidoHijoDatos").val()))
-       {
-           $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
-           $("#divPrimerApellidoHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!band && !(/^[a-zA-Z]*$/).test($("#SegundoApellidoHijoDatos").val()))
-       {
-           $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
-           $("#divSegundoApellidoHijoDatos").addClass("has-error");
-           toastr.error("Error campo mal introducido.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-           $("#headerHijos").css({ 'color': "red" });
-           band = true;
-       }else if(!band && ($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val()))
-       {
-            band = true;
-            $("#headerHijos").css({ 'color': "red" });
-            toastr.error("La cedula del padre y la madre son iguales.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-       }
-           
-       
-       if(!band && $("#CedulaMadreHijoDatos").val() != "" && $("#CedulaPadreHijoDatos").val() != "" && $("#PrimerNombreHijoDatos").val() != "" && $("#SegundoNombreHijoDatos").val() != "" && $("#PrimerApellidoHijoDatos").val() != "" && $("#SegundoApellidoHijoDatos").val() != "" && $("#FechaNacimientoHijoDatos").val() != "" && $("#NacionalidadHijoDatos").val() != "" && $("#input-2").val() != ""  && $("#FechaVencimientoActaNacimientoHijoDatos").val() != ""){
-            if($("#CedulaHijoDatos").val() != "")
-               tableHijos.row.add( {
-                   "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
-                    "CI Madre":$("#CedulaMadreHijoDatos").val(),
-                    "CI Padre":$("#CedulaPadreHijoDatos").val(),
-                    "CI Hijo":$("#CedulaHijoDatos").val(),
-                    "1er Nombre":$("#PrimerNombreHijoDatos").val(),
-                    "2do Nombre":$("#SegundoNombreHijoDatos").val(),
-                    "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
-                    "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
-                    "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
-                    "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
-                    "Nacionalidad":$("#NacionalidadHijoDatos").val()
-                } ).draw();
-            else
-                tableHijos.row.add( {
-                    "Delete": "<img src='/web/assets/images/delete.png' width='30px' heigth='30px'/>",
-                    "CI Madre":$("#CedulaMadreHijoDatos").val(),
-                    "CI Padre":$("#CedulaPadreHijoDatos").val(),
-                    "CI Hijo":0,
-                    "1er Nombre":$("#PrimerNombreHijoDatos").val(),
-                    "2do Nombre":$("#SegundoNombreHijoDatos").val(),
-                    "1er Apellido":$("#PrimerApellidoHijoDatos").val(),
-                    "2do Apellido":$("#SegundoApellidoHijoDatos").val(),
-                    "F Nacimiento":$("#FechaNacimientoHijoDatos").val(),
-                    "F Vencimiento Acta":$("#FechaVencimientoActaNacimientoHijoDatos").val(),
-                    "Nacionalidad":$("#NacionalidadHijoDatos").val()
-                } ).draw();
-            hijo.ciMadre = $("#CedulaMadreHijoDatos").val();
-            hijo.ciPadre = $("#CedulaPadreHijoDatos").val();
-            hijo.ciHijo = $("#CedulaHijoDatos").val();
-            hijo.primerNombre = $("#PrimerNombreHijoDatos").val();
-            hijo.segundoNombre = $("#SegundoNombreHijoDatos").val();
-            hijo.primerApellido = $("#PrimerApellidoHijoDatos").val();
-            hijo.segundoApellido = $("#SegundoApellidoHijoDatos").val();
-            hijo.fechaNacimiento = $("#FechaNacimientoHijoDatos").val();
-            hijo.fechaVencimiento = $("#FechaVencimientoActaNacimientoHijoDatos").val();
-            hijo.nacionalidad = $("#NacionalidadHijoDatos").val();
-            hijoData[countHijo] = hijo;
-            countHijo++;
-            $("#headerHijos").css({ 'color': "black" });
-            $("#spanCedulaMadreHijoDatos").removeClass("glyphicon-remove");
-            $("#divCedulaMadreHijoDatos").removeClass("has-error");
-            $("#spanCedulaPadreHijoDatos").removeClass("glyphicon-remove");
-            $("#divCedulaPadreHijoDatos").removeClass("has-error");
-            $("#spanCedulaHijoDatos").removeClass("glyphicon-remove");
-            $("#divCedulaHijoDatos").removeClass("has-error");
-            $("#spanPrimerNombreHijoDatos").removeClass("glyphicon-remove");
-            $("#divPrimerNombreHijoDatos").removeClass("has-error");
-            $("#spanSegundoNombreHijoDatos").removeClass("glyphicon-remove");
-            $("#divSegundoNombreHijoDatos").removeClass("has-error");
-            $("#spanPrimerApellidoHijoDatos").removeClass("glyphicon-remove");
-            $("#divPrimerApellidoHijoDatos").removeClass("has-error");
-            $("#spanSegundoApellidoHijoDatos").removeClass("glyphicon-remove");
-            $("#divSegundoApellidoHijoDatos").removeClass("has-error");
-            $("#spanNacionalidadHijoDatos").removeClass("glyphicon-remove");
-            $("#divNacionalidadHijoDatos").removeClass("has-error");
-            $("#divFechaVencimientoActaNacimientoHijoDatos").removeClass("has-error");
-            $("#spanFechaNacimientoHijoDatos").removeClass("glyphicon-remove");
-            $("#divFechaNacimientoHijoDatos").removeClass("has-error");
-            $("#spanActaNacCargaHijoDatos").removeClass("glyphicon-remove");
-            $("#divActaNacCargaHijoDatos").removeClass("has-error");
-       }else if(!band){
-           toastr.error("Error faltan datos.", "Error", {
-                    "timeOut": "0",
-                    "extendedTImeout": "0"
-                 });
-    
-            $("#headerHijos").css({ 'color': "red" });
-            $("#spanCedulaMadreHijoDatos").addClass("glyphicon-remove");
-            $("#divCedulaMadreHijoDatos").addClass("has-error");
-            $("#spanCedulaPadreHijoDatos").addClass("glyphicon-remove");
-            $("#divCedulaPadreHijoDatos").addClass("has-error");
-            $("#spanCedulaHijoDatos").addClass("glyphicon-remove");
-            $("#divCedulaHijoDatos").addClass("has-error");
-            $("#spanPrimerNombreHijoDatos").addClass("glyphicon-remove");
-            $("#divPrimerNombreHijoDatos").addClass("has-error");
-            $("#spanSegundoNombreHijoDatos").addClass("glyphicon-remove");
-            $("#divSegundoNombreHijoDatos").addClass("has-error");
-            $("#spanPrimerApellidoHijoDatos").addClass("glyphicon-remove");
-            $("#divPrimerApellidoHijoDatos").addClass("has-error");
-            $("#spanSegundoApellidoHijoDatos").addClass("glyphicon-remove");
-            $("#divSegundoApellidoHijoDatos").addClass("has-error");
-            $("#spanNacionalidadHijoDatos").addClass("glyphicon-remove");
-            $("#divNacionalidadHijoDatos").addClass("has-error");
-            $("#divFechaVencimientoActaNacimientoHijoDatos").addClass("has-error");
-            $("#spanFechaNacimientoHijoDatos").addClass("glyphicon-remove");
-            $("#divFechaNacimientoHijoDatos").addClass("has-error");
-            $("#spanActaNacCargaHijoDatos").addClass("glyphicon-remove");
-            $("#divActaNacCargaHijoDatos").addClass("has-error");
-       }
+                    });
+                }else
+                {
+                    if(registerOtherUserMadre)
+                    {
+                        toastr.error("La cedula de la madre, ya se encuentra registrada como padre en el registro de otro usuario.", "Error", {
+                                        "timeOut": "0",
+                                        "extendedTImeout": "0"
+                                     });
+                    }else if(registerOtherUserPadre)
+                    {
+                        toastr.error("La cedula de la padre, ya se encuentra registrada como madre en el registro de otro usuario.", "Error", {
+                                        "timeOut": "0",
+                                        "extendedTImeout": "0"
+                                     });
+                    }
+                }
+            }
+        });
     }else
     {
         toastr.error("Error solo puede registrar 6 hijos como maximo.", "Error", {
@@ -865,11 +938,48 @@ $('#agregarHijo').click(function(){
 });
 
 $('#tableHijos').on( 'click', 'td', function () {
+    var user = new Object();
     if(tableHijos.cell( this ).index().column == 0)
     {
+        if(registerOtherUserMadre)
+        {
+            user.ci = hijoData[tableHijos.cell( this ).index().row].ciMadre;
+        }else if(registerOtherUserPadre)
+        {
+            user.ci = hijoData[tableHijos.cell( this ).index().row].ciPadre;
+        }
+        
+        hijoData.splice(tableHijos.cell( this ).index().row,1);
         tableHijos.row(tableHijos.cell( this ).index().row).remove().draw();
-        hijoData.splice(this._DT_RowIndex,1);
         if(countHijo > 0)
             countHijo--;
+            
+        
+        if(!existeHijoData(hijoData,user,registerOtherUserMadre,registerOtherUserPadre))
+        {
+            remove(registerOtherUsers,user.ci);
+            otherUsersCount--;
+        }
     }
 });
+
+function existeHijoData(hijoData, user, registerOtherUserMadre, registerOtherUserPadre){
+    if(registerOtherUserMadre)
+        return hijoData.any(function(t){ return t.ciMadre == user.ci});
+    else if(registerOtherUserPadre)
+        return hijoData.any(function(t){ return t.ciPadre == user.ci});
+}
+
+function existe(users, user){
+    return users.any(function(t){ return t.ci == user.ci});
+}
+
+function remove(registerOtherUsers, ci)
+{
+    for(var i=0;i<registerOtherUsers.length;i++){
+          if(registerOtherUsers[i].ci == ci){
+          registerOtherUsers.splice(i, 1);//removes one item from the given index i
+          break;
+          }
+      }
+}

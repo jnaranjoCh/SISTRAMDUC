@@ -35,9 +35,12 @@ $('#generate').click(function(){
                             {
                                 $('#otherChildrens').removeClass("hidden");
                                 $('#relationship').removeClass("hidden");
+                                $('#relationship').html('');
+                                tableRelationship = "";
                                 for(var i = 0; i < data.length; i++)
                                 {
-                                    tableRelationship = '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
+                                    $(tableRelationshipList[i]).dataTable().fnDestroy();
+                                    tableRelationship = tableRelationship + '<h4 id="infoOtherParent'+i+'"></h4><div style="overflow-x: scroll; white-space: nowrap;">';
                                     tableRelationship = tableRelationship + '<table id="tableRelationship'+i+'" class="table table-bordered table-striped">'+
                                                                                 '<thead>'+
                                                                                 '<tr>'+
@@ -68,14 +71,21 @@ $('#generate').click(function(){
                                                                                 '</tr>'+
                                                                                 '</tfoot>'+
                                                                               '</table>';
-                                    tableRelationship = tableRelationship+'</div>';
-                                    $('#relationship').html(tableRelationship);
-                                    $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
-                                    $('#tableRelationship'+i).DataTable({
+                                    tableRelationship = tableRelationship+'</div></br>';
+                                    tableRelationshipList[i] = "#tableRelationship"+i;
+                                }
+                                $('#relationship').html(tableRelationship);
+                                for(var i = 0; i < data.length; i++)
+                                {
+                                    if(data[i].primerNombre == "" && data[i].segundoNombre == "" && data[i].primerApellido == "" && data[i].segundoApellido == "")
+                                        $("#infoOtherParent"+i).html("<strong>Usuario en espera por registrar ( Cedula: "+data[i].cedula+")</strong>");
+                                    else
+                                        $("#infoOtherParent"+i).html("<strong>Hijos de:</strong> "+data[i].primerNombre+" "+data[i].segundoNombre+" "+data[i].primerApellido+" "+data[i].segundoApellido);
+                                    $(tableRelationshipList[i]).DataTable({
                                                 "ajax":{
                                                    "url": routeRegistroUnico['registro_consultar_parentesco_hijos_ajax'],
                                                    "type": 'POST',
-                                                   "data": {"cedula":data[i].cedula}
+                                                   "data": {"cedula":data[i].cedula,"Email":$('#mail').val()}
                                                 },
                                                 "pagingType": "full_numbers",
                                         	    "language": {
@@ -94,6 +104,10 @@ $('#generate').click(function(){
                                                 ]
                                     });
                                 }
+                            }else
+                            {
+                                $('#otherChildrens').addClass("hidden");
+                                $('#relationship').addClass("hidden");
                             }
                         }
                     });

@@ -199,16 +199,6 @@ $('#submitData').click(function(){
             $("#div"+inputsR[i]).removeClass("has-error");
         }
     }
-
-    if($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val())
-    {
-        can_register = false;
-        $("#headerHijos").css({ 'color': "red" });
-        text = "La cedula del padre y la madre son iguales.";
-    }else
-    {
-        $("#headerHijos").css({ 'color': "black" });
-    }
     
     tableRegistros.column(2)
                         .data()
@@ -292,6 +282,16 @@ $('#submitData').click(function(){
     }
     
     if($('#checkboxHijos').prop('checked')){
+            if($("#CedulaPadreHijoDatos").val() == $("#CedulaMadreHijoDatos").val())
+            {
+                can_register = false;
+                $("#headerHijos").css({ 'color': "red" });
+                text = "La cedula del padre y la madre son iguales.";
+            }else
+            {
+                $("#headerHijos").css({ 'color': "black" });
+            }
+            
             if(can_register && (countHijo < 1 || countHijo != $("#ActaNacCargaHijoDatos").fileinput("getFilesCount"))){
                 if(countHijo < 1){
                     can_register = false;
@@ -385,12 +385,9 @@ $("#continue").click(function(){
     revistasData = burbuja(revistasData);
     $("#myModal3").modal("hide");
     if($('#checkboxHijos').prop('checked')){
-        if($('#checkboxParent').prop('checked')){
-            registerOtherUser = true;
-        }
         $.ajax({
                 method: "POST",
-                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val(), "registerOtherUser":registerOtherUser, "registerOtherUserPadre":registerOtherUserPadre, "registerOtherUserMadre":registerOtherUserMadre},
+                data: {"hijoData":hijoData,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val(), "registerOtherUser":true, "users":registerOtherUsers },
                 url:  routeRegistroUnico['registro_guardar_ajax'],
                 dataType: 'json',
                 beforeSend: function(){
@@ -404,7 +401,7 @@ $("#continue").click(function(){
     }else{
         $.ajax({
                 method: "POST",
-                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val(), "registerOtherUser":false, "registerOtherUserPadre":false, "registerOtherUserMadre":false},
+                data: {"hijoData":null,"personalData":personalData,"cargoData":cargoData,"registrosData":registrosData,"participantesData":participantesData,"revistasData":revistasData, "tipoDedicacion": $("#tipoDedicacionDatos").find('option:selected').val(), "registerOtherUser":false, "users":registerOtherUsers},
                 url:  routeRegistroUnico['registro_guardar_ajax'],
                 dataType: 'json',
                 beforeSend: function(){

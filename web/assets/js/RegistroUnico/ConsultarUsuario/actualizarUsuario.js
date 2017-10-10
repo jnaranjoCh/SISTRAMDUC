@@ -105,17 +105,19 @@ $("#actualizarUsuario").click(function (){
                                                 "extendedTImeout": "0"
                                             });
                                             tableRol.clear().draw();
-                                            $('#tableUsers').dataTable().fnDestroy();
-                                            $("#tableUsers").DataTable( {
-                                                    "ajax": routeRegistroUnico['registro_obteneremails_ajax'],
-                                                    "columns": [
-                                                        { "data": "Email" },
-                                                        { "data": "Estatus" },
-                                                        { "data": "Registro Completo" }
-                                                    ],
-                                                    "language": {
-                                                        "url": tableLenguage['datatable-spanish']
-                                                    }
+                                            tableUsers.destroy();
+                                            tableUsers = $("#tableUsers").DataTable( {
+                                                "ajax": routeRegistroUnico['registro_obteneremails_ajax'],
+                                                "columns": [
+                                                    { "data": "Email" },
+                                                    { "data": "Estatus" },
+                                                    { "data": "Registro Completo" },
+                                                    { "data": "Copiar" }
+                                                ],
+                                                "bDestroy": true,
+                                                "language": {
+                                                    "url": tableLenguage['datatable-spanish']
+                                                }
                                             });
                                             $("#gemail").val("");
                                             $("#formUsuario").addClass("hidden");

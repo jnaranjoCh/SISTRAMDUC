@@ -31,7 +31,7 @@ class RegistrarDatosController extends Controller
     {
         if($request->isXmlHttpRequest())
         {
-            $this->registerSectionOne($request->get('personalData'),$request->get('registerOtherUser'),$request->get('hijoData'),$request->get('registerOtherUserPadre'),$request->get('registerOtherUserMadre'));
+            $this->registerSectionOne($request->get('personalData'),$request->get('registerOtherUser'),$request->get('users'));
             $this->registerSectionTwo($request->get('cargoData'),$request->get('personalData')[16],$request->get('tipoDedicacion'));
             $this->registerSectionThree($request->get('registrosData'),$request->get('participantesData'),$request->get('revistasData'),$request->get('personalData')[16]);
             $this->registerSectionFour($request->get('hijoData'),$request->get('personalData')[16],$request->get('registerOtherUser'),$request->get('registerOtherUserPadre'),$request->get('registerOtherUserMadre'));
@@ -290,8 +290,9 @@ class RegistrarDatosController extends Controller
                     ->findOneById($id);
     }
     
-    private function registerSectionOne($user, $registerOtherUser, $hijos, $registerOtherUserPadre, $registerOtherUserMadre)
+    private function registerSectionOne($user, $registerOtherUser, $users)
     {
+        $roles = [];
         $em = $this->getDoctrine()->getManager();
         $newUser = $em->getRepository('AppBundle:Usuario')
                       ->findOneByCorreo($user[16]);
@@ -302,55 +303,47 @@ class RegistrarDatosController extends Controller
             );
         }
         
+        list($day, $month, $year) = explode('/', explode(' ', $user[5])[0]);
         $newUser->setPrimerNombre($user[0]);
         $newUser->setSegundoNombre($user[1]);
         $newUser->setPrimerApellido($user[2]);
         $newUser->setSegundoApellido($user[3]);
         $newUser->setNacionalidad($user[4]);
-        $newUser->setFechaNacimiento(new \DateTime($user[5]));
+        $newUser->setFechaNacimiento(new \DateTime($year."-".$month."-".$day));
         $newUser->setEdad($user[6]);
         $newUser->setSexo($user[7]);
         $newUser->setRif('J-'.$user[8]);
         $newUser->setTelefono($user[9].'-'.$user[10]);
         $newUser->setDireccion($user[15]);
-        
+        $em->flush();
         
         if(strcmp($registerOtherUser,"true")==0)
         {
-            $cedulaAux = null;
-            $correoAux = null;
-            if(strcmp($registerOtherUserMadre,"true")==0)
+            foreach($users as $userr)
             {
-                $cedulaAux = $hijos[0]['ciMadre'];
-                $correoAux = "Cedula: ".$hijos[0]['ciMadre']." (Sin registrar)";
+                $cedulaAux = $userr['ci'];
+                $correoAux = "Cedula: ".$userr['ci']." (Sin registrar)";
                 $otherUser = $em->getRepository('AppBundle:Usuario')
-                                    ->findOneByCorreo($hijos[0]['ciMadre']);
-            }else if(strcmp($registerOtherUserPadre,"true")==0)
-            {
-                $cedulaAux = $hijos[0]['ciPadre'];
-                $correoAux = "Cedula: ".$hijos[0]['ciPadre']." (Sin registrar)";
-                $otherUser = $em->getRepository('AppBundle:Usuario')
-                                ->findOneByCorreo($hijos[0]['ciPadre']);
-            }
-            
-            if(!$otherUser)
-            {
-                $roles[] = new Rol();
-                $otherUser = new Usuario();
-                $otherUser = $this->initialiceUser($otherUser);
-                $otherUser->setCorreo($correoAux);
-                $otherUser->setCedula($cedulaAux);
-                $encoder = $this->container->get('security.password_encoder');
-                $encoded = $encoder->encodePassword($otherUser,"123");
-                $otherUser->setPassword($encoded);
-                $otherUser->setActivo(0);
-                $otherUser->setIsRegister(0);
-                $roles[0] = $this->getByName("AppBundle:","Rol","Profesor");
-                $otherUser->addRoles($roles);
-                $em->persist($otherUser);
+                                ->findOneByCedula($userr['ci']);
+                    
+                if(!$otherUser && strcmp($userr['register'],"true")==0)
+                {
+                    $otherUser = new Usuario();
+                    $otherUser = $this->initialiceUser($otherUser);
+                    $otherUser->setCorreo($correoAux);
+                    $otherUser->setCedula($cedulaAux);
+                    $encoder = $this->container->get('security.password_encoder');
+                    $encoded = $encoder->encodePassword($otherUser,"123");
+                    $otherUser->setPassword($encoded);
+                    $otherUser->setActivo(0);
+                    $otherUser->setIsRegister(0);
+                    $roles[0] = $this->getByName("AppBundle:","Rol","Profesor");
+                    $otherUser->addRoles($roles);
+                    $em->persist($otherUser);
+                    $em->flush();
+                }
             }
         }
-        $em->flush();
     }
     
     private function initialiceUser($usuario)
@@ -532,28 +525,13 @@ class RegistrarDatosController extends Controller
         $em->flush();
     }
     
-     private function registerSectionFour($hijos,$email, $registerOtherUser, $registerOtherUserPadre, $registerOtherUserMadre)
+     private function registerSectionFour($hijos,$email)
      {
          if($hijos != null){
              
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository('AppBundle:Usuario')
                        ->findOneByCorreo($email);
-                          
-            /*if(strcmp($registerOtherUser,"true")==0)
-            {   
-                if(strcmp($registerOtherUserPadre,"true")==0)
-                {
-                    $otherUser  = $em->getRepository('AppBundle:Usuario')
-                                ->findOneByCedula($hijos[0]['ciPadre']);
-                }
-                
-                if(strcmp($registerOtherUserMadre,"true")==0)
-                {
-                    $otherUser  = $em->getRepository('AppBundle:Usuario')
-                                ->findOneByCedula($hijos[0]['ciMadre']);
-                }
-            }*/
             
             if (!$user) {
                 throw $this->createNotFoundException(
@@ -597,7 +575,6 @@ class RegistrarDatosController extends Controller
                  $em->flush();
                  $i++;
             }
-            //$otherUser->addHijos($hijoss);
             $user->addHijos($hijoss);
             $em->flush();
         } 
@@ -643,6 +620,55 @@ class RegistrarDatosController extends Controller
         return new JsonResponse($users);
     }
     
+    public function verificarCimadreCipadreHijoAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {
+            $ci = null;
+            if(strcmp($request->get("Madre"),"false")==0)
+            {
+                $ci = $this->getDoctrine()
+                              ->getManager()
+                              ->createQuery('SELECT h
+                                             FROM ClausulasContractualesBundle:Hijo h
+                                             WHERE h.cedulaMadre = :cedula')
+                              ->setParameter('cedula',$request->get("CedulaPadre"))
+                              ->getResult();    
+            }else if(strcmp($request->get("Padre"),"false")==0)
+            {
+                $ci = $this->getDoctrine()
+                              ->getManager()
+                              ->createQuery('SELECT h
+                                             FROM ClausulasContractualesBundle:Hijo h
+                                             WHERE h.cedulaPadre = :cedula')
+                              ->setParameter('cedula',$request->get("CedulaMadre"))
+                              ->getResult();    
+            }
+            
+            return new JsonResponse($ci);
+        }
+        else
+             throw $this->createNotFoundException('Error al realizar la petición');
+    }
+    
+    public function verificarHijoAction(Request $request)
+    {
+        if($request->isXmlHttpRequest())
+        {   
+            $hijos = $this->getDoctrine()
+                          ->getManager()
+                          ->createQuery('SELECT h
+                                         FROM ClausulasContractualesBundle:Hijo h
+                                         WHERE h.cedulaHijo = :cedula AND h.cedulaHijo != 0')
+                          ->setParameter('cedula',$request->get("CedulaHijo"))
+                          ->getResult();
+            return new JsonResponse($hijos);
+        }
+        else
+             throw $this->createNotFoundException('Error al realizar la petición');
+       
+    }
+    
     public function enviarParentescoHijosAction(Request $request)
     {
         $data[] = [];
@@ -650,6 +676,8 @@ class RegistrarDatosController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:Usuario')
                    ->findOneByCedula($request->get("cedula"));
+        $user2 = $em->getRepository('AppBundle:Usuario')
+                   ->findOneByCorreo($request->get("Email"));
         $Hijos = $this->getDoctrine()
                       ->getManager()
                       ->createQuery('SELECT h.cedulaHijo, h.cedulaMadre, h.cedulaPadre,
@@ -662,16 +690,19 @@ class RegistrarDatosController extends Controller
                       ->getResult();
         foreach($Hijos as $Hijo)
         {
-            $data[$i]["CIMadre"] = $Hijo['cedulaMadre'];
-            $data[$i]["CIPadre"] = $Hijo['cedulaPadre'];
-            $data[$i]["CIHijo"] = $Hijo['cedulaHijo'];
-            $data[$i]["1erNombre"] = $Hijo['primerNombre'];
-            $data[$i]["2doNombre"] = $Hijo['segundoNombre'];
-            $data[$i]["1erApellido"] = $Hijo['primerApellido'];
-            $data[$i]["2doApellido"] = $Hijo['segundoApellido'];
-            $data[$i]["FNacimiento"] = $Hijo['fechaNacimiento']->format('d/m/Y H:i');
-            $data[$i]["Nacionalidad"] = $Hijo['nacionalidad'];
-            $i++;
+            if(($user2->getCedula() == $Hijo['cedulaMadre'] && $user->getCedula() == $Hijo['cedulaPadre']) || ($user->getCedula() == $Hijo['cedulaMadre'] && $user2->getCedula() == $Hijo['cedulaPadre']))
+            {
+                $data[$i]["CIMadre"] = $Hijo['cedulaMadre'];
+                $data[$i]["CIPadre"] = $Hijo['cedulaPadre'];
+                $data[$i]["CIHijo"] = $Hijo['cedulaHijo'];
+                $data[$i]["1erNombre"] = $Hijo['primerNombre'];
+                $data[$i]["2doNombre"] = $Hijo['segundoNombre'];
+                $data[$i]["1erApellido"] = $Hijo['primerApellido'];
+                $data[$i]["2doApellido"] = $Hijo['segundoApellido'];
+                $data[$i]["FNacimiento"] = $Hijo['fechaNacimiento']->format('d/m/Y H:i');
+                $data[$i]["Nacionalidad"] = $Hijo['nacionalidad'];
+                $i++;
+            }
         }
         
         return new JsonResponse(array(

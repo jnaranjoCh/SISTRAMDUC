@@ -213,3 +213,15 @@ registro_consultar_parentesco_hijos_ajax:
     defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:enviarParentescoHijos }
     requirements:
         _method:  POST
+
+registro_verificarhijo_ajax:
+    path:     /registro/verificar-hijo
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:verificarHijo }
+    requirements:
+        _method:  POST
+        
+registro_verificarcipadremadre_ajax:
+    path:     /registro/verificar-cimadre-cipadre-hijo
+    defaults: { _controller: RegistroUnicoBundle:RegistrarDatos:verificarCimadreCipadreHijo }
+    requirements:
+        _method:  POST
